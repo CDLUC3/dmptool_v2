@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Institution:
+  = @user.institution_id
+%p
+  %b Email:
+  = @user.email
+%p
+  %b First name:
+  = @user.first_name
+%p
+  %b Last name:
+  = @user.last_name
+%p
+  %b Token:
+  = @user.token
+%p
+  %b Token expiration:
+  = @user.token_expiration
+%p
+  %b Prefs:
+  = @user.prefs
+
+= link_to 'Edit', edit_user_path(@user)
+\|
+= link_to 'Back', users_path
