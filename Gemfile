@@ -18,7 +18,6 @@ gem 'therubyracer'
 
 gem 'sass-rails', '4.0.0.rc1'
 gem 'haml-rails', '0.4'
-gem 'coffee-rails', '4.0.0'
 gem 'uglifier', '1.0.3'
 
 gem 'jquery-rails', '2.2.1'

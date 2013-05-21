@@ -11,41 +11,43 @@ class User < ActiveRecord::Base
 
   def create_default_preferences
     if prefs.nil?
+
       default_prefs = {
-              users:                   {
-                  role_granted: true
-              },
-              dmp_owners_and_co:       {
-                  new_comment: true,
-                  commited:    true,
-                  published:   true,
-                  submitted:   true
-              },
-              dmp_co:                  {
-                  submitted:    true,
-                  deactivated:  true,
-                  deleted:      true,
-                  new_co_owner: true
-              },
-              requirement_editors:     {
-                  commited:  true,
-                  deactived: true,
-                  deleted:   true
-              },
-              resource_editors:        {
-                  commited:            true,
-                  deactived:           true,
-                  deleted:             true,
-                  associated_commited: true
-              },
-              institutional_reviewers: {
-                  submitted:         true,
-                  new_comment:       true,
-                  approved_rejected: true
-              }
+          users:                   {
+              role_granted: true
+          },
+          dmp_owners_and_co:       {
+              new_comment: true,
+              commited:    true,
+              published:   true,
+              submitted:   true
+          },
+          dmp_co:                  {
+              submitted:    true,
+              deactivated:  true,
+              deleted:      true,
+              new_co_owner: true
+          },
+          requirement_editors:     {
+              commited:  true,
+              deactived: true,
+              deleted:   true
+          },
+          resource_editors:        {
+              commited:            true,
+              deactived:           true,
+              deleted:             true,
+              associated_commited: true
+          },
+          institutional_reviewers: {
+              submitted:         true,
+              new_comment:       true,
+              approved_rejected: true
           }
+      }
 
       self.prefs = default_prefs
+
     end
   end
 end

@@ -152,7 +152,6 @@ PLATFORMS
 
 DEPENDENCIES
   capybara (= 2.1.0.rc1)
-  coffee-rails (= 4.0.0)
   factory_girl_rails (= 4.2.0)
   haml-rails (= 0.4)
   jbuilder (= 1.0.1)
