@@ -21,4 +21,12 @@ FactoryGirl.define do
       sequence(:shib_domain) { |n| "uc#{n}.edu" }
     end
   end
+
+  factory :plan do
+    sequence(:name) { |n| "Data Management Plan #{n}" }
+    requirements_template_id 1
+    solicitation_identifier "2138219"
+    submission_deadline Date.today
+    visibility :public
+  end
 end

@@ -1,4 +1,6 @@
 Dmptool2::Application.routes.draw do
+  resources :plans
+
   resources :institutions
 
   resources :users
