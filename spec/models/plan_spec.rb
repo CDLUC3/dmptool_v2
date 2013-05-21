@@ -12,6 +12,8 @@ describe Plan do
   it { should respond_to(:submission_deadline) }
   it { should respond_to(:visibility) }
 
+  it { should have_many(:users).through(:user_plans) }
+
   it { should be_valid }
 
   describe "when name is blank" do
@@ -41,6 +43,17 @@ describe Plan do
         @plan.visibility = non_valid_visibility
         @plan.should_not be_valid
       end
+    end
+  end
+
+  describe "should belong to one or many users" do
+    let(:user) { FactoryGirl.create(:user) }
+
+    before { @plan.users << user }
+
+    it "should be able to access it's users" do
+      @plan.users.count.eql?(1)
+      @plan.users.first.eql?(user)
     end
   end
 end

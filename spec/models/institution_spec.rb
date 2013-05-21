@@ -17,6 +17,8 @@ describe Institution do
 
   it { should be_valid }
 
+  it { should have_many(:users) }
+
   describe "when the full name is blank" do
     before { @institution.full_name = "" }
     it { should_not be_valid }

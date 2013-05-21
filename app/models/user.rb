@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
 
   belongs_to :institution
+  has_many :user_plans
+  has_many :plans, through: :user_plans
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :institution_id, presence: true, numericality: true

@@ -13,6 +13,9 @@ describe User do
   it { should respond_to(:token) }
   it { should respond_to(:token_expiration) }
 
+  it { should have_many(:plans).through(:user_plans) }
+  it { should belong_to(:institution) }
+
   it { should be_valid }
 
   describe "when institution id is nil" do
@@ -95,5 +98,15 @@ describe User do
 
     it { should belong_to(:institution) }
     it { should_not belong_to(:institution2) }
+  end
+
+  describe "user should have access to their plans" do
+    let!(:plan) { FactoryGirl.create(:plan, users: [@user]) }
+    before { @user.save }
+
+    it "should create the proper relationship on plan creation" do
+      @user.plans.count.eql?(1)
+      @user.plans.first.eql?(plan)
+    end
   end
 end
