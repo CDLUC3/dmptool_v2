@@ -1,4 +1,6 @@
 Dmptool2::Application.routes.draw do
+  resources :institutions
+
   resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.

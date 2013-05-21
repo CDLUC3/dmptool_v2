@@ -1,0 +1,37 @@
+= form_for @institution do |f|
+  - if @institution.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@institution.errors.count, "error")} prohibited this institution from being saved:"
+      %ul
+        - @institution.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :full_name
+    = f.text_field :full_name
+  .field
+    = f.label :nickname
+    = f.text_field :nickname
+  .field
+    = f.label :desc
+    = f.text_area :desc
+  .field
+    = f.label :contact_info
+    = f.text_field :contact_info
+  .field
+    = f.label :contact_email
+    = f.text_field :contact_email
+  .field
+    = f.label :url
+    = f.text_field :url
+  .field
+    = f.label :url_text
+    = f.text_field :url_text
+  .field
+    = f.label :shib_entity_id
+    = f.text_field :shib_entity_id
+  .field
+    = f.label :shib_domain
+    = f.text_field :shib_domain
+  .actions
+    = f.submit 'Save'

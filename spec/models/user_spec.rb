@@ -84,4 +84,16 @@ describe User do
       @user.prefs.should_not be_empty
     end
   end
+
+  describe "user associations" do
+    let!(:institution) { FactoryGirl.create(:institution) }
+    let!(:institution2) { FactoryGirl.create(:institution) }
+    before do
+      @user.institution_id = institution.id
+      @user.save
+    end
+
+    it { should belong_to(:institution) }
+    it { should_not belong_to(:institution2) }
+  end
 end

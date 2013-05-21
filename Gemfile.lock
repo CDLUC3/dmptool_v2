@@ -119,6 +119,8 @@ GEM
       ffi (>= 1.0.7)
       json_pure
       rubyzip
+    shoulda-matchers (2.1.0)
+      activesupport (>= 3.0.0)
     sprockets (2.9.3)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -161,6 +163,7 @@ DEPENDENCIES
   rspec-rails (= 2.13.1)
   sass-rails (= 4.0.0.rc1)
   selenium-webdriver (= 2.0)
+  shoulda-matchers
   therubyracer
   turbolinks (= 1.0.0)
   uglifier (= 1.0.3)
