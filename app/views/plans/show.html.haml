@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @plan.name
+%p
+  %b Requirements templates:
+  = @plan.requirements_templates_id
+%p
+  %b Solicitation identifier:
+  = @plan.solicitation_identifier
+%p
+  %b Submission deadline:
+  = @plan.submission_deadline
+%p
+  %b Visibility:
+  = @plan.visibility
+
+= link_to 'Edit', edit_plan_path(@plan)
+\|
+= link_to 'Back', plans_path
