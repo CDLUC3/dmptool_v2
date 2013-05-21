@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130521222723) do
+ActiveRecord::Schema.define(version: 20130521230520) do
 
   create_table "institutions", force: true do |t|
     t.string   "full_name"
@@ -23,6 +23,14 @@ ActiveRecord::Schema.define(version: 20130521222723) do
     t.string   "url_text"
     t.string   "shib_entity_id"
     t.string   "shib_domain"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "plan_states", force: true do |t|
+    t.integer  "plan_id"
+    t.enum     "state",      limit: [:new, :committed, :submitted, :approved, :rejected, :revised, :inactive, :deleted]
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

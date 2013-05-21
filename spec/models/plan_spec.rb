@@ -13,6 +13,7 @@ describe Plan do
   it { should respond_to(:visibility) }
 
   it { should have_many(:users).through(:user_plans) }
+  it { should have_many(:plan_states) }
 
   it { should be_valid }
 
