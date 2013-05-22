@@ -28,6 +28,8 @@ FactoryGirl.define do
     solicitation_identifier "2138219"
     submission_deadline Time.now + 2.weeks
     visibility :public
+
+    #association :requirements_template
   end
 
   factory :published_plan do
@@ -47,5 +49,15 @@ FactoryGirl.define do
     factory :reviewer do
       visibility :reviewer
     end
+  end
+
+  factory :response do
+    value "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porta risus nec est vehicula id ornare felis scelerisque. Aliquam erat."
+    requirement_id 1
+    label_id 1
+
+    association :plan
+    #association :requirement
+    #association :label
   end
 end

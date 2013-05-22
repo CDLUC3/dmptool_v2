@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130522212903) do
+ActiveRecord::Schema.define(version: 20130522214609) do
 
   create_table "comments", force: true do |t|
     t.integer  "user_id"
@@ -58,6 +58,15 @@ ActiveRecord::Schema.define(version: 20130522212903) do
     t.integer  "plan_id"
     t.string   "file_name"
     t.enum     "visibility", limit: [:institutional, :public, :public_browsable]
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "responses", force: true do |t|
+    t.integer  "plan_id"
+    t.integer  "requirement_id"
+    t.integer  "label_id"
+    t.text     "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
