@@ -36,4 +36,16 @@ FactoryGirl.define do
 
     association :plan
   end
+
+  factory :comment do
+    visibility :owner
+    value "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porta risus nec est vehicula id ornare felis scelerisque. Aliquam erat."
+
+    association :user
+    association :plan
+
+    factory :reviewer do
+      visibility :reviewer
+    end
+  end
 end

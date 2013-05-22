@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130522210011) do
+ActiveRecord::Schema.define(version: 20130522212903) do
+
+  create_table "comments", force: true do |t|
+    t.integer  "user_id"
+    t.enum     "visibility", limit: [:owner, :reviewer]
+    t.integer  "plan_id"
+    t.text     "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "institutions", force: true do |t|
     t.string   "full_name"
