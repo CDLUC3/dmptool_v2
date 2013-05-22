@@ -75,4 +75,36 @@ FactoryGirl.define do
 
     association :user
   end
+
+  factory :authorization do
+    role "dmp_administrator"
+    group 1
+
+    factory :dmp_owner do
+      role "dmp_owner"
+    end
+
+    factory :dmp_co_owner do
+      role "dmp_co_owner"
+    end
+
+    factory :requirements_editor do
+      role "requirements_editor"
+    end
+
+    factory :resources_editor do
+      role "resources_editor"
+    end
+
+    factory :institutional_reviewer do
+      role "institutional_reviewer"
+    end
+
+    factory :institutional_administrator do
+      role "institutional_administrator"
+    end
+
+    association :user
+    #association :permission_groups
+  end
 end

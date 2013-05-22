@@ -11,12 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130522220525) do
+ActiveRecord::Schema.define(version: 20130522222113) do
 
   create_table "authentications", force: true do |t|
     t.integer  "user_id"
     t.enum     "provider",   limit: [:shibboleth, :ldap]
     t.string   "uid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "authorizations", force: true do |t|
+    t.enum     "role",       limit: [:dmp_owner, :dmp_co_owner, :requirements_editor, :resources_editor, :institutional_reviewer, :institutional_administrator, :dmp_administrator]
+    t.integer  "group"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
