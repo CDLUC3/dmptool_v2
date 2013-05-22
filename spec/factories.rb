@@ -54,10 +54,14 @@ FactoryGirl.define do
   factory :response do
     value "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porta risus nec est vehicula id ornare felis scelerisque. Aliquam erat."
     requirement_id 1
-    label_id 1
 
     association :plan
     #association :requirement
-    #association :label
+    association :label
+  end
+
+  factory :label do
+    desc "MB"
+    group "data-size"
   end
 end
