@@ -112,4 +112,23 @@ FactoryGirl.define do
 
     association :institution
   end
+
+  factory :resource_template do
+    requirements_template_id 1
+    name "Lorem Ipsum"
+    active false
+    mandatory_review false
+    widget_url "mywidget.com"
+
+    factory :active_true do
+      active true
+    end
+
+    factory :mandatory_review_true do
+      mandatory_review true
+    end
+
+    #association :requirements_template_id
+    association :institution
+  end
 end

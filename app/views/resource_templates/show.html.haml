@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Institution:
+  = @resource_template.institution_id
+%p
+  %b Requirements template:
+  = @resource_template.requirements_template_id
+%p
+  %b Name:
+  = @resource_template.name
+%p
+  %b Active:
+  = @resource_template.active
+%p
+  %b Mandatory review:
+  = @resource_template.mandatory_review
+%p
+  %b Widget url:
+  = @resource_template.widget_url
+
+= link_to 'Edit', edit_resource_template_path(@resource_template)
+\|
+= link_to 'Back', resource_templates_path

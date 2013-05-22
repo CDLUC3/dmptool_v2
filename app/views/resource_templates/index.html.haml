@@ -1,0 +1,29 @@
+%h1 Listing resource_templates
+
+%table
+  %tr
+    %th Institution
+    %th Requirements template
+    %th Name
+    %th Active
+    %th Mandatory review
+    %th Widget url
+    %th
+    %th
+    %th
+
+  - @resource_templates.each do |resource_template|
+    %tr
+      %td= resource_template.institution_id
+      %td= resource_template.requirements_template_id
+      %td= resource_template.name
+      %td= resource_template.active
+      %td= resource_template.mandatory_review
+      %td= resource_template.widget_url
+      %td= link_to 'Show', resource_template
+      %td= link_to 'Edit', edit_resource_template_path(resource_template)
+      %td= link_to 'Destroy', resource_template, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Resource template', new_resource_template_path

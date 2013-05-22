@@ -18,6 +18,7 @@ describe Institution do
   it { should be_valid }
 
   it { should have_many(:users) }
+  it { should have_many(:resource_templates) }
 
   describe "when the full name is blank" do
     before { @institution.full_name = "" }
