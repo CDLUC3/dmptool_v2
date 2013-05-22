@@ -8,7 +8,7 @@ class Authorization < ActiveRecord::Base
   validates :user_id, presence: true, numericality: true
 
   def institutions
-    #TODO fill this out
+    PermissionGroup.where(group: self.group).map(&:institution_id)
   end
 
   def dmp_owner?

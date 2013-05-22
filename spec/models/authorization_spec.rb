@@ -51,4 +51,19 @@ describe Authorization do
     end
   end
 
+  describe "when the institution method is called" do
+    it "should return the correct list of institutions" do
+      (1..5).each do |n|
+        FactoryGirl.create(:permission_group)
+        FactoryGirl.create(:permission_group, group: 2)
+        FactoryGirl.create(:permission_group, group: 3)
+      end
+
+      institution_list = @authorization.institutions
+      institution_list.count.eql?(5)
+      PermissionGroup.count.eql?(15)
+    end
+  end
+
+
 end

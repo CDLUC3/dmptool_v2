@@ -78,7 +78,6 @@ FactoryGirl.define do
 
   factory :authorization do
     role "dmp_administrator"
-    group 1
 
     factory :dmp_owner do
       role "dmp_owner"
@@ -105,6 +104,12 @@ FactoryGirl.define do
     end
 
     association :user
-    #association :permission_groups
+    association :permission_groups
+  end
+
+  factory :permission_group do
+    group 1
+
+    association :institution
   end
 end
