@@ -14,6 +14,7 @@ describe Plan do
 
   it { should have_many(:users).through(:user_plans) }
   it { should have_many(:plan_states) }
+  it { should have_many(:published_plans) }
 
   it { should be_valid }
 

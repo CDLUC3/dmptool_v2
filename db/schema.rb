@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130521230520) do
+ActiveRecord::Schema.define(version: 20130522210011) do
 
   create_table "institutions", force: true do |t|
     t.string   "full_name"
@@ -41,6 +41,14 @@ ActiveRecord::Schema.define(version: 20130521230520) do
     t.string   "solicitation_identifier"
     t.datetime "submission_deadline"
     t.enum     "visibility",               limit: [:institutional, :public, :public_browsable]
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "published_plans", force: true do |t|
+    t.integer  "plan_id"
+    t.string   "file_name"
+    t.enum     "visibility", limit: [:institutional, :public, :public_browsable]
     t.datetime "created_at"
     t.datetime "updated_at"
   end

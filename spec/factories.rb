@@ -26,7 +26,14 @@ FactoryGirl.define do
     sequence(:name) { |n| "Data Management Plan #{n}" }
     requirements_template_id 1
     solicitation_identifier "2138219"
-    submission_deadline Date.today
+    submission_deadline Time.now + 2.weeks
     visibility :public
+  end
+
+  factory :published_plan do
+    sequence(:file_name) { |n| "file_name_#{n}.pdf" }
+    visibility :public
+
+    association :plan
   end
 end
