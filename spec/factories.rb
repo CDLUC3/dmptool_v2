@@ -64,4 +64,15 @@ FactoryGirl.define do
     desc "MB"
     group "data-size"
   end
+
+  factory :authentication do
+    provider :shibboleth
+    sequence(:uid) { |n| "email#{n}@ucop.edu" }
+
+    factory :ldap do
+      provider :ldap
+    end
+
+    association :user
+  end
 end

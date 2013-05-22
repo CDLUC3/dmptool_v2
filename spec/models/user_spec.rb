@@ -15,6 +15,8 @@ describe User do
 
   it { should have_many(:plans).through(:user_plans) }
   it { should belong_to(:institution) }
+  it { should have_one(:authentication) }
+  it { should have_many(:comments) }
 
   it { should be_valid }
 
