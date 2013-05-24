@@ -1,0 +1,35 @@
+%h1 Listing requirements_templates
+
+%table
+  %tr
+    %th Institution
+    %th Name
+    %th Active
+    %th Start date
+    %th End date
+    %th Visibility
+    %th Version
+    %th Parent
+    %th Mandatory review
+    %th
+    %th
+    %th
+
+  - @requirements_templates.each do |requirements_template|
+    %tr
+      %td= requirements_template.institution_id
+      %td= requirements_template.name
+      %td= requirements_template.active
+      %td= requirements_template.start_date
+      %td= requirements_template.end_date
+      %td= requirements_template.visibility
+      %td= requirements_template.version
+      %td= requirements_template.parent_id
+      %td= requirements_template.mandatory_review
+      %td= link_to 'Show', requirements_template
+      %td= link_to 'Edit', edit_requirements_template_path(requirements_template)
+      %td= link_to 'Destroy', requirements_template, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Requirements template', new_requirements_template_path

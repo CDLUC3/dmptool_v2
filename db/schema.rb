@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130524172821) do
+ActiveRecord::Schema.define(version: 20130524183609) do
 
   create_table "authentications", force: true do |t|
     t.integer  "user_id"
@@ -88,6 +88,20 @@ ActiveRecord::Schema.define(version: 20130524172821) do
     t.integer  "plan_id"
     t.string   "file_name"
     t.enum     "visibility", limit: [:institutional, :public, :public_browsable]
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "requirements_templates", force: true do |t|
+    t.integer  "institution_id"
+    t.string   "name"
+    t.boolean  "active"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.enum     "visibility",       limit: [:public, :institutional]
+    t.integer  "version"
+    t.integer  "parent_id"
+    t.boolean  "mandatory_review"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

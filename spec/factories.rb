@@ -160,4 +160,26 @@ FactoryGirl.define do
     association :resource_template
     #association :requirement
   end
+
+  factory :requirement_template do
+    name 'Requirement Template Name'
+    active false
+    start_date Time.now
+    end_date Time.now + 2.weeks
+    visibility :public
+    parent_id nil
+    mandatory_review false
+
+    factory :institutional do
+      visibility :institutional
+    end
+
+    factory :active do
+      active true
+    end
+
+    factory :mandatory_review do
+      mandatory_review true
+    end
+  end
 end

@@ -1,0 +1,33 @@
+%p#notice= notice
+
+%p
+  %b Institution:
+  = @requirements_template.institution_id
+%p
+  %b Name:
+  = @requirements_template.name
+%p
+  %b Active:
+  = @requirements_template.active
+%p
+  %b Start date:
+  = @requirements_template.start_date
+%p
+  %b End date:
+  = @requirements_template.end_date
+%p
+  %b Visibility:
+  = @requirements_template.visibility
+%p
+  %b Version:
+  = @requirements_template.version
+%p
+  %b Parent:
+  = @requirements_template.parent_id
+%p
+  %b Mandatory review:
+  = @requirements_template.mandatory_review
+
+= link_to 'Edit', edit_requirements_template_path(@requirements_template)
+\|
+= link_to 'Back', requirements_templates_path

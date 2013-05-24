@@ -1,4 +1,6 @@
 Dmptool2::Application.routes.draw do
+  resources :requirements_templates
+
   resources :resources
 
   resources :resource_templates

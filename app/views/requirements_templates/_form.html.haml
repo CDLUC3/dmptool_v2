@@ -1,0 +1,37 @@
+= form_for @requirements_template do |f|
+  - if @requirements_template.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@requirements_template.errors.count, "error")} prohibited this requirements_template from being saved:"
+      %ul
+        - @requirements_template.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :institution_id
+    = f.number_field :institution_id
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :active
+    = f.check_box :active
+  .field
+    = f.label :start_date
+    = f.datetime_select :start_date
+  .field
+    = f.label :end_date
+    = f.datetime_select :end_date
+  .field
+    = f.label :visibility
+    = f.text_field :visibility
+  .field
+    = f.label :version
+    = f.number_field :version
+  .field
+    = f.label :parent_id
+    = f.number_field :parent_id
+  .field
+    = f.label :mandatory_review
+    = f.check_box :mandatory_review
+  .actions
+    = f.submit 'Save'
