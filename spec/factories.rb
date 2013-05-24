@@ -131,4 +131,33 @@ FactoryGirl.define do
     #association :requirements_template_id
     association :institution
   end
+
+  factory :resource do
+    resource_type :actionable_url
+    value "actionableurl.com"
+    label "This is a useful URL."
+    requirement_id 1
+
+
+    factory :expository_guidance do
+      resource_type :expository_guidance
+      value 'This is the text to guide the user.'
+      label 'Expository Guidance'
+    end
+
+    factory :example_response do
+      resource_type :example_response
+      value 'This is how you should respond to the question.'
+      label 'This is an example response.'
+    end
+
+    factory :suggested_response do
+      resource_type :suggested_response
+      value 'This is a suggested response.'
+      label 'This is the suggested response.'
+    end
+
+    association :resource_template
+    #association :requirement
+  end
 end

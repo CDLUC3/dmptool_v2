@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Type:
+  = @resource.type
+%p
+  %b Value:
+  = @resource.value
+%p
+  %b Label:
+  = @resource.label
+%p
+  %b Requirement:
+  = @resource.requirement_id
+%p
+  %b Resource template:
+  = @resource.resource_template_id
+
+= link_to 'Edit', edit_resource_path(@resource)
+\|
+= link_to 'Back', resources_path

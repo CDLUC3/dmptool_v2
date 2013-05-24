@@ -17,6 +17,7 @@ describe ResourceTemplate do
   it { should respond_to(:widget_url) }
 
   it { should belong_to(:institution) }
+  it { should have_many(:resources) }
 
   it { should be_valid }
 

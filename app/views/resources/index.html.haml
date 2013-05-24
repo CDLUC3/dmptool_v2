@@ -1,0 +1,27 @@
+%h1 Listing resources
+
+%table
+  %tr
+    %th Type
+    %th Value
+    %th Label
+    %th Requirement
+    %th Resource template
+    %th
+    %th
+    %th
+
+  - @resources.each do |resource|
+    %tr
+      %td= resource.type
+      %td= resource.value
+      %td= resource.label
+      %td= resource.requirement_id
+      %td= resource.resource_template_id
+      %td= link_to 'Show', resource
+      %td= link_to 'Edit', edit_resource_path(resource)
+      %td= link_to 'Destroy', resource, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Resource', new_resource_path

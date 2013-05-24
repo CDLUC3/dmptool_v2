@@ -1,6 +1,7 @@
 class ResourceTemplate < ActiveRecord::Base
 
   belongs_to :institution
+  has_many :resources
 
   validates :name, presence: true
 

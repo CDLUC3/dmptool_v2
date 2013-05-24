@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130522231822) do
+ActiveRecord::Schema.define(version: 20130524172821) do
 
   create_table "authentications", force: true do |t|
     t.integer  "user_id"
@@ -99,6 +99,16 @@ ActiveRecord::Schema.define(version: 20130522231822) do
     t.boolean  "active",                   default: false
     t.boolean  "mandatory_review"
     t.string   "widget_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "resources", force: true do |t|
+    t.enum     "resource_type",        limit: [:actionable_url, :expository_guidance, :example_response, :suggested_response]
+    t.string   "value"
+    t.string   "label"
+    t.integer  "requirement_id"
+    t.integer  "resource_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
