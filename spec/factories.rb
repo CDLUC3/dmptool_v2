@@ -134,7 +134,6 @@ FactoryGirl.define do
     resource_type :actionable_url
     value "actionableurl.com"
     label "This is a useful URL."
-    requirement_id 1
 
 
     factory :expository_guidance do
@@ -218,4 +217,10 @@ FactoryGirl.define do
 
     association :requirements_template
   end
+
+  factory :enumeration do
+    value "Lorem Ipsum"
+
+    association :requirement
+  end  
 end

@@ -6,6 +6,7 @@ class Plan < ActiveRecord::Base
   has_many :published_plans
   has_many :comments
   has_many :responses
+  belongs_to :requirements_template
 
   validates_columns :visibility
   validates :name, presence: true

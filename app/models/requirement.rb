@@ -1,6 +1,6 @@
 class Requirement < ActiveRecord::Base
   
-  # has_many :enumenrations
+  has_many :enumerations
   has_many :resources
   has_many :responses
   belongs_to :requirements_template
