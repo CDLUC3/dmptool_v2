@@ -3,9 +3,10 @@ require 'spec_helper'
 describe Resource do
 
   let(:resource_template) { FactoryGirl.create(:resource_template) }
+  let(:requirement) { FactoryGirl.create(:requirement) }
 
   before { @resource = Resource.new(value: 'actionableurl.com', label: 'Useful URL', resource_type: :example_response,
-                                    requirement_id: 1, resource_template_id: resource_template.id) }
+                                    requirement_id: requirement.id, resource_template_id: resource_template.id) }
 
   subject { @resource }
 

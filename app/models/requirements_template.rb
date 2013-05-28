@@ -2,7 +2,7 @@ class RequirementsTemplate < ActiveRecord::Base
 
   belongs_to :institution
   has_many :resource_templates
-  #has_many :requirements
+  has_many :requirements
 
   validates_columns :visibility
   validates :institution_id, presence: true, numericality: true
