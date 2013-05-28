@@ -3,8 +3,9 @@ require 'spec_helper'
 describe Response do
 
   let(:plan) { FactoryGirl.create(:plan) }
+  let(:requirement) { FactoryGirl.create(:requirement) }
 
-  before { @response = Response.new(plan_id: plan.id, requirement_id: 1, value: "This is the response.") }
+  before { @response = Response.new(plan_id: plan.id, requirement_id: requirement.id, value: "This is the response.") }
 
   subject { @response }
 

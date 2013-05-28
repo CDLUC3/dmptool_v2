@@ -3,8 +3,9 @@ require 'spec_helper'
 describe ResourceTemplate do
 
   let(:institution) { FactoryGirl.create(:institution) }
+  let(:requirements_template) { FactoryGirl.create(:requirements_template) }
 
-  before { @resource_template = ResourceTemplate.new(name:             "My Resource Template", requirements_template_id: 1, active: false,
+  before { @resource_template = ResourceTemplate.new(name: "My Resource Template", requirements_template_id: requirements_template.id, active: false,
                                                      mandatory_review: false, widget_url: "mywidget.com") }
 
   subject { @resource_template }

@@ -24,7 +24,6 @@ FactoryGirl.define do
 
   factory :plan do
     sequence(:name) { |n| "Data Management Plan #{n}" }
-    requirements_template_id 1
     solicitation_identifier "2138219"
     submission_deadline Time.now + 2.weeks
     visibility :public
@@ -113,7 +112,6 @@ FactoryGirl.define do
   end
 
   factory :resource_template do
-    requirements_template_id 1
     name "Lorem Ipsum"
     active false
     mandatory_review false
@@ -135,7 +133,6 @@ FactoryGirl.define do
     resource_type :actionable_url
     value "actionableurl.com"
     label "This is a useful URL."
-    requirement_id 1
 
 
     factory :expository_guidance do
@@ -160,7 +157,7 @@ FactoryGirl.define do
     association :requirement
   end
 
-  factory :requirement_template do
+  factory :requirements_template do
     name 'Requirement Template Name'
     active false
     start_date Time.now
@@ -180,12 +177,51 @@ FactoryGirl.define do
     factory :mandatory_review do
       mandatory_review true
     end
+
+    association :institution
+  end
+
+  factory :requirement do
+    order 1
+    parent_requirement 1
+    text_brief "Lorem Ipsum"
+    text_full "Lorem Ipsum Lrem Ipsum Lorem Ipsum"
+    requirement_type :text
+    obligation :mandatory
+    default "Lorem Ipsum Lrem Ipsum Lorem Ipsum"
+
+    factory :numeric do
+      requirement_type :numeric
+    end
+
+    factory :date do
+      requirement_type :date
+    end 
+
+    factory :enum do
+      requirement_type :enum
+    end
+
+    factory :mandatory_applicable do
+      obligation :mandatory_applicable
+    end 
+
+    factory :optional do
+      obligation :optional
+    end
+
+    factory :recommended do
+      obligation :recommended
+    end
+
+    association :requirements_template
   end
 
   factory :enumeration do
     value "Lorem Ipsum"
 
     association :requirement
+<<<<<<< HEAD
   end
 
   factory :tag do
@@ -194,4 +230,7 @@ FactoryGirl.define do
     association :requirements_template
   end  
 
+=======
+  end  
+>>>>>>> new_specs
 end
