@@ -1,0 +1,34 @@
+= form_for @requirement do |f|
+  - if @requirement.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@requirement.errors.count, "error")} prohibited this requirement from being saved:"
+      %ul
+        - @requirement.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :order
+    = f.number_field :order
+  .field
+    = f.label :parent_requirement
+    = f.number_field :parent_requirement
+  .field
+    = f.label :text_brief
+    = f.text_field :text_brief
+  .field
+    = f.label :text_full
+    = f.text_area :text_full
+  .field
+    = f.label :requirement_type
+    = f.text_field :requirement_type
+  .field
+    = f.label :obligation
+    = f.text_field :obligation
+  .field
+    = f.label :default
+    = f.text_area :default
+  .field
+    = f.label :requirements_template_id
+    = f.number_field :requirements_template_id
+  .actions
+    = f.submit 'Save'
