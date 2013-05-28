@@ -29,7 +29,7 @@ FactoryGirl.define do
     submission_deadline Time.now + 2.weeks
     visibility :public
 
-    #association :requirements_template
+    association :requirements_template
   end
 
   factory :published_plan do
@@ -53,10 +53,9 @@ FactoryGirl.define do
 
   factory :response do
     value "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porta risus nec est vehicula id ornare felis scelerisque. Aliquam erat."
-    requirement_id 1
 
     association :plan
-    #association :requirement
+    association :requirement
     association :label
   end
 
@@ -128,7 +127,7 @@ FactoryGirl.define do
       mandatory_review true
     end
 
-    #association :requirements_template_id
+    association :requirements_template
     association :institution
   end
 
@@ -158,7 +157,7 @@ FactoryGirl.define do
     end
 
     association :resource_template
-    #association :requirement
+    association :requirement
   end
 
   factory :requirement_template do
@@ -182,4 +181,17 @@ FactoryGirl.define do
       mandatory_review true
     end
   end
+
+  factory :enumeration do
+    value "Lorem Ipsum"
+
+    association :requirement
+  end
+
+  factory :tag do
+    tag "Lorem Ipsum"
+
+    association :requirements_template
+  end  
+
 end
