@@ -22,10 +22,8 @@ describe RequirementsTemplate do
   it { should belong_to(:institution) }
   it { should have_many(:resource_templates) }
   it { should have_many(:requirements) }
-<<<<<<< HEAD
   it { should have_many(:tags) }
-=======
->>>>>>> new_specs
+  it { should have_many(:additional_informations) }
 
   it { should be_valid }
 

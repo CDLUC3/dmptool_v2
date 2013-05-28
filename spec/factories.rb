@@ -221,16 +221,19 @@ FactoryGirl.define do
     value "Lorem Ipsum"
 
     association :requirement
-<<<<<<< HEAD
   end
 
   factory :tag do
     tag "Lorem Ipsum"
 
     association :requirements_template
-  end  
+  end
 
-=======
-  end  
->>>>>>> new_specs
+  factory :additonal_information do
+    url "myurl.com"
+    label "Lorem Ipsum"
+
+    association :requirements_template
+  end
+
 end
