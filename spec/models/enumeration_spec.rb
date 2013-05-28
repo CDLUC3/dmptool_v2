@@ -12,6 +12,8 @@ describe Enumeration do
   it { should respond_to(:value) }
 
   it { should belong_to(:requirement)}
+  
+  it { should be_valid }
 
   describe "when requirement_id is blank" do
     before { @enumeration.requirement_id = nil }

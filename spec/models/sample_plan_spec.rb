@@ -1,27 +1,28 @@
 require 'spec_helper'
 
-describe Tag do
-  
+describe SamplePlan do
+
   let(:requirements_template) { FactoryGirl.create(:requirements_template)}
 
-  before { @tag = Tag.new(requirements_template_id: requirements_template.id, tag: "Lorem Ipsum")}
+  before { @sample_plan = SamplePlan.new(requirements_template_id: requirements_template.id, label: "Lorem Ipsum", url: "myurl.com")}
 
-  subject { @tag }
+  subject { @sample_plan }
 
   it { should respond_to(:requirements_template_id) }
-  it { should respond_to(:tag)}
+  it { should respond_to(:url)}
+  it { should respond_to(:label)}
   
   it { should belong_to(:requirements_template)}
 
   it { should be_valid }
 
   describe "when requirements_template_id is blank" do
-    before { @tag.requirements_template_id = nil }
+    before { @sample_plan.requirements_template_id = nil }
     it { should_not be_valid }
   end
   
   describe "when requirements_template_id is a string" do
-    before { @tag.requirements_template_id = "text" }
+    before { @sample_plan.requirements_template_id = "text" }
     it { should_not be_valid }
   end
 

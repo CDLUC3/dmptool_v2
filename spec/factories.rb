@@ -236,4 +236,11 @@ FactoryGirl.define do
     association :requirements_template
   end
 
+  factory :sample_plan do
+    url "myurl.com"
+    label "Lorem Ipsum"
+
+    association :requirements_template
+  end
+
 end

@@ -24,7 +24,8 @@ describe RequirementsTemplate do
   it { should have_many(:requirements) }
   it { should have_many(:tags) }
   it { should have_many(:additional_informations) }
-
+  it { should have_many(:sample_plans)}
+  
   it { should be_valid }
 
   describe "when institution_id is blank" do

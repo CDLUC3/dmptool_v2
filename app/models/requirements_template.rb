@@ -5,6 +5,7 @@ class RequirementsTemplate < ActiveRecord::Base
   has_many :requirements
   has_many :tags
   has_many :additional_informations
+  has_many :sample_plans
 
   validates_columns :visibility
   validates :institution_id, presence: true, numericality: true
