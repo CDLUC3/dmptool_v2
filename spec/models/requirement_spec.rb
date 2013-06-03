@@ -24,6 +24,8 @@ describe Requirement do
   it { should have_many(:resources)}
   it { should have_many(:enumerations)}
 
+  it { should be_valid }
+
   describe "when requirements_template_id is blank" do
     before { @requirement.requirements_template_id = nil }
     it { should_not be_valid }

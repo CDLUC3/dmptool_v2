@@ -52,7 +52,6 @@ FactoryGirl.define do
 
   factory :response do
     value "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porta risus nec est vehicula id ornare felis scelerisque. Aliquam erat."
-    requirement_id 1
 
     association :plan
     association :requirement
@@ -217,4 +216,31 @@ FactoryGirl.define do
 
     association :requirements_template
   end
+
+  factory :enumeration do
+    value "Lorem Ipsum"
+
+    association :requirement
+  end
+
+  factory :tag do
+    tag "Lorem Ipsum"
+
+    association :requirements_template
+  end
+
+  factory :additonal_information do
+    url "myurl.com"
+    label "Lorem Ipsum"
+
+    association :requirements_template
+  end
+
+  factory :sample_plan do
+    url "myurl.com"
+    label "Lorem Ipsum"
+
+    association :requirements_template
+  end
+
 end

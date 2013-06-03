@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130528174232) do
+ActiveRecord::Schema.define(version: 20130528232150) do
+
+  create_table "additional_informations", force: true do |t|
+    t.string   "url"
+    t.string   "label"
+    t.integer  "requirements_template_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "authentications", force: true do |t|
     t.integer  "user_id"
@@ -152,6 +160,21 @@ ActiveRecord::Schema.define(version: 20130528174232) do
     t.integer  "requirement_id"
     t.integer  "label_id"
     t.text     "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "sample_plans", force: true do |t|
+    t.string   "url"
+    t.string   "label"
+    t.integer  "requirements_template_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tags", force: true do |t|
+    t.integer  "requirements_template_id"
+    t.string   "tag"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
