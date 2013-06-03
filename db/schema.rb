@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20130528174232) do
   end
 
   create_table "enumerations", force: true do |t|
-    t.integer  "requirements_id"
+    t.integer  "requirement_id"
     t.string   "value"
     t.datetime "created_at"
     t.datetime "updated_at"
