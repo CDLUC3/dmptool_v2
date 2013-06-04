@@ -1,0 +1,28 @@
+%h1 Login 
+
+
+%h3 Log In on DMPTool    
+.user_login
+  = form_tag 'user_sessions/login', method: :post do
+    = label_tag :username
+    = text_field_tag :username
+    %br
+    = label_tag :password
+    = password_field_tag :password
+    %br
+      = check_box_tag :remember_my_username
+      = label_tag :remember_my_username
+    %br  
+    = submit_tag "Login"
+
+    %div 
+      Don't have a DMPTool account yet?
+      %br
+      You can 
+      =link_to "Create An Account"
+      in DMPtool first and Log In
+
+    %div
+      = link_to "Forgot your username?"
+    %div
+      = link_to "Forgot your password?"

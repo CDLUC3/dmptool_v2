@@ -14,8 +14,6 @@ describe AdditionalInformation do
 
   it { should belong_to(:requirements_template)}
 
-  it { should be_valid }
-
   describe "when requirements_template_id is blank" do
     before { @additional_information.requirements_template_id = nil }
     it { should_not be_valid }

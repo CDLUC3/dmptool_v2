@@ -1,4 +1,5 @@
 Dmptool2::Application.routes.draw do
+
   resources :requirements
 
   resources :requirements_templates
@@ -12,6 +13,8 @@ Dmptool2::Application.routes.draw do
   resources :institutions
 
   resources :users
+
+  get 'user_sessions/login' => 'user_sessions#login'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
