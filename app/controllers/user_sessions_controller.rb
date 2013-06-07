@@ -1,5 +1,3 @@
-require 'pp'
-
 class UserSessionsController < ApplicationController
 
   def login
