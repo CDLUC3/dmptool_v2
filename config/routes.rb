@@ -1,20 +1,17 @@
 Dmptool2::Application.routes.draw do
 
   resources :requirements
-
   resources :requirements_templates
-
   resources :resources
-
   resources :resource_templates
-
   resources :plans
-
   resources :institutions
-
   resources :users
 
-  get 'user_sessions/login' => 'user_sessions#login'
+  get 'user_sessions/login', to: 'user_sessions#login', as: 'login'
+
+  post '/auth/:provider/callback', to: 'user_sessions#create'
+  get '/auth/failure', to: 'user_sessions#failure'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

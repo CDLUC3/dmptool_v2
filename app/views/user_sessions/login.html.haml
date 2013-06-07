@@ -3,7 +3,7 @@
 
 %h3 Log In on DMPTool    
 .user_login
-  = form_tag 'user_sessions/login', method: :post do
+  = form_tag '/auth/ldap/callback', method: :post do
     = label_tag :username
     = text_field_tag :username
     %br
