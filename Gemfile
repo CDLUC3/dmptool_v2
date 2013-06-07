@@ -14,6 +14,9 @@ group :test do
   gem 'shoulda-matchers'
 end
 
+gem 'omniauth'
+gem 'omniauth-ldap'
+
 gem 'mysql2'
 gem 'therubyracer'
 
