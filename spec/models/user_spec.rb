@@ -22,8 +22,15 @@ describe User do
   it { should be_valid }
 
   describe "when institution id is nil" do
-    before { @user.institution_id = nil }
-    it { should_not be_valid }
+    before do
+      @user.institution_id = nil
+      @duplicate_user = @user.dup
+    end
+
+    it "should default to 0" do
+      @user.save
+      @user.institution_id.eql?(0)
+    end
   end
 
   describe "when institution_id is a string" do
