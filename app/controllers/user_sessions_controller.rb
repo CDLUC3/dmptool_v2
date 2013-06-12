@@ -11,7 +11,7 @@ class UserSessionsController < ApplicationController
   end
 
   def failure
-    redirect_to login_path, alert: 'Invalid Username/Password'
+    redirect_to login_path, flash: { error: 'Invalid Username/Password' }
   end
 
   protected

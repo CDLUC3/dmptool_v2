@@ -4,14 +4,15 @@ module UserSessionsHelper
     @user = User.find_by(email: auth_hash[:info][:email])
 
     if @user
-      flash[:notice] = 'User was found.'
+      sign_in(@user)
+      flash[:success] = 'User was found.'
     else
       @user = User.new(email: auth_hash[:info][:email], first_name: auth_hash[:info][:first_name],
                           last_name: auth_hash[:info][:last_name])
 
       if @user.save
         sign_in(@user)
-        flash[:notice] = 'New user created.'
+        flash[:success] = 'New user created.'
       else
         flash[:alert] = 'Error creating new user.'
       end
