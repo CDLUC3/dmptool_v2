@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe AdditionalInformation do
   
-  let(:requirements_template) { FactoryGirl.create(:requirements_template)}
+  let(:requirements_template) { FactoryGirl.create(:requirements_template) }
 
   before { @additional_information = AdditionalInformation.new(requirements_template_id: requirements_template.id, label: "Lorem Ipsum", url: "myurl.com")}
 
@@ -12,7 +12,7 @@ describe AdditionalInformation do
   it { should respond_to(:label)}
   it { should respond_to(:url)}
 
-  it { should belong_to(:requirements_template)}
+  it { should belong_to(:requirements_template) }
 
   describe "when requirements_template_id is blank" do
     before { @additional_information.requirements_template_id = nil }
