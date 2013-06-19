@@ -30,6 +30,8 @@ namespace :deploy do
     run "ln -s #{shared_path}/database.yml #{release_path}/config/"
     run "ln -s #{shared_path}/ldap.yml #{release_path}/config/"
     run "ln -s #{shared_path}/unicorn.rb #{release_path}/config/"
+    run "ln -s #{shared_path}/unicorn.rb #{release_path}/config/unicorn/"
+    run "ln -s #{shared_path}/unicorn.rb #{release_path}/config/unicorn/production.rb"
   end
 end
 
