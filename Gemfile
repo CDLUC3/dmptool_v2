@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 
 gem 'rails', '4.0.0.rc2'
-gem 'bootstrap-sass', '2.3.1.0'
 gem 'unicorn'
 
 group :development, :test do
@@ -25,6 +24,7 @@ gem 'mysql2'
 gem 'therubyracer'
 
 gem 'enum_column3'
+gem 'bootstrap-sass', '2.3.2.0'
 gem 'sass-rails', '4.0.0.rc1'
 gem 'haml-rails', '0.4'
 gem 'uglifier', '1.0.3'
