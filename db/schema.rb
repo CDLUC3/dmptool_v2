@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130606202308) do
+ActiveRecord::Schema.define(version: 20130725190320) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20130606202308) do
   end
 
   create_table "authorizations", force: true do |t|
-    t.enum     "role",       limit: [:dmp_owner, :dmp_co_owner, :requirements_editor, :resources_editor, :institutional_reviewer, :institutional_administrator, :dmp_administrator]
+    t.integer  "role_id"
     t.integer  "group"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -160,6 +160,12 @@ ActiveRecord::Schema.define(version: 20130606202308) do
     t.integer  "requirement_id"
     t.integer  "label_id"
     t.text     "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "roles", force: true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
