@@ -18,6 +18,7 @@ describe User do
   it { should have_one(:authentication) }
   it { should have_many(:comments) }
   it { should have_many(:authorizations) }
+  it { should have_many(:roles).through(:authorizations) }
 
   it { should be_valid }
 

@@ -75,33 +75,10 @@ FactoryGirl.define do
   end
 
   factory :authorization do
-    role "dmp_administrator"
-
-    factory :dmp_owner do
-      role "dmp_owner"
-    end
-
-    factory :dmp_co_owner do
-      role "dmp_co_owner"
-    end
-
-    factory :requirements_editor do
-      role "requirements_editor"
-    end
-
-    factory :resources_editor do
-      role "resources_editor"
-    end
-
-    factory :institutional_reviewer do
-      role "institutional_reviewer"
-    end
-
-    factory :institutional_administrator do
-      role "institutional_administrator"
-    end
+    group 1
 
     association :user
+    association :role
     association :permission_groups
   end
 
@@ -196,7 +173,7 @@ FactoryGirl.define do
 
     factory :date do
       requirement_type :date
-    end 
+    end
 
     factory :enum do
       requirement_type :enum
@@ -204,7 +181,7 @@ FactoryGirl.define do
 
     factory :mandatory_applicable do
       obligation :mandatory_applicable
-    end 
+    end
 
     factory :optional do
       obligation :optional
@@ -243,4 +220,7 @@ FactoryGirl.define do
     association :requirements_template
   end
 
+  factory :role do
+    name "dmp_administrator"
+  end
 end
