@@ -29,6 +29,7 @@ gem 'sass-rails', '4.0.0.rc1'
 gem 'haml-rails', '0.4'
 gem 'uglifier', '1.0.3'
 
-gem 'jquery-rails', '2.2.1'
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'turbolinks', '1.0.0'
 gem 'jbuilder', '1.0.1'
