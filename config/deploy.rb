@@ -12,6 +12,7 @@ set :password, DEPLOY_CONFIG['password']
 set :use_sudo, true
 set :unicorn_user, 'dmp2'
 set :admin_runner, 'dmp2'
+set :git_user, 'dmp2'
 set :runner, 'dmp2'
 set :deploy_user, 'dmp2'
 set :sudo, 'sudo -iu dmp2'
@@ -30,6 +31,7 @@ namespace :deploy do
     run "ln -s #{shared_path}/database.yml #{release_path}/config/"
     run "ln -s #{shared_path}/ldap.yml #{release_path}/config/"
     run "ln -s #{shared_path}/unicorn.rb #{release_path}/config/"
+    run "chmod -R 777 #{current_path}/tmp"
   end
 end
 
