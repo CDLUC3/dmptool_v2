@@ -19,7 +19,9 @@ set :sudo, 'sudo -iu dmp2'
 set :deploy_via, :remote_cache
 set :branch, fetch(:branch, "master")
 set :env, fetch(:env, "development")
+set :ssh_options, {:forward_agent => true }
 
+default_run_options[:env] = { 'PATH' => '/dmp2/local/bin/:$PATH'}
 default_run_options[:pty] = true
 
 role :web, "dmp2-dev.cdlib.org"
