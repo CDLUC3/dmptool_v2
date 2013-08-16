@@ -31,6 +31,7 @@ role :db,  "dmp2-dev.cdlib.org", :primary => true # This is where Rails migratio
 namespace :deploy do
   task :symlink_shared do
     run "ln -s #{shared_path}/database.yml #{release_path}/config/"
+    run "ln -s #{shared_path}/shibboleth.yml #{release_path}/config/"
     run "ln -s #{shared_path}/ldap.yml #{release_path}/config/"
     run "ln -s #{shared_path}/unicorn.rb #{release_path}/config/"
     run "chmod -R 777 #{current_path}/tmp"
