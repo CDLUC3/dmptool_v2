@@ -1,5 +1,10 @@
 Dmptool2::Application.routes.draw do
 
+ root 'static_pages#home'
+ match 'about', to: 'static_pages#about', via: 'get'
+ match 'help', to: 'static_pages#help', via: 'get'
+ match 'contact', to: 'static_pages#contact', via: 'get'
+
   resources :requirements
   resources :requirements_templates
   resources :resources
@@ -9,7 +14,6 @@ Dmptool2::Application.routes.draw do
   resources :users
 
   get 'user_sessions/login', to: 'user_sessions#login', as: 'login'
-
   post '/auth/:provider/callback', to: 'user_sessions#create'
   get '/auth/failure', to: 'user_sessions#failure'
 

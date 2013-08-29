@@ -1,0 +1,24 @@
+%h3 Contact Us
+%p Your message is about:
+%br
+= form_tag do
+	.control-group
+		= radio_button_tag :question_about, 'using the dmptool'
+		= label_tag :question_about_Using_the_DMP_Tool, "Using the DMP Tool"
+
+		= radio_button_tag :question_about, 'Becoming a participating institution'
+		= label_tag :question_about_becoming_a_participating_institution, "Becoming a participating institution"
+
+		= radio_button_tag :question_about, 'Other'
+		= label_tag :question_about_Other, "Other"
+
+		= label_tag :name, "Your Name"
+		= text_field_tag :name
+	
+		= label_tag :email, "Email"
+		= email_field_tag :email
+	
+		= label_tag :message, "Message"
+		= text_area_tag 'message', nil, :rows => 5, :cols => 35, placeholder: "Text input"
+	%br
+	= submit_tag 'Submit'

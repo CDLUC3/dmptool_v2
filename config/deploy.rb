@@ -12,13 +12,16 @@ set :password, DEPLOY_CONFIG['password']
 set :use_sudo, true
 set :unicorn_user, 'dmp2'
 set :admin_runner, 'dmp2'
+set :git_user, 'dmp2'
 set :runner, 'dmp2'
 set :deploy_user, 'dmp2'
 set :sudo, 'sudo -iu dmp2'
 set :deploy_via, :remote_cache
 set :branch, fetch(:branch, "master")
 set :env, fetch(:env, "development")
+set :ssh_options, {:forward_agent => true }
 
+default_run_options[:env] = { 'PATH' => '/dmp2/local/bin/:$PATH'}
 default_run_options[:pty] = true
 
 role :web, "dmp2-dev.cdlib.org"
@@ -28,8 +31,10 @@ role :db,  "dmp2-dev.cdlib.org", :primary => true # This is where Rails migratio
 namespace :deploy do
   task :symlink_shared do
     run "ln -s #{shared_path}/database.yml #{release_path}/config/"
+    run "ln -s #{shared_path}/shibboleth.yml #{release_path}/config/"
     run "ln -s #{shared_path}/ldap.yml #{release_path}/config/"
     run "ln -s #{shared_path}/unicorn.rb #{release_path}/config/"
+    run "chmod -R 777 #{current_path}/tmp"
   end
 end
 
