@@ -14,6 +14,11 @@ class UserSessionsController < ApplicationController
     redirect_to login_path, flash: { error: 'Invalid Username/Password' }
   end
 
+  def destroy
+    sign_out
+    redirect_to root_path
+  end
+
   protected
 
     def auth_hash
