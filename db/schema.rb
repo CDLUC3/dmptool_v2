@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130725190320) do
+ActiveRecord::Schema.define(version: 20130904141459) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -204,6 +204,7 @@ ActiveRecord::Schema.define(version: 20130725190320) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "cookie_salt"
+    t.string   "login_id"
   end
 
 end
