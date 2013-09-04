@@ -1,0 +1,60 @@
+- unless @user.new_record?
+  %b= 'Name'
+
+- errors = @user.errors[:login_id]
+- validation_class = errors.empty? ? {} : 'error'
+%div{ class: "control-group #{validation_class}"}
+  = f.label :login_id, 'Username', class: 'control-label'
+  .controls
+    = f.text_field :login_id, readonly: !@user.new_record?
+    %span.help-inline
+      = errors.join (', ')
+
+- unless @user.new_record?
+
+  - errors = @user.errors[:first_name]
+  - validation_class = errors.empty? ? {} : 'error'
+  %div{ class: "control-group #{validation_class}"}
+    = f.label :first_name, class: 'control-label'
+    .controls
+      = f.text_field :first_name
+      %span.help-inline
+        = errors.join (', ')
+
+  - errors = @user.errors[:last_name]
+  - validation_class = errors.empty? ? {} : 'error'
+  %div{ class: "control-group #{validation_class}"}
+    = f.label :last_name, class: 'control-label'
+    .controls
+      = f.text_field :last_name
+      %span.help-inline
+        = errors.join (', ')
+
+- errors = @user.errors[:password]
+- validation_class = errors.empty? ? {} : 'error'
+%div{ class: "control-group #{validation_class}"}
+  = f.label :password, password_label(@user), class: 'control-label'
+  .controls
+    = f.password_field :password
+    %span.help-inline
+      = errors.join (', ')
+
+- errors = @user.errors[:password_confirmation]
+- validation_class = errors.empty? ? {} : 'error'
+%div{ class: "control-group #{validation_class}"}
+  = f.label :password_confirmation, class: 'control-label'
+  .controls
+    = f.password_field :password_confirmation
+    %span.help-inline
+      = errors.join (', ')
+
+%b= 'Contact Information' unless @user.new_record?
+
+- errors = @user.errors[:email]
+- validation_class = errors.empty? ? {} : 'error'
+%div{ class: "control-group #{validation_class}"}
+  = f.label :email, class: 'control-label'
+  .controls
+    = f.text_field :email
+    %span.help-inline
+      = errors.join (', ')
