@@ -74,6 +74,8 @@ GEM
     hashie (2.0.5)
     highline (1.6.19)
     hike (1.2.3)
+    holder_rails (2.0.0)
+      railties (>= 3.1.0)
     i18n (0.6.4)
     jbuilder (1.0.1)
       activesupport (>= 3.0.0)
@@ -84,6 +86,9 @@ GEM
       jquery-rails
       railties (>= 3.1.0)
     json_pure (1.8.0)
+    kaminari (0.14.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     kgio (2.8.0)
     libv8 (3.11.8.17)
     mail (2.5.4)
@@ -202,9 +207,11 @@ DEPENDENCIES
   enum_column3
   factory_girl_rails (= 4.2.0)
   haml-rails (= 0.4)
+  holder_rails
   jbuilder (= 1.0.1)
   jquery-rails
   jquery-ui-rails
+  kaminari
   mysql2
   omniauth
   omniauth-ldap
