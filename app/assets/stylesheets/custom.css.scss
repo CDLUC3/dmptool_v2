@@ -74,3 +74,17 @@ footer a {
   color: #999;
 }
 
+/* Forms */
+
+form .clearfix:before, form .clearfix:after {
+  display: inline;
+}
+
+.field_with_errors {
+  padding: 0px !important;
+  display: inline !important;
+}
+
+.form-errors {
+  width: 450px;
+}
