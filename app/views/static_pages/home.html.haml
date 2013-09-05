@@ -7,6 +7,7 @@
 
 	= image_tag('sample_DMP_Data_One_icon.png', :alt=>'See a plan created with the DMP tool', class: 'img img-polaroid')
 	%br/
-	= button_to('Log In', login_path, class: 'btn btn-large btn-primary')
+
+	= button_to 'Log in', login_path, class: 'btn btn-primary btn-large', method: :get
 	= link_to 'Create a DMP Tool Account', new_user_path
 
