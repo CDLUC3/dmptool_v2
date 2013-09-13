@@ -1,3 +1,39 @@
 // Place all the styles related to the RequirementsTemplates controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+hr {
+border-width: 1.5px 0;
+margin: 5px 0;
+padding-bottom: 10px;
+}
+
+.table th, .table td {
+border: none;
+}
+
+.existing_template .table td {
+padding-left: auto;
+padding-right: 30px;
+}
+
+.existing_template {
+padding-top: 18px;
+border-right: 1px solid #ccc;
+border-height: 100%;
+padding-right: 10px;
+}
+
+.new_template {
+padding-top: 10px;
+padding-left: 20px;
+}
+
+.add_fields {
+position:relative;
+left:50px;
+}
+
+tr#show_on_hover {
+display: none;
+}

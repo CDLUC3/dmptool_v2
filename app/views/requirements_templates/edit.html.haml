@@ -1,7 +1,4 @@
-%h1 Editing requirements_template
 
 = render 'form'
+= button_to 'Template Details >>', template_details_requirements_template_path(@requirements_template), method: 'get', class: 'btn btn-warning pull-right'
 
-= link_to 'Show', @requirements_template
-\|
-= link_to 'Back', requirements_templates_path

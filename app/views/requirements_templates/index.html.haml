@@ -1,35 +1,48 @@
-%h1 Listing requirements_templates
 
-%table
-  %tr
-    %th Institution
-    %th Name
-    %th Active
-    %th Start date
-    %th End date
-    %th Visibility
-    %th Version
-    %th Parent
-    %th Mandatory review
-    %th
-    %th
-    %th
+%h5 DMP Templates
+%br/
 
+= link_to 'All', scope: "all"
+|
+= link_to 'Active', scope: "active"
+|
+= link_to 'Inactive', scope: "inactive"
+|
+= link_to 'Institutional-Only', scope: "institutional"
+|
+= link_to 'Public', scope: "public"
+
+%br/
+%table.table.table-striped.table-condensed
+  %thead
+    %tr
+
+      %th Name
+      %th Version
+      %th Institution
+      %th Status
+      %th Visibility
+      %th Creation Date
+      %th Last Modification Date
+
+    %tr
+      %th
+
+  %tbody
   - @requirements_templates.each do |requirements_template|
     %tr
-      %td= requirements_template.institution_id
-      %td= requirements_template.name
-      %td= requirements_template.active
-      %td= requirements_template.start_date
-      %td= requirements_template.end_date
-      %td= requirements_template.visibility
+      %td{id: 'template_name'}=link_to requirements_template.name, template_details_requirements_template_path(requirements_template)
       %td= requirements_template.version
-      %td= requirements_template.parent_id
-      %td= requirements_template.mandatory_review
-      %td= link_to 'Show', requirements_template
-      %td= link_to 'Edit', edit_requirements_template_path(requirements_template)
-      %td= link_to 'Destroy', requirements_template, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td= requirements_template.institution.full_name
+      %td= requirements_template.active ? "Active" : "Inactive"
+      %td= requirements_template.visibility.capitalize
+      %td= requirements_template.created_at.strftime("%m/%d/%Y %I:%M%p")
+      %td= requirements_template.updated_at.strftime("%m/%d/%Y %I:%M%p")
 
-%br
+    %tr#show_on_hover
+      %td{colspan: "7"}= (link_to 'Overview', edit_requirements_template_path(requirements_template))+'|'+(link_to 'Details',template_details_requirements_template_path(requirements_template))+'|'+(link_to activate_link_text(requirements_template), toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}")+'|'+(link_to 'Copy', requirements_template)+'|'+(link_to 'Delete', requirements_template, :method => :delete, :data => { :confirm => 'Are you sure?' })
 
-= link_to 'New Requirements template', new_requirements_template_path
+.pagination
+= paginate @requirements_templates
+
+= button_to 'Create New template', template_information_path, :method => :get, class: 'btn btn-primary'

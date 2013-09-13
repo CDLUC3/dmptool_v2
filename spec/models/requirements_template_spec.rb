@@ -5,7 +5,7 @@ describe RequirementsTemplate do
   let(:institution) { FactoryGirl.create(:institution)}
 
   before { @requirements_template = RequirementsTemplate.new(institution_id: institution.id, name: 'Requirements Template Name',
-  active: false, start_date: Time.now, end_date: Time.now + 2.weeks, visibility: :public, mandatory_review: false) }
+  active: false, start_date: Time.now, end_date: Time.now + 2.weeks, visibility: :public, review_type: :no_review) }
 
   subject { @requirements_template }
 
@@ -17,7 +17,7 @@ describe RequirementsTemplate do
   it { should respond_to(:visibility) }
   it { should respond_to(:version) }
   it { should respond_to(:parent_id) }
-  it { should respond_to(:mandatory_review) }
+  it { should respond_to(:review_type) }
 
   it { should belong_to(:institution) }
   it { should have_many(:resource_templates) }
@@ -25,7 +25,7 @@ describe RequirementsTemplate do
   it { should have_many(:tags) }
   it { should have_many(:additional_informations) }
   it { should have_many(:sample_plans)}
-  
+
   it { should be_valid }
 
   describe "when institution_id is blank" do

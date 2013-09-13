@@ -1,0 +1,7 @@
+.control-group
+	= f.label :sample_plans, class: 'control-label'
+	.controls
+		= f.text_field :label, placeholder: 'Plan Name'
+		= f.text_field :url, placeholder: 'Plan Url'
+		= f.hidden_field :_destroy
+		= link_to "Remove", '#', class: "remove_fields"

@@ -7,11 +7,20 @@ class RequirementsTemplate < ActiveRecord::Base
   has_many :additional_informations
   has_many :sample_plans
 
-  validates_columns :visibility
+  accepts_nested_attributes_for :tags, allow_destroy: true, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
+  accepts_nested_attributes_for :sample_plans, allow_destroy: true, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
+  accepts_nested_attributes_for :additional_informations, allow_destroy: true, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
+
+  validates_columns :visibility, :review_type
   validates :institution_id, presence: true, numericality: true
   validates :visibility, presence: true
   validates :version, presence: true, numericality: true
   validates :name, presence: true
+
+  scope :active, -> { where(active: true) }
+  scope :inactive, -> { where(active: false) }
+  scope :institutional_visibility, -> { where(visibility: :institutional) }
+  scope :public_visibility, -> { where(visibility: :public) }
 
   after_initialize :version_number
 

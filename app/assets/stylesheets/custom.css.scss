@@ -6,7 +6,7 @@ html{
 }
 
 body {
-  padding-top: 40px;
+  padding-top: 20px;
   margin: 50px;
   padding-left: 60px;
 }
@@ -17,6 +17,33 @@ section {
 
 textarea {
   resize: vertical;
+}
+
+.contain {
+  padding-top: 90px;
+  margin: 5px;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0 0px;
+}
+
+tr td:first-child,
+tr th:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  width: 200px;
+}
+
+tr td:last-child,
+tr th:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.pagination {
+  text-align: center;
 }
 
 /* header */

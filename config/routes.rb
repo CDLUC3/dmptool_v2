@@ -6,16 +6,27 @@ Dmptool2::Application.routes.draw do
  match 'contact', to: 'static_pages#contact', via: 'get'
 
   resources :requirements
-  resources :requirements_templates
+  resources :requirements_templates do
+    member do
+      get :toggle_active
+      get :template_details
+    end
+    resources :sample_plans
+    resources :additonal_informations
+  end
   resources :resources
   resources :resource_templates
   resources :plans
   resources :institutions
   resources :users
+  resources :roles
 
   get 'user_sessions/login', to: 'user_sessions#login', as: 'login'
   post '/auth/:provider/callback', to: 'user_sessions#create'
   get '/auth/failure', to: 'user_sessions#failure'
+
+  get  'template_information', to: 'requirements_templates#template_information'
+  get  'copy_existing_template', to: 'requirements_templates#copy_existing_template'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

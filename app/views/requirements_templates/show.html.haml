@@ -25,9 +25,11 @@
   %b Parent:
   = @requirements_template.parent_id
 %p
-  %b Mandatory review:
-  = @requirements_template.mandatory_review
+  %b Review Type:
+  = @requirements_template.review_type
 
+
+= render 'sample_plans_index'
 = link_to 'Edit', edit_requirements_template_path(@requirements_template)
 \|
 = link_to 'Back', requirements_templates_path
