@@ -1,31 +1,26 @@
-= form_for @user do |f|
-  - if @user.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
-      %ul
-        - @user.errors.full_messages.each do |msg|
-          %li= msg
+= form_for @user, html: { class: 'form-horizontal' } do |f|
+  - if @user.errors[:base].any?
+    .alert.alert-error.form-errors
+      - @user.errors[:base].each do |msg|
+        %p= msg
 
-  .field
-    = f.label :institution_id
-    = f.number_field :institution_id
-  .field
-    = f.label :email
-    = f.text_field :email
-  .field
-    = f.label :first_name
-    = f.text_field :first_name
-  .field
-    = f.label :last_name
-    = f.text_field :last_name
-  .field
-    = f.label :token
-    = f.text_field :token
-  .field
-    = f.label :token_expiration
-    = f.datetime_select :token_expiration
-  .field
-    = f.label :prefs
-    = f.text_field :prefs
-  .actions
-    = f.submit 'Save'
+  .tabbable
+    - unless @user.new_record?
+      %ul.nav.nav-tabs
+        %li.active
+          = link_to 'Personal Information', '#tab1', 'data-toggle' => 'tab'
+        %li
+          = link_to 'Notification Preferences', '#tab2', 'data-toggle' => 'tab'
+    .tab-content
+      #tab1.tab-pane.active
+        = render 'personal', f: f
+      #tab2.tab-pane
+        = render 'notifications' unless @user.new_record?
+
+  .controls
+    .actions
+      - if @user.new_record?
+        = f.submit 'Create Account', class: 'btn'
+      - unless @user.new_record?
+        = f.submit 'Save', class: 'btn'
+        = link_to 'Cancel', edit_user_path(@user), class: 'btn'

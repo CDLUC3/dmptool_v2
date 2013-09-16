@@ -1,5 +1,6 @@
 %h4 Data Management Plan Tool
 %br/
+<<<<<<< HEAD
 .container-fluid
   .row-fluid
     .span4
@@ -9,6 +10,18 @@
       = link_to 'Create a DMP Tool Account', new_user_path
     .span8
       = holder_tag '600x250', 'DMP tool image'
+=======
+%p
+	Create, share, review, and publish Data
+	Management Plans confomring to institution and
+	funder requirements.
+
+	= image_tag('sample_DMP_Data_One_icon.png', :alt=>'See a plan created with the DMP tool', class: 'img img-polaroid')
+	%br/
+
+	= button_to 'Log in', login_path, class: 'btn btn-primary btn-large', method: :get
+	= link_to 'Create a DMP Tool Account', new_user_path
+>>>>>>> 526cf48b33db8ed9db43047b684e4b83ab24b057
 
   .contain
     .row-fluid
