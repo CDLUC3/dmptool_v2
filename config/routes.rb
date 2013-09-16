@@ -5,8 +5,8 @@ Dmptool2::Application.routes.draw do
  match 'help', to: 'static_pages#help', via: 'get'
  match 'contact', to: 'static_pages#contact', via: 'get'
 
-  resources :requirements
   resources :requirements_templates do
+    resources :requirements
     member do
       get :toggle_active
       get :template_details
@@ -14,8 +14,15 @@ Dmptool2::Application.routes.draw do
     resources :sample_plans
     resources :additonal_informations
   end
-  resources :resources
-  resources :resource_templates
+
+  resources :resource_templates do
+    resources :resources
+    member do
+      get :toggle_active
+      get :template_details
+    end
+  end
+
   resources :plans
   resources :institutions
   resources :users
@@ -25,8 +32,13 @@ Dmptool2::Application.routes.draw do
   post '/auth/:provider/callback', to: 'user_sessions#create'
   get '/auth/failure', to: 'user_sessions#failure'
 
-  get  'template_information', to: 'requirements_templates#template_information'
-  get  'copy_existing_template', to: 'requirements_templates#copy_existing_template'
+  get  'requirements_template_information', to: 'requirements_templates#template_information'
+  get  'copy_existing_requirements_template', to: 'requirements_templates#copy_existing_template'
+
+  get  'resource_template_information', to: 'resource_templates#template_information'
+  get  'copy_existing_resource_template', to: 'resource_templates#copy_existing_template'
+
+  post 'add_role', to: 'resource_templates#add_role'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

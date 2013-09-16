@@ -1,28 +1,50 @@
-= form_for @resource_template do |f|
-  - if @resource_template.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@resource_template.errors.count, "error")} prohibited this resource_template from being saved:"
-      %ul
-        - @resource_template.errors.full_messages.each do |msg|
-          %li= msg
+.form-horizontal
+  = form_for @resource_template do |f|
+    - if @resource_template.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@resource_template.errors.count, "error")} prohibited this resource_template from being saved:"
+        %ul
+          - @resource_template.errors.full_messages.each do |msg|
+            %li= msg
 
-  .field
-    = f.label :institution_id
-    = f.number_field :institution_id
-  .field
-    = f.label :requirements_template_id
-    = f.number_field :requirements_template_id
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :active
-    = f.check_box :active
-  .field
-    = f.label :mandatory_review
-    = f.check_box :mandatory_review
-  .field
-    = f.label :widget_url
-    = f.text_field :widget_url
-  .actions
-    = f.submit 'Save'
+    %h4 Resource Template Overview
+    %br
+    %strong Basic Information
+    %hr
+
+    .control-group
+      = f.label :template_name, class: "control-label"
+      .controls
+        = f.text_field :name
+    .control-group
+      = f.label :institution, class: "control-label"
+      .controls
+        = f.text_field :institution_id
+        / will replace the institution.id field above with this line as and the login functionality is complete
+        / = f.text_field current_user.institution.full_name, disabled: true
+    = render partial: 'date_fields' , locals: { f: f } unless @resource_template.new_record?
+
+    %strong Optional Information
+    %hr
+    .control-group
+      = f.label :institutional_contact, class: "control-label"
+      .controls
+        = f.text_field :contact_info, placeholder: "Label"
+        = f.text_field :contact_email, placeholder: "URL"
+    .control-group
+      = f.label :institutional_widget, class: "control-label"
+      .controls
+        = f.text_field :widget_url
+    .control-group
+      = f.label :review_requirement, class: "control-label"
+      .controls
+        = f.radio_button :review_type, :formal_review, class: "radio inline"
+        Formal Review Required
+        = f.radio_button :review_type, :informal_review, class: "radio inline"
+        Informal Review Required
+        = f.radio_button :review_type, :no_review, class: "radio inline"
+        No Review Required
+
+    %hr
+    .actions
+      = f.submit 'Save Changes', class: 'btn btn-success pull-left', method: 'post'

@@ -1,10 +1,17 @@
 class ResourceTemplatesController < ApplicationController
-  before_action :set_resource_template, only: [:show, :edit, :update, :destroy]
+  before_action :set_resource_template, only: [:show, :edit, :update, :destroy, :toggle_active, :template_details]
 
   # GET /resource_templates
   # GET /resource_templates.json
   def index
-    @resource_templates = ResourceTemplate.all
+    case params[:scope]
+    when "active"
+      @resource_templates = ResourceTemplate.active.page(params[:page]).per(5)
+    when "inactive"
+      @resource_templates = ResourceTemplate.inactive.page(params[:page]).per(5)
+    else
+      @resource_templates = ResourceTemplate.order(created_at: :asc).page(params[:page]).per(5)
+    end
   end
 
   # GET /resource_templates/1
@@ -15,6 +22,10 @@ class ResourceTemplatesController < ApplicationController
   # GET /resource_templates/new
   def new
     @resource_template = ResourceTemplate.new
+  end
+
+  def template_information
+    @resource_templates = ResourceTemplate.page.per(5)
   end
 
   # GET /resource_templates/1/edit
@@ -28,8 +39,8 @@ class ResourceTemplatesController < ApplicationController
 
     respond_to do |format|
       if @resource_template.save
-        format.html { redirect_to @resource_template, notice: 'Resource template was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @resource_template }
+        format.html { redirect_to edit_resource_template_path(@resource_template), notice: 'Resource template was successfully created.' }
+        format.json { render action: 'edit', status: :created, location: @resource_template }
       else
         format.html { render action: 'new' }
         format.json { render json: @resource_template.errors, status: :unprocessable_entity }
@@ -42,7 +53,7 @@ class ResourceTemplatesController < ApplicationController
   def update
     respond_to do |format|
       if @resource_template.update(resource_template_params)
-        format.html { redirect_to @resource_template, notice: 'Resource template was successfully updated.' }
+        format.html { redirect_to edit_resource_template_path(@resource_template), notice: 'Resource template was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -61,6 +72,35 @@ class ResourceTemplatesController < ApplicationController
     end
   end
 
+  def copy_existing_template
+    id = params[:resource_template].to_i unless params[:resource_template].blank?
+    @resource_template = ResourceTemplate.where(id: id).first
+    @resource_template_copy = @resource_template.dup
+    respond_to do |format|
+      format.html { render action: "new" }
+    end
+  end
+
+  def toggle_active
+    @resource_template.toggle!(:active)
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def template_details
+  end
+
+  def add_role
+    emails = params[:email].split(/,\s*/)
+    role  = Role.where(name: 'Resource Editor').first
+    # emails.each do |email|
+    #   user = User.where(email: email).first
+    #   user.roles << role
+    # end
+    redirect_to :back,  notice: "Added Resource Editor role to the User emails specified"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_resource_template
@@ -69,6 +109,6 @@ class ResourceTemplatesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def resource_template_params
-      params.require(:resource_template).permit(:institution_id, :requirements_template_id, :name, :active, :mandatory_review, :widget_url)
+      params.require(:resource_template).permit(:institution_id, :resource_template_id, :name, :active, :mandatory_review, :contact_info, :contact_email, :review_type, :widget_url)
     end
 end

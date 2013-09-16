@@ -1,29 +1,41 @@
-%h1 Listing resource_templates
+%h1 Resource Templates
+%br
 
-%table
-  %tr
-    %th Institution
-    %th Requirements template
-    %th Name
-    %th Active
-    %th Mandatory review
-    %th Widget url
-    %th
-    %th
-    %th
+= link_to 'All', scope: "all"
+|
+= link_to 'Active', scope: "active"
+|
+= link_to 'Inactive', scope: "inactive"
 
+%br/
+%table.table.table-striped.table-condensed
+  %thead
+    %tr
+      %th Name
+      %th Institution
+      %th Status
+      %th Creation Date
+      %th Last Modification Date
+
+  %tbody
   - @resource_templates.each do |resource_template|
     %tr
-      %td= resource_template.institution_id
-      %td= resource_template.requirements_template_id
-      %td= resource_template.name
-      %td= resource_template.active
-      %td= resource_template.mandatory_review
-      %td= resource_template.widget_url
-      %td= link_to 'Show', resource_template
-      %td= link_to 'Edit', edit_resource_template_path(resource_template)
-      %td= link_to 'Destroy', resource_template, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+      %td{id:'resource_template_name'}=link_to resource_template.name, template_details_resource_template_path(resource_template)
+      %td= resource_template.institution.full_name
+      %td= resource_template.active? ? 'Active' : 'Inactive'
+      %td= resource_template.created_at.strftime("%m/%d/%Y %I:%M%p")
+      %td= resource_template.updated_at.strftime("%m/%d/%Y %I:%M%p")
+
+    %tr#show_on_hover
+      %td{colspan: "7"}= (link_to 'Overview', edit_resource_template_path(resource_template))+'|'+(link_to 'Details',template_details_resource_template_path(resource_template))+'|'+(link_to activate_link_text(resource_template), toggle_active_resource_template_path(resource_template),remote: true, id: "activate_link_#{resource_template.id}")+'|'+(link_to 'Copy', resource_template)+'|'+(link_to 'Delete', resource_template, :method => :delete, :data => { :confirm => 'Are you sure?' })
+
+.pagination
+= paginate @resource_templates
 
 %br
 
-= link_to 'New Resource template', new_resource_template_path
+= button_to 'Create Resource template', resource_template_information_path, :method => :get, class: 'btn btn-primary'
+
+= link_to 'Add New Editor', add_role_path, method: :post, id: 'add_role_view'
+= render :partial => 'add_role'

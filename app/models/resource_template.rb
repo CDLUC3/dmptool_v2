@@ -1,14 +1,19 @@
 class ResourceTemplate < ActiveRecord::Base
 
-  belongs_to :institution
-  has_many :resources
-  belongs_to :requirements_template
+	belongs_to :institution
+	belongs_to :requirements_template
+	has_many :resources
 
-  validates :name, presence: true
+  validates_columns :review_type
+	validates :name, presence: true
+	validates :institution_id, presence: true, numericality: true
 
-  after_initialize  :default_values
+	scope :active, -> { where(active: true) }
+	scope :inactive, -> { where(active: false) }
 
-  def default_values
-    self.active ||= false
-  end
+	after_initialize  :default_values
+
+	def default_values
+		self.active ||= false
+	end
 end
