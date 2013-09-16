@@ -73,13 +73,9 @@ GEM
     hashie (2.0.5)
     highline (1.6.19)
     hike (1.2.3)
-<<<<<<< HEAD
     holder_rails (2.0.0)
       railties (>= 3.1.0)
-    i18n (0.6.4)
-=======
     i18n (0.6.5)
->>>>>>> 526cf48b33db8ed9db43047b684e4b83ab24b057
     jbuilder (1.0.1)
       activesupport (>= 3.0.0)
     jquery-rails (3.0.4)
