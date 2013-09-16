@@ -29,22 +29,22 @@ describe RequirementsTemplate do
   it { should be_valid }
 
   describe "when institution_id is blank" do
-    before { @requirements_template .institution_id = nil }
+    before { @requirements_template.institution_id = nil }
     it { should_not be_valid }
   end
 
   describe "when name is blank" do
-    before { @requirements_template .name = nil }
+    before { @requirements_template.name = nil }
     it { should_not be_valid }
   end
 
   describe "when visibility is blank" do
-    before { @requirements_template .visibility = nil }
+    before { @requirements_template.visibility = nil }
     it { should_not be_valid }
   end
 
   describe "when version is blank" do
-    before { @requirements_template .visibility = nil }
+    before { @requirements_template.visibility = nil }
     it { should_not be_valid }
   end
 
@@ -52,8 +52,8 @@ describe RequirementsTemplate do
     it "should not be valid" do
       invalid_visibilities = %w[these are not valid visibility values]
       invalid_visibilities.each do |invalid_visibility|
-        @requirements_template .visibility = invalid_visibility
-        @requirements_template .should_not be_valid
+        @requirements_template.visibility = invalid_visibility
+        @requirements_template.should_not be_valid
       end
     end
   end
@@ -62,8 +62,28 @@ describe RequirementsTemplate do
     it "should be valid" do
       valid_visibilities = %w[public institutional]
       valid_visibilities.each do |valid_visibility|
-        @requirements_template .visibility = valid_visibility
-        @requirements_template .should be_valid
+        @requirements_template.visibility = valid_visibility
+        @requirements_template.should be_valid
+      end
+    end
+  end
+
+  describe "when review_type is an invalid value" do
+    it "should not be valid" do
+      invalid_review_types = %w[these are not valid review_type values]
+      invalid_review_types.each do |invalid_review_type|
+        @requirements_template.review_type = invalid_review_type
+        @requirements_template.should_not be_valid
+      end
+    end
+  end
+
+  describe "when review_type is a valid value" do
+    it "should be valid" do
+      valid_review_types = %w[no_review informal_review formal_review]
+      valid_review_types.each do |valid_review_type|
+        @requirements_template.review_type = valid_review_type
+        @requirements_template.should be_valid
       end
     end
   end

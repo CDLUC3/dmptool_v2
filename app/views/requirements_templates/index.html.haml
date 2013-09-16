@@ -31,7 +31,7 @@
   %tbody
   - @requirements_templates.each do |requirements_template|
     %tr
-      %td{id: 'template_name'}=link_to requirements_template.name, template_details_requirements_template_path(requirements_template)
+      %td{id: 'requirements_template_name'}=link_to requirements_template.name, template_details_requirements_template_path(requirements_template)
       %td= requirements_template.version
       %td= requirements_template.institution.full_name
       %td= requirements_template.active ? "Active" : "Inactive"
@@ -40,9 +40,9 @@
       %td= requirements_template.updated_at.strftime("%m/%d/%Y %I:%M%p")
 
     %tr#show_on_hover
-      %td{colspan: "7"}= (link_to 'Overview', edit_requirements_template_path(requirements_template))+'|'+(link_to 'Details',template_details_requirements_template_path(requirements_template))+'|'+(link_to activate_link_text(requirements_template), toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}")+'|'+(link_to 'Copy', requirements_template)+'|'+(link_to 'Delete', requirements_template, :method => :delete, :data => { :confirm => 'Are you sure?' })
+      %td{colspan: "7"}= (link_to 'Overview', edit_requirements_template_path(requirements_template))+'|'+(link_to 'Details',template_details_requirements_template_path(requirements_template))+'|'+(link_to activate_link_text(requirements_template), toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}")+'|'+(link_to 'Copy', copy_existing_requirements_template_path(requirements_template))+'|'+(link_to 'Delete', requirements_template, :method => :delete, :data => { :confirm => 'Are you sure?' })
 
 .pagination
 = paginate @requirements_templates
 
-= button_to 'Create New template', template_information_path, :method => :get, class: 'btn btn-primary'
+= button_to 'Create New template', requirements_template_information_path, :method => :get, class: 'btn btn-primary'

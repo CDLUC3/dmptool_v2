@@ -1,5 +1,5 @@
 class RequirementsTemplatesController < ApplicationController
-  before_action :set_requirements_template, only: [:show, :edit, :update, :destroy, :template_details]
+  before_action :set_requirements_template, only: [:show, :edit, :update, :destroy, :toggle_active, :template_details]
 
   # GET /requirements_templates
   # GET /requirements_templates.json
@@ -76,7 +76,6 @@ class RequirementsTemplatesController < ApplicationController
   # DELETE /requirements_templates/1.json
   def destroy
     @requirements_template.destroy
-    Rails.looger.info('#{@requirements_template.inspect}')
     respond_to do |format|
       format.html { redirect_to requirements_templates_url }
       format.json { head :no_content }
@@ -93,7 +92,6 @@ class RequirementsTemplatesController < ApplicationController
   end
 
   def toggle_active
-    @requirements_template = RequirementsTemplate.find(params[:id])
     @requirements_template.toggle!(:active)
     respond_to do |format|
       format.js

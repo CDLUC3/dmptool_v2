@@ -22,7 +22,12 @@ class RequirementsTemplate < ActiveRecord::Base
   scope :institutional_visibility, -> { where(visibility: :institutional) }
   scope :public_visibility, -> { where(visibility: :public) }
 
+  after_initialize :default_values
   after_initialize :version_number
+
+  def default_values
+    self.active ||= false
+  end
 
   def version_number
     if parent_id.nil?
