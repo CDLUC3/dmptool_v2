@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20130916174701) do
-=======
-ActiveRecord::Schema.define(version: 20130904141459) do
->>>>>>> 526cf48b33db8ed9db43047b684e4b83ab24b057
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
