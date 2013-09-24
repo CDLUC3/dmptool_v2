@@ -1,19 +1,19 @@
 module UserSessionsHelper
+  require 'pp'
 
   def sign_in_or_create(auth_hash)
     @user = User.find_by(email: auth_hash[:info][:email])
 
     if @user
       sign_in(@user)
-      flash[:success] = 'User was found.'
     else
       @user = User.new(email: auth_hash[:info][:email], first_name: auth_hash[:info][:first_name],
-                          last_name: auth_hash[:info][:last_name])
+                          last_name: auth_hash[:info][:last_name], login_id: auth_hash[:info][:nickname])
 
       if @user.save
         sign_in(@user)
-        flash[:success] = 'New user created.'
       else
+        puts @user.errors.full_messages
         flash[:alert] = 'Error creating new user.'
       end
     end
