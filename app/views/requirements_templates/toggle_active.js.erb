@@ -1,1 +1,2 @@
-$("#activate_link_<%= @requirements_template.id %>").text("<%= activate_link_text(@requirements_template) %>").alert("<%= @requirements_template.active? %>");
+$("#activate_link_<%= @requirements_template.id %>").text("<%= activate_link_text(@requirements_template) %>");
+$("#status_<%= @requirements_template.id%>").text("<%= display_status_text(@requirements_template) %>");
