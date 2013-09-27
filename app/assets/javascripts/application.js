@@ -18,4 +18,3 @@
 //= require jquery.turbolinks
 //= require bootstrap
 //= require_tree .
-

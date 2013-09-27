@@ -28,6 +28,7 @@ gem 'bootstrap-sass', '2.3.2.0'
 gem 'sass-rails',  '~> 4.0.0'
 gem 'haml-rails', '0.4'
 gem 'uglifier', '1.0.3'
+gem 'deep_cloneable', '~> 1.5.5'
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'

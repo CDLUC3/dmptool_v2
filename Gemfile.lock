@@ -53,6 +53,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    deep_cloneable (1.5.5)
+      activerecord (>= 3.1.0)
     diff-lcs (1.2.4)
     enum_column3 (0.1.4)
     erubis (2.7.0)
@@ -205,6 +207,7 @@ DEPENDENCIES
   capistrano
   capistrano-unicorn
   capybara (= 2.1.0.rc1)
+  deep_cloneable (~> 1.5.5)
   enum_column3
   factory_girl_rails (= 4.2.0)
   haml-rails (= 0.4)
