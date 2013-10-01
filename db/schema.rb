@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20130916174701) do
-=======
-ActiveRecord::Schema.define(version: 20130904141459) do
->>>>>>> 526cf48b33db8ed9db43047b684e4b83ab24b057
+ActiveRecord::Schema.define(version: 20130927231128) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -113,7 +109,6 @@ ActiveRecord::Schema.define(version: 20130904141459) do
 
   create_table "requirements", force: true do |t|
     t.integer  "order"
-    t.integer  "parent_requirement"
     t.string   "text_brief"
     t.text     "text_full"
     t.enum     "requirement_type",         limit: [:text, :numeric, :date, :enum]
@@ -122,7 +117,10 @@ ActiveRecord::Schema.define(version: 20130904141459) do
     t.integer  "requirements_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "ancestry"
   end
+
+  add_index "requirements", ["ancestry"], name: "index_requirements_on_ancestry", using: :btree
 
   create_table "requirements_templates", force: true do |t|
     t.integer  "institution_id"

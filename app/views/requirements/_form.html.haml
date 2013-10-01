@@ -1,34 +1,47 @@
-= form_for @requirement do |f|
+
+= form_for ([@requirement.requirements_template, @requirement]), html: { class: "form-horizontal" } do |f|
   - if @requirement.errors.any?
     #error_explanation
       %h2= "#{pluralize(@requirement.errors.count, "error")} prohibited this requirement from being saved:"
       %ul
         - @requirement.errors.full_messages.each do |msg|
           %li= msg
+  %fieldset
+    .control-group
+      = f.hidden_field :parent_id
+    .control-group
+      = f.label :requirement_label, class: "control-label"
+      .controls
+        = f.text_field(:text_brief, class: "input-block-level")
+    .control-group
+      = f.label :detailed_question, class: "control-label"
+      .controls
+        = f.text_area(:text_full, rows: 5, class: "input-block-level" )
+    .control-group
+      = f.label :obligation, class: "control-label"
+      .controls
+        = f.radio_button :obligation, :mandatory, class: "radio inline"
+        Mandatory
+        %br/
+        = f.radio_button :obligation, :mandatory_applicable, class: "radio inline"
+        Mandatory If Applicable
+        %br/
+        = f.radio_button :obligation, :recommended, class: "radio inline"
+        Recommended
+        %br/
+        = f.radio_button :obligation, :optional, class: "radio inline"
+        Optional
+    .control-group
+      = f.label :question_type, class: "control-label"
+      .controls
+        = f.select :requirement_type, options_for_select([:text, :numeric, :date, :enum]), include_blank: true
 
-  .field
-    = f.label :order
-    = f.number_field :order
-  .field
-    = f.label :parent_requirement
-    = f.number_field :parent_requirement
-  .field
-    = f.label :text_brief
-    = f.text_field :text_brief
-  .field
-    = f.label :text_full
-    = f.text_area :text_full
-  .field
-    = f.label :requirement_type
-    = f.text_field :requirement_type
-  .field
-    = f.label :obligation
-    = f.text_field :obligation
-  .field
-    = f.label :default
-    = f.text_area :default
-  .field
-    = f.label :requirements_template_id
-    = f.number_field :requirements_template_id
-  .actions
-    = f.submit 'Save'
+    %fieldset.requirement_type
+      = f.fields_for :enumerations do |builder|
+        = render "enumeration_fields", f: builder
+      = link_to_add_fields 'Click to Add Item', f, :enumerations
+
+  .actions.pull-right
+    %br/
+    = f.submit 'Save', class: 'btn btn-info'
+    = link_to 'Finish', '#', class: 'btn btn-info'
