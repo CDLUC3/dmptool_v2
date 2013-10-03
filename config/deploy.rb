@@ -28,5 +28,6 @@ namespace :deploy do
   end
 end
 
+after 'deploy', 'deploy:migrate'
 before 'deploy:restart', 'deploy:symlink_shared'
 after 'deploy:restart', 'unicorn:duplicate'
