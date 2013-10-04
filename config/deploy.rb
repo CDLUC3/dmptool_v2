@@ -18,9 +18,6 @@ set :use_sudo, false
 default_run_options[:env] = { 'PATH' => '/dmp2/local/bin/:$PATH'}
 default_run_options[:pty] = true
 
-role :web, 'dmp2-dev.cdlib.org'
-role :app, 'dmp2-dev.cdlib.org'
-role :db,  'dmp2-dev.cdlib.org', :primary => true # This is where Rails migrations will run
 
 namespace :deploy do
   task :symlink_shared do
@@ -31,5 +28,6 @@ namespace :deploy do
   end
 end
 
+after 'deploy', 'deploy:migrate'
 before 'deploy:restart', 'deploy:symlink_shared'
 after 'deploy:restart', 'unicorn:duplicate'
