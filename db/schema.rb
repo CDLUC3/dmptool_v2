@@ -109,7 +109,6 @@ ActiveRecord::Schema.define(version: 20130916174701) do
 
   create_table "requirements", force: true do |t|
     t.integer  "order"
-    t.integer  "parent_requirement"
     t.string   "text_brief"
     t.text     "text_full"
     t.enum     "requirement_type",         limit: [:text, :numeric, :date, :enum]
@@ -118,7 +117,10 @@ ActiveRecord::Schema.define(version: 20130916174701) do
     t.integer  "requirements_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "ancestry"
   end
+
+  add_index "requirements", ["ancestry"], name: "index_requirements_on_ancestry", using: :btree
 
   create_table "requirements_templates", force: true do |t|
     t.integer  "institution_id"

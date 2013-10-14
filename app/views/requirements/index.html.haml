@@ -1,33 +1,24 @@
-%h1 Listing requirements
+%h4  DMP Template Details
+%hr
+.row-fluid
+  .span4
+    %fieldset.template_outline
+      %strong Template Outline
+      %br
+      = link_to 'Add Group', new_requirements_template_requirement_path(@requirements_template), id: 'add_requirement_group'
+      %hr
+        = render 'requirements_group'
 
-%table
-  %tr
-    %th Order
-    %th Parent requirement
-    %th Text brief
-    %th Text full
-    %th Requirement type
-    %th Obligation
-    %th Default
-    %th Requirements template
-    %th
-    %th
-    %th
 
-  - @requirements.each do |requirement|
-    %tr
-      %td= requirement.order
-      %td= requirement.parent_requirement
-      %td= requirement.text_brief
-      %td= requirement.text_full
-      %td= requirement.requirement_type
-      %td= requirement.obligation
-      %td= requirement.default
-      %td= requirement.requirements_template_id
-      %td= link_to 'Show', requirement
-      %td= link_to 'Edit', edit_requirement_path(requirement)
-      %td= link_to 'Destroy', requirement, :method => :delete, :data => { :confirm => 'Are you sure?' }
+    %br/
 
-%br
+    %fieldset.template_status
+      %strong DMP Template Status:
+      = @requirements_template.active? ? 'Active' : 'Deactivated'
+      %hr
+      = link_to activate_link_text(@requirements_template)+ ' ' +'Template', toggle_active_requirements_template_path(@requirements_template), remote: true, id: "activate_link_#{@requirements_template.id}"
+      %br/
+      = link_to 'Delete Template', @requirements_template, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
-= link_to 'New Requirement', new_requirement_path
+  .span8
+    = render 'form'

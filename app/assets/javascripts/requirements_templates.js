@@ -40,3 +40,12 @@ $(function() {
 	});
 
 });
+
+$(function() {
+	$(".show_on_hover").hide();
+		$("td.requirements_template_name").bind("mouseenter mouseleave",function()
+		{
+			$(this).closest('tr').next().find('.show_on_hover').slideToggle("slow");
+		});
+});
+

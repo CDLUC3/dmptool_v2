@@ -9,6 +9,7 @@
 
   %body
   = render 'layouts/header'
+  = render 'layouts/dashboard_header' unless controller_name == ('static_pages' ||  'user_sessions')
 
   .container
     - flash.each do |key, value|

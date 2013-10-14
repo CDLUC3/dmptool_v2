@@ -1,0 +1,12 @@
+%ul.requirements_group
+	- @requirements.roots.each do |requirement|
+		%b=link_to requirement.text_brief, edit_requirements_template_requirement_path(requirement.requirements_template, requirement)
+		%br/
+		= link_to 'Add Requirement', new_requirements_template_requirement_path(@requirements_template, parent_id: requirement)
+		= link_to 'Delete Group', [requirement.requirements_template, requirement], :method => :delete, :data => { :confirm => 'Are you sure?' }
+		%ul.requirement_sub_group
+		- requirement.root.children.each do |requirement_sub_group|
+			%li=link_to requirement_sub_group.text_brief, edit_requirements_template_requirement_path(requirement_sub_group.requirements_template, requirement_sub_group)
+			%ul.requirement_children
+			- requirement_sub_group.children.each do |requirement_children|
+				%li=link_to requirement_children.text_brief, edit_requirements_template_requirement_path(requirement_children.requirements_template, requirement_children)
