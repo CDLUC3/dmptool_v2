@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_many :plans, through: :user_plans
   has_many :comments
   has_many :authentications
-  has_many :authorizations
+  has_many :roles, through: :authorizations
 
   attr_accessor :ldap_create, :password, :password_confirmation
 
