@@ -1,7 +1,9 @@
-<h4> Data Management Plan Tool </h4>
-<br/>
+<div class=banner>
+	<%= image_tag 'banner_index.jpg', alt: 'Data Management Plan Tool' %>
+	<%= link_to 'Learn More', '#', id: 'learn-more', class: 'btn btn-large' %>
+</div>
 <div class=container-fluid>
-  <div class=row-fluid>
+  <!--<div class=row-fluid>
     <div class=span4
       <p> Create, share, review, and publish Data Management Plans conforming to institution andfunder requirements. </p>
       <br/>
@@ -11,19 +13,27 @@
     <div class= span8>
       <%= holder_tag '600x250', 'DMP tool image' %>
     </div>
+  </div>-->
+  <div class=row-fluid-header>
+  	<div class=span4>
+  		<h2 class=data_management_plans> Data Management Plans </h2>
+  	</div>
+  	<div class=span4>
+  		<h2 class=how_to_use> How To Use </h2>
+  	</div>
+  	<div class=span4>
+  		<h2 class=dmptool_news> DMP Tool News </h2>
+  	</div>
   </div>
-
-  <div class=contain>
-    <div class=row-fluid>
-      <div class=span4>
-        <%= render 'data_management_plans' %>
-      </div>
-      <div class=span4>
-        <%= render 'how_to_use' %>
-      </div>
-      <div class=span4>
-        <%= render 'dmptool_news' %>
-      </div>
+  <div class=row-fluid>
+    <div class=span4>
+      <%= render 'data_management_plans' %>
+    </div>
+    <div class=span4>
+      <%= render 'how_to_use' %>
+    </div>
+    <div class=span4>
+      <%= render 'dmptool_news' %>
     </div>
   </div>
 </div>

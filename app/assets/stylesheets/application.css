@@ -10,5 +10,14 @@
  *
  *= require jquery.ui.all
  *= require_self
- *= require_tree .
+ *= require custom
+ *= require institutions
+ *= require plans
+ *= require requirements_templates
+ *= require resource_templates
+ *= require scaffolds
+ *= require static_pages
+ *= require user_sessions
+ *= require users
+ *= require ui
  */
