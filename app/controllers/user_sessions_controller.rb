@@ -7,7 +7,11 @@ class UserSessionsController < ApplicationController
   def create
     sign_in_or_create(auth_hash)
 
-    redirect_to login_path
+    if signed_in?
+      redirect_to edit_user_path(current_user)
+    else
+      redirect_to login_path
+    end
   end
 
   def failure
