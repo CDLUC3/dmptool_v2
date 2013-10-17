@@ -1,0 +1,8 @@
+<div id="dialog_form">
+	<%= form_tag add_role_path, method: :post, remote: true do %>
+		<div class="field">
+			<%= label_tag :email, "Editors email" %>
+			<%= email_field_tag :email, nil, placeholder: " Enter Reviewer's email; multiple emails divided by comma ", class: "input-xxlarge" %>
+		</div>
+	<% end %>
+</div>
