@@ -14,10 +14,13 @@
  *= require institutions
  *= require plans
  *= require requirements_templates
+ *= require requirements
  *= require resource_templates
+ *= require resources
  *= require scaffolds
  *= require static_pages
  *= require user_sessions
  *= require users
  *= require ui
+ *= require_tree
  */
