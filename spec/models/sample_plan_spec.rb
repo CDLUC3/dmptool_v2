@@ -16,4 +16,14 @@ describe SamplePlan do
 
   it { should be_valid }
 
+  describe "when requirements_template_id is blank" do
+    before { @sample_plan.requirements_template_id = nil }
+    it { should_not be_valid }
+  end
+
+  describe "when requirements_template_id is a string" do
+    before { @sample_plan.requirements_template_id = "text" }
+    it { should_not be_valid }
+  end
+
 end
