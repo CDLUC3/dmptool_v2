@@ -1,35 +1,16 @@
-%h1 Listing institutions
-
-%table
-  %tr
-    %th Full name
-    %th Nickname
-    %th Desc
-    %th Contact info
-    %th Contact email
-    %th Url
-    %th Url text
-    %th Shib entity
-    %th Shib domain
-    %th
-    %th
-    %th
-
-  - @institutions.each do |institution|
-    %tr
-      %td= institution.full_name
-      %td= institution.nickname
-      %td= institution.desc
-      %td= institution.contact_info
-      %td= institution.contact_email
-      %td= institution.url
-      %td= institution.url_text
-      %td= institution.shib_entity_id
-      %td= institution.shib_domain
-      %td= link_to 'Show', institution
-      %td= link_to 'Edit', edit_institution_path(institution)
-      %td= link_to 'Destroy', institution, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Institution', new_institution_path
+.tabbable
+  / Only required for left/right tabs
+  %ul.nav.nav-tabs
+    %li.active
+      %a{"data-toggle" => "tab", href: "#tab1"} Institution Information
+    %li
+      %a{"data-toggle" => "tab", href: "#tab2"} Institutional Administrators
+    %li
+      %a{"data-toggle" => "tab", href: "#tab3"} Institutional Hierarchy
+  .tab-content
+    #tab1.tab-pane.active
+      = render 'form'
+    #tab2.tab-pane
+      = render 'institutional_administrators'
+    #tab3.tab-pane
+      = render 'institutional_hierarchy'

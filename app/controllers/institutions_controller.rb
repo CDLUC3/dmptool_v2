@@ -5,6 +5,8 @@ class InstitutionsController < ApplicationController
   # GET /institutions.json
   def index
     @institutions = Institution.all
+    @institution = Institution.new
+    @users = @institution.users
   end
 
   # GET /institutions/1

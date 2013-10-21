@@ -1,4 +1,4 @@
-= form_for @institution do |f|
+= form_for @institution, html: { class: 'form-horizontal', mutlipart: true } do |f|
   - if @institution.errors.any?
     #error_explanation
       %h2= "#{pluralize(@institution.errors.count, "error")} prohibited this institution from being saved:"
@@ -6,32 +6,42 @@
         - @institution.errors.full_messages.each do |msg|
           %li= msg
 
-  .field
-    = f.label :full_name
-    = f.text_field :full_name
-  .field
-    = f.label :nickname
-    = f.text_field :nickname
-  .field
-    = f.label :desc
-    = f.text_area :desc
-  .field
-    = f.label :contact_info
-    = f.text_field :contact_info
-  .field
-    = f.label :contact_email
-    = f.text_field :contact_email
-  .field
-    = f.label :url
-    = f.text_field :url
-  .field
-    = f.label :url_text
-    = f.text_field :url_text
-  .field
-    = f.label :shib_entity_id
-    = f.text_field :shib_entity_id
-  .field
-    = f.label :shib_domain
-    = f.text_field :shib_domain
+  .control-group
+    = f.label :full_name, "Institution Full Name", class: "control-label"
+    .controls
+      = f.text_field :full_name, class: "input-xxlarge"
+  .control-group
+    = f.label :shib_entity_id, "entity_id", class: "control-label"
+    .controls
+      = f.text_field :shib_entity_id, class: "input-large"
+  .control-group
+    = f.label :shib_domain, "Shibboleth Domain", class: "control-label"
+    .controls
+      = f.text_field :shib_domain, class: "input-large"
+  .control-group
+    = f.label :nickname, "Institution short name, or Acronym", class: "control-label"
+    .controls
+      = f.text_field :nickname, class: "input-large"
+  .control-group
+    = f.label :contact_info, "Administrator Contact", class: "control-label"
+    .controls
+      = f.text_field :contact_info, placeholder: "Name", class: "input-large"
+      = f.text_field :contact_email, placeholder: "Email", class: "input-large"
+  .control-group
+    = f.label :url, "Institution URL", class: "control-label"
+    .controls
+      = f.text_field :url_text, placeholder: "URL Text", class: "input-large"
+      = f.text_field :url, placeholder: "URL", class: "input-large"
+  .control-group
+    = f.label "Institutional Logo", class: "control-label"
+    .controls
+      = image_tag(@institution.logo.small.url, class: "btn", data: {toggle: "modal"} )if @institution.logo?
+      = f.file_field :logo
+      = f.hidden_field :logo_cache
+  .control-group
+    = f.label :desc, "Descriptive Text", class: "control-label"
+    .controls
+      = f.text_area :desc, rows: 5, class: "input-xxlarge"
   .actions
-    = f.submit 'Save'
+    = f.submit 'Save Changes', class: "btn btn-primary"
+    = button_tag "Cancel", type: :reset, method: :get, class: "btn btn-primary"
