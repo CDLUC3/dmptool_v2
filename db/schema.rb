@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20131018223029) do
 
   create_table "authorizations", force: true do |t|
     t.integer  "role_id"
+    t.integer  "group"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -48,14 +49,6 @@ ActiveRecord::Schema.define(version: 20131018223029) do
   create_table "enumerations", force: true do |t|
     t.integer  "requirement_id"
     t.string   "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "groups", force: true do |t|
-    t.integer  "requirements_template_id"
-    t.string   "text_brief"
-    t.boolean  "is_subgroup"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -83,7 +76,7 @@ ActiveRecord::Schema.define(version: 20131018223029) do
   end
 
   create_table "permission_groups", force: true do |t|
-    t.integer  "group_id"
+    t.integer  "group"
     t.integer  "institution_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -126,7 +119,6 @@ ActiveRecord::Schema.define(version: 20131018223029) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "ancestry"
-    t.integer  "group_id"
   end
 
   add_index "requirements", ["ancestry"], name: "index_requirements_on_ancestry", using: :btree
@@ -139,10 +131,10 @@ ActiveRecord::Schema.define(version: 20131018223029) do
     t.datetime "end_date"
     t.enum     "visibility",     limit: [:public, :institutional]
     t.integer  "version"
+    t.integer  "parent_id"
     t.enum     "review_type",    limit: [:formal_review, :informal_review, :no_review]
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "parent_id"
   end
 
   create_table "resource_templates", force: true do |t|

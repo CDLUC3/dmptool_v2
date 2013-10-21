@@ -1,0 +1,67 @@
+
+<% provide(:title, 'Institution Information') %>
+<h1>Institution Information</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@institution) do |f| %>
+
+      <div class="control-group">
+        <%= f.label :full_name , "Institution Full Name"%>
+        <div class="controls">
+          <%= f.text_field :full_name %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :shib_entity_id, "entity_id" %>
+        <%= f.text_field :shib_entity_id %>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :shib_domain , "Shibboleth Domain"%>
+        <%= f.text_field :shib_domain %>
+      </div>
+      <div class="control-group">
+        <%= f.label :nickname, "Institution short name, or Acronym" %>
+        <%= f.text_field :nickname %>
+      </div>
+      
+      <div class="control-group">
+        <%= f.label :url, "Institution URL" %>
+        <%= f.text_field :url_text, placeholder: "URL Text" %>
+        <%= f.text_field :url, placeholder: "URL" %>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :contact_info, "Administrator Contact" %>
+        <%= f.text_field :contact_info, placeholder: "Name" %>
+        <%= f.text_field :contact_email, placeholder: "Email" %>
+      </div>
+
+      <div class="control-group">
+        <%= f.label "Institutional Logo" %>
+      </div>
+  
+      <%= f.submit "Upload", class: "btn btn-primary" %>
+
+      <div class="control-group">
+        <%= f.label :desc , "Descriptive Text"%>
+        <%= f.text_area :desc %>
+      </div>
+
+      <%= f.submit "Save Changes", class: "btn btn-primary" %>
+
+      <%= button_tag "Cancel", class: "btn btn-primary" %>
+
+    <% end %>
+  </div>
+</div>
+
+
+
+
+
+
+
+
