@@ -1,5 +1,5 @@
 class RequirementsTemplatesController < ApplicationController
-  before_action :set_requirements_template, only: [:show, :edit, :update, :destroy, :toggle_active, :template_details]
+  before_action :set_requirements_template, only: [:show, :edit, :update, :destroy, :toggle_active]
 
   # GET /requirements_templates
   # GET /requirements_templates.json
@@ -84,11 +84,9 @@ class RequirementsTemplatesController < ApplicationController
 
   def copy_existing_template
     id = params[:requirements_template].to_i unless params[:requirements_template].blank?
-    @requirements_template = RequirementsTemplate.where(id: id).first
-    @requirements_template_copy = @requirements_template.dup
-    respond_to do |format|
-      format.html { render action: "new" }
-    end
+    requirements_template = RequirementsTemplate.where(id: id).first
+    @requirements_template = requirements_template.dup include: [:sample_plans, :additional_informations]
+    render action: "copy_existing_template"
   end
 
   def toggle_active
@@ -96,9 +94,6 @@ class RequirementsTemplatesController < ApplicationController
     respond_to do |format|
       format.js
     end
-  end
-
-  def template_details
   end
 
   private

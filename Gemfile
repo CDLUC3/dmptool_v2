@@ -11,7 +11,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'selenium-webdriver', '2.0'
+  gem 'selenium-webdriver', '~> 2.35.1'
   gem 'capybara', '2.1.0.rc1'
   gem 'factory_girl_rails', '4.2.0'
   gem 'shoulda-matchers'
@@ -28,10 +28,14 @@ gem 'bootstrap-sass', '2.3.2.0'
 gem 'sass-rails',  '~> 4.0.0'
 gem 'haml-rails', '0.4'
 gem 'uglifier', '1.0.3'
+gem 'deep_cloneable', '~> 1.5.5'
+gem 'ancestry'
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'turbolinks', '1.0.0'
+gem 'jquery-turbolinks'
 gem 'jbuilder', '1.0.1'
 gem 'holder_rails'
 gem 'kaminari'
+gem 'carrierwave'

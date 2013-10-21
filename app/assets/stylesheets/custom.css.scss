@@ -64,6 +64,12 @@ tr th:last-child {
   text-decoration: none;
 }
 
+.dashboard_header {
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -90,15 +96,17 @@ p {
   line-height: 1.7em;
 }
 
+fieldset {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
 /* footer */
 
 footer {
   margin-top: 45px;
   padding-top: 5px;
   text-align: left;
-}
-footer a {
-  color: #999;
 }
 
 /* Forms */

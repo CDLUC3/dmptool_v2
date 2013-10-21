@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130916174701) do
+ActiveRecord::Schema.define(version: 20131018223029) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(version: 20130916174701) do
 
   create_table "authorizations", force: true do |t|
     t.integer  "role_id"
-    t.integer  "group"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -53,6 +52,14 @@ ActiveRecord::Schema.define(version: 20130916174701) do
     t.datetime "updated_at"
   end
 
+  create_table "groups", force: true do |t|
+    t.integer  "requirements_template_id"
+    t.string   "text_brief"
+    t.boolean  "is_subgroup"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "institutions", force: true do |t|
     t.string   "full_name"
     t.string   "nickname"
@@ -65,6 +72,7 @@ ActiveRecord::Schema.define(version: 20130916174701) do
     t.string   "shib_domain"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "logo"
   end
 
   create_table "labels", force: true do |t|
@@ -75,7 +83,7 @@ ActiveRecord::Schema.define(version: 20130916174701) do
   end
 
   create_table "permission_groups", force: true do |t|
-    t.integer  "group"
+    t.integer  "group_id"
     t.integer  "institution_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -109,7 +117,6 @@ ActiveRecord::Schema.define(version: 20130916174701) do
 
   create_table "requirements", force: true do |t|
     t.integer  "order"
-    t.integer  "parent_requirement"
     t.string   "text_brief"
     t.text     "text_full"
     t.enum     "requirement_type",         limit: [:text, :numeric, :date, :enum]
@@ -118,7 +125,11 @@ ActiveRecord::Schema.define(version: 20130916174701) do
     t.integer  "requirements_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "ancestry"
+    t.integer  "group_id"
   end
+
+  add_index "requirements", ["ancestry"], name: "index_requirements_on_ancestry", using: :btree
 
   create_table "requirements_templates", force: true do |t|
     t.integer  "institution_id"
@@ -128,10 +139,10 @@ ActiveRecord::Schema.define(version: 20130916174701) do
     t.datetime "end_date"
     t.enum     "visibility",     limit: [:public, :institutional]
     t.integer  "version"
-    t.integer  "parent_id"
     t.enum     "review_type",    limit: [:formal_review, :informal_review, :no_review]
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "parent_id"
   end
 
   create_table "resource_templates", force: true do |t|

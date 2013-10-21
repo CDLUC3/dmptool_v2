@@ -24,74 +24,80 @@ def make_institutions
                             url_text: 'UC3: Data management Planning',
                             shib_entity_id: 'urn:mace:incommon:ucop.edu',
                             shib_domain: 'ucop.edu').first_or_create!
+
+  @si = Institution.where(full_name: 'Smithsonian Institution',
+                            nickname: 'SI',
+                            contact_info: 'Smithsonian Information',
+                            contact_email: 'info@si.edu',
+                            url_text: 'https://idp.si.edu').first_or_create!
 end
 
 def make_requirements_templates
   @requirements_templates = []
 
   @requirements_templates << RequirementsTemplate.where(institution_id: 1,
-                                                        name: 'Requirements Template Test (Active/Public/Mandatory)',
+                                                        name: 'Requirements Template Test 1',
                                                         active: true,
                                                         start_date: Time.now,
                                                         end_date: Time.now + 6.months,
                                                         visibility: :public,
-                                                        mandatory_review: true).first_or_create!
+                                                        review_type: :no_review).first_or_create!
 
   @requirements_templates << RequirementsTemplate.where(institution_id: 1,
-                                                        name: 'Requirements Template Test (Inactive/Public/Mandatory)',
+                                                        name: 'Requirements Template Test 2',
                                                         active: false,
                                                         start_date: Time.now,
                                                         end_date: Time.now + 6.months,
                                                         visibility: :public,
-                                                        mandatory_review: true).first_or_create!
+                                                        review_type: :informal_review).first_or_create!
 
   @requirements_templates << RequirementsTemplate.where(institution_id: 1,
-                                                        name: 'Requirements Template Test (Active/Institutional/Mandatory)',
+                                                        name: 'Requirements Template Test 3',
                                                         active: true,
                                                         start_date: Time.now,
                                                         end_date: Time.now + 6.months,
                                                         visibility: :institutional,
-                                                        mandatory_review: true).first_or_create!
+                                                        review_type: :formal_review).first_or_create!
 
   @requirements_templates << RequirementsTemplate.where(institution_id: 1,
-                                                        name: 'Requirements Template Test (Inactive/Institutional/Mandatory)',
+                                                        name: 'Requirements Template Test 4',
                                                         active: false,
                                                         start_date: Time.now,
                                                         end_date: Time.now + 6.months,
                                                         visibility: :institutional,
-                                                        mandatory_review: true).first_or_create!
+                                                        review_type: :no_review).first_or_create!
 
   @requirements_templates << RequirementsTemplate.where(institution_id: 1,
-                                                        name: 'Requirements Template Test (Active/Public/Nonreviewed)',
+                                                        name: 'Requirements Template Test 5',
                                                         active: true,
                                                         start_date: Time.now,
                                                         end_date: Time.now + 6.months,
                                                         visibility: :public,
-                                                        mandatory_review: false).first_or_create!
+                                                        review_type: :informal_review).first_or_create!
 
   @requirements_templates << RequirementsTemplate.where(institution_id: 1,
-                                                        name: 'Requirements Template Test (Inactive/Public/Nonreviewed)',
+                                                        name: 'Requirements Template Test 6',
                                                         active: false,
                                                         start_date: Time.now,
                                                         end_date: Time.now + 6.months,
                                                         visibility: :public,
-                                                        mandatory_review: false).first_or_create!
+                                                        review_type: :formal_review).first_or_create!
 
   @requirements_templates << RequirementsTemplate.where(institution_id: 1,
-                                                        name: 'Requirements Template Test (Active/Institutional/Nonreviewed)',
+                                                        name: 'Requirements Template Test 7',
                                                         active: true,
                                                         start_date: Time.now,
                                                         end_date: Time.now + 6.months,
                                                         visibility: :institutional,
-                                                        mandatory_review: false).first_or_create!
+                                                        review_type: :no_review).first_or_create!
 
   @requirements_templates << RequirementsTemplate.where(institution_id: 1,
-                                                        name: 'Requirements Template Test (Inactive/Institutional/Nonreviewed)',
+                                                        name: 'Requirements Template Test 8',
                                                         active: false,
                                                         start_date: Time.now,
                                                         end_date: Time.now + 6.months,
                                                         visibility: :institutional,
-                                                        mandatory_review: false).first_or_create!
+                                                        review_type: :formal_review).first_or_create!
 end
 
 def make_requirements
@@ -150,30 +156,30 @@ def make_resource_templates
   @requirements_templates.each do |requirement_template|
     ResourceTemplate.where(institution_id: requirement_template.institution.id,
                            requirements_template_id: requirement_template.id,
-                           name: "Sample Resource Template for #{requirement_template.name} (Active/Mandatory)",
+                           name: "Sample Resource Template for #{requirement_template.name}",
                            active: true,
-                           mandatory_review: true,
+                           review_type: :formal_review,
                            widget_url: 'http://widgeturl.com').first_or_create!
 
     ResourceTemplate.where(institution_id: requirement_template.institution.id,
                            requirements_template_id: requirement_template.id,
-                           name: "Sample Resource Template for #{requirement_template.name} (Inactive/Mandatory)",
+                           name: "Sample Resource Template for #{requirement_template.name}",
                            active: false,
-                           mandatory_review: true,
+                           review_type: :informal_review,
                            widget_url: 'http://widgeturl.com').first_or_create!
 
     ResourceTemplate.where(institution_id: requirement_template.institution.id,
                            requirements_template_id: requirement_template.id,
-                           name: "Sample Resource Template for #{requirement_template.name} (Active/Not Mandatory)",
+                           name: "Sample Resource Template for #{requirement_template.name}",
                            active: true,
-                           mandatory_review: false,
+                           review_type: :no_review,
                            widget_url: 'http://widgeturl.com').first_or_create!
 
     ResourceTemplate.where(institution_id: requirement_template.institution.id,
                            requirements_template_id: requirement_template.id,
-                           name: "Sample Resource Template for #{requirement_template.name} (Inactive/Not Mandatory)",
+                           name: "Sample Resource Template for #{requirement_template.name}",
                            active: false,
-                           mandatory_review: false,
+                           review_type: :informal_review,
                            widget_url: 'http://widgeturl.com').first_or_create!
   end
 end
