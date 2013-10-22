@@ -6,11 +6,15 @@ class InstitutionsController < ApplicationController
   # GET /institutions.json
   def index
     @institutions = Institution.all
-    #@institution = Institution.new
-     
-    @current_user = User.find(3)
-    @current_institution = Institution.find(2)
+    @institution = Institution.new
+
+    @current_user = current_user
+    @current_institution = @current_user.institution
     @institution_users = @current_institution.users
+     
+    #@current_user = User.find(3)
+    #@current_institution = Institution.find(2)
+    #@institution_users = @current_institution.users
   end
 
   # GET /institutions/1
