@@ -1,10 +1,12 @@
 Dmptool2::Application.routes.draw do
 
+  get "dashboard/show"
  root 'static_pages#home'
  match 'about', to: 'static_pages#about', via: 'get'
  match 'help', to: 'static_pages#help', via: 'get'
  match 'contact', to: 'static_pages#contact', via: 'get'
  match 'logout', to: 'user_sessions#destroy', via: 'get'
+ get 'dashboard', to: 'dashboard#show', as: 'dashboard'
 
   resources :requirements_templates do
     resources :requirements
