@@ -9,9 +9,9 @@
   </head>
   <body>
   <%= render 'layouts/header' %>
-  <%= render 'layouts/dashboard_header' unless controller_name == ('static_pages' ||  'user_sessions') %>
 
   <div class='container'>
+  	<%= render 'layouts/dashboard_header' unless controller_name == ('static_pages' ||  'user_sessions') %>
     <% flash.each do |key, value| %>
       <div class="alert alert-#{key}">
         <%= value %>
