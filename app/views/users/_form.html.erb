@@ -16,12 +16,10 @@
       
       <% unless @user.new_record? %>  
         <ul class="nav nav-tabs">
-          <li class="active" id="tab1">
-            <%= link_to 'Personal Information'  %>
+          <li class="active">
+            <a href="#tab1" data-toggle="tab">Personal Information</a>
           </li>
-          <li id="tab2">
-            <%= link_to 'Notification Preferences'  %>
-          </li>
+          <li><a href="#tab2" data-toggle="tab">Notification Preferences</a></li>
         </ul>
       <%end%>
 

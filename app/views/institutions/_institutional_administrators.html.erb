@@ -1,5 +1,5 @@
 <h1>Institutional Administrators</h1>
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Name</th>
@@ -11,7 +11,7 @@
   <tbody>
     <% @institution_users.each do |user| %>
       <tr>
-          <td><%= user.first_name %>, <%= user.last_name %></td>
+          <td><%= user.first_name %> <%= user.last_name %></td>
           <td><%= user.login_id %></td>
           <td><%= user.email %></td>
           <td><%= link_to 'Remove', user, method: :delete, data: {confirm: 'Are you sure?'} %></td>
