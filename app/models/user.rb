@@ -35,6 +35,19 @@ class User < ActiveRecord::Base
       Authentication.create(:user => self, :provider => 'ldap', :uid => uid)
     end
   end
+  
+  def self.from_omniauth(auth)
+    where(email: auth[:info][:email]).first || create_from_omniauth(auth)
+  end
+  
+  def self.create_from_omniauth(auth)
+    create! do |user|
+      user.email = auth[:info][:email]
+      user.first_name = auth[:info][:first_name]
+      user.last_name = auth[:info][:last_name]
+      user.login_id = auth[:info][:nickname]
+    end
+  end
 
   private
 

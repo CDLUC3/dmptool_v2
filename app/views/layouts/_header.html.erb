@@ -10,7 +10,7 @@
           <li><%= link_to 'DMPTool News', '#' %></li>
           <li><%= link_to 'Help', help_path %></li>
           <li><%= link_to 'Contact Us', contact_path %></li>
-          <li><%= link_to 'Logout', logout_path if signed_in? %></li>
+          <li><%= link_to 'Logout', logout_path if current_user %></li>
         </ul>
       </nav>
     <div>
