@@ -7,6 +7,7 @@ class ResourceTemplate < ActiveRecord::Base
   validates_columns :review_type
 	validates :name, presence: true
 	validates :institution_id, presence: true, numericality: true
+	validates :requirements_template_id, presence:true, numericality: true
 
 	scope :active, -> { where(active: true) }
 	scope :inactive, -> { where(active: false) }

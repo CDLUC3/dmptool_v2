@@ -5,16 +5,15 @@
     %fieldset.template_outline
       %strong Template Outline
       %br
-      = link_to 'Add Group', new_requirements_template_requirement_path(@requirements_template), id: 'add_requirement_group'
+      = link_to 'Add Group', new_requirements_template_requirement_path(@requirements_template), id: "add_requirement_group"
+      =link_to 'Delete Requirement Group', [@requirement.requirements_template, @requirement], :method => :delete, :data => { :confirm => 'Are you sure?' }
       %hr
         = render 'requirements_group'
-
-
     %br/
 
     %fieldset.template_status
       %strong DMP Template Status:
-      = @requirements_template.active? ? 'Active' : 'Deactivated'
+      %b{id: "status_#{@requirements_template.id}"}= @requirements_template.active ? "Active" : "Inactive"
       %hr
       = link_to activate_link_text(@requirements_template)+ ' ' +'Template', toggle_active_requirements_template_path(@requirements_template), remote: true, id: "activate_link_#{@requirements_template.id}"
       %br/
