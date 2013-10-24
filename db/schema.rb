@@ -211,7 +211,6 @@ ActiveRecord::Schema.define(version: 20131023175718) do
     t.datetime "updated_at"
     t.string   "cookie_salt"
     t.string   "login_id"
-    t.boolean  "active",           default: true
   end
 
 end
