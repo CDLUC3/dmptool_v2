@@ -59,13 +59,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
-    columnize (0.3.6)
-    debugger (1.6.2)
-      columnize (>= 0.3.1)
-      debugger-linecache (~> 1.2.0)
-      debugger-ruby_core_source (~> 1.2.3)
-    debugger-linecache (1.2.0)
-    debugger-ruby_core_source (1.2.3)
     deep_cloneable (1.5.5)
       activerecord (>= 3.1.0)
     diff-lcs (1.2.4)
@@ -78,6 +71,13 @@ GEM
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
     ffi (1.9.0)
+    haml (4.0.3)
+      tilt
+    haml-rails (0.4)
+      actionpack (>= 3.1, < 4.1)
+      activesupport (>= 3.1, < 4.1)
+      haml (>= 3.1, < 4.1)
+      railties (>= 3.1, < 4.1)
     hashie (2.0.5)
     highline (1.6.19)
     hike (1.2.3)
@@ -216,10 +216,10 @@ DEPENDENCIES
   capistrano-unicorn
   capybara (= 2.1.0.rc1)
   carrierwave
-  debugger
   deep_cloneable (~> 1.5.5)
   enum_column3
   factory_girl_rails (= 4.2.0)
+  haml-rails (= 0.4)
   holder_rails
   jbuilder (= 1.0.1)
   jquery-rails
