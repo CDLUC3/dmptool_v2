@@ -3,6 +3,7 @@
 
 .template_outline.span4
 	%h5 Template Outline
+	= @resource_template.name
 
 	.template_status
 		%strong DMP Template Status:
@@ -14,3 +15,4 @@
 
 
 .resource.span8
+	= render 'resources/form', f: builder

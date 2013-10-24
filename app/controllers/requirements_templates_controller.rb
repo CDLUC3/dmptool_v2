@@ -85,7 +85,7 @@ class RequirementsTemplatesController < ApplicationController
   def copy_existing_template
     id = params[:requirements_template].to_i unless params[:requirements_template].blank?
     requirements_template = RequirementsTemplate.where(id: id).first
-    @requirements_template = requirements_template.dup include: [:sample_plans, :additional_informations]
+    @requirements_template = requirements_template.dup include: [:resource_templates, :sample_plans, :additional_informations]
     render action: "copy_existing_template"
   end
 

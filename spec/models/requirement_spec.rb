@@ -4,14 +4,14 @@ describe Requirement do
 
   let(:requirements_template) { FactoryGirl.create(:requirements_template) }
 
-  before { @requirement = Requirement.new(order: 1, parent_requirement: 1, text_brief: "Lorem Ipsum", 
-                          text_full: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non dui id sem hendrerit ullamcorper. Nulla facilisi. Donec mi tellus, molestie ut euismod a, tincidunt at metus. Sed eleifend ullamcorper eros in consequat. Aenean nec odio magna, vitae porta metus.", 
+  before { @requirement = Requirement.new(order: 1, text_brief: "Lorem Ipsum",
+                          text_full: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non dui id sem hendrerit ullamcorper. Nulla facilisi. Donec mi tellus, molestie ut euismod a, tincidunt at metus. Sed eleifend ullamcorper eros in consequat. Aenean nec odio magna, vitae porta metus.",
                           requirement_type: :text, obligation: :optional, default: "Lorem Ipsum", requirements_template_id: requirements_template.id ) }
-  
+
   subject { @requirement }
 
-  it { should respond_to(:order)} 
-  it { should respond_to(:parent_requirement)}
+  it { should respond_to(:order)}
+  it { should respond_to(:ancestry)}
   it { should respond_to(:text_brief)}
   it { should respond_to(:text_full)}
   it { should respond_to(:requirement_type)}
@@ -39,8 +39,8 @@ describe Requirement do
   describe "when the Declarative Label(text_brief) is blank" do
     before { @requirement.text_brief = "" }
     it { should_not be_valid }
-  end 
-  
+  end
+
   describe "when obligation is invalid value"
     it "should not be valid" do
       invalid_obligations =  %w[these are invalid obligation values]
@@ -56,7 +56,7 @@ describe Requirement do
       valid_obligations.each do |valid_obligation|
         @requirement.obligation = valid_obligation
         @requirement.should be_valid
-    end    
+    end
   end
 
   describe "when requirement_type is an invalid value"
@@ -65,7 +65,7 @@ describe Requirement do
       invalid_requirement_types.each do |invalid_requirement_type|
         @requirement.requirement_type = invalid_requirement_type
         @requirement.should_not be_valid
-    end    
+    end
   end
 
   describe "when requirement_type is a valid value"
@@ -74,7 +74,7 @@ describe Requirement do
       valid_requirement_types.each do |valid_requirement_type|
         @requirement.requirement_type = valid_requirement_type
         @requirement.should be_valid
-    end    
+    end
   end
 
 end

@@ -1,4 +1,5 @@
 class ResourceTemplatesController < ApplicationController
+  before_filter :get_requirements_template
   before_action :set_resource_template, only: [:show, :edit, :update, :destroy, :toggle_active, :template_details]
 
   # GET /resource_templates
@@ -74,11 +75,9 @@ class ResourceTemplatesController < ApplicationController
 
   def copy_existing_template
     id = params[:resource_template].to_i unless params[:resource_template].blank?
-    @resource_template = ResourceTemplate.where(id: id).first
-    @resource_template_copy = @resource_template.dup
-    respond_to do |format|
-      format.html { render action: "new" }
-    end
+    resource_template = ResourceTemplate.where(id: id).first
+    @resource_template = resource_template.dup
+    render action: "copy_existing_template"
   end
 
   def toggle_active
@@ -88,18 +87,15 @@ class ResourceTemplatesController < ApplicationController
     end
   end
 
-  def template_details
-  end
-
-  def add_role
-    emails = params[:email].split(/,\s*/)
-    role  = Role.where(name: 'Resource Editor').first
-    # emails.each do |email|
-    #   user = User.where(email: email).first
-    #   user.roles << role
-    # end
-    redirect_to :back,  notice: "Added Resource Editor role to the User emails specified"
-  end
+  # def add_role
+  #   emails = params[:email].split(/,\s*/)
+  #   role  = Role.where(name: 'Resource Editor').first
+  #   # emails.each do |email|
+  #   #   user = User.where(email: email).first
+  #   #   user.roles << role
+  #   # end
+  #   redirect_to :back,  notice: "Added Resource Editor role to the User emails specified"
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -109,6 +105,10 @@ class ResourceTemplatesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def resource_template_params
-      params.require(:resource_template).permit(:institution_id, :resource_template_id, :name, :active, :mandatory_review, :contact_info, :contact_email, :review_type, :widget_url)
+      params.require(:resource_template).permit(:institution_id, :resource_template_id, :requirements_template_id, :name, :active, :mandatory_review, :contact_info, :contact_email, :review_type, :widget_url)
+    end
+
+    def get_requirements_template
+      @requirements_templates = RequirementsTemplate.order(created_at: :asc).page(params[:page]).per(5)
     end
 end
