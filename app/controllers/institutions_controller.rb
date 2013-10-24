@@ -1,12 +1,20 @@
 class InstitutionsController < ApplicationController
   before_action :set_institution, only: [:show, :edit, :update, :destroy]
+  before_action :check_for_cancel, :update => [:create, :update, :destroy]
 
   # GET /institutions
   # GET /institutions.json
   def index
     @institutions = Institution.all
     @institution = Institution.new
-    @users = @institution.users
+
+    @current_user = current_user
+    @current_institution = @current_user.institution
+    @institution_users = @current_institution.users
+     
+    #@current_user = User.find(3)
+    #@current_institution = Institution.find(2)
+    #@institution_users = @current_institution.users
   end
 
   # GET /institutions/1
@@ -73,4 +81,15 @@ class InstitutionsController < ApplicationController
     def institution_params
       params.require(:institution).permit(:full_name, :nickname, :desc, :contact_info, :contact_email, :url, :url_text, :shib_entity_id, :shib_domain)
     end
+
+    def check_for_cancel
+      redirect_to :back if params[:commit] == "Cancel"
+    end
+
 end
+
+
+
+
+
+

@@ -14,4 +14,14 @@ describe AdditionalInformation do
 
   it { should belong_to(:requirements_template) }
 
+  describe "when requirements_template_id is blank" do
+    before { @additional_information.requirements_template_id = nil }
+    it { should_not be_valid }
+  end
+
+  describe "when requirements_template_id is a string" do
+    before { @additional_information.requirements_template_id = "text" }
+    it { should_not be_valid }
+  end
+
 end

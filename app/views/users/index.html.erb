@@ -1,0 +1,38 @@
+<h1>Listing users</h1>
+
+<table class="table">
+	
+	<tr>
+		<th>Institution</th>
+		<th>Email</th>
+		<th>First name</th>
+		<th>Last name</th>
+		<th>Token</th>
+		<th>Token expiration</th>
+		<th>Prefs</th>
+		<th></th>
+		<th></th>
+		<th></th>
+	</tr>
+
+	<% @users.each do |user| %>
+		
+		<tr>
+			<td><%=user.institution_id%></td>
+			<td><%=user.email%></td>
+			<td><%=user.first_name%></td>
+			<td><%=user.last_name%></td>
+			<td><%=user.token%></td>
+			<td><%=user.token_expiration%></td>
+			<td><%=user.prefs%></td>
+			<td><%=link_to 'Show', user%></td>
+			<td><%=link_to 'Edit', edit_user_path(user)%></td>
+			<td><%=link_to 'Destroy', user, :method => :delete, :data => { :confirm => 'Are you sure?' }%></td>
+		</tr>
+	<%end%>
+
+</table>
+
+<br>
+
+<%= link_to 'New User', new_user_path %>
