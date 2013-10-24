@@ -12,9 +12,6 @@ class InstitutionsController < ApplicationController
     @current_institution = @current_user.institution
     @institution_users = @current_institution.users
      
-    #@current_user = User.find(3)
-    #@current_institution = Institution.find(2)
-    #@institution_users = @current_institution.users
   end
 
   # GET /institutions/1
