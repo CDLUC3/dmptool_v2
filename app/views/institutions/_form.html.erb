@@ -1,0 +1,94 @@
+
+<% provide(:title, 'Institution Information') %>
+<h1>Institution Information</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for @current_institution, :html => {:multipart => true} do |f| %>
+
+      <div class="control-group">
+        <div class="control-label">
+          <%= f.label :full_name , "Institution Full Name"%>
+        </div>
+        <div class="controls">
+          <%= f.text_field :full_name %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label">
+          <%= f.label :shib_entity_id, "entity_id" %>
+        </div>
+        <%= f.text_field :shib_entity_id %>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label">
+          <%= f.label :shib_domain , "Shibboleth Domain"%>
+        </div>
+        <%= f.text_field :shib_domain %>
+      </div>
+      <div class="control-group">
+        <div class="control-label">
+          <%= f.label :nickname, "Institution short name, or Acronym" %>
+        </div>
+        <%= f.text_field :nickname %>
+      </div>
+      
+      <div class="control-group">
+        <div class="control-label">
+          <%= f.label :url, "Institution URL" %>
+        </div>
+        <%= f.text_field :url_text, placeholder: "URL Text" %>
+        <%= f.text_field :url, placeholder: "URL" %>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label">
+          <%= f.label :contact_info, "Administrator Contact" %>
+        </div>
+        <%= f.text_field :contact_info, placeholder: "Name" %>
+        <%= f.text_field :contact_email, placeholder: "Email" %>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label">
+          <%= f.label "Institutional Logo" %>
+        </div>
+        
+        <div class="controls">
+          <%= image_tag @current_institution.logo.url if @current_institution.logo? %>
+          <%= f.file_field :logo %>
+          <%= f.hidden_field :logo_cache %>
+        </div>      
+      
+      </div>
+  
+      <%= f.submit "Upload", class: "btn btn-primary" %>
+
+      <div class="control-group">
+        
+        <div class="control-label">
+          <%= f.label :desc , "Descriptive Text"%>
+        </div>
+        
+        <div class="controls">
+          <%= f.text_area :desc, rows: 5 %>
+        </div>
+        
+      </div>
+
+      <%= f.submit "Save Changes", class: "btn btn-primary" %>
+      <%= f.submit "Cancel", class: "btn btn-primary" %>
+
+    <% end %>
+  </div>
+</div>
+
+
+
+
+
+
+
+

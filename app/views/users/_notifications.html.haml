@@ -34,7 +34,7 @@
 	= check_box_tag 'prefs[dmp_co][new_co_owner]', true, @user.prefs[:dmp_co][:new_co_owner]
 	A new co-owner is added to a DMP
 
-%p
+%p 
 	%b= 'DMP Template editors:'
 	%br
 	= check_box_tag 'prefs[requirement_editors][commited]', true, @user.prefs[:requirement_editors][:commited]
@@ -46,7 +46,7 @@
 	= check_box_tag 'prefs[requirement_editors][deleted]', true, @user.prefs[:requirement_editors][:deleted]
 	An institutional DMP template is deleted
 
-%p
+%p 
 	%b= 'Resources editors:'
 	%br
 	= check_box_tag 'prefs[resource_editors][commited]', true, @user.prefs[:resource_editors][:commited]
@@ -61,7 +61,7 @@
 	= check_box_tag 'prefs[resource_editors][associated_commited]', true, @user.prefs[:resource_editors][:associated_commited]
 	A DMP Template associated with an Institutional Resource template is committed
 
-%p
+%p 
 	%b= 'Institutional Reviewers:'
 	%br
 	= check_box_tag 'prefs[institutional_reviewers][submitted]', true, @user.prefs[:institutional_reviewers][:submitted]
@@ -72,3 +72,9 @@
 	%br
 	= check_box_tag 'prefs[institutional_reviewers][approved_rejected]', true, @user.prefs[:institutional_reviewers][:approved_rejected]
 	An Institutional DMP is approved or rejected
+
+
+
+
+
+
