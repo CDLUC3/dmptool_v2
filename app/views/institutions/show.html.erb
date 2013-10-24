@@ -1,5 +1,21 @@
-<%= @institution.full_name %>, <%= @institution.nickname %>
 
+<p>
+	<b>Full name:</b>  
+</p>
+<p>
+	<%= @institution.full_name %>
+</p>
+<p>
+	<b>Nickname:</b>  
+</p>
+	
+<p>
+	<%= @institution.nickname %>
+</p>
+
+<p>
+	<%= image_tag @institution.logo.url if @institution.logo? %>
+</p>
 
 <%#
 // %p#notice= notice

@@ -4,7 +4,7 @@
 
 <div class="row">
   <div class="span6 offset3">
-    <%= form_for(@current_institution) do |f| %>
+    <%= form_for @current_institution, :html => {:multipart => true} do |f| %>
 
       <div class="control-group">
         <div class="control-label">
@@ -52,12 +52,16 @@
       </div>
 
       <div class="control-group">
-        <div class="control-label"><%= f.label "Institutional Logo" %></div>
+        <div class="control-label">
+          <%= f.label "Institutional Logo" %>
+        </div>
+        
         <div class="controls">
-          <%=image_tag(@institution.logo.small.url, class: "btn", data: {toggle: "modal"} )if @institution.logo?%>
+          <%= image_tag @current_institution.logo.url if @current_institution.logo? %>
           <%= f.file_field :logo %>
           <%= f.hidden_field :logo_cache %>
         </div>      
+      
       </div>
   
       <%= f.submit "Upload", class: "btn btn-primary" %>
