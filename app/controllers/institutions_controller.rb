@@ -12,9 +12,6 @@ class InstitutionsController < ApplicationController
     @current_institution = @current_user.institution
     @institution_users = @current_institution.users
      
-    #@current_user = User.find(3)
-    #@current_institution = Institution.find(2)
-    #@institution_users = @current_institution.users
   end
 
   # GET /institutions/1
@@ -71,6 +68,7 @@ class InstitutionsController < ApplicationController
     end
   end
 
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_institution
@@ -79,7 +77,7 @@ class InstitutionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def institution_params
-      params.require(:institution).permit(:full_name, :nickname, :desc, :contact_info, :contact_email, :url, :url_text, :shib_entity_id, :shib_domain)
+      params.require(:institution).permit(:full_name, :nickname, :desc, :contact_info, :contact_email, :url, :url_text, :shib_entity_id, :shib_domain, :logo, :remote_logo_url)
     end
 
     def check_for_cancel

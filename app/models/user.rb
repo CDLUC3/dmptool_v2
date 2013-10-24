@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :plans, through: :user_plans
   has_many :comments
   has_many :authentications
+  has_many :authorizations
   has_many :roles, through: :authorizations
 
   attr_accessor :ldap_create, :password, :password_confirmation
@@ -47,6 +48,10 @@ class User < ActiveRecord::Base
       user.last_name = auth[:info][:last_name]
       user.login_id = auth[:info][:nickname]
     end
+  end
+
+  def full_name
+    [first_name, last_name].join(" ")
   end
 
   private

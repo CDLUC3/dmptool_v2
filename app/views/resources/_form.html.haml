@@ -1,25 +1,26 @@
-= form_for @resource do |f|
+.form-horizontal
+= form_for [@resource_template, @resource], url: new_resource_template_resource_path do |f|
   - if @resource.errors.any?
     #error_explanation
       %h2= "#{pluralize(@resource.errors.count, "error")} prohibited this resource from being saved:"
       %ul
         - @resource.errors.full_messages.each do |msg|
           %li= msg
-
-  .field
-    = f.label :type
-    = f.text_field :type
-  .field
+  .control_group
+    = f.hidden_field :resource_template_id
+  .control_group
+    = f.label :resource_type
+    .controls
+      = f.select :resource_type, options_for_select([:actionable_url, :expository_guidance, :example_response, :suggested_response]), include_blank: true
+  .control_group
     = f.label :value
-    = f.text_field :value
-  .field
+    .controls
+      = f.text_field :value
+  .control_group
     = f.label :label
-    = f.text_field :label
-  .field
-    = f.label :requirement_id
-    = f.number_field :requirement_id
-  .field
-    = f.label :resource_template_id
-    = f.number_field :resource_template_id
+    .controls
+      = f.text_field :label
+  .control_group
+    = f.hidden_field :requirement_id
   .actions
     = f.submit 'Save'

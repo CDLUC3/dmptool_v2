@@ -21,7 +21,6 @@ Dmptool2::Application.routes.draw do
     resources :resources
     member do
       get :toggle_active
-      get :template_details
     end
   end
 

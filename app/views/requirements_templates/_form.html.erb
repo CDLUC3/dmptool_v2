@@ -52,14 +52,14 @@
   <div class="control-group" >
     <%= f.label :start_date, class: "control-label" %>
     <div class="controls" >
-      <%= f.text_field :start_date, :value => @requirements_template.start_date.blank? ? " " : @requirements_template.start_date.strftime("%m/%d/%Y %I:%M %p"), id: 'start_date', class: "datepicker" %>
+      <%= f.text_field :start_date, value: @requirements_template.start_date.blank? ? " " : @requirements_template.start_date.strftime("%m/%d/%Y %I:%M %p"), id: 'start_date', class: "datepicker" %>
     </div>
   </div>
 
   <div class="control-group" >
     <%= f.label :end_date, class: "control-label" %>
     <div class="controls" >
-      <%= f.text_field :end_date,:value => @requirements_template.end_date.blank? ? " " : @requirements_template.end_date.strftime("%m/%d/%Y %I:%M %p"), id: 'end_date', class: "datepicker" %>
+      <%= f.text_field :end_date, value: @requirements_template.end_date.blank? ? " " : @requirements_template.end_date.strftime("%m/%d/%Y %I:%M %p"), id: 'end_date', class: "datepicker" %>
     </div>
   </div>
 

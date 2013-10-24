@@ -1,3 +1,5 @@
+= render 'requirements_templates'
+%br/
 .form-horizontal
   = form_for @resource_template do |f|
     - if @resource_template.errors.any?
@@ -7,13 +9,13 @@
           - @resource_template.errors.full_messages.each do |msg|
             %li= msg
 
-    %h4 Resource Template Overview
-    %br
+        = f.hidden_field :requirements_template_id, id: 'requirements_template_id'
+
     %strong Basic Information
-    %hr
+    %hr/
 
     .control-group
-      = f.label :template_name, class: "control-label"
+      = f.label :template_name,"Template Name", class: "control-label"
       .controls
         = f.text_field :name
     .control-group
@@ -25,18 +27,13 @@
     = render partial: 'date_fields' , locals: { f: f } unless @resource_template.new_record?
 
     %strong Optional Information
-    %hr
+    %hr/
     .control-group
-      = f.label :institutional_contact, class: "control-label"
+      = f.label :institutional_widget, "Institutional Widget",  class: "control-label"
       .controls
-        = f.text_field :contact_info, placeholder: "Label"
-        = f.text_field :contact_email, placeholder: "URL"
+        = f.email_field :widget_url
     .control-group
-      = f.label :institutional_widget, class: "control-label"
-      .controls
-        = f.text_field :widget_url
-    .control-group
-      = f.label :review_requirement, class: "control-label"
+      = f.label :review_requirement, "Review Requirement", class: "control-label"
       .controls
         = f.radio_button :review_type, :formal_review, class: "radio inline"
         Formal Review Required
@@ -45,6 +42,6 @@
         = f.radio_button :review_type, :no_review, class: "radio inline"
         No Review Required
 
-    %hr
+    %hr/
     .actions
       = f.submit 'Save Changes', class: 'btn btn-success pull-left', method: 'post'
