@@ -10,8 +10,14 @@ class User < ActiveRecord::Base
   has_many :authorizations
   has_many :roles, through: :authorizations
   
-  has_many  :owned_plans, through: :user_plans, class_name: "Plan", 
-            source: :plan, conditions: ['user_plans.owner', true]
+  has_many :owned_plans, -> { where user_plans: { owner: true} }, through: :user_plans,
+  source: :plan, class_name: 'Plan'
+  
+  has_many :coowned_plans, -> { where user_plans: { owner: false} }, through: :user_plans,
+  source: :plan, class_name: 'Plan'
+  
+  accepts_nested_attributes_for :user_plans
+  
 
   attr_accessor :ldap_create, :password, :password_confirmation
 
@@ -55,6 +61,13 @@ class User < ActiveRecord::Base
 
   def full_name
     [first_name, last_name].join(" ")
+  end
+  
+  def plans_by_state(states)
+    
+  end
+  
+  def plan_states
   end
 
   private
