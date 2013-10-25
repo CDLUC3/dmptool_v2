@@ -25,7 +25,7 @@ def make_institutions
                             shib_entity_id: 'urn:mace:incommon:ucop.edu',
                             shib_domain: 'ucop.edu').first_or_create!
 
-  @si = Institution.where(full_name: 'Smithsonian Institution'.
+  @si = Institution.where(full_name: 'Smithsonian Institution',
                             nickname: 'SI',
                             contact_info: 'Smithsonian Information',
                             contact_email: 'info@si.edu',
