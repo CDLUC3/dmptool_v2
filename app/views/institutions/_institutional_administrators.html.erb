@@ -13,7 +13,7 @@
           <td><%= user.full_name %></td>
           <td><%= user.login_id %></td>
           <td><%= user.email %></td>
-          <td><%= link_to raw('<i class="icon-remove icon-white"></i>'), user, method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn-danger' %></td>
+          <td><%= link_to "remove", user, method: :delete, data: {confirm: 'Are you sure?'} %></td>
       </tr>
     <% end %>
    </tbody>
