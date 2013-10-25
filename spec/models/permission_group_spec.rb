@@ -10,19 +10,9 @@ describe PermissionGroup do
 
   it { should respond_to(:group) }
   it { should respond_to(:institution_id) }
-
-  it { should belong_to(:institution) }
+  it { should belong_to(:authorizations)}
+  it { should belong_to(:institutions) }
 
   it { should be_valid }
-
-  describe "when group is blank" do
-    before { @permission_group.group = nil }
-    it { should_not be_valid }
-  end
-
-  describe "when institution_id is blank" do
-    before { @permission_group.institution_id = nil }
-    it { should_not be_valid }
-  end
 
 end

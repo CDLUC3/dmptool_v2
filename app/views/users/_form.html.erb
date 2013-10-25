@@ -1,56 +1,51 @@
+<%= form_for(@user, class: 'form-horizontal') do |f| %>
 
-
-
-<div class='form-horizontal'>
-  <%= form_for(@user) do |f| %>
-
-    <% if @user.errors[:base].any? %>
-      <div class = "alert alert-error form-errors">
-        <%= @user.errors[:base].each do |msg| %>
-          <p><%= msg %></p>
-        <% end %>
-      </div>
-    <% end %>
-
-    <div class="tabbable">
-      
-      <% unless @user.new_record? %>  
-        <ul class="nav nav-tabs">
-          <li class="active">
-            <a href="#tab1" data-toggle="tab">Personal Information</a>
-          </li>
-          <li><a href="#tab2" data-toggle="tab">Notification Preferences</a></li>
-        </ul>
-      <%end%>
-
-      <div class="tab-content">    
-        <div class="tab-pane active" id="tab1">
-          <%= render 'personal', f: f%>
-        </div>
-        <div class="tab-pane" id="tab2">
-          <%= render 'notifications' unless @user.new_record? %>
-        </div>     
-      </div>
-
+  <% if @user.errors[:base].any? %>
+    <div class = "alert alert-error form-errors">
+      <%= @user.errors[:base].each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
     </div>
-
-    <div class="controls">
-      <div class='actions'>
-        <% if @user.new_record? %>
-          <div class='btn'><%= f.submit 'Create Account' %></div>
-        <%end%>
-        <% unless @user.new_record? %>
-          <div class='btn'><%= f.submit 'Save' %></div>
-          <div class='btn'><%= link_to 'Cancel', edit_user_path(@user) %></div>
-        <%end%>
-    </div>
-
   <% end %>
-</div>
+
+  <div class="tabbable">
+
+    <% unless @user.new_record? %>
+      <ul class="nav nav-tabs">
+        <li class="active">
+          <a href="#tab1" data-toggle="tab">Personal Information</a>
+        </li>
+        <li><a href="#tab2" data-toggle="tab">Notification Preferences</a></li>
+      </ul>
+    <%end%>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="tab1">
+        <%= render 'personal', f: f%>
+      </div>
+      <div class="tab-pane" id="tab2">
+        <%= render 'notifications' unless @user.new_record? %>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="controls">
+    <div class='actions'>
+      <% if @user.new_record? %>
+        <div class='btn'><%= f.submit 'Create Account' %></div>
+      <%end%>
+      <% unless @user.new_record? %>
+        <div class='btn'><%= f.submit 'Save' %></div>
+        <div class='btn'><%= link_to 'Cancel', edit_user_path(@user) %></div>
+      <%end%>
+  </div>
+
+<% end %>
 
 
 
-  
+
 
 
 

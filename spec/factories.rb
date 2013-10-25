@@ -84,6 +84,7 @@ FactoryGirl.define do
   factory :permission_group do
     group 1
 
+    association :authorization
     association :institution
   end
 
