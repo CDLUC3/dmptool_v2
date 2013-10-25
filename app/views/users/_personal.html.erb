@@ -87,6 +87,18 @@
 	</div>
 </div>
 
+<%errors = @user.errors[:institution_id]%>
+<%validation_class = errors.empty? ? {} : 'error'%>
+
+<div class="control-group" id="validation_class">
+	<div class='control-label'>
+		<%= f.label :institution_id %>
+		<div class="controls">
+			<%= f.select( :institution_id, Institution.all.collect { |i| [i.full_name, i.id] }, {prompt: 'Select Institution'}) %>
+			<span class="help-in-line"><%=errors.join (', ')%></span>
+		</div>
+	</div>
+</div>
 
 
 

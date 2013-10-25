@@ -1,4 +1,3 @@
-<h1>Institutional Administrators</h1>
 <table class="table">
   <thead>
     <tr>
@@ -11,13 +10,13 @@
   <tbody>
     <% @institution_users.each do |user| %>
       <tr>
-          <td><%= user.first_name %> <%= user.last_name %></td>
+          <td><%= user.full_name %></td>
           <td><%= user.login_id %></td>
           <td><%= user.email %></td>
-          <td><%= link_to 'Remove', user, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+          <td><%= link_to raw('<i class="icon-remove icon-white"></i>'), user, method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn-danger' %></td>
       </tr>
     <% end %>
-   </tbody>     
+   </tbody>
 </table>
 <br>
 <%= link_to 'Add New Institutional Administrator', new_user_path %>

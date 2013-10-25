@@ -1,4 +1,4 @@
-<div class="tabbable"> <!-- Only required for left/right tabs -->
+<div class="tabbable">
   <ul class="nav nav-tabs">
     <li class="active"><a href="#tab1" data-toggle="tab">Institution Information</a></li>
     <li><a href="#tab2" data-toggle="tab">Institution Administrators</a></li>
@@ -6,18 +6,14 @@
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="tab1">
-      <p><%= render 'form' %></p>
+      <%= render 'form' %>
     </div>
     <div class="tab-pane" id="tab2">
-      <p><%= render 'institutional_administrators' %></p>
+      <%= render 'institutional_administrators' %>
     </div>
     <div class="tab-pane" id="tab3">
-      <p><%= render 'institutional_hierarchy' %></p>
+      <%= nested_institutions @institutions.arrange(order: :created_at) %>
+      <%= link_to 'Add New Institution', new_institution_path %>
     </div>
   </div>
 </div>
-
-
-
-
-
