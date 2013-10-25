@@ -1,8 +1,8 @@
-<div class='table_header'>
+<div class='table-header'>
 	<h3><span id='dmp-templates'></span>DMP Templates</h3>
 </div>
-<div class='table_scope'>
-<%= link_to "All", scope: "all" %>
+<div class='table-scope'>
+<%= link_to "All", '#', scope: "all", :class => 'current' %>
 |
 <%= link_to "Active", scope: "active" %>
 |
@@ -27,8 +27,8 @@
 	<tbody>
 	<% @requirements_templates.each do |requirements_template| %>
 		<tr>
-			<td class='requirements_template_name'><%=link_to requirements_template.name, requirements_template_requirements_path(requirements_template) %><br/>
-				<%= (link_to 'Overview', edit_requirements_template_path(requirements_template))+'|'+(link_to 'Details',requirements_template_requirements_path(requirements_template))+'|'+(link_to activate_link_text(requirements_template), toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", class: 'ajax')+'|'+(link_to 'Copy', copy_existing_requirements_template_path(requirements_template))+'|'+(link_to 'Delete', requirements_template_path(requirements_template), method: :delete, data: { confirm: 'Are you sure?' }) %>
+			<td class='requirements_template_name'><%=link_to(content_tag(:strong, 'Requirements Template Test'), requirements_template_requirements_path(requirements_template)) %><br/>
+				<%= (link_to 'Overview', edit_requirements_template_path(requirements_template))+' | '+(link_to 'Details',requirements_template_requirements_path(requirements_template))+' | '+(link_to activate_link_text(requirements_template), toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", class: 'ajax')+' | '+(link_to 'Copy', copy_existing_requirements_template_path(requirements_template))+' | '+(link_to 'Delete', requirements_template_path(requirements_template), :class => 'delete', method: :delete, data: { confirm: 'Are you sure?' }) %>
 			</td>
 			<td><%= requirements_template.version %></td>
 			<td><%= requirements_template.institution.full_name %></td>
@@ -38,12 +38,67 @@
 			<td><%= requirements_template.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 		</tr>
 	<% end %>
+		<tr>
+			<td colspan='7' class='table-buttons'><%= link_to 'View All', '#', :class => 'button button-silver' %>
+				<%= link_to 'Create New', requirements_template_information_path, :method => :get, :class => 'button button-silver' %>
+			</td>
+		</tr>
 	</tbody>
 </table>
-<div class="pagination">
-	<%= paginate @requirements_templates %>
-	</div>
-<%= button_to 'Create New template', requirements_template_information_path, :method => :get, class: 'btn btn-primary' %>
 
-<%= link_to 'Add New Editor', add_role_path, method: :post, id: 'add_role_view' %>
+<div class='table-header'>
+	<h3><span id='dmp-editors'></span>DMP Templates</h3>
+</div>
+<table class='table table-striped'>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Username</th>
+			<th>Email</th>
+			<th>Remove</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><strong>First Last</strong></td>
+			<td>Username</td>
+			<td><%= link_to 'username@example.com', '#' %></td>
+			<td class='remove'><%= link_to '', '#', :class => 'remove' %></td>
+		</tr>
+		<tr>
+			<td><strong>First Last</strong></td>
+			<td>Username</td>
+			<td><%= link_to 'username@example.com', '#' %></td>
+			<td class='remove'><%= link_to '', '#', :class => 'remove' %></td>
+		</tr>
+		<tr>
+			<td><strong>First Last</strong></td>
+			<td>Username</td>
+			<td><%= link_to 'username@example.com', '#' %></td>
+			<td class='remove'><%= link_to '', '#', :class => 'remove' %></td>
+		</tr>
+		<tr>
+			<td><strong>First Last</strong></td>
+			<td>Username</td>
+			<td><%= link_to 'username@example.com', '#' %></td>
+			<td class='remove'><%= link_to '', '#', :class => 'remove' %></td>
+		</tr>
+		<tr>
+			<td><strong>First Last</strong></td>
+			<td>Username</td>
+			<td><%= link_to 'username@example.com', '#' %></td>
+			<td class='remove'><%= link_to '', '#', :class => 'remove' %></td>
+		</tr>
+		<tr>
+			<td colspan='7' class='table-buttons'><%= link_to 'View All', '#', :class => 'button button-silver' %>
+				<%= link_to 'Create New', requirements_template_information_path, :method => :get, :class => 'button button-silver' %>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<!--<div class="pagination">
+	<%= paginate @requirements_templates %>
+</div>-->
+<!--<%= button_to 'Create New template', requirements_template_information_path, :method => :get, class: 'btn btn-primary' %>
+<%= link_to 'Add New Editor', add_role_path, method: :post, id: 'add_role_view' %>-->
 <%= render partial: 'resource_templates/add_role' %>

@@ -1,5 +1,5 @@
 <div class='dashboard'>
-	<div class='dashboard_header'>
+	<div class='dashboard-header'>
 		<div class='cdl_logo'>
 			<%= image_tag('cdl_logo.png', :width => '164', :height => '51', :alt => 'California Digital Library') %>	
 		</div>
@@ -8,30 +8,30 @@
 		</div>
 		<div class='inst_url'>
 			<%= link_to '#', :id => 'inst-url' do %>
-				<span></span>www.domainname.com
+				<span></span>www.domainname.edu
 			<% end %>
 			<%= link_to '#', :id => 'inst-contact' do %>
 				<span></span>Contact Institution Administration
 			<% end %>
 		</div>
 	</div>
-	<div class ='dashboard_nav'>
-		<%= link_to 'My Dashboard ', '#' %>
-		|
-		<%= link_to 'My DMPs', '#' %>
-		|
-		<%= link_to 'Create New DMP' ,'#' %>
-		|
-		<%= link_to 'Review DMPs', '#' %>
-		|
-		<%= link_to 'DMP Templates', requirements_templates_path %>
-		|
-		<%= link_to 'Resources', resource_templates_path %>
-		|
-		<%= link_to 'Institution Profile', '#' %>
-		|
-		<%= link_to 'My Profile', '#' %>
-		|
-		<%= link_to 'DMP Administration', '#' %>
+	<div class ='dashboard-nav'>
+		<ul>
+			<li><%= link_to(content_tag(:span, 'My Dashboard'), '#') %></li>
+			<li><%= link_to(content_tag(:span, 'My DMPs'), '#') %></li>
+			<li><%= link_to(content_tag(:span, 'Create New DMP'),'#') %></li>
+			<li><%= link_to(content_tag(:span, 'Review DMPs'), '#') %></li>
+			<li class='current'><%= link_to(content_tag(:span, 'DMP Templates'), requirements_templates_path) %>
+				<ul>
+					<li class='current'><%= link_to 'Template Overview', '#' %></li>
+					<li><%= link_to 'Template Details', '#' %></li>
+					<li class='last'></li>
+				</ul>
+			</li>
+			<li><%= link_to(content_tag(:span, 'Resources'), resource_templates_path) %></li>
+			<li><%= link_to(content_tag(:span, 'Institution Profile'), '#') %></li>
+			<li><%= link_to(content_tag(:span, 'My Profile'), '#') %></li>
+			<li><%= link_to(content_tag(:span, 'DMP Administration'), '#') %></li>
+		</ul>
 	</div>
 </div>
