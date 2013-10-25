@@ -1,0 +1,92 @@
+<% provide(:title, 'Institution Information') %>
+
+<%= form_for @institution, html:{ class: 'form-horizontal', multipart: true}  do |f| %>
+  <% if @institution.errors.any? %>
+    #error_explanation
+      <h2>= "#{pluralize(@current_institution.errors.count, "error")} prohibited this Institution from being saved:"</h2>
+      <ul>
+        <% @nstitution.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :full_name , "Institution Full Name", class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :full_name, class: "input-xxlarge" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :shib_entity_id, "entity_id", class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :shib_entity_id %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :shib_domain , "Shibboleth Domain", class: "control-label"%>
+    <div class="controls">
+      <%= f.text_field :shib_domain %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :parent_id , "Parent Institution", class: "control-label"%>
+    <div class="controls">
+      <%= f.select(:parent_id, options_for_select(@categories), :prompt => 'Select') %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :nickname, "Institution short name, or Acronym", class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :nickname %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :url, "Institution URL", class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :url_text, placeholder: "URL Text", class: "input-large" %>
+      <%= f.text_field :url, placeholder: "URL", class: "input-xlarge" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :contact_info, "Administrator Contact", class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :contact_info, placeholder: "Name", class: "input-large" %>
+      <%= f.text_field :contact_email, placeholder: "Email", class: "input-xlarge" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label "Institutional Logo", class: "control-label" %>
+    <div class="controls">
+      <%= image_tag @institution.logo.url if @institution.logo? %>
+      <%= f.file_field :logo %>
+      <%= f.hidden_field :logo_cache %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit "Upload", class: "btn btn-primary" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :desc , "Descriptive Text", class: "control-label" %>
+    <div class="controls">
+      <%= f.text_area :desc, rows: 5, class: "input-xxlarge" %>
+    </div>
+  </div>
+
+<div class="actions">
+  <%= f.submit "Save Changes", class: "btn btn-primary" %>
+  <%= f.submit "Cancel", type: :reset, method: :get, class: "btn btn-primary" %>
+<div>
+
+<% end %>

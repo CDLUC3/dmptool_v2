@@ -1,10 +1,18 @@
 class InstitutionsController < ApplicationController
   before_action :set_institution, only: [:show, :edit, :update, :destroy]
+  before_action :check_for_cancel, :update => [:create, :update, :destroy]
+  before_filter :collection_for_parent_select
 
   # GET /institutions
   # GET /institutions.json
   def index
     @institutions = Institution.all
+    @institution = Institution.new(:parent_id => params[:parent_id])
+
+    @current_user = current_user
+    @current_institution = @current_user.institution
+    @institution_users = @current_institution.users
+
   end
 
   # GET /institutions/1
@@ -14,7 +22,7 @@ class InstitutionsController < ApplicationController
 
   # GET /institutions/new
   def new
-    @institution = Institution.new
+    @institution = Institution.new(:parent_id => params[:parent_id])
   end
 
   # GET /institutions/1/edit
@@ -61,6 +69,22 @@ class InstitutionsController < ApplicationController
     end
   end
 
+  def collection_for_parent_select
+    @categories = ancestry_options(Institution.unscoped.arrange(order: :full_name)){|i| "#{'-' * i.depth} #{i.full_name}" }
+  end
+
+  def ancestry_options(items, &block)
+    return ancestry_options(items){ |i| "#{'-' * i.depth} #{i.full_name}" } unless block_given?
+
+    result = []
+    items.map do |item, sub_items|
+      result << [yield(item), item.id]
+      #this is a recursive call:
+      result += ancestry_options(sub_items, &block)
+    end
+    result
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_institution
@@ -69,6 +93,17 @@ class InstitutionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def institution_params
-      params.require(:institution).permit(:full_name, :nickname, :desc, :contact_info, :contact_email, :url, :url_text, :shib_entity_id, :shib_domain)
+      params.require(:institution).permit(:full_name, :nickname, :desc, :contact_info, :contact_email, :url, :url_text, :shib_entity_id, :shib_domain, :logo, :remote_logo_url, :parent_id)
     end
+
+    def check_for_cancel
+      redirect_to :back if params[:commit] == "Cancel"
+    end
+
 end
+
+
+
+
+
+

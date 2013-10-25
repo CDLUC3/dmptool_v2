@@ -1,4 +1,3 @@
-
 = form_for ([@requirement.requirements_template, @requirement]), html: { class: "form-horizontal" } do |f|
   - if @requirement.errors.any?
     #error_explanation
@@ -9,6 +8,7 @@
   %fieldset
     .control-group
       = f.hidden_field :parent_id
+      = f.check_box :group, id: 'if_group', style: "display: none;"
     .control-group
       = f.label :requirement_label, class: "control-label"
       .controls
@@ -16,7 +16,7 @@
     .control-group
       = f.label :detailed_question, class: "control-label"
       .controls
-        = f.text_area(:text_full, rows: 5, class: "input-block-level" )
+        = f.text_area(:text_full, rows: 5, class: "input-block-level")
     .control-group
       = f.label :obligation, class: "control-label"
       .controls
@@ -44,4 +44,4 @@
   .actions.pull-right
     %br/
     = f.submit 'Save', class: 'btn btn-info'
-    = link_to 'Finish', '#', class: 'btn btn-info'
+    = button_to 'Finish', '#', class: 'btn btn-info', method: :get

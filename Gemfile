@@ -8,6 +8,7 @@ group :development, :test do
   gem 'rspec-rails', '2.13.1'
   gem 'capistrano'
   gem 'capistrano-unicorn'
+  gem 'debugger'
 end
 
 group :test do

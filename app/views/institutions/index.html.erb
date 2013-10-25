@@ -1,0 +1,19 @@
+<div class="tabbable">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab">Institution Information</a></li>
+    <li><a href="#tab2" data-toggle="tab">Institution Administrators</a></li>
+    <li><a href="#tab3" data-toggle="tab">Institution Hierarchy</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      <%= render 'form' %>
+    </div>
+    <div class="tab-pane" id="tab2">
+      <%= render 'institutional_administrators' %>
+    </div>
+    <div class="tab-pane" id="tab3">
+      <%= nested_institutions @institutions.arrange(order: :created_at) %>
+      <%= link_to 'Add New Institution', new_institution_path %>
+    </div>
+  </div>
+</div>

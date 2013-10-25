@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :plans, through: :user_plans
   has_many :comments
   has_many :authentications
+  has_many :authorizations
   has_many :roles, through: :authorizations
 
   attr_accessor :ldap_create, :password, :password_confirmation
@@ -34,6 +35,23 @@ class User < ActiveRecord::Base
     unless Authentication.find_by_user_id_and_provider(self.id, 'ldap')
       Authentication.create(:user => self, :provider => 'ldap', :uid => uid)
     end
+  end
+  
+  def self.from_omniauth(auth)
+    where(email: auth[:info][:email]).first || create_from_omniauth(auth)
+  end
+  
+  def self.create_from_omniauth(auth)
+    create! do |user|
+      user.email = auth[:info][:email]
+      user.first_name = auth[:info][:first_name]
+      user.last_name = auth[:info][:last_name]
+      user.login_id = auth[:info][:nickname]
+    end
+  end
+
+  def full_name
+    [first_name, last_name].join(" ")
   end
 
   private

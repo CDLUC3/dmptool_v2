@@ -1,0 +1,22 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Remove</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @institution_users.each do |user| %>
+      <tr>
+          <td><%= user.full_name %></td>
+          <td><%= user.login_id %></td>
+          <td><%= user.email %></td>
+          <td><%= link_to raw('<i class="icon-remove icon-white"></i>'), user, method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn-danger' %></td>
+      </tr>
+    <% end %>
+   </tbody>
+</table>
+<br>
+<%= link_to 'Add New Institutional Administrator', new_user_path %>

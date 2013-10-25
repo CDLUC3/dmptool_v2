@@ -5,13 +5,9 @@ class UserSessionsController < ApplicationController
   end
 
   def create
-    sign_in_or_create(auth_hash)
-
-    if signed_in?
-      redirect_to edit_user_path(current_user)
-    else
-      redirect_to login_path
-    end
+    user = User.from_omniauth(env["omniauth.auth"])
+    session[:login_id] = user.login_id
+    redirect_to edit_user_path(current_user)
   end
 
   def failure
@@ -19,13 +15,8 @@ class UserSessionsController < ApplicationController
   end
 
   def destroy
-    sign_out
-    redirect_to root_path
+    session[:login_id] = nil
+    redirect_to root_path, notice: "Signed out."
   end
 
-  protected
-
-    def auth_hash
-      request.env['omniauth.auth']
-    end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130927231128) do
+ActiveRecord::Schema.define(version: 20131025100957) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(version: 20130927231128) do
 
   create_table "authorizations", force: true do |t|
     t.integer  "role_id"
-    t.integer  "group"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -65,7 +64,11 @@ ActiveRecord::Schema.define(version: 20130927231128) do
     t.string   "shib_domain"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "logo"
+    t.string   "ancestry"
   end
+
+  add_index "institutions", ["ancestry"], name: "index_institutions_on_ancestry", using: :btree
 
   create_table "labels", force: true do |t|
     t.string   "desc"
@@ -79,6 +82,7 @@ ActiveRecord::Schema.define(version: 20130927231128) do
     t.integer  "institution_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "authorization_id"
   end
 
   create_table "plan_states", force: true do |t|
@@ -118,6 +122,7 @@ ActiveRecord::Schema.define(version: 20130927231128) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "ancestry"
+    t.boolean  "group"
   end
 
   add_index "requirements", ["ancestry"], name: "index_requirements_on_ancestry", using: :btree

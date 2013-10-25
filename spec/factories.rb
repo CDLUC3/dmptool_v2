@@ -79,27 +79,31 @@ FactoryGirl.define do
 
     association :user
     association :role
-    association :permission_groups
   end
 
   factory :permission_group do
     group 1
 
+    association :authorization
     association :institution
   end
 
   factory :resource_template do
     name "Lorem Ipsum"
     active false
-    mandatory_review false
+    review_type :no_review
     widget_url "mywidget.com"
 
     factory :active_true do
       active true
     end
 
-    factory :mandatory_review_true do
-      mandatory_review true
+    factory :resource_review_type_formal do
+      review_type :formal_review
+    end
+
+    factory :resource_review_type_informal do
+      review_type :informal_review
     end
 
     association :requirements_template
@@ -110,7 +114,6 @@ FactoryGirl.define do
     resource_type :actionable_url
     value "actionableurl.com"
     label "This is a useful URL."
-
 
     factory :expository_guidance do
       resource_type :expository_guidance
@@ -141,7 +144,7 @@ FactoryGirl.define do
     end_date Time.now + 2.weeks
     visibility :public
     parent_id nil
-    mandatory_review false
+    review_type :no_review
 
     factory :institutional do
       visibility :institutional
@@ -151,8 +154,12 @@ FactoryGirl.define do
       active true
     end
 
-    factory :mandatory_review do
-      mandatory_review true
+    factory :review_type_formal do
+      review_type :formal_review
+    end
+
+    factory :review_type_informal do
+      review_type :informal_review
     end
 
     association :institution
@@ -160,7 +167,7 @@ FactoryGirl.define do
 
   factory :requirement do
     order 1
-    parent_requirement 1
+    ancestry "1"
     text_brief "Lorem Ipsum"
     text_full "Lorem Ipsum Lrem Ipsum Lorem Ipsum"
     requirement_type :text

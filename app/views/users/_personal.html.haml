@@ -58,3 +58,41 @@
     = f.text_field :email
     %span.help-inline
       = errors.join (', ')
+
+- errors = @user.errors[:institution_id]
+- validation_class = errors.empty? ? {} : 'error'
+%div{ class: "control-group #{validation_class}"}
+  = f.label :institution_id, 'Institution', class: 'control-label'
+  .controls
+    = f.select( :institution_id, Institution.all.collect { |i| [i.full_name, i.id] }, {prompt: 'Select Institution'})
+    %span.help-inline
+      = errors.join (', ')
+
+%b= 'DMP Options' unless @user.new_record?
+.control-group
+  = label_tag :my_roles, 'My Roles', class: 'control-label'
+  .controls
+    = @user.roles.map {|r| r.name}.join(' | ')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> 376fe1c0d258ce324bf5b4201b82e2b922a38e22

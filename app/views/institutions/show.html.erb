@@ -1,0 +1,40 @@
+
+<p><b>Full name:</b></p>
+
+<p><%= @institution.full_name %></p>
+
+<p><b>Nickname:</b></p>
+	
+<p><%= @institution.nickname %></p>
+
+<p><b>Nickname:</b></p>	
+<p><%= @institution.nickname %></p>
+
+<p><b>Desc:</b></p>	
+<p><%= @institution.desc %></p>
+
+<p><b>Contact info:</b></p>	
+<p><%= @institution.contact_info %></p>
+
+<p><b>Contact email:</b></p>	
+<p><%= @institution.contact_email %></p>
+
+<p><b>Url:</b></p>	
+<p><%= @institution.url %></p>
+
+<p><b>Url text:</b></p>	
+<p><%= @institution.url_text %></p>
+
+<p><b>Shib entity:</b></p>	
+<p><%= @institution.shib_entity_id %></p>
+
+<p><b>Shib domain:</b></p>	
+<p><%= @institution.shib_domain %></p>
+
+<p><b>Logo:</b></p>
+<p><%= image_tag @institution.logo.url if @institution.logo? %></p>
+
+<%= link_to 'Back', institutions_path %>
+
+
+
