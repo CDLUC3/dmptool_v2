@@ -19,6 +19,10 @@
     .controls
       = f.text_field :shib_domain, class: "input-large"
   .control-group
+    = label_tag, "Parent Institution", class: "control-label"
+    .controls
+      = f.input(:parent_id, :as => :select, :collection => @institutions, prompt: "Select An Institution")
+  .control-group
     = f.label :nickname, "Institution short name, or Acronym", class: "control-label"
     .controls
       = f.text_field :nickname, class: "input-large"
