@@ -9,6 +9,9 @@ class User < ActiveRecord::Base
   has_many :authentications
   has_many :authorizations
   has_many :roles, through: :authorizations
+  
+  has_many  :owned_plans, through: :user_plans, class_name: "Plan", 
+            source: :plan, conditions: ['user_plans.owner', true]
 
   attr_accessor :ldap_create, :password, :password_confirmation
 
