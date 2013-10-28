@@ -10,8 +10,8 @@ class InstitutionsController < ApplicationController
     @institution = Institution.new(:parent_id => params[:parent_id])
 
     @current_user = current_user
-    @current_institution = @current_user.institution
-    @institution_users = @current_institution.users
+    @institution = @current_user.institution
+    @institution_users = @institution.users
 
   end
 
