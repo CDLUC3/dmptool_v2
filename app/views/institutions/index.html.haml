@@ -13,7 +13,10 @@
     #tab2.tab-pane
       = render 'institutional_administrators'
     #tab3.tab-pane
-      = render 'institutional_hierarchy'
+      = nested_institutions @institutions.arrange(order: :created_at)
+      %br/
+      %hr/
+      = link_to 'Add New Institution', new_institution_path
 
 
 

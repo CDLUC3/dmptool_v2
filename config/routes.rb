@@ -24,7 +24,9 @@ Dmptool2::Application.routes.draw do
 
   resources :plans
   resources :institutions
-  resources :users
+  resources :users do
+    get :edit_roles, :on => :member
+  end
   resources :roles
 
   get 'user_sessions/login', to: 'user_sessions#login', as: 'login'
