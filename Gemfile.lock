@@ -1,3 +1,18 @@
+GIT
+  remote: git://github.com/radar/paranoia.git
+  revision: 87fc348171e532a4a39d2f1235056eaebdd4c24e
+  branch: rails4
+  specs:
+    paranoia (2.0.1)
+      activerecord (~> 4.0)
+
+GIT
+  remote: git://github.com/ryanb/cancan.git
+  revision: e6bf4c8d12dca316eb4f0923ca30b6d3dfedb7ae
+  branch: 2.0
+  specs:
+    cancan (2.0.0.alpha)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -212,6 +227,7 @@ PLATFORMS
 DEPENDENCIES
   ancestry
   bootstrap-sass (= 2.3.2.0)
+  cancan!
   capistrano
   capistrano-unicorn
   capybara (= 2.1.0.rc1)
@@ -229,6 +245,7 @@ DEPENDENCIES
   mysql2
   omniauth
   omniauth-ldap
+  paranoia!
   rails (= 4.0.0)
   rspec-rails (= 2.13.1)
   sass-rails (~> 4.0.0)
