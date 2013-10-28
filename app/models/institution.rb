@@ -1,4 +1,6 @@
 class Institution < ActiveRecord::Base
+  acts_as_paranoid
+
 	mount_uploader :logo, LogoUploader
 		has_ancestry
   	has_many :users

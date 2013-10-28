@@ -20,12 +20,12 @@ $(function(){
 	});
 
 
-// $(function() {
-//   $('#requirements_group').jstree({
-//     plugins: ['themes', 'ui'],
-//     themes: {
-//       theme : 'default',
-//       icons : false
-//     }
-//   });
-// });
+$(function() {
+  $('.requirements_tree_view').jstree({
+    plugins: ['themes', 'ui'],
+    themes: {
+      theme : 'default',
+      icons : false
+    }
+  });
+});

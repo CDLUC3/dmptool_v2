@@ -14,10 +14,3 @@ config/shibboleth.yml
 ehthumbs.db
 Thumbs.db
 tmp/
-app/models/ability.rb
-app/views/users/_institutions_list.html.haml
-app/views/users/_users_list.html.haml
-app/views/users/edit_roles.html.haml
-app/views/users/edit_roles.js.erb
-config/deploy.yml
-spec/models/ability_spec.rb
