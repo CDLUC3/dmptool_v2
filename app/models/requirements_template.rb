@@ -9,7 +9,7 @@ class RequirementsTemplate < ActiveRecord::Base
 
   accepts_nested_attributes_for :resource_templates, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
   accepts_nested_attributes_for :requirements, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
-  accepts_nested_attributes_for :tags, allow_destroy: true, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
+  accepts_nested_attributes_for :tags, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
   accepts_nested_attributes_for :sample_plans, allow_destroy: true, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
   accepts_nested_attributes_for :additional_informations, allow_destroy: true, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
 

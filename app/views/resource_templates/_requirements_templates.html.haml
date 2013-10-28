@@ -1,0 +1,32 @@
+%table.table.table-hover.table-condensed
+  %thead
+    %tr
+      %th
+      %th Name
+      %th Institution
+      %th Status
+      %th Visibility
+      %th Creation Date
+      %th Last Modification Date
+  %tbody
+  - @requirements_templates.each do |requirements_template|
+    %tr
+      %td{class: 'selected_requirements_template'}= radio_button_tag :requirements_template_id, requirements_template.id
+      %td{class: 'selected_requirements_template_name'}= requirements_template.name
+      %td= requirements_template.institution.full_name
+      %td= requirements_template.active ? "Active" : "Inactive"
+      %td= requirements_template.visibility.capitalize
+      %td= requirements_template.created_at.strftime("%m/%d/%Y %I:%M%p")
+      %td= requirements_template.updated_at.strftime("%m/%d/%Y %I:%M%p")
+.pagination
+= paginate @requirements_templates
+
+.form-horizontal
+  %h4 Resource Template Overview
+  %br/
+  %strong Associated DMP Template
+  %hr/
+  .control-group
+  = label_tag(:dmp_template, "DMP Template", class: "control-label")
+  .controls
+    = text_field_tag(:selected_requirement_template, nil, id: "selected_requirement_template_name", class: "input-xxlarge")
