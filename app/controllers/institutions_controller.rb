@@ -27,6 +27,7 @@ class InstitutionsController < ApplicationController
 
   # GET /institutions/1/edit
   def edit
+    @institution = Institution.find(params[:id])
   end
 
   # POST /institutions

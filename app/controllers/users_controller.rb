@@ -20,6 +20,9 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    @institutions = Institution.all
+    #if current_user.ldap_user? ? (@disabled=true) : (@disabled=false) ;
+    #end
   end
 
   # POST /users

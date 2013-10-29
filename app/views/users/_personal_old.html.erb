@@ -1,5 +1,5 @@
 <%unless @user.new_record?%>
-	<b>Name</b>
+        <b>Name</b>
 <%end%>
 
 <%errors = @user.errors[:login_id]%>
@@ -17,10 +17,10 @@
 
 <%unless @user.new_record?%>
 
-	<%errors = @user.errors[:first_name]%>
-	<%validation_class = errors.empty? ? {} : 'error'%>
+        <%errors = @user.errors[:first_name]%>
+        <%validation_class = errors.empty? ? {} : 'error'%>
 
-	<div class="control-group" id="validation_class">
+        <div class="control-group" id="validation_class">
                 <div class='control-label'>
                         <%= f.label :first_name %>
                         <div class="controls">
@@ -30,10 +30,10 @@
                 </div>
         </div>
 
-	<%errors = @user.errors[:last_name]%>
-	<%validation_class = errors.empty? ? {} : 'error'%>
+        <%errors = @user.errors[:last_name]%>
+        <%validation_class = errors.empty? ? {} : 'error'%>
 
-	<div class="control-group" id="validation_class">
+        <div class="control-group" id="validation_class">
                 <div class='control-label'>
                         <%= f.label :last_name %>
                         <div class="controls">
@@ -61,7 +61,6 @@
 <%errors = @user.errors[:password_confirmation]%>
 <%validation_class = errors.empty? ? {} : 'error'%>
 
-
 <div class="control-group" id="validation_class">
         <div class='control-label'>
                 <%= f.label :password_confirmation %>
@@ -71,6 +70,7 @@
                 </div>
         </div>
 </div>
+
 
 <b><%='Contact Information' unless @user.new_record?%></b>
 
@@ -87,55 +87,15 @@
         </div>
 </div>
 
-
 <%errors = @user.errors[:institution_id]%>
 <%validation_class = errors.empty? ? {} : 'error'%>
 
 <div class="control-group" id="validation_class">
-	<div class='control-label'>
-		<%= f.label :institution_id, class: "control-label" %>
-		<div class="controls">
-		
-
-			<%= f.select( :institution_id, Institution.all.collect { |i| [i.full_name, i.id] }, {prompt: 'Select Institution'})%>
-
-			<span class="help-inline"><%=errors.join (', ')%></span>
-		</div>
-	</div>
+        <div class='control-label'>
+                <%= f.label :institution_id %>
+                <div class="controls">
+                        <%= f.select( :institution_id, Institution.all.collect { |i| [i.full_name, i.id] }, {prompt: 'Select Institution'}) %>
+                        <span class="help-in-line"><%=errors.join (', ')%></span>
+                </div>
+        </div>
 </div>
-
-<%unless @user.new_record?%>
-	<b>DMP Options</b>
-<%end%>
-<div class="control-group">
-	<div>
-		<%label_tag :my_roles, 'My Roles'%>
-		<div class="controls">
-			<%= @user.roles.map {|r| r.name}.join(' | ')%>
-		</div>
-	</div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
