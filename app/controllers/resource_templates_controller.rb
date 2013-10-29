@@ -87,15 +87,15 @@ class ResourceTemplatesController < ApplicationController
     end
   end
 
-  def add_role
-    emails = params[:email].split(/,\s*/)
-    role  = Role.where(name: 'Resources Editor').first
-    emails.each do |email|
-      user = User.where(email: email).first
-      user.roles << role
-    end
-    redirect_to :back,  notice: "Added Resource Editor role to the User emails specified"
-  end
+  # def add_role
+  #   emails = params[:email].split(/,\s*/)
+  #   role  = Role.where(name: 'Resource Editor').first
+  #   # emails.each do |email|
+  #   #   user = User.where(email: email).first
+  #   #   user.roles << role
+  #   # end
+  #   redirect_to :back,  notice: "Added Resource Editor role to the User emails specified"
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.

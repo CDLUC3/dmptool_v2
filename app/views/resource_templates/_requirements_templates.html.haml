@@ -1,4 +1,4 @@
-%table.table.table-hover.table-condensed
+%table.table.tablehover.tablecondensed
   %thead
     %tr
       %th
@@ -9,7 +9,7 @@
       %th Creation Date
       %th Last Modification Date
   %tbody
-  - @requirements_templates.each do |requirements_template|
+   @requirements_templates.each do |requirements_template|
     %tr
       %td{class: 'selected_requirements_template'}= radio_button_tag :requirements_template_id, requirements_template.id
       %td{class: 'selected_requirements_template_name'}= requirements_template.name
@@ -21,12 +21,12 @@
 .pagination
 = paginate @requirements_templates
 
-.form-horizontal
+.formhorizontal
   %h4 Resource Template Overview
   %br/
   %strong Associated DMP Template
   %hr/
-  .control-group
-  = label_tag(:dmp_template, "DMP Template", class: "control-label")
+  .controlgroup
+  = label_tag(:dmp_template, "DMP Template", class: "controllabel")
   .controls
-    = text_field_tag(:selected_requirement_template, nil, id: "selected_requirement_template_name", class: "input-xxlarge")
+    = text_field_tag(:selected_requirement_template, nil, id: "selected_requirement_template_name", class: "inputxxlarge")

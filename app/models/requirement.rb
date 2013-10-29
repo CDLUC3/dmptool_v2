@@ -1,6 +1,5 @@
 class Requirement < ActiveRecord::Base
   include ActiveModel::Validations
-
   has_ancestry
   has_many :resources
   has_many :responses
@@ -12,6 +11,7 @@ class Requirement < ActiveRecord::Base
   validates_columns :requirement_type, :obligation
   validates :text_brief, presence: true
   validates :requirements_template_id, presence: true
+
 
   #These don't need to be validated if requirement is not a leaf
   validates :text_full, presence: true, unless: Proc.new { |x| x.is_group? }
