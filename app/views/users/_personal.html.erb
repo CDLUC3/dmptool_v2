@@ -62,18 +62,6 @@
 	</div>
 </div>
 
-<%errors = @user.errors[:login_id]%>
-<%validation_class = errors.empty? ? {} : 'error'%>
-
-<div class="control-group" id="validation_class">
-	<%= f.label :password_confirmation, class: "control-label" %>
-	<div class="controls">
-		<%= f.password_field :password_confirmation %>
-		<span class="help-inline"><%=errors.join (', ')%></span>
-	</div>
-</div>
-
-
 
 <%errors = @user.errors[:email]%>
 <%validation_class = errors.empty? ? {} : 'error'%>
@@ -94,7 +82,11 @@
 <div class="control-group" id="validation_class">
 	<%= f.label :institution_id, class: "control-label" %>
 	<div class="controls">
-		<%= f.select( :institution_id, @institutions.collect { |i| [i.full_name, i.id] }, {prompt: 'Select Institution'}) %>
+		
+		<%# f.select( :institution_id, Institution.all.collect { |i| [i.full_name, i.id] }, {prompt: 'Select Institution'}, {disabled: @disabled}) %>
+
+		<%= f.select( :institution_id, Institution.all.collect { |i| [i.full_name, i.id] }, {prompt: 'Select Institution'})%>
+
 		<span class="help-inline"><%=errors.join (', ')%></span>
 	</div>
 </div>
