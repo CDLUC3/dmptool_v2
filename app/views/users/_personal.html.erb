@@ -96,8 +96,7 @@
 		<%= f.label :institution_id, class: "control-label" %>
 		<div class="controls">
 		
-
-			<%= f.select( :institution_id, Institution.all.collect { |i| [i.full_name, i.id] }, {prompt: 'Select Institution'})%>
+			<%= f.select( :institution_id, @institution_list, {prompt: 'Select Institution'})%>
 
 			<span class="help-inline"><%=errors.join (', ')%></span>
 		</div>

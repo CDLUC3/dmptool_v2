@@ -20,9 +20,19 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @institutions = Institution.all
-    #if current_user.ldap_user? ? (@disabled=true) : (@disabled=false) ;
-    #end
+
+    #@ins = User.find(:id).institution_id
+
+    @user = User.find(params[:id])
+    @ins = @user.institution
+    
+    #@children = @ins.roots.children
+    #@institutions = Institution.all
+    #@ins = Institution.find(:institution_id)
+    #@children = @ins.roots.children
+
+    @institution_list = Institution.all.collect { |i| [i.full_name, i.id] }
+
   end
 
   # POST /users
