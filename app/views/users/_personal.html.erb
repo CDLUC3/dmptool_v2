@@ -110,7 +110,7 @@
 	<div class='control-label'>
 		<%label_tag :my_roles, 'My Roles'%>
 		<div class="controls">
-			<%= @user.roles.map {|r| r.name}.join(' | ')%>
+			<%= @roles %>
 		</div>
 	</div>
 </div>

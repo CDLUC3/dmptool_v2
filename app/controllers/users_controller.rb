@@ -25,13 +25,15 @@ class UsersController < ApplicationController
 
     @user = User.find(params[:id])
     @ins = @user.institution
-    
+
     #@children = @ins.roots.children
     #@institutions = Institution.all
     #@ins = Institution.find(:institution_id)
     #@children = @ins.roots.children
 
     @institution_list = Institution.all.collect { |i| [i.full_name, i.id] }
+
+    @roles = @user.roles.map {|r| r.name}.join(' | ')
 
   end
 
