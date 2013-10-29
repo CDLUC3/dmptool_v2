@@ -108,7 +108,7 @@
 	<b>DMP Options</b>
 <%end%>
 <div class="control-group">
-	<div>
+	<div class='control-label'>
 		<%label_tag :my_roles, 'My Roles'%>
 		<div class="controls">
 			<%= @user.roles.map {|r| r.name}.join(' | ')%>
