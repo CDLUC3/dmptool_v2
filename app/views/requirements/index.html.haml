@@ -1,13 +1,14 @@
 %h4  DMP Template Details
 %hr
 .row-fluid
-  .span4
+  .span5
     %fieldset.template_outline
       %strong Template Outline
       %br
-      = link_to 'Add Group', new_requirements_template_requirement_path(@requirements_template), id: "add_requirement_group"
+      = link_to 'Add Requirements Group', new_requirements_template_requirement_path(@requirements_template), id: "add_requirement_group"
       %hr
-        = render 'requirements_group'
+      .requirements_tree_view
+        = nested_requirements @requirements.arrange(order: :created_at)
     %br/
 
     %fieldset.template_status
@@ -18,5 +19,7 @@
       %br/
       = link_to 'Delete Template', @requirements_template, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
-  .span8
+  .span7
     = render 'form'
+
+
