@@ -95,10 +95,9 @@
 	<div class='control-label'>
 		<%= f.label :institution_id, class: "control-label" %>
 		<div class="controls">
-		
-			<%= f.select( :institution_id, @institution_list, {prompt: 'Select Institution'})%>
+		      <%= f.select( :institution_id, @institution_list, {prompt: 'Select Institution'})%>
 
-			<span class="help-inline"><%=errors.join (', ')%></span>
+		      <span class="help-inline"><%=errors.join (', ')%></span>
 		</div>
 	</div>
 </div>

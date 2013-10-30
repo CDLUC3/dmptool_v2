@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  include InstitutionsHelper
+
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
@@ -21,17 +23,10 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
 
-    #@ins = User.find(:id).institution_id
-
     @user = User.find(params[:id])
-    @ins = @user.institution
+    @my_institution = @user.institution
 
-    #@children = @ins.roots.children
-    #@institutions = Institution.all
-    #@ins = Institution.find(:institution_id)
-    #@children = @ins.roots.children
-
-    @institution_list = Institution.all.collect { |i| [i.full_name, i.id] }
+    @institution_list = my_profile_institution_list(@my_institution)
 
     @roles = @user.roles.map {|r| r.name}.join(' | ')
 
