@@ -1,37 +1,37 @@
-<div class='dashboard'>
-	<div class='dashboard-header'>
-		<div class='cdl_logo'>
-			<%= image_tag('cdl_logo.png', :width => '164', :height => '51', :alt => 'California Digital Library') %>	
+<div class="dashboard">
+	<div class="dashboard-header">
+		<div class="inst-logo">
+			<%= image_tag("cdl_logo.png", :width => "164", :height => "51", :alt => "California Digital Library") %>	
 		</div>
-		<div class='cdl_title'>
+		<div class="inst-title">
 			<h3>University of California Curation Center of the California Digital Library</h3>
 		</div>
-		<div class='inst_url'>
-			<%= link_to '#', :id => 'inst-url' do %>
+		<div class="inst-url">
+			<%= link_to "#", :id => "inst-url" do %>
 				<span></span>www.domainname.edu
 			<% end %>
-			<%= link_to '#', :id => 'inst-contact' do %>
+			<%= link_to "#", :id => "inst-contact" do %>
 				<span></span>Contact Institution Administration
 			<% end %>
 		</div>
 	</div>
-	<div class ='dashboard-nav'>
+	<div class="dashboard-nav">
 		<ul>
-			<li><%= link_to(content_tag(:span, 'My Dashboard'), '#') %></li>
-			<li><%= link_to(content_tag(:span, 'My DMPs'), '#') %></li>
-			<li><%= link_to(content_tag(:span, 'Create New DMP'),'#') %></li>
-			<li><%= link_to(content_tag(:span, 'Review DMPs'), '#') %></li>
-			<li class='current'><%= link_to(content_tag(:span, 'DMP Templates'), requirements_templates_path) %>
+			<li><%= link_to(content_tag(:span, "My Dashboard"), "#") %></li>
+			<li><%= link_to(content_tag(:span, "My DMPs"), "#") %></li>
+			<li><%= link_to(content_tag(:span, "Create New DMP"),"#") %></li>
+			<li><%= link_to(content_tag(:span, "Review DMPs"), "#") %></li>
+			<li class="current"><%= link_to(content_tag(:span, "DMP Templates"), requirements_templates_path) %>
 				<ul>
-					<li class='current'><%= link_to 'Template Overview', '#' %></li>
-					<li><%= link_to 'Template Details', '#' %></li>
-					<li class='last'></li>
+					<li class="current"><%= link_to "Template Overview", "#" %></li>
+					<li><%= link_to "Template Details", "#" %></li>
+					<li class="last"></li>
 				</ul>
 			</li>
-			<li><%= link_to(content_tag(:span, 'Resources'), resource_templates_path) %></li>
-			<li><%= link_to(content_tag(:span, 'Institution Profile'), '#') %></li>
-			<li><%= link_to(content_tag(:span, 'My Profile'), '#') %></li>
-			<li><%= link_to(content_tag(:span, 'DMP Administration'), '#') %></li>
+			<li><%= link_to(content_tag(:span, "Resources"), resource_templates_path) %></li>
+			<li><%= link_to(content_tag(:span, "Institution Profile"), "#") %></li>
+			<li><%= link_to(content_tag(:span, "My Profile"), "#") %></li>
+			<li><%= link_to(content_tag(:span, "DMP Administration"), "#") %></li>
 		</ul>
 	</div>
 </div>

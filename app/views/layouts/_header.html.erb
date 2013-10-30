@@ -1,24 +1,20 @@
-<header class='navbar'>
-  <div class='navbar-inner'>
-    <div class='container'>
+<header class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
       <nav>
-      	<%= link_to image_tag('dmp_logo.png'), root_path, :id => 'logo' %>
-        <ul class='nav pull-right'>
-          <!--<li><%= link_to 'Home', root_path %></li>-->
-          <li><%= link_to 'About', '#' %></li>
-          <li><%= link_to 'DMP Guidance', '#' %></li>
-          <li><%= link_to 'Example DMPs', '#' %></li>
-          <li><%= link_to 'DMPTool News', '#' %></li>
-          <li><%= link_to 'Help', help_path %></li>
-          <li><%= link_to 'Contact Us', contact_path %></li>
-<<<<<<< HEAD
+      	<%= link_to image_tag("dmp_logo.png"), root_path, :id => "logo" %>
+        <ul class="nav pull-right">
+          <!--<li><%= link_to "Home", root_path %></li>-->
+          <li><%= link_to "About", "#" %></li>
+          <li><%= link_to "DMP Guidance", "#" %></li>
+          <li><%= link_to "Example DMPs", "#" %></li>
+          <li><%= link_to "DMPTool News", "#" %></li>
+          <li><%= link_to "Help", help_path %></li>
+          <li><%= link_to "Contact Us", contact_path %></li>
           <li id=login><%= link_to login_path do %>
           		<span></span>Log In
           	<% end %>
           </li>
-=======
-          <li><%= link_to 'Logout', logout_path if current_user %></li>
->>>>>>> development
         </ul>
       </nav>
     <div>
