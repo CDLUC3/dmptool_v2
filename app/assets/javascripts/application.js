@@ -11,10 +11,10 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require bootstrap
 //= require jquery.ui.all
 //= require jquery_ujs
 //= require holder
 //= require turbolinks
 //= require jquery.turbolinks
-//= require bootstrap
 //= require_tree .
