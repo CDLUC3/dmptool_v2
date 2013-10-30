@@ -305,16 +305,17 @@ h1, h2, h3 {
 }
 h1 {
 	color: #86A641;
-	font-size: 1.5em;
-	margin: 10px 0; }
+	font-size: 1.5em; }
 h2 {
 	color: #516935;
 	font-size: 1.125em;
-	text-align: left;
-	margin: 10px 0; }
+	text-align: left; }
 h3 {
 	color: #4C4C4E;
 	font-size: 1.125em; }
+h4, h5, h6 {
+	margin: 5px 0;
+}
 hr {
 	border-top: 1px solid #B6B6B7;
 	margin: 20px 0 0 0;
@@ -575,27 +576,22 @@ hr {
 
 /* DMP Templates */
 
-.table-header {
+h3.dmp-header  {
 	clear: both;
 	-moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -ms-box-sizing: border-box;
     box-sizing: border-box;
 	background: #6D6E70;
-	width: 100%;
-	height: 39px;
-	position: relative;
-}
-.table-header h3 {
 	color: #FFFFFF;
 	text-transform: uppercase;
-	line-height: 42px;
+	line-height: 43px;
+	width: 100%;
 	height: 39px;
 	margin: 0;
 	padding-left: 53px;
-	position: relative;
-}
-.table-header h3 span {
+	position: relative; }
+h3.dmp-header  span {
 	display: block;
 	background-image: url(dmp_icons.png);
 	background-repeat: no-repeat;
@@ -603,21 +599,21 @@ hr {
 	font-weight: normal;
 	position: absolute;
 	left: 11px; }
-.table-header h3 span#dmp-templates {
+h3.dmp-header  span#dmp-templates {
 	background-position: -123px -42px;
 	width: 26px;
 	height: 25px;
 	top: 7px; }
-.table-header h3 span#dmp-editors {
+h3.dmp-header  span#dmp-editors {
 	background-position: -60px -42px;
 	width: 27px;
 	height: 25px;
 	top: 7px; }
-.table-header h3 span#inst-guidance {
+h3.dmp-header  span#inst-guidance {
 	background-position: -109px -16px; }
-.table-header h3 span#funder-guidance {
+h3.dmp-header  span#funder-guidance {
 	background-position: -147px -16px; }
-.table-header h3 span#create-new {
+h3.dmp-header  span#create-new {
 	background-position: -92px -42px;
 	width: 26px;
 	height: 25px;
@@ -664,11 +660,22 @@ table.table tr td a {
 	color: #4C4C4E; }
 table.table tr td a.delete {
 	color: #E02665; }
-table.table tr td.table-buttons {
+.btn-container, table.table tr td.table-buttons {
+	-moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
 	border-top: 1px solid #B6B6B7;
 	background: none;
 	font-size: 1em;
 	padding: 9px; }
+table.table tr td.table-buttons {
+	-moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    -ms-box-sizing: content-box;
+    box-sizing: content-box;
+    margin-left: 0;
+}
 table.table tr td.remove {
 	width: 86px;
 	text-align: center; }
@@ -681,11 +688,57 @@ table.table a.remove {
 table.table tr th.cell-narrow, table.table tr td.cell-narrow {
 	width: 35px;
 	text-align: center; }
-.table-buttons .button, .table-buttons .btn {
+.table-buttons .btn {
 	float: left;
 	margin-right: 6px; }
+	
+/* DMP Tab Content */
 
+.dmp-tabs {
+	margin-top: 12px;
+}
+.dmp-tabs ul.nav-tabs {
+	margin: 0;
+}
+.dmp-tabs ul.nav-tabs li {
+	height: 31px;
+}
+.dmp-tabs ul.nav-tabs > li > a {
+	display: block;
+	color: #4C4C4E;
+	font-weight: bold;
+	line-height: 31px;
+	height: 30px;
+	padding: 0 14px;
+}
+.dmp-tabs ul.nav-tabs > li.active > a {
+	border-color: #C9C9CB;
+	border-bottom: none;
+	color: #516935;;
+}
+.dmp-tabs ul.nav-tabs > li > a:hover, .dmp-tabs ul.nav-tabs > li > a:focus {
+	border: 1px solid transparent;
+	border-bottom: 1px solid transparent;
+	height: 28px;
+} 
 
+.dmp-tabs ul.nav-tabs > li.active > a:hover, .dmp-tabs ul.nav-tabs > li.active > a:focus {
+	border: 1px solid #C9C9CB;
+	border-bottom: none;
+	height: 30px;
+}
+.tab-content {
+	border: 1px solid #C9C9CB;
+	border-top: none;
+}
+.tab-pane {
+	padding: 10px 14px 0;
+}
+.tab-pane hr {
+	border-top: 2px dotted #C9C9CB;
+	margin-top: 0;
+	margin-bottom: 20px;
+}
 
 
 

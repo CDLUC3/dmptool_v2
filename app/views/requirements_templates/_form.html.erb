@@ -1,94 +1,118 @@
-<%= form_for @requirements_template, html: { class: 'form-horizontal' } do |f| %>
-  <% if @requirements_template.errors.any? %>
-    #error_explanation
-      <h2>= "#{pluralize(@requirements_template.errors.count, "error")} prohibited this requirements_template from being saved:"</h2>
-      <ul>
-        <% @requirements_template.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-  <% end %>
-  <h4> DMP Template Overview </h4>
-  <br/>
-  <h5> Basic Information </h5>
-  <hr/>
-  <div class="control-group" >
-    <%= f.label :template_name, class: "control-label" %>
-    <div class="controls" >
-      <%= f.text_field :name %>
-    </div>
+<h3 class="dmp-header"><span id="dmp-templates"></span>DMP Template Overview</h3>
+<div class="dmp-tabs">
+	<script>
+  		$('#dmp-tabs a').click(function (e) {
+			e.preventDefault();
+			$(this).tab('show');
+		})
+		$('#dmp-tabs li:first a').tab('show');
+		$('#dmp-tabs li:eq(1) a').tab('show');
+		$('#dmp-tabs li:eq(2) a').tab('show');
+	</script>
+	<ul class="nav nav-tabs" id="dmp-tabs">
+  		<li class="active"><%= link_to "Basic Information", "#basic-info", :data => {:toggle => 'tab'} %></li>
+  		<li><%= link_to "Notification Preferences", "#notification", :data => {:toggle => 'tab'} %></li>
+  	</ul>
+</div>
+
+<div class="tab-content">
+	<div class="tab-pane active" id="basic-info">
+	<h5>Name and Password</h5>
+	<hr/>
+	<%= form_for @requirements_template, html: { class: "form-horizontal" } do |f| %>
+	  <% if @requirements_template.errors.any? %>
+	    #error_explanation
+	      <h2>= "#{pluralize(@requirements_template.errors.count, "error")} prohibited this requirements_template from being saved:"</h2>
+	      <ul>
+	        <% @requirements_template.errors.full_messages.each do |msg| %>
+	          <li><%= msg %></li>
+	        <% end %>
+	      </ul>
+  	<% end %>
+	  <div class="control-group" >
+	    <%= f.label :template_name, class: "control-label" %>
+	    <div class="controls" >
+	      <%= f.text_field :name %>
+	    </div>
+	  </div>
+	
+	  <div class="control-group" >
+	    <%= f.label :visibility, class: "control-label" %>
+	    <div class="controls" >
+	      <%= f.radio_button :visibility, :public, class: "radio inline" %>
+	      Public
+	      <%= f.radio_button :visibility, :institutional, class: "radio inline" %>
+	      Institutional
+	    </div>
+	  </div>
+	
+	  <%= render partial: "date_fields" , locals: { f: f } unless @requirements_template.new_record? %>
+	
+	  <div class="control-group" >
+	    <%= f.label :version, class: "control-label" %>
+	    <div class="controls" >
+	      <%= f.text_field :version, value: "V1.0", disabled: true %>
+	    </div>
+	  </div>
+	
+	  <div class="control-group" >
+	    <%= f.label :institution, class: "control-label" %>
+	    <div class="controls" >
+	      <%= f.text_field :institution_id %>
+	<!--       / will replace the institution.id field above with this line as and the login functionality is complete
+	      / = f.text_field current_user.institution.full_name, disabled: true -->
+	    </div>
+	  </div>
+	
+	  <h5> Optional Information </h5>
+	  <hr/>
+	  <div class="control-group" >
+	    <%= f.label :start_date, class: "control-label" %>
+	    <div class="controls" >
+	      <%= f.text_field :start_date, :value => @requirements_template.start_date.blank? ? " " : @requirements_template.start_date.strftime("%m/%d/%Y %I:%M %p"), id: "start_date", class: "datepicker" %>
+	    </div>
+	  </div>
+	
+	  <div class="control-group" >
+	    <%= f.label :end_date, class: "control-label" %>
+	    <div class="controls" >
+	      <%= f.text_field :end_date,:value => @requirements_template.end_date.blank? ? " " : @requirements_template.end_date.strftime("%m/%d/%Y %I:%M %p"), id: "end_date", class: "datepicker" %>
+	    </div>
+	  </div>
+	
+	  <div class="control-group" >
+	    <%= f.label :review_requirement, class: "control-label" %>
+	    <div class="controls" >
+	      <%= f.radio_button :review_type, :formal_review, class: "radio inline" %>
+	      Formal Review Required
+	      <%= f.radio_button :review_type, :informal_review, class: "radio inline" %>
+	      Informal Review Required
+	      <%= f.radio_button :review_type, :no_review, class: "radio inline" %>
+	      No Review Required
+	    </div>
+	  </div>
+	
+	  <div class="control-group" >
+	    <%= f.fields_for :additional_informations do |builder| %>
+	      <%= render "additional_information_fields", f: builder %>
+	    <% end %>
+	    <%= link_to_add_fields "Add Funder Link", f, :additional_informations %>
+	  </div>
+	
+	  <div class="control-group" >
+	    <%= f.fields_for :sample_plans do |builder| %>
+	      <%= render "sample_plan_fields", f: builder %>
+	    <% end %>
+	    <%= link_to_add_fields "Add Sample Plan", f , :sample_plans %>
+	  </div>
+	  
+	  <div class="btn-container">
+	  <%= f.submit "Save Changes", class: "btn btn-silver pull-left", method: "post" %>
+	  </div>
+	<% end %>
+	</div>
+	<div class="tab-pane" id="notification">
+		<h5>Notification Preferences</h5>
+		<hr/>
+	</div>
   </div>
-
-  <div class="control-group" >
-    <%= f.label :visibility, class: "control-label" %>
-    <div class="controls" >
-      <%= f.radio_button :visibility, :public, class: "radio inline" %>
-      Public
-      <%= f.radio_button :visibility, :institutional, class: "radio inline" %>
-      Institutional
-    </div>
-  </div>
-
-  <%= render partial: 'date_fields' , locals: { f: f } unless @requirements_template.new_record? %>
-
-  <div class="control-group" >
-    <%= f.label :version, class: "control-label" %>
-    <div class="controls" >
-      <%= f.text_field :version, value: "V1.0", disabled: true %>
-    </div>
-  </div>
-
-  <div class="control-group" >
-    <%= f.label :institution, class: "control-label" %>
-    <div class="controls" >
-      <%= f.text_field :institution_id %>
-<!--       / will replace the institution.id field above with this line as and the login functionality is complete
-      / = f.text_field current_user.institution.full_name, disabled: true -->
-    </div>
-  </div>
-
-  <h5> Optional Information </h5>
-  <hr/>
-  <div class="control-group" >
-    <%= f.label :start_date, class: "control-label" %>
-    <div class="controls" >
-      <%= f.text_field :start_date, :value => @requirements_template.start_date.blank? ? " " : @requirements_template.start_date.strftime("%m/%d/%Y %I:%M %p"), id: 'start_date', class: "datepicker" %>
-    </div>
-  </div>
-
-  <div class="control-group" >
-    <%= f.label :end_date, class: "control-label" %>
-    <div class="controls" >
-      <%= f.text_field :end_date,:value => @requirements_template.end_date.blank? ? " " : @requirements_template.end_date.strftime("%m/%d/%Y %I:%M %p"), id: 'end_date', class: "datepicker" %>
-    </div>
-  </div>
-
-  <div class="control-group" >
-    <%= f.label :review_requirement, class: "control-label" %>
-    <div class="controls" >
-      <%= f.radio_button :review_type, :formal_review, class: "radio inline" %>
-      Formal Review Required
-      <%= f.radio_button :review_type, :informal_review, class: "radio inline" %>
-      Informal Review Required
-      <%= f.radio_button :review_type, :no_review, class: "radio inline" %>
-      No Review Required
-    </div>
-  </div>
-
-  <div class="control-group" >
-    <%= f.fields_for :additional_informations do |builder| %>
-      <%= render "additional_information_fields", f: builder %>
-    <% end %>
-    <%= link_to_add_fields 'Add Funder Link', f, :additional_informations %>
-  </div>
-
-  <div class="control-group" >
-    <%= f.fields_for :sample_plans do |builder| %>
-      <%= render "sample_plan_fields", f: builder %>
-    <% end %>
-    <%= link_to_add_fields 'Add Sample Plan', f , :sample_plans %>
-  </div>
-  <hr/>
-  <%= f.submit 'Save Changes', class: 'btn btn-success pull-left', method: 'post' %>
-
-<% end %>
