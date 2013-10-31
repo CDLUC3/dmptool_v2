@@ -5,15 +5,14 @@ module InstitutionsHelper
     end.join.html_safe
   end
 
+  
   def my_profile_institution_list(ins)
-    if ins.has_children? && !ins.root?
+    if !ins.root?
       @institution_list = ins.parent.subtree.collect { |i| [i.full_name, i.id] }
-    elsif ins.has_children? && ins.root?
+    elsif ins.has_children? 
       @institution_list = ins.subtree.collect { |i| [i.full_name, i.id] }
-    elsif !ins.has_children? && ins.root?
+    else
       @institution_list = [[ ins.full_name, ins.id ]]
-    elsif !ins.has_children? && !ins.root?
-       @institution_list = ins.parent.subtree.collect { |i| [i.full_name, i.id] }
     end
   end
 end
