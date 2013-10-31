@@ -7,8 +7,8 @@
           %li= msg
   %fieldset
     .control-group
-      = f.hidden_field :parent_id
-      = f.check_box :group, id: 'if_group', style: "display: none;"
+      = f.text_field :parent_id
+      = f.check_box :group, id: 'if_group'
     .control-group
       = f.label :requirement_label, class: "control-label"
       .controls
@@ -44,4 +44,4 @@
   .actions.pull-right
     %br/
     = f.submit 'Save', class: 'btn btn-info'
-    = button_to 'Finish', '#', class: 'btn btn-info', method: :get
+    = link_to 'Finish', '#', class: 'btn btn-info'

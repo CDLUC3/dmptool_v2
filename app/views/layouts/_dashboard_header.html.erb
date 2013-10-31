@@ -17,7 +17,7 @@
 	</div>
 	<div class="dashboard-nav">
 		<ul>
-			<li><%= link_to(content_tag(:span, "My Dashboard"), "#") %></li>
+			<li><%= link_to(content_tag(:span, "My Dashboard"),  dashboard_path) %></li>
 			<li><%= link_to(content_tag(:span, "My DMPs"), "#") %></li>
 			<li><%= link_to(content_tag(:span, "Create New DMP"),"#") %></li>
 			<li><%= link_to(content_tag(:span, "Review DMPs"), "#") %></li>
@@ -29,9 +29,9 @@
 				</ul>
 			</li>
 			<li><%= link_to(content_tag(:span, "Resources"), resource_templates_path) %></li>
-			<li><%= link_to(content_tag(:span, "Institution Profile"), "#") %></li>
-			<li><%= link_to(content_tag(:span, "My Profile"), "#") %></li>
-			<li><%= link_to(content_tag(:span, "DMP Administration"), "#") %></li>
+			<li><%= link_to(content_tag(:span, "Institution Profile"), institutions_path) %></li>
+			<li><%= link_to(content_tag(:span, "My Profile"), edit_user_path(current_user)) %></li>
+			<li><%= link_to(content_tag(:span, "DMP Administration"), users_url) %></li>
 		</ul>
 	</div>
 </div>

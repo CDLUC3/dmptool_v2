@@ -1,3 +1,52 @@
 // Place all the styles related to the Dashboard controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+div.row {
+  margin-top: 1.5em;
+}
+
+div.two_col {
+  border-style: solid;
+  border-width: 1px;
+}
+
+div.col1 {
+  width: 50%;
+  float: left;
+}
+
+div.col2 {
+  width: 50%;
+  float: left;
+}
+
+div.col1>div, div.col2>div {
+  margin:10px 15px 10px 15px
+}
+
+div.col1>div>div, div.col2>div>div {
+  height: 2em;
+}
+
+div.col1 div.head, div.col2 div.head{
+  height: 2em;
+  font-size: 110%;
+  font-weight: bold;
+  color: green;
+}
+
+div.two_col>div:first-child{
+  font-size: 120%;
+  padding: 0.5em 0 0 0.5em;
+  text-transform:uppercase;
+  height: 2em;
+  background-color: green;
+  color: white;
+}
+
+div.button_row {
+  clear:both;
+  padding: 10px 15px 10px 15px;
+}
+

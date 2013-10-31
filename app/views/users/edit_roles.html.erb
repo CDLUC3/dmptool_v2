@@ -1,0 +1,16 @@
+<div id="roles_dialog_form" >
+	<% form_tag(controller: "users", action: "update", :method => :put)  %>
+		<%= hidden_field_tag "user[role_ids][]", nil %>
+		<div>
+  		<% Role.all.each do |role| %>
+    		<%= check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id), id: dom_id(role) %>
+   			<%= label_tag dom_id(role), role.name %><br/>
+   		<% end %>
+		</div>
+
+		<div class="actions">
+			<%= submit_tag 'Save Changes', class: "btn btn-primary" %>
+			<%= button_tag "Cancel", type: :reset, method: :get, class: "btn btn-primary" %>
+		</div>
+
+</div>

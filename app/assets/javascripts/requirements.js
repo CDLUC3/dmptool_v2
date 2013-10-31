@@ -11,21 +11,19 @@ $(function(){
 	});
 });
 
-	$(function(){
-	 	$("#add_requirement_group").click(function(e) {
-	 		e.preventDefault();
-	 		$("#if_group").prop('checked', true);
-			$("#requirement_text_full, #requirement_requirement_type").prop("disabled", true);
-		});
+$(function(){
+ 	$("#add_requirement_group").click(function(e) {
+ 		e.preventDefault();
+ 		$("#if_group").prop('checked', true);
+		$("#requirement_text_full, #requirement_requirement_type, #obligation").prop("disabled", true);
 	});
+});
 
-
-// $(function() {
-//   $('#requirements_group').jstree({
-//     plugins: ['themes', 'ui'],
-//     themes: {
-//       theme : 'default',
-//       icons : false
-//     }
-//   });
-// });
+$(function(){
+ 	$(".add_requirements_sub_group").click(function(e) {
+ 		e.preventDefault();
+ 		$("form")[0].reset();
+ 		$("#if_group").prop('checked', true);
+		$("#requirement_text_full, #requirement_requirement_type, #obligation").prop("disabled", true);
+	});
+});

@@ -1,10 +1,13 @@
 class UsersController < ApplicationController
+  include InstitutionsHelper
+
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @users = User.all.page(params[:page]).per(10)
+    @institutions = Institution.all
   end
 
   # GET /users/1
@@ -19,6 +22,14 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+
+    @user = User.find(params[:id])
+    @my_institution = @user.institution
+
+    @institution_list = my_profile_institution_list(@my_institution)
+
+    @roles = @user.roles.map {|r| r.name}.join(' | ')
+
   end
 
   # POST /users
@@ -119,6 +130,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit_roles
+    @user = User.find(params[:id])
+    # role_ids = params[:user][:role_ids] ||= []
+    # Rails.logger.info("value = #{role_ids.inpsect}")
+    # @user.attributes = { 'role_ids' => [] }.merge(params[:user])
+    @user.save!
+  end
+
   private
 
   def reset_ldap_password(user, password)
@@ -132,7 +151,7 @@ class UsersController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
     params.require(:user).permit(:institution_id, :email, :first_name, :last_name,
-                                 :password, :password_confirmation, :prefs, :login_id)
+                                 :password, :password_confirmation, :prefs, :login_id, role_ids: [])
   end
 
   def update_ldap_if_necessary(user, params)
@@ -149,12 +168,6 @@ class UsersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_user
     @user = User.find(params[:id])
-  end
-
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def user_params
-    params.require(:user).permit(:institution_id, :email, :first_name, :last_name,
-                                 :password, :password_confirmation, :prefs, :login_id)
   end
 
   def update_notifications (prefs)

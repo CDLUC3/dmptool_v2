@@ -35,7 +35,7 @@
   <div class="control-group">
     <%= f.label :parent_id , "Parent Institution", class: "control-label"%>
     <div class="controls">
-      <%= f.select(:parent_id, options_for_select(@categories), :prompt => 'Select') %>
+      <%= f.select(:parent_id, options_for_select(@categories), :prompt => 'Select', :include_blank => 'none') %>
     </div>
   </div>
 
@@ -84,9 +84,9 @@
     </div>
   </div>
 
-<div class="actions">
-  <%= f.submit "Save Changes", class: "btn btn-primary" %>
-  <%= f.submit "Cancel", type: :reset, method: :get, class: "btn btn-primary" %>
-<div>
+  <div class="actions">
+    <%= f.submit "Save Changes", class: "btn btn-primary" %>
+    <%= button_tag "Cancel", type: :reset, class: "btn btn-primary" %>
+  </div>
 
-<% end %>
+  <% end %>

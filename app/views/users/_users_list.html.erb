@@ -1,0 +1,24 @@
+<table class ="table table-striped table-bordered">
+  <tr>
+    <th> User Name </th>
+    <th> Institution </th>
+    <th> Current Role </th>
+    <th> Edit User Role </th>
+    <th> Remove User </th>
+  </tr>
+
+  <% @users.each do |user| %>
+    <tr class='user_row'>
+      <td><%= link_to user.full_name, edit_user_path(user) %></td>
+      <td><%= link_to user.institution.full_name, edit_institution_path(user.institution) %></td>
+      <td><%= user.roles.map {|r| r.name}.join('|') %></td>
+      <td><%=link_to raw('<i class="icon-user icon-white"></i>'), edit_roles_user_path(user), :class => 'btn btn-info', id: "#edit_roles_view" %></td>
+      <td><%= link_to raw('<i class="icon-trash icon-white"></i>'), user, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger' %></td>
+    </tr>
+  <% end %>
+
+  <div class="pagination">
+    <%= paginate @users %>
+  </div>
+
+</table>

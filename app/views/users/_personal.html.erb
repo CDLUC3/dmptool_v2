@@ -6,13 +6,13 @@
 <%validation_class = errors.empty? ? {} : 'error'%>
 
 <div class="control-group" id="validation_class">
-	<div class='control-label'>
-		<%= f.label :login_id, 'Username' %>
-		<div class="controls">
-			<%= f.text_field :login_id, readonly: !@user.new_record? %>
-			<span class="help-in-line"><%=errors.join (', ')%></span>
-		</div>
-	</div>
+        <div class='control-label'>
+                <%= f.label :login_id, 'Username' %>
+                <div class="controls">
+                        <%= f.text_field :login_id, readonly: !@user.new_record? %>
+                        <span class="help-in-line"><%=errors.join (', ')%></span>
+                </div>
+        </div>
 </div>
 
 <%unless @user.new_record?%>
@@ -21,27 +21,27 @@
 	<%validation_class = errors.empty? ? {} : 'error'%>
 
 	<div class="control-group" id="validation_class">
-		<div class='control-label'>
-			<%= f.label :first_name %>
-			<div class="controls">
-				<%= f.text_field :first_name %>
-				<span class="help-in-line"><%=errors.join (', ')%></span>
-			</div>
-		</div>
-	</div>
+                <div class='control-label'>
+                        <%= f.label :first_name %>
+                        <div class="controls">
+                                <%= f.text_field :first_name %>
+                                <span class="help-in-line"><%=errors.join (', ')%></span>
+                        </div>
+                </div>
+        </div>
 
 	<%errors = @user.errors[:last_name]%>
 	<%validation_class = errors.empty? ? {} : 'error'%>
 
 	<div class="control-group" id="validation_class">
-		<div class='control-label'>
-			<%= f.label :last_name %>
-			<div class="controls">
-				<%= f.text_field :last_name %>
-				<span class="help-in-line"><%=errors.join (', ')%></span>
-			</div>
-		</div>
-	</div>
+                <div class='control-label'>
+                        <%= f.label :last_name %>
+                        <div class="controls">
+                                <%= f.text_field :last_name %>
+                                <span class="help-in-line"><%=errors.join (', ')%></span>
+                        </div>
+                </div>
+        </div>
 
 <%end%>
 
@@ -49,28 +49,28 @@
 <%validation_class = errors.empty? ? {} : 'error'%>
 
 <div class="control-group" id="validation_class">
-	<div class='control-label'>
-		<%= f.label :password, password_label(@user) %>
-		<div class="controls">
-			<%= f.password_field :password %>
-			<span class="help-in-line"><%=errors.join (', ')%></span>
-		</div>
-	</div>
+        <div class='control-label'>
+                <%= f.label :password, password_label(@user) %>
+                <div class="controls">
+                        <%= f.password_field :password %>
+                        <span class="help-in-line"><%=errors.join (', ')%></span>
+                </div>
+        </div>
 </div>
 
 <%errors = @user.errors[:password_confirmation]%>
 <%validation_class = errors.empty? ? {} : 'error'%>
 
-<div class="control-group" id="validation_class">
-	<div class='control-label'>
-		<%= f.label :password_confirmation %>
-		<div class="controls">
-			<%= f.password_field :password_confirmation %>
-			<span class="help-in-line"><%=errors.join (', ')%></span>
-		</div>
-	</div>
-</div>
 
+<div class="control-group" id="validation_class">
+        <div class='control-label'>
+                <%= f.label :password_confirmation %>
+                <div class="controls">
+                        <%= f.password_field :password_confirmation %>
+                        <span class="help-in-line"><%=errors.join (', ')%></span>
+                </div>
+        </div>
+</div>
 
 <b><%='Contact Information' unless @user.new_record?%></b>
 
@@ -78,33 +78,41 @@
 <%validation_class = errors.empty? ? {} : 'error'%>
 
 <div class="control-group" id="validation_class">
-	<div class='control-label'>
-		<%= f.label :email %>
-		<div class="controls">
-			<%= f.text_field :email %>
-			<span class="help-in-line"><%=errors.join (', ')%></span>
-		</div>
-	</div>
+        <div class='control-label'>
+                <%= f.label :email %>
+                <div class="controls">
+                        <%= f.text_field :email %>
+                        <span class="help-in-line"><%=errors.join (', ')%></span>
+                </div>
+        </div>
 </div>
+
 
 <%errors = @user.errors[:institution_id]%>
 <%validation_class = errors.empty? ? {} : 'error'%>
 
 <div class="control-group" id="validation_class">
 	<div class='control-label'>
-		<%= f.label :institution_id %>
+		<%= f.label :institution_id, class: "control-label" %>
 		<div class="controls">
-			<%= f.select( :institution_id, Institution.all.collect { |i| [i.full_name, i.id] }, {prompt: 'Select Institution'}) %>
-			<span class="help-in-line"><%=errors.join (', ')%></span>
+		      <%= f.select( :institution_id, @institution_list, {prompt: 'Select Institution'})%>
+
+		      <span class="help-inline"><%=errors.join (', ')%></span>
 		</div>
 	</div>
 </div>
 
-
-
-
-
-
+<%unless @user.new_record?%>
+	<b>DMP Options</b>
+<%end%>
+<div class="control-group">
+	<div class='control-label'>
+		<%label_tag :my_roles, 'My Roles'%>
+		<div class="controls">
+			<%= @roles %>
+		</div>
+	</div>
+</div>
 
 
 

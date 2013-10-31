@@ -7,7 +7,11 @@ class UserSessionsController < ApplicationController
   def create
     user = User.from_omniauth(env["omniauth.auth"])
     session[:login_id] = user.login_id
-    redirect_to edit_user_path(current_user)
+    if user.created_at.time.utc + 1 > Time.new.utc || user.institution_id.nil? || user.institution_id == 0
+      redirect_to edit_user_path(current_user) #edit info or set institution
+    else
+      redirect_to dashboard_path #otherwise if old user with institution set, send to dashboard
+    end
   end
 
   def failure

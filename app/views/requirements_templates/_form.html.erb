@@ -5,9 +5,6 @@
 			e.preventDefault();
 			$(this).tab('show');
 		})
-		$('#dmp-tabs li:first a').tab('show');
-		$('#dmp-tabs li:eq(1) a').tab('show');
-		$('#dmp-tabs li:eq(2) a').tab('show');
 	</script>
 	<ul class="nav nav-tabs" id="dmp-tabs">
   		<li class="active"><%= link_to "Basic Information", "#basic-info", :data => {:toggle => 'tab'} %></li>

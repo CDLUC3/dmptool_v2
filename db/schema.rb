@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131025100957) do
+ActiveRecord::Schema.define(version: 20131028075853) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 20131025100957) do
     t.datetime "updated_at"
     t.string   "logo"
     t.string   "ancestry"
+    t.datetime "deleted_at"
   end
 
   add_index "institutions", ["ancestry"], name: "index_institutions_on_ancestry", using: :btree
@@ -214,6 +215,8 @@ ActiveRecord::Schema.define(version: 20131025100957) do
     t.datetime "updated_at"
     t.string   "cookie_salt"
     t.string   "login_id"
+    t.boolean  "active",           default: true
+    t.datetime "deleted_at"
   end
 
 end
