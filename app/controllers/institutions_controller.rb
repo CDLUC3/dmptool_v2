@@ -1,7 +1,9 @@
 class InstitutionsController < ApplicationController
   before_action :set_institution, only: [:show, :edit, :update, :destroy]
   before_action :check_for_cancel, :update => [:create, :update, :destroy]
-  before_filter lambda { @categories = InstitutionsController.institution_select_list }
+  before_filter :populate_institution_select_list
+  
+  
   
 
   # GET /institutions
@@ -13,6 +15,8 @@ class InstitutionsController < ApplicationController
     @current_user = current_user
     @institution = @current_user.institution
     @institution_users = @institution.users
+    
+    @categories.delete_if {|i| i[1] == @institution.id}
 
   end
 
@@ -69,6 +73,10 @@ class InstitutionsController < ApplicationController
       format.html { redirect_to institutions_url }
       format.json { head :no_content }
     end
+  end
+  
+  def populate_institution_select_list
+    @categories = InstitutionsController.institution_select_list
   end
 
   def self.institution_select_list
