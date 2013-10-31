@@ -6,7 +6,7 @@
 	</p>	
   <%= form_tag login_path, method: :post do %>
 		<div class="control-group">
-    	<%= select_tag(:institution_id, options_for_select(@inst_list), :prompt => 'Select your institution', :include_blank => 'none') %>
+    	<%= select_tag(:institution_id, options_for_select(@inst_list, :selected => session[:institution_id]), :prompt => 'Select your institution', :include_blank => 'none') %>
   	</div>
     <%= submit_tag "Next" %>
   <% end %>

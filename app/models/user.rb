@@ -47,16 +47,17 @@ class User < ActiveRecord::Base
     end
   end
   
-  def self.from_omniauth(auth)
-    where(email: auth[:info][:email]).first || create_from_omniauth(auth)
+  def self.from_omniauth(auth, institution_id)
+    where(email: auth[:info][:email]).first || create_from_omniauth(auth, institution_id)
   end
   
-  def self.create_from_omniauth(auth)
+  def self.create_from_omniauth(auth, institution_id)
     create! do |user|
       user.email = auth[:info][:email]
       user.first_name = auth[:info][:first_name]
       user.last_name = auth[:info][:last_name]
       user.login_id = auth[:info][:nickname]
+      user.institution_id = institution_id
     end
   end
 
