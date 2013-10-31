@@ -22,5 +22,10 @@ class UserSessionsController < ApplicationController
     session[:login_id] = nil
     redirect_to root_path, notice: "Signed out."
   end
+  
+  #allow choosing the institution before logging in.
+  def institution
+     @inst_list = InstitutionsController.institution_select_list
+  end
 
 end

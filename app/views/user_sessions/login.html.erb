@@ -1,6 +1,8 @@
 <h4> Log In on DMPTool </h4>
 <div class="user_login">
   <%= form_tag '/auth/ldap/callback', method: :post do %>
+  
+  	<%= hidden_field_tag :institution_id, params[:institution_id]%>
     <%= label_tag :username %>
     <%= text_field_tag :username %>
     <br/>
