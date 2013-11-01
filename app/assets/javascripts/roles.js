@@ -34,6 +34,6 @@ $(function() {
 
 $(function() {
 	$("#cancel_action").bind("click",function() {
-		$("#flash_notice").reset();
+		$("#flash_notice").remove();
 	});
 })

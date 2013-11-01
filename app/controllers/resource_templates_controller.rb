@@ -7,12 +7,13 @@ class ResourceTemplatesController < ApplicationController
   def index
     case params[:scope]
     when "active"
-      @resource_templates = ResourceTemplate.active.page(params[:page]).per(5)
+      @resource_templates = ResourceTemplate.active.page(params[:page]).per(10)
     when "inactive"
-      @resource_templates = ResourceTemplate.inactive.page(params[:page]).per(5)
+      @resource_templates = ResourceTemplate.inactive.page(params[:page]).per(10)
     else
-      @resource_templates = ResourceTemplate.order(created_at: :asc).page(params[:page]).per(5)
+      @resource_templates = ResourceTemplate.order(created_at: :asc).page(params[:page]).per(10)
     end
+    resource_editors_of_current_institution
   end
 
   # GET /resource_templates/1
@@ -88,10 +89,10 @@ class ResourceTemplatesController < ApplicationController
   end
 
   def add_role
-    @invalid_emails = Array.new
-    @existing_emails = Array.new
     emails = params[:email].split(/,\s*/) unless params[:email] == ""
     role  = Role.where(name: 'Resources Editor').first
+    @invalid_emails = []
+    @existing_emails = []
     emails.each do |email|
       @user = User.find_by(email: email)
       if @user.nil?
@@ -105,25 +106,32 @@ class ResourceTemplatesController < ApplicationController
           pg.save!
         rescue ActiveRecord::RecordNotUnique
           @existing_emails << email
-          puts "User is already been assigned with this role"
         end
       end
     end
     respond_to do |format|
-      if (!@existing_emails.nil? && @invalid_emails.nil?)
+      if (!@invalid_emails.empty? && !@existing_emails.empty?)
+        flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} specified and Users with #{@existing_emails.join(', ')} already have been assigned the Resouces Editor role. "
+        format.js { render action: 'add_role' }
+      elsif (!@existing_emails.empty? && @invalid_emails.empty?)
         flash.now[:notice] = "The following emails #{@existing_emails.join(', ')} have already been assigned with this Resouces Editor role"
         format.js { render action: 'add_role' }
-      elsif (@existing_emails.nil? && !@invalid_emails.nil?)
+      elsif (@existing_emails.empty? && !@invalid_emails.empty?)
         flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} specified. "
-        format.js { render action: 'add_role' }
-      elsif (!@invalid_emails.nil? && !@existing_emails.nil?)
-        flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} specified and Users with #{@existing_emails.join(', ')} already have been assigned the Role #{@role}. "
         format.js { render action: 'add_role' }
       else
         flash.now[:notice] = "Added Resources Editor Role to the Users specified."
         format.js { render action: 'add_role' }
       end
-   end
+    end
+  end
+
+  def remove_resource_editor_role
+    user = params[:user_id]
+    resource_editors_of_current_institution
+    @remove_role = @institution.authorizations.where(role_id: @role_id, user_id: user )
+    @remove_role.delete_all
+    redirect_to resource_templates_path, notice: "Removed User from Resources Editor Role."
   end
 
   private
@@ -141,4 +149,10 @@ class ResourceTemplatesController < ApplicationController
       @requirements_templates = RequirementsTemplate.order(created_at: :asc).page(params[:page]).per(5)
     end
 
+    def resource_editors_of_current_institution
+      @institution = current_user.institution
+      @role_id = Role.where(name: "Resources Editor").pluck(:id).first
+      @user_ids = @institution.authorizations.where(role_id: @role_id).pluck(:user_id) unless @institution.authorizations.nil?
+      @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
+    end
 end

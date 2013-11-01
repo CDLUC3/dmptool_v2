@@ -35,7 +35,10 @@
 
 %br
 
-= button_to 'Create Resource template', resource_template_information_path, :method => :get, class: 'btn btn-primary'
+= button_to 'Create Resource template', resource_template_information_path, :method => :get, class: 'btn'
+
+= render 'remove_resource_editor_role'
 
 = link_to 'Add New Editor', add_role_path, method: :post, id: 'add_role_view'
 = render :partial => 'add_role'
+
