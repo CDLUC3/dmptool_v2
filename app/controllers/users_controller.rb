@@ -18,6 +18,7 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    @institution_list = Institution.all.collect { |i| [i.full_name, i.id] }
   end
 
   # GET /users/1/edit
