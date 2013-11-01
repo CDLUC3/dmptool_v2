@@ -5,7 +5,7 @@
 <%errors = @user.errors[:login_id]%>
 <%validation_class = errors.empty? ? {} : 'error'%>
 
-<div class="control-group" id="validation_class">
+<div class="control-group" >
         <div class='control-label'>
                 <%= f.label :login_id, 'Username' %>
                 <div class="controls">
@@ -18,9 +18,9 @@
 <%unless @user.new_record?%>
 
 	<%errors = @user.errors[:first_name]%>
-	<%validation_class = errors.empty? ? {} : 'error'%>
+        <%validation_class = errors.empty? ? {} : 'error'%>
 
-	<div class="control-group" id="validation_class">
+	<div class="control-group" >
                 <div class='control-label'>
                         <%= f.label :first_name %>
                         <div class="controls">
@@ -31,9 +31,9 @@
         </div>
 
 	<%errors = @user.errors[:last_name]%>
-	<%validation_class = errors.empty? ? {} : 'error'%>
+<%validation_class = errors.empty? ? {} : 'error'%>
 
-	<div class="control-group" id="validation_class">
+	<div class="control-group" >
                 <div class='control-label'>
                         <%= f.label :last_name %>
                         <div class="controls">
@@ -48,7 +48,7 @@
 <%errors = @user.errors[:password]%>
 <%validation_class = errors.empty? ? {} : 'error'%>
 
-<div class="control-group" id="validation_class">
+<div class="control-group" >
         <div class='control-label'>
                 <%= f.label :password, password_label(@user) %>
                 <div class="controls">
@@ -62,7 +62,7 @@
 <%validation_class = errors.empty? ? {} : 'error'%>
 
 
-<div class="control-group" id="validation_class">
+<div class="control-group" >
         <div class='control-label'>
                 <%= f.label :password_confirmation %>
                 <div class="controls">
@@ -77,7 +77,7 @@
 <%errors = @user.errors[:email]%>
 <%validation_class = errors.empty? ? {} : 'error'%>
 
-<div class="control-group" id="validation_class">
+<div class="control-group" >
         <div class='control-label'>
                 <%= f.label :email %>
                 <div class="controls">
@@ -91,7 +91,7 @@
 <%errors = @user.errors[:institution_id]%>
 <%validation_class = errors.empty? ? {} : 'error'%>
 
-<div class="control-group" id="validation_class">
+<div class="control-group" >
 	<div class='control-label'>
 		<%= f.label :institution_id, class: "control-label" %>
 		<div class="controls">

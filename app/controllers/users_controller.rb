@@ -18,6 +18,7 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    @institution_list = Institution.all.collect { |i| [i.full_name, i.id] }
   end
 
   # GET /users/1/edit
@@ -36,31 +37,33 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-    @user.ldap_create = true
 
-    print user_params
-    if [@user.valid?, valid_password(user_params[:password], user_params[:password_confirmation])].all?
-      begin
-        results = Ldap_User::LDAP.fetch(@user.login_id)
-        if results['objectclass'].include?('dmpUser')
-          @display_text = "A DMPTool account with this login already exists.  Please login."
-        else
-          @display_text = "Please contact uc3@ucop.edu to add your DMPTool account manually."
-        end
-      rescue LdapMixin::LdapException => detail
-        if detail.message.include? 'does not exist'
-          # Add the user, spaces are in place of the first/last name as LDAP requires these.
-          User.transaction do
-            if !Ldap_User.add(@user.login_id, user_params[:password], ' ', ' ', @user.email)
-              @display_text = "There were problems adding this user to the LDAP directory. Please contact uc3@ucop.edu."
-            elsif @user.save
-              @user.ensure_ldap_authentication(@user.login_id)
-              @display_text = "This DMPTool account has been created."
+      print user_params
+      if [@user.valid?, valid_password(user_params[:password], user_params[:password_confirmation])].all?
+        begin
+          results = Ldap_User::LDAP.fetch(@user.login_id)
+          if results['objectclass'].include?('dmpUser')
+            @display_text = "A DMPTool account with this login already exists.  Please login."
+          else
+            @display_text = "Please contact uc3@ucop.edu to add your DMPTool account manually."
+          end
+        rescue LdapMixin::LdapException => detail
+          if detail.message.include? 'does not exist'
+            # Add the user, spaces are in place of the first/last name as LDAP requires these.
+            User.transaction do
+              if !Ldap_User.add(@user.login_id, user_params[:password], ' ', ' ', @user.email)
+                @display_text = "There were problems adding this user to the LDAP directory. Please contact uc3@ucop.edu."
+              elsif @user.save
+                @user.ensure_ldap_authentication(@user.login_id)
+                @display_text = "This DMPTool account has been created."
+              end
             end
           end
         end
+
       end
-    end
+
+  
 
     respond_to do |format|
       if !@user.errors.any? && @user.save

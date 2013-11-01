@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+
+  validates :email, presence: true
   acts_as_paranoid
 
   serialize :prefs, Hash
