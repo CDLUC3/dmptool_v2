@@ -1,37 +1,80 @@
-<section>
-	<h2>Overview</h2>
-	
-		<div class="row">
-			<div class="span8 two_col">
-				<div class="col1">
-					<div>
-						<div class="head">My DMPs</div>
-						<div><%= current_user.owned_plans.count %> plans I own</div>
-						<div><%= current_user.coowned_plans.count %> plans i co-own</div>
-						<div style="text-align: center;"><%= link_to 'Create new DMP' %></div>
-					</div>
+<div class="row">
+	<div class="span8 two_col">
+		<div>Overview</div>
+		<div class="col1">
+			<div>
+				<div class="head">My DMPs</div>
+				<div>
+					<%= link_to "#{current_user.owned_plans.count} plans I own" %>
 				</div>
-				<div class="col2">
-					<div>
-						<div class="head">My DMPs under Review</div>
-					</div>
+				<div>
+					<%= link_to "#{current_user.coowned_plans.count} plans i co-own" %>
 				</div>
 			</div>
 		</div>
-			
-</section>
-
-<section>
-	<h2>DMPs for My Review</h2>
-
+		<div class="col2">
+			<div>
+				<div class="head">My DMPs under review</div>
+				<div><%= link_to "nn Submitted" %></div>
+				<div><%= link_to "nn Approved" %></div>
+				<div><%= link_to "nn Rejected" %></div>
+			</div>
 		</div>
-	</div>	
-</section>
+		<div class="button_row"><%= link_to image_tag('create_new.png', size: '108x39') %></div>
+	</div>
+</div>
+		
 
-<section>
-	<h2>DMP Templates</h2>
-</section>
 
-<section>
-	<h2>Resource Templates<h2>
-</section>
+<div class="row">
+	<div class="span8 two_col">
+		<div>DMPs for My Review</div>
+		<div class="col1">
+			<div>
+				<div><%= link_to "nn DMPs pending review" %></div>
+				<div><%= link_to "nn DMPs finished review" %></div>
+			</div>
+		</div>
+		<div class="col2">
+		</div>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="span8 two_col">
+		<div>DMP Templates</div>
+		<div class="col1">
+			<div>
+				<div class="head">Within my Institution</div>
+				<div><%= link_to "nn DMP Templates only for my institution" %></div>
+				<div><%= link_to "nn DMP Templates publically available" %></div>
+			</div>
+		</div>
+		<div class="col2">
+			<div>
+				<div class="head">Funder Requirements</div>
+				<div><%= link_to "nn Public DMP Templates" %></div>
+			</div>
+		</div>
+		<div class="button_row">
+			<%= link_to image_tag('create_new.png', size: '108x39') %>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="row">
+	<div class="span8 two_col">
+		<div>Resource Templates</div>
+		<div class="col1">
+			<div>
+				<div><%= link_to "nn Resource templates" %></div>
+			</div>
+		</div>
+		<div class="col2">
+		</div>
+		<div class="button_row"><div class="button_row"><%= link_to image_tag('create_new.png', size: '108x39') %></div></div>
+	</div>
+</div>

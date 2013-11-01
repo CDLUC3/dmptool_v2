@@ -2,6 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+div.row {
+  margin-top: 1.5em;
+}
+
 div.two_col {
   border-style: solid;
   border-width: 1px;
@@ -30,5 +34,19 @@ div.col1 div.head, div.col2 div.head{
   font-size: 110%;
   font-weight: bold;
   color: green;
+}
+
+div.two_col>div:first-child{
+  font-size: 120%;
+  padding: 0.5em 0 0 0.5em;
+  text-transform:uppercase;
+  height: 2em;
+  background-color: green;
+  color: white;
+}
+
+div.button_row {
+  clear:both;
+  padding: 10px 15px 10px 15px;
 }
 

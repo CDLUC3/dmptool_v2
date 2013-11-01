@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  include InstitutionsHelper
+
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
@@ -16,13 +18,19 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    @institution_list = Institution.all.collect { |i| [i.full_name, i.id] }
   end
 
   # GET /users/1/edit
   def edit
-    @institutions = Institution.all
-    #if current_user.ldap_user? ? (@disabled=true) : (@disabled=false) ;
-    #end
+
+    @user = User.find(params[:id])
+    @my_institution = @user.institution
+
+    @institution_list = my_profile_institution_list(@my_institution)
+
+    @roles = @user.roles.map {|r| r.name}.join(' | ')
+
   end
 
   # POST /users
