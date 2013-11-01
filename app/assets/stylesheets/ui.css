@@ -4,7 +4,12 @@ body {
 	padding: 0; }
 	
 .container {
-	width: 1024px; }
+	width: 1024px;
+	position: relative; }
+.container .container {
+	width: auto;
+	padding: 0 35px;
+}
 	
 /* Header */
 	
@@ -107,9 +112,9 @@ a.btn, input[type=submit].btn {
 	text-shadow: none;
 	text-decoration: none;
 	text-align: center;
-	line-height: 32px;
+	line-height: 31px;
 	width: auto;
-	height: 31px;
+	height: 30px;
 	padding: 0 20px; }
 a.btn:hover, a.btn:focus, a.btn:active, input[type=submit].btn:hover, input[type=submit].btn:focus, input[type=submit].btn:active {
 	color: #FFFFFF;
@@ -140,6 +145,8 @@ a.btn-large, input[type=submit].btn-large {
 	padding-right: 35px; }
 a.btn-large:hover, a.btn-large:active, input[type=submit].btn-large:hover, input[type=submit].btn-large:active {
 	background-position: 0 -247px; }
+.controls a.btn {
+	display: inline-block; }
 
 /* Homepage */
 .banner {
@@ -660,21 +667,12 @@ table.table tr td a {
 	color: #4C4C4E; }
 table.table tr td a.delete {
 	color: #E02665; }
-.btn-container, table.table tr td.table-buttons {
-	-moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    box-sizing: border-box;
-	border-top: 1px solid #B6B6B7;
-	background: none;
-	font-size: 1em;
-	padding: 9px; }
 table.table tr td.table-buttons {
-	-moz-box-sizing: content-box;
-    -webkit-box-sizing: content-box;
-    -ms-box-sizing: content-box;
-    box-sizing: content-box;
+    border-top: 1px solid #B6B6B7;
+    background: none;
+    font-size: 1em;
     margin-left: 0;
+    padding: 9;
 }
 table.table tr td.remove {
 	width: 86px;
@@ -695,53 +693,69 @@ table.table tr th.cell-narrow, table.table tr td.cell-narrow {
 /* DMP Tab Content */
 
 .dmp-tabs {
-	margin-top: 12px;
-}
+	margin-top: 12px; }
 .dmp-tabs ul.nav-tabs {
-	margin: 0;
-}
+	margin: 0; }
 .dmp-tabs ul.nav-tabs li {
-	height: 31px;
-}
+	height: 31px; }
 .dmp-tabs ul.nav-tabs > li > a {
 	display: block;
 	color: #4C4C4E;
 	font-weight: bold;
 	line-height: 31px;
 	height: 30px;
-	padding: 0 14px;
-}
+	padding: 0 14px; }
 .dmp-tabs ul.nav-tabs > li.active > a {
 	border-color: #C9C9CB;
 	border-bottom: none;
-	color: #516935;;
-}
+	color: #516935; }
 .dmp-tabs ul.nav-tabs > li > a:hover, .dmp-tabs ul.nav-tabs > li > a:focus {
 	border: 1px solid transparent;
 	border-bottom: 1px solid transparent;
-	height: 28px;
-} 
-
+	height: 28px; } 
 .dmp-tabs ul.nav-tabs > li.active > a:hover, .dmp-tabs ul.nav-tabs > li.active > a:focus {
 	border: 1px solid #C9C9CB;
 	border-bottom: none;
-	height: 30px;
-}
+	height: 30px; }
 .tab-content {
 	border: 1px solid #C9C9CB;
 	border-top: none;
-}
+	margin-bottom: 20px;
+	overflow: hidden; }
 .tab-pane {
-	padding: 10px 14px 0;
-}
+	padding-top: 10px; }
 .tab-pane hr {
 	border-top: 2px dotted #C9C9CB;
 	margin-top: 0;
-	margin-bottom: 20px;
+	margin-bottom: 20px; }
+.tab-inner {
+	padding: 0 14px;
 }
-
-
-
+.btn-container {
+	border-top: 1px solid #B6B6B7;
+	background: none;
+	font-size: 1em;
+	min-height: 31px;
+	padding: 9px; }
+/* Forms */
+.tab-pane form {
+	margin: 0; }
+label, input, button, select, textarea {
+	line-height: 1.125em; }
+label {
+	display: inline; }
+input[type=text], textarea {
+	border-color: #B6B6B7; }
+input.radio, input.checkbox, input[type=radio], input[type=checkbox], .controls > input.radio, .controls > input.checkbox {
+	vertical-align: bottom;
+	margin-top: 0
+	margin-right: 2px;
+	padding: 0; }
+button {
+	border: 1px solid #B6B6B7;
+	border-radius: 4px;
+	height: 30px;
+	margin-left: 8px; }
 
 
 
