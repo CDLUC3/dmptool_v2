@@ -87,15 +87,44 @@ class ResourceTemplatesController < ApplicationController
     end
   end
 
-  # def add_role
-  #   emails = params[:email].split(/,\s*/)
-  #   role  = Role.where(name: 'Resource Editor').first
-  #   # emails.each do |email|
-  #   #   user = User.where(email: email).first
-  #   #   user.roles << role
-  #   # end
-  #   redirect_to :back,  notice: "Added Resource Editor role to the User emails specified"
-  # end
+  def add_role
+    @invalid_emails = Array.new
+    @existing_emails = Array.new
+    emails = params[:email].split(/,\s*/) unless params[:email] == ""
+    role  = Role.where(name: 'Resources Editor').first
+    emails.each do |email|
+      @user = User.find_by(email: email)
+      if @user.nil?
+        @invalid_emails << email
+      else
+        begin
+          @user.roles << role
+          authorization = Authorization.where(user_id: @user.id, role_id: role.id).pluck(:id).first
+          institution = @user.institution.id
+          pg = PermissionGroup.create(authorization_id: authorization, institution_id: institution)
+          pg.save!
+        rescue ActiveRecord::RecordNotUnique
+          @existing_emails << email
+          puts "User is already been assigned with this role"
+        end
+      end
+    end
+    respond_to do |format|
+      if (!@existing_emails.nil? && @invalid_emails.nil?)
+        flash.now[:notice] = "The following emails #{@existing_emails.join(', ')} have already been assigned with this Resouces Editor role"
+        format.js { render action: 'add_role' }
+      elsif (@existing_emails.nil? && !@invalid_emails.nil?)
+        flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} specified. "
+        format.js { render action: 'add_role' }
+      elsif (!@invalid_emails.nil? && !@existing_emails.nil?)
+        flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} specified and Users with #{@existing_emails.join(', ')} already have been assigned the Role #{@role}. "
+        format.js { render action: 'add_role' }
+      else
+        flash.now[:notice] = "Added Resources Editor Role to the Users specified."
+        format.js { render action: 'add_role' }
+      end
+   end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -111,4 +140,5 @@ class ResourceTemplatesController < ApplicationController
     def get_requirements_template
       @requirements_templates = RequirementsTemplate.order(created_at: :asc).page(params[:page]).per(5)
     end
+
 end
