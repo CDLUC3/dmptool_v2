@@ -31,7 +31,8 @@ Dmptool2::Application.routes.draw do
   end
   resources :roles
 
-  get 'user_sessions/login', to: 'user_sessions#login', as: 'login'
+  match 'user_sessions/login', to: 'user_sessions#login', as: 'login', :via => [:get, :post]
+  get 'user_sessions/institution', to: 'user_sessions#institution', as: 'choose_institution'
   post '/auth/:provider/callback', to: 'user_sessions#create'
   get '/auth/failure', to: 'user_sessions#failure'
 

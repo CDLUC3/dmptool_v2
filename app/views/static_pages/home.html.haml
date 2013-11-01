@@ -5,7 +5,7 @@
     .span4
       %p Create, share, review, and publish Data Management Plans conforming to institution andfunder requirements.
       %br/
-      = button_to 'Log In', login_path, class: 'btn btn-large btn-primary', method: :get
+      = button_to 'Log In', choose_institution_path, class: 'btn btn-large btn-primary', method: :get
       = link_to 'Create a DMP Tool Account', new_user_path
     .span8
       = holder_tag '600x250', 'DMP tool image'

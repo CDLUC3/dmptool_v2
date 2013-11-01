@@ -1,7 +1,10 @@
 class InstitutionsController < ApplicationController
   before_action :set_institution, only: [:show, :edit, :update, :destroy]
   before_action :check_for_cancel, :update => [:create, :update, :destroy]
-  before_filter :collection_for_parent_select
+  before_filter :populate_institution_select_list
+  
+  
+  
 
   # GET /institutions
   # GET /institutions.json
@@ -12,6 +15,8 @@ class InstitutionsController < ApplicationController
     @current_user = current_user
     @institution = @current_user.institution
     @institution_users = @institution.users
+    
+    @categories.delete_if {|i| i[1] == @institution.id}
 
   end
 
@@ -69,12 +74,16 @@ class InstitutionsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-  def collection_for_parent_select
-    @categories = ancestry_options(Institution.unscoped.arrange(order: :full_name)){|i| "#{'-' * i.depth} #{i.full_name}" }
+  
+  def populate_institution_select_list
+    @categories = InstitutionsController.institution_select_list
   end
 
-  def ancestry_options(items, &block)
+  def self.institution_select_list
+    ancestry_options(Institution.unscoped.arrange(order: :full_name)){|i| "#{'-' * i.depth} #{i.full_name}" }
+  end
+
+  def self.ancestry_options(items, &block)
     return ancestry_options(items){ |i| "#{'-' * i.depth} #{i.full_name}" } unless block_given?
 
     result = []
