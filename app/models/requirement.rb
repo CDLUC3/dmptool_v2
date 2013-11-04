@@ -1,5 +1,5 @@
 class Requirement < ActiveRecord::Base
-  include ActiveModel::Validations
+
   has_ancestry
   has_many :resources
   has_many :responses
@@ -21,10 +21,24 @@ class Requirement < ActiveRecord::Base
     self.group == true
   end
 
-  # to_do
-  # def validate_no_subgroup_within_a_requirement
-  #   if self.text_full.present? && self.text_obligation.present?
-  #     errors.add( "A Requirement Sub group cannot be added under a Requirement")
-  #   end
-  # end
+  before_save :validating_to_set_either_subgroup_or_requirement
+
+  def validating_to_set_either_subgroup_or_requirement
+    parent_id = self.parent_id
+    return true if parent_id.nil?
+    parent = Requirement.find(parent_id)
+    has_children = parent.has_children?
+    return true if has_children.nil?
+    child = parent.children.first
+      if (child.group? == true && self.group? == false)
+        errors[:base] <<  "Cannot add a Single Requirment Since a Sub Group already exists."
+        return false
+      elsif (child.group? == false && self.group? == true)
+        errors[:base] <<  "Cannot add a Sub Group since a Single Requirment already exists."
+        return false
+      else
+        return true
+      end
+  end
+
 end
