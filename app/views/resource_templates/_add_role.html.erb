@@ -1,8 +1,14 @@
 <div id="dialog_form">
-	<%= form_tag add_role_path, method: :post, remote: true do %>
-		<div class="field">
-			<%= label_tag :email, "Editors email" %>
-			<%= email_field_tag :email, nil, placeholder: " Enter Reviewer's email; multiple emails divided by comma ", class: "input-xxlarge" %>
+	<%= form_tag(add_role_path, method: :post, remote: true, html: { class: "form-horizontal"}) do %>
+		<div class="control-group">
+			<%= label_tag :email, "Editors Emails", class: "control-label" %>
+			<div class="controls">
+				<%= text_field_tag(:email, nil, placeholder: "Enter Reviewer's email; multiple emails divided by comma ", class:"input-block-level") %>
+			</div>
 		</div>
-	<% end %>
+		<div class="actions pull-right">
+			<%= submit_tag "Submit", class: "btn"  %>
+			<%= button_tag "Cancel", type: :reset, class: "btn", id: "cancel_action" %>
+		</div>
+		<% end %>
 </div>

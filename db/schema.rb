@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131028075853) do
+ActiveRecord::Schema.define(version: 20131031174839) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(version: 20131028075853) do
     t.datetime "updated_at"
   end
 
+  add_index "authorizations", ["user_id", "role_id"], name: "index_authorizations_on_user_id_and_role_id", unique: true, using: :btree
+
   create_table "comments", force: true do |t|
     t.integer  "user_id"
     t.enum     "visibility", limit: [:owner, :reviewer]
@@ -48,6 +50,14 @@ ActiveRecord::Schema.define(version: 20131028075853) do
   create_table "enumerations", force: true do |t|
     t.integer  "requirement_id"
     t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "groups", force: true do |t|
+    t.integer  "requirements_template_id"
+    t.string   "text_brief"
+    t.boolean  "is_subgroup"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -124,6 +134,7 @@ ActiveRecord::Schema.define(version: 20131028075853) do
     t.datetime "updated_at"
     t.string   "ancestry"
     t.boolean  "group"
+    t.integer  "group_id"
   end
 
   add_index "requirements", ["ancestry"], name: "index_requirements_on_ancestry", using: :btree
