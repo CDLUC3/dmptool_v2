@@ -91,14 +91,14 @@
 		    </div>
 		  </div>
 		
-		  <div class="control-group" >
+		  <div class="control-group">
 		    <%= f.fields_for :additional_informations do |builder| %>
 		      <%= render "additional_information_fields", f: builder %>
 		    <% end %>
 		    <%= link_to_add_fields "Add Funder Link", f, :additional_informations %>
 		  </div>
 		
-		  <div class="control-group" >
+		  <div class="control-group">
 		    <%= f.fields_for :sample_plans do |builder| %>
 		      <%= render "sample_plan_fields", f: builder %>
 		    <% end %>
@@ -111,8 +111,10 @@
 	<% end %>
 	</div>
 	<div class="tab-pane" id="notification">
-		<h5>Notification Preferences</h5>
-		<hr/>
+		<div class="tab-inner">
+			<h5>Notification Preferences</h5>
+			<hr/>
+		</div>
 	</div>
   </div>
 </div>
