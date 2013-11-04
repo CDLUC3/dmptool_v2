@@ -1,5 +1,17 @@
 class Ability
   include CanCan::Ability
+  
+  def initialize(user)
+
+    user ||= User.new #guest user not logged in
+
+    if user.has_role?(1)
+      can :manage, :all
+    #elsif !user.has_role?(1)
+     # cannot :read, @users 
+    end
+  end
+
   ################ TO BE COMPLETED
 
   #   def initialize(user)

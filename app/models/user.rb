@@ -74,6 +74,10 @@ class User < ActiveRecord::Base
   def plan_states
   end
 
+  def has_role?(role_id)
+    self.authorizations.where(:role_id => role_id).first.present?
+  end
+
   private
 
   def create_cookie_salt
