@@ -7,17 +7,17 @@
           %li= msg
   %fieldset
     .control-group
-      = f.text_field :parent_id
-      = f.check_box :group, id: 'if_group'
+      = f.hidden_field :parent_id
+      = f.check_box :group, id: 'if_group', style: "display: none;"
     .control-group
-      = f.label :requirement_label, class: "control-label"
+      = f.label :requirement_label, "Requirement Label", class: "control-label"
       .controls
         = f.text_field(:text_brief, class: "input-block-level")
     .control-group
-      = f.label :detailed_question, class: "control-label"
+      = f.label :detailed_question, "Detailed Question", class: "control-label"
       .controls
         = f.text_area(:text_full, rows: 5, class: "input-block-level")
-    .control-group
+    .control-group#obligation
       = f.label :obligation, class: "control-label"
       .controls
         = f.radio_button :obligation, :mandatory, class: "radio inline"
@@ -29,10 +29,10 @@
         = f.radio_button :obligation, :recommended, class: "radio inline"
         Recommended
         %br/
-        = f.radio_button :obligation, :optional, class: "radio inline"
+        = f.radio_button :obligation, :optional, checked: true , class: "radio inline"
         Optional
     .control-group
-      = f.label :question_type, class: "control-label"
+      = f.label :question_type, "Question Type", class: "control-label"
       .controls
         = f.select :requirement_type, options_for_select([:text, :numeric, :date, :enum]), include_blank: true
 

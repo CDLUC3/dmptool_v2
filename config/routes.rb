@@ -41,7 +41,7 @@ Dmptool2::Application.routes.draw do
 
   get  'resource_template_information', to: 'resource_templates#template_information'
   get  'copy_existing_resource_template', to: 'resource_templates#copy_existing_template'
-
+  get  'remove_resource_editor_role', to: 'resource_templates#remove_resource_editor_role'
   post 'add_role', to: 'resource_templates#add_role'
 
   # The priority is based upon order of creation: first created -> highest priority.
