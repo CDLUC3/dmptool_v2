@@ -15,9 +15,9 @@
 		<div class="col2">
 			<div>
 				<div class="head">My DMPs under review</div>
-				<div><%= link_to "nn Submitted" %></div>
-				<div><%= link_to "nn Approved" %></div>
-				<div><%= link_to "nn Rejected" %></div>
+				<% current_user.unique_plan_states.each do |state|%>
+					<div><%= link_to "#{current_user.plans_by_state(state).count} #{state.capitalize}"%></div>
+				<% end %>
 			</div>
 		</div>
 		<div class="button_row"><%= link_to image_tag('create_new.png', size: '108x39') %></div>
