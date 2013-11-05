@@ -67,11 +67,19 @@ class User < ActiveRecord::Base
     [first_name, last_name].join(" ")
   end
   
-  def plans_by_state(states)
-    
+  
+  def plans_by_state(state)
+    #get all plans this user has in the state specified
+    Plan.joins(:plan_states, :user_plans).
+          where(:user_plans => { :user_id => self.id }).
+          where(:plan_states => { :state => state})
   end
   
-  def plan_states
+  def unique_plan_states
+    #returns a list of the unique plan states that this user has
+    PlanState.select('state').joins(plan: :user_plans).
+          where(:user_plans => { :user_id => self.id }  ).distinct.
+          map{|s| s.state.to_s}.sort
   end
 
   private

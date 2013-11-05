@@ -1,0 +1,12 @@
+<div class="control-group">
+  <%= f.label :creation_date, "Creation Date", class: "control-label" %>
+  <div class="controls">
+    <%= f.text_field :created_at, :value => @resource_template.created_at.strftime("%m/%d/%Y %I:%M %p"), disabled: true, class: 'datepicker' %>
+  </div>
+</div>
+<div class="control-group">
+  <%= f.label :modification_date, "Modification Date", class: "control-label" %>
+  <div class="controls">
+    <%= f.text_field :updated_at, :value => @resource_template.created_at.strftime("%m/%d/%Y %I:%M %p"), disabled: true, class: 'datepicker' %>
+  </div>
+</div>

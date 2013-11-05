@@ -1,0 +1,43 @@
+<table class="table tablecondensed table-striped" >
+  <thead>
+    <tr>
+      <th>
+      <th> Name </th>
+      <th> Institution </th>
+      <th> Status </th>
+      <th> Visibility </th>
+      <th> Creation Date </th>
+      <th> Last Modification Date </th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @requirements_templates.each do |requirements_template| %>
+    <tr>
+      <td class="selected_requirements_template" ><%= radio_button_tag :requirements_template_id, requirements_template.id %></td>
+      <td class="selected_requirements_template_name" ><%= requirements_template.name %></td>
+      <td><%= requirements_template.institution.full_name %></td>
+      <td><%= requirements_template.active ? "Active" : "Inactive" %></td>
+      <td><%= requirements_template.visibility.capitalize %></td>
+      <td><%= requirements_template.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+      <td><%= requirements_template.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<div class="pagination">
+  <%= paginate @requirements_templates %>
+</div>
+
+<div class="form-horizontal">
+  <h4> Resource Template Overview </h4>
+  <br/>
+  <h5> Associated DMP Template </h5>
+  <hr/>
+  <div class="controlgroup">
+    <%= label_tag(:dmp_template, "DMP Template", class: "control-label") %>
+    <div class="controls">
+      <%= text_field_tag(:selected_requirement_template, nil, id: "selected_requirement_template_name", class: "input-xlarge") %>
+    </div>
+  </div>
+</div>

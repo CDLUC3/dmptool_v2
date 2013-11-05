@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 	<footer class ='footer'>
 		<div class='copyright'>
 			<p>DMPTOOL is a service of the <a href="http://www.cdlib.org/services/uc3">University of California Curation Center</a>
@@ -8,7 +9,7 @@
 			<a href = "http://www.cdlib.org/about/privacy.html", target = "_blank">Privacy Policy</a> | 
 			<%= link_to "Terms of Use", '#' %> | 
 			<a href = "http://blogs.library.ucla.edu/dmptool/photo-credits", target = "_blank">Photo Credits</a> | 
-			<%= link_to "Contact Us", '#' %> | 
+			<%= link_to "Contact Us", contact_path %> | 
 			<%= link_to "About", about_path %>
 			<div class='footer-feeds'>
 				<a class='facebook' href='#' title='Facebook'>&nbsp;</a>
@@ -17,3 +18,18 @@
 			</div>
 		</div>
 	</footer>
+=======
+<footer class ='footer' >
+	<hr/>
+	DMPTOOL is a service of the <a href="http://www.cdlib.org/services/uc3">University of California Curation Center</a>
+  of the <a href="http://cdlib.org/">California Digital Library</a><br/>
+  Copyright &copy; 2010-<%=Time.new.year%> The Regents of the University of California<br/>
+	<a href = "http://www.cdlib.org/about/privacy.html", target = "_blank">Privacy Policy</a>
+	|
+	<%= link_to "Terms of Use", '#' %>
+	|
+	<a href = "http://blogs.library.ucla.edu/dmptool/photo-credits", target = "_blank">Photo Credits</a>
+	|
+	<%= link_to "About", about_path %>
+</footer>
+>>>>>>> development

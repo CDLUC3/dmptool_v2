@@ -30,9 +30,8 @@
     .control-group
       = f.label :institution, class: "control-label"
       .controls
-        = f.text_field :institution_id
-        / will replace the institution.id field above with this line as and the login functionality is complete
-        / = f.text_field current_user.institution.full_name, disabled: true
+        = f.hidden_field :institution_id, value: current_user.institution.id
+        = text_field_tag :institution_name, current_user.institution.full_name, disabled: true
 
     %strong Optional Information
     %hr

@@ -1,3 +1,14 @@
 <div class="requirements_group">
-	<%= (link_to requirement.text_brief, edit_requirements_template_requirement_path(requirement.requirements_template, requirement))+ " " +(link_to raw('<i class="icon-plus icon-white"></i>'), new_requirements_template_requirement_path(@requirements_template, parent_id: requirement), :class => 'img-rounded btn-success')+ " " +(link_to raw('<i class="icon-folder-close icon-black"></i>'), new_requirements_template_requirement_path(@requirements_template, parent_id: requirement), class: "add_requirements_sub_group img-rounded btn-warning")+ " " +(link_to raw('<i class="icon-remove icon-white"></i>'), [requirement.requirements_template, requirement], :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'img-rounded btn-danger') %>
+	<%= link_to requirement.text_brief, edit_requirements_template_requirement_path(requirement.requirements_template, requirement) %>
+
+	<%= link_to raw('<i class="icon-plus icon-black"></i>'),
+				new_requirements_template_requirement_path(@requirements_template, parent_id: requirement) %>
+
+	<%= link_to raw('<i class="icon-folder-close icon-black"></i>'),
+				new_requirements_template_requirement_path(@requirements_template, parent_id: requirement, node_type: 'group'),
+				class: "add_requirements_sub_group" %>
+
+	<%= link_to raw('<i class="icon-remove icon-black"></i>'),
+				[requirement.requirements_template, requirement], :method => :delete,
+				:data => { :confirm => 'Are you sure?' } %>
 </div>
