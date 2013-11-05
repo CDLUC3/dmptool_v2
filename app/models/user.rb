@@ -12,15 +12,14 @@ class User < ActiveRecord::Base
   has_many :authentications
   has_many :authorizations
   has_many :roles, through: :authorizations
-  
+
   has_many :owned_plans, -> { where user_plans: { owner: true} }, through: :user_plans,
   source: :plan, class_name: 'Plan'
-  
+
   has_many :coowned_plans, -> { where user_plans: { owner: false} }, through: :user_plans,
   source: :plan, class_name: 'Plan'
-  
+
   accepts_nested_attributes_for :user_plans
-  
 
   attr_accessor :ldap_create, :password, :password_confirmation
 
@@ -28,7 +27,7 @@ class User < ActiveRecord::Base
   validates :institution_id, presence: true, numericality: true
   validates :email, presence: true, uniqueness: { :case_sensitive => false }, format: { with: VALID_EMAIL_REGEX }
   validates :prefs, presence: true
-  validates :login_id, presence: true, uniqueness: { case_sensitive: false }
+  validates :login_id, presence: true, uniqueness: { case_sensitive: false }, :if => :ldap_create
 
   before_validation :create_default_preferences, if: Proc.new { |x| x.prefs.empty? }
   before_validation :add_default_institution, if: Proc.new { |x| x.institution_id.nil? }
@@ -48,11 +47,11 @@ class User < ActiveRecord::Base
       Authentication.create(:user => self, :provider => 'ldap', :uid => uid)
     end
   end
-  
+
   def self.from_omniauth(auth, institution_id)
     where(email: auth[:info][:email]).first || create_from_omniauth(auth, institution_id)
   end
-  
+
   def self.create_from_omniauth(auth, institution_id)
     create! do |user|
       user.email = auth[:info][:email]
@@ -66,7 +65,6 @@ class User < ActiveRecord::Base
   def full_name
     [first_name, last_name].join(" ")
   end
-  
   
   def plans_by_state(state)
     #get all plans this user has in the state specified
