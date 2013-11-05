@@ -150,7 +150,7 @@ class ResourceTemplatesController < ApplicationController
     end
 
     def resource_editors_of_current_institution
-      @institution = current_user.institution
+      @institution = current_user.institution unless current_user.nil?
       @role_id = Role.where(name: "Resources Editor").pluck(:id).first
       @user_ids = @institution.authorizations.where(role_id: @role_id).pluck(:user_id) unless @institution.authorizations.nil?
       @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
