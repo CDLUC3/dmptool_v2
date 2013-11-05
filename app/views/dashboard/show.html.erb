@@ -15,8 +15,12 @@
 		<div class="col2">
 			<div>
 				<div class="head">My DMPs under review</div>
-				<% current_user.unique_plan_states.each do |state|%>
-					<div><%= link_to "#{current_user.plans_by_state(state).count} #{state.capitalize}"%></div>
+				<% if (current_user.unique_plan_states & PlanState::REVIEW_STATES).empty? %>
+					<div>No DMPs are under review.</div>
+				<% else %>
+					<% (current_user.unique_plan_states & PlanState::REVIEW_STATES).each do |state|%>
+						<div><%= link_to "#{current_user.plans_by_state(state).count} #{state.capitalize}"%></div>
+					<% end %>
 				<% end %>
 			</div>
 		</div>
@@ -25,20 +29,21 @@
 </div>
 		
 
-
-<div class="row">
-	<div class="span8 two_col">
-		<div>DMPs for My Review</div>
-		<div class="col1">
-			<div>
-				<div><%= link_to "nn DMPs pending review" %></div>
-				<div><%= link_to "nn DMPs finished review" %></div>
+<% if @simple_roles.include?('institutional_reviewer') %>
+	<div class="row">
+		<div class="span8 two_col">
+			<div>DMPs for My Review</div>
+			<div class="col1">
+				<div>
+					<div><%= link_to "#{@pending_review} DMPs pending review" %></div>
+					<div><%= link_to "#{@finished_review} DMPs finished review" %></div>
+				</div>
+			</div>
+			<div class="col2">
 			</div>
 		</div>
-		<div class="col2">
-		</div>
 	</div>
-</div>
+<% end %>
 
 
 <div class="row">
