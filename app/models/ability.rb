@@ -1,14 +1,18 @@
 class Ability
   include CanCan::Ability
   
+  #1)dmp_administrator            
+  #2)resources_editor             
+  #3)requirements_editor          
+  #4)institutional_reviewer       
+  #5)institutional_administrator  
+
   def initialize(user)
 
-    user ||= User.new #guest user not logged in
+    user ||= User.new #guest user if not logged in
 
-    if user.has_role?(1)
+    if user.has_role?(1) || user.has_role?(2) || user.has_role?(3) || user.has_role?(4) || user.has_role?(5)
       can :manage, :all
-    #elsif !user.has_role?(1)
-     # cannot :read, @users 
     end
   end
 
