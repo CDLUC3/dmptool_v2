@@ -1,0 +1,23 @@
+production:
+  #The host for the web application, used to construct the target for the shibboleth id
+  #provider's return.
+  host: dmp2-dev.cdlib.org
+  uid_field: eppn
+  info_fields:
+    email: mail
+    first_name: givenName
+    last_name: sn
+    name: displayName
+    identity_provider: shib_identity_provider
+
+development:
+  #The host for the web application, used to construct the target for the shibboleth id
+  #provider's return.
+  host: connectionstest.ideals.illinois.edu
+  uid_field: eppn
+  info_fields:
+    email: mail
+    first_name: givenName
+    last_name: sn
+    name: displayName
+    identity_provider: shib_identity_provider
