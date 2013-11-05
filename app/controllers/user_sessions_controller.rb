@@ -19,7 +19,7 @@ class UserSessionsController < ApplicationController
   def create
     redirect_to choose_institution_path if session[:institution_id].blank?
     user = User.from_omniauth(env["omniauth.auth"], session['institution_id'])
-    session[:login_id] = user.login_id
+    session[:user_id] = user.id
     redirect_to dashboard_path #otherwise if old user with institution set, send to dashboard
   end
 
@@ -28,7 +28,7 @@ class UserSessionsController < ApplicationController
   end
 
   def destroy
-    session[:login_id] = nil
+    session[:user_id] = nil
     redirect_to root_path, notice: "Signed out."
   end
 

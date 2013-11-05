@@ -1,12 +1,12 @@
 Dmptool2::Application.routes.draw do
 
- get "dashboard/show"
- root 'static_pages#home'
- get 'about', to: 'static_pages#about'
- get 'help', to: 'static_pages#help'
- get 'contact', to: 'static_pages#contact'
- get 'logout', to: 'user_sessions#destroy'
- get 'dashboard', to: 'dashboard#show', as: 'dashboard'
+  get "dashboard/show"
+  root 'static_pages#home'
+  get 'about', to: 'static_pages#about'
+  get 'help', to: 'static_pages#help'
+  get 'contact', to: 'static_pages#contact'
+  get 'logout', to: 'user_sessions#destroy'
+  get 'dashboard', to: 'dashboard#show', as: 'dashboard'
 
   resources :requirements_templates do
     resources :requirements
@@ -27,7 +27,11 @@ Dmptool2::Application.routes.draw do
   resources :plans
   resources :institutions
   resources :users do
-    get :edit_roles, :on => :member
+    member do
+      get :edit_roles
+      get :finish_signup
+      put :finish_signup_update
+    end
   end
   resources :roles
 
@@ -36,13 +40,16 @@ Dmptool2::Application.routes.draw do
   post '/auth/:provider/callback', to: 'user_sessions#create'
   get '/auth/failure', to: 'user_sessions#failure'
 
-  get  'requirements_template_information', to: 'requirements_templates#template_information'
-  get  'copy_existing_requirements_template', to: 'requirements_templates#copy_existing_template'
+  get 'requirements_template_information', to: 'requirements_templates#template_information'
+  get 'copy_existing_requirements_template', to: 'requirements_templates#copy_existing_template'
 
-  get  'resource_template_information', to: 'resource_templates#template_information'
-  get  'copy_existing_resource_template', to: 'resource_templates#copy_existing_template'
+  get 'resource_template_information', to: 'resource_templates#template_information'
+  get 'copy_existing_resource_template', to: 'resource_templates#copy_existing_template'
 
   post 'add_role', to: 'resource_templates#add_role'
+
+  get '/auth/:provider/callback', :to => 'authentications#create'
+  get '/auth/failure', :to => 'authentications#failure'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
