@@ -1,12 +1,19 @@
 class UserSessionsController < ApplicationController
 
   def login
-    if !params[:institution_id].blank?
+    if params[:institution_id].present?
       session['institution_id'] = params[:institution_id]
-    elsif params[:instituion_id].blank? && session['institution_id'].blank?
+    elsif session['institution_id'].blank?
       redirect_to choose_institution_path
     end
     @institution = Institution.find(session[:institution_id])
+    if @institution.shib_domain
+      #initiate shibboleth login sequence
+      redirect_to OmniAuth::Strategies::Shibboleth.login_path_with_entity(
+          Dmptool2::Application.shibboleth_host, @institution.shib_entity_id)
+    else
+      #just let the original form render
+    end
   end
 
   def create
@@ -24,7 +31,7 @@ class UserSessionsController < ApplicationController
     session[:login_id] = nil
     redirect_to root_path, notice: "Signed out."
   end
-  
+
   #allow choosing the institution before logging in.
   def institution
      @inst_list = InstitutionsController.institution_select_list
