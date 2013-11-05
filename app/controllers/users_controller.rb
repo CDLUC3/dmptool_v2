@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   include InstitutionsHelper
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_filter :require_current_user, only: [:finish_signup, :finish_signup_update]
 
   # GET /users
   # GET /users.json
@@ -140,6 +141,19 @@ class UsersController < ApplicationController
     @user.save!
   end
 
+  def finish_signup
+    @user.first_name = @user.last_name = ''
+  end
+
+  def finish_signup_update
+    if @user.update_attributes(params[:user].permit(:first_name, :last_name))
+      flash[:notice] = 'You have completed signing up for the DMP tool.'
+      redirect_to user_path(@user)
+    else
+      render 'finish_signup'
+    end
+  end
+
   private
 
   def reset_ldap_password(user, password)
@@ -201,5 +215,14 @@ class UsersController < ApplicationController
 
     !@user.errors.any?
   end
+
+  def require_current_user
+    @user = User.find(params[:id])
+    unless @user == current_user
+      flash[:notice] = "User information may only be edited by that user"
+      redirect_to root_path
+    end
+  end
+
 
 end

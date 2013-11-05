@@ -26,7 +26,11 @@ Dmptool2::Application.routes.draw do
   end
 
   resources :users do
-    get :edit_roles, :on => :member
+    member do
+      get :edit_roles
+      get :finish_signup
+      put :finish_signup_update
+    end
   end
   resources :roles
   resources :plans
@@ -38,11 +42,11 @@ Dmptool2::Application.routes.draw do
   post '/auth/:provider/callback', to: 'user_sessions#create'
   get '/auth/failure', to: 'user_sessions#failure'
 
-  get  'requirements_template_information', to: 'requirements_templates#template_information'
-  get  'copy_existing_requirements_template', to: 'requirements_templates#copy_existing_template'
+  get 'requirements_template_information', to: 'requirements_templates#template_information'
+  get 'copy_existing_requirements_template', to: 'requirements_templates#copy_existing_template'
 
-  get  'resource_template_information', to: 'resource_templates#template_information'
-  get  'copy_existing_resource_template', to: 'resource_templates#copy_existing_template'
+  get 'resource_template_information', to: 'resource_templates#template_information'
+  get 'copy_existing_resource_template', to: 'resource_templates#copy_existing_template'
 
 
 
@@ -54,6 +58,9 @@ Dmptool2::Application.routes.draw do
 
   post 'add_authorization', to: 'authorizations#add_authorization'
   get 'remove_authorization', to: 'authorizations#remove_authorization'
+
+  get '/auth/:provider/callback', :to => 'authentications#create'
+  get '/auth/failure', :to => 'authentications#failure'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

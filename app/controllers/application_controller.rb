@@ -17,8 +17,20 @@ class ApplicationController < ActionController::Base
 
   protected
 
-    def current_user
-      @current_user ||= User.find_by_login_id(session[:login_id]) if session[:login_id]
+  def current_user
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  end
+
+  def login_user(user)
+    @current_user = user
+    session[:user_id] = user.id
+  end
+
+  def require_user
+    unless current_user
+      go_to_login
     end
+  end
+
 
 end
