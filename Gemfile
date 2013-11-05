@@ -5,6 +5,8 @@ gem 'rails', '4.0.0'
 gem 'unicorn'
 
 group :development, :test do
+  #HADING - use thin for my development
+  gem 'thin'
   gem 'rspec-rails', '2.13.1'
   gem 'capistrano'
   gem 'capistrano-unicorn'
@@ -20,6 +22,7 @@ end
 
 gem 'omniauth'
 gem 'omniauth-ldap'
+gem 'omniauth-shibboleth', :git => 'git://github.com/hading/omniauth-shibboleth.git'
 
 gem 'mysql2'
 gem 'therubyracer'
