@@ -20,8 +20,8 @@ class AuthenticationsController < ApplicationController
 
     #HADING - fix up some stuff for how we expect the authentication to come back, just
     #for development
-    authentication['info']['email'] ||= 'hding2@illinois.edu'
-    authentication['info']['domain'] ||= 'illinois.edu'
+    #authentication['info']['email'] ||= 'hding2@illinois.edu'
+    #authentication['info']['domain'] ||= 'illinois.edu'
 
     preprocess_for_provider(authentication)
     auth = Authentication.find_by_provider_and_uid(authentication['provider'], authentication['uid'])
