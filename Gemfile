@@ -6,7 +6,7 @@ gem 'unicorn'
 
 group :development, :test do
   #HADING - use thin for my development
-  gem 'thin'
+  #gem 'thin'
   gem 'rspec-rails', '2.13.1'
   gem 'capistrano'
   gem 'capistrano-unicorn'
