@@ -67,8 +67,8 @@
 </div>
 
 <%unless @user.new_record?%>
-
   <b>Contact Information</b>
+<%end%>
 
   <%errors = @user.errors[:email]%>
   <%validation_class = errors.empty? ? {} : 'error'%>
@@ -94,7 +94,6 @@
     </div>
   </div>
 
-<%end%>
 
 <%unless @user.new_record?%>
 	<b>DMP Options</b>
