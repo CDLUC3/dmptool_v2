@@ -28,7 +28,7 @@
 			<td class="requirements_template_name"><%=link_to(content_tag(:strong, "Requirements Template Test"), requirements_template_requirements_path(requirements_template)) %><br/>
 				<%= (link_to "Overview", edit_requirements_template_path(requirements_template))+" | "+(link_to "Details",requirements_template_requirements_path(requirements_template))+" | "+(link_to activate_link_text(requirements_template), toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", class: "ajax")+" | "+(link_to "Copy", copy_existing_requirements_template_path(requirements_template))+" | "+(link_to "Delete", requirements_template_path(requirements_template), :class => "delete", method: :delete, data: { confirm: "Are you sure?" }) %>
 			</td>
-			<td class="cell-narrow"><%= requirements_template.version %></td>
+			<td class="narrow"><%= requirements_template.version %></td>
 			<td><%= requirements_template.institution.full_name %></td>
 			<td id="status_#{requirements_template.id}"><%= requirements_template.active ? "Active" : "Inactive" %></td>
 			<td><%= requirements_template.visibility.capitalize %></td>
@@ -37,7 +37,7 @@
 		</tr>
 	<% end %>
 		<tr>
-			<td colspan="7" class="table-buttons"><%= link_to "View All", "#", :class => "btn btn-silver" %>
+			<td colspan="7" class="full"><%= link_to "View All", "#", :class => "btn btn-silver" %>
 				<%= link_to "Create New", requirements_template_information_path, :method => :get, :class => "btn btn-silver" %>
 			</td>
 		</tr>
@@ -59,34 +59,34 @@
 			<td><strong>First Last</strong></td>
 			<td>Username</td>
 			<td><%= link_to "username@example.com", "#" %></td>
-			<td class="cell-narrow"><%= link_to "", "#", :class => "remove" %></td>
+			<td class="narrow"><%= link_to "", "#", :class => "remove" %></td>
 		</tr>
 		<tr>
 			<td><strong>First Last</strong></td>
 			<td>Username</td>
 			<td><%= link_to "username@example.com", "#" %></td>
-			<td class="cell-narrow"><%= link_to "", "#", :class => "remove" %></td>
+			<td class="narrow"><%= link_to "", "#", :class => "remove" %></td>
 		</tr>
 		<tr>
 			<td><strong>First Last</strong></td>
 			<td>Username</td>
 			<td><%= link_to "username@example.com", "#" %></td>
-			<td class="cell-narrow"><%= link_to "", "#", :class => "remove" %></td>
+			<td class="narrow"><%= link_to "", "#", :class => "remove" %></td>
 		</tr>
 		<tr>
 			<td><strong>First Last</strong></td>
 			<td>Username</td>
 			<td><%= link_to "username@example.com", "#" %></td>
-			<td class="cell-narrow"><%= link_to "", "#", :class => "remove" %></td>
+			<td class="narrow"><%= link_to "", "#", :class => "remove" %></td>
 		</tr>
 		<tr>
 			<td><strong>First Last</strong></td>
 			<td>Username</td>
 			<td><%= link_to "username@example.com", "#" %></td>
-			<td class="cell-narrow"><%= link_to "", "#", :class => "remove" %></td>
+			<td class="narrow"><%= link_to "", "#", :class => "remove" %></td>
 		</tr>
 		<tr>
-			<td colspan="7" class="table-buttons"><%= link_to "View All", "#", :class => "btn btn-silver" %>
+			<td colspan="7" class="full"><%= link_to "View All", "#", :class => "btn btn-silver" %>
 				<%= link_to "Create New", requirements_template_information_path, :method => :get, :class => "btn btn-silver" %>
 			</td>
 		</tr>
