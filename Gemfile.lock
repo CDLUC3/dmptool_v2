@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/hading/omniauth-shibboleth.git
+  revision: 2c8f3390eeaf6be7d15f6aeaee605917aa985295
+  specs:
+    omniauth-shibboleth (1.0.8)
+      omniauth (>= 1.0.0)
+
+GIT
   remote: git://github.com/radar/paranoia.git
   revision: 87fc348171e532a4a39d2f1235056eaebdd4c24e
   branch: rails4
@@ -76,6 +83,7 @@ GEM
       execjs
     coffee-script-source (1.6.3)
     columnize (0.3.6)
+    daemons (1.1.9)
     debugger (1.6.2)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.2.0)
@@ -87,6 +95,7 @@ GEM
     diff-lcs (1.2.4)
     enum_column3 (0.1.4)
     erubis (2.7.0)
+    eventmachine (1.0.3)
     execjs (2.0.1)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
@@ -94,6 +103,13 @@ GEM
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
     ffi (1.9.0)
+    haml (4.0.3)
+      tilt
+    haml-rails (0.4)
+      actionpack (>= 3.1, < 4.1)
+      activesupport (>= 3.1, < 4.1)
+      haml (>= 3.1, < 4.1)
+      railties (>= 3.1, < 4.1)
     hashie (2.0.5)
     highline (1.6.19)
     hike (1.2.3)
@@ -199,6 +215,10 @@ GEM
     therubyracer (0.12.0)
       libv8 (~> 3.16.14.0)
       ref
+    thin (1.6.1)
+      daemons (>= 1.0.9)
+      eventmachine (>= 1.0.0)
+      rack (>= 1.0.0)
     thor (0.18.1)
     thread_safe (0.1.2)
       atomic
@@ -236,6 +256,8 @@ DEPENDENCIES
   deep_cloneable (~> 1.5.5)
   enum_column3
   factory_girl_rails (= 4.2.0)
+  haml-rails (= 0.4)
+  holder_rails
   jbuilder (= 1.0.1)
   jquery-rails
   jquery-turbolinks
@@ -244,6 +266,7 @@ DEPENDENCIES
   mysql2
   omniauth
   omniauth-ldap
+  omniauth-shibboleth!
   paranoia!
   rails (= 4.0.0)
   rspec-rails (= 2.13.1)
@@ -251,6 +274,7 @@ DEPENDENCIES
   selenium-webdriver (~> 2.35.1)
   shoulda-matchers
   therubyracer
+  thin
   turbolinks (= 1.0.0)
   uglifier (= 1.0.3)
   unicorn
