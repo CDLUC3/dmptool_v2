@@ -6,6 +6,10 @@ class Plan < ActiveRecord::Base
   has_many :published_plans
   has_many :comments
   has_many :responses
+  has_one  :current_state,
+           :class_name => 'PlanState',
+           :primary_key => 'current_plan_state_id',
+           :foreign_key => 'id'
   belongs_to :requirements_template
 
   validates_columns :visibility
