@@ -1,20 +1,19 @@
 <header class="navbar">
   <div class="navbar-inner">
-    <div class="container">
-      <nav>
-      	<%= link_to image_tag("dmp_logo.png"), root_path, :id => "logo" %>
-        <ul class="nav pull-right">
-          <li><%= link_to "Home", root_path %></li>
-          <li><%= link_to "About", about_path %></li>
-          <li><%= link_to "DMP Guidance", "#" %></li>
-          <li><%= link_to "Example DMPs", "#" %></li>
-          <li><%= link_to "DMPTool News", "#" %></li>
-          <li><%= link_to "Help", help_path %></li>
-          <li><%= link_to "Contact Us", contact_path %></li>
-          <li><%= link_to 'LogIn', choose_institution_path if !current_user %></li>
-          <li id="login"><span></span><%= link_to 'Logout', logout_path if current_user %></li>
-        </ul>
-      </nav>
-    <div>
+    <nav>
+    	<%= link_to(image_tag("dmp_logo.png", :alt => "DMPTOOL", :width => "146", :height => "25"), root_path, :id => "logo", :title => "DMPTool Home") %>
+      <ul class="nav pull-right">
+        <li><%= link_to "Home", root_path, :title => "Home" %></li>
+        <li><%= link_to "About", about_path, :title => "About" %></li>
+        <li><%= link_to "DMP Guidance", "#", :title => "DMP Guidance" %></li>
+        <li><%= link_to "Example DMPs", "#", :title => "Example DMPs" %></li>
+        <li><%= link_to "DMPTool News", "#", :title => "DMPTool News" %></li>
+        <li><%= link_to "Help", help_path, :title => "Help" %></li>
+        <li><%= link_to "Contact Us", contact_path, :title => "Contact Us" %></li>
+				<li class="login"><span></span>
+        <%= link_to(content_tag(:span, "") + "Log In", choose_institution_path) if !current_user %>
+        <%= link_to(content_tag(:span, "") + "Log Out", logout_path) if current_user %></li>
+      </ul>
+    </nav>
   </div>
 </header>

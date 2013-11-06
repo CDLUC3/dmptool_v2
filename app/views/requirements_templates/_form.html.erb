@@ -1,13 +1,12 @@
-<div class="container">
 	<h3 class="dmp-header"><span id="dmp-templates"></span>DMP Template Overview</h3>
-	<div class="dmp-tabs">
+	<div class="tabs">
 		<script>
-	  		$('#dmp-tabs a').click(function (e) {
+	  		$('.nav-tabs a').click(function (e) {
 				e.preventDefault();
 				$(this).tab('show');
 			})
 		</script>
-		<ul class="nav nav-tabs" id="dmp-tabs">
+		<ul class="nav nav-tabs">
 	  		<li class="active"><%= link_to "Basic Information", "#basic-info", :data => {:toggle => "tab"} %></li>
 	  	</ul>
 	</div>
@@ -56,8 +55,7 @@
 				  <div class="control-group">
 				    <%= f.label :institution, class: "control-label" %>
 				    <div class="controls">
-				      <%= f.hidden_field :institution_id, value: current_user.institution.id %>
-				      <%= text_field_tag :institution_name, current_user.institution.full_name, disabled: true %>
+				      
 				    </div>
 				  </div>
 				
@@ -102,12 +100,10 @@
 				    <% end %>
 				    <%= link_to_add_fields 'Add Sample Plan', f , :sample_plans %>
 				  </div>
-				  
-				  <div class="btn-container">
-				  	<%= f.submit 'Save Changes', class: 'btn btn-green', method: 'post' %>
-					</div>
 				</div>
-				<% end %>
+				<div class="btn-container">
+					<%= f.submit 'Save Changes', class: 'btn btn-green', method: 'post' %>
+				</div>
+			<% end %>
 		</div>
 	</div>
-</div>
