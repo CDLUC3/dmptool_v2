@@ -8,6 +8,7 @@
     <%= render 'layouts/shim' %>
   </head>
   <body>
+  <p><%= "Welcome! #{current_user.full_name}" unless current_user.nil? %></p>
   <%= render 'layouts/header' %>
   <%= render 'layouts/dashboard_header' unless controller_name == ('static_pages' ||  'user_sessions') %>
 
