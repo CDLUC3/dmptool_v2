@@ -9,5 +9,5 @@ class PlanState < ActiveRecord::Base
   
   PENDING_REVIEW_STATES = ['submitted']
   
-  FINISHED_REVIEW_STATES = ['approved', 'rejected']
+  FINISHED_REVIEW_STATES = ['approved', 'rejected', 'committed']
 end
