@@ -2,6 +2,8 @@ class ResourcesController < ApplicationController
   before_filter :get_resource_template
   before_action :set_resource, only: [:show, :edit, :update, :destroy]
 
+  
+
   # GET /resources
   # GET /resources.json
   def index

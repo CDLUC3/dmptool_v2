@@ -8,10 +8,14 @@
 		|
 		<%= link_to 'Review DMPs', '#' %>
 	<%end%>
-	|
-	<%= link_to 'DMP Templates', requirements_templates_path %>
 
-	<% if (current_user.has_role?(2) ||  current_user.has_role?(1))%>
+	<% if (current_user.has_role?(1) ||  current_user.has_role?(5))%>
+		|
+	<%= link_to 'DMP Templates', requirements_templates_path %>
+	<%end%>
+
+
+	<% if (current_user.has_role?(2) ||  current_user.has_role?(1) ||  current_user.has_role?(5))%>
 		|
 		<%= link_to 'Resources', resource_templates_path %>
 	<%end%>

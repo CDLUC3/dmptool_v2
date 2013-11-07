@@ -2,6 +2,8 @@ class ResourceTemplatesController < ApplicationController
   before_filter :get_requirements_template
   before_action :set_resource_template, only: [:show, :edit, :update, :destroy, :toggle_active, :template_details]
 
+  
+
   # GET /resource_templates
   # GET /resource_templates.json
   def index
