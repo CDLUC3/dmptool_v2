@@ -14,6 +14,11 @@
 	<%= link_to 'Institution Profile', institutions_path %>
 	|
 	<%= link_to 'My Profile', edit_user_path(current_user) %>
+
+	<% if can? :manage, :all %>
 	|
-	<%= link_to 'DMP Administration', users_path %>
+			
+		<%=  link_to 'DMP Administration', users_path %>
+
+	<% end %>
 </div>

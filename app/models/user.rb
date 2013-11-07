@@ -81,6 +81,10 @@ class User < ActiveRecord::Base
         select('plan_states.state').distinct.pluck(:state)
   end
 
+  def has_role?(role_id)
+    self.authorizations.where(:role_id => role_id).first.present?
+  end
+
   private
 
   def create_cookie_salt
