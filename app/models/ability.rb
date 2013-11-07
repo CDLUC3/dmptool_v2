@@ -20,19 +20,7 @@ class Ability
       can :manage, :all
     end
 
-    # if user.has_role?(1)
-    #   can :edit, :all
-    # end
-
-    # if user.has_role?(1)
-    #   @editable_user = true
-    # end 
-
-    # if user.has_role?(5)
-
-    #   @editable_user = true
-    # end 
-
+    
 
   end
 
