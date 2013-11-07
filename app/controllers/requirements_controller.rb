@@ -64,7 +64,7 @@ class RequirementsController < ApplicationController
     @requirements = @requirements_template.requirements
     @requirement.destroy
     respond_to do |format|
-      format.html { render action: 'index' }
+      format.html { redirect_to requirements_template_requirements_path }
       format.json { head :no_content }
     end
   end

@@ -1,8 +1,0 @@
-.control-group
-	= f.label :creation_date, class: "control-label"
-	.controls
-		= f.text_field :created_at, :value => @requirements_template.created_at.strftime("%m/%d/%Y %I:%M %p"), disabled: true, class: 'datepicker'
-.control-group
-	= f.label :modification_date, class: "control-label"
-	.controls
-		= f.text_field :updated_at, :value => @requirements_template.created_at.strftime("%m/%d/%Y %I:%M %p"), disabled: true, class: 'datepicker'

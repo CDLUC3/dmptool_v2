@@ -1,0 +1,29 @@
+<h5>DMP Template Details</h5>
+<hr/>
+<div class="row-fluid">
+  <div class="span5">
+    <fieldset class="template_outline">
+      <strong>Template Outline</strong>
+      <br/>
+      <%= link_to 'Add Requirements Group', new_requirements_template_requirement_path(@requirements_template, node_type: 'group') %>
+      <hr/>
+      <div class="requirements_tree_view">
+        <%= nested_requirements @requirements.arrange(order: :created_at) %>
+      </div>
+    </fieldset>
+    <br/>
+    <fieldset class="template_status">
+      <strong>DMP Template Status:</strong>
+      <b id="status_<%= @requirements_template.id %>">
+        <%= @requirements_template.active ? "Active" : "Inactive" %>
+      </b>
+      <hr/>
+      <%= link_to activate_link_text(@requirements_template)+ ' ' +'Template', toggle_active_requirements_template_path(@requirements_template), remote: true, id: "activate_link_#{@requirements_template.id}" %>
+      <br/>
+      <%= link_to 'Delete Template', @requirements_template, method: :delete, data: { confirm: 'Are you sure?' } %>
+    </fieldset>
+  </div>
+  <div class="span7">
+    <%= render 'form' %>
+  </div>
+</div>

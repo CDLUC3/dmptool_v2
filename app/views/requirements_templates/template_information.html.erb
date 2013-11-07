@@ -2,9 +2,8 @@
 	<div class="existing_template span6" >
 		<h5> Copy an Existing DMP Template </h5>
 		<p> Select an existing requirements template below and edit the template information and details. </p>
-
-		<%= form_tag copy_existing_requirements_template_path, method: 'get' do %>
-			<table class"table table-condensed span6"
+		<%= form_tag copy_existing_requirements_template_path, method: :get do %>
+			<table class="table table-condensed span6">
 				<thead>
 					<tr>
 						<th></th>
@@ -22,15 +21,16 @@
 				<% end %>
 				</tbody>
 			</table>
-			<br/>
-		<%= submit_tag 'Template Information', class: 'btn btn-primary' %>
+			<div class="actions span6">
+				<%= submit_tag 'Template Information >>', class: 'btn btn-warning' %>
+			</div>
 		<% end %>
 	</div>
 
-	<div class="new_template span6"
+	<div class="new_template span6">
 		<h5> Create New DMP Template </h5>
 		<p> Input basic and optional information of the new requirements template and edit the template details. </p>
 		<br/>
-		<%= button_to 'Template Information', new_requirements_template_path, :method => :get, class: 'btn btn-primary' %>
+		<%= button_to 'Template Information >>', new_requirements_template_path, method: :get, class: 'btn btn-warning' %>
 	</div>
 </div>
