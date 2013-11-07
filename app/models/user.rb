@@ -84,6 +84,8 @@ class User < ActiveRecord::Base
   def has_role?(role_id)
     self.authorizations.where(:role_id => role_id).first.present?
   end
+
+  
   
   def roles_on_institutions
     #gives list of the unique roles for the user

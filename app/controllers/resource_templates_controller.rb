@@ -1,7 +1,10 @@
 class ResourceTemplatesController < ApplicationController
+  require 'ability'
+
   before_filter :get_requirements_template
   before_action :set_resource_template, only: [:show, :edit, :update, :destroy, :toggle_active, :template_details]
 
+  before_action :check_admin_access, only: [:index]
   
 
   # GET /resource_templates
@@ -157,4 +160,12 @@ class ResourceTemplatesController < ApplicationController
       @user_ids = @institution.authorizations.where(role_id: @role_id).pluck(:user_id) unless @institution.authorizations.nil?
       @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
     end
+
+    def check_admin_access
+      unless (current_user.has_role?(1) || current_user.has_role?(2) || current_user.has_role?(3) || current_user.has_role?(4) || current_user.has_role?(5))    
+        flash[:error] = "You don't have access to this content"
+        redirect_to root_url # halts request cycle
+      end
+  end
+
 end

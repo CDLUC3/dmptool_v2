@@ -11,7 +11,6 @@ class Ability
 
   def initialize(user)
     
-
     user ||= User.new #guest user if not logged in
     alias_action :create, :read, :update, :destroy, :to => :crud
 
@@ -29,9 +28,9 @@ class Ability
       cannot :crud, [RequirementsTemplate, Requirements]
     end
     
-
   end
 
+  
   ################ TO BE COMPLETED
 
   #   def initialize(user)
