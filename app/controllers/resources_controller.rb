@@ -7,6 +7,9 @@ class ResourcesController < ApplicationController
   def index
     @resource = @resource_template.resources.build
     @resources = @resource_template.resources
+    @requirements_template = @resource_template.requirements_template
+    requirement_ids = @requirements_template.requirements.pluck(:id)
+    @requirements = Requirement.where(id: requirement_ids)
   end
 
   # GET /resources/1
@@ -16,14 +19,20 @@ class ResourcesController < ApplicationController
 
   # GET /resources/new
   def new
-    @resource = @resource_template.resources.build(:parent_id => params[:parent_id])
+    @resource = @resource_template.resources.build
     @resources = @resource_template.resources
+    @requirements_template = @resource_template.requirements_template
+    requirement_ids = @requirements_template.requirements.pluck(:id)
+    @requirements = Requirement.where(id: requirement_ids)
     render 'index'
   end
 
   # GET /resources/1/edit
   def edit
     @resources = @resource_template.resources
+    @requirements_template = @resource_template.requirements_template
+    requirement_ids = @requirements_template.requirements.pluck(:id)
+    @requirements = Requirement.where(id: requirement_ids)
     render 'index'
   end
 
@@ -49,7 +58,7 @@ class ResourcesController < ApplicationController
     @resources = @resource_template.resources
     respond_to do |format|
       if @resource.update(resource_params)
-        format.html { redirect_to  resource_template_resources_path(@resource_template), notice: 'Resource was successfully updated.' }
+        format.html { redirect_to resource_template_resources_path(@resource_template), notice: 'Resource was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'index' }
@@ -81,6 +90,6 @@ class ResourcesController < ApplicationController
     end
 
     def get_resource_template
-      @resource_template =  ResourceTemplate.find(params[:resource_template_id])
+      @resource_template = ResourceTemplate.find(params[:resource_template_id])
     end
 end

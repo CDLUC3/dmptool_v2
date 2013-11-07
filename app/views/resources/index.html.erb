@@ -1,0 +1,37 @@
+<h5> Resource Template Details </h5>
+<hr/>
+<div class="row-fluid">
+  <div class="span5">
+    <fieldset class="template_outline">
+      <strong>Template Outline</strong>
+      <hr/>
+      <div class="requirements_tree_view">
+        <%= @requirements.each do |element| %>
+          <%= element.text_brief   %>
+        <% end %>
+      </div>
+    </fieldset>
+    <br/>
+    <fieldset class="template_status">
+      <strong>Resource Template Status:</strong>
+      <b id="status_<%= @resource_template.id %>">
+        <%= @resource_template.active ? "Active" : "Inactive" %>
+      </b>
+      <hr/>
+      <%= link_to activate_link_text(@resource_template)+ ' ' +'Template',
+        toggle_active_resource_template_path(@resource_template), remote: true, id: "activate_link_#{@resource_template.id}" %>
+      <br/>
+      <%= link_to 'Delete Template', @resource_template, method: :delete, data: { confirm: 'Are you sure?' } %>
+    </fieldset>
+  </div>
+
+  <div class="span7">
+    <% @resources.each do |resource| %>
+    <tr>
+      <td><%= render 'form' %></td>
+    </tr>
+    <% end %>
+    <%= link_to 'Add New Resource', new_resource_template_resource_path(@resource_template) %>
+  </div>
+
+</div>

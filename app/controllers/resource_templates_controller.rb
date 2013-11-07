@@ -90,7 +90,7 @@ class ResourceTemplatesController < ApplicationController
 
   def add_role
     emails = params[:email].split(/,\s*/) unless params[:email] == ""
-    role  = Role.where(name: 'Resources Editor').first
+    role  = Role.where(name: 'resources_editor').first
     @invalid_emails = []
     @existing_emails = []
     emails.each do |email|
@@ -129,8 +129,10 @@ class ResourceTemplatesController < ApplicationController
   def remove_resource_editor_role
     user = params[:user_id]
     resource_editors_of_current_institution
-    @remove_role = @institution.authorizations.where(role_id: @role_id, user_id: user )
-    @remove_role.delete_all
+    @authorization = @institution.authorizations.where(role_id: @role_id, user_id: user )
+    @authorization_id = @authorization.pluck(:id)
+    PermissionGroup.where(institution_id: @institution.id, authorization_id: @authorization_id).delete_all
+    @authorization.delete_all
     redirect_to resource_templates_path, notice: "Removed User from Resources Editor Role."
   end
 
@@ -151,7 +153,7 @@ class ResourceTemplatesController < ApplicationController
 
     def resource_editors_of_current_institution
       @institution = current_user.institution unless current_user.nil?
-      @role_id = Role.where(name: "Resources Editor").pluck(:id).first
+      @role_id = Role.where(name: "resources_editor").pluck(:id).first
       @user_ids = @institution.authorizations.where(role_id: @role_id).pluck(:user_id) unless @institution.authorizations.nil?
       @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
     end
