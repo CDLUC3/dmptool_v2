@@ -17,6 +17,10 @@ class PlanState < ActiveRecord::Base
 
   validates_columns :state
   
+  ALL_STATES = ['new', 'committed', 'submitted', 'approved', 'rejected', 'revised', 'inactive', 'deleted']
+  
+  ACTIVE_STATES = ['new', 'committed', 'submitted', 'approved', 'rejected', 'revised']
+  
   REVIEW_STATES = ['submitted', 'approved', 'rejected']
   
   PENDING_REVIEW_STATES = ['submitted']
