@@ -4,18 +4,26 @@
 	<%= link_to 'My DMPs', '#' %>
 	|
 	<%= link_to 'Create New DMP' ,'#' %>
-	|
-	<%= link_to 'Review DMPs', '#' %>
+	<% if (current_user.has_role?(4) ||  current_user.has_role?(1))%>
+		|
+		<%= link_to 'Review DMPs', '#' %>
+	<%end%>
 	|
 	<%= link_to 'DMP Templates', requirements_templates_path %>
-	|
-	<%= link_to 'Resources', resource_templates_path %>
-	|
-	<%= link_to 'Institution Profile', institutions_path %>
+
+	<% if (current_user.has_role?(2) ||  current_user.has_role?(1))%>
+		|
+		<%= link_to 'Resources', resource_templates_path %>
+	<%end%>
+	
+	<% if ( current_user.has_role?(5) ||  current_user.has_role?(1) )%>
+		|
+		<%= link_to 'Institution Profile', institutions_path %>
+	<%end%>
 	|
 	<%= link_to 'My Profile', edit_user_path(current_user) %>
 
-	<% if can? :manage, :all %>
+	<% if current_user.has_role?(1) %>
 	|
 			
 		<%=  link_to 'DMP Administration', users_path %>
