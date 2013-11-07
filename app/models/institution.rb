@@ -14,16 +14,16 @@ class Institution < ActiveRecord::Base
   
   def plans_by_state(state)
     #get all plans this institution and sub-institutions has in the state specified
-    Plan.joins(:plan_states, :requirements_template).
+    Plan.joins(:current_state, :requirements_template).
           where(:requirements_templates => { :institution_id => self.subtree_ids }).
           where(:plan_states => { :state => state})
   end
   	
   def unique_plan_states
     #returns a list of the unique plan states that this institution and sub-institutions has
-    PlanState.select('state').joins({:plan => :requirements_template}).
-          where(:requirements_templates => { :institution_id => self.subtree_ids }).distinct.
-          map{|s| s.state.to_s}.sort
+    Plan.joins(:current_state, :requirements_template).
+        where(:requirements_templates => { :institution_id => self.subtree_ids }).
+        select('plan_states.state').distinct.pluck(:state)
   end
   
   def requirements_templates_deep

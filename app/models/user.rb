@@ -20,7 +20,6 @@ class User < ActiveRecord::Base
   source: :plan, class_name: 'Plan'
   
   accepts_nested_attributes_for :user_plans
-  
 
   attr_accessor :ldap_create, :password, :password_confirmation
 
@@ -70,16 +69,16 @@ class User < ActiveRecord::Base
   
   def plans_by_state(state)
     #get all plans this user has in the state specified
-    Plan.joins(:plan_states, :user_plans).
+    Plan.joins(:current_state, :user_plans).
           where(:user_plans => { :user_id => self.id }).
           where(:plan_states => { :state => state})
   end
   
   def unique_plan_states
     #returns a list of the unique plan states that this user has
-    PlanState.select('state').joins(plan: :user_plans).
-          where(:user_plans => { :user_id => self.id }  ).distinct.
-          map{|s| s.state.to_s}.sort
+    Plan.joins(:current_state, :user_plans).
+        where(:user_plans => { :user_id => self.id }).
+        select('plan_states.state').distinct.pluck(:state)
   end
 
   private
