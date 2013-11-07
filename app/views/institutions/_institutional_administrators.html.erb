@@ -19,4 +19,9 @@
    </tbody>
 </table>
 <br>
-<%= link_to 'Add New Institutional Administrator', new_user_path %>
+
+
+<%= link_to 'Add New Institutional Administrator', new_role_path, method: :post, id: 1  %>
+
+<%= render partial: 'roles/add_role' %>
+
