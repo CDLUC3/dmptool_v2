@@ -84,6 +84,26 @@ class User < ActiveRecord::Base
   def has_role?(role_id)
     self.authorizations.where(:role_id => role_id).first.present?
   end
+  
+  def roles_on_institutions
+    #gives list of the unique roles for the user
+    #for each insitution. Higher level institutions are expanded
+    #to give roles for each sub-institution, also
+    #since the roles always cascade to lower institutions
+    auths = self.authorizations.includes(:role, :institutions)
+    roles = {}
+    auths.each do |auth|
+      auth_name = auth.role.name
+      inst_ids = auth.institutions.map{|inst| inst.subtree_ids}.flatten
+      if roles.has_key?(auth_name)
+        roles[auth_name] = roles[auth_name] + inst_ids
+      else
+        roles[auth_name] = inst_ids
+      end
+    end
+    roles.each{ |key,val| roles[key] = val.flatten.uniq }
+    roles 
+  end
 
   private
 
