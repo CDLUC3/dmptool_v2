@@ -10,13 +10,16 @@ class ResourceTemplatesController < ApplicationController
   # GET /resource_templates
   # GET /resource_templates.json
   def index
+    
+    @resource_templates = ResourceTemplate.page(params[:page]).
+                              where(institution_id: current_user.institution )
     case params[:scope]
     when "active"
-      @resource_templates = ResourceTemplate.active.page(params[:page]).per(10)
+      @resource_templates = @resource_templates.where(active: true).per(10)
     when "inactive"
-      @resource_templates = ResourceTemplate.inactive.page(params[:page]).per(10)
+      @resource_templates = @resource_templates.where(active: false).per(10)
     else
-      @resource_templates = ResourceTemplate.order(created_at: :asc).page(params[:page]).per(10)
+      @resource_templates = @resource_templates.per(10)
     end
     resource_editors_of_current_institution
   end
