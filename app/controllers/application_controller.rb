@@ -8,6 +8,12 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
 
+  def check_admin_access
+      unless (current_user.has_role?(1) || current_user.has_role?(2) || current_user.has_role?(3) || current_user.has_role?(4) || current_user.has_role?(5))    
+        flash[:error] = "You don't have access to this content"
+        redirect_to root_url # halts request cycle
+      end
+   end
 
   protected
 
