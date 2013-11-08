@@ -25,7 +25,7 @@ class ResourceTemplatesController < ApplicationController
         @resource_templates = @resource_templates.where(active: false).per(10)
       else
         @resource_templates = @resource_templates.per(10)
-      end
+    end
     resource_editors
   end
 
