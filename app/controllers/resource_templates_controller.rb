@@ -11,17 +11,22 @@ class ResourceTemplatesController < ApplicationController
   # GET /resource_templates.json
   def index
     
-    @resource_templates = ResourceTemplate.page(params[:page]).
-                              where(institution_id: current_user.institution )
-    case params[:scope]
-    when "active"
-      @resource_templates = @resource_templates.where(active: true).per(10)
-    when "inactive"
-      @resource_templates = @resource_templates.where(active: false).per(10)
-    else
-      @resource_templates = @resource_templates.per(10)
+    if current_user.has_role?(1)
+      @resource_templates = ResourceTemplate.page(params[:page])
+    else   
+      @resource_templates = ResourceTemplate.page(params[:page]).                      
+                            where(institution_id: current_user.institution )
     end
-    resource_editors_of_current_institution
+
+    case params[:scope]
+      when "active"
+        @resource_templates = @resource_templates.where(active: true).per(10)
+      when "inactive"
+        @resource_templates = @resource_templates.where(active: false).per(10)
+      else
+        @resource_templates = @resource_templates.per(10)
+      end
+    resource_editors
   end
 
 
@@ -160,11 +165,18 @@ class ResourceTemplatesController < ApplicationController
       @requirements_templates = RequirementsTemplate.order(created_at: :asc).page(params[:page]).per(5)
     end
 
-    def resource_editors_of_current_institution
-      @institution = current_user.institution unless current_user.nil?
-      @role_id = Role.where(name: "resources_editor").pluck(:id).first
-      @user_ids = @institution.authorizations.where(role_id: @role_id).pluck(:user_id) unless @institution.authorizations.nil?
-      @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
+    def resource_editors
+
+      @user_ids = Authorization.where(role_id: 2).pluck(:user_id) #All the Resources Editors
+
+      if current_user.has_role?(1) #DMP administrator
+        @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
+      else
+         
+        @users = User.where(id: @user_ids, institution_id: current_user.institution).order('created_at DESC').page(params[:page]).per(10)
+  
+      end
+      
     end
 
     def check_admin_access
