@@ -51,7 +51,7 @@ Dmptool2::Application.routes.draw do
   post 'add_role', to: 'resource_templates#add_role'
   post 'add_role', to: 'requirements_templates#add_role'
 
-  #post 'add_role', to: 'authorization#add_role'
+  post 'add_authorization', to: 'institutions#add_authorization'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
