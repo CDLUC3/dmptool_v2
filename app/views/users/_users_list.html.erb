@@ -15,12 +15,12 @@
           <td><%= link_to user.institution.full_name, edit_institution_path(user.institution) %></td>
           <td><%= user.roles.map {|r| r.name}.join('|') %></td>
           
-          <%if (  ((current_user.institution == user.institution) && (can? :manage, :all)) || (current_user.has_role?(1)) )%>
-            
-            <td><%=link_to raw('<i class="icon-user icon-white"></i>'), edit_roles_user_path(user), :class => 'btn btn-info', id: "#edit_roles_view" %></td>
-            <td><%= link_to raw('<i class="icon-trash icon-white"></i>'), user, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger' %></td>
           
-          <%end%>
+            
+          <td><%=link_to raw('<i class="icon-user icon-white"></i>'), edit_roles_user_path(user), :class => 'btn btn-info', id: "#edit_roles_view" %></td>
+          <td><%= link_to raw('<i class="icon-trash icon-white"></i>'), user, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger' %></td>
+        
+        
         
         </tr>
         
