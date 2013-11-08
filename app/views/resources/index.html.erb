@@ -5,10 +5,14 @@
     <fieldset class="template_outline">
       <strong>Template Outline</strong>
       <hr/>
-      <div class="requirements_tree_view">
-        <%= @requirements.each do |element| %>
-          <%= element.text_brief   %>
-        <% end %>
+      <div>
+        <table>
+          <% @requirements.each do |requirement| %>
+          <tr>
+            <td><%= link_to requirement.text_brief ,requirement_id: requirement.id, node_type: 'group' %></td>
+          </tr>
+          <% end %>
+        </table>
       </div>
     </fieldset>
     <br/>
@@ -28,10 +32,10 @@
   <div class="span7">
     <% @resources.each do |resource| %>
     <tr>
-      <td><%= render 'form' %></td>
+      <td><%= render :partial => 'form', :locals => {resource: resource} %></td>
     </tr>
     <% end %>
-    <%= link_to 'Add New Resource', new_resource_template_resource_path(@resource_template) %>
+    <%= link_to 'Add New Resource', new_resource_template_resource_path(@resource_template)%>
   </div>
 
 </div>

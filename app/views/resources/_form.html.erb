@@ -1,11 +1,11 @@
 <div class="form-horizontal">
-  <%= form_for [@resource.resource_template, @resource] do |f| %>
+  <%= form_for [resource.resource_template, resource] do |f| %>
 
-    <% if @resource.errors.any? %>
+    <% if resource.errors.any? %>
       <div id="error_explanation">
-        <h2>= "#{pluralize(@resource.errors.count, "error")} prohibited this resource from being saved:"</h2>
+        <h2>= "#{pluralize(resource.errors.count, "error")} prohibited this resource from being saved:"</h2>
         <ul>
-          <% @resource.errors.full_messages.each do |msg| %>
+          <% resource.errors.full_messages.each do |msg| %>
             <li><%= msg %></li>
           <% end %>
         </ul>
@@ -14,8 +14,8 @@
 
     <fieldset>
       <div class="control-group">
-        <%= f.hidden_field :resource_template_id %>
-        <%= f.hidden_field :requirement_id %>
+        <%= f.text_field :resource_template_id %>
+        <%= f.text_field :requirement_id %>
       </div>
 
       <div class="control-group">
