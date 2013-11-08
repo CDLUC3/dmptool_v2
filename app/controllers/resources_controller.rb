@@ -18,8 +18,8 @@ class ResourcesController < ApplicationController
 
   # GET /resources/new
   def new
-    @resource = @resource_template.resources.where(requirement_id: params[:requirement_id]).build
-    @resources = @resource_template.resources
+    @resources = @resource_template.resources.where(requirement_id: params[:requirement_id])
+    @resources << Resource.new({requirement_id: params["requirement_id"], resource_template_id:  params["resource_template_id"]})
     @requirements_template = @resource_template.requirements_template
     requirement_ids = @requirements_template.requirements.pluck(:id)
     @requirements = Requirement.where(id: requirement_ids)
