@@ -5,8 +5,7 @@ class ResourcesController < ApplicationController
   # GET /resources
   # GET /resources.json
   def index
-    @resource = @resource_template.resources.build
-    @resources = @resource_template.resources
+    @resources = @resource_template.resources.where(requirement_id: params[:requirement_id])
     @requirements_template = @resource_template.requirements_template
     requirement_ids = @requirements_template.requirements.pluck(:id)
     @requirements = Requirement.where(id: requirement_ids)
@@ -19,7 +18,7 @@ class ResourcesController < ApplicationController
 
   # GET /resources/new
   def new
-    @resource = @resource_template.resources.build
+    @resource = @resource_template.resources.where(requirement_id: params[:requirement_id]).build
     @resources = @resource_template.resources
     @requirements_template = @resource_template.requirements_template
     requirement_ids = @requirements_template.requirements.pluck(:id)
@@ -29,7 +28,7 @@ class ResourcesController < ApplicationController
 
   # GET /resources/1/edit
   def edit
-    @resources = @resource_template.resources
+    @resources = @resource_template.resources.where(requirement_id: params[:requirement_id])
     @requirements_template = @resource_template.requirements_template
     requirement_ids = @requirements_template.requirements.pluck(:id)
     @requirements = Requirement.where(id: requirement_ids)
@@ -39,7 +38,7 @@ class ResourcesController < ApplicationController
   # POST /resources
   # POST /resources.json
   def create
-    @resource = @resource_template.resources.build(resource_params)
+    @resource = @resource_template.resources.where(requirement_id: params[:requirement_id]).build(resource_params)
     @resources = @resource_template.resources
     respond_to do |format|
       if @resource.save
@@ -55,7 +54,7 @@ class ResourcesController < ApplicationController
   # PATCH/PUT /resources/1
   # PATCH/PUT /resources/1.json
   def update
-    @resources = @resource_template.resources
+    @resources = @resource_template.resources.where(requirement_id: params[:requirement_id])
     respond_to do |format|
       if @resource.update(resource_params)
         format.html { redirect_to resource_template_resources_path(@resource_template), notice: 'Resource was successfully updated.' }
