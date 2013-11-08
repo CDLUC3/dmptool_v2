@@ -92,4 +92,7 @@ class ResourcesController < ApplicationController
     def get_resource_template
       @resource_template = ResourceTemplate.find(params[:resource_template_id])
     end
+
+
+
 end

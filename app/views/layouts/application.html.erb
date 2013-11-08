@@ -10,7 +10,9 @@
   <body>
   <p><%= "Welcome! #{current_user.full_name}" unless current_user.nil? %></p>
   <%= render 'layouts/header' %>
-  <%= render 'layouts/dashboard_header' unless controller_name == ('static_pages' ||  'user_sessions') %>
+  <%if current_user%> 
+    <%= render 'layouts/dashboard_header'  %>
+  <%end%>
 
   <div class='container' >
     <% flash.each do |key, value| %>
@@ -21,7 +23,7 @@
 
     <%= yield %>
   </div>
-
+  
   <%= render 'layouts/footer' %>
   </body>
 </html>
