@@ -10,7 +10,7 @@ $(function() {
 			closeOnEscape: true,
 			draggable: true,
 			resizable: false,
-			title: "Add New Editor",
+			title: "Add New Role",
 			show: {
 				effect: "blind",
 				duration: 1000

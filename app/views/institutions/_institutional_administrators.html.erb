@@ -21,7 +21,9 @@
 <br>
 
 
-<%= link_to 'Add New Institutional Administrator', new_role_path, method: :post, id: 1  %>
+<%= link_to 'Add New Institutional Administrator', add_authorization_path, method: :post, id: 'add_authorization_view' %>
 
-<%= render partial: 'roles/add_role' %>
+
+<%= render partial: 'add_authorization' %>
+
 

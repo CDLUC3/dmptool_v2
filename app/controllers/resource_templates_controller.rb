@@ -25,7 +25,7 @@ class ResourceTemplatesController < ApplicationController
         @resource_templates = @resource_templates.where(active: false).per(10)
       else
         @resource_templates = @resource_templates.per(10)
-      end
+    end
     resource_editors
   end
 
@@ -179,11 +179,6 @@ class ResourceTemplatesController < ApplicationController
       
     end
 
-    def check_admin_access
-      unless (current_user.has_role?(1) || current_user.has_role?(2) || current_user.has_role?(3) || current_user.has_role?(4) || current_user.has_role?(5))    
-        flash[:error] = "You don't have access to this content"
-        redirect_to root_url # halts request cycle
-      end
-  end
+    
 
 end
