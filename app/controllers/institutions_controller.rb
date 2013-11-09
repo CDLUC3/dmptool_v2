@@ -103,8 +103,10 @@ class InstitutionsController < ApplicationController
   end
 
   def add_authorization
+  
     emails = params[:email].split(/,\s*/) unless params[:email] == ""
     #@role_id = params[:role_id]
+    @role_id = Role.find(params[:role_id])
     @role_id = 2
     @role_name = Role.where(id: @role_id).pluck(:name)
     @invalid_emails = []

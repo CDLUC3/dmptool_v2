@@ -1,5 +1,6 @@
 <div id="dialog_form">
 	<%= form_tag(add_authorization_path, method: :post, remote: true, html: { class: "form-horizontal"}) do %>
+	<%= hidden_field_tag 'role_id',  '5'%>
 		<div class="control-group">
 			<%= label_tag :email, "Institutional Administrators Emails", class: "control-label" %>
 			<div class="controls">
