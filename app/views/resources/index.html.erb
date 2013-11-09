@@ -9,7 +9,10 @@
         <table>
           <% @requirements.each do |requirement| %>
           <tr>
-            <td><%= link_to requirement.text_brief ,requirement_id: requirement.id, node_type: 'group' %></td>
+            <td><%= link_to requirement.text_brief,
+            			resource_template_resources_path(@resource_template,
+            			requirement_id: requirement.id, node_type: 'group') %>
+            </td>
           </tr>
           <% end %>
         </table>
@@ -35,7 +38,7 @@
       <td><%= render :partial => 'form', :locals => {resource: resource} %></td>
     </tr>
     <% end %>
-    <%= link_to 'Add New Resource', new_resource_template_resource_path(@resource_template)%>
+    <%= link_to 'Add New Resource', new_resource_template_resource_path(@resource_template, requirement_id: params[:requirement_id]) %>
   </div>
 
 </div>
