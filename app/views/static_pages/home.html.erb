@@ -1,27 +1,20 @@
 <h4> Data Management Plan Tool </h4>
 <br/>
-<div class=container-fluid>
-  <div class=row-fluid>
-    <div class=span4
-      <p> Create, share, review, and publish Data Management Plans conforming to institution andfunder requirements. </p>
-      <br/>
-      <%= button_to 'Log In', choose_institution_path, class: 'btn btn-large btn-primary', method: :get %>
-      <%= link_to 'Create a DMP Tool Account', new_user_path %>
-    </div>
-    <div class= span8>
-      <%= holder_tag '600x250', 'DMP tool image' %>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span4">
     </div>
   </div>
 
-  <div class=contain>
-    <div class=row-fluid>
-      <div class=span4>
+  <div class="contain">
+    <div class="row-fluid">
+      <div class="span4">
         <%= render 'data_management_plans' %>
       </div>
-      <div class=span4>
+      <div class="span4">
         <%= render 'how_to_use' %>
       </div>
-      <div class=span4>
+      <div class="span4">
         <%= render 'dmptool_news' %>
       </div>
     </div>
