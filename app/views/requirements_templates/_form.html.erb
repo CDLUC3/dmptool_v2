@@ -1,12 +1,17 @@
 <%= form_for @requirements_template, html: { class: 'form-horizontal' } do |f| %>
   <% if @requirements_template.errors.any? %>
-    #error_explanation
-      <h2>= "#{pluralize(@requirements_template.errors.count, "error")} prohibited this requirements_template from being saved:"</h2>
+    <div id="error_explanation">
+      <h2>
+        <%= "#{pluralize(@requirements_template.errors.count, "error")} prohibited this requirements template from being saved:" %>
+      </h2>
       <ul>
         <% @requirements_template.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
+          <li>
+            <%= msg %>
+          </li>
         <% end %>
       </ul>
+    </div>
   <% end %>
   <h4> DMP Template Overview </h4>
   <br/>
@@ -38,13 +43,29 @@
     </div>
   </div>
 
-  <div class="control-group" >
-    <%= f.label :institution, class: "control-label" %>
-    <div class="controls" >
-      <%= f.hidden_field :institution_id, value: current_user.institution.id %>
-      <%= text_field_tag :institution_name, current_user.institution.full_name, disabled: true %>
+  <% if current_user.has_role?(1) %>
+    <div class="control-group" >
+      <%= f.label :institution, class: "control-label" %>
+      <div class="controls" >
+        <%= collection_select(:requirements_template, :institution_id, Institution.all, :id, :full_name, { prompt: "-Select a Institution"} ) %>
+      </div>
     </div>
-  </div>
+  <% elsif current_user.has_role?(5) %>
+    <div class="control-group" >
+      <%= f.label :institution, class: "control-label" %>
+      <div class="controls" >
+        <%= f.select(:institution_id, current_user.institution.subtree.map {|r| [r.full_name,r.id] }, { prompt: "-Select a Institution"} ) %>
+      </div>
+    </div>
+  <% else %>
+    <div class="control-group" >
+      <%= f.label :institution, class: "control-label" %>
+      <div class="controls" >
+        <%= f.hidden_field :institution_id, value: current_user.institution.id %>
+        <%= text_field_tag :institution_name, current_user.institution.full_name, disabled: true %>
+      </div>
+    </div>
+  <% end %>
 
   <h5> Optional Information </h5>
   <hr/>
@@ -72,6 +93,13 @@
       <%= f.radio_button :review_type, :no_review, class: "radio inline" %>
       No Review Required
     </div>
+  </div>
+
+  <div class="control-group" >
+    <%= f.fields_for :tags do |builder| %>
+      <%= render "tag_fields", f: builder %>
+    <% end %>
+    <%= link_to_add_fields 'Add Tags', f, :tags %>
   </div>
 
   <div class="control-group" >
