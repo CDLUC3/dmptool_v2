@@ -11,6 +11,8 @@ class Institution < ActiveRecord::Base
 	has_many :authorizations, through: :permission_groups
 
 	validates :full_name, presence: true
+
+  
   
   def plans_by_state(state)
     #get all plans this institution and sub-institutions has in the state specified
