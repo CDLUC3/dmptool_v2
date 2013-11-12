@@ -1,16 +1,11 @@
 <%= form_for @user, html: { class: 'form-horizontal' } do |f| %>
-  <% if  @user.errors.any? %>
-    <div id="error_explanation">
-      <h2>
-        <%= "#{pluralize( @user.errors.count, "error")} prohibited this User from being saved:" %>
-      </h2>
-      <ul>
-        <%  @user.errors.full_messages.each do |msg| %>
-          <li>
-            <%= msg %>
-          </li>
-        <% end %>
-      </ul>
+  <% if @user.errors[:base].any? %>
+    <div class="alert alert-error form-errors">
+      <% @user.errors[:base].each do |msg| %>
+        <p>
+          <%= msg %>
+        </p>
+      <% end %>
     </div>
   <% end %>
   <div class="tabbable">
