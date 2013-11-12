@@ -13,7 +13,6 @@ class InstitutionsController < ApplicationController
     @institution_users = institutional_admins
     
     @categories.delete_if {|i| i[1] == @institution.id}
-
   end
 
   # GET /institutions/1
@@ -97,8 +96,6 @@ class InstitutionsController < ApplicationController
       format.js
     end
   end
-
-  
 
 
   def institutional_admins
