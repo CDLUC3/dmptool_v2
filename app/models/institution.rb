@@ -9,6 +9,8 @@ class Institution < ActiveRecord::Base
 	has_many :requirements_templates
 
 	validates :full_name, presence: true
+
+  
   
   def plans_by_state(state)
     #get all plans this institution and sub-institutions has in the state specified
