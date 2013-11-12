@@ -6,7 +6,8 @@ class AuthorizationsController < ApplicationController
 
     emails = params[:email].split(/,\s*/) unless params[:email] == ""
     @role_id = params[:role_id]
-    @role_name = Role.where(id: @role_id).pluck(:name)
+    @role_name = params[:role_name]
+    #@role_name = Role.where(id: @role_id).pluck(:name)
     @invalid_emails = []
     @existing_emails = []
     emails.each do |email|

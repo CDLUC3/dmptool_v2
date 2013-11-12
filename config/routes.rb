@@ -51,8 +51,6 @@ Dmptool2::Application.routes.draw do
   post 'add_role', to: 'resource_templates#add_role'
   post 'add_requirements_editor_role', to: 'requirements_templates#add_requirements_editor_role'
 
-  #post 'add_authorization', to: 'institutions#add_authorization'
-
   post 'add_authorization', to: 'authorizations#add_authorization'
 
   # The priority is based upon order of creation: first created -> highest priority.
