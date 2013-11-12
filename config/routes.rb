@@ -52,6 +52,7 @@ Dmptool2::Application.routes.draw do
   post 'add_requirements_editor_role', to: 'requirements_templates#add_requirements_editor_role'
 
   post 'add_authorization', to: 'authorizations#add_authorization'
+  get 'remove_authorization', to: 'authorizations#remove_authorization'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
