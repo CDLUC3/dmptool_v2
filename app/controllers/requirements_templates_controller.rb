@@ -110,9 +110,6 @@ class RequirementsTemplatesController < ApplicationController
         begin
           @user.roles << role
           authorization = Authorization.where(user_id: @user.id, role_id: role.id).pluck(:id).first
-          institution = @user.institution.id
-          pg = PermissionGroup.create(authorization_id: authorization, institution_id: institution)
-          pg.save!
         rescue ActiveRecord::RecordNotUnique
           @existing_emails << email
         end
@@ -140,7 +137,6 @@ class RequirementsTemplatesController < ApplicationController
     requirements_editors_of_current_institution
     @authorization = @institution.authorizations.where(role_id: @role_id, user_id: user )
     @authorization_id = @authorization.pluck(:id)
-    PermissionGroup.where(institution_id: @institution.id, authorization_id: @authorization_id).delete_all
     @authorization.delete_all
     redirect_to requirements_templates_path, notice: "Removed User from DMP Templates Editor Role."
   end
@@ -158,9 +154,12 @@ class RequirementsTemplatesController < ApplicationController
     end
 
     def requirements_editors_of_current_institution
-      @institution = current_user.institution unless current_user.nil?
+      if !current_user.nil?
+        @institution = current_user.institution
+        @user_ids = @institution.users_in_role('requirements_editor').pluck(:id)
+        @users = @institution.users_in_role('requirements_editor').
+                    order('created_at DESC').page(params[:page]).per(10)
+      end  
       @role_id = Role.where(name: "requirements_editor").pluck(:id).first
-      @user_ids = @institution.authorizations.where(role_id: @role_id).pluck(:user_id) unless @institution.authorizations.nil?
-      @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
     end
 end

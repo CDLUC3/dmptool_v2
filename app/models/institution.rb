@@ -7,8 +7,6 @@ class Institution < ActiveRecord::Base
 	has_many :users
 	has_many :resource_templates        
 	has_many :requirements_templates
-	has_many :permission_groups
-	has_many :authorizations, through: :permission_groups
 
 	validates :full_name, presence: true
   
@@ -29,6 +27,10 @@ class Institution < ActiveRecord::Base
   def requirements_templates_deep
     #gets the deep list of all requirements templates for this and all sub-institutions under it
     RequirementsTemplate.where(:requirements_templates => { :institution_id => self.subtree_ids})
+  end
+  
+  def users_in_role(role_name)
+    User.joins({:authorizations => :role}).where("roles.name = ?", role_name).where(institution_id: self.id)
   end
   
 end

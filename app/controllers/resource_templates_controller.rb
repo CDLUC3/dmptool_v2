@@ -116,8 +116,8 @@ class ResourceTemplatesController < ApplicationController
           @user.roles << role
           authorization = Authorization.where(user_id: @user.id, role_id: role.id).pluck(:id).first
           institution = @user.institution.id
-          pg = PermissionGroup.create(authorization_id: authorization, institution_id: institution)
-          pg.save!
+          auth = Authorization.new({:role_id => role.id, :user_id => @user.id})
+          auth.save!
         rescue ActiveRecord::RecordNotUnique
           @existing_emails << email
         end
@@ -145,7 +145,6 @@ class ResourceTemplatesController < ApplicationController
     resource_editors_of_current_institution
     @authorization = @institution.authorizations.where(role_id: @role_id, user_id: user )
     @authorization_id = @authorization.pluck(:id)
-    PermissionGroup.where(institution_id: @institution.id, authorization_id: @authorization_id).delete_all
     @authorization.delete_all
     redirect_to resource_templates_path, notice: "Removed User from Resources Editor Role."
   end
