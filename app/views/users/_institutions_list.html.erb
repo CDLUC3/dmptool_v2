@@ -8,7 +8,11 @@
   <% @institutions.each do |institution| %>
     <tr class='user_row'>
       <td><%= link_to institution.full_name, edit_institution_path(institution) %></td>
-      <td><%= link_to fetch_user(institution), edit_user_path(fetch_id) %></td>
+			<td>
+				<% institution.users_in_role("institutional_administrator").each do |u|%>
+					<%= link_to u.full_name,	edit_user_path(u) %><br/>
+				<% end %>
+      </td>
       <td><%= link_to institution.parent.try(:full_name), edit_institution_path(institution) unless institution.parent == nil %></td>
     </tr>
   <% end %>
