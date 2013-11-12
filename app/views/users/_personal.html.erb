@@ -1,5 +1,7 @@
+<p> Don't see your institution in the list? You can still use the DMPTool. Please create an account below. All fields are required.</p>
+
 <%unless @user.new_record?%>
-	<b>Name</b>
+  <b>Name</b>
 <%end%>
 
 <% errors = @user.errors[:login_id] %>
@@ -70,60 +72,40 @@
   <b>Contact Information</b>
 <%end%>
 
-  <%errors = @user.errors[:email]%>
-  <%validation_class = errors.empty? ? {} : 'error'%>
-  <div class="control-group <%= validation_class%>">
-    <%= f.label :email, class:'control-label' %>
-    <div class="controls">
-      <%= f.text_field :email %>
-        <span class="help-in-line">
-          <%=errors.join (', ')%>
-        </span>
-    </div>
-  </div>
-
-  <%errors = @user.errors[:institution_id]%>
-  <%validation_class = errors.empty? ? {} : 'error'%>
-  <div class="control-group <%= validation_class%>">
-    <%= f.label :institution_id, class: "control-label" %>
-    <div class="controls">
-      <%= f.select( :institution_id, @institution_list, {prompt: 'Select Institution'})%>
-        <span class="help-inline">
-          <%=errors.join (', ')%>
+<% errors = @user.errors[:email] %>
+<% validation_class = errors.empty? ? {} : 'error' %>
+<div class="control-group <%= validation_class%>">
+  <%= f.label :email, class:'control-label' %>
+  <div class="controls">
+    <%= f.text_field :email %>
+      <span class="help-in-line">
+        <%=errors.join (', ')%>
       </span>
-    </div>
   </div>
+</div>
+
+<% errors = @user.errors[:institution_id] %>
+<% validation_class = errors.empty? ? {} : 'error' %>
+<div class="control-group  <%= validation_class %>">
+  <%= f.label :institution_id, class:'control-label' %>
+  <div class="controls">
+    <%= collection_select(:user, :institution_id, Institution.all, :id, :full_name, { prompt: "-Select a Institution"} ) %>
+      <span class="help-in-line">
+        <%=errors.join (', ')%>
+    </span>
+  </div>
+</div>
 
 
 <%unless @user.new_record?%>
-	<b>DMP Options</b>
+  <b>DMP Options</b>
 
   <div class="control-group">
-  	<%label_tag :my_roles, 'My Roles', class:'control-label'%>
-  	<div class="controls">
-  		<%= @roles %>
-  	</div>
+    <% label_tag :my_roles, 'My Roles', class:'control-label' %>
+    <div class="controls">
+      <%= @roles %>
+    </div>
   </div>
 
 <%end%>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

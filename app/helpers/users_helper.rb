@@ -4,7 +4,7 @@ module UsersHelper
   end
 
   def fetch_user(institution)
-  	role = Role.where(name: "Institutional Administrator").pluck(:id)
+  	role = Role.where(name: "institutional_administrator").pluck(:id)
   	@user_id = institution.authorizations.select(:user_id).where(role_id: role)
 		user_names =  User.where(id: @user_id).pluck(:first_name, :last_name).join(' ')
 	end
