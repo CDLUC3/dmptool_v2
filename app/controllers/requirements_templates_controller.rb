@@ -97,7 +97,7 @@ class RequirementsTemplatesController < ApplicationController
     end
   end
 
-  def add_role
+  def add_requirements_editor_role
     emails = params[:email].split(/,\s*/) unless params[:email] == ""
     role  = Role.where(name: 'requirements_editor').first
     @invalid_emails = []
@@ -120,17 +120,17 @@ class RequirementsTemplatesController < ApplicationController
     end
     respond_to do |format|
       if (!@invalid_emails.empty? && !@existing_emails.empty?)
-        flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} specified and Users with #{@existing_emails.join(', ')} already have been assigned the Resouces Editor role. "
-        format.js { render action: 'add_role' }
+        flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} specified and Users with #{@existing_emails.join(', ')} already have been assigned the DMP Templates Editor Role. "
+        format.js { render action: 'add_requirements_editor_role' }
       elsif (!@existing_emails.empty? && @invalid_emails.empty?)
-        flash.now[:notice] = "The following emails #{@existing_emails.join(', ')} have already been assigned with this Resouces Editor role"
-        format.js { render action: 'add_role' }
+        flash.now[:notice] = "The following emails #{@existing_emails.join(', ')} have already been assigned with this DMP Templates Editor Role."
+        format.js { render action: 'add_requirements_editor_role' }
       elsif (@existing_emails.empty? && !@invalid_emails.empty?)
         flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} specified. "
-        format.js { render action: 'add_role' }
+        format.js { render action: 'add_requirements_editor_role' }
       else
-        flash.now[:notice] = "Added Resources Editor Role to the Users specified."
-        format.js { render action: 'add_role' }
+        flash.now[:notice] = "Added DMP Templates Editor Role to the Users specified."
+        format.js { render action: 'add_requirements_editor_role' }
       end
     end
   end
@@ -142,7 +142,7 @@ class RequirementsTemplatesController < ApplicationController
     @authorization_id = @authorization.pluck(:id)
     PermissionGroup.where(institution_id: @institution.id, authorization_id: @authorization_id).delete_all
     @authorization.delete_all
-    redirect_to requirements_templates_path, notice: "Removed User from Requirements Editor Role."
+    redirect_to requirements_templates_path, notice: "Removed User from DMP Templates Editor Role."
   end
 
   private
