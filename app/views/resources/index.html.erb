@@ -3,7 +3,8 @@
 <div class="row-fluid">
   <div class="span5">
     <fieldset class="template_outline">
-      <strong>Template Outline</strong>
+      <strong>Selected DMP Template</strong>
+      <p><%= link_to @requirements_template.name, edit_requirements_template_path(@requirements_template) %></p>
       <hr/>
       <div>
         <table>
@@ -33,6 +34,8 @@
   </div>
 
   <div class="span7">
+    <strong>Resources</strong>
+    <p> Click on a Requirement to view the list of Related Resources </p>
     <% @resources.each do |resource| %>
     <tr>
       <td><%= render :partial => 'form', :locals => {resource: resource} %></td>

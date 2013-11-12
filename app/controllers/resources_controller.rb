@@ -18,6 +18,7 @@ class ResourcesController < ApplicationController
 
   # GET /resources/new
   def new
+    @resource = @resource_template.resources.build
     @resources = @resource_template.resources.where(requirement_id: params[:requirement_id])
     @resources << Resource.new({requirement_id: params["requirement_id"], resource_template_id:  params["resource_template_id"]})
     @requirements_template = @resource_template.requirements_template
@@ -39,7 +40,10 @@ class ResourcesController < ApplicationController
   # POST /resources.json
   def create
     @resource = @resource_template.resources.where(requirement_id: params[:requirement_id]).build(resource_params)
-    @resources = @resource_template.resources
+    @resources = @resource_template.resources.where(requirement_id: params[:requirement_id])
+    @requirements_template = @resource_template.requirements_template
+    requirement_ids = @requirements_template.requirements.pluck(:id)
+    @requirements = Requirement.where(id: requirement_ids)
     respond_to do |format|
       if @resource.save
         format.html { redirect_to resource_template_resources_path(@resource_template, requirement_id: @resource.requirement_id), notice: 'Resource was successfully created.' }
@@ -72,7 +76,7 @@ class ResourcesController < ApplicationController
     @resources = @resource_template.resources
     @resource.destroy
     respond_to do |format|
-      format.html { redirect_to resources_url }
+      format.html { redirect_to resource_template_resources_url }
       format.json { head :no_content }
     end
   end

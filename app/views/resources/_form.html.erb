@@ -14,14 +14,14 @@
 
     <fieldset>
       <div class="control-group">
-        <%= f.text_field :resource_template_id %>
-        <%= f.text_field :requirement_id %>
+        <%= f.hidden_field :resource_template_id %>
+        <%= f.hidden_field :requirement_id %>
       </div>
 
       <div class="control-group">
         <%= f.label :resource_type, "Resource Type", class: "control-label" %>
         <div class="controls">
-          <%= f.select :resource_type, 
+          <%= f.select :resource_type,
           		options_for_select([ :actionable_url, :expository_guidance, :example_response, :suggested_response], resource.resource_type) %>
         </div>
       </div>
@@ -42,8 +42,11 @@
       <div class="actions pull-right">
         <%= f.submit 'Save Changes', class: "btn" %>
         <%= button_tag 'Cancel', type: :reset, class: "btn" %>
+        <%= link_to 'Delete Resource', [resource.resource_template, resource], :method => :delete,
+        data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
       </div>
     </fieldset>
+
 
   <% end %>
 </div>
