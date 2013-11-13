@@ -7,6 +7,7 @@ Dmptool2::Application.routes.draw do
  get 'contact', to: 'static_pages#contact'
  get 'logout', to: 'user_sessions#destroy'
  get 'dashboard', to: 'dashboard#show', as: 'dashboard'
+ get 'dashboard/test', to: 'dashboard#test'
 
   resources :requirements_templates do
     resources :requirements
