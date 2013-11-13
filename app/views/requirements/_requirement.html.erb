@@ -1,13 +1,48 @@
 <div class="requirements_group">
-	<%= link_to requirement.text_brief, edit_requirements_template_requirement_path(requirement.requirements_template, requirement) %>
+	<ul style="list-style-type: none;">
+		<li>
+			<% if requirement.group? %>
+				<i class="icon-folder-open icon-black"></i><%= link_to requirement.text_brief, edit_requirements_template_requirement_path(requirement.requirements_template, requirement, node_type: 'group') %>
+			<% else %>
+				<%= link_to requirement.text_brief, edit_requirements_template_requirement_path(requirement.requirements_template, requirement)%>
+			<% end %>
 
-	<%= link_to raw('<i class="icon-plus icon-black"></i>'),
-				new_requirements_template_requirement_path(@requirements_template, parent_id: requirement) %>
+			<% if requirement.group == false %>
+				<%= link_to raw('<i class="icon-remove icon-black"></i>'),
+							[requirement.requirements_template, requirement], :method => :delete, id: "delete_requirement",
+							data: { confirm: 'Are you sure?' } %>
 
-	<%= link_to raw('<i class="icon-folder-close icon-black"></i>'),
-				new_requirements_template_requirement_path(@requirements_template, parent_id: requirement, node_type: 'group'), class: "add_requirements_sub_group" %>
+			<% elsif requirement.is_childless? %>
+				<%= link_to raw('<i class="icon-plus icon-black"></i>'),
+							new_requirements_template_requirement_path(@requirements_template, parent_id: requirement) %>
+				<%= link_to raw('<i class="icon-folder-close icon-black"></i>'),
+							new_requirements_template_requirement_path(@requirements_template, parent_id: requirement, node_type: 'group'), class: "add_requirements_sub_group" %>
+				<%= link_to raw('<i class="icon-remove icon-black"></i>'),
+							[requirement.requirements_template, requirement], :method => :delete, id: "delete_requirement",
+							data: { confirm: 'Are you sure?' } %>
 
-	<%= link_to raw('<i class="icon-remove icon-black"></i>'),
-				[requirement.requirements_template, requirement], :method => :delete, id: "delete_requirement",
-				data: { confirm: 'Are you sure?' } %>
+			<% elsif (requirement.group == true  &&  requirement.has_children? && requirement.children.first.group == false ) %>
+				<%= link_to raw('<i class="icon-plus icon-black"></i>'),
+							new_requirements_template_requirement_path(@requirements_template, parent_id: requirement) %>
+				<%= link_to raw('<i class="icon-remove icon-black"></i>'),
+							[requirement.requirements_template, requirement], :method => :delete, id: "delete_requirement",
+							data: { confirm: 'Are you sure?' } %>
+
+			<% elsif (requirement.group == true  &&  requirement.has_children? && requirement.children.first.group == true ) %>
+				<%= link_to raw('<i class="icon-folder-close icon-black"></i>'),
+							new_requirements_template_requirement_path(@requirements_template, parent_id: requirement, node_type: 'group'), class: "add_requirements_sub_group" %>
+				<%= link_to raw('<i class="icon-remove icon-black"></i>'),
+							[requirement.requirements_template, requirement], :method => :delete, id: "delete_requirement",
+							data: { confirm: 'Are you sure?' } %>
+			<% else %>
+				<%= link_to raw('<i class="icon-plus icon-black"></i>'),
+							new_requirements_template_requirement_path(@requirements_template, parent_id: requirement) %>
+				<%= link_to raw('<i class="icon-folder-close icon-black"></i>'),
+							new_requirements_template_requirement_path(@requirements_template, parent_id: requirement, node_type: 'group'), class: "add_requirements_sub_group" %>
+				<%= link_to raw('<i class="icon-remove icon-black"></i>'),
+							[requirement.requirements_template, requirement], :method => :delete, id: "delete_requirement",
+							data: { confirm: 'Are you sure?' } %>
+			<% end %>
+		</li>
+	</ul>
 </div>
