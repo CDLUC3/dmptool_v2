@@ -14,7 +14,8 @@ class AuthorizationsController < ApplicationController
         @invalid_emails << email
       else
         
-        if check_correct_permissions(@user.id, params[:role_id])           
+        if check_correct_permissions(@user.id, params[:role_id])  
+          @check = true         
           begin
             authorization = Authorization.create(role_id: @role_id, user_id: @user.id)
             authorization.save!
@@ -22,23 +23,31 @@ class AuthorizationsController < ApplicationController
             @existing_emails << email
           end
         else
-          redirect_to @path, notice: "You don't have permission to grant this role."
+          @check = false   
         end
       end
     end
     respond_to do |format|
-      if (!@invalid_emails.empty? && !@existing_emails.empty?)
+      if !@check
+        flash.now[:notice] = "Permission error."
+        format.js { render action: 'add_authorization' }
+        return     
+      elsif (!@invalid_emails.empty? && !@existing_emails.empty?)
         flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} specified and Users with #{@existing_emails.join(', ')} already have been assigned this role. "
         format.js { render action: 'add_authorization' }
+        return
       elsif (!@existing_emails.empty? && @invalid_emails.empty?)
         flash.now[:notice] = "The following emails #{@existing_emails.join(', ')} have already been assigned with this role"
         format.js { render action: 'add_authorization' }
+        return
       elsif (@existing_emails.empty? && !@invalid_emails.empty?)
-        flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} specified. "
+        flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} in your institution. "
         format.js { render action: 'add_authorization' }
+        return
       else
         flash.now[:notice] = "Granted #{@role_name} Role to the Users specified."
         format.js { render action: 'add_authorization' }
+        return
       end
     end
   end
@@ -46,7 +55,6 @@ class AuthorizationsController < ApplicationController
 
   def remove_authorization
     if check_correct_permissions( params[:user_id], params[:role_id] )
-
       @path = '/' + params[:p]   
       @authorization = Authorization.where(role_id: params[:role_id] , user_id: params[:user_id] )
       @authorization_id = @authorization.pluck(:id)
@@ -55,6 +63,7 @@ class AuthorizationsController < ApplicationController
     else
       redirect_to @path, notice: "You don't have permission to revoke this role."
     end
+    return
   end
 
   private 
