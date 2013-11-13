@@ -14,9 +14,9 @@ class AuthenticationsController < ApplicationController
   def create
     authentication = request.env['omniauth.auth']
     Rails.logger.error(authentication.to_s)
-    #request.env.keys.sort.each do |key|
-    #  Rails.logger.error("#{key}: #{request.env[key]}")
-    #end
+    request.env.keys.sort.each do |key|
+      Rails.logger.error("#{key}: #{request.env[key]}")
+    end
 
     #HADING - fix up some stuff for how we expect the authentication to come back, just
     #for development
@@ -79,8 +79,12 @@ class AuthenticationsController < ApplicationController
       when 'ldap'
         Institution.non_partner_institution
       when 'shibboleth'
-        Institution.find_by_shib_domain(authentication['info']['domain'])
+        Institution.find_by_shib_domain(domain(authentication['uid']))
     end
+  end
+
+  def domain(shibboleth_uid)
+    return shibboleth_uid.split('@').last
   end
 
   def new_user(authentication)
