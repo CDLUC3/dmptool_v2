@@ -1,5 +1,5 @@
 <div class="col col-single">
-	<h3 class="dmp-header"><span id="dmp-templates"></span>DMP Templates</h3>
+	<h3 class="dashboard-heading"><span class="icon template-dmp"></span>DMP Templates</h3>
 	<div class="table-scope">
 		<%= link_to "All", "#", scope: "all", :class => "current" %>
 		|
@@ -14,20 +14,33 @@
 	<table class="table table-striped table-condensed">
 		<thead>
 			<tr>
-				<th> Name </th>
-				<th class="cell-narrow"> Version </th>
-				<th> Institution </th>
-				<th> Status </th>
-				<th> Visibility </th>
-				<th> Creation Date </th>
-				<th> Last Modification Date </th>
+				<th>Name</th>
+				<th class="cell-narrow">Version</th>
+				<th>Institution</th>
+				<th>Status</th>
+				<th>Visibility</th>
+				<th>Creation Date</th>
+				<th>Last Modification Date</th>
 			</tr>
 		</thead>
 		<tbody>
 		<% @requirements_templates.each do |requirements_template| %>
 			<tr>
-				<td class="requirements_template_name"><%=link_to(content_tag(:strong, "Requirements Template Test"), requirements_template_requirements_path(requirements_template)) %><br/>
-					<%= (link_to "Overview", edit_requirements_template_path(requirements_template))+" | "+(link_to "Details",requirements_template_requirements_path(requirements_template))+" | "+(link_to activate_link_text(requirements_template), toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", class: "ajax")+" | "+(link_to "Copy", copy_existing_requirements_template_path(requirements_template))+" | "+(link_to "Delete", requirements_template_path(requirements_template), :class => "delete", method: :delete, data: { confirm: "Are you sure?" }) %>
+				<td class="requirements_template_name">
+					<script>
+						jQuery(function(){ 
+							jQuery(".toggle-links").hover(
+								function(){jQuery(this).parent().find(".template-links").css("visibility", "visible")},
+								function(){jQuery(this).parent().find(".template-links").css("visibility", "hidden")}
+							);
+						})
+					</script>
+						<div class="toggle-links">
+							<%=link_to(content_tag(:strong, "Requirements Template Test"), requirements_template_requirements_path(requirements_template)) %>
+							<div class="template-links">
+								<%= (link_to "Overview", edit_requirements_template_path(requirements_template))+" | "+(link_to "Details",requirements_template_requirements_path(requirements_template))+" | "+(link_to activate_link_text(requirements_template), toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", class: "ajax")+" | "+(link_to "Copy", copy_existing_requirements_template_path(requirements_template))+" | "+(link_to "Delete", requirements_template_path(requirements_template), :class => "delete", method: :delete, data: { confirm: "Are you sure?" }) %>
+							</div>
+						</div>
 				</td>
 				<td class="narrow"><%= requirements_template.version %></td>
 				<td><%= requirements_template.institution.full_name %></td>
@@ -45,7 +58,7 @@
 		</tbody>
 	</table>
 	
-	<h3 class="dmp-header"><span id="dmp-editors"></span>DMP Templates</h3>
+	<h3 class="dashboard-heading"><span class="icon template-dmp"></span>DMP Templates</h3>
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -60,31 +73,31 @@
 				<td><strong>First Last</strong></td>
 				<td>Username</td>
 				<td><%= link_to "username@example.com", "#" %></td>
-				<td class="narrow"><%= link_to "", "#", :class => "remove" %></td>
+				<td class="narrow"><%= link_to "", "#", :class => "icon remove" %></td>
 			</tr>
 			<tr>
 				<td><strong>First Last</strong></td>
 				<td>Username</td>
 				<td><%= link_to "username@example.com", "#" %></td>
-				<td class="narrow"><%= link_to "", "#", :class => "remove" %></td>
+				<td class="narrow"><%= link_to "", "#", :class => "icon remove" %></td>
 			</tr>
 			<tr>
 				<td><strong>First Last</strong></td>
 				<td>Username</td>
 				<td><%= link_to "username@example.com", "#" %></td>
-				<td class="narrow"><%= link_to "", "#", :class => "remove" %></td>
+				<td class="narrow"><%= link_to "", "#", :class => "icon remove" %></td>
 			</tr>
 			<tr>
 				<td><strong>First Last</strong></td>
 				<td>Username</td>
 				<td><%= link_to "username@example.com", "#" %></td>
-				<td class="narrow"><%= link_to "", "#", :class => "remove" %></td>
+				<td class="narrow"><%= link_to "", "#", :class => "icon remove" %></td>
 			</tr>
 			<tr>
 				<td><strong>First Last</strong></td>
 				<td>Username</td>
 				<td><%= link_to "username@example.com", "#" %></td>
-				<td class="narrow"><%= link_to "", "#", :class => "remove" %></td>
+				<td class="narrow"><%= link_to "", "#", :class => "icon remove" %></td>
 			</tr>
 			<tr>
 				<td colspan="7" class="full"><%= link_to "View All", "#", :class => "btn btn-silver" %>

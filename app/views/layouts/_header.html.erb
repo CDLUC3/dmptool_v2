@@ -1,7 +1,7 @@
 <header class="navbar">
   <div class="navbar-inner">
     <nav>
-    	<%= link_to(image_tag("dmp_logo.png", :alt => "DMPTOOL", :width => "146", :height => "25"), root_path, :id => "logo", :title => "DMPTool Home") %>
+    	<%= link_to(image_tag("dmp_logo.png", :alt => "DMPTOOL", :width => "146", :height => "25"), root_path, :class => "logo", :title => "DMPTool Home") %>
       <ul class="nav pull-right">
         <li><%= link_to "Home", root_path, :title => "Home" %></li>
         <li><%= link_to "About", about_path, :title => "About" %></li>
@@ -10,9 +10,9 @@
         <li><%= link_to "DMPTool News", "#", :title => "DMPTool News" %></li>
         <li><%= link_to "Help", help_path, :title => "Help" %></li>
         <li><%= link_to "Contact Us", contact_path, :title => "Contact Us" %></li>
-				<li class="login"><span></span>
-        <%= link_to(content_tag(:span, "") + "Log In", choose_institution_path) if !current_user %>
-        <%= link_to(content_tag(:span, "") + "Log Out", logout_path) if current_user %></li>
+				<li class="login">
+        <%= link_to(content_tag(:span, "", :class => "icon") + "Log In", choose_institution_path) if !current_user %>
+        <%= link_to(content_tag(:span, "", :class => "icon") + "Log Out", logout_path) if current_user %></li>
       </ul>
     </nav>
   </div>
