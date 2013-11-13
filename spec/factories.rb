@@ -81,13 +81,6 @@ FactoryGirl.define do
     association :role
   end
 
-  factory :permission_group do
-    group 1
-
-    association :authorization
-    association :institution
-  end
-
   factory :resource_template do
     name "Lorem Ipsum"
     active false

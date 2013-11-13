@@ -16,6 +16,7 @@ class RequirementsTemplatesController < ApplicationController
     else
       @requirements_templates = RequirementsTemplate.order(created_at: :asc).page(params[:page]).per(5)
     end
+    requirements_editors_of_current_institution
   end
 
   # GET /requirements_templates/1
@@ -96,6 +97,50 @@ class RequirementsTemplatesController < ApplicationController
     end
   end
 
+  def add_requirements_editor_role
+    emails = params[:email].split(/,\s*/) unless params[:email] == ""
+    role  = Role.where(name: 'requirements_editor').first
+    @invalid_emails = []
+    @existing_emails = []
+    emails.each do |email|
+      @user = User.find_by(email: email)
+      if @user.nil?
+        @invalid_emails << email
+      else
+        begin
+          @user.roles << role
+          authorization = Authorization.where(user_id: @user.id, role_id: role.id).pluck(:id).first
+        rescue ActiveRecord::RecordNotUnique
+          @existing_emails << email
+        end
+      end
+    end
+    respond_to do |format|
+      if (!@invalid_emails.empty? && !@existing_emails.empty?)
+        flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} specified and Users with #{@existing_emails.join(', ')} already have been assigned the DMP Templates Editor Role. "
+        format.js { render action: 'add_requirements_editor_role' }
+      elsif (!@existing_emails.empty? && @invalid_emails.empty?)
+        flash.now[:notice] = "The following emails #{@existing_emails.join(', ')} have already been assigned with this DMP Templates Editor Role."
+        format.js { render action: 'add_requirements_editor_role' }
+      elsif (@existing_emails.empty? && !@invalid_emails.empty?)
+        flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} specified. "
+        format.js { render action: 'add_requirements_editor_role' }
+      else
+        flash.now[:notice] = "Added DMP Templates Editor Role to the Users specified."
+        format.js { render action: 'add_requirements_editor_role' }
+      end
+    end
+  end
+
+  def remove_requirements_editor_role
+    user = params[:user_id]
+    requirements_editors_of_current_institution
+    @authorization = @institution.authorizations.where(role_id: @role_id, user_id: user )
+    @authorization_id = @authorization.pluck(:id)
+    @authorization.delete_all
+    redirect_to requirements_templates_path, notice: "Removed User from DMP Templates Editor Role."
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_requirements_template
@@ -106,5 +151,15 @@ class RequirementsTemplatesController < ApplicationController
     def requirements_template_params
       params.require(:requirements_template).permit(:institution_id, :name, :active, :start_date, :end_date, :visibility, :version, :parent_id, :review_type, tags_attributes: [:id, :requirements_template_id, :tag, :_destroy],
         additional_informations_attributes: [:id, :requirements_template_id, :url, :label, :_destroy], sample_plans_attributes: [:id, :requirements_template_id, :url, :label, :_destroy])
+    end
+
+    def requirements_editors_of_current_institution
+      if !current_user.nil?
+        @institution = current_user.institution
+        @user_ids = @institution.users_in_role('requirements_editor').pluck(:id)
+        @users = @institution.users_in_role('requirements_editor').
+                    order('created_at DESC').page(params[:page]).per(10)
+      end  
+      @role_id = Role.where(name: "requirements_editor").pluck(:id).first
     end
 end

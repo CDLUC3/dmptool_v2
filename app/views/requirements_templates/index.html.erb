@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="col col-single">
 	<h3 class="dashboard-heading"><span class="icon template-dmp"></span>DMP Templates</h3>
 	<div class="table-scope">
@@ -14,13 +15,13 @@
 	<table class="table table-striped table-condensed">
 		<thead>
 			<tr>
-				<th>Name</th>
-				<th class="cell-narrow">Version</th>
-				<th>Institution</th>
-				<th>Status</th>
-				<th>Visibility</th>
-				<th>Creation Date</th>
-				<th>Last Modification Date</th>
+				<th> Name </th>
+				<th class="narrow"> Version </th>
+				<th> Institution </th>
+				<th> Status </th>
+				<th> Visibility </th>
+				<th> Creation Date </th>
+				<th> Last Modification Date </th>
 			</tr>
 		</thead>
 		<tbody>
@@ -38,7 +39,7 @@
 						<div class="toggle-links">
 							<%=link_to(content_tag(:strong, "Requirements Template Test"), requirements_template_requirements_path(requirements_template)) %>
 							<div class="template-links">
-								<%= (link_to "Overview", edit_requirements_template_path(requirements_template))+" | "+(link_to "Details",requirements_template_requirements_path(requirements_template))+" | "+(link_to activate_link_text(requirements_template), toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", class: "ajax")+" | "+(link_to "Copy", copy_existing_requirements_template_path(requirements_template))+" | "+(link_to "Delete", requirements_template_path(requirements_template), :class => "delete", method: :delete, data: { confirm: "Are you sure?" }) %>
+								<%= (link_to 'Overview', edit_requirements_template_path(requirements_template))+'|'+(link_to 'Details',requirements_template_requirements_path(requirements_template))+'|'+(link_to activate_link_text(requirements_template), toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", class: 'ajax')+'|'+(link_to 'Copy', copy_existing_requirements_template_path(requirements_template))+'|'+(link_to 'Delete', requirements_template_path(requirements_template), method: :delete, data: { confirm: 'Are you sure?' }) %>
 							</div>
 						</div>
 				</td>
@@ -51,8 +52,11 @@
 			</tr>
 		<% end %>
 			<tr>
-				<td colspan="7" class="full"><%= link_to "View All", "#", :class => "btn btn-silver" %>
-					<%= link_to "Create New", requirements_template_information_path, :method => :get, :class => "btn btn-silver" %>
+				<td colspan="7" class="full">
+					<%= button_to 'Create New template', requirements_template_information_path, :method => :get, :class => 'btn btn-silver' %>
+					<%= render 'remove_requirements_editor_role' %>
+					<%= link_to 'Add New Editor', add_requirements_editor_role_path, method: :post, id: 'add_requirements_editor_role_view' %>
+					<%= render :partial => 'add_requirements_editor_role' %>
 				</td>
 			</tr>
 		</tbody>
@@ -100,16 +104,14 @@
 				<td class="narrow"><%= link_to "", "#", :class => "icon remove" %></td>
 			</tr>
 			<tr>
-				<td colspan="7" class="full"><%= link_to "View All", "#", :class => "btn btn-silver" %>
+				<td colspan="7" class="full">
+					<%= link_to "View All", "#", :class => "btn btn-silver" %>
 					<%= link_to "Create New", requirements_template_information_path, :method => :get, :class => "btn btn-silver" %>
 				</td>
 			</tr>
 		</tbody>
 	</table>
-	<!--<div class="pagination">
+	<div class="pagination">
 		<%= paginate @requirements_templates %>
-	</div>-->
-	<!--<%= button_to "Create New template", requirements_template_information_path, :method => :get, class: "btn btn-primary" %>
-	<%= link_to "Add New Editor", add_role_path, method: :post, id: "add_role_view" %>-->
-	<%= render partial: "resource_templates/add_role" %>
+	</div>
 </div>

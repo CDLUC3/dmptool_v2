@@ -3,8 +3,8 @@ class InstitutionsController < ApplicationController
   before_action :check_for_cancel, :update => [:create, :update, :destroy]
   before_filter :populate_institution_select_list
   
-  
-  
+
+
 
   # GET /institutions
   # GET /institutions.json
@@ -12,12 +12,11 @@ class InstitutionsController < ApplicationController
     @institutions = Institution.all
     @institution = Institution.new(:parent_id => params[:parent_id])
 
-    @current_user = current_user
-    @institution = @current_user.institution
-    @institution_users = @institution.users
+    @current_institution = current_user.institution
+    
+    @institution_users = institutional_admins
     
     @categories.delete_if {|i| i[1] == @institution.id}
-
   end
 
   # GET /institutions/1
@@ -32,7 +31,8 @@ class InstitutionsController < ApplicationController
 
   # GET /institutions/1/edit
   def edit
-    @institution = Institution.find(params[:id])
+    @current_institution = Institution.find(params[:id])
+    #@institution = Institution.find(params[:id])
   end
 
   # POST /institutions
@@ -93,6 +93,23 @@ class InstitutionsController < ApplicationController
       result += ancestry_options(sub_items, &block)
     end
     result
+  end
+
+  def toggle_active
+    @resource_template.toggle!(:active)
+    respond_to do |format|
+      format.js
+    end
+  end
+
+
+  def institutional_admins
+    @user_ids = Authorization.where(role_id: 5).pluck(:user_id) #All the institutional_admins
+    if current_user.has_role?(1) #DMP administrator
+      @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
+    else     
+      @users = User.where(id: @user_ids, institution_id: current_user.institution).order('created_at DESC').page(params[:page]).per(10)
+    end  
   end
 
   private

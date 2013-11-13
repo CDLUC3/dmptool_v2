@@ -20,7 +20,6 @@ class User < ActiveRecord::Base
   source: :plan, class_name: 'Plan'
   
   accepts_nested_attributes_for :user_plans
-  
 
   attr_accessor :ldap_create, :password, :password_confirmation
 
@@ -70,16 +69,42 @@ class User < ActiveRecord::Base
   
   def plans_by_state(state)
     #get all plans this user has in the state specified
-    Plan.joins(:plan_states, :user_plans).
+    Plan.joins(:current_state, :user_plans).
           where(:user_plans => { :user_id => self.id }).
           where(:plan_states => { :state => state})
   end
   
   def unique_plan_states
     #returns a list of the unique plan states that this user has
-    PlanState.select('state').joins(plan: :user_plans).
-          where(:user_plans => { :user_id => self.id }  ).distinct.
-          map{|s| s.state.to_s}.sort
+    Plan.joins(:current_state, :user_plans).
+        where(:user_plans => { :user_id => self.id }).
+        select('plan_states.state').distinct.pluck(:state)
+  end
+
+  def has_role?(role_id)
+    self.authorizations.where(:role_id => role_id).first.present?
+  end
+
+  
+  
+  def roles_on_institutions
+    #gives list of the unique roles for the user
+    #for each insitution. Higher level institutions are expanded
+    #to give roles for each sub-institution, also
+    #since the roles always cascade to lower institutions
+    auths = self.authorizations.includes(:role, :institutions)
+    roles = {}
+    auths.each do |auth|
+      auth_name = auth.role.name
+      inst_ids = auth.institutions.map{|inst| inst.subtree_ids}.flatten
+      if roles.has_key?(auth_name)
+        roles[auth_name] = roles[auth_name] + inst_ids
+      else
+        roles[auth_name] = inst_ids
+      end
+    end
+    roles.each{ |key,val| roles[key] = val.flatten.uniq }
+    roles 
   end
 
   private

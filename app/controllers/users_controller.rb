@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   def index
     @users = User.all.page(params[:page]).per(10)
     @institutions = Institution.all
+
   end
 
   # GET /users/1
@@ -18,7 +19,7 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
-    @institution_list = Institution.all.collect { |i| [i.full_name, i.id] }
+    @institution_list = Institution.all
   end
 
   # GET /users/1/edit

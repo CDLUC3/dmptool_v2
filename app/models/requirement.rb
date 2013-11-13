@@ -22,6 +22,7 @@ class Requirement < ActiveRecord::Base
   end
 
   before_save :validating_to_set_either_subgroup_or_requirement
+  before_save :validating_not_to_add_a_child_under_a_leaf
 
   def validating_to_set_either_subgroup_or_requirement
     parent_id = self.parent_id
@@ -31,14 +32,26 @@ class Requirement < ActiveRecord::Base
     return true if has_children.nil?
     child = parent.children.first
       if (child.group? == true && self.group? == false)
-        errors[:base] <<  "Cannot add a Single Requirment Since a Sub Group already exists."
+        errors[:base] <<  "Cannot add a Single Requirement since a Sub Group already exists."
         return false
       elsif (child.group? == false && self.group? == true)
-        errors[:base] <<  "Cannot add a Sub Group since a Single Requirment already exists."
+        errors[:base] <<  "Cannot add a Sub Group since a Single Requirement already exists."
         return false
       else
         return true
       end
+  end
+
+  def validating_not_to_add_a_child_under_a_leaf
+    parent_id = self.parent_id
+    return true if parent_id.nil?
+    parent = Requirement.find(parent_id)
+    if parent.group? == false
+      errors[:base] <<  "Cannot add any Requirement or a Sub Group under a Single Requirement."
+      return false
+    else
+      return true
+    end
   end
 
 end

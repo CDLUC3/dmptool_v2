@@ -5,30 +5,34 @@ class Institution < ActiveRecord::Base
 
 	has_ancestry
 	has_many :users
-	has_many :resource_templates
+	has_many :resource_templates        
 	has_many :requirements_templates
-	has_many :permission_groups
-	has_many :authorizations, through: :permission_groups
-	
-  has_many  :private_requirements_templates, -> { where requirements_templates: { visibility: 'institutional'} },
-            source: :requirements_template, class_name: 'RequirementsTemplate'
-	
-	has_many  :public_requirements_templates, -> { where requirements_templates: { visibility: 'public'} },
-            source: :requirements_template, class_name: 'RequirementsTemplate'
 
 	validates :full_name, presence: true
+
+  
   
   def plans_by_state(state)
-    #get all plans this user has in the state specified
-    Plan.joins(:plan_states, :requirements_template).
-          where(:requirements_templates => { :institution_id => self.id }).
+    #get all plans this institution and sub-institutions has in the state specified
+    Plan.joins(:current_state, :requirements_template).
+          where(:requirements_templates => { :institution_id => self.subtree_ids }).
           where(:plan_states => { :state => state})
   end
   	
   def unique_plan_states
-    #returns a list of the unique plan states that this institution has
-    PlanState.select('state').joins({:plan => :requirements_template}).
-          where(:requirements_templates => { :institution_id => self.id }).distinct.
-          map{|s| s.state.to_s}.sort
+    #returns a list of the unique plan states that this institution and sub-institutions has
+    Plan.joins(:current_state, :requirements_template).
+        where(:requirements_templates => { :institution_id => self.subtree_ids }).
+        select('plan_states.state').distinct.pluck(:state)
   end
+  
+  def requirements_templates_deep
+    #gets the deep list of all requirements templates for this and all sub-institutions under it
+    RequirementsTemplate.where(:requirements_templates => { :institution_id => self.subtree_ids})
+  end
+  
+  def users_in_role(role_name)
+    User.joins({:authorizations => :role}).where("roles.name = ?", role_name).where(institution_id: self.id)
+  end
+  
 end

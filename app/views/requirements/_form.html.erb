@@ -1,0 +1,67 @@
+<%= form_for ([@requirement.requirements_template, @requirement]), html: { class: "form-horizontal" } do |f| %>
+  <% if @requirement.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= "#{pluralize(@requirement.errors.count, "error")} prohibited this requirement from being saved:" %>
+      </h2>
+      <ul>
+        <% @requirement.errors.full_messages.each do |msg| %>
+          <li>
+            <%= msg %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <fieldset>
+    <div class="control-group">
+      <%= f.hidden_field :parent_id %>
+      <%= f.check_box :group, id: 'if_group', style: "display: none;" %>
+    </div>
+    <div class="control-group">
+      <%= f.label :requirement_label, "Requirement Label", class: "control-label" %>
+      <div class="controls">
+        <%= f.text_field(:text_brief, class: "input-block-level") %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :detailed_question, "Detailed Question", class: "control-label" %>
+      <div class="controls">
+        <%= f.text_area(:text_full, rows: 5, class: "input-block-level") %>
+      </div>
+    </div>
+    <div class="control-group" id="obligation">
+      <%= f.label :obligation, class: "control-label" %>
+      <div class="controls">
+        <%= f.radio_button :obligation, :mandatory, class: "radio inline" %>
+        Mandatory
+        <br/>
+        <%= f.radio_button :obligation, :mandatory_applicable, class: "radio inline" %>
+        Mandatory If Applicable
+        <br/>
+        <%= f.radio_button :obligation, :recommended, class: "radio inline" %>
+        Recommended
+        <br/>
+        <%= f.radio_button :obligation, :optional, checked: true , class: "radio inline" %>
+        Optional
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :question_type, "Question Type", class: "control-label" %>
+      <div class="controls">
+        <%= f.select :requirement_type, options_for_select([:text, :numeric, :date, :enum]), include_blank: true %>
+      </div>
+    </div>
+    <fieldset class="requirement_type">
+      <%= f.fields_for :enumerations do |builder| %>
+        <%= render "enumeration_fields", f: builder %>
+      <% end %>
+      <%= link_to_add_fields 'Click to Add Item', f, :enumerations %>
+    </fieldset>
+  </fieldset>
+  <div class="actions pull-right">
+    <br/>
+    <%= f.submit 'Save', class: 'btn btn-info' %>
+    <%= link_to 'Finish', '#', class: 'btn btn-info' %>
+  </div>
+<% end %>

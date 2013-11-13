@@ -1,11 +1,11 @@
 <% provide(:title, 'Institution Information') %>
 
-<%= form_for @institution, html:{ class: 'form-horizontal', multipart: true}  do |f| %>
-  <% if @institution.errors.any? %>
+<%= form_for @current_institution, html:{ class: 'form-horizontal', multipart: true}  do |f| %>
+  <% if @current_institution.errors.any? %>
     #error_explanation
       <h2>= "#{pluralize(@current_institution.errors.count, "error")} prohibited this Institution from being saved:"</h2>
       <ul>
-        <% @nstitution.errors.full_messages.each do |msg| %>
+        <% @current_institution.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
         <% end %>
       </ul>
@@ -65,7 +65,7 @@
   <div class="control-group">
     <%= f.label "Institutional Logo", class: "control-label" %>
     <div class="controls">
-      <%= image_tag @institution.logo.url if @institution.logo? %>
+      <%= image_tag @current_institution.logo.url if @current_institution.logo? %>
       <%= f.file_field :logo %>
       <%= f.hidden_field :logo_cache %>
     </div>

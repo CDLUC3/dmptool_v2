@@ -4,7 +4,7 @@
 		<h4>Copy an Existing DMP Template</h4>
 		<p>Select an existing requirements template below and edit the template information and details.</p>
 
-		<%= form_tag copy_existing_requirements_template_path, method: "get" do %>
+		<%= form_tag copy_existing_requirements_template_path, method: :get do %>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -34,6 +34,6 @@
 	<div class="col col-double">
 		<h4>Create New DMP Template</h4>
 		<p>Input basic and optional information of the new requirements template and edit the template details.</p>
-		<%= button_to "Template Information", new_requirements_template_path, :method => :get, class: "btn btn-silver" %>
+		<%= button_to "Template Information", new_requirements_template_path, :method => :get, :class => "btn btn-silver" %>
 	</div>
 </div>

@@ -1,5 +1,36 @@
 class Ability
   include CanCan::Ability
+  
+  #ROLE IDS
+  #1)dmp_administrator            
+  #2)resources_editor             
+  #3)requirements_editor          
+  #4)institutional_reviewer       
+  #5)institutional_administrator 
+
+
+  def initialize(user)
+    
+    user ||= User.new #guest user if not logged in
+    alias_action :create, :read, :update, :destroy, :to => :crud
+
+    if user.has_role?(1) #dmp admin
+      can :manage, :all
+    end
+
+    if user.has_role?(2) #resources editor
+      can :crud, [ResourceTemplate, Resource]
+      cannot :crud, [RequirementsTemplate, Requirements]
+    end
+
+    if user.has_role?(3) #requirement editor
+      can :crud, [ResourceTemplate, Resource]
+      cannot :crud, [RequirementsTemplate, Requirements]
+    end
+    
+  end
+
+  
   ################ TO BE COMPLETED
 
   #   def initialize(user)

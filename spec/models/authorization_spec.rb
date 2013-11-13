@@ -14,7 +14,6 @@ describe Authorization do
 
   it { should belong_to(:user) }
   it { should belong_to(:role) }
-  it { should have_many(:institutions).through(:permission_groups) }
 
   it { should be_valid }
 

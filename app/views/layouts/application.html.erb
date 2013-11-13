@@ -8,6 +8,7 @@
     <%= render 'layouts/shim' %>
   </head>
   <body>
+  <p><%= "Welcome! #{current_user.full_name}" unless current_user.nil? %></p>
   <%= render 'layouts/header' %>
 
   <div class='container'>
@@ -20,7 +21,7 @@
 
     <%= yield %>
   </div>
-
+  
   <%= render 'layouts/footer' %>
   </body>
 </html>

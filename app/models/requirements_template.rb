@@ -3,7 +3,7 @@ class RequirementsTemplate < ActiveRecord::Base
   belongs_to :institution
   has_many :resource_templates
   has_many :requirements
-  has_many :tags
+  has_many :tags, inverse_of: :requirements_template
   has_many :additional_informations, inverse_of: :requirements_template
   has_many :sample_plans, inverse_of: :requirements_template
 

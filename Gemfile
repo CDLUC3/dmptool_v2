@@ -29,7 +29,7 @@ gem 'bootstrap-sass', '2.3.2.0'
 gem 'sass-rails',  '~> 4.0.0'
 # make sure this is not commented out when pushing up to the repo on bitbucket.
 # you can comment it out for running locally
-gem 'haml-rails', '0.4'
+#gem 'haml-rails', '0.4'
 gem 'uglifier', '1.0.3'
 gem 'deep_cloneable', '~> 1.5.5'
 gem 'ancestry'
@@ -39,7 +39,6 @@ gem 'jquery-ui-rails'
 gem 'turbolinks', '1.0.0'
 gem 'jquery-turbolinks'
 gem 'jbuilder', '1.0.1'
-gem 'holder_rails'
 gem 'kaminari'
 gem 'carrierwave'
 gem "cancan", :git => "git://github.com/ryanb/cancan.git", :branch => "2.0"

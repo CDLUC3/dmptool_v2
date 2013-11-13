@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131031174839) do
+ActiveRecord::Schema.define(version: 20131112185027) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -54,14 +54,6 @@ ActiveRecord::Schema.define(version: 20131031174839) do
     t.datetime "updated_at"
   end
 
-  create_table "groups", force: true do |t|
-    t.integer  "requirements_template_id"
-    t.string   "text_brief"
-    t.boolean  "is_subgroup"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "institutions", force: true do |t|
     t.string   "full_name"
     t.string   "nickname"
@@ -88,14 +80,6 @@ ActiveRecord::Schema.define(version: 20131031174839) do
     t.datetime "updated_at"
   end
 
-  create_table "permission_groups", force: true do |t|
-    t.integer  "group"
-    t.integer  "institution_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "authorization_id"
-  end
-
   create_table "plan_states", force: true do |t|
     t.integer  "plan_id"
     t.enum     "state",      limit: [:new, :committed, :submitted, :approved, :rejected, :revised, :inactive, :deleted]
@@ -112,6 +96,7 @@ ActiveRecord::Schema.define(version: 20131031174839) do
     t.enum     "visibility",               limit: [:institutional, :public, :public_browsable]
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "current_plan_state_id"
   end
 
   create_table "published_plans", force: true do |t|
@@ -134,7 +119,6 @@ ActiveRecord::Schema.define(version: 20131031174839) do
     t.datetime "updated_at"
     t.string   "ancestry"
     t.boolean  "group"
-    t.integer  "group_id"
   end
 
   add_index "requirements", ["ancestry"], name: "index_requirements_on_ancestry", using: :btree
