@@ -3,7 +3,7 @@
 <ul>
 	<% requirements.each do |requirement| %>
 		<li>
-			<%= requirement.text_brief %>
+			<%= link_to(requirement.text_brief) %>
 			<%= render :partial => 'tree_level', :locals => {requirements: requirement.children} %>
 		</li>
 	<% end %>
