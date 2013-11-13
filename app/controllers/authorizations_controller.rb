@@ -1,14 +1,11 @@
 class AuthorizationsController < ApplicationController
-#ADD FILTERS
-  before_action :check_correct_permissions
 	
-
-
-
 	def add_authorization
+
     emails = params[:email].split(/,\s*/) unless params[:email] == ""
     @role_id = params[:role_id]
     @role_name = params[:role_name]
+    @path = '/' + params[:p]    
     @invalid_emails = []
     @existing_emails = []
     emails.each do |email|
@@ -16,11 +13,16 @@ class AuthorizationsController < ApplicationController
       if @user.nil?
         @invalid_emails << email
       else
-        begin
-          authorization = Authorization.create(role_id: @role_id, user_id: @user.id)
-          authorization.save!
-        rescue ActiveRecord::RecordNotUnique
-          @existing_emails << email
+        
+        if check_correct_permissions(@user.id, params[:role_id])           
+          begin
+            authorization = Authorization.create(role_id: @role_id, user_id: @user.id)
+            authorization.save!
+          rescue ActiveRecord::RecordNotUnique
+            @existing_emails << email
+          end
+        else
+          redirect_to @path, notice: "You don't have permission to grant this role."
         end
       end
     end
@@ -41,17 +43,34 @@ class AuthorizationsController < ApplicationController
     end
   end
 
+
   def remove_authorization
-    @path = '/' + params[:p]   
-    @authorization = Authorization.where(role_id: params[:role_id] , user_id: params[:user_id] )
-    @authorization_id = @authorization.pluck(:id)
-    @authorization.delete_all
-    redirect_to @path, notice: "The Role has been revoked."
+    if check_correct_permissions( params[:user_id], params[:role_id] )
+
+      @path = '/' + params[:p]   
+      @authorization = Authorization.where(role_id: params[:role_id] , user_id: params[:user_id] )
+      @authorization_id = @authorization.pluck(:id)
+      @authorization.delete_all
+      redirect_to @path, notice: "The Role has been revoked."
+    else
+      redirect_to @path, notice: "You don't have permission to revoke this role."
+    end
   end
 
+  private 
 
-  def check_correct_permissions
-    true
+  def check_correct_permissions(user_id, role_id)
+    user = User.find(user_id)  
+    return (  
+
+              current_user.has_role?(1) || 
+
+              (  current_user.has_role?(2) && (current_user.institution == user.institution) && (role_id != 1)  ) || 
+
+              ( current_user.has_role?(role_id) && (current_user.institution == user.institution) )   
+
+            )
   end
 
 end
+
