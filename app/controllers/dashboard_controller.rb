@@ -8,4 +8,9 @@ class DashboardController < ApplicationController
       @finished_review = current_user.institution.plans_by_state(PlanState::FINISHED_REVIEW_STATES).count
     end
   end
+  
+  def test
+    @rt = RequirementsTemplate.find(1)
+    @root_requirements = @rt.requirements.where("ancestry IS NULL")
+  end
 end

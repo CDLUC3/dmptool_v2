@@ -1,0 +1,10 @@
+<% #this takes the nodes on one level of the requirements as the variable requirements %>
+
+<ul>
+	<% requirements.each do |requirement| %>
+		<li>
+			<%= requirement.text_brief %>
+			<%= render :partial => 'tree_level', :locals => {requirements: requirement.children} %>
+		</li>
+	<% end %>
+</ul>
