@@ -65,7 +65,7 @@ class AuthorizationsController < ApplicationController
 
               current_user.has_role?(1) || 
 
-              (  current_user.has_role?(2) && (current_user.institution == user.institution) && (role_id != 1)  ) || 
+              (  current_user.has_role?(5) && (current_user.institution == user.institution) && (role_id != 1)  ) || 
 
               ( current_user.has_role?(role_id) && (current_user.institution == user.institution) )   
 
