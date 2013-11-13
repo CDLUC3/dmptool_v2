@@ -39,11 +39,11 @@ class AuthorizationsController < ApplicationController
   end
 
   def remove_authorization
-    user = params[:user_id]
+    @path = '/' + params[:p]   
     @authorization = Authorization.where(role_id: params[:role_id] , user_id: params[:user_id] )
     @authorization_id = @authorization.pluck(:id)
     @authorization.delete_all
-    redirect_to institutions_path, notice: "The Role has been revoked."
+    redirect_to @path, notice: "The Role has been revoked."
   end
 
 end
