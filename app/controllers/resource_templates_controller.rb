@@ -10,7 +10,7 @@ class ResourceTemplatesController < ApplicationController
   # GET /resource_templates.json
   def index
     
-    if current_user.has_role?(1)
+    if safe_has_role?('dmp_administrator')
       @resource_templates = ResourceTemplate.page(params[:page])
     else   
       @resource_templates = ResourceTemplate.page(params[:page]).                      
@@ -122,7 +122,7 @@ class ResourceTemplatesController < ApplicationController
 
       @user_ids = Authorization.where(role_id: 2).pluck(:user_id) #All the Resources Editors
 
-      if current_user.has_role?(1) #DMP administrator
+      if safe_has_role?('dmp_administrator')
         @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
       else
          

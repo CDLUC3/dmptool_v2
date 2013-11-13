@@ -10,11 +10,9 @@
   <body>
   <p><%= "Welcome! #{current_user.full_name}" unless current_user.nil? %></p>
   <%= render 'layouts/header' %>
-  <%if current_user%> 
-    <%= render 'layouts/dashboard_header'  %>
-  <%end%>
 
-  <div class='container' >
+  <div class='container'>
+  	<%= render 'layouts/dashboard_header' unless controller_name == ('static_pages' ||  'user_sessions') %>
     <% flash.each do |key, value| %>
       <div class="alert alert-#{key}">
         <%= value %>

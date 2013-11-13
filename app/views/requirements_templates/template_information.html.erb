@@ -1,12 +1,14 @@
+<h3 class="dmp-header"><span id="create-new"></span>Create New DMP</h3>
 <div class="row-fluid">
-	<div class="existing_template span6" >
-		<h5> Copy an Existing DMP Template </h5>
-		<p> Select an existing requirements template below and edit the template information and details. </p>
-		<%= form_tag copy_existing_requirements_template_path, method: :get do %>
-			<table class="table table-condensed span6">
+	<div class="col col-double">
+		<h4>Copy an Existing DMP Template</h4>
+		<p>Select an existing requirements template below and edit the template information and details.</p>
+
+		<%= form_tag copy_existing_requirements_template_path, method: "get" do %>
+			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th></th>
+						<th class="narrow"></th>
 						<th> Name </th>
 						<th> Status </th>
 					</tr>
@@ -14,23 +16,24 @@
 				<tbody>
 				<% @requirements_templates.each do |requirements_template| %>
 					<tr>
-						<td><%= radio_button_tag :requirements_template, requirements_template.id, checked: false %></td>
+						<td class="narrow"><%= radio_button_tag :requirements_template, requirements_template.id, checked: false %></td>
 						<td><%= requirements_template.name %></td>
 						<td><%= requirements_template.active ? "active" : "inactive" %></td>
 					</tr>
 				<% end %>
+					<tr>
+						<td colspan="7" class="full">
+							<%= submit_tag "Template Information", :class => "btn btn-silver" %>
+						</td>
+					</tr>
 				</tbody>
 			</table>
-			<div class="actions span6">
-				<%= submit_tag 'Template Information >>', class: 'btn btn-warning' %>
-			</div>
 		<% end %>
 	</div>
 
-	<div class="new_template span6">
-		<h5> Create New DMP Template </h5>
-		<p> Input basic and optional information of the new requirements template and edit the template details. </p>
-		<br/>
-		<%= button_to 'Template Information >>', new_requirements_template_path, method: :get, class: 'btn btn-warning' %>
+	<div class="col col-double">
+		<h4>Create New DMP Template</h4>
+		<p>Input basic and optional information of the new requirements template and edit the template details.</p>
+		<%= button_to "Template Information", new_requirements_template_path, :method => :get, class: "btn btn-silver" %>
 	</div>
 </div>

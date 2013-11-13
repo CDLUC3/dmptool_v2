@@ -1,36 +1,47 @@
-<div class ='dashboard_header'>
-	<%= link_to 'My Dashboard ', dashboard_path %>
-	|
-	<%= link_to 'My DMPs', '#' %>
-	|
-	<%= link_to 'Create New DMP' ,'#' %>
-	<% if (current_user.has_role?(4) ||  current_user.has_role?(1))%>
-		|
-		<%= link_to 'Review DMPs', '#' %>
-	<%end%>
-
-	<% if (current_user.has_role?(1) ||  current_user.has_role?(5))%>
-		|
-	<%= link_to 'DMP Templates', requirements_templates_path %>
-	<%end%>
-
-
-	<% if (current_user.has_role?(2) ||  current_user.has_role?(1) ||  current_user.has_role?(5))%>
-		|
-		<%= link_to 'Resources', resource_templates_path %>
-	<%end%>
-	
-	<% if ( current_user.has_role?(5) ||  current_user.has_role?(1) )%>
-		|
-		<%= link_to 'Institution Profile', institutions_path %>
-	<%end%>
-	|
-	<%= link_to 'My Profile', edit_user_path(current_user) %>
-
-	<% if current_user.has_role?(1) %>
-	|
-			
-		<%=  link_to 'DMP Administration', users_path %>
-
-	<% end %>
+<div class="dashboard">
+	<div class="dashboard-header">
+		<div class="inst-logo">
+			<%= image_tag("cdl_logo.png", :width => "164", :height => "51", :alt => "California Digital Library") %>	
+		</div>
+		<div class="inst-title">
+			<h3>University of California Curation Center of the California Digital Library</h3>
+		</div>
+		<div class="inst-info">
+			<%= link_to "#", :id => "inst-domain" do %>
+				<span class="icon inst-domain"></span>www.domainname.edu
+			<% end %>
+			<%= link_to "#", :id => "inst-contact" do %>
+				<span class="icon inst-contact"></span>Contact Institution Administration
+			<% end %>
+		</div>
+	</div>
+	<div class="dashboard-nav">
+		<ul class="nav">
+			<li><%= link_to(content_tag(:span, "My Dashboard"),  dashboard_path) %></li>
+			<li><%= link_to(content_tag(:span, "My DMPs"), "#") %></li>
+			<li><%= link_to(content_tag(:span, "Create New DMP"),"#") %></li>
+			<% if (safe_has_role?('institutional_reviewer') ||  safe_has_role?('dmp_administrator'))%>
+				<li><%= link_to(content_tag(:span, "Review DMPs"), "#") %></li>
+			<% end %>
+			<% if (safe_has_role?('dmp_administrator') || safe_has_role?('institutional_administrator'))%>
+				<li class="current"><%= link_to(content_tag(:span, "DMP Templates"), requirements_templates_path) %>
+					<ul>
+						<li><%= link_to "Template Overview", "#" %></li>
+						<li><%= link_to "Template Details", "#" %></li>
+						<li class="last"></li>
+					</ul>
+				</li>
+			<% end %>
+			<% if (safe_has_role?('resources_editor') || safe_has_role?('dmp_administrator') || safe_has_role?('institutional_administrator'))%>
+				<li><%= link_to(content_tag(:span, "Resources"), resource_templates_path) %></li>
+			<% end %>
+			<% if ( safe_has_role?('institutional_administrator') ||  safe_has_role?('dmp_administrator') )%>
+				<li><%= link_to(content_tag(:span, "Institution Profile"), institutions_path) %></li>
+			<% end %>
+			<li><%= link_to(content_tag(:span, "My Profile"), edit_user_path(current_user)) %></li>
+			<% if safe_has_role?('dmp_administrator') %>
+				<li><%= link_to(content_tag(:span, "DMP Administration"), users_url) %></li>
+			<% end %>
+		</ul>
+	</div>
 </div>

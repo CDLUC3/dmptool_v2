@@ -1,30 +1,23 @@
-<h4> Log In to the DMPTool through <%= @institution.full_name %> </h4>
+<h4>Log In on DMPTool through <%= @institution.full_name %></h4>
 <div class="user_login">
-  <%= form_tag '/auth/ldap/callback', method: :post do %>
-  
-  	<%= hidden_field_tag :institution_id, session[:institution_id]%>
+  <%= form_tag "/auth/ldap/callback", method: :post do %>
+  	
+    <%= hidden_field_tag :institution_id, session[:institution_id]%>
     <%= label_tag :username %>
-    <%= text_field_tag :username %>
-    <br/>
+    <%= text_field_tag :username %><br/>
     <%= label_tag :password %>
     <%= password_field_tag :password %>
-    <br/>
-    <%= check_box_tag :remember_my_username %>
-    <%= label_tag :remember_my_username %>
-    <%= submit_tag "Login" %>
+    <p><%= check_box_tag :remember_my_username %>
+    <%= label_tag :remember_my_username %></p>
+    <%= submit_tag "Login", :class => "btn btn-green" %>
   <% end %>
-
   <div>
-  	<p>
-  		Is the institution shown incorrect? <%= link_to "Select a different institution", choose_institution_path %> to log in with.
-  	</p>	
-    <p>Don't have a DMPTool account yet? </p>
-    <br/>
-    <p>You can
-    <%= link_to "Create An Account", new_user_path %>
-    in DMPtool first and Log In.</p>
-    <%= link_to "Forgot your username?" %>
-    <br/>
-    <%= link_to "Forgot your password?" %>
+	  <p>Is the institution shown incorrect? <%= link_to "Select a different institution", choose_institution_path %> to log in with.</p>
+	  <p>Don't have a DMPTool account yet?</p>
+	  <p>You can
+	  <%= link_to "Create An Account", new_user_path %>
+	  in DMPtool first and Log In.</p>
+	  <p><%= link_to "Forgot your username?" %><br/>
+	  <%= link_to "Forgot your password?" %></p>
   </div>
 </div>

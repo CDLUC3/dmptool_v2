@@ -103,7 +103,7 @@ class InstitutionsController < ApplicationController
 
   def institutional_admins
     @user_ids = Authorization.where(role_id: 5).pluck(:user_id) #All the institutional_admins
-    if current_user.has_role?(1) #DMP administrator
+    if safe_has_role?('dmp_administrator')
       @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
     else     
       @users = User.where(id: @user_ids, institution_id: current_user.institution).order('created_at DESC').page(params[:page]).per(10)
