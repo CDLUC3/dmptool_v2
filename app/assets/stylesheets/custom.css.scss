@@ -5,11 +5,11 @@ html{
 	overflow-y: scroll;
 }
 
-body {
+/* body {
   padding-top: 20px;
   margin: 50px;
   padding-left: 60px;
-}
+} */
 
 section {
 	overflow: auto;
@@ -47,7 +47,7 @@ tr th:last-child {
 }
 
 /* header */
-#logo {
+/* #logo {
   float: left;
   margin-right: 10px;
   font-size: 1.7em;
@@ -62,38 +62,36 @@ tr th:last-child {
 #logo:hover {
   color: #A7C177;
   text-decoration: none;
-}
+} */
 
-.dashboard_header {
+/* .dashboard_header {
   text-align: center;
   padding-top: 20px;
   padding-bottom: 20px;
-}
+} */
 
 /* typography */
 
-h1, h2, h3, h4, h5, h6 {
+/* h1, h2, h3, h4, h5, h6 {
   line-height: 1;
-}
+} */
 
-h1 {
+/* h1 {
   font-size: 3em;
   letter-spacing: -2px;
   margin-bottom: 30px;
-}
+} */
 
-h2 {
+/* h2 {
   font-size: 1.2em;
   letter-spacing: -1px;
   margin-bottom: 30px;
   text-align: center;
   font-weight: normal;
   color: #999;
-}
+} */
 
 p {
-  font-size: 1.1em;
-  line-height: 1.7em;
 }
 
 fieldset {
@@ -103,11 +101,11 @@ fieldset {
 
 /* footer */
 
-footer {
+/* footer {
   margin-top: 45px;
   padding-top: 5px;
   text-align: left;
-}
+} */
 
 /* Forms */
 
