@@ -5,12 +5,14 @@ gem 'rails', '4.0.0'
 gem 'unicorn'
 
 group :development, :test do
-  #HADING - use thin for my development
+  #HADING - use thin for my development, fix debugger
   #gem 'thin'
+
   gem 'rspec-rails', '2.13.1'
   gem 'capistrano'
   gem 'capistrano-unicorn'
-  gem 'debugger'
+  #HADING - was having problem with this in the gemfile - take out for now and let IDE do what it needs to
+  #gem 'debugger'
 end
 
 group :test do
@@ -32,7 +34,7 @@ gem 'bootstrap-sass', '2.3.2.0'
 gem 'sass-rails',  '~> 4.0.0'
 # make sure this is not commented out when pushing up to the repo on bitbucket.
 # you can comment it out for running locally
-#gem 'haml-rails', '0.4'
+gem 'haml-rails', '0.4'
 gem 'uglifier', '1.0.3'
 gem 'deep_cloneable', '~> 1.5.5'
 gem 'ancestry'
