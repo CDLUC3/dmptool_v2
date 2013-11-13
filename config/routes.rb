@@ -7,6 +7,7 @@ Dmptool2::Application.routes.draw do
  get 'contact', to: 'static_pages#contact'
  get 'logout', to: 'user_sessions#destroy'
  get 'dashboard', to: 'dashboard#show', as: 'dashboard'
+ get 'dashboard/test', to: 'dashboard#test'
 
   resources :requirements_templates do
     resources :requirements
@@ -52,6 +53,7 @@ Dmptool2::Application.routes.draw do
   post 'add_requirements_editor_role', to: 'requirements_templates#add_requirements_editor_role'
 
   post 'add_authorization', to: 'authorizations#add_authorization'
+  get 'remove_authorization', to: 'authorizations#remove_authorization'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

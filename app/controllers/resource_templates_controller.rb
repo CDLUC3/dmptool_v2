@@ -3,8 +3,7 @@ class ResourceTemplatesController < ApplicationController
 
   before_filter :get_requirements_template
   before_action :set_resource_template, only: [:show, :edit, :update, :destroy, :toggle_active, :template_details]
-
-  before_action :check_admin_access, only: [:index]
+  before_action :check_admin_access
   
 
   # GET /resource_templates
@@ -102,52 +101,7 @@ class ResourceTemplatesController < ApplicationController
     end
   end
 
-  def add_role
-    emails = params[:email].split(/,\s*/) unless params[:email] == ""
-    role  = Role.where(name: 'resources_editor').first
-    @invalid_emails = []
-    @existing_emails = []
-    emails.each do |email|
-      @user = User.find_by(email: email)
-      if @user.nil?
-        @invalid_emails << email
-      else
-        begin
-          @user.roles << role
-          authorization = Authorization.where(user_id: @user.id, role_id: role.id).pluck(:id).first
-          institution = @user.institution.id
-          auth = Authorization.new({:role_id => role.id, :user_id => @user.id})
-          auth.save!
-        rescue ActiveRecord::RecordNotUnique
-          @existing_emails << email
-        end
-      end
-    end
-    respond_to do |format|
-      if (!@invalid_emails.empty? && !@existing_emails.empty?)
-        flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} specified and Users with #{@existing_emails.join(', ')} already have been assigned the Resouces Editor role. "
-        format.js { render action: 'add_role' }
-      elsif (!@existing_emails.empty? && @invalid_emails.empty?)
-        flash.now[:notice] = "The following emails #{@existing_emails.join(', ')} have already been assigned with this Resouces Editor role"
-        format.js { render action: 'add_role' }
-      elsif (@existing_emails.empty? && !@invalid_emails.empty?)
-        flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} specified. "
-        format.js { render action: 'add_role' }
-      else
-        flash.now[:notice] = "Added Resources Editor Role to the Users specified."
-        format.js { render action: 'add_role' }
-      end
-    end
-  end
 
-  def remove_resource_editor_role
-    user = params[:user_id]
-    resource_editors_of_current_institution
-    @authorization = @institution.authorizations.where(role_id: @role_id, user_id: user )
-    @authorization_id = @authorization.pluck(:id)
-    @authorization.delete_all
-    redirect_to resource_templates_path, notice: "Removed User from Resources Editor Role."
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

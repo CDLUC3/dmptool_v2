@@ -2,7 +2,7 @@ class InstitutionsController < ApplicationController
   before_action :set_institution, only: [:show, :edit, :update, :destroy]
   before_action :check_for_cancel, :update => [:create, :update, :destroy]
   before_filter :populate_institution_select_list
-  
+  before_action :check_institution_admin
 
   # GET /institutions
   # GET /institutions.json
@@ -10,15 +10,11 @@ class InstitutionsController < ApplicationController
     @institutions = Institution.all
     @institution = Institution.new(:parent_id => params[:parent_id])
 
-    #@current_user = current_user
-   # @institution = @current_user.institution
-    #@institution_users = @institution.users
+    @current_institution = current_user.institution
     
     @institution_users = institutional_admins
-
     
     @categories.delete_if {|i| i[1] == @institution.id}
-
   end
 
   # GET /institutions/1
@@ -33,7 +29,8 @@ class InstitutionsController < ApplicationController
 
   # GET /institutions/1/edit
   def edit
-    @institution = Institution.find(params[:id])
+    @current_institution = Institution.find(params[:id])
+    #@institution = Institution.find(params[:id])
   end
 
   # POST /institutions
@@ -102,43 +99,6 @@ class InstitutionsController < ApplicationController
       format.js
     end
   end
-
-  # def add_authorization
-
-  #   emails = params[:email].split(/,\s*/) unless params[:email] == ""
-  #   @role_id = params[:role_id]
-  #   @role_name = Role.where(id: @role_id).pluck(:name)
-  #   @invalid_emails = []
-  #   @existing_emails = []
-  #   emails.each do |email|
-  #     @user = User.find_by(email: email)
-  #     if @user.nil?
-  #       @invalid_emails << email
-  #     else
-  #       begin
-  #         authorization = Authorization.create(role_id: @role_id, user_id: @user.id)
-  #         authorization.save!
-  #       rescue ActiveRecord::RecordNotUnique
-  #         @existing_emails << email
-  #       end
-  #     end
-  #   end
-  #   respond_to do |format|
-  #     if (!@invalid_emails.empty? && !@existing_emails.empty?)
-  #       flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} specified and Users with #{@existing_emails.join(', ')} already have been assigned this role. "
-  #       format.js { render action: 'add_authorization' }
-  #     elsif (!@existing_emails.empty? && @invalid_emails.empty?)
-  #       flash.now[:notice] = "The following emails #{@existing_emails.join(', ')} have already been assigned with this role"
-  #       format.js { render action: 'add_authorization' }
-  #     elsif (@existing_emails.empty? && !@invalid_emails.empty?)
-  #       flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} specified. "
-  #       format.js { render action: 'add_authorization' }
-  #     else
-  #       flash.now[:notice] = "Added #{@role_name} Role to the Users specified."
-  #       format.js { render action: 'add_authorization' }
-  #     end
-  #   end
-  # end
 
 
   def institutional_admins

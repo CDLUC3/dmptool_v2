@@ -1,13 +1,14 @@
 class AuthorizationsController < ApplicationController
-
-
+#ADD FILTERS
+  before_action :check_correct_permissions
 	
-	def add_authorization
 
+
+
+	def add_authorization
     emails = params[:email].split(/,\s*/) unless params[:email] == ""
     @role_id = params[:role_id]
     @role_name = params[:role_name]
-    #@role_name = Role.where(id: @role_id).pluck(:name)
     @invalid_emails = []
     @existing_emails = []
     emails.each do |email|
@@ -38,6 +39,19 @@ class AuthorizationsController < ApplicationController
         format.js { render action: 'add_authorization' }
       end
     end
+  end
+
+  def remove_authorization
+    @path = '/' + params[:p]   
+    @authorization = Authorization.where(role_id: params[:role_id] , user_id: params[:user_id] )
+    @authorization_id = @authorization.pluck(:id)
+    @authorization.delete_all
+    redirect_to @path, notice: "The Role has been revoked."
+  end
+
+
+  def check_correct_permissions
+    true
   end
 
 end
