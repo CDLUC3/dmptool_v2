@@ -1,0 +1,10 @@
+<ul>
+	<% requirements.each do |requirement| %>
+		<li>
+			<%= link_to requirement.text_brief,
+            			resource_template_resources_path(@resource_template,
+            			requirement_id: requirement.id, node_type: 'group') %>
+			<%= render partial: 'requirements_tree', locals: { requirements: requirement.children } %>
+		</li>
+	<% end %>
+</ul>
