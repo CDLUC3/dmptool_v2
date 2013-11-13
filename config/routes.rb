@@ -63,6 +63,9 @@ Dmptool2::Application.routes.draw do
   get '/auth/:provider/callback', :to => 'authentications#create'
   get '/auth/failure', :to => 'authentications#failure'
 
+  get '/auth/:provider/callback', :to => 'authentications#create'
+  get '/auth/failure', :to => 'authentications#failure'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
