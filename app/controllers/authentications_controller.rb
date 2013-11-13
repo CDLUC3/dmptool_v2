@@ -40,10 +40,10 @@ class AuthenticationsController < ApplicationController
       login_user(user)
       flash[:notice] = "You have successfully created an account. Please update your personal details if necessary."
       if authentication['provider'] == 'shibboleth'
-        redirect_to finish_signup_user_path(user) and return
+        redirect_to finish_signup_user_url(user, :protocol => 'https') and return
       end
     end
-    redirect_to dashboard_path
+    redirect_to dashboard_url(:protocol => 'https')
   end
 
   def failure

@@ -1,7 +1,7 @@
 .grid_14.prefix_1.suffix_1.alpha.omega
   %h1 Finish Signup
   .grid_10.prefix_1.alpha
-    = form_for @user, :url => finish_signup_update_user_path(@user), :method => :put do |f|
+    = form_for @user, :url => finish_signup_update_user_path(@user), :method => :patch do |f|
       .left_label
         = f.label :first_name
       .right_field

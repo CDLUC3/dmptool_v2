@@ -148,7 +148,7 @@ class UsersController < ApplicationController
   def finish_signup_update
     if @user.update_attributes(params[:user].permit(:first_name, :last_name))
       flash[:notice] = 'You have completed signing up for the DMP tool.'
-      redirect_to user_path(@user)
+      redirect_to user_url(@user, :protocol => 'https')
     else
       render 'finish_signup'
     end

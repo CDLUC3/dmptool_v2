@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   has_many :user_plans
   has_many :plans, through: :user_plans
   has_many :comments
-  has_many :authentications
+  has_many :authentications, dependent: :destroy
   has_many :authorizations
   has_many :roles, through: :authorizations
 
@@ -65,14 +65,14 @@ class User < ActiveRecord::Base
   def full_name
     [first_name, last_name].join(" ")
   end
-  
+
   def plans_by_state(state)
     #get all plans this user has in the state specified
     Plan.joins(:current_state, :user_plans).
           where(:user_plans => { :user_id => self.id }).
           where(:plan_states => { :state => state})
   end
-  
+
   def unique_plan_states
     #returns a list of the unique plan states that this user has
     Plan.joins(:current_state, :user_plans).
@@ -84,8 +84,8 @@ class User < ActiveRecord::Base
     self.authorizations.where(:role_id => role_id).first.present?
   end
 
-  
-  
+
+
   def roles_on_institutions
     #gives list of the unique roles for the user
     #for each insitution. Higher level institutions are expanded
@@ -103,7 +103,7 @@ class User < ActiveRecord::Base
       end
     end
     roles.each{ |key,val| roles[key] = val.flatten.uniq }
-    roles 
+    roles
   end
 
   private

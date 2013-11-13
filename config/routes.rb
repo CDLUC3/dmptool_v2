@@ -29,7 +29,7 @@ Dmptool2::Application.routes.draw do
     member do
       get :edit_roles
       get :finish_signup
-      put :finish_signup_update
+      patch :finish_signup_update
     end
   end
   resources :roles
