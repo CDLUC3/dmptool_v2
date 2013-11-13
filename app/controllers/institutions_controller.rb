@@ -4,11 +4,15 @@ class InstitutionsController < ApplicationController
   before_filter :populate_institution_select_list
   
 
+
+
   # GET /institutions
   # GET /institutions.json
   def index
     @institutions = Institution.all
     @institution = Institution.new(:parent_id => params[:parent_id])
+
+    @current_institution = current_user.institution
     
     @institution_users = institutional_admins
     
@@ -27,7 +31,8 @@ class InstitutionsController < ApplicationController
 
   # GET /institutions/1/edit
   def edit
-    @institution = Institution.find(params[:id])
+    @current_institution = Institution.find(params[:id])
+    #@institution = Institution.find(params[:id])
   end
 
   # POST /institutions
