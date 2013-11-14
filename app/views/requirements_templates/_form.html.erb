@@ -44,7 +44,7 @@
 				  </div>
 					
 				  <%= render partial: 'date_fields' , locals: { f: f } unless @requirements_template.new_record? %>
-				  <% if safe_has_role?('dmp_administrator') %>
+				  <% if safe_has_role?('DMP Administrator') %>
 				  <div class="control-group">
 				    <%= f.label :version, class: "control-label" %>
 				    <div class="controls">
@@ -52,14 +52,14 @@
 				    </div>
 				  </div>
 				
-				<% if safe_has_role?('dmp_administrator') %>
+				<% if safe_has_role?('DMP Administrator') %>
     				<div class="control-group" >
       					<%= f.label :institution, class: "control-label" %>
       					<div class="controls" >
         					<%= collection_select(:requirements_template, :institution_id, Institution.all, :id, :full_name, { prompt: "-Select a Institution"} ) %>
       					</div>
     				</div>
-  				<% elsif safe_has_role?('institutional_administrator') %>
+  				<% elsif safe_has_role?('Institutional Administrator') %>
     				<div class="control-group" >
       					<%= f.label :institution, class: "control-label" %>
       					<div class="controls" >
