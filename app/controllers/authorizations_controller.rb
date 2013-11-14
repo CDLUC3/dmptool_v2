@@ -3,7 +3,7 @@ class AuthorizationsController < ApplicationController
 	def add_authorization
 
     emails = params[:email].split(/,\s*/) unless params[:email] == ""
-    @role_id = params[:role_id]
+    @role_id = (params[:role_id]).to_i
     @role_name = params[:role_name]
     @path = '/' + params[:p]    
     @invalid_emails = []
@@ -14,7 +14,7 @@ class AuthorizationsController < ApplicationController
         @invalid_emails << email
       else
         
-        if check_correct_permissions(@user.id, params[:role_id])  
+        if check_correct_permissions(@user.id, @role_id)  
           @check = true         
           begin
             authorization = Authorization.create(role_id: @role_id, user_id: @user.id)
@@ -41,7 +41,7 @@ class AuthorizationsController < ApplicationController
         format.js { render action: 'add_authorization' }
         return
       elsif (@existing_emails.empty? && !@invalid_emails.empty?)
-        flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} in your institution. "
+        flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} within your institution. "
         format.js { render action: 'add_authorization' }
         return
       else
@@ -54,8 +54,8 @@ class AuthorizationsController < ApplicationController
 
 
   def remove_authorization
+    @path = '/' + params[:p]
     if check_correct_permissions( params[:user_id], params[:role_id] )
-      @path = '/' + params[:p]   
       @authorization = Authorization.where(role_id: params[:role_id] , user_id: params[:user_id] )
       @authorization_id = @authorization.pluck(:id)
       @authorization.delete_all
@@ -66,19 +66,21 @@ class AuthorizationsController < ApplicationController
     return
   end
 
-  private 
+   
 
   def check_correct_permissions(user_id, role_id)
+    
+    a = false
     user = User.find(user_id)  
-    return (  
+    a =   
 
               current_user.has_role?(Role::DMP_ADMIN) || 
 
               (  current_user.has_role?(Role::INSTITUTIONAL_ADMIN) &&(current_user.institution == user.institution) && (role_id != Role::DMP_ADMIN)  ) || 
 
               ( current_user.has_role?(role_id) && (current_user.institution == user.institution) )   
-
-            )
+    return a
+            
   end
 
 end
