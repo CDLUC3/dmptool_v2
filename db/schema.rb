@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131112185027) do
+ActiveRecord::Schema.define(version: 20131114000149) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -50,6 +50,14 @@ ActiveRecord::Schema.define(version: 20131112185027) do
   create_table "enumerations", force: true do |t|
     t.integer  "requirement_id"
     t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "groups", force: true do |t|
+    t.integer  "requirements_template_id"
+    t.string   "text_brief"
+    t.boolean  "is_subgroup"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -119,6 +127,7 @@ ActiveRecord::Schema.define(version: 20131112185027) do
     t.datetime "updated_at"
     t.string   "ancestry"
     t.boolean  "group"
+    t.integer  "group_id"
   end
 
   add_index "requirements", ["ancestry"], name: "index_requirements_on_ancestry", using: :btree
@@ -158,6 +167,7 @@ ActiveRecord::Schema.define(version: 20131112185027) do
     t.integer  "resource_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "text"
   end
 
   create_table "responses", force: true do |t|

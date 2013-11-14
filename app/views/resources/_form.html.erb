@@ -27,15 +27,23 @@
       </div>
 
       <div class="control-group">
-        <%= f.label :details, "Details", class: "control-label" %>
+        <%= f.label :details, "Details", class: "control-label", id: "text_details" %>
         <div class="controls">
-          <%= f.text_field :label, placeholder: "URL Label" %>
+          <%= f.text_area :text, size: "20x10",placeholder: "Enter the text", class: "input-xlarge" %>
+        </div>
+      </div>
+
+
+      <div class="control-group">
+        <%= f.label :details, "Details", class: "control-label", id: "value_details" %>
+        <div class="controls">
+          <%= f.text_field :label, placeholder: "URL Label", class: "input-xlarge" %>
         </div>
       </div>
 
       <div class="control-group">
         <div class="controls">
-          <%= f.text_field :value, placeholder: "URL" %>
+          <%= f.text_field :value, placeholder: "URL", class: "input-xlarge" %>
         </div>
       </div>
 
@@ -43,7 +51,7 @@
         <%= f.submit 'Save Changes', class: "btn" %>
         <%= button_tag 'Cancel', type: :reset, class: "btn" %>
         <%= link_to 'Delete Resource', [resource.resource_template, resource], :method => :delete,
-        data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+        data: { confirm: 'Are you sure?' }, class: "btn" %>
       </div>
     </fieldset>
 
