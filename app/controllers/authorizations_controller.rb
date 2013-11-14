@@ -55,8 +55,9 @@ class AuthorizationsController < ApplicationController
 
   def remove_authorization
     @path = '/' + params[:p]
-    if check_correct_permissions( params[:user_id], params[:role_id] )
-      @authorization = Authorization.where(role_id: params[:role_id] , user_id: params[:user_id] )
+    @role_id = (params[:role_id]).to_i
+    if check_correct_permissions( params[:user_id], @role_id )
+      @authorization = Authorization.where(role_id: @role_id , user_id: params[:user_id] )
       @authorization_id = @authorization.pluck(:id)
       @authorization.delete_all
       redirect_to @path, notice: "The Role has been revoked."
