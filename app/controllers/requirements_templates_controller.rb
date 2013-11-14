@@ -6,6 +6,8 @@ class RequirementsTemplatesController < ApplicationController
   def index
     case params[:scope]
       when "all"
+        @requirements_templates = RequirementsTemplate.all.page(params[:page])
+      when "all_limited"
         @requirements_templates = RequirementsTemplate.all.page(params[:page]).per(5)
       when "active"
         @requirements_templates = RequirementsTemplate.active.page(params[:page]).per(5)
@@ -16,7 +18,7 @@ class RequirementsTemplatesController < ApplicationController
       when "institutional"
         @requirements_templates = RequirementsTemplate.institutional_visibility.page(params[:page]).per(5)
       else
-        @requirements_templates = RequirementsTemplate.order(created_at: :asc).page(params[:page])
+        @requirements_templates = RequirementsTemplate.order(created_at: :asc).page(params[:page]).per(5)
       end
       template_editors
   end

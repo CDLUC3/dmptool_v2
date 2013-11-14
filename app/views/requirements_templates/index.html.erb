@@ -1,7 +1,7 @@
 <div class="col col-single">
 	<h3 class="dashboard-heading"><span class="icon template-dmp"></span>DMP Templates</h3>
 	<div class="table-scope">
-		<%= link_to "All", scope: "all", :class => "current" %>
+		<%= link_to "All", scope: "all_limited", :class => "current" %>
 		|
 		<%= link_to "Active", scope: "active" %>
 		|
@@ -54,7 +54,7 @@
 				
 
 				<td colspan="7" class="full">
-					<%= link_to "View All", requirements_templates_path, :method => :get, :class => "btn btn-silver"%>
+					<%= link_to "View All", requirements_templates_path(:scope => "all"), :method => :get, :class => "btn btn-silver"%>
 					<%= link_to "Create New", requirements_template_information_path, :method => :get, :class => "btn btn-silver" %>
 				</td>
 			

@@ -24,7 +24,7 @@
 				<li><%= link_to(content_tag(:span, "Review DMPs"), "#") %></li>
 			<% end %>
 			<% if (safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::INSTITUTIONAL_ADMIN)|| safe_has_role?(Role::TEMPLATE_EDITOR))%>
-				<li class="current"><%= link_to(content_tag(:span, "DMP Templates"), requirements_templates_path(:scope => "all")) %>
+				<li class="current"><%= link_to(content_tag(:span, "DMP Templates"), requirements_templates_path) %>
 					<ul>
 						<li><%= link_to "Template Overview", "#" %></li>
 						<li><%= link_to "Template Details", "#" %></li>
