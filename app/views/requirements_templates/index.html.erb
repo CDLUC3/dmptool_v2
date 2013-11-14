@@ -58,58 +58,13 @@
 		</tbody>
 	</table>
 	
-	<h3 class="dashboard-heading"><span class="icon template-dmp"></span>DMP Templates</h3>
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Username</th>
-				<th>Email</th>
-				<th>Remove</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td><strong>First Last</strong></td>
-				<td>Username</td>
-				<td><%= link_to "username@example.com", "#" %></td>
-				<td class="narrow"><%= link_to "", "#", :class => "icon remove" %></td>
-			</tr>
-			<tr>
-				<td><strong>First Last</strong></td>
-				<td>Username</td>
-				<td><%= link_to "username@example.com", "#" %></td>
-				<td class="narrow"><%= link_to "", "#", :class => "icon remove" %></td>
-			</tr>
-			<tr>
-				<td><strong>First Last</strong></td>
-				<td>Username</td>
-				<td><%= link_to "username@example.com", "#" %></td>
-				<td class="narrow"><%= link_to "", "#", :class => "icon remove" %></td>
-			</tr>
-			<tr>
-				<td><strong>First Last</strong></td>
-				<td>Username</td>
-				<td><%= link_to "username@example.com", "#" %></td>
-				<td class="narrow"><%= link_to "", "#", :class => "icon remove" %></td>
-			</tr>
-			<tr>
-				<td><strong>First Last</strong></td>
-				<td>Username</td>
-				<td><%= link_to "username@example.com", "#" %></td>
-				<td class="narrow"><%= link_to "", "#", :class => "icon remove" %></td>
-			</tr>
-			<tr>
-				<td colspan="7" class="full"><%= link_to "View All", "#", :class => "btn btn-silver" %>
-					<%= link_to "Create New", requirements_template_information_path, :method => :get, :class => "btn btn-silver" %>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<!--<div class="pagination">
-		<%= paginate @requirements_templates %>
-	</div>-->
-	<!--<%= button_to "Create New template", requirements_template_information_path, :method => :get, class: "btn btn-primary" %>
-	<%= link_to "Add New Editor", add_role_path, method: :post, id: "add_role_view" %>-->
-	<%= render partial: "resource_templates/add_role" %>
+	<%= button_to 'Create New template', requirements_template_information_path, :method => :get, class: 'btn' %>
+	<br/>	
+	<%= render 'template_editors' %>
+
+	<%= button_to 'Add New Editor', add_role_path, method: :post, id: 'add_role_view', class: 'btn' %>
+
+	<%= render partial: "/authorizations/add_authorization" , :locals => { :role_type => 3, :role_name => 'DMP Template Editor'}%>
+	
+	
 </div>

@@ -20,10 +20,10 @@
 			<li><%= link_to(content_tag(:span, "My Dashboard"),  dashboard_path) %></li>
 			<li><%= link_to(content_tag(:span, "My DMPs"), "#") %></li>
 			<li><%= link_to(content_tag(:span, "Create New DMP"),"#") %></li>
-			<% if (safe_has_role?('institutional_reviewer') ||  safe_has_role?('dmp_administrator'))%>
+			<% if (safe_has_role?(Role::INSTITUTIONAL_REVIEWER) ||  safe_has_role?(Role::DMP_ADMIN))%>
 				<li><%= link_to(content_tag(:span, "Review DMPs"), "#") %></li>
 			<% end %>
-			<% if (safe_has_role?('dmp_administrator') || safe_has_role?('institutional_administrator'))%>
+			<% if (safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::INSTITUTIONAL_ADMIN)|| safe_has_role?(Role::TEMPLATE_EDITOR))%>
 				<li class="current"><%= link_to(content_tag(:span, "DMP Templates"), requirements_templates_path) %>
 					<ul>
 						<li><%= link_to "Template Overview", "#" %></li>
@@ -32,14 +32,14 @@
 					</ul>
 				</li>
 			<% end %>
-			<% if (safe_has_role?('resources_editor') || safe_has_role?('dmp_administrator') || safe_has_role?('institutional_administrator'))%>
+			<% if (safe_has_role?(Role::RESOURCE_EDITOR) || safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::INSTITUTIONAL_ADMIN))%>
 				<li><%= link_to(content_tag(:span, "Resources"), resource_templates_path) %></li>
 			<% end %>
-			<% if ( safe_has_role?('institutional_administrator') ||  safe_has_role?('dmp_administrator') )%>
+			<% if ( safe_has_role?(Role::INSTITUTIONAL_ADMIN)||  safe_has_role?(Role::DMP_ADMIN) )%>
 				<li><%= link_to(content_tag(:span, "Institution Profile"), institutions_path) %></li>
 			<% end %>
 			<li><%= link_to(content_tag(:span, "My Profile"), edit_user_path(current_user)) %></li>
-			<% if safe_has_role?('dmp_administrator') %>
+			<% if safe_has_role?(Role::DMP_ADMIN) %>
 				<li><%= link_to(content_tag(:span, "DMP Administration"), users_url) %></li>
 			<% end %>
 		</ul>
