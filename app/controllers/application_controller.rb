@@ -27,14 +27,17 @@ class ApplicationController < ActionController::Base
     end
 
     def check_admin_access
-      unless (current_user.has_role?(1) || current_user.has_role?(2) || current_user.has_role?(3) || current_user.has_role?(4) || current_user.has_role?(5))    
+      unless (current_user.has_role?(Role::DMP_ADMIN) || current_user.has_role?(Role::RESOURCE_EDITOR) ||
+            current_user.has_role?(Role::TEMPLATE_EDITOR) ||
+            current_user.has_role?(Role::INSTITUTIONAL_REVIEWER) ||
+            current_user.has_role?(Role::INSTITUTIONAL_ADMIN))    
         flash[:error] = "You don't have access to this content"
         redirect_to root_url # halts request cycle
       end
     end
 
     def check_institution_admin
-      unless (current_user.has_role?(1) || current_user.has_role?(5) )    
+      unless (current_user.has_role?(Role::DMP_ADMIN) || current_user.has_role?(Role::INSTITUTIONAL_ADMIN) )    
         flash[:error] = "You don't have access to this content"
         redirect_to root_url # halts request cycle
       end

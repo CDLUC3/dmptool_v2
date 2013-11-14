@@ -14,16 +14,16 @@ class Ability
     user ||= User.new #guest user if not logged in
     alias_action :create, :read, :update, :destroy, :to => :crud
 
-    if user.has_role?(1) #dmp admin
+    if user.has_role?(Role::DMP_ADMIN) #dmp admin
       can :manage, :all
     end
 
-    if user.has_role?(2) #resources editor
+    if user.has_role?(Role::RESOURCE_EDITOR) #resources editor
       can :crud, [ResourceTemplate, Resource]
       cannot :crud, [RequirementsTemplate, Requirements]
     end
 
-    if user.has_role?(3) #requirement editor
+    if user.has_role?(Role::TEMPLATE_EDITOR) #requirement editor
       can :crud, [ResourceTemplate, Resource]
       cannot :crud, [RequirementsTemplate, Requirements]
     end
