@@ -16,7 +16,7 @@ class RequirementsTemplatesController < ApplicationController
     else
       @requirements_templates = RequirementsTemplate.order(created_at: :asc).page(params[:page]).per(5)
     end
-    requirements_editors_of_current_institution
+    template_editors
   end
 
   # GET /requirements_templates/1
@@ -134,7 +134,7 @@ class RequirementsTemplatesController < ApplicationController
 
   def remove_requirements_editor_role
     user = params[:user_id]
-    requirements_editors_of_current_institution
+    template_editors
     @authorization = @institution.authorizations.where(role_id: @role_id, user_id: user )
     @authorization_id = @authorization.pluck(:id)
     @authorization.delete_all
@@ -153,13 +153,22 @@ class RequirementsTemplatesController < ApplicationController
         additional_informations_attributes: [:id, :requirements_template_id, :url, :label, :_destroy], sample_plans_attributes: [:id, :requirements_template_id, :url, :label, :_destroy])
     end
 
-    def requirements_editors_of_current_institution
-      if !current_user.nil?
-        @institution = current_user.institution
-        @user_ids = @institution.users_in_role('requirements_editor').pluck(:id)
-        @users = @institution.users_in_role('requirements_editor').
-                    order('created_at DESC').page(params[:page]).per(10)
-      end  
-      @role_id = Role.where(name: "requirements_editor").pluck(:id).first
+    def template_editors
+      @user_ids = Authorization.where(role_id: 3).pluck(:user_id) #All the DMP Template Editors
+      if safe_has_role?(Role::DMP_ADMIN)
+        @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
+      else
+        @users = User.where(id: @user_ids, institution_id: current_user.institution).order('created_at DESC').page(params[:page]).per(10)
+      end     
+      #@role_id = Role.where(name: "requirements_editor").pluck(:id).first
+    end
+
+    def resource_editors
+      @user_ids = Authorization.where(role_id: 2).pluck(:user_id) #All the Resources Editors
+      if safe_has_role?(Role::DMP_ADMIN)
+        @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
+      else
+        @users = User.where(id: @user_ids, institution_id: current_user.institution).order('created_at DESC').page(params[:page]).per(10)
+      end
     end
 end

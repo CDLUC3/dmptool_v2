@@ -119,19 +119,12 @@ class ResourceTemplatesController < ApplicationController
     end
 
     def resource_editors
-
       @user_ids = Authorization.where(role_id: 2).pluck(:user_id) #All the Resources Editors
-
       if safe_has_role?(Role::DMP_ADMIN)
         @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
       else
-         
         @users = User.where(id: @user_ids, institution_id: current_user.institution).order('created_at DESC').page(params[:page]).per(10)
-  
       end
-      
     end
-
-    
 
 end
