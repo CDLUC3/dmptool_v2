@@ -20,10 +20,7 @@
 			<li><%= link_to(content_tag(:span, "My Dashboard"),  dashboard_path) %></li>
 			<li><%= link_to(content_tag(:span, "My DMPs"), "#") %></li>
 			<li><%= link_to(content_tag(:span, "Create New DMP"),"#") %>
-			<% if (current_user.has_role?(4) ||  current_user.has_role?(1))%>
 			<li><%= link_to(content_tag(:span, "Review DMPs"), "#") %></li>
-			<%end%>
-			<% if (current_user.has_role?(1) ||  current_user.has_role?(5))%>
 			<li><%= link_to(content_tag(:span, "DMP Templates"), requirements_templates_path) %>
 				<ul>
 					<li><%= link_to "Template Overview", "#" %></li>
@@ -31,17 +28,10 @@
 					<li class="last"></li>
 				</ul>
 			</li>
-			<%end%>
-			<% if (current_user.has_role?(2) ||  current_user.has_role?(1) ||  current_user.has_role?(5))%>
 			<li><%= link_to(content_tag(:span, "Resources"), resource_templates_path) %></li>
-			<%end%>
-			<% if ( current_user.has_role?(5) ||  current_user.has_role?(1) )%>
 			<li><%= link_to(content_tag(:span, "Institution Profile"), institutions_path) %></li>
-			<%end%>
 			<li><%= link_to(content_tag(:span, "My Profile"), edit_user_path(current_user)) %></li>
-			<% if current_user.has_role?(1) %>
 			<li><%= link_to(content_tag(:span, "DMP Administration"), users_url) %></li>
-			<%end%>
 		</ul>
 	</div>
 </div>

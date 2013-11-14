@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <div class="col col-single">
 	<h3 class="dashboard-heading"><span class="icon template-dmp"></span>DMP Templates</h3>
 	<div class="table-scope">
@@ -39,7 +38,7 @@
 						<div class="toggle-links">
 							<%=link_to(content_tag(:strong, "Requirements Template Test"), requirements_template_requirements_path(requirements_template)) %>
 							<div class="template-links">
-								<%= (link_to 'Overview', edit_requirements_template_path(requirements_template))+'|'+(link_to 'Details',requirements_template_requirements_path(requirements_template))+'|'+(link_to activate_link_text(requirements_template), toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", class: 'ajax')+'|'+(link_to 'Copy', copy_existing_requirements_template_path(requirements_template))+'|'+(link_to 'Delete', requirements_template_path(requirements_template), method: :delete, data: { confirm: 'Are you sure?' }) %>
+								<%= (link_to 'Overview', edit_requirements_template_path(requirements_template))+' | '+(link_to 'Details',requirements_template_requirements_path(requirements_template))+' | '+(link_to activate_link_text(requirements_template), toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", class: 'ajax')+' | '+(link_to 'Copy', copy_existing_requirements_template_path(requirements_template))+' | '+(link_to 'Delete', requirements_template_path(requirements_template), :class => "delete", method: :delete, data: { confirm: 'Are you sure?' }) %>
 							</div>
 						</div>
 				</td>
@@ -53,64 +52,13 @@
 		<% end %>
 			<tr>
 				<td colspan="7" class="full">
-					<%= button_to 'Create New template', requirements_template_information_path, :method => :get, :class => 'btn btn-silver' %>
-					<%= render 'remove_requirements_editor_role' %>
-					<%= link_to 'Add New Editor', add_requirements_editor_role_path, method: :post, id: 'add_requirements_editor_role_view' %>
-					<%= render :partial => 'add_requirements_editor_role' %>
+					<%= button_to 'Create New template', requirements_template_information_path, :method => :get, :class => 'btn btn-green' %>
 				</td>
 			</tr>
 		</tbody>
 	</table>
-	
-	<h3 class="dashboard-heading"><span class="icon template-dmp"></span>DMP Templates</h3>
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Username</th>
-				<th>Email</th>
-				<th>Remove</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td><strong>First Last</strong></td>
-				<td>Username</td>
-				<td><%= link_to "username@example.com", "#" %></td>
-				<td class="narrow"><%= link_to "", "#", :class => "icon remove" %></td>
-			</tr>
-			<tr>
-				<td><strong>First Last</strong></td>
-				<td>Username</td>
-				<td><%= link_to "username@example.com", "#" %></td>
-				<td class="narrow"><%= link_to "", "#", :class => "icon remove" %></td>
-			</tr>
-			<tr>
-				<td><strong>First Last</strong></td>
-				<td>Username</td>
-				<td><%= link_to "username@example.com", "#" %></td>
-				<td class="narrow"><%= link_to "", "#", :class => "icon remove" %></td>
-			</tr>
-			<tr>
-				<td><strong>First Last</strong></td>
-				<td>Username</td>
-				<td><%= link_to "username@example.com", "#" %></td>
-				<td class="narrow"><%= link_to "", "#", :class => "icon remove" %></td>
-			</tr>
-			<tr>
-				<td><strong>First Last</strong></td>
-				<td>Username</td>
-				<td><%= link_to "username@example.com", "#" %></td>
-				<td class="narrow"><%= link_to "", "#", :class => "icon remove" %></td>
-			</tr>
-			<tr>
-				<td colspan="7" class="full">
-					<%= link_to "View All", "#", :class => "btn btn-silver" %>
-					<%= link_to "Create New", requirements_template_information_path, :method => :get, :class => "btn btn-silver" %>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+	<%= render 'remove_requirements_editor_role' %>
+	<%= render :partial => 'add_requirements_editor_role' %>
 	<div class="pagination">
 		<%= paginate @requirements_templates %>
 	</div>
