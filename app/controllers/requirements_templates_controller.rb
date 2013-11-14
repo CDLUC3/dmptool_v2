@@ -5,18 +5,20 @@ class RequirementsTemplatesController < ApplicationController
   # GET /requirements_templates.json
   def index
     case params[:scope]
-    when "active"
-      @requirements_templates = RequirementsTemplate.active.page(params[:page]).per(5)
-    when "inactive"
-      @requirements_templates = RequirementsTemplate.inactive.page(params[:page]).per(5)
-    when "public"
-      @requirements_templates = RequirementsTemplate.public_visibility.page(params[:page]).per(5)
-    when "institutional"
-      @requirements_templates = RequirementsTemplate.institutional_visibility.page(params[:page]).per(5)
-    else
-      @requirements_templates = RequirementsTemplate.order(created_at: :asc).page(params[:page]).per(5)
-    end
-    template_editors
+      when "all"
+        @requirements_templates = RequirementsTemplate.all.page(params[:page]).per(5)
+      when "active"
+        @requirements_templates = RequirementsTemplate.active.page(params[:page]).per(5)
+      when "inactive"
+        @requirements_templates = RequirementsTemplate.inactive.page(params[:page]).per(5)
+      when "public"
+        @requirements_templates = RequirementsTemplate.public_visibility.page(params[:page]).per(5)
+      when "institutional"
+        @requirements_templates = RequirementsTemplate.institutional_visibility.page(params[:page]).per(5)
+      else
+        @requirements_templates = RequirementsTemplate.order(created_at: :asc).page(params[:page])
+      end
+      template_editors
   end
 
   # GET /requirements_templates/1
@@ -121,12 +123,4 @@ class RequirementsTemplatesController < ApplicationController
       #@role_id = Role.where(name: "requirements_editor").pluck(:id).first
     end
 
-    def resource_editors
-      @user_ids = Authorization.where(role_id: 2).pluck(:user_id) #All the Resources Editors
-      if safe_has_role?(Role::DMP_ADMIN)
-        @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
-      else
-        @users = User.where(id: @user_ids, institution_id: current_user.institution).order('created_at DESC').page(params[:page]).per(10)
-      end
-    end
 end
