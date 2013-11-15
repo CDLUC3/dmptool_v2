@@ -1,6 +1,6 @@
 
 
-<h3 class="dashboard-heading"><span class="icon template-dmp"></span>DMP Template Editors</h3>
+<h3 class="dashboard-heading"><span class="icon template-editor"></span>DMP Template Editors</h3>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -16,7 +16,7 @@
           <td><%= user.full_name %></td>
           <td><%= user.login_id %></td>
           <td><%= user.email %></td>
-          <td class="narrow"><%= link_to raw('<i class="icon-minus-sign icon-white"></i>'), remove_authorization_path(user_id: user.id, role_id: 3, p: 'requirements_templates'), class: "icon remove" %></td>
+          <td><%= link_to raw('<i class="icon-minus-sign icon-white"></i>'), remove_authorization_path(user_id: user.id, role_id: 3, p: 'requirements_templates'), class: "icon remove" %></td>
         </tr>
       <% end %>
       
