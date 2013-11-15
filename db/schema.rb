@@ -54,14 +54,6 @@ ActiveRecord::Schema.define(version: 20131114000149) do
     t.datetime "updated_at"
   end
 
-  create_table "groups", force: true do |t|
-    t.integer  "requirements_template_id"
-    t.string   "text_brief"
-    t.boolean  "is_subgroup"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "institutions", force: true do |t|
     t.string   "full_name"
     t.string   "nickname"
@@ -127,7 +119,6 @@ ActiveRecord::Schema.define(version: 20131114000149) do
     t.datetime "updated_at"
     t.string   "ancestry"
     t.boolean  "group"
-    t.integer  "group_id"
   end
 
   add_index "requirements", ["ancestry"], name: "index_requirements_on_ancestry", using: :btree

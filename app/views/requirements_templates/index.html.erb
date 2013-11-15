@@ -1,7 +1,7 @@
 <div class="col col-single">
 	<h3 class="dashboard-heading"><span class="icon template-dmp"></span>DMP Templates</h3>
 	<div class="table-scope">
-		<%= link_to "All", "#", scope: "all", :class => "current" %>
+		<%= link_to "All", scope: "all_limited", :class => "current" %>
 		|
 		<%= link_to "Active", scope: "active" %>
 		|
@@ -36,7 +36,7 @@
 						})
 					</script>
 						<div class="toggle-links">
-							<%=link_to(content_tag(:strong, "Requirements Template Test"), requirements_template_requirements_path(requirements_template)) %>
+							<%=link_to (content_tag(:strong, requirements_template.name)), requirements_template_requirements_path(requirements_template) %>
 							<div class="template-links">
 								<%= (link_to "Overview", edit_requirements_template_path(requirements_template))+" | "+(link_to "Details",requirements_template_requirements_path(requirements_template))+" | "+(link_to activate_link_text(requirements_template), toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", class: "ajax")+" | "+(link_to "Copy", copy_existing_requirements_template_path(requirements_template))+" | "+(link_to "Delete", requirements_template_path(requirements_template), :class => "delete", method: :delete, data: { confirm: "Are you sure?" }) %>
 							</div>
@@ -51,9 +51,14 @@
 			</tr>
 		<% end %>
 			<tr>
-				<td colspan="7" class="full"><%= link_to "View All", "#", :class => "btn btn-silver" %>
+				
+
+				<td colspan="7" class="full">
+					<%= link_to "View All", requirements_templates_path(:scope => "all"), :method => :get, :class => "btn btn-silver"%>
 					<%= link_to "Create New", requirements_template_information_path, :method => :get, :class => "btn btn-silver" %>
 				</td>
+			
+
 			</tr>
 		</tbody>
 	</table>
@@ -62,7 +67,7 @@
 	<br/>	
 	<%= render 'template_editors' %>
 
-	<%= button_to 'Add New Editor', add_role_path, method: :post, id: 'add_role_view', class: 'btn' %>
+	<%= button_to 'Add New Template Editor', add_authorization_path, method: :post, id: 'add_authorization_view', class: 'btn' %>
 
 	<%= render partial: "/authorizations/add_authorization" , :locals => { :role_type => 3, :role_name => 'DMP Template Editor'}%>
 	

@@ -9,9 +9,7 @@
     <tr class='user_row'>
       <td><%= link_to institution.full_name, edit_institution_path(institution) %></td>
 			<td>
-				<% institution.users_in_role("institutional_administrator").each do |u|%>
-					<%= link_to u.full_name,	edit_user_path(u) %><br/>
-				<% end %>
+				<%= institution.contact_email %><br/>
       </td>
       <td><%= link_to institution.parent.try(:full_name), edit_institution_path(institution) unless institution.parent == nil %></td>
     </tr>

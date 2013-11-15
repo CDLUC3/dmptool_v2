@@ -5,18 +5,22 @@ class RequirementsTemplatesController < ApplicationController
   # GET /requirements_templates.json
   def index
     case params[:scope]
-    when "active"
-      @requirements_templates = RequirementsTemplate.active.page(params[:page]).per(5)
-    when "inactive"
-      @requirements_templates = RequirementsTemplate.inactive.page(params[:page]).per(5)
-    when "public"
-      @requirements_templates = RequirementsTemplate.public_visibility.page(params[:page]).per(5)
-    when "institutional"
-      @requirements_templates = RequirementsTemplate.institutional_visibility.page(params[:page]).per(5)
-    else
-      @requirements_templates = RequirementsTemplate.order(created_at: :asc).page(params[:page]).per(5)
-    end
-    template_editors
+      when "all"
+        @requirements_templates = RequirementsTemplate.all.page(params[:page])
+      when "all_limited"
+        @requirements_templates = RequirementsTemplate.all.page(params[:page]).per(5)
+      when "active"
+        @requirements_templates = RequirementsTemplate.active.page(params[:page]).per(5)
+      when "inactive"
+        @requirements_templates = RequirementsTemplate.inactive.page(params[:page]).per(5)
+      when "public"
+        @requirements_templates = RequirementsTemplate.public_visibility.page(params[:page]).per(5)
+      when "institutional"
+        @requirements_templates = RequirementsTemplate.institutional_visibility.page(params[:page]).per(5)
+      else
+        @requirements_templates = RequirementsTemplate.order(created_at: :asc).page(params[:page]).per(5)
+      end
+      template_editors
   end
 
   # GET /requirements_templates/1
@@ -97,49 +101,7 @@ class RequirementsTemplatesController < ApplicationController
     end
   end
 
-  def add_requirements_editor_role
-    emails = params[:email].split(/,\s*/) unless params[:email] == ""
-    role  = Role.where(name: 'requirements_editor').first
-    @invalid_emails = []
-    @existing_emails = []
-    emails.each do |email|
-      @user = User.find_by(email: email)
-      if @user.nil?
-        @invalid_emails << email
-      else
-        begin
-          @user.roles << role
-          authorization = Authorization.where(user_id: @user.id, role_id: role.id).pluck(:id).first
-        rescue ActiveRecord::RecordNotUnique
-          @existing_emails << email
-        end
-      end
-    end
-    respond_to do |format|
-      if (!@invalid_emails.empty? && !@existing_emails.empty?)
-        flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} specified and Users with #{@existing_emails.join(', ')} already have been assigned the DMP Templates Editor Role. "
-        format.js { render action: 'add_requirements_editor_role' }
-      elsif (!@existing_emails.empty? && @invalid_emails.empty?)
-        flash.now[:notice] = "The following emails #{@existing_emails.join(', ')} have already been assigned with this DMP Templates Editor Role."
-        format.js { render action: 'add_requirements_editor_role' }
-      elsif (@existing_emails.empty? && !@invalid_emails.empty?)
-        flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} specified. "
-        format.js { render action: 'add_requirements_editor_role' }
-      else
-        flash.now[:notice] = "Added DMP Templates Editor Role to the Users specified."
-        format.js { render action: 'add_requirements_editor_role' }
-      end
-    end
-  end
-
-  def remove_requirements_editor_role
-    user = params[:user_id]
-    template_editors
-    @authorization = @institution.authorizations.where(role_id: @role_id, user_id: user )
-    @authorization_id = @authorization.pluck(:id)
-    @authorization.delete_all
-    redirect_to requirements_templates_path, notice: "Removed User from DMP Templates Editor Role."
-  end
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -163,12 +125,4 @@ class RequirementsTemplatesController < ApplicationController
       #@role_id = Role.where(name: "requirements_editor").pluck(:id).first
     end
 
-    def resource_editors
-      @user_ids = Authorization.where(role_id: 2).pluck(:user_id) #All the Resources Editors
-      if safe_has_role?(Role::DMP_ADMIN)
-        @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
-      else
-        @users = User.where(id: @user_ids, institution_id: current_user.institution).order('created_at DESC').page(params[:page]).per(10)
-      end
-    end
 end
