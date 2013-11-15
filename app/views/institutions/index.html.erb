@@ -1,4 +1,5 @@
 <div class="tabbable"> <!-- Only required for left/right tabs -->
+<h3 class="dashboard-heading"><span class="icon inst-profile"></span>Institution Profile</h3>
   <ul class="nav nav-tabs">
     <li class="active"><a href="#tab1" data-toggle="tab">Institution Information</a></li>
     <li><a href="#tab2" data-toggle="tab">Institution Administrators</a></li>
@@ -9,13 +10,13 @@
       <%= render 'form' %>
     </div>
     <div class="tab-pane" id="tab2">
-      <%= render 'institutional_administrators' %>
+      	<%= render 'institutional_administrators' %>
     </div>
     <div class="tab-pane" id="tab3">
-      <%= nested_institutions @institutions.arrange(order: :created_at) %>
-      <br/>
-      <hr/>
-      <%= link_to 'Add New Institution', new_institution_path(5) %>
+	      <%= nested_institutions @institutions.arrange(order: :created_at) %>
+	      <div class="btn-container">
+	      	<%= link_to 'Add New Institution', new_institution_path(5), :class => "btn btn-green" %>
+	      </div>
     </div>
   </div>
 </div>

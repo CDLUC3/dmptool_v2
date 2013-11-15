@@ -1,69 +1,73 @@
 <% provide(:title, 'Institution Information') %>
-
-<%= form_for @current_institution, html:{ class: 'form-horizontal', multipart: true}  do |f| %>
-  <% if @current_institution.errors.any? %>
-    #error_explanation
-      <h2>= "#{pluralize(@current_institution.errors.count, "error")} prohibited this Institution from being saved:"</h2>
-      <ul>
-        <% @current_institution.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
+<%= form_for @current_institution, html:{ :class => 'form-horizontal', multipart: true}  do |f| %>
+	<h5>Institution Information</h5>
+	<hr/>
+	<% if @current_institution.errors.any? %>
+	<div id="error_explanation">
+		<h2><%= "#{pluralize(@current_institution.errors.count, "error")} prohibited this Institution from being saved:" %></h2>
+		<ul>
+  	<% @current_institution.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		<% end %>
+    </ul>
+  </div>
   <% end %>
+  <div class="control-group">
+    <%= f.label :full_name , "Institution Full Name", :class=> "control-label required" %>
+    <div class="controls">
+	    <%= f.text_field :full_name, :class => "input-xxlarge required" %>
+	    ( <span class="required">*</span> Required Field )
+	  </div>
+  </div>
 
   <div class="control-group">
-    <%= f.label :full_name , "Institution Full Name", class: "control-label" %>
+    <%= f.label :shib_entity_id, "Entity_id", :class => "control-label required" %>
     <div class="controls">
-      <%= f.text_field :full_name, class: "input-xxlarge" %>
+      <%= f.text_field :shib_entity_id, :class => "required" %>
+      ( <span class="required">*</span> Required Field )
     </div>
   </div>
 
   <div class="control-group">
-    <%= f.label :shib_entity_id, "entity_id", class: "control-label" %>
+    <%= f.label :shib_domain , "Shibboleth Domain", :class => "control-label required"%>
     <div class="controls">
-      <%= f.text_field :shib_entity_id %>
+      <%= f.text_field :shib_domain, :class => "required" %>
+      ( <span class="required">*</span> Required Field )
     </div>
   </div>
 
   <div class="control-group">
-    <%= f.label :shib_domain , "Shibboleth Domain", class: "control-label"%>
-    <div class="controls">
-      <%= f.text_field :shib_domain %>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <%= f.label :parent_id , "Parent Institution", class: "control-label"%>
+    <%= f.label :parent_id , "Parent Institution", :class => "control-label"%>
     <div class="controls">
       <%= f.select(:parent_id, options_for_select(@categories), :prompt => 'Select', :include_blank => 'none') %>
     </div>
   </div>
 
   <div class="control-group">
-    <%= f.label :nickname, "Institution short name, or Acronym", class: "control-label" %>
+    <%= f.label :nickname, "Institution short name, or acronym", :class => "control-label" %>
     <div class="controls">
       <%= f.text_field :nickname %>
     </div>
   </div>
 
   <div class="control-group">
-    <%= f.label :url, "Institution URL", class: "control-label" %>
+    <%= f.label :url, "Institution URL", :class => "control-label" %>
     <div class="controls">
-      <%= f.text_field :url_text, placeholder: "URL Text", class: "input-large" %>
-      <%= f.text_field :url, placeholder: "URL", class: "input-xlarge" %>
+      <%= f.text_field :url_text, placeholder: "URL Text", :class => "input-large" %>
+      <%= f.text_field :url, placeholder: "URL", :class => "input-large" %>
     </div>
   </div>
 
   <div class="control-group">
-    <%= f.label :contact_info, "Administrator Contact", class: "control-label" %>
+    <%= f.label :contact_info, "Administrator Contact", :class => "control-label" %>
     <div class="controls">
-      <%= f.text_field :contact_info, placeholder: "Name", class: "input-large" %>
-      <%= f.text_field :contact_email, placeholder: "Email", class: "input-xlarge" %>
+      <%= f.text_field :contact_info, placeholder: "Name", :class => "input-large" %>
+      <%= f.text_field :contact_email, placeholder: "Email", :class => "input-large" %>
     </div>
   </div>
 
   <div class="control-group">
-    <%= f.label "Institutional Logo", class: "control-label" %>
+    <%= f.label "Institutional Logo", :class => "control-label" %>
     <div class="controls">
       <%= image_tag @current_institution.logo.url if @current_institution.logo? %>
       <%= f.file_field :logo %>
@@ -73,20 +77,18 @@
 
   <div class="control-group">
     <div class="controls">
-      <%= f.submit "Upload", class: "btn btn-primary" %>
+      <%= f.submit "Upload", :class => "btn" %>
     </div>
   </div>
 
   <div class="control-group">
-    <%= f.label :desc , "Descriptive Text", class: "control-label" %>
+    <%= f.label :desc , "Descriptive Text", :class => "control-label" %>
     <div class="controls">
-      <%= f.text_area :desc, rows: 5, class: "input-xxlarge" %>
+      <%= f.text_area :desc, rows: 5, :class => "input-xxlarge" %>
     </div>
   </div>
-
-  <div class="actions">
-    <%= f.submit "Save Changes", class: "btn btn-primary" %>
-    <%= button_tag "Cancel", type: :reset, class: "btn btn-primary" %>
+  <div class="btn-container">
+    <%= f.submit "Save Changes", :class => "btn btn-green" %>
+    <%= button_tag "Cancel", type: :reset, :class => "btn" %>
   </div>
-
-  <% end %>
+<% end %>
