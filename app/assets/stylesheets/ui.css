@@ -65,8 +65,13 @@ h2 {
 h3 {
 	color: #4C4C4E;
 	font-size: 1.125em; }
-h4, h5, h6 {
+h4 {
+	font-size: 1em;
+	margin: 10px 0; }
+h5, h6 {
 	margin: 5px 0; }
+h5 {
+}
 hr {
 	border-top: 1px solid #B6B6B7;
 	margin: 20px 0 5px 0;
@@ -92,29 +97,39 @@ ol ol li {
 ol ol ol li {
 	list-style: lower-roman; }
 span.required {
-	color: #CC0000; }
+	color: #DA0049; }
 
 /* Forms */
 form {
+	font-size: 0.85em;
 	margin: 0; }
+fieldset {
+	border: none;
+	padding: 0; }
 label, input, button, select, textarea {
 	line-height: 1.125em; }
 label.control-label, .form-horizontal label.control-label {
-	font-size: 1em;
-	margin: 14px 0 0 0;
+	line-height: 30px;
+	margin: 7px 0 0;
 	padding: 0; }
 label.required:before {
 	content: "\002A\0020";
-	color: #CC0000; }
-input[type=text], textarea, .form-horizontal input[type=text], .form-horizontal textarea {
+	color: #DA0049; }
+input[type=text], textarea, select, .form-horizontal input[type=text], .form-horizontal textarea, .form-horizontal select {
 	border-color: #B6B6B7;
 	margin: 5px 10px 5px 0;
-	padding: 4px 6px 6px; }
+	padding: 4px 6px; }
+textarea, .form-horizontal textarea {
+	padding-top: 7px; }
 input.radio, input.checkbox, input[type=radio], input[type=checkbox], .controls > input.radio, .controls > input.checkbox {
 	vertical-align: bottom;
+	line-height: 30px;
 	margin-top: 0
-	margin-right: 2px;
+	margin-right: 4px;
 	padding: 0; }
+input.radio, input.checkbox {
+	margin-top: 11px;
+}
 input.input-large {
 	width: 200px; }
 button {
@@ -123,7 +138,6 @@ button {
 	height: 30px;
 	margin-left: 8px; }
 .form-horizontal .control-group {
-	font-size: 0.85em;
 	margin-bottom: 10px; }
 	
 /* Tables */
@@ -258,9 +272,7 @@ ul.nav li a:hover, ul.nav li a:active {
 .navbar ul.nav > li > a:focus,
 .navbar ul.nav > li > a:hover {
   color: #A1E000; }
-.navbar ul.nav > li.active > a,
-.navbar ul.nav > li.active > a:hover,
-.navbar ul.nav > li.active > a:focus {
+.navbar ul.nav > li.current > a {
 	color: #A1E000; }
 .navbar ul.nav > li.login {
 	float: right;
@@ -327,8 +339,10 @@ a.icon, span.icon {
 a.icon {
 	text-decoration: none; }
 span.icon {
-	position: absolute; }
-	
+	position: absolute;
+	top: 0;
+	left: 0; }
+
 /* Login Icon */
 .navbar ul.nav li.login a span.icon {
 	background-position: -180px -100px; width: 20px; height: 20px; }
@@ -384,7 +398,14 @@ a.icon.cancel {
 	background-position: -45px -15px; width: 15px; height: 15px; }
 a.icon.checkmark {
 	background-position: -30px -15px; width: 15px; height: 15px; }
-a.icon.remove {
+a.delete {
+	display: inline-block;
+	color: #DA0049;
+	font-size: 0.75em;
+	line-height: 16px;
+	padding-left: 20px;
+	position: relative; }
+a.icon.remove, span.icon.remove {
 	background-position: -45px 0; width: 15px; height: 15px; }
 a.icon.new-folder {
 	background-position: -160px 0; width: 20px; height: 15px; }
@@ -453,7 +474,7 @@ span.icon.trash {
 	min-height: 31px;
 	margin: 0 -15px;
 	padding: 10px 10px 0; }
-.btn, .btn-primary {
+.btn, a.btn, .btn-primary, .btn-info {
 	display: inline-block;
 	border: none;
 	border-radius: 15px;
@@ -476,17 +497,18 @@ span.icon.trash {
 	height: 30px;
 	margin-right: 5px;
 	padding: 0 20px; }
-table.table .btn {
-	font-size: 1em;
-}
-.control-group .btn {
+form .btn {
 	font-size: 0.9em;
+}
+table.table .btn  {
+	font-size: 1em;
 }
 .btn.pull-right {
 	margin-left: 5px;
 	margin-right: 0; }
 .btn:hover, .btn:focus, .btn:active,
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active
+.btn-info:hover, .btn-primary:focus, .btn-primary:active {
 	box-shadow: none;
 	-moz-box-shadow: none;
 	-webkit-box-shadow: none;
@@ -500,11 +522,10 @@ table.table .btn {
 .btn-gray:hover, .btn-gray:focus, .btn-gray:active {
 	background-position: 0 -93px;
 	color: #FFFFFF; }
-.btn-green, .btn-info {
+.btn-green, a.btn-green, .btn-info {
 	background-position: 0 -124px;
 	color: #FFFFFF; }
-.btn-green:hover, .btn-green:focus, .btn-green:active, 
-.btn-info:hover, .btn-info:focus, .btn-info:active {
+.btn-green:hover, .btn-green:focus, .btn-green:active {
 	background-position: 0 -155px;
 	color: #FFFFFF; }
 .btn-large {
@@ -689,13 +710,13 @@ table.table .btn {
 .dashboard-nav > ul > li:first-child > a > span {
 	border-left: none; }
 .dashboard-nav ul ul {
-	display: block;
+	display: none;
 	background: #E9E9E9;
 	font-size: 0.9em;
 	width: auto;
 	position: absolute;
 	top: 50px; }
-.dashboard-nav ul li:hover ul, .dashboard-nav ul li ul:hover {
+.dashboard-nav ul li.current ul {
 	display: block; }
 .dashboard-nav ul ul li {
 	height: 29px;
@@ -757,10 +778,15 @@ h3.dashboard-heading span.icon {
 	
 /* Tabs */
 .tabbable {
-	width: 670px; }
+/*	width: 670px; */
+margin: 12px 0 20px; }
+[class*="span"] .tabbable {
+	background: #EDF2E2;
+	margin-top: 0;
+	padding: 0 30px 30px;
+}
 ul.nav-tabs li {
-	height: 31px;
-	margin-top: 12px; }
+	height: 31px; }
 ul.nav-tabs li a {
 	display: block;
 	color: #4C4C4E;
@@ -783,7 +809,7 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 .tab-content {
 	border: 1px solid #C9C9CB;
 	border-top: none;
-	margin-bottom: 20px;
+	background: #FFFFFF;
 	overflow: hidden; }
 .tab-pane {
 	padding: 10px 15px; }
@@ -795,3 +821,26 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	width: 300px; }
 .tab-pane textarea.input-xxlarge {
 	width: 400px; }
+
+/* Template Pages */
+.tree-view, .template-status {
+	border: 1px solid #C9C9CB;
+	padding: 10px 15px;
+}
+[class*="span"] hr {
+	border-top-style: dotted;
+	border-top-width: 2px;
+	margin: 5px 0;
+}
+.requirements_tree_view {
+	font-size: 0.8em;
+	padding-left: 25px;
+}
+span[id*="status_"] {
+	color: #DA0049;
+}
+h5 span {
+	font-size: 0.9em;
+	font-weight: normal;
+}
+

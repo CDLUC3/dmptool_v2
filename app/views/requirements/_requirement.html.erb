@@ -1,13 +1,13 @@
 <div class="requirements_group">
 	<%= link_to requirement.text_brief, edit_requirements_template_requirement_path(requirement.requirements_template, requirement) %>
 
-	<%= link_to raw('<i class="icon-plus icon-black"></i>'),
-				new_requirements_template_requirement_path(@requirements_template, parent_id: requirement) %>
+	<%= link_to raw(''),
+				new_requirements_template_requirement_path(@requirements_template, parent_id: requirement), :class => "icon add" %>
 
-	<%= link_to raw('<i class="icon-folder-close icon-black"></i>'),
-				new_requirements_template_requirement_path(@requirements_template, parent_id: requirement, node_type: 'group'), class: "add_requirements_sub_group" %>
+	<%= link_to raw(''),
+				new_requirements_template_requirement_path(@requirements_template, parent_id: requirement, node_type: 'group'), class: "add_requirements_sub_group icon new-folder" %>
 
-	<%= link_to raw('<i class="icon-remove icon-black"></i>'),
-				[requirement.requirements_template, requirement], :method => :delete, id: "delete_requirement",
+	<%= link_to raw(''),
+				[requirement.requirements_template, requirement], :method => :delete, id: "delete_requirement", :class => "icon remove",
 				data: { confirm: 'Are you sure?' } %>
 </div>
