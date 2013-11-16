@@ -4,22 +4,26 @@
 $(function() {
 	$("#text_details").hide();
 	$("#resource_text").hide();
-	$("#resource_resource_type").change(function(){
-		var type = $(this).val();
-		if (type == "actionable_url")
-		{
-			$("#text_details").hide();
-			$("#resource_text").hide();
-			$("#value_details").show();
-			$("#resource_label").show();
-			$("#resource_value").show();
-		}
-		else {
-			$("#text_details").show();
-			$("#resource_text").show();
-			$("#value_details").hide();
-			$("#resource_label").hide();
-			$("#resource_value").hide();
-		}
+	$(document).on("ready", showHideDetails());
+	$("#resource_resource_type").bind('change', function(){
+		showHideDetails()
 	});
+		function showHideDetails() {
+			var type = $("#resource_resource_type").val();
+			if (type == "actionable_url")
+			{
+				$("#text_details").hide();
+				$("#resource_text").hide();
+				$("#value_details").show();
+				$("#resource_label").show();
+				$("#resource_value").show();
+			}
+			else {
+				$("#text_details").show();
+				$("#resource_text").show();
+				$("#value_details").hide();
+				$("#resource_label").hide();
+				$("#resource_value").hide();
+			}
+		}
 });

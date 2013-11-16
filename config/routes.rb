@@ -29,6 +29,7 @@ Dmptool2::Application.routes.draw do
   resources :users do
     get :edit_roles, :on => :member
   end
+
   resources :roles
   resources :plans
   resources :institutions
@@ -45,8 +46,6 @@ Dmptool2::Application.routes.draw do
   get  'resource_template_information', to: 'resource_templates#template_information'
   get  'copy_existing_resource_template', to: 'resource_templates#copy_existing_template'
 
-
-
   get  'remove_resource_editor_role', to: 'resource_templates#remove_resource_editor_role'
   get  'remove_requirements_editor_role', to: 'requirements_templates#remove_requirements_editor_role'
 
@@ -55,6 +54,8 @@ Dmptool2::Application.routes.draw do
 
   post 'add_authorization', to: 'authorizations#add_authorization'
   get 'remove_authorization', to: 'authorizations#remove_authorization'
+
+  get  'edit_user_roles', to: 'users#edit_user_roles'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

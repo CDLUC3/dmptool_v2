@@ -1,4 +1,8 @@
 <header class="navbar">
+	<div class="welcome">
+		<p><%= "Welcome!" unless current_user.nil? %>
+			<%= content_tag(:strong, "#{current_user.full_name}") unless current_user.nil? %></p>
+	</div>
   <div class="navbar-inner">
     <nav>
     	<%= link_to(image_tag("dmp_logo.png", :alt => "DMPTOOL", :width => "146", :height => "25"), root_path, :class => "logo", :title => "DMPTool Home") %>
