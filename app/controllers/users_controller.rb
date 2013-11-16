@@ -134,6 +134,10 @@ class UsersController < ApplicationController
 
   def edit_user_roles
     @user = User.find(params[:user_id])
+
+    @role_ids = @user.role_ids
+    @role_names = @user.role_names
+    #@auths = @user.authorizations
     # role_ids = params[:user][:role_ids] ||= []
     # Rails.logger.info("value = #{role_ids.inpsect}")
     # @user.attributes = { 'role_ids' => [] }.merge(params[:user])
@@ -142,7 +146,7 @@ class UsersController < ApplicationController
 
   def update_user_roles
     @user = User.find(params[:user_id])
-    # role_ids = params[:user][:role_ids] ||= []
+    @role_ids = params[:user_id][:role_ids] ||= []
     # Rails.logger.info("value = #{role_ids.inpsect}")
     # @user.attributes = { 'role_ids' => [] }.merge(params[:user])
     #@user.save!
