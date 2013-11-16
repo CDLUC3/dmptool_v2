@@ -1,18 +1,20 @@
-<p><b>First Name:</b></p>
+<p><b><%= @user.first_name %> Current Roles:</b></p>
 
-<p><%= @user.first_name %></p>
-
-<p><b>Email:</b></p>
+<ul>
+  <% @roles.each do |role| %>
+      <li>
+        <%= check_box_tag 'role_ids[]', role.id -%>
+        <%= h role.name -%>
+      </li>
+  <% end %>
+</ul>
 	
-<p><%= @user.email %></p>
-
-<p><b>Roles:</b></p>	
-
-<p><%= @role_ids %></p>
 
 
 <br />
 
 <%= link_to 'Back', users_path %>
+
+
 
 

@@ -134,9 +134,13 @@ class UsersController < ApplicationController
 
   def edit_user_roles
     @user = User.find(params[:user_id])
+    @auths = @user.authorizations
 
-    @role_ids = @user.role_ids
-    @role_names = @user.role_names
+    @roles = Role.all
+
+    @user_role_ids = @user.role_ids
+    
+    @user_role_names = @user.role_names
     #@auths = @user.authorizations
     # role_ids = params[:user][:role_ids] ||= []
     # Rails.logger.info("value = #{role_ids.inpsect}")
