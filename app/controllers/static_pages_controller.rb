@@ -1,4 +1,7 @@
 class StaticPagesController < ApplicationController
+  
+  layout 'application', only: [:guidance]
+  
   def home
   end
 
@@ -9,5 +12,8 @@ class StaticPagesController < ApplicationController
   end
 
   def contact
+  end
+  
+  def guidance
   end
 end
