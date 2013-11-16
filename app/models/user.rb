@@ -80,7 +80,7 @@ class User < ActiveRecord::Base
         where(:user_plans => { :user_id => self.id }).
         select('plan_states.state').distinct.pluck(:state)
   end
-  
+
   def role_ids
     @role_id ||= self.authorizations.pluck(:role_id) #caches role ids
   end
