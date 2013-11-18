@@ -1,0 +1,25 @@
+<%
+ # This partial takes locals variables for guidance collection called "templates"
+  # it also takes a variable called public with values true or false since
+  # the layout differs for public items from the institution-only guidance
+%>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th colspan="2"><%= (public ? 'Funder' : 'Institution') %></th>
+			<th><%= (public ? 'Funder Links' : 'Institution Links') %></th>
+			<th>Sample Plans</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% templates.each do |t| %>
+			<tr>
+				<td><%= t.institution.full_name %></td>
+				<td>Basic Template</td>
+				<td>Guidelines</td>
+				<td>Sample Plan</td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>

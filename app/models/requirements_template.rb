@@ -24,6 +24,7 @@ class RequirementsTemplate < ActiveRecord::Base
   scope :institutional_visibility, -> { where(visibility: :institutional) }
   scope :public_visibility, -> { where(visibility: :public) }
 
+
   after_initialize :default_values
   after_initialize :version_number
 
@@ -37,5 +38,10 @@ class RequirementsTemplate < ActiveRecord::Base
     else
       self.version = RequirementsTemplate.where(id: parent_id).version + 1
     end
+  end
+  
+  def self.letter_range(s, e)
+    #add as a scope where s=start and e=end letter
+    joins(:institution).where("full_name REGEXP ?", "^[#{s}-#{e}]")
   end
 end

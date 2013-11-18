@@ -43,4 +43,11 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def check_dmp_admin
+      unless (current_user.has_role?(Role::DMP_ADMIN) )    
+        flash[:error] = "You don't have access to this content"
+        redirect_to root_url # halts request cycle
+      end
+    end
+
 end
