@@ -161,9 +161,7 @@ class UsersController < ApplicationController
 
   private
 
-  def check_dmp_admin
-    self.has_role?(1)
-  end
+  
 
   def remove_all_user_authorizations(user_id)
     @authorization = Authorization.where(user_id: user_id)
