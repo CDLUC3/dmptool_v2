@@ -2,6 +2,8 @@ class UsersController < ApplicationController
   include InstitutionsHelper
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :check_dmp_admin, only: [:index, :edit_user_roles, :update_user_roles, :destroy]
+
 
   # GET /users
   # GET /users.json
@@ -134,29 +136,37 @@ class UsersController < ApplicationController
 
   def edit_user_roles
     @user = User.find(params[:user_id])
-    @auths = @user.authorizations
-
     @roles = Role.all
-
-    @user_role_ids = @user.role_ids
-    
-    @user_role_names = @user.role_names
-    #@auths = @user.authorizations
-    # role_ids = params[:user][:role_ids] ||= []
-    # Rails.logger.info("value = #{role_ids.inpsect}")
-    # @user.attributes = { 'role_ids' => [] }.merge(params[:user])
-    #@user.save!
   end
 
   def update_user_roles
-    @user = User.find(params[:user_id])
-    @role_ids = params[:user_id][:role_ids] ||= []
-    # Rails.logger.info("value = #{role_ids.inpsect}")
-    # @user.attributes = { 'role_ids' => [] }.merge(params[:user])
-    #@user.save!
+
+    @user_id = params[:user_id]
+    @role_ids = params[:role_ids] ||= []  #"role_ids"=>["1", "2", "3"]
+
+    remove_all_user_authorizations(@user_id)
+    
+    @role_ids.each do |role_id|
+      role_id = role_id.to_i
+      authorization = Authorization.create(role_id: role_id, user_id: @user_id)
+      authorization.save!
+    end  
+
+    respond_to do |format|
+      format.html { redirect_to users_url, notice: 'User was successfully updated.'}
+      format.json { head :no_content }
+    end
+
   end
 
   private
+
+  
+
+  def remove_all_user_authorizations(user_id)
+    @authorization = Authorization.where(user_id: user_id)
+    @authorization.delete_all
+  end
 
   def reset_ldap_password(user, password)
     Ldap_User.find_by_email(user.email).change_password(password)

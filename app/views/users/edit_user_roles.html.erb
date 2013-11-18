@@ -1,20 +1,26 @@
-<p><b><%= @user.first_name %> Current Roles:</b></p>
-
-<ul>
-  <% @roles.each do |role| %>
-      <li>
-        <%= check_box_tag 'role_ids[]', role.id -%>
-        <%= h role.name -%>
-      </li>
-  <% end %>
-</ul>
-	
 
 
-<br />
+<%= form_tag(update_user_roles_path(user_id: @user.id), method: 'post') do %>
+
+	<p><b><%= @user.first_name %> Current Roles:</b></p>
+
+	<ul>
+	  <% @roles.each do |role| %>
+	      <li>
+	        <%= check_box_tag 'role_ids[]', role.id, checked = @user.has_role?(role.id) %>
+	        <%= role.name %>
+	      </li>
+	  <% end %>
+	</ul>
+		
+	<br />
+
+	<div class="btn-container">
+		<%=  submit_tag 'Save Changes',  :class => 'btn btn-green' %>
+	</div>
+
+<%end%>
 
 <%= link_to 'Back', users_path %>
-
-
 
 
