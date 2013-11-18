@@ -138,9 +138,11 @@ class UsersController < ApplicationController
 
     @roles = Role.all
 
-    @user_role_ids = @user.role_ids
+    @checked = true
+
+    #@user_role_ids = @user.role_ids    
+    #@user_role_names = @user.role_names
     
-    @user_role_names = @user.role_names
     #@auths = @user.authorizations
     # role_ids = params[:user][:role_ids] ||= []
     # Rails.logger.info("value = #{role_ids.inpsect}")
@@ -150,7 +152,8 @@ class UsersController < ApplicationController
 
   def update_user_roles
     @user = User.find(params[:user_id])
-    @role_ids = params[:user_id][:role_ids] ||= []
+  
+    @role_ids = params[:user_id][:role_ids] ||= [] #"role_ids"=>["1", "2", "3"]
     # Rails.logger.info("value = #{role_ids.inpsect}")
     # @user.attributes = { 'role_ids' => [] }.merge(params[:user])
     #@user.save!
