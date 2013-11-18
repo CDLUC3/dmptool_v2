@@ -1,5 +1,4 @@
 class ResourceTemplatesController < ApplicationController
-  require 'ability'
 
   before_filter :get_requirements_template
   before_action :set_resource_template, only: [:show, :edit, :update, :destroy, :toggle_active, :template_details]

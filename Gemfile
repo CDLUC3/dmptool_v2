@@ -41,6 +41,5 @@ gem 'jquery-turbolinks'
 gem 'jbuilder', '1.0.1'
 gem 'kaminari'
 gem 'carrierwave'
-gem "cancan", :git => "git://github.com/ryanb/cancan.git", :branch => "2.0"
 gem 'paranoia', :github => 'radar/paranoia', :branch => 'rails4'
 gem 'american_date'
