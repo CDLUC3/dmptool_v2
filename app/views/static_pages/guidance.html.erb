@@ -1,1 +1,30 @@
-Merge test22
+<h1>Funder Guidance</h1>
+
+<div>
+	<div style="float: right; width: 300px">
+		SEARCH BOX GOES HERE
+	</div>
+	<p>
+		Use the A-Z links below to narrow down the list by institution or
+		use the search box to search for specific DMP Templates.  Sample
+		plans are not necessarily from the funder.
+	</p>
+</div>
+
+<div>
+	<%= link_to('A-F', { :s => 'a', :e => 'f' }) %> |
+	<%= link_to('G-L', { :s => 'g', :e => 'l' }) %> |
+	<%= link_to('M-S', { :s => 'm', :e => 's' }) %> |
+	<%= link_to('T-Z', { :s => 't', :e => 'z' }) %> |
+	<%= link_to('View All') %>
+</div>
+
+<%= render partial: 'guidance_table', :locals => {templates: @public_templates, public: true} %>
+
+<% if defined?(@institution_templates) && @institution_templates.length > 0 %>
+	<h1>Guidance within <%= current_user.institution.full_name %></h1>
+	<p>Below is a list of DMP templates available in your institution</p>
+	
+	<%= render partial: 'guidance_table', :locals => {templates: @institution_templates, public: false} %>
+<% end %>
+
