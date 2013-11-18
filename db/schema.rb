@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131112185027) do
+ActiveRecord::Schema.define(version: 20131114000149) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -158,6 +158,7 @@ ActiveRecord::Schema.define(version: 20131112185027) do
     t.integer  "resource_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "text"
   end
 
   create_table "responses", force: true do |t|

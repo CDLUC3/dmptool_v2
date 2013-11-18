@@ -3,15 +3,14 @@ class ResourceTemplatesController < ApplicationController
 
   before_filter :get_requirements_template
   before_action :set_resource_template, only: [:show, :edit, :update, :destroy, :toggle_active, :template_details]
-
-  before_action :check_admin_access, only: [:index]
+  before_action :check_admin_access
   
 
   # GET /resource_templates
   # GET /resource_templates.json
   def index
     
-    if current_user.has_role?(1)
+    if safe_has_role?(Role::DMP_ADMIN)
       @resource_templates = ResourceTemplate.page(params[:page])
     else   
       @resource_templates = ResourceTemplate.page(params[:page]).                      
@@ -120,19 +119,12 @@ class ResourceTemplatesController < ApplicationController
     end
 
     def resource_editors
-
       @user_ids = Authorization.where(role_id: 2).pluck(:user_id) #All the Resources Editors
-
-      if current_user.has_role?(1) #DMP administrator
+      if safe_has_role?(Role::DMP_ADMIN)
         @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
       else
-         
         @users = User.where(id: @user_ids, institution_id: current_user.institution).order('created_at DESC').page(params[:page]).per(10)
-  
       end
-      
     end
-
-    
 
 end

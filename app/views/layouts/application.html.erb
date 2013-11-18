@@ -11,7 +11,9 @@
   <%= render 'layouts/header' %>
 
   <div class='container'>
-  	<%= render 'layouts/dashboard_header' unless controller_name == ('static_pages' ||  'user_sessions') %>
+  	<% if current_user %>
+  		<%= render 'layouts/dashboard_header' unless ['static_pages', 'user_sessions'].include?(controller_name) && !['guidance'].include?(action_name) %>
+  	<% end %>
     <% flash.each do |key, value| %>
       <div class="alert alert-#{key}">
         <%= value %>

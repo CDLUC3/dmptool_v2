@@ -28,7 +28,14 @@ class Institution < ActiveRecord::Base
   
   def requirements_templates_deep
     #gets the deep list of all requirements templates for this and all sub-institutions under it
-    RequirementsTemplate.where(:requirements_templates => { :institution_id => self.subtree_ids})
+    #this query should be used in most cases, rather than the default association
+    RequirementsTemplate.where(institution_id: self.subtree_ids)
+  end
+  
+  def resource_templates_deep
+    #gets the deep list of all resource templates for this and all sub-institutions under it
+    #this query should be used in most cases, rather than the default association
+    ResourceTemplate.where(institution_id: self.subtree_ids)
   end
   
   def users_in_role(role_name)

@@ -2,7 +2,7 @@
 // All this logic will automatically be available in application.js.
 $(document).ready(function() {
 	$('#roles_dialog_form').hide();
-	$('#edit_roles_view').click(function() {
+	$('#edit_user_roles_view').click(function() {
 		$('#roles_dialog_form').dialog( {
 			width: 600,
 			height: 200,

@@ -15,15 +15,19 @@
           <td><%= user.full_name %></td>
           <td><%= user.login_id %></td>
           <td><%= user.email %></td>
-          <td class="align-center"><%= link_to "", remove_authorization_path(user_id: user.id, role_id: 5, p: 'institutions'), :class => "icon remove" %></td>
+          <td class="align-center"><%= link_to raw('<i class="icon-minus-sign icon-white"></i>'), remove_authorization_path(user_id: user.id, role_id: 5, p: 'institutions'), class: "img-polaroid btn-danger" %></td>
+          
       </tr>
     <% end %>
    </tbody>
 </table>
-<%= render partial: "/authorizations/add_authorization" , :locals => { :role_type => 5, :role_name => 'Institutional Administrator'}%>
+<br>
+
 <div class="btn-container">
-	<%= link_to 'Add New Institutional Administrator', add_authorization_path, method: :post, :id => 'add_authorization_view', :class => "btn btn-green" %>
+	<%= link_to 'Add New Institutional Administrator', add_authorization_path, method: :post, id: 'add_authorization_view'%>
 </div>
+
+<%= render partial: "/authorizations/add_authorization" , :locals => { :role_type => 5, :role_name => 'Institutional Administrator', :p => 'institutions'}%>
 
 
 

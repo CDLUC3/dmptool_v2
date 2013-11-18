@@ -2,9 +2,7 @@ class InstitutionsController < ApplicationController
   before_action :set_institution, only: [:show, :edit, :update, :destroy]
   before_action :check_for_cancel, :update => [:create, :update, :destroy]
   before_filter :populate_institution_select_list
-  
-
-
+  before_action :check_institution_admin
 
   # GET /institutions
   # GET /institutions.json
@@ -105,7 +103,7 @@ class InstitutionsController < ApplicationController
 
   def institutional_admins
     @user_ids = Authorization.where(role_id: 5).pluck(:user_id) #All the institutional_admins
-    if current_user.has_role?(1) #DMP administrator
+    if safe_has_role?(Role::DMP_ADMIN)
       @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
     else     
       @users = User.where(id: @user_ids, institution_id: current_user.institution).order('created_at DESC').page(params[:page]).per(10)

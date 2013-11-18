@@ -823,24 +823,22 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	width: 400px; }
 
 /* Template Pages */
+.requirements_group ul li {
+	list-style: none;
+}
 .tree-view, .template-status {
 	border: 1px solid #C9C9CB;
-	padding: 10px 15px;
-}
+	padding: 10px 15px; }
 [class*="span"] hr {
 	border-top-style: dotted;
 	border-top-width: 2px;
-	margin: 5px 0;
-}
+	margin: 5px 0; }
 .requirements_tree_view {
 	font-size: 0.8em;
-	padding-left: 25px;
-}
+	padding-left: 25px; }
 span[id*="status_"] {
-	color: #DA0049;
-}
+	color: #DA0049; }
 h5 span {
 	font-size: 0.9em;
-	font-weight: normal;
-}
+	font-weight: normal; }
 

@@ -1,4 +1,4 @@
-<p> Don't see your institution in the list? You can still use the DMPTool. Please create an account below. All fields are required.</p>
+<p> Please update any info regarding your account.</p>
 
 <%unless @user.new_record?%>
   <b>Name</b>
@@ -89,9 +89,16 @@
 <div class="control-group  <%= validation_class %>">
   <%= f.label :institution_id, class:'control-label' %>
   <div class="controls">
-    <%= collection_select(:user, :institution_id, Institution.all, :id, :full_name, { prompt: "-Select a Institution"} ) %>
-      <span class="help-in-line">
-        <%=errors.join (', ')%>
+    
+    <%# filter institution list in my profile page only %>
+    <%if @user.new_record?%>
+      <%= collection_select(:user, :institution_id, Institution.all, :id, :full_name, { prompt: "-Select a Institution"} ) %>
+    <%else%>
+      <%= f.select( :institution_id, @institution_list, {prompt: 'Select Institution'})%>
+    <%end%>
+    
+    <span class="help-in-line">
+      <%=errors.join (', ')%>
     </span>
   </div>
 </div>

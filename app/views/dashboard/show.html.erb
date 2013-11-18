@@ -29,7 +29,7 @@
 </div>
 		
 
-<% if @simple_roles.include?('institutional_reviewer') %>
+<% if defined? @pending_review %>
 	<div class="row">
 		<div class="span8 two_col">
 			<div>DMPs for My Review</div>
@@ -46,40 +46,46 @@
 <% end %>
 
 
-<div class="row">
-	<div class="span8 two_col">
-		<div>DMP Templates</div>
-		<div class="col1">
-			<div>
-				<div class="head">Within my Institution</div>
-				<div><%= link_to "nn DMP Templates only for my institution" %></div>
-				<div><%= link_to "nn DMP Templates publically available" %></div>
+<% if defined? @requirements_templates %>
+	<div class="row">
+		<div class="span8 two_col">
+			<div>DMP Templates</div>
+			<div class="col1">
+				<div>
+					<div class="head">Within my Institution</div>
+					<div><%= link_to "#{@requirements_templates} DMP Templates only for my institution", requirements_templates_path(scope: 'institutional') %></div>
+				</div>
 			</div>
-		</div>
-		<div class="col2">
-			<div>
-				<div class="head">Funder Requirements</div>
-				<div><%= link_to "nn Public DMP Templates" %></div>
+			<div class="col2">
+				<div>
+					<div class="head">Funder Requirements</div>
+					<div><%= link_to "#{@public_requirements_templates} Public DMP Templates", requirements_templates_path(scope: 'public') %></div>
+				</div>
 			</div>
-		</div>
-		<div class="button_row">
-			<%= link_to image_tag('create_new.png', size: '108x39') %>
+			<div class="button_row">
+				<%= link_to image_tag('create_new.png', size: '108x39'), requirements_template_information_path, :method => :get %>
+			</div>
 		</div>
 	</div>
-</div>
+<% end %>
 
 
-
-<div class="row">
-	<div class="span8 two_col">
-		<div>Resource Templates</div>
-		<div class="col1">
-			<div>
-				<div><%= link_to "nn Resource templates" %></div>
+<% if defined? @resource_templates %>
+	<div class="row">
+		<div class="span8 two_col">
+			<div>Resource Templates</div>
+			<div class="col1">
+				<div>
+					<div><%= link_to "#{@resource_templates} Resource templates", resource_templates_path %></div>
+				</div>
+			</div>
+			<div class="col2">
+			</div>
+			<div class="button_row">
+				<div class="button_row">
+					<%= link_to image_tag('create_new.png', size: '108x39'), resource_template_information_path %>
+				</div>
 			</div>
 		</div>
-		<div class="col2">
-		</div>
-		<div class="button_row"><div class="button_row"><%= link_to image_tag('create_new.png', size: '108x39') %></div></div>
 	</div>
-</div>
+<% end %>
