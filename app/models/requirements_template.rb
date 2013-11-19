@@ -40,8 +40,16 @@ class RequirementsTemplate < ActiveRecord::Base
     end
   end
   
-  def self.letter_range(s, e)
+  def self.letter_range_by_institution(s, e)
     #add as a scope where s=start and e=end letter
     joins(:institution).where("full_name REGEXP ?", "^[#{s}-#{e}]")
+  end
+  
+  def self.search_terms_by_institution(terms)
+    items = terms.split
+    conditions = items.map{|item| "full_name LIKE ?" }
+    values = items.map{|item| "%#{item}%" }
+    #add as a scope where s=start and e=end letter
+    joins(:institution).where(conditions.join(" AND "), *values)
   end
 end

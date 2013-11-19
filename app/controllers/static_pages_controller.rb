@@ -18,7 +18,11 @@ class StaticPagesController < ApplicationController
     @public_templates = RequirementsTemplate.public_visibility.includes(:institution, :sample_plans)
     
     if params[:s] && params[:e]
-      @public_templates = @public_templates.letter_range(params[:s], params[:e])
+      @public_templates = @public_templates.letter_range_by_institution(params[:s], params[:e])
+    end
+    
+    if params[:q]
+      @public_templates = @public_templates.search_terms_by_institution(params[:q])
     end
     
     if current_user
