@@ -14,6 +14,7 @@ Dmptool2::Application.routes.draw do
     resources :requirements
     member do
       get :toggle_active
+      get :basic
     end
     resources :sample_plans
     resources :additonal_informations

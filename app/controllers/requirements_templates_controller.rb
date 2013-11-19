@@ -38,6 +38,20 @@ class RequirementsTemplatesController < ApplicationController
   # GET /requirements_templates/1.json
   def show
   end
+  
+  # GET /requirements_templates/1/basic and basic_requirements_template_path
+  # shows a basic template (as RTF for now)
+  def basic
+    
+    respond_to do |format|
+      format.rtf {
+        headers["Content-Disposition"] = "attachment; filename=\"" + "catfood" + ".rtf\""
+        render :layout => false,
+               :content_type=> 'application/rtf'
+               #:action => 'basic.rtf.erb', 
+      }
+    end
+  end
 
   # GET /requirements_templates/new
   def new
