@@ -22,7 +22,7 @@ class StaticPagesController < ApplicationController
     end
     
     if params[:q]
-      @public_templates = @public_templates.search_terms_by_institution(params[:q])
+      @public_templates = @public_templates.search_terms(params[:q])
     end
     
     if current_user
