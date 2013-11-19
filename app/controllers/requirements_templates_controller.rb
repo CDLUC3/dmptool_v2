@@ -11,17 +11,17 @@ class RequirementsTemplatesController < ApplicationController
         when "all"
           @requirements_templates = RequirementsTemplate.all.page(params[:page])
         when "all_limited"
-          @requirements_templates = RequirementsTemplate.all.page(params[:page])
+          @requirements_templates = RequirementsTemplate.all.page(params[:page]).per(5)
         when "active"
-          @requirements_templates = RequirementsTemplate.active.page(params[:page])
+          @requirements_templates = RequirementsTemplate.active.page(params[:page]).per(5)
         when "inactive"
-          @requirements_templates = RequirementsTemplate.inactive.page(params[:page])
+          @requirements_templates = RequirementsTemplate.inactive.page(params[:page]).per(5)
         when "public"
-          @requirements_templates = RequirementsTemplate.public_visibility.page(params[:page])
+          @requirements_templates = RequirementsTemplate.public_visibility.page(params[:page]).per(5)
         when "institutional"
-          @requirements_templates = RequirementsTemplate.institutional_visibility.page(params[:page])
+          @requirements_templates = RequirementsTemplate.institutional_visibility.page(params[:page]).per(5)
         else
-          @requirements_templates = RequirementsTemplate.order(created_at: :asc).page(params[:page])
+          @requirements_templates = RequirementsTemplate.order(created_at: :asc).page(params[:page]).per(5)
       end
 
 
@@ -29,26 +29,7 @@ class RequirementsTemplatesController < ApplicationController
         @requirements_templates = @requirements_templates.where(institution_id: current_user.institution_id)
       end
 
-      @requirements_templates = @requirements_templates.per(5)
-
-      # case params[:scope]
-      #   when "all"
-      #     @requirements_templates = RequirementsTemplate.all.within_user_institution.page(params[:page])
-      #   when "all_limited"
-      #     @requirements_templates = RequirementsTemplate.all.within_user_institution.page(params[:page]).per(5)
-      #   when "active"
-      #     @requirements_templates = RequirementsTemplate.active.within_user_institution.page(params[:page]).per(5)
-      #   when "inactive"
-      #     @requirements_templates = RequirementsTemplate.inactive.within_user_institution.page(params[:page]).per(5)
-      #   when "public"
-      #     @requirements_templates = RequirementsTemplate.public_visibility.within_user_institution.page(params[:page]).per(5)
-      #   when "institutional"
-      #     @requirements_templates = RequirementsTemplate.institutional_visibility.within_user_institution.page(params[:page]).per(5)
-      #   else
-      #     @requirements_templates = RequirementsTemplate.order(created_at: :asc).within_user_institution.page(params[:page]).per(5)
-      # end
-
-    #else
+      #@requirements_templates = @requirements_templates.per(5)
 
       template_editors
   end
