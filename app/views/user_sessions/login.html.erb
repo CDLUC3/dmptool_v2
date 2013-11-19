@@ -1,12 +1,16 @@
-<h4>Log In on DMPTool through <%= @institution.full_name %></h4>
+<h3 class="dashboard-heading"><span class="icon login">Log In</h3>
 <div class="user_login">
+	<h4>Log In on DMPTool through <%= @institution.full_name %></h4>
   <%= form_tag "/auth/ldap/callback", method: :post do %>
-  	
     <%= hidden_field_tag :institution_id, session[:institution_id]%>
-    <%= label_tag :username %>
-    <%= text_field_tag :username %><br/>
-    <%= label_tag :password %>
-    <%= password_field_tag :password %>
+    <div class="control-group">
+	    <%= label_tag :username %>
+	    <%= text_field_tag :username %>
+	  </div>
+	  <div class="control-group">
+	    <%= label_tag :password %>
+	    <%= password_field_tag :password %>
+    </div>
     <p><%= check_box_tag :remember_my_username %>
     <%= label_tag :remember_my_username %></p>
     <%= submit_tag "Login", :class => "btn btn-green" %>

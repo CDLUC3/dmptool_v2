@@ -10,6 +10,13 @@ body {
 .container .container {
 	width: auto;
 	padding: 0 35px; }
+.container > .row-fluid {
+	-moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+	margin: 12px 0 0;
+	padding: 0 35px; }
 .col {
 	-moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -19,13 +26,13 @@ body {
   position: relative; }
 .col:before {
 	content: "";
-	display: block;
+	display: table;
 	clear: both;
 	height: 0;
 	line-height: 0; }	
 .col:after {
 	content: "";
-	display: block;
+	display: table;
 	clear: both;
 	height: 0;
 	line-height: 0;	}
@@ -101,41 +108,46 @@ span.required {
 
 /* Forms */
 form {
-	font-size: 0.85em;
-	margin: 0; }
+	font-size: 0.85em; }
 fieldset {
 	border: none;
 	padding: 0; }
 label, input, button, select, textarea {
 	line-height: 1.125em; }
-label.control-label, .form-horizontal label.control-label {
+label {
+	display: inline-block;
+	margin: 0;
+	padding: 0; }
+.control-group > label {
+	display: block; }
+label.control-label, form.form-horizontal label.control-label {
 	line-height: 30px;
 	margin: 7px 0 0;
 	padding: 0; }
 label.required:before {
 	content: "\002A\0020";
 	color: #DA0049; }
-input[type=text], textarea, select, .form-horizontal input[type=text], .form-horizontal textarea, .form-horizontal select {
+input[type=text], input[type=password], textarea, select, 
+form.form-horizontal input[type=text], form.horizonatl input[type=password], 
+form.form-horizontal textarea, form.form-horizontal select {
 	border-color: #B6B6B7;
 	margin: 5px 10px 5px 0;
 	padding: 4px 6px; }
-textarea, .form-horizontal textarea {
+textarea, form.form-horizontal textarea {
 	padding-top: 7px; }
-input.radio, input.checkbox, input[type=radio], input[type=checkbox], .controls > input.radio, .controls > input.checkbox {
+input[type=radio], input[type=checkbox] {
+	vertical-align: top;
+	margin: 0 4px 0 0; }
+.controls > input[type=radio], .controls > input[type=checkbox] 
+.controls > input.radio, .controls > input.checkbox {
 	vertical-align: bottom;
 	line-height: 30px;
 	margin-top: 0
 	margin-right: 4px;
 	padding: 0; }
-input.radio, input.checkbox {
-	margin-top: 11px;
-}
 input.input-large {
 	width: 200px; }
 button {
-	border: 1px solid #B6B6B7;
-	border-radius: 4px;
-	height: 30px;
 	margin-left: 8px; }
 .form-horizontal .control-group {
 	margin-bottom: 10px; }
@@ -247,8 +259,7 @@ table.table a.btn {
 	top: 0; }
 .navbar .logo:hover img {
 	top: -25px; }
-	
-/* Navbar */
+/* Header Navigation */
 ul.nav {
 	margin: 0;
 	padding: 0; }
@@ -265,7 +276,7 @@ ul.nav li a:hover, ul.nav li a:active {
 	right: 22px;
 	left: auto; }
 .navbar ul.nav > li > a {
-  color: white;
+  color: #FFFFFF;
   font-weight: bold;
   text-shadow: none;
   padding: 13px 14px 12px; }
@@ -294,13 +305,13 @@ ul.nav li a:hover, ul.nav li a:active {
 	position: relative; }
 .footer:before {
 	content: "";
-	display: block;
+	display: table;
 	clear: both;
 	height: 0;
 	line-height: 0; }
 .footer:after {
 	content: "";
-	display: block;
+	display: table;
 	clear: both;
 	height: 0;
 	line-height: 0; }
@@ -330,74 +341,80 @@ ul.nav li a:hover, ul.nav li a:active {
 	margin: -6px 0 0 30px; }
 	
 /* Icons */
-a.icon, span.icon {
+.icon, a.icon, span.icon {
 	display: inline-block;
 	background-image: url(dmp_icons.png);
 	background-repeat: no-repeat;
 	background-color: transparent;
 	overflow: hidden; }
 a.icon {
-	text-decoration: none; }
+	text-decoration: none;
+	position: relative; }
 span.icon {
 	position: absolute;
 	top: 0;
 	left: 0; }
 
-/* Login Icon */
-.navbar ul.nav li.login a span.icon {
-	background-position: -180px -100px; width: 20px; height: 20px; }
-.navbar ul.nav li.login a:hover span.icon, a.login:active span.icon {
+/* Login Icons */
+.icon.login {
+	background-position: -175px -55px; 
+	width: 20px; height: 20px; }
+li.login a span.icon.login {
+	background-position: -180px -100px; }
+li.login a:hover span.icon.login, li.login a:focus span.icon.login, li.login a:active span.icon.login {
 	background-position: -180px -120px; }
-
 /* Bucket Icons */
-span.icon.data-plans {
+.icon.data-plans {
 	background-position: 0 -105px; width: 40px; height: 35px; }	
-span.icon.how-to {
+.icon.how-to {
 	background-position: -40px -105px; width: 40px; height: 35px; }
-span.icon.news {
+.icon.news {
 	background-position: -80px -105px; width: 40px; height: 35px; }
-
-/* Heading Icons */
-h3.dmp-header span {
-	display: block;
-	top: 7px;
-	left: 11px; }
-span.icon.admin {
+/* Dashboard Heading Icons */
+.icon.admin {
 	background-position: -99px -30px; width: 33px; height: 25px; }
-span.icon.funder-guidance {
+.icon.funder-guidance {
 	background-position: -166px -30px; width: 33px; height: 25px; }
-span.icon.inst-guidance {
+.icon.inst-guidance {
 	background-position: -133px -30px; width: 33px; height: 25px; }
-span.icon.inst-profile {
+.icon.inst-profile {
 	background-position: -90px -80px; width: 30px; height: 25px; }
-span.icon.profile {
+.icon.profile {
 	background-position: -66px -30px; width: 33px; height: 25px; }
-span.icon.template-dmp {
-	background-position: -30px -55px; width: 25px; height: 25px; }
-span.icon.template-editor {
-	background-position: -90px -55px; width: 25px; height: 25px; }
-span.icon.template-new {
+
+.icon.template-editor {
+	background-position: -100px -55px; width: 25px; height: 25px; }
+.icon.template-new {
 	background-position: 0 -55px; width: 25px; height: 25px; }
-span.icon.template-details {
+.icon.template-dmp {
+	background-position: -25px -55px; width: 25px; height: 25px; }
+.icon.template-resource {
+	background-position: -75px -55px; width: 25px; height: 25px; }
+.icon.template-details {
 	background-position: -120px -55px; width: 25px; height: 25px; }
-span.icon.template-preview {
-	background-position: -150px -55px; width: 25px; height: 25px; }
-span.icon.template-resource {
-	background-position: -60px -55px; width: 25px; height: 25px; }
-span.icon.select {
+.icon.template-preview {
+	background-position: -125px -55px; width: 25px; height: 25px; }
+.icon.select {
 	background-position: -120px -80px; width: 30px; height: 20px; }
-span.icon.review {
-	background-position: -175px -55px; width: 25px; height: 25px; }
-span.icon.overview {
+.icon.review {
+	background-position: -150px -55px; width: 25px; height: 25px; }
+.icon.overview {
 	background-position: -150px -80px; width: 30px; height: 20px; }
-	
 /* Action Icons */
-a.icon.add {
+.icon.new-folder {
+	background-position: -160px 0; width: 20px; height: 15px; }
+.icon.folder-closed {
+	background-position: -125px -20px; width: 18px; height: 10px;  }
+.icon.folder-open {
+	background-position: -105px -20px; width: 18px; height: 10px; }
+.icon.add {
 	background-position: -30px 0; width: 15px; height: 15px; }
-a.icon.cancel {
+.icon.cancel {
 	background-position: -45px -15px; width: 15px; height: 15px; }
-a.icon.checkmark {
+.icon.checkmark {
 	background-position: -30px -15px; width: 15px; height: 15px; }
+.icon.remove {
+	background-position: -45px 0; width: 15px; height: 15px; }
 a.delete {
 	display: inline-block;
 	color: #DA0049;
@@ -405,66 +422,65 @@ a.delete {
 	line-height: 16px;
 	padding-left: 20px;
 	position: relative; }
-a.icon.remove, span.icon.remove {
-	background-position: -45px 0; width: 15px; height: 15px; }
-a.icon.new-folder {
-	background-position: -160px 0; width: 20px; height: 15px; }
-a.icon.comment {
-	background-position: -160px -15px; width: 20px; height: 15px;  }
-a.icon.arrow-up {
-	background-position: -60px 0; width: 10px; height: 15px; }
-a.icon.arrow-down {
-	background-position: -60px -15px; width: 10px; height: 15px; }
-a.icon.arrow-left {
-	background-position: -70px 0; width: 15px; height: 10px; }
-a.icon.arrow-right {
-	background-position: -70px -10px; width: 15px; height: 10px; }
-a.icon.close {
-	background-position: 0 0; width: 30px; height: 30px; }
-a.icon.edit-user {
-	background-position: 0 -30px; width: 33px; height: 25px; }
-a.icon.remove-user {
-	background-position: -33px -30px; width: 33px; height: 25px; }
-	
-/* Social Icons */
-a.icon.facebook {
-	background-position: -120px -100px; width: 20px; height: 20px; }
-a.icon.facebook:hover, a.icon-facebook:active {
-	background-position: -120px -120px; }
-a.icon.rss {
-	background-position: -160px -100px; width: 20px; height: 20px; }
-a.icon.rss:hover, a.icon-rss:active {
-	background-position: -160px -120px; }
-a.icon.twitter {
-	background-position: -140px -100px; width: 20px; height: 20px; }
-a.icon.twitter:hover, a.icon-twitter:active {
-	background-position: -140px -120px; }
-	
-/* File Tree Icons */
-span.icon.arrow-expanded {
-	background-position: -70px -20px; width: 9px; height: 9px; }
-span.icon.arrow-collapsed {
-	background-position: -79px -20px; width: 9px; height: 9px; }
-span.icon.folder-closed {
-	background-position: -108px -120px; width: 18px; height: 10px;  }
-span.icon.folder-open {
-	background-position: -90px -20px; width: 18px; height: 10px; }
-	
-/* Other Icons */
-span.icon.inst {
-	background-position: -180px 0; width: 20px; height: 15px; }
-span.icon.inst-domain {
-	background-position: 0 -80px; width: 30px; height: 25px; }
-span.icon.inst-contact {
-	background-position: -30px -80px; width: 30px; height: 25px; }
-span.icon.document {
-	background-position: -145px 0; width: 15px; height: 15px; }
-span.icon.pdf {
-	background-position: -105px 0; width: 20px; height: 20px; }
-span.icon.rts {
-	background-position: -85px 0; width: 20px; height: 20px; }
-span.icon.trash {
+a.delete:hover, a.delete:focus, a.delete:active {
+	color: #DA0049; }
+.icon.trash {
 	background-position: -145px -15px; width :15px; height: 15px; }
+.icon.close {
+	background-position: 0 0; width: 30px; height: 30px; }
+.icon.comment {
+	background-position: -160px -15px; width: 20px; height: 15px;  }
+.icon.mail {
+	background-position: -75px -20px; width: 15px; height: 10px; }
+.icon.mail:hover, .icon.mail:focus, .icon.mail:active {
+	background-position: -90px -20px; }
+.icon.arrow-up {
+	background-position: -55px 0; width: 10px; height: 15px; }
+.icon.arrow-up:hover, .icon.arrow-up:focus, .icon.arrow-up:active {
+	background-position: -55px -15px; }
+.icon.arrow-down {
+	background-position: -65px 0px; width: 10px; height: 15px; }
+.icon.arrow-down:hover, .icon.arrow-down:focus, .icon.arrow-down:active {
+	background-position: -65px -15px; }
+.icon.arrow-left {
+	background-position: -75px 0; width: 15px; height: 10px; }
+.icon.arrow-left:hover, .icon.arrow-left:focus, .icon.arrow-left:active {
+	background-position: -75px -15px; }
+.icon.arrow-right {
+	background-position: -90px -10px; width: 15px; height: 10px; }
+.icon.arrow-right:hover, .icon.arrow-
+.icon.edit-user {
+	background-position: 0 -30px; width: 33px; height: 25px; }
+.icon.remove-user {
+	background-position: -33px -30px; width: 33px; height: 25px; }
+/* Social Icons */
+.icon.facebook {
+	background-position: -120px -100px; width: 20px; height: 20px; }
+.icon.facebook:hover, .icon.facebook:focus, .icon.facebook:active {
+	background-position: -120px -120px; }
+.icon.rss {
+	background-position: -160px -100px; width: 20px; height: 20px; }
+.icon.rss:hover, .icon.rss:focus, .icon.rss:active {
+	background-position: -160px -120px; }
+.icon.twitter {
+	background-position: -140px -100px; width: 20px; height: 20px; }
+.icon.twitter:hover, .icon.twitter:focus, .icon.twitter:active {
+	background-position: -140px -120px; }
+/* Other Icons */
+.icon.search {
+	background-position: -180px -80px; width: 20px; height: 20px; }
+.icon.inst {
+	background-position: -180px 0; width: 20px; height: 15px; }
+.icon.inst-domain {
+	background-position: 0 -80px; width: 30px; height: 25px; }
+.icon.inst-contact {
+	background-position: -30px -80px; width: 30px; height: 25px; }
+.icon.pdf {
+	background-position: -105px 0; width: 20px; height: 20px; }
+.icon.rts {
+	background-position: -125px 0; width: 20px; height: 20px; }
+.icon.document {
+	background-position: -145px 0; width: 15px; height: 15px; }
 
 /* Buttons */
 .btn-container {
@@ -474,7 +490,7 @@ span.icon.trash {
 	min-height: 31px;
 	margin: 0 -15px;
 	padding: 10px 10px 0; }
-.btn, a.btn, .btn-primary, .btn-info {
+.btn, a.btn, button, input[type=submit] {
 	display: inline-block;
 	border: none;
 	border-radius: 15px;
@@ -497,18 +513,19 @@ span.icon.trash {
 	height: 30px;
 	margin-right: 5px;
 	padding: 0 20px; }
-form .btn {
-	font-size: 0.9em;
-}
-table.table .btn  {
-	font-size: 1em;
-}
+form .btn, form a.btn, form button, form input[type=submit] {
+	font-size: 1em; }
+table .btn, table a.btn, table button  {
+	font-size: 1em; }
 .btn.pull-right {
 	margin-left: 5px;
 	margin-right: 0; }
+.btn.pull-left {
+	margin-left: 0;
+	margin-right: 5px; }
 .btn:hover, .btn:focus, .btn:active,
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active
-.btn-info:hover, .btn-primary:focus, .btn-primary:active {
+a.btn:hover, a.btn:focus, a.btn:active,
+button:hover, button:focus, button:active {
 	box-shadow: none;
 	-moz-box-shadow: none;
 	-webkit-box-shadow: none;
@@ -516,33 +533,51 @@ table.table .btn  {
 	background-position: 0 -31px;
 	color: #4C4C4E;
 	text-decoration: none; }
-.btn-gray {
+.btn-gray, a.btn-gray, button.btn-gray {
 	background-position: 0 -62px;
 	color: #FFFFFF; }
-.btn-gray:hover, .btn-gray:focus, .btn-gray:active {
+.btn-gray:hover, .btn-gray:focus, .btn-gray:active,
+a.btn-gray:hover, a.btn-gray:focus, a.btn-gray:active,
+button.btn-gray:hover, button.btn-gray:focus, button.btn-gray:active {
 	background-position: 0 -93px;
 	color: #FFFFFF; }
-.btn-green, a.btn-green, .btn-info {
+.btn-green, a.btn-green, button.btn-green, input[type=submit] {
 	background-position: 0 -124px;
 	color: #FFFFFF; }
-.btn-green:hover, .btn-green:focus, .btn-green:active {
+.btn-green:hover, .btn-green:focus, .btn-green:active,
+a.btn-green:hover, a.btn-green:focus, a.btn-green:active,
+button.btn-green:hover, button.btn-green:focus, button.btn-green:active,
+input[type=submit]:hover, input[type=submit]:focus, input[type=submit]:active {
 	background-position: 0 -155px;
 	color: #FFFFFF; }
-.btn-large {
+a.btn-large {
 	border-radius: 30px;
 	-moz-border-radius: 30px;
 	-webkit-border-radius: 30px;
 	-ms-border-radius: 30px;
+	box-shadow: 0 0 30px 3px #CCCCCC;
+	-moz-box-shadow: 0 0 30px 3px #CCCCCC;
+	-webkit-box-shadow: 0 0 30px 3px #CCCCCC;
+	-ms-box-shadow: 0 0 30px 3px #CCCCCC;
 	background-position: 0 -186px;
+	color: #FFFFFF;
 	font-size: 1.5em;
+	font-weight: normal;
 	line-height: 64px;
 	height: 61px;
 	padding-left: 35px;
 	padding-right: 35px; }
-.btn-large:hover, .btn-large:focus, .btn-large:active {
-	background-position: 0 -247px; }
+a.btn-large:hover, a.btn-large:focus, a.btn-large:active {
+	box-shadow: 0 0 30px 3px #CCCCCC;
+	-moz-box-shadow: 0 0 30px 3px #CCCCCC;
+	-webkit-box-shadow: 0 0 30px 3px #CCCCCC;
+	-ms-box-shadow: 0 0 30px 3px #CCCCCC;
+	background-position: 0 -247px;
+	color: #FFFFFF; }
 	
 /* Homepage */
+
+/* Banner */
 .banner {
 	width: 1024px;
 	height: 333px;
@@ -550,21 +585,21 @@ table.table .btn  {
 	position: relative; }
 .banner:before {
 	content: "";
-	display: block;
+	display: table;
 	clear: both;
 	height: 0;
 	line-height: 0; }
 .banner:after {
 	content: "";
-	display: block;
+	display: table;
 	clear: both;
 	height: 0;
 	line-height: 0; }
 .banner a.btn {
-	box-shadow: 0 0 12px #333;
 	position: absolute;
 	right: 310px;
 	bottom: 83px; }
+/* Buckets */
 .buckets-header {
 	clear: both;
 	border-top: 1px solid #B6B6B7;
@@ -572,15 +607,16 @@ table.table .btn  {
 	margin-bottom: 8px; }
 .buckets-header:after {
 	content: "";
-	display: block;
+	display: table;
 	clear: both;
 	height: 0;
 	line-height: 0; }
-.buckets .col-triple, .buckets-header .col-triple {	
+.buckets .col-triple, .buckets-header .col-triple,
+.buckets .span4, .buckets-header .span4 {	
 	width: 33%;
 	margin: 0;
 	position: relative; }
-.buckets-header .col-triple {
+.buckets-header .col-triple, .buckets-header .span4 {
 	border: none;
 	padding: 8px 0; }
 .buckets .col-triple {
@@ -625,10 +661,12 @@ table.table .btn  {
 	position: absolute;
 	bottom: 14px; }
 
+/* Dashboard */
+
 /* Dashboard Header */
 .dashboard:after {
 	content: "";
-	display: block;
+	display: table;
 	clear: both;
 	height: 0;
 	line-height: 0; }
@@ -667,8 +705,7 @@ table.table .btn  {
 .dashboard-header .inst-info a span.icon {
 	top: 0;
 	left: 0; }
-
-/* Dashboard Navbar */
+/* Dashboard Navigation */
 .dashboard-nav {
 	clear: both;
 	-moz-box-sizing: border-box;
@@ -756,35 +793,16 @@ table.table .btn  {
 	background-position: -15px -58px;
 	color: #516935; }
 	
-/* DMP Templates */
-h3.dashboard-heading  {
-	clear: both;
-	-moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  box-sizing: border-box;
-	background: #6D6E70;
-	color: #FFFFFF;
-	text-transform: uppercase;
-	line-height: 43px;
-	width: 100%;
-	height: 39px;
-	margin: 0;
-	padding-left: 53px;
-	position: relative; }
-h3.dashboard-heading span.icon {
-	top: 7px;
-	left: 11px; }
-	
 /* Tabs */
 .tabbable {
-/*	width: 670px; */
 margin: 12px 0 20px; }
 [class*="span"] .tabbable {
 	background: #EDF2E2;
 	margin-top: 0;
-	padding: 0 30px 30px;
-}
+	padding: 0 30px 30px; }
+.tabbable-condensed {
+	width: 670px; }
+/* Tab Navigation */
 ul.nav-tabs li {
 	height: 31px; }
 ul.nav-tabs li a {
@@ -806,6 +824,7 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	border: 1px solid #C9C9CB;
 	border-bottom: none;
 	height: 30px; }
+/* Tab Content */
 .tab-content {
 	border: 1px solid #C9C9CB;
 	border-top: none;
@@ -817,28 +836,47 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	border-top: 2px dotted #C9C9CB;
 	margin-top: 0;
 	margin-bottom: 20px; }
+.tab-pane form {
+	margin-bottom: 0; }
 .tab-pane input.input-xxlarge {
 	width: 300px; }
 .tab-pane textarea.input-xxlarge {
 	width: 400px; }
 
-/* Template Pages */
-.requirements_group ul li {
-	list-style: none;
-}
+/* Admin Pages */
+.user_login {
+	margin-top: 10px; }
 .tree-view, .template-status {
 	border: 1px solid #C9C9CB;
 	padding: 10px 15px; }
+.requirements_tree_view {
+	font-size: 0.8em;
+	padding-left: 25px; }
+.requirements_group ul li {
+	list-style: none; }
 [class*="span"] hr {
 	border-top-style: dotted;
 	border-top-width: 2px;
 	margin: 5px 0; }
-.requirements_tree_view {
-	font-size: 0.8em;
-	padding-left: 25px; }
-span[id*="status_"] {
-	color: #DA0049; }
+h3.dashboard-heading  {
+	clear: both;
+	-moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+	background: #6D6E70;
+	color: #FFFFFF;
+	text-transform: uppercase;
+	line-height: 43px;
+	height: 39px;
+	margin: 0;
+	padding: 0 0 0 53px;
+	position: relative; }
+h3.dashboard-heading span.icon {
+	top: 7px;
+	left: 11px; }
 h5 span {
 	font-size: 0.9em;
 	font-weight: normal; }
-
+span[id*="status_"] {
+	color: #DA0049; }

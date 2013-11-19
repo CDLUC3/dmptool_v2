@@ -10,10 +10,11 @@
   <body>
   <%= render 'layouts/header' %>
 
-  <div class='container'>
+  <div class="container">
   	<% if current_user %>
   		<%= render 'layouts/dashboard_header' unless ['static_pages', 'user_sessions'].include?(controller_name) && !['guidance'].include?(action_name) %>
   	<% end %>
+  	<div class="row-fluid">
     <% flash.each do |key, value| %>
       <div class="alert alert-#{key}">
         <%= value %>
@@ -21,6 +22,7 @@
     <% end %>
 
     <%= yield %>
+    </div>
   </div>
   
   <%= render 'layouts/footer' %>
