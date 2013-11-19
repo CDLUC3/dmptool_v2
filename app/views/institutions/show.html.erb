@@ -34,7 +34,7 @@
 <p><%= @institution.shib_domain %></p>
 
 <p><b>Logo:</b></p>
-<p><%= image_tag @institution.logo.url if @institution.logo? %></p>
+<p><%= image_tag (@institution.logo.url), size: "170x60" if @institution.logo? %></p>
 
 <%= link_to 'Back', institutions_path %>
 

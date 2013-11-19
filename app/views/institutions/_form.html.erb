@@ -69,7 +69,7 @@
   <div class="control-group">
     <%= f.label "Institutional Logo", :class => "control-label" %>
     <div class="controls">
-      <%= image_tag @current_institution.logo.url if @current_institution.logo? %>
+      <%= image_tag (@current_institution.logo.url), size: "170x60" if @current_institution.logo? %>
       <%= f.file_field :logo %>
       <%= f.hidden_field :logo_cache %>
     </div>
