@@ -2,7 +2,7 @@
 	<div class="dashboard-header">
 		<% unless current_user.institution.nil? %>
 			<div class="inst-logo">
-				<%= image_tag current_user.institution.logo, :width => "164", :height => "51", :alt => "#{current_user.institution.nickname}" %>
+				<%= image_tag current_user.institution.logo, :alt => "#{current_user.institution.nickname}" %>
 			</div>
 			<div class="inst-title">
 				<h3><%= current_user.institution.full_name %></h3>

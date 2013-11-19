@@ -37,5 +37,6 @@ gem 'jquery-turbolinks'
 gem 'jbuilder', '1.0.1'
 gem 'kaminari'
 gem 'carrierwave'
+gem "mini_magick"
 gem 'paranoia', :github => 'radar/paranoia', :branch => 'rails4'
 gem 'american_date'
