@@ -56,6 +56,7 @@ Dmptool2::Application.routes.draw do
   get 'remove_authorization', to: 'authorizations#remove_authorization'
 
   get  'edit_user_roles', to: 'users#edit_user_roles'
+  post  'update_user_roles', to: 'users#update_user_roles'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -13,6 +13,19 @@
       </div>
     <% end %>
 
+    <h5> Associated DMP Template </h5>
+    <hr/>
+      <div class="controlgroup">
+        <%= label_tag(:dmp_template, "DMP Template", class: "control-label") %>
+        <div class="controls">
+        <% if @resource_template.requirements_template_id.nil? %>
+          <%= text_field_tag(:selected_requirement_template, nil, id: "selected_requirement_template_name", class: "input-xlarge") %>
+        <% else %>
+          <%= text_field_tag(:selected_requirement_template, @resource_template.requirements_template.name, id: "selected_requirement_template_name", class: "input-xlarge") %>
+        <% end %>
+        </div>
+      </div>
+
     <h5> Basic Information </h5>
     <hr/>
     <%= f.hidden_field :requirements_template_id, id: 'requirements_template_id' %>
