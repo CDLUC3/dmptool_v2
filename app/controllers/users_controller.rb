@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   include InstitutionsHelper
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :check_dmp_admin, only: [:index, :edit_user_roles, :update_user_roles, :destroy]
+  before_action :check_dmp_admin_access, only: [:index, :edit_user_roles, :update_user_roles, :destroy]
 
 
   # GET /users
