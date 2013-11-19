@@ -14,9 +14,13 @@
       <td><%= link_to institution.parent.try(:full_name), edit_institution_path(institution) unless institution.parent == nil %></td>
     </tr>
   <% end %>
-
+  
   <div class="pagination">
     <%= paginate @users %>
   </div>
 
 </table>
+
+<div class="btn-container">
+  <%= link_to 'Add New Institution', new_institution_path(5), :class => "btn btn-green" %>
+</div>

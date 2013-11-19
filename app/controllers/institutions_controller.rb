@@ -24,7 +24,7 @@ class InstitutionsController < ApplicationController
 
   # GET /institutions/new
   def new
-    @institution = Institution.new(:parent_id => params[:parent_id])
+    @current_institution = Institution.new(:parent_id => params[:parent_id])
   end
 
   # GET /institutions/1/edit
