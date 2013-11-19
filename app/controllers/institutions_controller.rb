@@ -2,7 +2,7 @@ class InstitutionsController < ApplicationController
   before_action :set_institution, only: [:show, :edit, :update, :destroy]
   before_action :check_for_cancel, :update => [:create, :update, :destroy]
   before_filter :populate_institution_select_list
-  before_action :check_institution_admin
+  before_action :check_institution_admin_access
 
   # GET /institutions
   # GET /institutions.json
@@ -24,7 +24,7 @@ class InstitutionsController < ApplicationController
 
   # GET /institutions/new
   def new
-    @institution = Institution.new(:parent_id => params[:parent_id])
+    @current_institution = Institution.new(:parent_id => params[:parent_id])
   end
 
   # GET /institutions/1/edit

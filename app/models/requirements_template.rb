@@ -1,5 +1,6 @@
 class RequirementsTemplate < ActiveRecord::Base
 
+  
   belongs_to :institution
   has_many :resource_templates
   has_many :requirements
