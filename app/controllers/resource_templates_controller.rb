@@ -2,7 +2,7 @@ class ResourceTemplatesController < ApplicationController
 
   before_filter :get_requirements_template
   before_action :set_resource_template, only: [:show, :edit, :update, :destroy, :toggle_active, :template_details]
-  before_action :check_admin_access
+  before_action :check_resource_editor_access, only: [:show, :edit, :update, :destroy, :template_details, :index]
   
 
   # GET /resource_templates

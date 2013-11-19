@@ -1,25 +1,55 @@
 class RequirementsTemplatesController < ApplicationController
   before_action :set_requirements_template, only: [:show, :edit, :update, :destroy, :toggle_active]
+  before_action :check_DMPTemplate_editor_access, only: [:show, :edit, :update, :destroy, :index]
 
   # GET /requirements_templates
   # GET /requirements_templates.json
   def index
-    case params[:scope]
-      when "all"
-        @requirements_templates = RequirementsTemplate.all.page(params[:page])
-      when "all_limited"
-        @requirements_templates = RequirementsTemplate.all.page(params[:page]).per(5)
-      when "active"
-        @requirements_templates = RequirementsTemplate.active.page(params[:page]).per(5)
-      when "inactive"
-        @requirements_templates = RequirementsTemplate.inactive.page(params[:page]).per(5)
-      when "public"
-        @requirements_templates = RequirementsTemplate.public_visibility.page(params[:page]).per(5)
-      when "institutional"
-        @requirements_templates = RequirementsTemplate.institutional_visibility.page(params[:page]).per(5)
-      else
-        @requirements_templates = RequirementsTemplate.order(created_at: :asc).page(params[:page]).per(5)
+
+    #if current_user.has_role?(Role::DMP_ADMIN)
+      case params[:scope]
+        when "all"
+          @requirements_templates = RequirementsTemplate.all.page(params[:page])
+        when "all_limited"
+          @requirements_templates = RequirementsTemplate.all.page(params[:page])
+        when "active"
+          @requirements_templates = RequirementsTemplate.active.page(params[:page])
+        when "inactive"
+          @requirements_templates = RequirementsTemplate.inactive.page(params[:page])
+        when "public"
+          @requirements_templates = RequirementsTemplate.public_visibility.page(params[:page])
+        when "institutional"
+          @requirements_templates = RequirementsTemplate.institutional_visibility.page(params[:page])
+        else
+          @requirements_templates = RequirementsTemplate.order(created_at: :asc).page(params[:page])
       end
+
+
+      if !current_user.has_role?(Role::DMP_ADMIN)
+        @requirements_templates = @requirements_templates.where(institution_id: current_user.institution_id)
+      end
+
+      @requirements_templates = @requirements_templates.per(5)
+
+      # case params[:scope]
+      #   when "all"
+      #     @requirements_templates = RequirementsTemplate.all.within_user_institution.page(params[:page])
+      #   when "all_limited"
+      #     @requirements_templates = RequirementsTemplate.all.within_user_institution.page(params[:page]).per(5)
+      #   when "active"
+      #     @requirements_templates = RequirementsTemplate.active.within_user_institution.page(params[:page]).per(5)
+      #   when "inactive"
+      #     @requirements_templates = RequirementsTemplate.inactive.within_user_institution.page(params[:page]).per(5)
+      #   when "public"
+      #     @requirements_templates = RequirementsTemplate.public_visibility.within_user_institution.page(params[:page]).per(5)
+      #   when "institutional"
+      #     @requirements_templates = RequirementsTemplate.institutional_visibility.within_user_institution.page(params[:page]).per(5)
+      #   else
+      #     @requirements_templates = RequirementsTemplate.order(created_at: :asc).within_user_institution.page(params[:page]).per(5)
+      # end
+
+    #else
+
       template_editors
   end
 
