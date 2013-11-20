@@ -9,10 +9,4 @@ module ApplicationHelper
     link_to(name, '#', class: "add_fields btn", data: {id: id, fields: fields.gsub("\n", "")})
   end
 
-  def current_class?(*paths)
-  	current = false
-  	paths.each { |path| current ||= current_page?(path) }
-  	current ? 'current' : nil
-	end
-
 end
