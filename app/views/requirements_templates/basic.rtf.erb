@@ -1,1 +1,60 @@
-testing
+<%
+@doc = RTF::Document.new(RTF::Font.new(RTF::Font::ROMAN, 'Times New Roman'))
+
+#this is a section for defining the styles for use in the document
+#those ending with _p are paragraph styles and those with _c are character styles
+@styles = {}
+
+@styles['h1_p'] = RTF::ParagraphStyle.new
+@styles['h1_p'].justification = RTF::ParagraphStyle::CENTER_JUSTIFY
+@styles['h1_after'] = :line_break
+@styles['h1_c'] = RTF::CharacterStyle.new
+@styles['h1_c'].bold = true
+@styles['h1_c'].font = RTF::Font.new(RTF::Font::ROMAN, 'Times New Roman')
+@styles['h1_c'].font_size = 50
+
+
+
+# a helper function so I don't have to nest so many levels for items that have
+# both a Paragraph and a character style.  par is the parent and s is the style
+def style(par, s)
+	#makes it easier to apply styles that are both paragraph and character styles at once
+	if @styles.has_key?("#{s}_p") && @styles.has_key?("#{s}_c")
+		par.paragraph(@styles["#{s}_p"]) do |p|
+   		p.apply(@styles["#{s}_c"]) do |c|
+      	yield(c)
+      	c.send(@styles["#{s}_after"]) if @styles.has_key?("#{s}_after")
+   		end
+		end
+	elsif @styles.has_key?("#{s}_p")
+		par.paragraph(@styles["#{s}_p"]) do |p|
+      yield(p)
+      c.send(@styles["#{s}_after"]) if @styles.has_key?("#{s}_after")
+		end
+	elsif @styles.has_key?('#{s}_c')
+		#not sure if this one will work with style without a paragraph?  DANGER!!!
+		par.apply(@styles["#{s}_c"]) do |c|
+      yield(c)
+      c.send(@styles["#{s}_after"]) if @styles.has_key?("#{s}_after")
+		end
+	end
+end
+
+style(@doc, 'h1'){|s| s << @rt.name }
+style(@doc, 'h1'){|s| s << @rt.institution.full_name }
+
+
+
+#@doc.paragraph do |p|
+#	 p << "This is the first sentence in the paragraph. "
+#	 p << "This is the second sentence in the paragraph. "
+#	 p << "And this is the third sentence in the paragraph. Iñtërnâtiônàlizætiøn"
+#end
+
+
+
+
+
+
+-%><%= raw(@doc.to_rtf) %>
+ 
