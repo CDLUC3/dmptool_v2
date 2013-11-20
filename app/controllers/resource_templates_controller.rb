@@ -24,6 +24,11 @@ class ResourceTemplatesController < ApplicationController
       else
         @resource_templates = @resource_templates.per(10)
     end
+
+    if !current_user.has_role?(Role::DMP_ADMIN)
+      @resource_templates = @resource_templates.where(institution_id: current_user.institution_id)
+    end
+
     resource_editors
   end
 

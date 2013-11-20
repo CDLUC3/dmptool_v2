@@ -31,8 +31,6 @@ class RequirementsTemplatesController < ApplicationController
         @requirements_templates = @requirements_templates.where(institution_id: current_user.institution_id)
       end
 
-      #@requirements_templates = @requirements_templates.per(5)
-
       template_editors
   end
 
