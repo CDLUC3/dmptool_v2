@@ -1,3 +1,5 @@
+require 'rtf'
+
 class RequirementsTemplatesController < ApplicationController
   before_action :set_requirements_template, only: [:show, :edit, :update, :destroy, :toggle_active]
   before_action :check_DMPTemplate_editor_access, only: [:show, :edit, :update, :destroy, :index]
@@ -42,6 +44,7 @@ class RequirementsTemplatesController < ApplicationController
   # GET /requirements_templates/1/basic and basic_requirements_template_path
   # shows a basic template (as RTF for now)
   def basic
+    @rt = RequirementsTemplate.find(params[:id])
     
     respond_to do |format|
       format.rtf {
