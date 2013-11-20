@@ -28,14 +28,10 @@ class AuthorizationsController < ApplicationController
       end
     end
     respond_to do |format|
-      if !@check
-        flash.now[:notice] = "Permission error."
-        format.js { render action: 'add_authorization' }
-        return     
-      elsif (!@invalid_emails.empty? && !@existing_emails.empty?)
+      if (!@invalid_emails.empty? && !@existing_emails.empty?)
         flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} specified and Users with #{@existing_emails.join(', ')} already have been assigned this role. "
         format.js { render action: 'add_authorization' }
-        return
+        return    
       elsif (!@existing_emails.empty? && @invalid_emails.empty?)
         flash.now[:notice] = "The following emails #{@existing_emails.join(', ')} have already been assigned with this role"
         format.js { render action: 'add_authorization' }
@@ -44,6 +40,10 @@ class AuthorizationsController < ApplicationController
         flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} within your institution. "
         format.js { render action: 'add_authorization' }
         return
+      elsif !@check
+        flash.now[:notice] = "Permission error."
+        format.js { render action: 'add_authorization' }
+        return 
       else
         flash.now[:notice] = "Granted #{@role_name} Role to the Users specified."
         format.js { render action: 'add_authorization' }
