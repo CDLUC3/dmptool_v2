@@ -27,6 +27,7 @@ class ResourceTemplatesController < ApplicationController
 
     if !current_user.has_role?(Role::DMP_ADMIN)
       @resource_templates = @resource_templates.where(institution_id: current_user.institution_id)
+      @resource_templates = @resource_templates.where(institution_id: current_user.institution.subtree_ids)
     end
 
     resource_editors
@@ -128,6 +129,7 @@ class ResourceTemplatesController < ApplicationController
         @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
       else
         @users = User.where(id: @user_ids, institution_id: current_user.institution).order('created_at DESC').page(params[:page]).per(10)
+        
       end
     end
 

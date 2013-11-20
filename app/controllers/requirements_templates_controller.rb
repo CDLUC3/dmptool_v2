@@ -28,7 +28,8 @@ class RequirementsTemplatesController < ApplicationController
 
 
       if !current_user.has_role?(Role::DMP_ADMIN)
-        @requirements_templates = @requirements_templates.where(institution_id: current_user.institution_id)
+        @requirements_templates = @requirements_templates.
+                                  where(institution_id: [current_user.institution_id, current_user.institution.subtree_ids])
       end
 
       template_editors
