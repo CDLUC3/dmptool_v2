@@ -6,6 +6,14 @@ GIT
     paranoia (2.0.1)
       activerecord (~> 4.0)
 
+GIT
+  remote: https://github.com/clbustos/rtf.git
+  revision: 723b5184559448bc95a0c3464436391c4b992b6e
+  specs:
+    ifad-rtf (0.4.2)
+      nokogiri (~> 1.1)
+      tidy-ext (~> 0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -112,6 +120,8 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25)
+    mini_magick (3.6.0)
+      subexec (~> 0.2.1)
     mini_portile (0.5.1)
     minitest (4.7.5)
     multi_json (1.7.9)
@@ -189,12 +199,14 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
+    subexec (0.2.3)
     therubyracer (0.12.0)
       libv8 (~> 3.16.14.0)
       ref
     thor (0.18.1)
     thread_safe (0.1.2)
       atomic
+    tidy-ext (0.1.14)
     tilt (1.4.1)
     treetop (1.4.15)
       polyglot
@@ -228,11 +240,13 @@ DEPENDENCIES
   deep_cloneable (~> 1.5.5)
   enum_column3
   factory_girl_rails (= 4.2.0)
+  ifad-rtf!
   jbuilder (= 1.0.1)
   jquery-rails
   jquery-turbolinks
   jquery-ui-rails
   kaminari
+  mini_magick
   mysql2
   omniauth
   omniauth-ldap

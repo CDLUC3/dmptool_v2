@@ -2,9 +2,8 @@
 
 class LogoUploader < CarrierWave::Uploader::Base
 
-  #Include RMagick or MiniMagick support:
-  #include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
+  #Include MiniMagick support:
+  include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
   storage :file
@@ -25,11 +24,11 @@ class LogoUploader < CarrierWave::Uploader::Base
   # end
 
   # Process files as they are uploaded:
-  # process :scale => [200, 300]
+  process :scale => [170, 60]
   #
-  # def scale(width, height)
-  #   # do something
-  # end
+  def scale(width, height)
+    resize_to_fit(width, height)
+  end
 
   # Create different versions of your uploaded files:
   # version :thumb do
@@ -38,9 +37,9 @@ class LogoUploader < CarrierWave::Uploader::Base
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
-  # def extension_white_list
-  #   %w(jpg jpeg gif png)
-  # end
+  def extension_white_list
+     %w(jpg jpeg gif png)
+  end
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.

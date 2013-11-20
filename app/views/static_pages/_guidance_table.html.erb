@@ -7,7 +7,8 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<th colspan="2"><%= (public ? 'Funder' : 'Institution') %></th>
+			<th><%= (public ? 'Funder' : 'Institution') %></th>
+			<th>Template</th>
 			<th><%= (public ? 'Funder Links' : 'Institution Links') %></th>
 			<th>Sample Plans</th>
 		</tr>
@@ -16,9 +17,15 @@
 		<% templates.each do |t| %>
 			<tr>
 				<td><%= t.institution.full_name %></td>
-				<td>Basic Template</td>
+				<td><%= link_to t.name, basic_requirements_template_path(t, format: :rtf ) %></td>
 				<td>Guidelines</td>
-				<td>Sample Plan</td>
+				<td>
+					<% t.sample_plans.each do |s| %>
+						<div class="samples">
+							<%= s.label %>
+						</div>
+					<% end %>
+				</td>
 			</tr>
 		<% end %>
 	</tbody>
