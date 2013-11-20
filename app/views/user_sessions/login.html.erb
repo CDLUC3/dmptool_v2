@@ -1,27 +1,37 @@
-<h3 class="dashboard-heading"><span class="icon login">Log In</h3>
-<div class="user_login">
-	<h4>Log In on DMPTool through <%= @institution.full_name %></h4>
-  <%= form_tag "/auth/ldap/callback", method: :post do %>
-    <%= hidden_field_tag :institution_id, session[:institution_id]%>
-    <div class="control-group">
-	    <%= label_tag :username %>
-	    <%= text_field_tag :username %>
-	  </div>
-	  <div class="control-group">
-	    <%= label_tag :password %>
-	    <%= password_field_tag :password %>
-    </div>
-    <p><%= check_box_tag :remember_my_username %>
-    <%= label_tag :remember_my_username %></p>
-    <%= submit_tag "Login", :class => "btn btn-green" %>
-  <% end %>
-  <div>
-	  <p>Is the institution shown incorrect? <%= link_to "Select a different institution", choose_institution_path %> to log in with.</p>
-	  <p>Don't have a DMPTool account yet?</p>
-	  <p>You can
-	  <%= link_to "Create An Account", new_user_path %>
-	  in DMPtool first and Log In.</p>
-	  <p><%= link_to "Forgot your username?" %><br/>
-	  <%= link_to "Forgot your password?" %></p>
-  </div>
+<div class="login row-fluid">
+	<h3 class="dashboard-heading"><span class="icon login"></span>Log In</h3>
+	<div class="user_login span7">
+		<p>Log in to DMPTool through:<br/>
+			<strong><%= @institution.full_name %></strong></h5>
+	  <%= form_tag "/auth/ldap/callback", method: :post do %>
+	    <%= hidden_field_tag :institution_id, session[:institution_id]%>
+	    <hr/>
+	    <div class="control-group">
+		    <%= label_tag :username %>
+		    <%= text_field_tag :username %>
+		  </div>
+		  <div class="control-group">
+		    <%= label_tag :password %>
+		    <%= password_field_tag :password %>
+	    </div>
+	    <p><%= check_box_tag :remember_my_username %>
+	    	<%= label_tag :remember_my_username, "Remember My Password", :class => "checkbox-label" %></p>
+	    <%= submit_tag "Login", :class => "btn btn-green" %>
+	  <% end %>
+	  <div class="control-group forgot_password">
+		  <p><%= link_to "Forgot your username?" %><br/>
+				<%= link_to "Forgot your password?" %></p>
+		</div>
+	</div>
+	<div class="user_login span5">
+		<div class="control-group switch_institution">
+			<p>Is the institution shown incorrect?<br/>
+			<strong><%= link_to "Select a different institution", choose_institution_path %></strong></p>
+			<hr/>
+		</div>
+		<div class="control-group create_account">
+			<p><strong>Don't have a DMPTool account yet?</strong></p>
+				<%= link_to "Create An Account", new_user_path, :class => "btn btn-green" %>
+		</div>
+	</div>
 </div>
