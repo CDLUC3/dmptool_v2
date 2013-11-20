@@ -18,7 +18,7 @@ class RequirementsController < ApplicationController
   def new
     @requirement = @requirements_template.requirements.build(:parent_id => params[:parent_id])
     @requirements = @requirements_template.requirements
-    @requirements.enumerations.build
+    @requirement.enumerations.build
     render 'index'
   end
 
