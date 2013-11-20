@@ -43,6 +43,7 @@ class RequirementsTemplatesController < ApplicationController
   # shows a basic template (as RTF for now)
   def basic
     @rt = RequirementsTemplate.find(params[:id])
+    @base_req = @rt.requirements.roots
     
     respond_to do |format|
       format.rtf {
