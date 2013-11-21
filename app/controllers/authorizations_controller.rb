@@ -75,11 +75,11 @@ class AuthorizationsController < ApplicationController
     user = User.find(user_id)  
     a =   
 
-              current_user.has_role?(Role::DMP_ADMIN) || 
+              safe_has_role?(Role::DMP_ADMIN) || 
 
-              (  current_user.has_role?(Role::INSTITUTIONAL_ADMIN) &&(current_user.institution == user.institution) && (role_id != Role::DMP_ADMIN)  ) || 
+              (  safe_has_role?(Role::INSTITUTIONAL_ADMIN) && (current_user.institution == user.institution) && (role_id != Role::DMP_ADMIN)  ) || 
 
-              ( current_user.has_role?(role_id) && (current_user.institution == user.institution) )   
+              ( safe_has_role?(role_id) && (current_user.institution == user.institution) )   
     return a
             
   end

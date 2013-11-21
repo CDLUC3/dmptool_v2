@@ -13,6 +13,45 @@
 @styles['h1_c'].font = RTF::Font.new(RTF::Font::ROMAN, 'Times New Roman')
 @styles['h1_c'].font_size = 50
 
+@styles['h2_p'] = RTF::ParagraphStyle.new
+@styles['h2_p'].justification = RTF::ParagraphStyle::LEFT_JUSTIFY
+@styles['h2_after'] = :line_break
+@styles['h2_c'] = RTF::CharacterStyle.new
+@styles['h2_c'].bold = true
+@styles['h2_c'].font = RTF::Font.new(RTF::Font::ROMAN, 'Times New Roman')
+@styles['h2_c'].font_size = 50
+
+@styles['h3_p'] = RTF::ParagraphStyle.new
+@styles['h3_p'].justification = RTF::ParagraphStyle::LEFT_JUSTIFY
+@styles['h3_after'] = :line_break
+@styles['h3_c'] = RTF::CharacterStyle.new
+@styles['h3_c'].bold = true
+@styles['h3_c'].font = RTF::Font.new(RTF::Font::ROMAN, 'Times New Roman')
+@styles['h3_c'].font_size = 44
+
+@styles['h4_p'] = RTF::ParagraphStyle.new
+@styles['h4_p'].justification = RTF::ParagraphStyle::LEFT_JUSTIFY
+@styles['h4_after'] = :line_break
+@styles['h4_c'] = RTF::CharacterStyle.new
+@styles['h4_c'].bold = true
+@styles['h4_c'].font = RTF::Font.new(RTF::Font::ROMAN, 'Times New Roman')
+@styles['h4_c'].font_size = 36
+
+@styles['question_p'] = RTF::ParagraphStyle.new
+@styles['question_p'].justification = RTF::ParagraphStyle::LEFT_JUSTIFY
+@styles['question_after'] = :line_break
+@styles['question_c'] = RTF::CharacterStyle.new
+@styles['question_c'].bold = true
+@styles['question_c'].font = RTF::Font.new(RTF::Font::ROMAN, 'Times New Roman')
+@styles['question_c'].font_size = 30
+
+@styles['answer_p'] = RTF::ParagraphStyle.new
+@styles['answer_p'].justification = RTF::ParagraphStyle::LEFT_JUSTIFY
+@styles['answer_after'] = :line_break
+@styles['answer_c'] = RTF::CharacterStyle.new
+@styles['answer_c'].bold = false
+@styles['answer_c'].font = RTF::Font.new(RTF::Font::ROMAN, 'Times New Roman')
+@styles['answer_c'].font_size = 30
 
 
 # a helper function so I don't have to nest so many levels for items that have
@@ -43,6 +82,14 @@ end
 style(@doc, 'h1'){|s| s << @rt.name }
 style(@doc, 'h1'){|s| s << @rt.institution.full_name }
 
+style(@doc, 'h1'){|s| s << 'h1 example'}
+style(@doc, 'h2'){|s| s << 'h2 example'}
+style(@doc, 'h3'){|s| s << 'h3 example'}
+style(@doc, 'h4'){|s| s << 'h4 example'}
+
+style(@doc, 'question'){|s| s << 'question example'}
+
+style(@doc, 'answer'){|s| s << 'answer example'}
 
 
 #@doc.paragraph do |p|

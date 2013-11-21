@@ -26,6 +26,7 @@ class RequirementsTemplate < ActiveRecord::Base
   scope :public_visibility, -> { where(visibility: :public) }
 
 
+
   after_initialize :default_values
   after_initialize :version_number
 
