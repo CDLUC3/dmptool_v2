@@ -7,7 +7,7 @@
 
 @styles['h1_p'] = RTF::ParagraphStyle.new
 @styles['h1_p'].justification = RTF::ParagraphStyle::CENTER_JUSTIFY
-@styles['h1_after'] = :line_break
+@styles['h1_after'] = [:line_break]
 @styles['h1_c'] = RTF::CharacterStyle.new
 @styles['h1_c'].bold = true
 @styles['h1_c'].font = RTF::Font.new(RTF::Font::ROMAN, 'Times New Roman')
@@ -15,7 +15,7 @@
 
 @styles['h2_p'] = RTF::ParagraphStyle.new
 @styles['h2_p'].justification = RTF::ParagraphStyle::LEFT_JUSTIFY
-@styles['h2_after'] = :line_break
+@styles['h2_after'] = [:line_break]
 @styles['h2_c'] = RTF::CharacterStyle.new
 @styles['h2_c'].bold = true
 @styles['h2_c'].font = RTF::Font.new(RTF::Font::ROMAN, 'Times New Roman')
@@ -23,7 +23,7 @@
 
 @styles['h3_p'] = RTF::ParagraphStyle.new
 @styles['h3_p'].justification = RTF::ParagraphStyle::LEFT_JUSTIFY
-@styles['h3_after'] = :line_break
+@styles['h3_after'] = [:line_break]
 @styles['h3_c'] = RTF::CharacterStyle.new
 @styles['h3_c'].bold = true
 @styles['h3_c'].font = RTF::Font.new(RTF::Font::ROMAN, 'Times New Roman')
@@ -31,23 +31,31 @@
 
 @styles['h4_p'] = RTF::ParagraphStyle.new
 @styles['h4_p'].justification = RTF::ParagraphStyle::LEFT_JUSTIFY
-@styles['h4_after'] = :line_break
+@styles['h4_after'] = [:line_break]
 @styles['h4_c'] = RTF::CharacterStyle.new
 @styles['h4_c'].bold = true
 @styles['h4_c'].font = RTF::Font.new(RTF::Font::ROMAN, 'Times New Roman')
 @styles['h4_c'].font_size = 36
 
-@styles['question_p'] = RTF::ParagraphStyle.new
-@styles['question_p'].justification = RTF::ParagraphStyle::LEFT_JUSTIFY
-@styles['question_after'] = :line_break
-@styles['question_c'] = RTF::CharacterStyle.new
-@styles['question_c'].bold = true
-@styles['question_c'].font = RTF::Font.new(RTF::Font::ROMAN, 'Times New Roman')
-@styles['question_c'].font_size = 30
+@styles['question_brief_p'] = RTF::ParagraphStyle.new
+@styles['question_brief_p'].justification = RTF::ParagraphStyle::LEFT_JUSTIFY
+@styles['question_brief_after'] = [:line_break]
+@styles['question_brief_c'] = RTF::CharacterStyle.new
+@styles['question_brief_c'].bold = true
+@styles['question_brief_c'].font = RTF::Font.new(RTF::Font::ROMAN, 'Times New Roman')
+@styles['question_brief_c'].font_size = 30
+
+@styles['question_full_p'] = RTF::ParagraphStyle.new
+@styles['question_full_p'].justification = RTF::ParagraphStyle::LEFT_JUSTIFY
+@styles['question_full_after'] = [:line_break, :line_break]
+@styles['question_full_c'] = RTF::CharacterStyle.new
+@styles['question_full_c'].bold = false
+@styles['question_full_c'].font = RTF::Font.new(RTF::Font::ROMAN, 'Times New Roman')
+@styles['question_full_c'].font_size = 30
 
 @styles['answer_p'] = RTF::ParagraphStyle.new
 @styles['answer_p'].justification = RTF::ParagraphStyle::LEFT_JUSTIFY
-@styles['answer_after'] = :line_break
+@styles['answer_after'] = [:line_break]
 @styles['answer_c'] = RTF::CharacterStyle.new
 @styles['answer_c'].bold = false
 @styles['answer_c'].font = RTF::Font.new(RTF::Font::ROMAN, 'Times New Roman')
@@ -62,19 +70,19 @@ def style(par, s)
 		par.paragraph(@styles["#{s}_p"]) do |p|
    		p.apply(@styles["#{s}_c"]) do |c|
       	yield(c)
-      	c.send(@styles["#{s}_after"]) if @styles.has_key?("#{s}_after")
+      	@styles["#{s}_after"].each{|i| c.send(i)} if @styles.has_key?("#{s}_after")
    		end
 		end
 	elsif @styles.has_key?("#{s}_p")
 		par.paragraph(@styles["#{s}_p"]) do |p|
       yield(p)
-      c.send(@styles["#{s}_after"]) if @styles.has_key?("#{s}_after")
+      @styles["#{s}_after"].each{|i| c.send(i)} if @styles.has_key?("#{s}_after")
 		end
 	elsif @styles.has_key?('#{s}_c')
 		#not sure if this one will work with style without a paragraph?  DANGER!!!
 		par.apply(@styles["#{s}_c"]) do |c|
       yield(c)
-      c.send(@styles["#{s}_after"]) if @styles.has_key?("#{s}_after")
+      @styles["#{s}_after"].each{|i| c.send(i)} if @styles.has_key?("#{s}_after")
 		end
 	end
 end
@@ -82,15 +90,35 @@ end
 style(@doc, 'h1'){|s| s << @rt.name }
 style(@doc, 'h1'){|s| s << @rt.institution.full_name }
 
+=begin
+
 style(@doc, 'h1'){|s| s << 'h1 example'}
 style(@doc, 'h2'){|s| s << 'h2 example'}
 style(@doc, 'h3'){|s| s << 'h3 example'}
 style(@doc, 'h4'){|s| s << 'h4 example'}
 
-style(@doc, 'question'){|s| s << 'question example'}
+style(@doc, 'question_brief'){|s| s << 'question example'}
 
 style(@doc, 'answer'){|s| s << 'answer example'}
+=end
 
+#recursive function to output outline levels and questions/detailed
+#create a level in the tree, r is the requirement nodes for this level
+#and par is the parent node in the RTF document to begin write into.
+def create_level(nodes, par)
+	nodes.each do |node|
+		if node.group #this is a heading for the group level
+			style(par, "h#{node.depth+2}"){|s| s << node.text_brief }
+		else
+			style(par, "question_brief"){|s| s << node.text_brief }
+			style(par, "question_full"){|s| s << node.text_brief }
+		end
+		create_level(node.children, par) if node.has_children?
+	end
+end
+
+
+create_level(@rt.requirements.roots, @doc)
 
 #@doc.paragraph do |p|
 #	 p << "This is the first sentence in the paragraph. "

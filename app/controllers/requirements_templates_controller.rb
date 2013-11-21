@@ -47,7 +47,7 @@ class RequirementsTemplatesController < ApplicationController
 
     respond_to do |format|
       format.rtf {
-        headers["Content-Disposition"] = "attachment; filename=\"" + "catfood" + ".rtf\""
+        headers["Content-Disposition"] = "attachment; filename=\"" + sanitize_for_filename(@rt.name) + ".rtf\""
         render :layout => false,
                :content_type=> 'application/rtf'
                #:action => 'basic.rtf.erb',
@@ -147,7 +147,6 @@ class RequirementsTemplatesController < ApplicationController
       else
         @users = User.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).order('created_at DESC').page(params[:page]).per(10)
       end
-      #@role_id = Role.where(name: "requirements_editor").pluck(:id).first
     end
 
     def count

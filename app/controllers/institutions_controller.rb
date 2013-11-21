@@ -7,7 +7,13 @@ class InstitutionsController < ApplicationController
   # GET /institutions
   # GET /institutions.json
   def index
-    @institutions = Institution.all
+
+    if safe_has_role?(Role::DMP_ADMIN)
+      @institutions = Institution.all
+    else
+      @institutions = Institution.where(id: [current_user.institution.subtree_ids])
+    end
+    
     @institution = Institution.new(:parent_id => params[:parent_id])
 
     @current_institution = current_user.institution
@@ -106,7 +112,7 @@ class InstitutionsController < ApplicationController
     if safe_has_role?(Role::DMP_ADMIN)
       @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
     else     
-      @users = User.where(id: @user_ids, institution_id: current_user.institution).order('created_at DESC').page(params[:page]).per(10)
+      @users = User.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).order('created_at DESC').page(params[:page]).per(10)
     end  
   end
 

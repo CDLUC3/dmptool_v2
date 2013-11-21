@@ -63,5 +63,9 @@ class ApplicationController < ActionController::Base
         redirect_to root_url # halts request cycle
       end
     end
+    
+    def sanitize_for_filename(filename)
+      ActiveSupport::Inflector.transliterate filename.downcase.gsub(/[\\\/?:*"><|]+/,"_").gsub(/\s/,"_")
+    end
 
 end
