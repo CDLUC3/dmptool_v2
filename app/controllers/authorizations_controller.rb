@@ -77,7 +77,7 @@ class AuthorizationsController < ApplicationController
 
           (   
 
-            safe_has_role?(Role::INSTITUTIONAL_ADMIN) && 
+            current_user.has_role?(Role::INSTITUTIONAL_ADMIN) && 
 
             current_user.institution.subtree_ids.include?(user.institution_id) 
 
