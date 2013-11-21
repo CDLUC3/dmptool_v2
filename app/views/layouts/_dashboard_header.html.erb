@@ -1,13 +1,14 @@
-<div class="dashboard row-fluid">
-	<div class="dashboard-header">
+<div class="dashboard">
+	<div class="dashboard-header row-fluid">
 		<% unless current_user.institution.nil? %>
-			<div class="inst-logo">
-				<%= image_tag current_user.institution.logo, :alt => "#{current_user.institution.nickname}" %>
+			<div class="inst-logo span3">
+				
+				<!--<%= image_tag current_user.institution.logo, :alt => "#{current_user.institution.nickname}" %>-->
 			</div>
-			<div class="inst-title">
+			<div class="inst-title span5">
 				<h3><%= current_user.institution.full_name %></h3>
 			</div>
-			<div class="inst-info">
+			<div class="inst-info span4">
 				<%= link_to "http://#{current_user.institution.url}", :id => "inst-domain" do %>
 					<span class="icon inst-domain"></span><%= current_user.institution.url %>
 				<% end %>
