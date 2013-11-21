@@ -761,7 +761,7 @@ table .btn, table a.btn, table button  {
 	
 /* Tabs */
 .tabbable {
-margin: 12px 0 20px; }
+margin-bottom: 20px; }
 [class*="span"] .tabbable {
 	background: #EDF2E2;
 	margin-top: 0;
@@ -769,7 +769,12 @@ margin: 12px 0 20px; }
 .tabbable-condensed {
 	width: 670px; }
 /* Tab Navigation */
+ul.nav-tabs {
+	margin: 12px 0 0; }
+ul.nav-tabs li:before {
+	content: ""; }
 ul.nav-tabs li {
+	list-style: none;
 	height: 31px; }
 ul.nav-tabs li a {
 	display: block;
