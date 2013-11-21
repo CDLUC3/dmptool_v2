@@ -43,11 +43,10 @@ class RequirementsTemplatesController < ApplicationController
   # shows a basic template (as RTF for now)
   def basic
     @rt = RequirementsTemplate.find(params[:id])
-    @base_req = @rt.requirements.roots
     
     respond_to do |format|
       format.rtf {
-        headers["Content-Disposition"] = "attachment; filename=\"" + "catfood" + ".rtf\""
+        headers["Content-Disposition"] = "attachment; filename=\"" + sanitize_for_filename(@rt.name) + ".rtf\""
         render :layout => false,
                :content_type=> 'application/rtf'
                #:action => 'basic.rtf.erb', 
