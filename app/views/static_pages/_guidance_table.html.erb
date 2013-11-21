@@ -20,7 +20,13 @@
 				<td><%= link_to t.name,	basic_requirements_template_path(t, format: :rtf ) %>
 						<%= link_to image_tag('/assets/rtf_icon.png'),	basic_requirements_template_path(t, format: :rtf ) %>
 				</td>
-				<td><%= link_to "Guidelines", requirements_template_path(t.id) %></td>
+				<td>
+					<% t.additional_informations.each do |info| %>
+						<div class="samples">
+							<%= link_to info.label, info.url %>
+						</div>
+					<% end %>
+				</td>
 				<td>
 					<% t.sample_plans.each do |s| %>
 						<div class="samples">

@@ -9,5 +9,7 @@ class Resource < ActiveRecord::Base
   validates :label, presence: true
   validates :requirement_id, presence: true, numericality: true
   validates :resource_template_id, presence: true, numericality: true
+  
+  scope :guidance, -> { where(resource_type: 'expository_guidance') }
 
 end

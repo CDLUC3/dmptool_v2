@@ -47,11 +47,19 @@
 
 @styles['question_full_p'] = RTF::ParagraphStyle.new
 @styles['question_full_p'].justification = RTF::ParagraphStyle::LEFT_JUSTIFY
-@styles['question_full_after'] = [:line_break, :line_break]
+@styles['question_full_after'] = [:line_break]
 @styles['question_full_c'] = RTF::CharacterStyle.new
 @styles['question_full_c'].bold = false
 @styles['question_full_c'].font = RTF::Font.new(RTF::Font::ROMAN, 'Times New Roman')
 @styles['question_full_c'].font_size = 30
+
+@styles['help_p'] = RTF::ParagraphStyle.new
+@styles['help_p'].justification = RTF::ParagraphStyle::LEFT_JUSTIFY
+@styles['help_after'] = [:line_break]
+@styles['help_c'] = RTF::CharacterStyle.new
+@styles['help_c'].bold = false
+@styles['help_c'].font = RTF::Font.new(RTF::Font::ROMAN, 'Times New Roman')
+@styles['help_c'].font_size = 30
 
 @styles['answer_p'] = RTF::ParagraphStyle.new
 @styles['answer_p'].justification = RTF::ParagraphStyle::LEFT_JUSTIFY
@@ -90,18 +98,6 @@ end
 style(@doc, 'h1'){|s| s << @rt.name }
 style(@doc, 'h1'){|s| s << @rt.institution.full_name }
 
-=begin
-
-style(@doc, 'h1'){|s| s << 'h1 example'}
-style(@doc, 'h2'){|s| s << 'h2 example'}
-style(@doc, 'h3'){|s| s << 'h3 example'}
-style(@doc, 'h4'){|s| s << 'h4 example'}
-
-style(@doc, 'question_brief'){|s| s << 'question example'}
-
-style(@doc, 'answer'){|s| s << 'answer example'}
-=end
-
 #recursive function to output outline levels and questions/detailed
 #create a level in the tree, r is the requirement nodes for this level
 #and par is the parent node in the RTF document to begin write into.
@@ -111,7 +107,11 @@ def create_level(nodes, par)
 			style(par, "h#{node.depth+2}"){|s| s << node.text_brief }
 		else
 			style(par, "question_brief"){|s| s << node.text_brief }
-			style(par, "question_full"){|s| s << node.text_brief }
+			style(par, "question_full"){|s| s << node.text_full }
+			node.resources.guidance.each do |g|
+				style(par, "help"){|s| s << g.value }
+			end
+			style(par, "help"){|s| s << '' } # adds a blank line
 		end
 		create_level(node.children, par) if node.has_children?
 	end
