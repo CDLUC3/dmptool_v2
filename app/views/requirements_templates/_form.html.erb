@@ -1,125 +1,23 @@
-	<h3 class="dashboard-heading"><span class="icon overview"></span>DMP Template Overview</h3>
-	<div class="tabbable">
-		<ul class="nav nav-tabs">
-			<li class="active"><%= link_to "Basic Information", "#tab1", :data => {:toggle => "tab"} %></li>
-		</ul>
-		
-		<div class="tab-content">
-			<div class="tab-pane active" id="tab1">
-				<%= form_for @requirements_template, html: { :class => 'form-horizontal' } do |f| %>
-					<div class="tab-inner">
-					  <% if @requirements_template.errors.any? %>
-					  <div id="error_explanation">
-						  <h2><%= "#{pluralize(@requirements_template.errors.count, "error")} prohibited this requirements template from being saved:" %></h2>
-						  <ul>
-						  	<% @requirements_template.errors.full_messages.each do |msg| %>
-						  	<li><%= msg %></li>
-						  	<% end %>
-						  </ul>
-					  </div>
-					  <% end %>
-					  <h5>Basic Information</h5>
-					  <hr/>
-					  <div class="control-group" >
-					    <%= f.label :template_name, :class => "control-label" %>
-					    <div class="controls" >
-					      <%= f.text_field :name %>
-					    </div>
-					  </div>
-					
-					  <div class="control-group" >
-					    <%= f.label :visibility, :class => "control-label" %>
-					    <div class="controls" >
-					      <%= f.radio_button :visibility, :public, :class => "radio inline" %>
-					      Public
-					      <%= f.radio_button :visibility, :institutional, :class => "radio inline" %>
-					      Institutional
-					    </div>
-					  </div>
-					
-					  <%= render partial: 'date_fields' , locals: { f: f } unless @requirements_template.new_record? %>
-					
-					  <div class="control-group" >
-					    <%= f.label :version, :class => "control-label" %>
-					    <div class="controls" >
-					      <%= f.text_field :version, value: "V1.0", disabled: true %>
-					    </div>
-					  </div>
-					
-					  <% if current_user.has_role?(1) %>
-					  <div class="control-group" >
-					    <%= f.label :institution, :class => "control-label" %>
-					    <div class="controls" >
-					      <%= collection_select(:requirements_template, :institution_id, Institution.all, :id, :full_name, { prompt: "-Select a Institution"} ) %>
-					    </div>
-					  </div>
-					  <% elsif current_user.has_role?(5) %>
-					  <div class="control-group" >
-					    <%= f.label :institution, :class => "control-label" %>
-					    <div class="controls" >
-					      <%= f.select(:institution_id, current_user.institution.subtree.map {|r| [r.full_name,r.id] }, { prompt: "-Select a Institution"} ) %>
-					    </div>
-					  </div>
-					  <% else %>
-					  <div class="control-group" >
-					    <%= f.label :institution, :class => "control-label" %>
-					    <div class="controls" >
-					      <%= f.hidden_field :institution_id, value: current_user.institution.id %>
-					      <%= text_field_tag :institution_name, current_user.institution.full_name, disabled: true %>
-					    </div>
-					  </div>
-					  <% end %>
-					
-					  <h5> Optional Information </h5>
-					  <hr/>
-					  <div class="control-group" >
-					    <%= f.label :start_date, :class => "control-label" %>
-					    <div class="controls" >
-					      <%= f.text_field :start_date, value: @requirements_template.start_date.blank? ? " " : @requirements_template.start_date.strftime("%m/%d/%Y"), id: 'start_date', :class => "datepicker" %>
-					    </div>
-					  </div>
-					
-					  <div class="control-group" >
-					    <%= f.label :end_date, :class => "control-label" %>
-					    <div class="controls" >
-					      <%= f.text_field :end_date, value: @requirements_template.end_date.blank? ? " " : @requirements_template.end_date.strftime("%m/%d/%Y"), id: 'end_date', :class => "datepicker" %>
-					    </div>
-					  </div>
-					
-					  <div class="control-group" >
-					    <%= f.label :review_requirement, :class => "control-label" %>
-					    <div class="controls" >
-					      <%= f.radio_button :review_type, :formal_review, :class => "radio inline" %>
-					      Formal Review Required<br/>
-					      <%= f.radio_button :review_type, :informal_review, :class => "radio inline" %>
-					      Informal Review Required<br/>
-					      <%= f.radio_button :review_type, :no_review, :class => "radio inline" %>
-					      No Review Required
-					    </div>
-					  </div>
-					
-					  <div class="control-group" >
-					    <%= f.fields_for :tags do |builder| %>
-					      <%= render "tag_fields", f: builder %>
-					    <% end %>
-					    <%= link_to_add_fields 'Add Tags', f, :tags %>
-					  </div>
-					
-					  <div class="control-group" >
-					    <%= f.fields_for :additional_informations do |builder| %>
-					      <%= render "additional_information_fields", f: builder %>
-					    <% end %>
-					    <%= link_to_add_fields 'Add Funder Link', f, :additional_informations %>
-					  </div>
-					
-					  <div class="control-group" >
-					    <%= f.fields_for :sample_plans do |builder| %>
-					      <%= render "sample_plan_fields", f: builder %>
-					    <% end %>
-					    <%= link_to_add_fields 'Add Sample Plan', f, :sample_plans %>
-					  </div>
-					</div>
-				<% end %>
+<h3 class="dashboard-heading"><span class="icon overview"></span>DMP Template Overview</h3>
+<div class="tabbable">
+	<ul class="nav nav-tabs">
+		<li class="active"><%= link_to "Basic Information", "#tab1", :data => {:toggle => "tab"} %></li>
+	</ul>
+	<div class="tab-content">
+		<div class="tab-pane active" id="tab1">
+			<%= form_for @requirements_template, html: { :class => 'form-horizontal' } do |f| %>
+			<div class="tab-inner">
+			  <% if @requirements_template.errors.any? %>
+				  <div id="error_explanation">
+					  <h2><%= "#{pluralize(@requirements_template.errors.count, "error")} prohibited this requirements template from being saved:" %></h2>
+					  <ul>
+					  	<% @requirements_template.errors.full_messages.each do |msg| %>
+					  		<li><%= msg %></li>
+					  	<% end %>
+					  </ul>
+				  </div>
+			  <% end %>
+
 				<h5>Basic Information</h5>
 				<hr/>
 				<div class="control-group">
@@ -128,7 +26,7 @@
 						<%= f.text_field :name %>
 					</div>
 				</div>
-	
+
 				<div class="control-group">
 					<%= f.label :visibility, :class => "control-label" %>
 					<div class="controls">
@@ -138,7 +36,7 @@
 						Institutional
 					</div>
 				</div>
-	
+
 				<%= render partial: 'date_fields' , locals: { f: f } unless @requirements_template.new_record? %>
 				<% if safe_has_role?(Role::DMP_ADMIN) %>
 					<div class="control-group">
@@ -148,7 +46,7 @@
 						</div>
 					</div>
 				<% end %>
-	
+
 				<% if safe_has_role?(Role::DMP_ADMIN) %>
 					<div class="control-group" >
 						<%= f.label :institution, :class => "control-label" %>
@@ -172,7 +70,7 @@
 						</div>
 					</div>
 				<% end %>
-	
+
 				<h5>Optional Information</h5>
 				<hr/>
 				<div class="control-group">
@@ -181,14 +79,14 @@
 						<%= f.text_field :start_date, value: @requirements_template.start_date.blank? ? " " : @requirements_template.start_date.strftime("%m/%d/%Y"), id: 'start_date', :class => "datepicker" %>
 					</div>
 				</div>
-	
+
 				<div class="control-group">
 					<%= f.label :end_date, :class => "control-label" %>
 					<div class="controls">
 						<%= f.text_field :end_date, value: @requirements_template.end_date.blank? ? " " : @requirements_template.end_date.strftime("%m/%d/%Y"), id: 'end_date', :class => "datepicker" %>
 					</div>
 				</div>
-	
+
 				<div class="control-group">
 					<%= f.label :review_requirement, :class => "control-label" %>
 					<div class="controls">
@@ -200,21 +98,21 @@
 						No Review Required
 					</div>
 				</div>
-	
+
 				<div class="control-group" >
 					<%= f.fields_for :tags do |builder| %>
 						<%= render "tag_fields", f: builder %>
 					<% end %>
 					<%= link_to_add_fields 'Add Tags', f, :tags %>
 				</div>
-	
+
 				<div class="control-group">
 					<%= f.fields_for :additional_informations do |builder| %>
 						<%= render "additional_information_fields", f: builder %>
 					<% end %>
 					<%= link_to_add_fields 'Add Funder Link', f, :additional_informations %>
 				</div>
-	
+
 				<div class="control-group">
 					<%= f.fields_for :sample_plans do |builder| %>
 						<%= render "sample_plan_fields", f: builder %>
@@ -225,6 +123,7 @@
 			<div class="buttons row-fluid">
 				<%= f.submit 'Save Changes', :class => 'btn btn-green', method: 'post' %>
 			</div>
-		<% end %>
+			<% end %>
+		</div>
 	</div>
 </div>
