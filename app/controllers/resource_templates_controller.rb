@@ -8,26 +8,20 @@ class ResourceTemplatesController < ApplicationController
   # GET /resource_templates
   # GET /resource_templates.json
   def index
-    
-    if safe_has_role?(Role::DMP_ADMIN)
-      @resource_templates = ResourceTemplate.page(params[:page])
-    else   
-      @resource_templates = ResourceTemplate.page(params[:page]).                      
-                            where(institution_id: current_user.institution )
-    end
 
     case params[:scope]
       when "active"
-        @resource_templates = @resource_templates.where(active: true).per(10)
+        @resource_templates = ResourceTemplate.where(active: true).page(params[:page]).per(10)
       when "inactive"
-        @resource_templates = @resource_templates.where(active: false).per(10)
+        @resource_templates = ResourceTemplate.where(active: false).page(params[:page]).per(10)
       else
-        @resource_templates = @resource_templates.per(10)
+        @resource_templates = ResourceTemplate.all.page(params[:page]).per(10)
     end
 
-    if !current_user.has_role?(Role::DMP_ADMIN)
-      @resource_templates = @resource_templates.where(institution_id: current_user.institution_id)
-      @resource_templates = @resource_templates.where(institution_id: current_user.institution.subtree_ids)
+    if !safe_has_role?(Role::DMP_ADMIN)
+      @resource_templates = @resource_templates.
+                            where(institution_id: [current_user.institution.subtree_ids])
+    
     end
 
     resource_editors

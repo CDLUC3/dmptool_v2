@@ -8,7 +8,6 @@ class RequirementsTemplatesController < ApplicationController
   # GET /requirements_templates.json
   def index
 
-    #if current_user.has_role?(Role::DMP_ADMIN)
       case params[:scope]
         when "all"
           @requirements_templates = RequirementsTemplate.all.page(params[:page])
@@ -27,9 +26,9 @@ class RequirementsTemplatesController < ApplicationController
       end
 
 
-      if !current_user.has_role?(Role::DMP_ADMIN)
+      if !safe_has_role?(Role::DMP_ADMIN)
         @requirements_templates = @requirements_templates.
-                                  where(institution_id: [current_user.institution_id, current_user.institution.subtree_ids])
+                                  where(institution_id: [current_user.institution.subtree_ids])
       end
 
       template_editors
