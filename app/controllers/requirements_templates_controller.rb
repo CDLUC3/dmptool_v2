@@ -147,7 +147,6 @@ class RequirementsTemplatesController < ApplicationController
       else
         @users = User.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).order('created_at DESC').page(params[:page]).per(10)
       end
-      #@role_id = Role.where(name: "requirements_editor").pluck(:id).first
     end
 
     def count

@@ -15,7 +15,7 @@
           <td><%= user.full_name %></td>
           <td><%= user.login_id %></td>
           <td><%= user.email %></td>
-          <td class="align-center"><%= link_to raw('<i class="icon-minus-sign icon-white"></i>'), remove_authorization_path(user_id: user.id, role_id: 5, p: 'institutions'), class: "img-polaroid btn-danger" %></td>
+          <td class="align-center"><%= link_to raw('<i class="icon-minus-sign icon-white"></i>'), remove_authorization_path(user_id: user.id, role_id: 5, p: 'institutions'), class: "img-polaroid btn-danger" , :data => { :confirm => 'Are you sure?' }  %></td>
           
       </tr>
     <% end %>
