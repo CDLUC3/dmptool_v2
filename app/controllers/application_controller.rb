@@ -25,40 +25,40 @@ class ApplicationController < ActionController::Base
     end
 
     def check_admin_access
-      unless (current_user.has_role?(Role::DMP_ADMIN) || current_user.has_role?(Role::RESOURCE_EDITOR) ||
-            current_user.has_role?(Role::TEMPLATE_EDITOR) ||
-            current_user.has_role?(Role::INSTITUTIONAL_REVIEWER) ||
-            current_user.has_role?(Role::INSTITUTIONAL_ADMIN))    
+      unless (safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::RESOURCE_EDITOR) ||
+            safe_has_role?(Role::TEMPLATE_EDITOR) ||
+            safe_has_role?(Role::INSTITUTIONAL_REVIEWER) ||
+            safe_has_role?(Role::INSTITUTIONAL_ADMIN))    
         flash[:error] = "You don't have access to this content"
         redirect_to root_url # halts request cycle
       end
     end
 
     def check_institution_admin_access
-      unless (current_user.has_role?(Role::DMP_ADMIN) || current_user.has_role?(Role::INSTITUTIONAL_ADMIN) )    
+      unless (safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::INSTITUTIONAL_ADMIN) )    
         flash[:error] = "You don't have access to this content"
         redirect_to root_url # halts request cycle
       end
     end
 
     def check_dmp_admin_access
-      unless (current_user.has_role?(Role::DMP_ADMIN) )    
+      unless (safe_has_role?(Role::DMP_ADMIN) )    
         flash[:error] = "You don't have access to this content"
         redirect_to root_url # halts request cycle
       end
     end
 
     def check_DMPTemplate_editor_access
-      unless (current_user.has_role?(Role::DMP_ADMIN) || current_user.has_role?(Role::INSTITUTIONAL_ADMIN) ||
-               current_user.has_role?(Role::TEMPLATE_EDITOR) )    
+      unless (safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::INSTITUTIONAL_ADMIN) ||
+               safe_has_role?(Role::TEMPLATE_EDITOR) )    
         flash[:error] = "You don't have access to this content"
         redirect_to root_url # halts request cycle
       end
     end
 
     def check_resource_editor_access
-      unless (current_user.has_role?(Role::DMP_ADMIN) || current_user.has_role?(Role::INSTITUTIONAL_ADMIN) ||
-               current_user.has_role?(Role::RESOURCE_EDITOR) )    
+      unless (safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::INSTITUTIONAL_ADMIN) ||
+               safe_has_role?(Role::RESOURCE_EDITOR) )    
         flash[:error] = "You don't have access to this content"
         redirect_to root_url # halts request cycle
       end

@@ -6,7 +6,7 @@
       <th> Name </th>
       <th> Username </th>
       <th> Email </th>
-      <th> Remove Role </th>
+      <th> Revoke Role </th>
     </tr>
   </thead>
   <tbody>
@@ -15,7 +15,10 @@
       <td><%= user.full_name %></td>
       <td><%= user.login_id %></td>
       <td><%= user.email %></td>
-      <td><%= link_to raw('<i class="icon-minus-sign icon-white"></i>'), remove_authorization_path(user_id: user.id, role_id: 2, p: 'resource_templates'), class: "img-polaroid btn-danger" %></td>
+      <td><%= link_to raw('<i class="icon-minus-sign icon-white"></i>'), remove_authorization_path(user_id: user.id, role_id: 2, p: 'resource_templates'), class: "img-polaroid btn-danger", :data => { :confirm => 'Are you sure?' } %></td>
+
+      
+
     </tr>
   <% end %>
   </tbody>

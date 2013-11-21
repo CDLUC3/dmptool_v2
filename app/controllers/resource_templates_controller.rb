@@ -3,33 +3,26 @@ class ResourceTemplatesController < ApplicationController
   before_filter :get_requirements_template
   before_action :set_resource_template, only: [:show, :edit, :update, :destroy, :toggle_active, :template_details]
   before_action :check_resource_editor_access, only: [:show, :edit, :update, :destroy, :template_details, :index]
-  
 
   # GET /resource_templates
   # GET /resource_templates.json
   def index
-    
-    if safe_has_role?(Role::DMP_ADMIN)
-      @resource_templates = ResourceTemplate.page(params[:page])
-    else   
-      @resource_templates = ResourceTemplate.page(params[:page]).                      
-                            where(institution_id: current_user.institution )
-    end
-
     case params[:scope]
       when "active"
-        @resource_templates = @resource_templates.where(active: true).per(10)
+        @resource_templates = ResourceTemplate.where(active: true).page(params[:page]).per(10)
       when "inactive"
-        @resource_templates = @resource_templates.where(active: false).per(10)
+        @resource_templates = ResourceTemplate.where(active: false).page(params[:page]).per(10)
       else
-        @resource_templates = @resource_templates.per(10)
+        @resource_templates = ResourceTemplate.all.page(params[:page]).per(10)
     end
 
-    if !current_user.has_role?(Role::DMP_ADMIN)
-      @resource_templates = @resource_templates.where(institution_id: current_user.institution_id)
-    end
+    if !safe_has_role?(Role::DMP_ADMIN)
+      @resource_templates = @resource_templates.
+                            where(institution_id: [current_user.institution.subtree_ids])
 
+    end
     resource_editors
+    count
   end
 
 
@@ -105,8 +98,6 @@ class ResourceTemplatesController < ApplicationController
     end
   end
 
-
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_resource_template
@@ -127,8 +118,13 @@ class ResourceTemplatesController < ApplicationController
       if safe_has_role?(Role::DMP_ADMIN)
         @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
       else
-        @users = User.where(id: @user_ids, institution_id: current_user.institution).order('created_at DESC').page(params[:page]).per(10)
+        @users = User.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).order('created_at DESC').page(params[:page]).per(10)
       end
     end
 
+    def count
+      @all = ResourceTemplate.all.count
+      @active = ResourceTemplate.active.count
+      @inactive = ResourceTemplate.inactive.count
+    end
 end
