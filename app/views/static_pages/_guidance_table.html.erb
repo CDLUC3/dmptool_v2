@@ -17,12 +17,14 @@
 		<% templates.each do |t| %>
 			<tr>
 				<td><%= t.institution.full_name %></td>
-				<td><%= link_to t.name, basic_requirements_template_path(t, format: :rtf ) %></td>
+				<td><%= link_to t.name,	basic_requirements_template_path(t, format: :rtf ) %>
+						<%= link_to image_tag('rtf_icon'),	basic_requirements_template_path(t, format: :rtf ) %>
+				</td>
 				<td>Guidelines</td>
 				<td>
 					<% t.sample_plans.each do |s| %>
 						<div class="samples">
-							<%= s.label %>
+							<%= link_to s.label, s.url %>
 						</div>
 					<% end %>
 				</td>
