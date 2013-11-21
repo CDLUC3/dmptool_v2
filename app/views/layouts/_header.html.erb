@@ -6,18 +6,17 @@
 	</div>
   <nav class="navbar">
     <ul class="nav">
-        <li><%= link_to "Home", root_path, :title => "Home" %></li>
-        <li><%= link_to "About", about_path, :title => "About" %></li>
-        <li><%= link_to "DMP Requirements", guidance_path, :title => "DMP Requirements" %></li>
-        <li><%= link_to "Example DMPs", "#", :title => "Example DMPs" %></li>
-        <li><%= link_to "News", "#", :title => "News" %></li>
-        <li><%= link_to "Help", help_path, :title => "Help" %></li>
-        <li><%= link_to "Contact Us", contact_path, :title => "Contact Us" %></li>
-        <li><%= link_to "Dashboard", dashboard_show_path, :title => "Dashboard" %></li>
-				<li class="login">
-	        <%= link_to(content_tag(:span, "", :class => "icon login") + "Log In", choose_institution_path) if !current_user %>
-	        <%= link_to(content_tag(:span, "", :class => "icon login") + "Log Out", logout_path) if current_user %></li>
-      </ul>
-    </nav>
-  </div>
+      <li><%= link_to "Home", root_path, :title => "Home" %></li>
+      <li><%= link_to "About", about_path, :title => "About" %></li>
+      <li><%= link_to "DMP Requirements", guidance_path, :title => "DMP Requirements" %></li>
+      <li><%= link_to "Example DMPs", "#", :title => "Example DMPs" %></li>
+      <li><%= link_to "News", "#", :title => "News" %></li>
+      <li><%= link_to "Help", help_path, :title => "Help" %></li>
+      <li><%= link_to "Contact Us", contact_path, :title => "Contact Us" %></li>
+      <li><%= link_to "Dashboard", dashboard_show_path, :title => "Dashboard" %></li>
+			<li class="login">
+	      <%= link_to(content_tag(:span, "", :class => "icon login") + "Log In", choose_institution_path) if !current_user %>
+	      <%= link_to(content_tag(:span, "", :class => "icon login") + "Log Out", logout_path) if current_user %></li>
+    </ul>
+  </nav>
 </header>
