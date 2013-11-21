@@ -146,7 +146,7 @@ class RequirementsTemplatesController < ApplicationController
       if safe_has_role?(Role::DMP_ADMIN)
         @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
       else
-        @users = User.where(id: @user_ids, institution_id: current_user.institution).order('created_at DESC').page(params[:page]).per(10)
+        @users = User.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).order('created_at DESC').page(params[:page]).per(10)
       end     
       #@role_id = Role.where(name: "requirements_editor").pluck(:id).first
     end
