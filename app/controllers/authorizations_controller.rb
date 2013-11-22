@@ -41,7 +41,7 @@ class AuthorizationsController < ApplicationController
         format.js { render action: 'add_authorization' }
         return
       elsif !@check
-        flash.now[:notice] = "Permission error."
+        flash.now[:notice] = "You cannot grant this role to a user outside your institution. Please contact the DMP Administrator."
         format.js { render action: 'add_authorization' }
         return 
       else
