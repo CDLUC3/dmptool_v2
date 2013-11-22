@@ -14,7 +14,7 @@
     </div>
     <div class="tab-pane" id="tab3">
 	      <%= nested_institutions @institutions.arrange(order: :created_at) %>
-	      <div class="btn-container">
+	      <div class="buttons row-fluid">
 	      	<%= link_to 'Add New Institution', new_institution_path(5), :class => "btn btn-green" %>
 	      </div>
     </div>

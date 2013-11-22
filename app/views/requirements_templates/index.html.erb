@@ -1,4 +1,3 @@
-<div class="col col-single">
 	<h3 class="dashboard-heading"><span class="icon template-dmp"></span>DMP Templates</h3>
 	<div class="table-scope">
 		<%= link_to "All(#{@all})", scope: "all_limited", :class => "current" %>
@@ -51,8 +50,6 @@
 			</tr>
 		<% end %>
 			<tr>
-
-
 				<td colspan="7" class="full">
 					<%= link_to "View All", requirements_templates_path(:scope => "all"), :method => :get, :class => "btn btn-green"%>
 					<%# link_to "Create New", requirements_template_information_path, :method => :get, :class => "btn btn-silver" %>
@@ -72,4 +69,3 @@
 	<div class="pagination">
 		<%= paginate @requirements_templates %>
 	</div>
-</div>

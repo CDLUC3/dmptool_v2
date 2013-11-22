@@ -8,8 +8,8 @@
       <% end %>
     </div>
   <% end %>
+  <% unless @user.new_record? %>
   <div class="tabbable">
-    <% unless @user.new_record? %>
       <ul class="nav nav-tabs">
         <li class="active">
           <%= link_to 'Personal Information', '#tab1', 'data-toggle' => 'tab' %>
@@ -18,26 +18,25 @@
           <%= link_to 'Notification Preferences', '#tab2', 'data-toggle' => 'tab' %>
         </li>
       </ul>
-    <% end %>
     <div class="tab-content">
       <div class="tab-pane active" id="tab1">
         <%= render 'personal', f: f %>
+        <div class="control-group">
+			  	<%= f.submit 'Save', :class => 'btn' %>
+			  	<%= link_to 'Cancel', edit_user_path(@user), :class => 'btn' %>
+	  		</div>
       </div>
       <div class="tab-pane" id="tab2">
         <%= render 'notifications' unless @user.new_record? %>
       </div>
     </div>
   </div>
-  <div class="controls">
-    <div class="actions">
-      <% if @user.new_record? %>
-        <%= f.submit 'Create Account', class: 'btn' %>
-        <p>By clicking Create Account, you agree to our <%= link_to 'Terms of Use', '#'%> and <%= link_to 'Privacy Policy', '#' %>.</p>
-      <% end %>
-      <% unless @user.new_record? %>
-        <%= f.submit 'Save', class: 'btn' %>
-        <%= link_to 'Cancel', edit_user_path(@user), class: 'btn' %>
-      <% end %>
-    </div>
-  </div>
+  <% end %>
+  <% if @user.new_record? %>
+  	<%= render 'personal', f: f %>
+	  <p><%= f.submit 'Create Account', :class => 'btn' %></p>
+  <% end %>
+<% end %>
+<% if @user.new_record? %>
+<p>By clicking <strong>Create Account</strong>,you agree to our <%= link_to 'Terms of Use', '#', :title => "DMPTool Terms of Use", :target => "_blank" %> and <%= link_to 'Privacy Policy', '#', :title => "DMPTool Privacy Policy", :target => "_blank" %>.</p>
 <% end %>

@@ -1,19 +1,20 @@
-<footer class ="footer">
-	<div class="copyright">
-		<p>DMPTOOL is a service of the <a href="http://www.cdlib.org/services/uc3">University of California Curation Center</a>
-	  of the <a href="http://cdlib.org/">California Digital Library</a><br/>
+<footer class ="footer row-fluid">
+	<div class="copyright span6">
+		<p>DMPTOOL is a service of the 
+		<%= link_to "University of California Curation Center", "http://www.cdlib.org/services/uc3", :title => "University of California Curation Center", :target => "_blank" %> 
+		of the 
+	  <%= link_to "California Digital Library", "http://cdlib.org", :title => "California Digital Libary", :target => "_blank" %><br/>
 	  Copyright &copy; 2010-<%=Time.new.year%> The Regents of the University of California</p>
 	</div>
-	<div class="footer-links">
-		<a href = "http://www.cdlib.org/about/privacy.html", target = "_blank">Privacy Policy</a> | 
-		<%= link_to "Terms of Use", "#" %> | 
-		<a href = "http://blogs.library.ucla.edu/dmptool/photo-credits", target = "_blank">Photo Credits</a> | 
-		<%= link_to "Contact Us", contact_path %> | 
-		<%= link_to "About", about_path %>
+	<div class="footer-links span6">
+		<%= link_to "Privacy Policy", "http://www.cdlib.org/about/privacy.html", :title => "Privacy Policy", :target => "_blank" %> | 
+		<%= link_to "Terms of Use", "#", :title => "Terms of Use" %> | 
+		<%= link_to "Contact Us", contact_path, :title => "Contact Us" %> | 
+		<%= link_to "About", about_path, :title => "About the California Digital Library Data Management Tool" %>
 		<div class="footer-feeds">
-			<a class="icon facebook" href="#" title="Facebook">&nbsp;</a>
-			<a class="icon twitter" href="#" title="Twitter">&nbsp;</a>
-			<a class="icon rss" href="#" title="RSS">&nbsp;</a>
+			<%= link_to "", "#", :class => "icon facebook", :title => "Follow the California Digital Library on Facebook", :target => "_blank" %>
+			<%= link_to "", "#", :class => "icon twitter", :title => "Follow the California Digital Library on Twitter", :target => "_blank" %>
+			<%= link_to "", "#", :class => "icon rss", :title => "California Digital Library RSS Feed", :target => "_blank" %>
 		</div>
 	</div>
 </footer>
