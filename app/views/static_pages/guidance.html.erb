@@ -1,4 +1,4 @@
-<h1>Funder Guidance</h1>
+<h1>Funder Requirements</h1>
 
 <div>
 	<div class="search_area">
@@ -26,7 +26,6 @@
 <%= render partial: 'guidance_table', :locals => {templates: @public_templates, public: true} %>
 
 <% if defined?(@institution_templates) && @institution_templates.length > 0 %>
-	<h1>Guidance within <%= current_user.institution.full_name %></h1>
 	<p>Below is a list of DMP templates available in your institution</p>
 	
 	<%= render partial: 'guidance_table', :locals => {templates: @institution_templates, public: false} %>

@@ -29,21 +29,33 @@ class ApplicationController < ActionController::Base
             safe_has_role?(Role::TEMPLATE_EDITOR) ||
             safe_has_role?(Role::INSTITUTIONAL_REVIEWER) ||
             safe_has_role?(Role::INSTITUTIONAL_ADMIN))    
-        flash[:error] = "You don't have access to this content"
+        if current_user   
+          flash[:error] = "You don't have access to this content."
+        else
+          flash[:error] = "You need to be logged in."
+        end
         redirect_to root_url # halts request cycle
       end
     end
 
     def check_institution_admin_access
-      unless (safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::INSTITUTIONAL_ADMIN) )    
-        flash[:error] = "You don't have access to this content"
+      unless (safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::INSTITUTIONAL_ADMIN) ) 
+        if current_user   
+          flash[:error] = "You don't have access to this content."
+        else
+          flash[:error] = "You need to be logged in."
+        end
         redirect_to root_url # halts request cycle
       end
     end
 
     def check_dmp_admin_access
       unless (safe_has_role?(Role::DMP_ADMIN) )    
-        flash[:error] = "You don't have access to this content"
+        if current_user   
+          flash[:error] = "You don't have access to this content."
+        else
+          flash[:error] = "You need to be logged in."
+        end
         redirect_to root_url # halts request cycle
       end
     end
@@ -51,7 +63,11 @@ class ApplicationController < ActionController::Base
     def check_DMPTemplate_editor_access
       unless (safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::INSTITUTIONAL_ADMIN) ||
                safe_has_role?(Role::TEMPLATE_EDITOR) )    
-        flash[:error] = "You don't have access to this content"
+        if current_user   
+          flash[:error] = "You don't have access to this content."
+        else
+          flash[:error] = "You need to be logged in."
+        end
         redirect_to root_url # halts request cycle
       end
     end
@@ -59,9 +75,17 @@ class ApplicationController < ActionController::Base
     def check_resource_editor_access
       unless (safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::INSTITUTIONAL_ADMIN) ||
                safe_has_role?(Role::RESOURCE_EDITOR) )    
-        flash[:error] = "You don't have access to this content"
+        if current_user   
+          flash[:error] = "You don't have access to this content."
+        else
+          flash[:error] = "You need to be logged in."
+        end
         redirect_to root_url # halts request cycle
       end
+    end
+    
+    def sanitize_for_filename(filename)
+      ActiveSupport::Inflector.transliterate filename.downcase.gsub(/[\\\/?:*"><|]+/,"_").gsub(/\s/,"_")
     end
 
 end

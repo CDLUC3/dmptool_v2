@@ -32,24 +32,25 @@ class RequirementsTemplatesController < ApplicationController
       end
 
       template_editors
+      count
   end
 
   # GET /requirements_templates/1
   # GET /requirements_templates/1.json
   def show
   end
-  
+
   # GET /requirements_templates/1/basic and basic_requirements_template_path
   # shows a basic template (as RTF for now)
   def basic
     @rt = RequirementsTemplate.find(params[:id])
-    
+
     respond_to do |format|
       format.rtf {
-        headers["Content-Disposition"] = "attachment; filename=\"" + "catfood" + ".rtf\""
+        headers["Content-Disposition"] = "attachment; filename=\"" + sanitize_for_filename(@rt.name) + ".rtf\""
         render :layout => false,
                :content_type=> 'application/rtf'
-               #:action => 'basic.rtf.erb', 
+               #:action => 'basic.rtf.erb',
       }
     end
   end
@@ -127,8 +128,6 @@ class RequirementsTemplatesController < ApplicationController
     end
   end
 
-  
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_requirements_template
@@ -147,8 +146,14 @@ class RequirementsTemplatesController < ApplicationController
         @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
       else
         @users = User.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).order('created_at DESC').page(params[:page]).per(10)
-      end     
-      #@role_id = Role.where(name: "requirements_editor").pluck(:id).first
+      end
     end
 
+    def count
+      @all = RequirementsTemplate.all.count
+      @active = RequirementsTemplate.active.count
+      @inactive = RequirementsTemplate.inactive.count
+      @public = RequirementsTemplate.public_visibility.count
+      @institutional = RequirementsTemplate.institutional_visibility.count
+    end
 end

@@ -13,7 +13,9 @@
       <li><%= link_to "News", "#", :title => "News" %></li>
       <li><%= link_to "Help", help_path, :title => "Help" %></li>
       <li><%= link_to "Contact Us", contact_path, :title => "Contact Us" %></li>
-      <li><%= link_to "Dashboard", dashboard_show_path, :title => "Dashboard" %></li>
+			<% if current_user %>
+      	<li><%= link_to "Dashboard", dashboard_show_path, :title => "Dashboard" %></li>
+			<% end %>
 			<li class="login">
 	      <%= link_to(content_tag(:span, "", :class => "icon login") + "Log In", choose_institution_path) if !current_user %>
 	      <%= link_to(content_tag(:span, "", :class => "icon login") + "Log Out", logout_path) if current_user %></li>

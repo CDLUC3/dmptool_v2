@@ -41,7 +41,7 @@ class AuthorizationsController < ApplicationController
         format.js { render action: 'add_authorization' }
         return
       elsif !@check
-        flash.now[:notice] = "Permission error."
+        flash.now[:notice] = "You cannot grant this role to a user outside your institution. Please contact the DMP Administrator."
         format.js { render action: 'add_authorization' }
         return 
       else
@@ -73,13 +73,24 @@ class AuthorizationsController < ApplicationController
     
     a = false
     user = User.find(user_id)  
-    a =   
+    a =   safe_has_role?(Role::DMP_ADMIN) || 
 
-              safe_has_role?(Role::DMP_ADMIN) || 
+          (   
 
-              (  safe_has_role?(Role::INSTITUTIONAL_ADMIN) && (current_user.institution == user.institution) && (role_id != Role::DMP_ADMIN)  ) || 
+            current_user.has_role?(Role::INSTITUTIONAL_ADMIN) && 
 
-              ( safe_has_role?(role_id) && (current_user.institution == user.institution) )   
+            current_user.institution.subtree_ids.include?(user.institution_id) 
+
+          )  || 
+
+          (
+
+            safe_has_role?(role_id) && 
+
+            current_user.institution.subtree_ids.include?(user.institution_id) 
+
+          )
+
     return a
             
   end
