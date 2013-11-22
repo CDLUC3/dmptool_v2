@@ -3,13 +3,10 @@
 	<ul class="nav nav-tabs">
 		<li class="active"><%= link_to "Basic Information", "#tab1", :data => {:toggle => "tab"} %></li>
 	</ul>
-
 	<div class="tab-content">
 		<div class="tab-pane active" id="tab1">
-
 			<%= form_for @requirements_template, html: { :class => 'form-horizontal' } do |f| %>
 			<div class="tab-inner">
-
 			  <% if @requirements_template.errors.any? %>
 				  <div id="error_explanation">
 					  <h2><%= "#{pluralize(@requirements_template.errors.count, "error")} prohibited this requirements template from being saved:" %></h2>
@@ -122,11 +119,9 @@
 					<% end %>
 					<%= link_to_add_fields 'Add Sample Plan', f , :sample_plans %>
 				</div>
-
-				<div class="btn-container">
-					<%= f.submit 'Save Changes', :class => 'btn btn-green', method: 'post' %>
-				</div>
-
+			</div>
+			<div class="buttons row-fluid">
+				<%= f.submit 'Save Changes', :class => 'btn btn-green', method: 'post' %>
 			</div>
 			<% end %>
 		</div>

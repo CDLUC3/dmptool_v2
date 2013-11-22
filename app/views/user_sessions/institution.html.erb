@@ -1,21 +1,17 @@
-<h4>Log In</h4>
-<div class="user_login">
-	<h5>Log in through your institution</h5>
-	<p>
-		Select your institution below and you will be directed to your institutional log in page.
-	</p>	
-  <%= form_tag login_path, method: :post do %>
-		<div class="control-group">
-    	<%= select_tag(:institution_id, options_for_select(@inst_list, :selected => session[:institution_id]),
-    		:prompt => 'Select your institution') %>
-  	</div>
-    <%= submit_tag "Next" %>
-  <% end %>
-  
-  <p>
-  	If you do not see your institution in the list, please select &quot;None of the above&quot;
-  	and click Next.
-  </p>
-
-
+<div class="login row-fluid">
+	<h3 class="dashboard-heading"><span class="icon login"></span>Log In</h3>
+	<div class="span5 user_login">
+		<h4>Log in through your institution</h4>
+		<p>Select your institution below and you will be directed to your institutional log in page.</p>	
+	  <%= form_tag login_path, method: :post do %>
+			<div class="control-group select_institution">
+	    	<%= select_tag(:institution_id, options_for_select(@inst_list, :selected => session[:institution_id]),
+	    		:prompt => 'Select your institution', :class => "institution") %>
+	    	
+	  	</div>
+	    <%= submit_tag "Next" %>
+	  <% end %>
+	  <p>If you do not see your institution in the list, <br/>
+	  	please select <strong>&quot;None of the above&quot;</strong> and click <strong>Next</strong>.</p>
+	</div>
 </div>

@@ -1,6 +1,6 @@
-<p> Please update any info regarding your account.</p>
-
 <%unless @user.new_record?%>
+<p>Please update any info regarding your account.</p>
+
   <b>Name</b>
 <%end%>
 
@@ -89,10 +89,9 @@
 <div class="control-group  <%= validation_class %>">
   <%= f.label :institution_id, class:'control-label' %>
   <div class="controls">
-    
     <%# filter institution list in my profile page only %>
     <%if @user.new_record?%>
-      <%= collection_select(:user, :institution_id, Institution.all, :id, :full_name, { prompt: "-Select a Institution"} ) %>
+      <%= collection_select(:user, :institution_id, Institution.all, :id, :full_name, { prompt: "-Select an Institution-"} ) %>
     <%else%>
       <%= f.select( :institution_id, @institution_list, {prompt: 'Select Institution'})%>
     <%end%>
