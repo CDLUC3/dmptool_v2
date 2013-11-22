@@ -118,9 +118,11 @@ textarea, form.form-horizontal textarea {
 input[type=radio], input[type=checkbox] {
 	vertical-align: top;
 	margin: 0 4px 0 0; }
+.controls.radios {
+	line-height: 30px;
+	margin-top: 7px; }
 .controls > input[type=radio], .controls > input[type=checkbox] 
 .controls > input.radio, .controls > input.checkbox {
-	vertical-align: bottom;
 	line-height: 30px;
 	margin-top: 0
 	margin-right: 4px;
@@ -350,15 +352,15 @@ li.login a:hover span.icon.login, li.login a:focus span.icon.login, li.login a:a
 .icon.profile {
 	background-position: -66px -30px; width: 33px; height: 25px; }
 .icon.template-editor {
-	background-position: -100px -55px; width: 25px; height: 25px; }
+	background-position: -75px -55px; width: 25px; height: 25px; }
 .icon.template-new {
 	background-position: 0 -55px; width: 25px; height: 25px; }
 .icon.template-dmp {
 	background-position: -25px -55px; width: 25px; height: 25px; }
 .icon.template-resource {
-	background-position: -75px -55px; width: 25px; height: 25px; }
+	background-position: -50px -55px; width: 25px; height: 25px; }
 .icon.template-details {
-	background-position: -120px -55px; width: 25px; height: 25px; }
+	background-position: -100px -55px; width: 25px; height: 25px; }
 .icon.template-preview {
 	background-position: -125px -55px; width: 25px; height: 25px; }
 .icon.select {
@@ -383,10 +385,16 @@ li.login a:hover span.icon.login, li.login a:focus span.icon.login, li.login a:a
 .icon.remove {
 	background-position: -40px 0; width: 15px; height: 15px; }
 a.icon.delete {
+	background: none;
 	color: #DA0049 !important;
 	font-size: 0.75em;
+	vertical-align: middle;
 	line-height: 16px;
 	padding-left: 20px; }
+form a.icon.delete {
+	font-size: 12px; }
+a.icon.delete:hover, a.icon.delete:focus, a.icon.delete:active {
+	text-decoration: underline !important; }
 .icon.trash {
 	background-position: -145px -15px; width :15px; height: 15px; }
 .icon.close {
@@ -457,9 +465,9 @@ a.icon.delete {
 	min-height: 30px;
 	margin: 0 -15px;
 	padding: 10px 10px 0; }
-a.btn, button, input[type=submit] {
+a.btn, button, button.btn, input[type=submit], input[type=submit].btn {
 	display: inline-block;
-	border: none !important;
+	border: none;
 	border-radius: 15px;
 	-moz-border-radius: 15px;
 	-webkit-border-radius: 15px;
@@ -470,26 +478,36 @@ a.btn, button, input[type=submit] {
 	-ms-box-shadow: none !important;
 	background: url(button_bg.jpg) repeat-x 0 0 transparent;
 	color: #4C4C4E !important;
-	font-size: 0.85em;
+	font-size: 12px;
 	font-weight: bold;
-	text-shadow: none;
-	text-decoration: none !important;
+	text-shadow: none !important;
 	text-align: center;
-	line-height: 33px;
+	line-height: normal;
 	width: auto;
 	height: 30px;
 	margin-right: 5px;
 	padding: 0 20px; }
+a.btn {
+	line-height: 33px;
+	text-decoration: none !important; }
+button.ui-datepicker-trigger {
+	border: 1px solid #B6B6B7;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-ms-border-radius: 4px;
+	padding: 0 10px; }
 a.btn:hover, a.btn:focus, a.btn:active,
-button:hover, button:focus, button:active
-input[type=submit]:hover, input[type=submit]:focus, input[type=submit]:active {
+button:hover, button:focus, button:active, 
+button.btn:hover, button.btn:focus, button.btn:active {
 	background-position: 0 -30px; }
-a.btn-green, button.btn-green, input[type=submit] {
+a.btn-green, button.btn-green, input[type=submit], input[type=submit].btn {
 	background-position: 0 -60px;
 	color: #FFFFFF !important; }
 a.btn-green:hover, a.btn-green:focus, a.btn-green:active,
 button.btn-green:hover, button.btn-green:focus, button.btn-green:active,
-input[type=submit]:hover, input[type=submit]:focus, input[type=submit]:active {
+input[type=submit]:hover, input[type=submit]:focus, input[type=submit]:active, 
+input[type=submit].btn:hover, input[type=submit].btn:focus, input[type=submit].btn:active {
 	background-position: 0 -90px; }
 a.btn-gray, button.btn-gray {
 	background-position: 0 -120px;
@@ -516,10 +534,11 @@ a.btn-large {
 	padding-right: 35px; }
 a.btn-large:hover, a.btn-large:focus, a.btn-large:active {
 	background-position: 0 -240px; }
-p .btn, p a.btn, p button, p input[type=submit], 
-form .btn, form a.btn, form button, form input[type=submit], 
-table .btn, table a.btn, table button  {
-	font-size: 1em; }
+p a.btn, p button, p button.btn, p input[type=submit], p input[type=submit].btn,
+form a.btn, form button, form button.btn, form input[type=submit], form input[type=submit].btn
+	font-size: 1em;
+table a.btn, table button, table button.btn  {
+	font-size: }
 .btn.pull-right {
 	margin-left: 5px;
 	margin-right: 0; }
@@ -760,11 +779,10 @@ table .btn, table a.btn, table button  {
 	color: #516935; }
 	
 /* Tabs */
-.tabbable {
-margin-bottom: 20px; }
-[class*="span"] .tabbable {
+.tabbable[class*="span"] {
+	float: right;
 	background: #EDF2E2;
-	margin-top: 0;
+	margin: 0 0 0 20px;
 	padding: 0 30px 30px; }
 .tabbable-condensed {
 	width: 670px; }
@@ -839,8 +857,13 @@ h3.dashboard-heading span.icon {
 .requirements_tree_view {
 	font-size: 0.8em;
 	padding-left: 25px; }
-.requirements_group ul li {
-	list-style: none; }
+.requirements_tree_view ul li:before {
+	content: ""; }
+.requirements_tree_view ul li a:first-child {
+	position: relative;
+	padding-left: 22px; }
+.requirements_tree_view ul li a.icon {
+	vertical-align: middle; }
 [class*="span"] hr {
 	border-top-style: dotted;
 	border-top-width: 2px;

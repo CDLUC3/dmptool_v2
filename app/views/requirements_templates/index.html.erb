@@ -51,18 +51,17 @@
 		<% end %>
 			<tr>
 				<td colspan="7" class="full">
-					<%= link_to "View All", requirements_templates_path(:scope => "all"), :method => :get, :class => "btn btn-green"%>
-					<%# link_to "Create New", requirements_template_information_path, :method => :get, :class => "btn btn-silver" %>
+					<%= link_to "View All", requirements_templates_path(:scope => "all"), :method => :get, :class => "btn"%>
 				</td>
 			</tr>
 		</tbody>
 	</table>
 	
-	<%= button_to 'Create New template', requirements_template_information_path, :method => :get, class: 'btn' %>
+	<%= button_to 'Create New template', requirements_template_information_path, :method => :get, :class => 'btn' %>
 	<br/>	
 	<%= render 'template_editors' %>
 
-	<%= button_to 'Add New Template Editor', add_authorization_path, method: :post, id: 'add_authorization_view', class: 'btn' %>
+	<%= button_to 'Add New Template Editor', add_authorization_path, method: :post, id: 'add_authorization_view', :class => 'btn' %>
 
 	<%= render partial: "/authorizations/add_authorization" , :locals => { :role_type => 3, :role_name => 'DMP Template Editor'}%>
 	

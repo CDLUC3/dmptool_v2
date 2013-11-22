@@ -24,18 +24,15 @@
 	      </div>
 	    </div>
 	  </div>
-	  <div class="span8">
-	  	<div class="tabbable">
-	  		<ul class="nav nav-tabs">
-	  			<li class="active"><%= link_to "Requirements", "#tab1", :data => {:toggle => "tab"} %></li>
-	  		</ul>
-	  		<div class="tab-content">
-	  				<div class="tab-pane active" id="tab1">
-	  					<%= render 'form' %>
-	  				</div>
-	  		</div>
+	  <div class="tabbable span8">
+	  	<ul class="nav nav-tabs">
+	  		<li class="active"><%= link_to "Requirements", "#tab1", :data => {:toggle => "tab"} %></li>
+	  	</ul>
+	  	<div class="tab-content">
+	  			<div class="tab-pane active" id="tab1">
+	  				<%= render 'form' %>
+	  			</div>
 	  	</div>
-	    
 	  </div>
 	</div>
 </div>
