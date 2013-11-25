@@ -150,10 +150,19 @@ class RequirementsTemplatesController < ApplicationController
     end
 
     def count
+    if current_user.has_role?(Role::DMP_ADMIN)
       @all = RequirementsTemplate.all.count
       @active = RequirementsTemplate.active.count
       @inactive = RequirementsTemplate.inactive.count
       @public = RequirementsTemplate.public_visibility.count
       @institutional = RequirementsTemplate.institutional_visibility.count
+    else
+      @institution = current_user.institution
+      @all = @institution.requirements_templates_deep.all.count
+      @active = @institution.requirements_templates_deep.active.count
+      @inactive = @institution.requirements_templates_deep.inactive.count
+      @public = @institution.requirements_templates_deep.public_visibility.count
+      @institutional = @institution.requirements_templates_deep.institutional_visibility.count
     end
+  end
 end

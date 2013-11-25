@@ -123,8 +123,15 @@ class ResourceTemplatesController < ApplicationController
     end
 
     def count
-      @all = ResourceTemplate.all.count
-      @active = ResourceTemplate.active.count
-      @inactive = ResourceTemplate.inactive.count
+      if current_user.has_role?(Role::DMP_ADMIN)
+        @all = ResourceTemplate.all.count
+        @active = ResourceTemplate.active.count
+        @inactive = ResourceTemplate.inactive.count
+      else
+        @institution = current_user.institution
+        @all = @institution.resource_templates_deep.all.count
+        @active = @institution.resource_templates_deep.active.count
+        @inactive = @institution.resource_templates_deep.inactive.count
+      end
     end
 end

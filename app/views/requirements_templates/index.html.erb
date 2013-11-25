@@ -1,14 +1,14 @@
 	<h3 class="dashboard-heading"><span class="icon template-dmp"></span>DMP Templates</h3>
 	<div class="table-scope">
-		<%= link_to "All(#{@all})", scope: "all_limited", :class => "current" %>
+		<%= link_to(content_tag(:span, "All (#{@all}) ", class: "current" ), scope: "all_limited") %>
 		|
-		<%= link_to "Active(#{@active})", scope: "active" %>
+		<%= link_to(content_tag(:span, "Active (#{@active}) ", class: "current"), scope: "active") %>
 		|
-		<%= link_to "Inactive(#{@inactive})", scope: "inactive" %>
+		<%= link_to(content_tag(:span, "Inactive (#{@inactive}) ", class: "current"), scope: "inactive") %>
 		|
-		<%= link_to "Institutional-Only(#{@institutional})", scope: "institutional" %>
+		<%= link_to(content_tag(:span, "Institutional-Only (#{@institutional}) ", class: "current"), scope: "institutional") %>
 		|
-		<%= link_to "Public(#{@public})", scope: "public" %>
+		<%= link_to(content_tag(:span, "Public (#{@public}) ", class: "current"), scope: "public") %>
 	</div>
 	<table class="table table-striped table-condensed">
 		<thead>
@@ -52,7 +52,6 @@
 			<tr>
 				<td colspan="7" class="full">
 					<%= link_to "View All", requirements_templates_path(:scope => "all"), :method => :get, :class => "btn btn-green"%>
-					<%# link_to "Create New", requirements_template_information_path, :method => :get, :class => "btn btn-silver" %>
 				</td>
 			</tr>
 		</tbody>

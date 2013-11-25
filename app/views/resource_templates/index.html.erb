@@ -1,11 +1,11 @@
 <h5> Resource Templates </h5>
 <br/>
 
-<%= link_to "All(#{@all})", scope: "all" %>
+<%= link_to(content_tag(:span, "All (#{@all}) ", class: "current" ), scope: "all") %>
 |
-<%= link_to "Active(#{@active})", scope: "active" %>
+<%= link_to(content_tag(:span, "Active (#{@active}) ", class: "current"), scope: "active") %>
 |
-<%= link_to "Inactive(#{@inactive})", scope: "inactive" %>
+<%= link_to(content_tag(:span, "Inactive (#{@inactive}) ", class: "current"), scope: "inactive") %>
 
 <br/>
 <table class="table table-striped table-condensed">
