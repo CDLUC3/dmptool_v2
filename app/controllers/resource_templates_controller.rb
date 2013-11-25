@@ -37,7 +37,13 @@ class ResourceTemplatesController < ApplicationController
   end
 
   def template_information
-    @resource_templates = ResourceTemplate.page.per(5)
+    if !safe_has_role?(Role::DMP_ADMIN)
+      @resource_templates = ResourceTemplate.
+                          where(institution_id: [current_user.institution.subtree_ids]).page.per(5)
+    else
+      @resource_templates = ResourceTemplate.page.per(5)
+    end
+    
   end
 
   # GET /resource_templates/1/edit
