@@ -37,7 +37,13 @@ class ResourceTemplatesController < ApplicationController
   end
 
   def template_information
-    @resource_templates = ResourceTemplate.page.per(5)
+    if !safe_has_role?(Role::DMP_ADMIN)
+      @resource_templates = ResourceTemplate.
+                          where(institution_id: [current_user.institution.subtree_ids]).page.per(5)
+    else
+      @resource_templates = ResourceTemplate.page.per(5)
+    end
+    
   end
 
   # GET /resource_templates/1/edit
@@ -104,13 +110,17 @@ class ResourceTemplatesController < ApplicationController
       @resource_template = ResourceTemplate.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    
     def resource_template_params
       params.require(:resource_template).permit(:institution_id, :resource_template_id, :requirements_template_id, :name, :active, :mandatory_review, :contact_info, :contact_email, :review_type, :widget_url)
     end
 
-    def get_requirements_template
-      @requirements_templates = RequirementsTemplate.order(created_at: :asc).page(params[:page]).per(5)
+    def get_requirements_template      
+      if !safe_has_role?(Role::DMP_ADMIN)
+        @requirements_templates = RequirementsTemplate.where.any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public).order(created_at: :asc).page(params[:page]).per(5)
+      else
+        @requirements_templates = RequirementsTemplate.all.order(created_at: :asc).page(params[:page]).per(5)
+      end
     end
 
     def resource_editors

@@ -3,7 +3,7 @@
 		<% unless current_user.institution.nil? %>
 			<div class="inst-logo span3">
 				
-				<!--<%= image_tag current_user.institution.logo, :alt => "#{current_user.institution.nickname}" %>-->
+				<%= image_tag current_user.institution.logo, :alt => "#{current_user.institution.nickname}" %>
 			</div>
 			<div class="inst-title span5">
 				<h3><%= current_user.institution.full_name %></h3>

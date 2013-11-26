@@ -27,8 +27,8 @@ class RequirementsTemplatesController < ApplicationController
 
 
       if !safe_has_role?(Role::DMP_ADMIN)
-        @requirements_templates = @requirements_templates.
-                                  where(institution_id: [current_user.institution.subtree_ids])
+        @requirements_templates = @requirements_templates.where.
+                                  any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public)
       end
 
       template_editors
@@ -64,6 +64,7 @@ class RequirementsTemplatesController < ApplicationController
   end
 
   def template_information
+    
     @requirements_templates = RequirementsTemplate.institutional_visibility.page.per(5)
   end
 
@@ -116,7 +117,13 @@ class RequirementsTemplatesController < ApplicationController
 
   def copy_existing_template
     id = params[:requirements_template].to_i unless params[:requirements_template].blank?
-    requirements_template = RequirementsTemplate.where(id: id).first
+
+    if !safe_has_role?(Role::DMP_ADMIN)
+      requirements_template = RequirementsTemplate.
+                            where(id: id, institution_id: [current_user.institution.subtree_ids]).first
+    else
+      requirements_template = RequirementsTemplate.where(id: id).first
+    end 
     @requirements_template = requirements_template.dup include: [:resource_templates, :sample_plans, :additional_informations]
     render action: "copy_existing_template"
   end
