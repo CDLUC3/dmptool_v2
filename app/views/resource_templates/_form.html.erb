@@ -42,8 +42,14 @@
     <div class="control-group">
       <%= f.label :institution, class: "control-label" %>
       <div class="controls">
-        <%= f.hidden_field :institution_id, value: current_user.institution.id %>
-        <%= text_field_tag :institution_name, current_user.institution.full_name, disabled: true, class: "input-xlarge" %>
+              
+        <% if safe_has_role?(Role::DMP_ADMIN) %>
+          <%= f.select( :institution_id, options_from_collection_for_select(Institution.all, "id", "full_name")) %>
+        <% else %>
+          <%= f.hidden_field :institution_id, value: current_user.institution.id %>
+          <%= text_field_tag :institution_name, current_user.institution.full_name, disabled: true, class: "input-xlarge" %>
+        <% end %>
+      
       </div>
     </div>
 

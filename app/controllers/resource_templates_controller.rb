@@ -34,6 +34,7 @@ class ResourceTemplatesController < ApplicationController
   # GET /resource_templates/new
   def new
     @resource_template = ResourceTemplate.new
+
   end
 
   def template_information
