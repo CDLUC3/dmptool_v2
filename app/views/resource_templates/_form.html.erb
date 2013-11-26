@@ -13,19 +13,16 @@
       </div>
     <% end %>
 
-    <h5> Associated DMP Template </h5>
+    <%= label_tag(:dmp_template, raw("<strong>Selected DMP Template</strong>"), class: "control-label") %>
+    <div class="controls">
+    <% if @resource_template.requirements_template_id.nil? %>
+      <%= text_field_tag(:selected_requirement_template, nil, id: "selected_requirement_template_name", class: "input-xxlarge", disabled: true) %>
+    <% else %>
+      <%= text_field_tag(:selected_requirement_template, @resource_template.requirements_template.name, class: "input-xxlarge", disabled: true) %>
+    <% end %>
+    </div>
     <hr/>
-      <div class="controlgroup">
-        <%= label_tag(:dmp_template, "DMP Template", class: "control-label") %>
-        <div class="controls">
-        <% if @resource_template.requirements_template_id.nil? %>
-          <%= text_field_tag(:selected_requirement_template, nil, id: "selected_requirement_template_name", class: "input-xlarge") %>
-        <% else %>
-          <%= text_field_tag(:selected_requirement_template, @resource_template.requirements_template.name, id: "selected_requirement_template_name", class: "input-xlarge") %>
-        <% end %>
-        </div>
-      </div>
-
+    <br/>
     <h5> Basic Information </h5>
     <hr/>
     <%= f.hidden_field :requirements_template_id, id: 'requirements_template_id' %>
@@ -33,7 +30,7 @@
     <div class="control-group">
       <%= f.label :template_name,"Template Name", class: "control-label" %>
       <div class="controls">
-        <%= f.text_field :name, class: "input-xlarge" %>
+        <%= f.text_field :name, class: "input-xxlarge" %>
       </div>
     </div>
 
@@ -43,7 +40,7 @@
       <%= f.label :institution, class: "control-label" %>
       <div class="controls">
         <%= f.hidden_field :institution_id, value: current_user.institution.id %>
-        <%= text_field_tag :institution_name, current_user.institution.full_name, disabled: true, class: "input-xlarge" %>
+        <%= text_field_tag :institution_name, current_user.institution.full_name, disabled: true, class: "input-xxlarge" %>
       </div>
     </div>
 
@@ -53,7 +50,7 @@
     <div class="control-group">
       <%= f.label :institutional_widget, "Institutional Widget", class: "control-label" %>
       <div class="controls">
-        <%= f.text_field :widget_url, class: "input-xlarge" %>
+        <%= f.text_field :widget_url, class: "input-xxlarge" %>
       </div>
     </div>
 
@@ -64,7 +61,7 @@
         Formal Review Required
         <%= f.radio_button :review_type, :informal_review, class: "radio inline" %>
         Informal Review Required
-        <%= f.radio_button :review_type, :no_review, class: "radio inline" %>
+        <%= f.radio_button :review_type, :no_review, class: "radio inline", checked: true %>
         No Review Required
       </div>
     </div>

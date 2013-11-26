@@ -32,7 +32,7 @@
       <td><%= render :partial => 'form', :locals => {resource: resource} %></td>
     </tr>
     <% end %>
-    <%= link_to 'Add New Resource', new_resource_template_resource_path(@resource_template, requirement_id: params[:requirement_id]) %>
+    <%= link_to 'Add New Resource', new_resource_template_resource_path(@resource_template, requirement_id: params[:requirement_id]), id: "add_new_resource" %>
   </div>
 
 </div>

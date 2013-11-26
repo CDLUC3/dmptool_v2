@@ -1,9 +1,9 @@
 <div class="row-fluid">
 	<div class="existing_template span6">
-		<h5> Copy an Existing DMP Template </h5>
+		<h5> Copy an Existing Resource Template </h5>
 		<p> Select an existing resource template below and edit the template information and details. </p>
 		<%= form_tag copy_existing_resource_template_path, method: 'get' do %>
-			<table class="table table-condensed span6">
+			<table class="table table-striped">
 				<thead>
 					<tr>
 						<th></th>
@@ -19,17 +19,18 @@
 						<td><%= resource_template.active ? "active" : "inactive" %></td>
 					</tr>
 				<% end %>
-				<t/body>
+					<tr>
+						<td colspan="7" class="full">
+							<%= submit_tag "Template Information", :class => "btn" %>
+						</td>
+					</tr>
+				</tbody>
 			</table>
-			<div class="actions span6">
-				<%= submit_tag 'Template Information >>', class: 'btn btn-warning' %>
-			</div>
 		<% end %>
 	</div>
 	<div class="new_template span6">
-		<h5> Create New DMP Template </h5>
+		<h5> Create New Resource Template </h5>
 		<p> Input basic and optional information of the new resource template and edit the template details. </p>
-		<br/>
 		<%= button_to 'Template Information >>', new_resource_template_path, :method => :get, class: 'btn btn-warning' %>
 	</div>
 </div>
