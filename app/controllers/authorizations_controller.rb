@@ -8,48 +8,64 @@ class AuthorizationsController < ApplicationController
     @path = '/' + params[:p]    
     @invalid_emails = []
     @existing_emails = []
+    @outside_emails = []
+    @saved_emails = []
+   
     emails.each do |email|
+      @user_saved = false
       @user = User.find_by(email: email)
       if @user.nil?
         @invalid_emails << email
-      else
-        
-        if check_correct_permissions(@user.id, @role_id)  
-          @check = true         
+      else 
+
+        if check_correct_permissions(@user.id, @role_id) 
+          @user_saved = true
+                
           begin
             authorization = Authorization.create(role_id: @role_id, user_id: @user.id)
             authorization.save!
           rescue ActiveRecord::RecordNotUnique
             @existing_emails << email
+            @user_saved = false
           end
+
         else
-          @check = false   
+          @outside_emails << email  
         end
+
+        @saved_emails << email if @user_saved
+
       end
     end
+
     respond_to do |format|
-      if (!@invalid_emails.empty? && !@existing_emails.empty?)
-        flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} specified and Users with #{@existing_emails.join(', ')} already have been assigned this role. "
-        format.js { render action: 'add_authorization' }
-        return    
-      elsif (!@existing_emails.empty? && @invalid_emails.empty?)
-        flash.now[:notice] = "The following emails #{@existing_emails.join(', ')} have already been assigned with this role"
-        format.js { render action: 'add_authorization' }
-        return
-      elsif (@existing_emails.empty? && !@invalid_emails.empty?)
-        flash.now[:notice] = "Could not find Users with the following emails #{@invalid_emails.join(', ')} within your institution. "
-        format.js { render action: 'add_authorization' }
-        return
-      elsif !@check
-        flash.now[:notice] = "You cannot grant this role to a user outside your institution. Please contact the DMP Administrator."
-        format.js { render action: 'add_authorization' }
-        return 
-      else
-        flash.now[:notice] = "Granted #{@role_name} Role to the Users specified."
-        format.js { render action: 'add_authorization' }
-        return
+
+      @message = ""
+
+      if !@invalid_emails.empty?
+        @message << "Could not find Users with the following " + "email".pluralize(@invalid_emails.count) + 
+                    ": #{@invalid_emails.join(', ')}."
       end
+
+      if !@existing_emails.empty?
+        @message << "The following " + "user".pluralize(@existing_emails.count) +
+                    ": #{@existing_emails.join(', ')}  " +
+                    pluralize_has(@existing_emails.count) + " already been assigned this role."
+      end
+      
+      if !@outside_emails.empty?
+        @message << "You cannot grant this role to users outside your institution: #{@outside_emails.join(', ')}. Please contact the DMP Administrator.\n"
+      end
+
+      if !@saved_emails.empty?
+        @message << "Role Granted to the following " + "User".pluralize(@saved_emails.count) + ": #{@saved_emails.join(', ')}  "
+      end
+
+      flash.now[:notice] = @message
+      format.js { render action: 'add_authorization' }
+      return
     end
+
   end
 
 
@@ -71,7 +87,6 @@ class AuthorizationsController < ApplicationController
 
   def check_correct_permissions(user_id, role_id)
     
-    a = false
     user = User.find(user_id)  
     a =   safe_has_role?(Role::DMP_ADMIN) || 
 
@@ -95,5 +110,35 @@ class AuthorizationsController < ApplicationController
             
   end
 
+  private
+
+  def pluralize_has(count)
+    if count > 1
+      "have"
+    else
+      "has"
+    end
+  end
+
+
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

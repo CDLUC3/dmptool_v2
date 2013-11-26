@@ -27,8 +27,8 @@ class RequirementsTemplatesController < ApplicationController
 
 
       if !safe_has_role?(Role::DMP_ADMIN)
-        @requirements_templates = @requirements_templates.
-                                  where(institution_id: [current_user.institution.subtree_ids])
+        @requirements_templates = @requirements_templates.where.
+                                  any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public)
       end
 
       template_editors
