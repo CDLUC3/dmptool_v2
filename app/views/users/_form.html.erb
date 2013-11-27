@@ -21,7 +21,7 @@
     <div class="tab-content">
       <div class="tab-pane active" id="tab1">
         <%= render 'personal', f: f %>
-        <div class="control-group">
+        <div class="buttons">
 			  	<%= f.submit 'Save', :class => 'btn' %>
 			  	<%= link_to 'Cancel', edit_user_path(@user), :class => 'btn' %>
 	  		</div>

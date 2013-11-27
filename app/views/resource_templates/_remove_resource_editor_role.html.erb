@@ -5,7 +5,7 @@
       <th> Name </th>
       <th> Username </th>
       <th> Email </th>
-      <th> Revoke Role </th>
+      <th class="span1"> Revoke Role </th>
     </tr>
   </thead>
   <tbody>
@@ -14,12 +14,13 @@
       <td><%= user.full_name %></td>
       <td><%= user.login_id %></td>
       <td><%= user.email %></td>
-      <td><%= link_to raw(''), remove_authorization_path(user_id: user.id, role_id: 2, p: 'resource_templates'), :class => "icon remove" %></td>
+      <td class="span1"><%= link_to raw(''), remove_authorization_path(user_id: user.id, role_id: 2, p: 'resource_templates'), :class => "icon remove" %></td>
     </tr>
   <% end %>
   </tbody>
 </table>
-<%= link_to 'Add New Editor', add_role_path, method: :post, id: 'add_role_view', :class => "btn btn-green" %>
-<div class="pagination">
-  <%= paginate @users %>
+<div class="buttons pagination">
+	<%= link_to "View All", requirements_templates_path(:scope => "all"), :method => :get, :class => "btn"%>
+	<%= paginate @users %>
 </div>
+<%= link_to 'Add New Editor', add_role_path, method: :post, id: 'add_role_view', :class => "btn btn-green" %>

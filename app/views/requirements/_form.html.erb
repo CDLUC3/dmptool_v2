@@ -1,4 +1,4 @@
-<%= form_for ([@requirement.requirements_template, @requirement]), html: { class: "form-horizontal" } do |f| %>
+<%= form_for ([@requirement.requirements_template, @requirement]), html: { :class => "form-horizontal" } do |f| %>
   <% if @requirement.errors.any? %>
     <div id="error_explanation">
       <h2>
@@ -19,35 +19,35 @@
       <%= f.check_box :group, id: 'if_group', style: "display: none;" %>
     </div>
     <div class="control-group">
-      <%= f.label :requirement_label, "Requirement Label", class: "control-label" %>
+      <%= f.label :requirement_label, "Requirement Label", :class => "control-label" %>
       <div class="controls">
-        <%= f.text_field(:text_brief, class: "input-block-level") %>
+        <%= f.text_field(:text_brief, :class => "input-block-level") %>
       </div>
     </div>
     <div class="control-group">
-      <%= f.label :detailed_question, "Detailed Question", class: "control-label" %>
+      <%= f.label :detailed_question, "Detailed Question", :class => "control-label" %>
       <div class="controls">
-        <%= f.text_area(:text_full, rows: 5, class: "input-block-level") %>
+        <%= f.text_area(:text_full, rows: 5, :class => "input-block-level") %>
       </div>
     </div>
     <div class="control-group" id="obligation">
-      <%= f.label :obligation, class: "control-label" %>
+      <%= f.label :obligation, :class => "control-label" %>
       <div class="controls">
-        <%= f.radio_button :obligation, :mandatory, class: "radio inline" %>
+        <%= f.radio_button :obligation, :mandatory, :class => "radio inline" %>
         Mandatory
         <br/>
-        <%= f.radio_button :obligation, :mandatory_applicable, class: "radio inline" %>
+        <%= f.radio_button :obligation, :mandatory_applicable, :class => "radio inline" %>
         Mandatory If Applicable
         <br/>
-        <%= f.radio_button :obligation, :recommended, class: "radio inline" %>
+        <%= f.radio_button :obligation, :recommended, :class => "radio inline" %>
         Recommended
         <br/>
-        <%= f.radio_button :obligation, :optional, checked: true , class: "radio inline" %>
+        <%= f.radio_button :obligation, :optional, checked: true , :class => "radio inline" %>
         Optional
       </div>
     </div>
     <div class="control-group">
-      <%= f.label :question_type, "Question Type", class: "control-label" %>
+      <%= f.label :question_type, "Question Type", :class => "control-label" %>
       <div class="controls">
         <%= f.select :requirement_type, options_for_select([:text, :numeric, :date, :enum], @requirement.requirement_type), include_blank: true %>
       </div>
@@ -59,9 +59,7 @@
       <%= link_to_add_fields 'Click to Add Item', f, :enumerations %>
     </fieldset>
   </fieldset>
-  <div class="actions pull-right">
     <br/>
-    <%= f.submit 'Save', class: 'btn' %>
-    <%= link_to 'Finish', '#', class: 'btn btn-green' %>
-  </div>
+	  <%= f.submit 'Save', :class => 'btn' %>
+	  <%= link_to 'Finish', '#', :class => 'btn btn-green' %>
 <% end %>

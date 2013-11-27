@@ -1,10 +1,12 @@
 <table class ="table table-striped table-bordered">
-  <tr>
-    <th> Institution Name </th>
-    <th> Administrator </th>
-    <th> Parent Institution </th>
-  </tr>
-
+	<thead>
+	  <tr>
+	    <th> Institution Name </th>
+	    <th> Administrator </th>
+	    <th> Parent Institution </th>
+	  </tr>
+  <thead>
+  <tbody>
   <% @institutions.each do |institution| %>
     <tr class='user_row'>
       <td><%= link_to institution.full_name, edit_institution_path(institution) %></td>
@@ -14,13 +16,11 @@
       <td><%= link_to institution.parent.try(:full_name), edit_institution_path(institution) unless institution.parent == nil %></td>
     </tr>
   <% end %>
-  
-  <div class="pagination">
-    <%= paginate @users %>
-  </div>
-
+  </tbody>
 </table>
-
-<div class="btn-container">
-  <%= link_to 'Add New Institution', new_institution_path(5), :class => "btn btn-green" %>
+<div class=" buttons pagination">
+  <%= paginate @users %>
+</div>
+<div class="buttons">
+	<%= link_to 'Add New Institution', new_institution_path(5), :class => "btn btn-green" %>
 </div>

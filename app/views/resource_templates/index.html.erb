@@ -9,7 +9,7 @@
 <table class="table table-striped table-condensed">
   <thead>
     <tr>
-      <th> Name </th>
+      <th class="span4"> Name </th>
       <th> Institution </th>
       <th> Status </th>
       <th> Creation Date </th>
@@ -51,16 +51,11 @@
   <% end %>
   </tbody>
 </table>
-<div class="pagination">
-  <%= paginate @resource_templates %>
+<div class="buttons pagination">
+	<%= link_to "View All", requirements_templates_path(:scope => "all"), :method => :get, :class => "btn"%>
+	<%= paginate @resource_templates %>
 </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> development
 <%= button_to 'Create Resource template', resource_template_information_path, :method => :get, class: 'btn' %>
-
-<br>
 
 <%= render 'remove_resource_editor_role' %>
 

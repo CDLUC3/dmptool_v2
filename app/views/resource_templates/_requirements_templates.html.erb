@@ -1,7 +1,7 @@
 <table class="table tablecondensed table-striped" >
   <thead>
     <tr>
-      <th>
+      <th class="span1"></th>
       <th> Name </th>
       <th> Institution </th>
       <th> Status </th>
@@ -13,7 +13,7 @@
   <tbody>
   <% @requirements_templates.each do |requirements_template| %>
     <tr>
-      <td class="selected_requirements_template" ><%= radio_button_tag :requirements_template_id, requirements_template.id %></td>
+      <td class="selected_requirements_template span1"><%= radio_button_tag :requirements_template_id, requirements_template.id %></td>
       <td class="selected_requirements_template_name" ><%= requirements_template.name %></td>
       <td><%= requirements_template.institution.full_name %></td>
       <td><%= requirements_template.active ? "Active" : "Inactive" %></td>
@@ -24,8 +24,7 @@
   <% end %>
   </tbody>
 </table>
-
-<div class="pagination">
+<div class="buttons pagination">
   <%= paginate @requirements_templates %>
 </div>
 
