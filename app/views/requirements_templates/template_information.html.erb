@@ -8,7 +8,7 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th class="narrow"></th>
+							<th class="span1"></th>
 							<th> Name </th>
 							<th> Status </th>
 						</tr>
@@ -21,13 +21,11 @@
 							<td><%= requirements_template.active ? "active" : "inactive" %></td>
 						</tr>
 					<% end %>
-						<tr>
-							<td colspan="7" class="full">
-								<%= submit_tag "Template Information", :class => "btn" %>
-							</td>
-						</tr>
 					</tbody>
 				</table>
+				<div class="buttons">
+					<%= submit_tag "Template Information", :class => "btn" %>
+				</div>
 			<% end %>
 		</div>
 	
