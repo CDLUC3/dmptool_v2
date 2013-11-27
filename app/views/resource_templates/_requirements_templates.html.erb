@@ -1,3 +1,4 @@
+<h3 class="dashboard-heading"><span class="icon overview"></span>Resource Template Overview</h3>
 <table class="table tablecondensed table-striped" >
   <thead>
     <tr>
@@ -25,9 +26,6 @@
   </tbody>
 </table>
 <div class="buttons pagination">
+	<%= link_to "View All", requirements_templates_path(:scope => "all"), :method => :get, :class => "btn"%>
   <%= paginate @requirements_templates %>
-</div>
-
-<div class="form-horizontal">
-  <h4> Resource Template Overview </h4>
 </div>

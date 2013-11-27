@@ -1,21 +1,25 @@
 <h3 class="dashboard-heading"><span class="icon template-editor"></span>DMP Template Editors</h3>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Username</th>
-        <th>Email</th>
-        <th class="span1">Revoke Role</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @users.each do |user| %>
-        <tr>
-          <td><%= user.full_name %></td>
-          <td><%= user.login_id %></td>
-          <td><%= user.email %></td>
-          <td class="span1"><%= link_to raw(''), remove_authorization_path(user_id: user.id, role_id: 3, p: 'requirements_templates'), :class => "icon remove", :data => { :confirm => 'Are you sure?' }  %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Username</th>
+      <th>Email</th>
+      <th class="span1">Revoke Role</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+    <tr>
+      <td><%= user.full_name %></td>
+      <td><%= user.login_id %></td>
+      <td><%= user.email %></td>
+      <td class="span1"><%= link_to raw(''), remove_authorization_path(user_id: user.id, role_id: 3, p: 'requirements_templates'), :class => "icon remove", :data => { :confirm => 'Are you sure?' }  %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="buttons pagination">
+	<%= link_to "View All", requirements_templates_path(:scope => "all"), :method => :get, :class => "btn"%>
+	<%= paginate @users %>
+</div>
