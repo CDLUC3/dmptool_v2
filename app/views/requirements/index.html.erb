@@ -18,24 +18,21 @@
 		        <%= @requirements_template.active ? "Active" : "Inactive" %>
 		      </span>
 		    </h5>
-	      <div class="buttons row-fluid">
+	      <div>
 		      <%= link_to activate_link_text(@requirements_template)+ ' ' +'Template', toggle_active_requirements_template_path(@requirements_template), remote: true, id: "activate_link_#{@requirements_template.id}", :class => "btn" %>
 		      <%= link_to(content_tag(:span, "", :class => "icon remove") + "Delete Template", @requirements_template, method: :delete, data: { confirm: 'Are you sure?' }, :class => "icon delete") %>
 	      </div>
 	    </div>
 	  </div>
-	  <div class="span8">
-	  	<div class="tabbable">
-	  		<ul class="nav nav-tabs">
-	  			<li class="active"><%= link_to "Requirements", "#tab1", :data => {:toggle => "tab"} %></li>
-	  		</ul>
-	  		<div class="tab-content">
-	  				<div class="tab-pane active" id="tab1">
-	  					<%= render 'form' %>
-	  				</div>
-	  		</div>
+	  <div class="tabbable span8">
+	  	<ul class="nav nav-tabs">
+	  		<li class="active"><%= link_to "Requirements", "#tab1", :data => {:toggle => "tab"} %></li>
+	  	</ul>
+	  	<div class="tab-content">
+	  			<div class="tab-pane active" id="tab1">
+	  				<%= render 'form' %>
+	  			</div>
 	  	</div>
-	    
 	  </div>
 	</div>
 </div>

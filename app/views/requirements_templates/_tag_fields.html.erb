@@ -3,6 +3,6 @@
 	<div class="controls">
 		<%= f.text_field :tag, placeholder: 'Tag' %>
 		<%= f.hidden_field :_destroy %>
-		<%= link_to "Remove", '#', class: "remove_fields btn" %>
+		<%= link_to(content_tag(:span, "", :class => "icon remove") + "Remove", '#', :class => "icon delete remove_fields") %>
 	</div>
 </div>

@@ -1,7 +1,7 @@
 <%unless @user.new_record?%>
 <p>Please update any info regarding your account.</p>
-
-  <b>Name</b>
+<h5>Name</h5>
+<hr/>
 <%end%>
 
 <% errors = @user.errors[:login_id] %>
@@ -9,7 +9,7 @@
 <div class="control-group <%= validation_class %>">
   <%= f.label :login_id, 'Username', class: 'control-label' %>
   <div class="controls">
-    <%= f.text_field :login_id, readonly: !@user.new_record? %>
+    <%= f.text_field :login_id, readonly: !@user.new_record?, :class => "input-xxlarge" %>
     <span class="help-inline">
       <%= errors.join (', ') %>
     </span>
@@ -23,7 +23,7 @@
   <div class="control-group <%= validation_class %>">
     <%= f.label :first_name, class: 'control-label' %>
     <div class="controls">
-      <%= f.text_field :first_name %>
+      <%= f.text_field :first_name, :class => "input-xxlarge" %>
       <span class="help-inline">
         <%= errors.join (', ') %>
       </span>
@@ -35,7 +35,7 @@
   <div class="control-group <%= validation_class %>">
     <%= f.label :last_name, class: 'control-label' %>
     <div class="controls">
-      <%= f.text_field :last_name %>
+      <%= f.text_field :last_name, :class => "input-xxlarge" %>
         <span class="help-in-line">
           <%=errors.join (', ')%>
       </span>
@@ -49,7 +49,7 @@
 <div class="control-group <%= validation_class %>">
   <%= f.label :password, password_label(@user), class:'control-label' %>
   <div class="controls">
-    <%= f.password_field :password %>
+    <%= f.password_field :password, :class => "input-xxlarge" %>
       <span class="help-in-line">
         <%=errors.join (', ')%>
     </span>
@@ -61,7 +61,7 @@
 <div class="control-group  <%= validation_class %>">
   <%= f.label :password_confirmation, class:'control-label' %>
   <div class="controls">
-    <%= f.password_field :password_confirmation %>
+    <%= f.password_field :password_confirmation, :class => "input-xxlarge" %>
       <span class="help-in-line">
         <%=errors.join (', ')%>
     </span>
@@ -69,7 +69,8 @@
 </div>
 
 <%unless @user.new_record?%>
-  <b>Contact Information</b>
+<h5>Contact Information</h5>
+<hr/>
 <%end%>
 
 <% errors = @user.errors[:email] %>
@@ -77,7 +78,7 @@
 <div class="control-group <%= validation_class%>">
   <%= f.label :email, class:'control-label' %>
   <div class="controls">
-    <%= f.text_field :email %>
+    <%= f.text_field :email, :class => "input-xxlarge" %>
       <span class="help-in-line">
         <%=errors.join (', ')%>
       </span>
@@ -91,9 +92,9 @@
   <div class="controls">
     <%# filter institution list in my profile page only %>
     <%if @user.new_record?%>
-      <%= collection_select(:user, :institution_id, Institution.all, :id, :full_name, { prompt: "-Select an Institution-"} ) %>
+      <%= collection_select(:user, :institution_id, Institution.all, :id, :full_name, { prompt: "-Select an Institution-"}, :class => "input-xxlarge") %>
     <%else%>
-      <%= f.select( :institution_id, @institution_list, {prompt: 'Select Institution'})%>
+      <%= f.select( :institution_id, @institution_list, {prompt: 'Select Institution'}, :class => "input-xxlarge")%>
     <%end%>
     
     <span class="help-in-line">

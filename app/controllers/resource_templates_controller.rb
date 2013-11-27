@@ -8,12 +8,16 @@ class ResourceTemplatesController < ApplicationController
   # GET /resource_templates.json
   def index
     case params[:scope]
+      when "all"
+        @resource_templates = ResourceTemplate.all.page(params[:page])
+      when "all_limited"
+        @resource_templates = ResourceTemplate.all.page(params[:page]).per(5)
       when "active"
-        @resource_templates = ResourceTemplate.where(active: true).page(params[:page]).per(10)
+        @resource_templates = ResourceTemplate.where(active: true).page(params[:page]).per(5)
       when "inactive"
-        @resource_templates = ResourceTemplate.where(active: false).page(params[:page]).per(10)
+        @resource_templates = ResourceTemplate.where(active: false).page(params[:page]).per(5)
       else
-        @resource_templates = ResourceTemplate.all.page(params[:page]).per(10)
+        @resource_templates = ResourceTemplate.all.page(params[:page]).per(5)
     end
 
     if !safe_has_role?(Role::DMP_ADMIN)
@@ -25,7 +29,6 @@ class ResourceTemplatesController < ApplicationController
     count
   end
 
-
   # GET /resource_templates/1
   # GET /resource_templates/1.json
   def show
@@ -36,16 +39,6 @@ class ResourceTemplatesController < ApplicationController
     @resource_template = ResourceTemplate.new
   end
 
-  def template_information
-    if !safe_has_role?(Role::DMP_ADMIN)
-      @resource_templates = ResourceTemplate.
-                          where(institution_id: [current_user.institution.subtree_ids]).page.per(5)
-    else
-      @resource_templates = ResourceTemplate.page.per(5)
-    end
-    
-  end
-
   # GET /resource_templates/1/edit
   def edit
   end
@@ -54,7 +47,6 @@ class ResourceTemplatesController < ApplicationController
   # POST /resource_templates.json
   def create
     @resource_template = ResourceTemplate.new(resource_template_params)
-
     respond_to do |format|
       if @resource_template.save
         format.html { redirect_to edit_resource_template_path(@resource_template), notice: 'Resource template was successfully created.' }
@@ -90,13 +82,6 @@ class ResourceTemplatesController < ApplicationController
     end
   end
 
-  def copy_existing_template
-    id = params[:resource_template].to_i unless params[:resource_template].blank?
-    resource_template = ResourceTemplate.where(id: id).first
-    @resource_template = resource_template.dup
-    render action: "copy_existing_template"
-  end
-
   def toggle_active
     @resource_template.toggle!(:active)
     respond_to do |format|
@@ -110,12 +95,12 @@ class ResourceTemplatesController < ApplicationController
       @resource_template = ResourceTemplate.find(params[:id])
     end
 
-    
+
     def resource_template_params
       params.require(:resource_template).permit(:institution_id, :resource_template_id, :requirements_template_id, :name, :active, :mandatory_review, :contact_info, :contact_email, :review_type, :widget_url)
     end
 
-    def get_requirements_template      
+    def get_requirements_template
       if !safe_has_role?(Role::DMP_ADMIN)
         @requirements_templates = RequirementsTemplate.where.any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public).order(created_at: :asc).page(params[:page]).per(5)
       else

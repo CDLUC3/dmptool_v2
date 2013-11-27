@@ -13,10 +13,14 @@
       	<%= render 'institutional_administrators' %>
     </div>
     <div class="tab-pane" id="tab3">
+    	<h5>Institution Hierarchy</h5>
+    	<hr/>
+    	<div class="institutions">
 	      <%= nested_institutions @institutions.arrange(order: :created_at) %>
-	      <div class="buttons row-fluid">
-	      	<%= link_to 'Add New Institution', new_institution_path(5), :class => "btn btn-green" %>
-	      </div>
+	    </div>
+	    <div class="buttons">
+	     <%= link_to 'Add New Institution', new_institution_path(5), :class => "btn btn-green" %>
+	    </div>
     </div>
   </div>
 </div>

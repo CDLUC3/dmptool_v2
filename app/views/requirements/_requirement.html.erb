@@ -2,9 +2,9 @@
 	<ul>
 		<li>
 			<% if requirement.group? %>
-				<%= link_to requirement.text_brief, edit_requirements_template_requirement_path(requirement.requirements_template, requirement, node_type: 'group'), :class => "icon folder-open" %>
+				<%= link_to(content_tag(:span, "", :class => "icon folder-open") + requirement.text_brief, edit_requirements_template_requirement_path(requirement.requirements_template, requirement, node_type: 'group')) %>
 			<% else %>
-				<%= link_to requirement.text_brief, edit_requirements_template_requirement_path(requirement.requirements_template, requirement), :class => "icon folder-open" %>
+				<%= link_to(content_tag(:span, "", :class => "icon folder-open") + requirement.text_brief, edit_requirements_template_requirement_path(requirement.requirements_template, requirement)) %>
 			<% end %>
 			<% if requirement.group == false %>
 				<%= link_to raw(''),

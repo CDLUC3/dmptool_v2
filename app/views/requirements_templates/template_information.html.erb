@@ -3,12 +3,12 @@
 		<div class="span6">
 			<h4>Copy an Existing DMP Template</h4>
 			<p>Select an existing requirements template below and edit the template information and details.</p>
-	
+
 			<%= form_tag copy_existing_requirements_template_path, method: :get do %>
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th class="narrow"></th>
+							<th class="span1"></th>
 							<th> Name </th>
 							<th> Status </th>
 						</tr>
@@ -21,16 +21,17 @@
 							<td><%= requirements_template.active ? "active" : "inactive" %></td>
 						</tr>
 					<% end %>
-						<tr>
-							<td colspan="7" class="full">
-								<%= submit_tag "Template Information", :class => "btn" %>
-							</td>
-						</tr>
 					</tbody>
 				</table>
+				<div class="buttons">
+					<%= submit_tag "Template Information", :class => "btn" %>
+				</div>
+				<div class="pagination">
+					<%= paginate @requirements_templates %>
+				</div>
 			<% end %>
 		</div>
-	
+
 		<div class="span6">
 			<h4>Create New DMP Template</h4>
 			<p>Input basic and optional information of the new requirements template and edit the template details.</p>

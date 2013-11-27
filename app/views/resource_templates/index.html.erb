@@ -1,17 +1,16 @@
-<h5> Resource Templates </h5>
-<br/>
+<h3 class="dashboard-heading"><span class="icon template-resource"></span>Resource Templates</h3>
+<div class="table-scope">
+  <%= link_to(content_tag(:span, "All (#{@all}) ", class: "current" ), scope: "all_limited") %>
+  |
+  <%= link_to(content_tag(:span, "Active (#{@active}) ", class: "current"), scope: "active") %>
+  |
+  <%= link_to(content_tag(:span, "Inactive (#{@inactive}) ", class: "current"), scope: "inactive") %>
+</div>
 
-<%= link_to(content_tag(:span, "All (#{@all}) ", class: "current" ), scope: "all") %>
-|
-<%= link_to(content_tag(:span, "Active (#{@active}) ", class: "current"), scope: "active") %>
-|
-<%= link_to(content_tag(:span, "Inactive (#{@inactive}) ", class: "current"), scope: "inactive") %>
-
-<br/>
 <table class="table table-striped table-condensed">
   <thead>
     <tr>
-      <th> Name </th>
+      <th class="span4"> Name </th>
       <th> Institution </th>
       <th> Status </th>
       <th> Creation Date </th>
@@ -22,7 +21,20 @@
   <% @resource_templates.each do |resource_template| %>
     <tr>
       <td class="resource_template_name">
-        <%= link_to resource_template.name, resource_template_resources_path(resource_template) %>
+      	<script>
+						jQuery(function(){
+							jQuery(".toggle-links").hover(
+								function(){jQuery(this).parent().find(".template-links").css("visibility", "visible")},
+								function(){jQuery(this).parent().find(".template-links").css("visibility", "hidden")}
+							);
+						})
+				</script>
+				<div class="toggle-links">
+        	<%= link_to (content_tag(:strong, resource_template.name)), resource_template_resources_path(resource_template) %>
+        	<div class="template-links">
+        		<%= (link_to 'Overview', edit_resource_template_path(resource_template))+' | '+(link_to 'Details',resource_template_resources_path(resource_template))+' | '+(link_to activate_link_text(resource_template), toggle_active_resource_template_path(resource_template),remote: true, id: "activate_link_#{resource_template.id}")+' | '+(link_to 'Copy', copy_existing_resource_template_path(resource_template))+' | '+(link_to 'Delete', resource_template_path(resource_template), :class => "delete",  method: :delete, data: { confirm: 'Are you sure?' }) %>
+        	</div>
+        </div>
       </td>
       <td>
         <%= resource_template.institution.full_name %>
@@ -37,26 +49,16 @@
         <%= resource_template.updated_at.strftime("%m/%d/%Y %I:%M%p") %>
       </td>
     </tr>
-    <tr>
-      <td class="show_on_hover" colspan="7">
-        <%= (link_to 'Overview', edit_resource_template_path(resource_template))+'|'+(link_to 'Details',resource_template_resources_path(resource_template))+'|'+(link_to activate_link_text(resource_template), toggle_active_resource_template_path(resource_template),remote: true, id: "activate_link_#{resource_template.id}")+'|'+(link_to 'Copy', copy_existing_resource_template_path(resource_template))+'|'+(link_to 'Delete', resource_template_path(resource_template),  method: :delete, data: { confirm: 'Are you sure?' }) %>
-      </td>
-    </tr>
   <% end %>
   </tbody>
 </table>
-
-<div class="pagination">
-  <%= paginate @resource_templates %>
+<div class="buttons pagination">
+	<%= link_to "View All", resource_templates_path(:scope => "all"), :method => :get, :class => "btn"%>
+	<%= paginate @resource_templates %>
 </div>
-
-<%= button_to 'Create Resource template', resource_template_information_path, :method => :get, class: 'btn' %>
-
-<br>
+<%= button_to 'Create Resource template', new_resource_template_path, :method => :get, class: 'btn' %>
 
 <%= render 'remove_resource_editor_role' %>
-
-<%= link_to 'Add New Editor', add_role_path, method: :post, id: 'add_role_view' %>
 
 <%= render partial: "/authorizations/add_authorization" , :locals => { :role_type => 2, :role_name => 'Resources Editor'}%>
 
