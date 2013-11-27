@@ -32,7 +32,7 @@
 				<div class="toggle-links">
         	<%= link_to (content_tag(:strong, resource_template.name)), resource_template_resources_path(resource_template) %>
         	<div class="template-links">
-        		<%= (link_to 'Overview', edit_resource_template_path(resource_template))+' | '+(link_to 'Details',resource_template_resources_path(resource_template))+' | '+(link_to activate_link_text(resource_template), toggle_active_resource_template_path(resource_template),remote: true, id: "activate_link_#{resource_template.id}")+' | '+(link_to 'Copy', copy_existing_resource_template_path(resource_template))+' | '+(link_to 'Delete', resource_template_path(resource_template), :class => "delete",  method: :delete, data: { confirm: 'Are you sure?' }) %>
+        		<%= (link_to 'Overview', edit_resource_template_path(resource_template))+' | '+(link_to 'Details',resource_template_resources_path(resource_template))+' | '+(link_to activate_link_text(resource_template), toggle_active_resource_template_path(resource_template),remote: true, id: "activate_link_#{resource_template.id}")+' | '+(link_to 'Delete', resource_template_path(resource_template), :class => "delete",  method: :delete, data: { confirm: 'Are you sure?' }) %>
         	</div>
         </div>
       </td>
