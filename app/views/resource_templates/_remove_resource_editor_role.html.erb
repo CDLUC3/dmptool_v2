@@ -20,7 +20,6 @@
   </tbody>
 </table>
 <div class="buttons pagination">
-	<%= link_to "View All", requirements_templates_path(:scope => "all"), :method => :get, :class => "btn"%>
 	<%= paginate @users %>
 </div>
 <%= link_to 'Add New Editor', add_role_path, method: :post, id: 'add_role_view', :class => "btn btn-green" %>

@@ -7,32 +7,29 @@ class RequirementsTemplatesController < ApplicationController
   # GET /requirements_templates
   # GET /requirements_templates.json
   def index
+    case params[:scope]
+      when "all"
+        @requirements_templates = RequirementsTemplate.all.page(params[:page])
+      when "all_limited"
+        @requirements_templates = RequirementsTemplate.all.page(params[:page]).per(5)
+      when "active"
+        @requirements_templates = RequirementsTemplate.active.page(params[:page]).per(5)
+      when "inactive"
+        @requirements_templates = RequirementsTemplate.inactive.page(params[:page]).per(5)
+      when "public"
+        @requirements_templates = RequirementsTemplate.public_visibility.page(params[:page]).per(5)
+      when "institutional"
+        @requirements_templates = RequirementsTemplate.institutional_visibility.page(params[:page]).per(5)
+      else
+        @requirements_templates = RequirementsTemplate.order(created_at: :asc).page(params[:page]).per(5)
+    end
+    if !safe_has_role?(Role::DMP_ADMIN)
+      @requirements_templates = @requirements_templates.where.
+                                any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public)
+    end
 
-      case params[:scope]
-        when "all"
-          @requirements_templates = RequirementsTemplate.all.page(params[:page])
-        when "all_limited"
-          @requirements_templates = RequirementsTemplate.all.page(params[:page]).per(5)
-        when "active"
-          @requirements_templates = RequirementsTemplate.active.page(params[:page]).per(5)
-        when "inactive"
-          @requirements_templates = RequirementsTemplate.inactive.page(params[:page]).per(5)
-        when "public"
-          @requirements_templates = RequirementsTemplate.public_visibility.page(params[:page]).per(5)
-        when "institutional"
-          @requirements_templates = RequirementsTemplate.institutional_visibility.page(params[:page]).per(5)
-        else
-          @requirements_templates = RequirementsTemplate.order(created_at: :asc).page(params[:page]).per(5)
-      end
-
-
-      if !safe_has_role?(Role::DMP_ADMIN)
-        @requirements_templates = @requirements_templates.where.
-                                  any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public)
-      end
-
-      template_editors
-      count
+    template_editors
+    count
   end
 
   # GET /requirements_templates/1
@@ -64,7 +61,6 @@ class RequirementsTemplatesController < ApplicationController
   end
 
   def template_information
-    
     @requirements_templates = RequirementsTemplate.institutional_visibility.page.per(5)
   end
 
@@ -123,7 +119,7 @@ class RequirementsTemplatesController < ApplicationController
                             where(id: id, institution_id: [current_user.institution.subtree_ids]).first
     else
       requirements_template = RequirementsTemplate.where(id: id).first
-    end 
+    end
     @requirements_template = requirements_template.dup include: [:resource_templates, :sample_plans, :additional_informations]
     render action: "copy_existing_template"
   end
@@ -157,10 +153,19 @@ class RequirementsTemplatesController < ApplicationController
     end
 
     def count
+    if current_user.has_role?(Role::DMP_ADMIN)
       @all = RequirementsTemplate.all.count
       @active = RequirementsTemplate.active.count
       @inactive = RequirementsTemplate.inactive.count
       @public = RequirementsTemplate.public_visibility.count
       @institutional = RequirementsTemplate.institutional_visibility.count
+    else
+      @institution = current_user.institution
+      @all = @institution.requirements_templates_deep.all.count
+      @active = @institution.requirements_templates_deep.active.count
+      @inactive = @institution.requirements_templates_deep.inactive.count
+      @public = @institution.requirements_templates_deep.public_visibility.count
+      @institutional = @institution.requirements_templates_deep.institutional_visibility.count
     end
+  end
 end

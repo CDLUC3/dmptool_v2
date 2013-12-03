@@ -58,7 +58,7 @@ class AuthorizationsController < ApplicationController
       end
 
       if !@saved_emails.empty?
-        @message << "Role Granted to the following " + "User".pluralize(@saved_emails.count) + ": #{@saved_emails.join(', ')}  "
+        @message << "Role granted to the following " + "user".pluralize(@saved_emails.count) + ": #{@saved_emails.join(', ')}  "
       end
 
       flash.now[:notice] = @message
@@ -76,7 +76,7 @@ class AuthorizationsController < ApplicationController
       @authorization = Authorization.where(role_id: @role_id , user_id: params[:user_id] )
       @authorization_id = @authorization.pluck(:id)
       @authorization.delete_all
-      redirect_to @path, notice: "The Role has been revoked."
+      redirect_to @path, notice: "The role has been revoked."
     else
       redirect_to @path, notice: "You don't have permission to revoke this role."
     end

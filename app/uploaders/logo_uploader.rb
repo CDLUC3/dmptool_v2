@@ -9,10 +9,18 @@ class LogoUploader < CarrierWave::Uploader::Base
   storage :file
   # storage :fog
 
+  def cache_dir
+    '/tmp/dmptool2-cache'
+  end
+
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
+  # def store_dir
+  #   "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+  # end
+
   def store_dir
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+     "/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
@@ -24,7 +32,7 @@ class LogoUploader < CarrierWave::Uploader::Base
   # end
 
   # Process files as they are uploaded:
-  process :scale => [170, 60]
+  process :scale => [200, 90]
   #
   def scale(width, height)
     resize_to_fit(width, height)
