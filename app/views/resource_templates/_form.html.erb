@@ -20,7 +20,7 @@
 			    <h5>Associated DMP Template</h5>
 			    <hr/>
 			    <div class="control-group">
-			      <%= label_tag(:dmp_template, "DMP Template", class: "control-label") %>
+			      <%= f.label :dmp_template, "DMP Template", class: "control-label" %>
 			      <div class="controls">
 			      <% if @resource_template.requirements_template_id.nil? %>
 			        <%= text_field_tag(:selected_requirement_template, nil, id: "selected_requirement_template_name", class: "input-xlarge") %>

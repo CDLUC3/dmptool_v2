@@ -184,14 +184,6 @@ table.table th.valign-middle, table.table td.valign-middle {
 	vertical-align: middle; }
 table.table th.valign-bottom, table.table td.valign-bottom {
 	vertical-align: bottom; }
-table.table tbody > tr > th.full, table.table tbody > tr > td.full {
-  background: none;
-  padding: 9px; }
-table.table tbody tr td.span12, table.table td.full {
-	border-top: 1px solid #B6B6B7; }
-table.table th.narrow, table.table td.narrow {
-	width: 35px;
-	text-align: center; }
 table.table td .template-links {
 	visibility: hidden; }
 table.table td .requirements_template_name:hover .template-links {
@@ -251,7 +243,7 @@ table.table a.delete {
   -webkit-box-sizing: border-box;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
-	font-size: 0.8em;
+	font-size: 0.85em;
 	width: 100%;
 	margin: 0;
 	padding: 0 20px;
