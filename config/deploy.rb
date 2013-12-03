@@ -25,7 +25,7 @@ namespace :deploy do
     run "ln -s #{shared_path}/shibboleth.yml #{release_path}/config/"
     run "ln -s #{shared_path}/ldap.yml #{release_path}/config/"
     run "ln -s #{shared_path}/unicorn.rb #{release_path}/config/"
-    run "ln -s #{shared_path}/uploads #{release_path}/public/uploads/"
+    run "ln -s #{shared_path}/uploads #{release_path}/public/uploads"
   end
 end
 
