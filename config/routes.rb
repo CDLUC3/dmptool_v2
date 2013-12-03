@@ -28,7 +28,11 @@ Dmptool2::Application.routes.draw do
   end
 
   resources :users do
-    get :edit_roles, :on => :member
+    member do
+      get :edit_roles, :on => :member
+      get :finish_signup
+      patch :finish_signup_update
+    end
   end
 
   resources :roles
@@ -41,8 +45,11 @@ Dmptool2::Application.routes.draw do
   post '/auth/:provider/callback', to: 'user_sessions#create'
   get '/auth/failure', to: 'user_sessions#failure'
 
-  get  'requirements_template_information', to: 'requirements_templates#template_information'
-  get  'copy_existing_requirements_template', to: 'requirements_templates#copy_existing_template'
+  get 'requirements_template_information', to: 'requirements_templates#template_information'
+  get 'copy_existing_requirements_template', to: 'requirements_templates#copy_existing_template'
+
+  get 'resource_template_information', to: 'resource_templates#template_information'
+  get 'copy_existing_resource_template', to: 'resource_templates#copy_existing_template'
 
   get  'remove_resource_editor_role', to: 'resource_templates#remove_resource_editor_role'
   get  'remove_requirements_editor_role', to: 'requirements_templates#remove_requirements_editor_role'
@@ -53,6 +60,14 @@ Dmptool2::Application.routes.draw do
   post 'add_authorization', to: 'authorizations#add_authorization'
   get 'remove_authorization', to: 'authorizations#remove_authorization'
 
+  get '/auth/:provider/callback', :to => 'authentications#create'
+  get '/auth/failure', :to => 'authentications#failure'
+
+  get '/auth/:provider/callback', :to => 'authentications#create'
+  get '/auth/failure', :to => 'authentications#failure'
+
+  get '/auth/:provider/callback', :to => 'authentications#create'
+  get '/auth/failure', :to => 'authentications#failure'
   get  'edit_user_roles', to: 'users#edit_user_roles'
   post  'update_user_roles', to: 'users#update_user_roles'
 

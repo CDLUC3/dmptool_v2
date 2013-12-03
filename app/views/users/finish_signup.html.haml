@@ -1,0 +1,17 @@
+.grid_14.prefix_1.suffix_1.alpha.omega
+  %h1 Finish Signup
+  .grid_10.prefix_1.alpha
+    = form_for @user, :url => finish_signup_update_user_path(@user), :method => :patch do |f|
+      .left_label
+        = f.label :first_name
+      .right_field
+        = f.text_field :first_name
+      .left_label
+        = f.label :last_name
+      .right_field
+        = f.text_field :last_name
+      .clear
+      .left_label &nbsp;
+      .field_and_label_box.finish_signup_buttons
+        = f.submit "Update Account"
+        = button_to_function "Reset Form", 'this.form.reset();'

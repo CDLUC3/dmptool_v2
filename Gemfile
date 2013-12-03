@@ -20,6 +20,7 @@ end
 
 gem 'omniauth'
 gem 'omniauth-ldap'
+gem 'omniauth-shibboleth', :git => 'git://github.com/hading/omniauth-shibboleth.git'
 
 gem 'mysql2'
 gem 'therubyracer'

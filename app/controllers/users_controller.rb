@@ -139,6 +139,19 @@ class UsersController < ApplicationController
     @roles = Role.all
   end
 
+  def finish_signup
+    @user.first_name = @user.last_name = ''
+  end
+
+  def finish_signup_update
+    if @user.update_attributes(params[:user].permit(:first_name, :last_name))
+      flash[:notice] = 'You have completed signing up for the DMP tool.'
+      redirect_to user_url(@user, :protocol => 'https')
+    else
+      render 'finish_signup'
+    end
+  end
+
   def update_user_roles
 
     @user_id = params[:user_id]
@@ -227,5 +240,14 @@ class UsersController < ApplicationController
 
     !@user.errors.any?
   end
+
+  def require_current_user
+    @user = User.find(params[:id])
+    unless @user == current_user
+      flash[:notice] = "User information may only be edited by that user"
+      redirect_to root_path
+    end
+  end
+
 
 end
