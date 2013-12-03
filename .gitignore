@@ -17,6 +17,10 @@ tmp/
 config/deploy.yml
 
 
+public/uploads
+public/uploads/
+public/uploads/*
+public/uploads/*/
 
 
 
