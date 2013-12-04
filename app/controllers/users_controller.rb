@@ -68,7 +68,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if !@user.errors.any? && @user.save
-        session[:login_id] = @user.login_id
+        session[:user_id] = @user.id
         format.html { redirect_to edit_user_path(@user), notice: 'User was successfully created.' }
         format.json { render action: 'show', status: :created, location: @user }
       else

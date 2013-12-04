@@ -7,7 +7,7 @@ class UserSessionsController < ApplicationController
       redirect_to choose_institution_path, flash: {error: 'Please choose your institution to log in.'}
     end
     @institution = Institution.find(session[:institution_id])
-    if @institution.shib_domain
+    if !@institution.shib_domain.blank?
       #initiate shibboleth login sequence
       redirect_to OmniAuth::Strategies::Shibboleth.login_path_with_entity(
           Dmptool2::Application.shibboleth_host, @institution.shib_entity_id)
