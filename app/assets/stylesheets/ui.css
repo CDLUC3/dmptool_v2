@@ -464,15 +464,13 @@ a.icon.delete:hover, a.icon.delete:focus, a.icon.delete:active {
 	border-top: none;
 	width: auto;
 	min-height: 30px;
-	margin: -20px 0 0;
+	margin: -20px 0 20px;
 	padding: 10px;
-	position: relative; }
-.buttons.pagination {
-	margin-bottom: 20px; }
+	position: relative; }=
 .tab-pane .buttons {
 	border: none;
 	border-top: 1px solid #B6B6B7;
-	margin: 0 -15px;
+	margin: 0 -15px 0;
 	padding-bottom: 0; }
 .tab-pane.table .buttons {
 	border: none;
@@ -739,12 +737,10 @@ table a.btn, table button, table button.btn  {
 	padding: 0 9px; }
 .dashboard-nav ul.nav li:first-child a span {
 	border-left: none; }
-	
 /* Dasbhoard Breadcrumbs */
 .dashboard-breadcrumbs.row-fluid {
 	float: left;
 	background: #E9E9E9;
-	height: 50px;
 	margin: 0;
 	padding: 11px 0 10px; }
 .dashboard-breadcrumbs ul.nav {
