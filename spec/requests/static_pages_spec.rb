@@ -2,12 +2,12 @@ require 'spec_helper'
 
 describe "StaticPages" do
 
-  describe "Home page" do
-  	it "should have the content 'Data Management Plan Tool'" do
-  		visit root_path
-  		expect(page).to have_content('Data Management Plan Tool')
-  	end
-  end
+  # describe "Home page" do
+  # 	it "should have the content 'Data Management Plan Tool'" do
+  # 		visit root_path
+  # 		expect(page).to have_content('Data Management Plan Tool')
+  # 	end
+  # end
 
   describe "About page" do
     it "should have  the content 'About the DMPTool' " do
