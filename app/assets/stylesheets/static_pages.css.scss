@@ -5,3 +5,35 @@
 .how_to_use ol, .data_management_plans ol {
 	list-style-type: none;
 }
+
+div.samples {
+  margin-bottom:0.5em;
+}
+
+div.search_area {
+  float: right;
+  width: 300px;
+  position: relative;
+}
+
+div.search_area form {
+  display: inline;
+}
+
+div.search_area form input {
+  display: inline;
+}
+
+div.search_area form input#q {
+  display: inline;
+  padding-left: 25px;
+  width: 150px;
+}
+
+div#searcher{
+  position: absolute;
+  z-order: 5;
+  left:6px;
+  top:5px;
+  
+}

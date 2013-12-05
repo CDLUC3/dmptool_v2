@@ -1,0 +1,33 @@
+<h1>Funder Requirements</h1>
+
+<div>
+	<div class="search_area">
+		<%= form_tag('', {:method => :get}) do %>
+		  <div id="searcher"><i class="icon-search"></i></div>
+			<%= search_field_tag(:q, params[:q]) %>
+			<%= submit_tag('Search') %>
+		<% end %>
+	</div>
+	<p>
+		Use the A-Z links below to narrow down the list by institution or
+		use the search box to search for specific DMP Templates.  Sample
+		plans are not necessarily from the funder.
+	</p>
+</div>
+
+<div>
+	<%= link_to('A-F', { :s => 'a', :e => 'f' }) %> |
+	<%= link_to('G-L', { :s => 'g', :e => 'l' }) %> |
+	<%= link_to('M-S', { :s => 'm', :e => 's' }) %> |
+	<%= link_to('T-Z', { :s => 't', :e => 'z' }) %> |
+	<%= link_to('View All') %>
+</div>
+
+<%= render partial: 'guidance_table', :locals => {templates: @public_templates, public: true} %>
+
+<% if defined?(@institution_templates) && @institution_templates.length > 0 %>
+	<p>Below is a list of DMP templates available in your institution</p>
+	
+	<%= render partial: 'guidance_table', :locals => {templates: @institution_templates, public: false} %>
+<% end %>
+

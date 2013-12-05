@@ -1,0 +1,27 @@
+<script type="text/javascript" src="http://static.jstree.com/v.1.0pre/jquery.jstree.js"></script>
+<%= stylesheet_link_tag 'style' %>
+<p>
+	This is to test the js tree
+</p>
+
+<div id="demo1">
+	<%= render partial: 'tree_level', :locals => { :requirements => @root_requirements } %>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#demo1").jstree({
+			"plugins" : ["themes", "html_data"]
+		});
+	});
+	$(document).ready(function() {
+		setTimeout(function() {
+			//alert('timed out');
+			$('a').click(function(event) {
+				event.preventDefault();
+				alert($(this).html());
+			});
+		}, 2000);
+	});
+
+</script>

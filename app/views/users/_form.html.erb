@@ -1,56 +1,42 @@
-<%= form_for(@user, class: 'form-horizontal') do |f| %>
-
+<%= form_for @user, html: { class: 'form-horizontal' } do |f| %>
   <% if @user.errors[:base].any? %>
-    <div class = "alert alert-error form-errors">
-      <%= @user.errors[:base].each do |msg| %>
-        <p><%= msg %></p>
+    <div class="alert alert-error form-errors">
+      <% @user.errors[:base].each do |msg| %>
+        <p>
+          <%= msg %>
+        </p>
       <% end %>
     </div>
   <% end %>
-
+  <% unless @user.new_record? %>
   <div class="tabbable">
-
-    <% unless @user.new_record? %>
       <ul class="nav nav-tabs">
         <li class="active">
-          <a href="#tab1" data-toggle="tab">Personal Information</a>
+          <%= link_to 'Personal Information', '#tab1', 'data-toggle' => 'tab' %>
         </li>
-        <li><a href="#tab2" data-toggle="tab">Notification Preferences</a></li>
+        <li>
+          <%= link_to 'Notification Preferences', '#tab2', 'data-toggle' => 'tab' %>
+        </li>
       </ul>
-    <%end%>
-
     <div class="tab-content">
       <div class="tab-pane active" id="tab1">
-        <%= render 'personal', f: f%>
+        <%= render 'personal', f: f %>
+        <div class="buttons">
+			  	<%= f.submit 'Save', :class => 'btn' %>
+			  	<%= link_to 'Cancel', edit_user_path(@user), :class => 'btn' %>
+	  		</div>
       </div>
       <div class="tab-pane" id="tab2">
         <%= render 'notifications' unless @user.new_record? %>
       </div>
     </div>
-
   </div>
-
-  <div class="controls">
-    <div class='actions'>
-      <% if @user.new_record? %>
-        <div class='btn'><%= f.submit 'Create Account' %></div>
-      <%end%>
-      <% unless @user.new_record? %>
-        <div class='btn'><%= f.submit 'Save' %></div>
-        <div class='btn'><%= link_to 'Cancel', edit_user_path(@user) %></div>
-      <%end%>
-  </div>
-
+  <% end %>
+  <% if @user.new_record? %>
+  	<%= render 'personal', f: f %>
+	  <p><%= f.submit 'Create Account', :class => 'btn' %></p>
+  <% end %>
 <% end %>
-
-
-
-
-
-
-
-
-
-
-
-
+<% if @user.new_record? %>
+<p>By clicking <strong>Create Account</strong>,you agree to our <%= link_to 'Terms of Use', '#', :title => "DMPTool Terms of Use", :target => "_blank" %> and <%= link_to 'Privacy Policy', '#', :title => "DMPTool Privacy Policy", :target => "_blank" %>.</p>
+<% end %>

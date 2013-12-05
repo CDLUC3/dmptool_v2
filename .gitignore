@@ -15,3 +15,13 @@ ehthumbs.db
 Thumbs.db
 tmp/
 config/deploy.yml
+
+
+public/uploads
+public/uploads/
+public/uploads/*
+public/uploads/*/
+
+
+
+>>>>>>> e5f67e0e012d616f4c906bd9f0043c83aa36bbcf

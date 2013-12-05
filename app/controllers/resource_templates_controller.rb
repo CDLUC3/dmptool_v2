@@ -1,18 +1,32 @@
 class ResourceTemplatesController < ApplicationController
+
   before_filter :get_requirements_template
   before_action :set_resource_template, only: [:show, :edit, :update, :destroy, :toggle_active, :template_details]
+  before_action :check_resource_editor_access, only: [:show, :edit, :update, :destroy, :template_details, :index]
 
   # GET /resource_templates
   # GET /resource_templates.json
   def index
     case params[:scope]
-    when "active"
-      @resource_templates = ResourceTemplate.active.page(params[:page]).per(5)
-    when "inactive"
-      @resource_templates = ResourceTemplate.inactive.page(params[:page]).per(5)
-    else
-      @resource_templates = ResourceTemplate.order(created_at: :asc).page(params[:page]).per(5)
+      when "all"
+        @resource_templates = ResourceTemplate.all.page(params[:page])
+      when "all_limited"
+        @resource_templates = ResourceTemplate.all.page(params[:page]).per(5)
+      when "active"
+        @resource_templates = ResourceTemplate.where(active: true).page(params[:page]).per(5)
+      when "inactive"
+        @resource_templates = ResourceTemplate.where(active: false).page(params[:page]).per(5)
+      else
+        @resource_templates = ResourceTemplate.all.page(params[:page]).per(5)
     end
+
+    if !safe_has_role?(Role::DMP_ADMIN)
+      @resource_templates = @resource_templates.
+                            where(institution_id: [current_user.institution.subtree_ids])
+
+    end
+    resource_editors
+    count
   end
 
   # GET /resource_templates/1
@@ -25,10 +39,6 @@ class ResourceTemplatesController < ApplicationController
     @resource_template = ResourceTemplate.new
   end
 
-  def template_information
-    @resource_templates = ResourceTemplate.page.per(5)
-  end
-
   # GET /resource_templates/1/edit
   def edit
   end
@@ -37,7 +47,6 @@ class ResourceTemplatesController < ApplicationController
   # POST /resource_templates.json
   def create
     @resource_template = ResourceTemplate.new(resource_template_params)
-
     respond_to do |format|
       if @resource_template.save
         format.html { redirect_to edit_resource_template_path(@resource_template), notice: 'Resource template was successfully created.' }
@@ -73,13 +82,6 @@ class ResourceTemplatesController < ApplicationController
     end
   end
 
-  def copy_existing_template
-    id = params[:resource_template].to_i unless params[:resource_template].blank?
-    resource_template = ResourceTemplate.where(id: id).first
-    @resource_template = resource_template.dup
-    render action: "copy_existing_template"
-  end
-
   def toggle_active
     @resource_template.toggle!(:active)
     respond_to do |format|
@@ -87,28 +89,44 @@ class ResourceTemplatesController < ApplicationController
     end
   end
 
-  # def add_role
-  #   emails = params[:email].split(/,\s*/)
-  #   role  = Role.where(name: 'Resource Editor').first
-  #   # emails.each do |email|
-  #   #   user = User.where(email: email).first
-  #   #   user.roles << role
-  #   # end
-  #   redirect_to :back,  notice: "Added Resource Editor role to the User emails specified"
-  # end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_resource_template
       @resource_template = ResourceTemplate.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+
     def resource_template_params
       params.require(:resource_template).permit(:institution_id, :resource_template_id, :requirements_template_id, :name, :active, :mandatory_review, :contact_info, :contact_email, :review_type, :widget_url)
     end
 
     def get_requirements_template
-      @requirements_templates = RequirementsTemplate.order(created_at: :asc).page(params[:page]).per(5)
+      if !safe_has_role?(Role::DMP_ADMIN)
+        @requirements_templates = RequirementsTemplate.where.any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public).order(created_at: :asc).page(params[:page]).per(5)
+      else
+        @requirements_templates = RequirementsTemplate.all.order(created_at: :asc).page(params[:page]).per(5)
+      end
+    end
+
+    def resource_editors
+      @user_ids = Authorization.where(role_id: 2).pluck(:user_id) #All the Resources Editors
+      if safe_has_role?(Role::DMP_ADMIN)
+        @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
+      else
+        @users = User.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).order('created_at DESC').page(params[:page]).per(10)
+      end
+    end
+
+    def count
+      if current_user.has_role?(Role::DMP_ADMIN)
+        @all = ResourceTemplate.all.count
+        @active = ResourceTemplate.active.count
+        @inactive = ResourceTemplate.inactive.count
+      else
+        @institution = current_user.institution
+        @all = @institution.resource_templates_deep.all.count
+        @active = @institution.resource_templates_deep.active.count
+        @inactive = @institution.resource_templates_deep.inactive.count
+      end
     end
 end

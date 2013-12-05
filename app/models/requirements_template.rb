@@ -1,9 +1,10 @@
 class RequirementsTemplate < ActiveRecord::Base
 
+  
   belongs_to :institution
   has_many :resource_templates
   has_many :requirements
-  has_many :tags
+  has_many :tags, inverse_of: :requirements_template
   has_many :additional_informations, inverse_of: :requirements_template
   has_many :sample_plans, inverse_of: :requirements_template
 
@@ -24,6 +25,8 @@ class RequirementsTemplate < ActiveRecord::Base
   scope :institutional_visibility, -> { where(visibility: :institutional) }
   scope :public_visibility, -> { where(visibility: :public) }
 
+
+
   after_initialize :default_values
   after_initialize :version_number
 
@@ -37,5 +40,20 @@ class RequirementsTemplate < ActiveRecord::Base
     else
       self.version = RequirementsTemplate.where(id: parent_id).version + 1
     end
+  end
+  
+  def self.letter_range_by_institution(s, e)
+    #add as a scope where s=start and e=end letter
+    joins(:institution).where("full_name REGEXP ?", "^[#{s}-#{e}]")
+  end
+  
+  def self.search_terms(terms)
+    #searches both institution name and template name
+    items = terms.split
+    conditions1 = items.map{|item| "full_name LIKE ?" }
+    conditions2 = items.map{|item| "name LIKE ?" }
+    conditions = "( (#{conditions1.join(' AND ')})" + ' OR ' + "(#{conditions2.join(' AND ')}) )"
+    values = items.map{|item| "%#{item}%" }
+    joins(:institution).where(conditions, *(values * 2) )
   end
 end

@@ -1,0 +1,17 @@
+<%#this partial requires to pass role_type as a local variable%>
+<div id="dialog_form">
+	<%= form_tag(add_authorization_path, method: :post, remote: true, html: { class: "form-horizontal"}) do %>
+	<%= hidden_field_tag 'role_id', role_type%>
+	<%= hidden_field_tag 'p', p%>
+		<div class="control-group">
+			<%= label_tag :email, role_name + " Email", class: "control-label" %>
+			<div class="controls">
+				<%= text_field_tag(:email, nil, placeholder: "Enter " + role_name + " email; multiple emails divided by comma ", class:"input-block-level") %>
+			</div>
+		</div>
+		<div class="actions pull-right">
+			<%= submit_tag "Submit", class: "btn"  %>
+			<%= button_tag "Cancel", type: :reset, class: "btn", id: "cancel_action" %>
+		</div>
+		<% end %>
+</div>

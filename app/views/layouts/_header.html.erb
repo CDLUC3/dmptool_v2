@@ -1,26 +1,24 @@
-<header class='navbar'>
-  <div class='navbar-inner'>
-    <div class='container'>
-      <nav>
-      	<%= link_to image_tag('dmp_logo.png'), root_path, :id => 'logo' %>
-        <ul class='nav pull-right'>
-          <!--<li><%= link_to 'Home', root_path %></li>-->
-          <li><%= link_to 'About', '#' %></li>
-          <li><%= link_to 'DMP Guidance', '#' %></li>
-          <li><%= link_to 'Example DMPs', '#' %></li>
-          <li><%= link_to 'DMPTool News', '#' %></li>
-          <li><%= link_to 'Help', help_path %></li>
-          <li><%= link_to 'Contact Us', contact_path %></li>
-<<<<<<< HEAD
-          <li id=login><%= link_to login_path do %>
-          		<span></span>Log In
-          	<% end %>
-          </li>
-=======
-          <li><%= link_to 'Logout', logout_path if current_user %></li>
->>>>>>> development
-        </ul>
-      </nav>
-    <div>
-  </div>
+<header class="header container">
+	<%= link_to(image_tag("dmp_logo.png", :alt => "DMPTOOL", :width => "146", :height => "25"), root_path, :class => "logo", :title => "DMPTool Home") %>
+	<div class="welcome">
+		<p><%= "Welcome!" unless current_user.nil? %>
+			<%= content_tag(:strong, "#{current_user.full_name}") unless current_user.nil? %></p>
+	</div>
+  <nav class="navbar">
+    <ul class="nav">
+      <li><%= link_to "Home", root_path, :title => "Home" %></li>
+      <li><%= link_to "About", about_path, :title => "About" %></li>
+      <li><%= link_to "DMP Requirements", guidance_path, :title => "DMP Requirements" %></li>
+      <li><%= link_to "Sample DMPs", "#", :title => "Sample DMPs" %></li>
+      <li><%= link_to "News", "#", :title => "News" %></li>
+      <li><%= link_to "Help", help_path, :title => "Help" %></li>
+      <li><%= link_to "Contact Us", contact_path, :title => "Contact Us" %></li>
+			<% if current_user %>
+      	<li><%= link_to "Dashboard", dashboard_show_path, :title => "Dashboard" %></li>
+			<% end %>
+			<li class="login">
+	      <%= link_to(content_tag(:span, "", :class => "icon login") + "Log In", choose_institution_path) if !current_user %>
+	      <%= link_to(content_tag(:span, "", :class => "icon login") + "Log Out", logout_path) if current_user %></li>
+    </ul>
+  </nav>
 </header>

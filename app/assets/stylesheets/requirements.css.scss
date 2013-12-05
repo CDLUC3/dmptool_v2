@@ -2,7 +2,9 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-ul#requirements_group {
-	list-style-type: none;
-	margin-left: 30px;
+.nested_requirements {
+  margin-left: 30px;
+}
+.nested_requirements .nested_requirements .nested_requirements .nested_requirements .nested_requirements .nested_requirements{
+  margin-left: 0;
 }

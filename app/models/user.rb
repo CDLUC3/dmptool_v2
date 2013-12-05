@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
 
+  validates :email, presence: true
+  acts_as_paranoid
+
   serialize :prefs, Hash
 
   belongs_to :institution
@@ -9,6 +12,14 @@ class User < ActiveRecord::Base
   has_many :authentications
   has_many :authorizations
   has_many :roles, through: :authorizations
+  
+  has_many :owned_plans, -> { where user_plans: { owner: true} }, through: :user_plans,
+  source: :plan, class_name: 'Plan'
+  
+  has_many :coowned_plans, -> { where user_plans: { owner: false} }, through: :user_plans,
+  source: :plan, class_name: 'Plan'
+  
+  accepts_nested_attributes_for :user_plans
 
   attr_accessor :ldap_create, :password, :password_confirmation
 
@@ -37,21 +48,53 @@ class User < ActiveRecord::Base
     end
   end
   
-  def self.from_omniauth(auth)
-    where(email: auth[:info][:email]).first || create_from_omniauth(auth)
+  def self.from_omniauth(auth, institution_id)
+    where(email: auth[:info][:email]).first || create_from_omniauth(auth, institution_id)
   end
   
-  def self.create_from_omniauth(auth)
+  def self.create_from_omniauth(auth, institution_id)
     create! do |user|
       user.email = auth[:info][:email]
       user.first_name = auth[:info][:first_name]
       user.last_name = auth[:info][:last_name]
       user.login_id = auth[:info][:nickname]
+      user.institution_id = institution_id
     end
   end
 
   def full_name
     [first_name, last_name].join(" ")
+  end
+  
+  
+  def plans_by_state(state)
+    #get all plans this user has in the state specified
+    Plan.joins(:current_state, :user_plans).
+          where(:user_plans => { :user_id => self.id }).
+          where(:plan_states => { :state => state})
+  end
+  
+  def unique_plan_states
+    #returns a list of the unique plan states that this user has
+    Plan.joins(:current_state, :user_plans).
+        where(:user_plans => { :user_id => self.id }).
+        select('plan_states.state').distinct.pluck(:state)
+  end
+
+  def role_ids
+    @role_id ||= self.authorizations.pluck(:role_id) #caches role ids
+  end
+  
+  def role_names
+    @role_names ||= self.roles.pluck(:name)
+  end
+
+  def has_role?(role_id)
+    role_ids.include?(role_id)
+  end
+  
+  def has_role_name?(role_name)
+    role_names.include?(role_name)
   end
 
   private

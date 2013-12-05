@@ -10,18 +10,19 @@
   <body>
   <%= render 'layouts/header' %>
 
-  <div class='container'>
-  	<%= render 'layouts/dashboard_header' unless controller_name == ('static_pages' ||  'user_sessions') %>
+  <div class="container">
+  	<% if current_user %>
+  		<%= render 'layouts/dashboard_header' unless ['static_pages', 'user_sessions'].include?(controller_name) && !['guidance'].include?(action_name) %>
+  	<% end %>
     <% flash.each do |key, value| %>
       <div class="alert alert-#{key}">
-        <%= value %>
+        <p><%= value %></p>
       </div>
     <% end %>
 
     <%= yield %>
   </div>
-
+  
   <%= render 'layouts/footer' %>
-  <%= debug(params) if Rails.env.development? %>
   </body>
 </html>

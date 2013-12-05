@@ -3,15 +3,18 @@ Dmptool2::Application.routes.draw do
  get "dashboard/show"
  root 'static_pages#home'
  get 'about', to: 'static_pages#about'
+ get 'guidance', to: 'static_pages#guidance'
  get 'help', to: 'static_pages#help'
  get 'contact', to: 'static_pages#contact'
  get 'logout', to: 'user_sessions#destroy'
  get 'dashboard', to: 'dashboard#show', as: 'dashboard'
+ get 'dashboard/test', to: 'dashboard#test'
 
   resources :requirements_templates do
     resources :requirements
     member do
       get :toggle_active
+      get :basic
     end
     resources :sample_plans
     resources :additonal_informations
@@ -24,22 +27,34 @@ Dmptool2::Application.routes.draw do
     end
   end
 
+  resources :users do
+    get :edit_roles, :on => :member
+  end
+
+  resources :roles
   resources :plans
   resources :institutions
-  resources :users
-  resources :roles
+  resources :authorizations
 
-  get 'user_sessions/login', to: 'user_sessions#login', as: 'login'
+  match 'user_sessions/login', to: 'user_sessions#login', as: 'login', :via => [:get, :post]
+  get 'user_sessions/institution', to: 'user_sessions#institution', as: 'choose_institution'
   post '/auth/:provider/callback', to: 'user_sessions#create'
   get '/auth/failure', to: 'user_sessions#failure'
 
   get  'requirements_template_information', to: 'requirements_templates#template_information'
   get  'copy_existing_requirements_template', to: 'requirements_templates#copy_existing_template'
 
-  get  'resource_template_information', to: 'resource_templates#template_information'
-  get  'copy_existing_resource_template', to: 'resource_templates#copy_existing_template'
+  get  'remove_resource_editor_role', to: 'resource_templates#remove_resource_editor_role'
+  get  'remove_requirements_editor_role', to: 'requirements_templates#remove_requirements_editor_role'
 
   post 'add_role', to: 'resource_templates#add_role'
+  post 'add_requirements_editor_role', to: 'requirements_templates#add_requirements_editor_role'
+
+  post 'add_authorization', to: 'authorizations#add_authorization'
+  get 'remove_authorization', to: 'authorizations#remove_authorization'
+
+  get  'edit_user_roles', to: 'users#edit_user_roles'
+  post  'update_user_roles', to: 'users#update_user_roles'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

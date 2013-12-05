@@ -1,10 +1,12 @@
-<table class="table">
+<h5>Institutional Adminitrators</h5>
+<hr/>
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Name</th>
       <th>Username</th>
       <th>Email</th>
-      <th>Remove</th>
+      <th class="span1">Revoke Role</th>
     </tr>
   </thead>
   <tbody>
@@ -13,10 +15,18 @@
           <td><%= user.full_name %></td>
           <td><%= user.login_id %></td>
           <td><%= user.email %></td>
-          <td><%= link_to raw('<i class="icon-remove icon-white"></i>'), user, method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn-danger' %></td>
+          <td class="span1"><%= link_to raw(''), remove_authorization_path(user_id: user.id, role_id: 5, p: 'institutions'), :class => "icon remove" , :data => { :confirm => 'Are you sure?' }  %></td>
+          
       </tr>
     <% end %>
    </tbody>
 </table>
-<br>
-<%= link_to 'Add New Institutional Administrator', new_user_path %>
+
+<div class="buttons">
+	<%= link_to 'Add New Institutional Administrator', add_authorization_path, method: :post, id: 'add_authorization_view', :class => 'btn btn-green'%>
+</div>
+
+<%= render partial: "/authorizations/add_authorization" , :locals => { :role_type => 5, :role_name => 'Institutional Administrator', :p => 'institutions'}%>
+
+
+

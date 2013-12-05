@@ -1,26 +1,55 @@
+require 'rtf'
+
 class RequirementsTemplatesController < ApplicationController
   before_action :set_requirements_template, only: [:show, :edit, :update, :destroy, :toggle_active]
+  before_action :check_DMPTemplate_editor_access, only: [:show, :edit, :update, :destroy, :index]
 
   # GET /requirements_templates
   # GET /requirements_templates.json
   def index
     case params[:scope]
-    when "active"
-      @requirements_templates = RequirementsTemplate.active.page(params[:page]).per(5)
-    when "inactive"
-      @requirements_templates = RequirementsTemplate.inactive.page(params[:page]).per(5)
-    when "public"
-      @requirements_templates = RequirementsTemplate.public_visibility.page(params[:page]).per(5)
-    when "institutional"
-      @requirements_templates = RequirementsTemplate.institutional_visibility.page(params[:page]).per(5)
-    else
-      @requirements_templates = RequirementsTemplate.order(created_at: :asc).page(params[:page]).per(5)
+      when "all"
+        @requirements_templates = RequirementsTemplate.all.page(params[:page])
+      when "all_limited"
+        @requirements_templates = RequirementsTemplate.all.page(params[:page]).per(5)
+      when "active"
+        @requirements_templates = RequirementsTemplate.active.page(params[:page]).per(5)
+      when "inactive"
+        @requirements_templates = RequirementsTemplate.inactive.page(params[:page]).per(5)
+      when "public"
+        @requirements_templates = RequirementsTemplate.public_visibility.page(params[:page]).per(5)
+      when "institutional"
+        @requirements_templates = RequirementsTemplate.institutional_visibility.page(params[:page]).per(5)
+      else
+        @requirements_templates = RequirementsTemplate.order(created_at: :asc).page(params[:page]).per(5)
     end
+    if !safe_has_role?(Role::DMP_ADMIN)
+      @requirements_templates = @requirements_templates.where.
+                                any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public)
+    end
+
+    template_editors
+    count
   end
 
   # GET /requirements_templates/1
   # GET /requirements_templates/1.json
   def show
+  end
+
+  # GET /requirements_templates/1/basic and basic_requirements_template_path
+  # shows a basic template (as RTF for now)
+  def basic
+    @rt = RequirementsTemplate.find(params[:id])
+
+    respond_to do |format|
+      format.rtf {
+        headers["Content-Disposition"] = "attachment; filename=\"" + sanitize_for_filename(@rt.name) + ".rtf\""
+        render :layout => false,
+               :content_type=> 'application/rtf'
+               #:action => 'basic.rtf.erb',
+      }
+    end
   end
 
   # GET /requirements_templates/new
@@ -84,7 +113,13 @@ class RequirementsTemplatesController < ApplicationController
 
   def copy_existing_template
     id = params[:requirements_template].to_i unless params[:requirements_template].blank?
-    requirements_template = RequirementsTemplate.where(id: id).first
+
+    if !safe_has_role?(Role::DMP_ADMIN)
+      requirements_template = RequirementsTemplate.
+                            where(id: id, institution_id: [current_user.institution.subtree_ids]).first
+    else
+      requirements_template = RequirementsTemplate.where(id: id).first
+    end
     @requirements_template = requirements_template.dup include: [:resource_templates, :sample_plans, :additional_informations]
     render action: "copy_existing_template"
   end
@@ -107,4 +142,30 @@ class RequirementsTemplatesController < ApplicationController
       params.require(:requirements_template).permit(:institution_id, :name, :active, :start_date, :end_date, :visibility, :version, :parent_id, :review_type, tags_attributes: [:id, :requirements_template_id, :tag, :_destroy],
         additional_informations_attributes: [:id, :requirements_template_id, :url, :label, :_destroy], sample_plans_attributes: [:id, :requirements_template_id, :url, :label, :_destroy])
     end
+
+    def template_editors
+      @user_ids = Authorization.where(role_id: 3).pluck(:user_id) #All the DMP Template Editors
+      if safe_has_role?(Role::DMP_ADMIN)
+        @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
+      else
+        @users = User.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).order('created_at DESC').page(params[:page]).per(10)
+      end
+    end
+
+    def count
+    if current_user.has_role?(Role::DMP_ADMIN)
+      @all = RequirementsTemplate.all.count
+      @active = RequirementsTemplate.active.count
+      @inactive = RequirementsTemplate.inactive.count
+      @public = RequirementsTemplate.public_visibility.count
+      @institutional = RequirementsTemplate.institutional_visibility.count
+    else
+      @institution = current_user.institution
+      @all = @institution.requirements_templates_deep.all.count
+      @active = @institution.requirements_templates_deep.active.count
+      @inactive = @institution.requirements_templates_deep.inactive.count
+      @public = @institution.requirements_templates_deep.public_visibility.count
+      @institutional = @institution.requirements_templates_deep.institutional_visibility.count
+    end
+  end
 end

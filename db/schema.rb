@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131025100957) do
+ActiveRecord::Schema.define(version: 20131114000149) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -35,6 +35,8 @@ ActiveRecord::Schema.define(version: 20131025100957) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "authorizations", ["user_id", "role_id"], name: "index_authorizations_on_user_id_and_role_id", unique: true, using: :btree
 
   create_table "comments", force: true do |t|
     t.integer  "user_id"
@@ -66,6 +68,7 @@ ActiveRecord::Schema.define(version: 20131025100957) do
     t.datetime "updated_at"
     t.string   "logo"
     t.string   "ancestry"
+    t.datetime "deleted_at"
   end
 
   add_index "institutions", ["ancestry"], name: "index_institutions_on_ancestry", using: :btree
@@ -75,14 +78,6 @@ ActiveRecord::Schema.define(version: 20131025100957) do
     t.string   "group"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "permission_groups", force: true do |t|
-    t.integer  "group"
-    t.integer  "institution_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "authorization_id"
   end
 
   create_table "plan_states", force: true do |t|
@@ -101,6 +96,7 @@ ActiveRecord::Schema.define(version: 20131025100957) do
     t.enum     "visibility",               limit: [:institutional, :public, :public_browsable]
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "current_plan_state_id"
   end
 
   create_table "published_plans", force: true do |t|
@@ -162,6 +158,7 @@ ActiveRecord::Schema.define(version: 20131025100957) do
     t.integer  "resource_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "text"
   end
 
   create_table "responses", force: true do |t|
@@ -214,6 +211,8 @@ ActiveRecord::Schema.define(version: 20131025100957) do
     t.datetime "updated_at"
     t.string   "cookie_salt"
     t.string   "login_id"
+    t.boolean  "active",           default: true
+    t.datetime "deleted_at"
   end
 
 end

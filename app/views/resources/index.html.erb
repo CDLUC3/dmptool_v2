@@ -1,0 +1,38 @@
+<h5> Resource Template Details </h5>
+<hr/>
+<div class="row-fluid">
+  <div class="span5">
+    <fieldset class="template_outline">
+      <strong>Selected DMP Template</strong>
+      <p><%= link_to @requirements_template.name, edit_requirements_template_path(@requirements_template) %></p>
+      <hr/>
+      <div id="requirements_tree">
+        <%= render partial: 'requirements_tree', locals: { requirements: @requirements } %>
+      </div>
+    </fieldset>
+    <br/>
+    <fieldset class="template_status">
+      <strong>Resource Template Status:</strong>
+      <b id="status_<%= @resource_template.id %>">
+        <%= @resource_template.active ? "Active" : "Inactive" %>
+      </b>
+      <hr/>
+      <%= link_to activate_link_text(@resource_template)+ ' ' +'Template',
+        toggle_active_resource_template_path(@resource_template), remote: true, id: "activate_link_#{@resource_template.id}" %>
+      <br/>
+      <%= link_to 'Delete Template', @resource_template, method: :delete, data: { confirm: 'Are you sure?' } %>
+    </fieldset>
+  </div>
+
+  <div class="span7">
+    <strong>Resources</strong>
+    <p> Click on a Requirement to view the list of Related Resources </p>
+    <% @resources.each do |resource| %>
+    <tr>
+      <td><%= render :partial => 'form', :locals => {resource: resource} %></td>
+    </tr>
+    <% end %>
+    <%= link_to 'Add New Resource', new_resource_template_resource_path(@resource_template, requirement_id: params[:requirement_id]), id: "add_new_resource" %>
+  </div>
+
+</div>

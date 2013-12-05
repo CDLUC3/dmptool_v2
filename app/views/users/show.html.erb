@@ -1,0 +1,34 @@
+<p id="notice">
+  <%= notice %>
+</p>
+<p>
+  <b>Institution:</b>
+  <%= @user.institution_id %>
+</p>
+<p>
+  <b>Email:</b>
+  <%= @user.email %>
+</p>
+<p>
+  <b>First name:</b>
+  <%= @user.first_name %>
+</p>
+<p>
+  <b>Last name:</b>
+  <%= @user.last_name %>
+</p>
+<p>
+  <b>Token:</b>
+  <%= @user.token %>
+</p>
+<p>
+  <b>Token expiration:</b>
+  <%= @user.token_expiration %>
+</p>
+<p>
+  <b>Prefs:</b>
+  <%= @user.prefs %>
+</p>
+<%= link_to 'Edit', edit_user_path(@user) %>
+\|
+<%= link_to 'Back', users_path %>

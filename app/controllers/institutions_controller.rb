@@ -1,18 +1,26 @@
 class InstitutionsController < ApplicationController
   before_action :set_institution, only: [:show, :edit, :update, :destroy]
   before_action :check_for_cancel, :update => [:create, :update, :destroy]
-  before_filter :collection_for_parent_select
+  before_filter :populate_institution_select_list
+  before_action :check_institution_admin_access
 
   # GET /institutions
   # GET /institutions.json
   def index
-    @institutions = Institution.all
+
+    if safe_has_role?(Role::DMP_ADMIN)
+      @institutions = Institution.all
+    else
+      @institutions = Institution.where(id: [current_user.institution.subtree_ids])
+    end
+    
     @institution = Institution.new(:parent_id => params[:parent_id])
 
-    @current_user = current_user
-    @current_institution = @current_user.institution
-    @institution_users = @current_institution.users
-
+    @current_institution = current_user.institution
+    
+    @institution_users = institutional_admins
+    
+    @categories.delete_if {|i| i[1] == @institution.id}
   end
 
   # GET /institutions/1
@@ -22,11 +30,13 @@ class InstitutionsController < ApplicationController
 
   # GET /institutions/new
   def new
-    @institution = Institution.new(:parent_id => params[:parent_id])
+    @current_institution = Institution.new(:parent_id => params[:parent_id])
   end
 
   # GET /institutions/1/edit
   def edit
+    @current_institution = Institution.find(params[:id])
+    #@institution = Institution.find(params[:id])
   end
 
   # POST /institutions
@@ -68,12 +78,16 @@ class InstitutionsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-  def collection_for_parent_select
-    @categories = ancestry_options(Institution.unscoped.arrange(order: :full_name)){|i| "#{'-' * i.depth} #{i.full_name}" }
+  
+  def populate_institution_select_list
+    @categories = InstitutionsController.institution_select_list
   end
 
-  def ancestry_options(items, &block)
+  def self.institution_select_list
+    ancestry_options(Institution.unscoped.arrange(order: :full_name)){|i| "#{'-' * i.depth} #{i.full_name}" }
+  end
+
+  def self.ancestry_options(items, &block)
     return ancestry_options(items){ |i| "#{'-' * i.depth} #{i.full_name}" } unless block_given?
 
     result = []
@@ -83,6 +97,23 @@ class InstitutionsController < ApplicationController
       result += ancestry_options(sub_items, &block)
     end
     result
+  end
+
+  def toggle_active
+    @resource_template.toggle!(:active)
+    respond_to do |format|
+      format.js
+    end
+  end
+
+
+  def institutional_admins
+    @user_ids = Authorization.where(role_id: 5).pluck(:user_id) #All the institutional_admins
+    if safe_has_role?(Role::DMP_ADMIN)
+      @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
+    else     
+      @users = User.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).order('created_at DESC').page(params[:page]).per(10)
+    end  
   end
 
   private
