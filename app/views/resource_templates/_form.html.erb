@@ -5,7 +5,7 @@
 	</ul>
 	<div class="tab-content">
 		<div class="tab-pane active" id="tab1">
-			  <%= form_for @resource_template, :class => 'form form-horizontal' do |f| %>
+			  <%= form_for @resource_template, html: { :class => 'form-horizontal' } do |f| %>
 			    <% if @resource_template.errors.any? %>
 			      <div id="error_explanation">
 			        <h2><%= "#{pluralize(@resource_template.errors.count, "error")} prohibited this resource template from being saved:" %></h2>
@@ -17,10 +17,8 @@
 			      </div>
 			    <% end %>
 					
-			    <h5>Associated DMP Template</h5>
-			    <hr/>
 			    <div class="control-group">
-			      <%= f.label :dmp_template, "DMP Template", :class => "control-label" %>
+			      <%= f.label :dmp_template, "Select DMP Template", :class => "control-label" %>
 			      <div class="controls">
 			      <% if @resource_template.requirements_template_id.nil? %>
 			        <%= text_field_tag(:selected_requirement_template, nil, id: "selected_requirement_template_name", :class => "input-xlarge") %>

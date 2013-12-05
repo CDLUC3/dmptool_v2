@@ -39,7 +39,7 @@ h1 {
 	font-size: 1.5em; }
 h2 {
 	color: #516935;
-	font-size: 1.125em;
+	font-size: 1.25em;
 	text-align: left; }
 h3 {
 	color: #4C4C4E;
@@ -62,11 +62,11 @@ p {
 ul, ol {
 	line-height: 1.7em;
 	margin: 0 0 20px 25px; }
-ul li {
+ul > li {
 	list-style: none; }
-ul li:before {
+ul > li:before {
 	content: "\00BB\0020"; }
-ol li {
+ol > li {
 	list-style: decimal; }
 ul ul, ol ol {
 	font-size: 1em; }
@@ -145,7 +145,7 @@ input.input-large {
 	padding: 6px 9px 5px; }
 .table-scope a {
 	color: #4C4C4E; }
-.table-scope a.current {
+.table-scope a .current {
 	color: #516935;
 	font-weight: bold; }
 table.table {
@@ -384,7 +384,7 @@ li.login a:hover span.icon.login, li.login a:focus span.icon.login, li.login a:a
 a.icon.delete {
 	background: none;
 	color: #DA0049 !important;
-	font-size: 0.75em;
+	font-size: 0.7em;
 	vertical-align: middle;
 	line-height: 16px;
 	padding-left: 20px; }
@@ -441,8 +441,7 @@ a.icon.delete:hover, a.icon.delete:focus, a.icon.delete:active {
 .icon.inst {
 	background-position: -180px 0; width: 20px; height: 15px; }
 .institution .icon.inst {
-	position: static;
-}
+	position: static; }
 .icon.inst-domain {
 	background-position: 0 -80px; width: 30px; height: 25px; }
 .icon.inst-contact {
@@ -466,7 +465,7 @@ a.icon.delete:hover, a.icon.delete:focus, a.icon.delete:active {
 	min-height: 30px;
 	margin: -20px 0 20px;
 	padding: 10px;
-	position: relative; }=
+	position: relative; }
 .tab-pane .buttons {
 	border: none;
 	border-top: 1px solid #B6B6B7;
@@ -795,7 +794,7 @@ table a.btn, table button, table button.btn  {
 	width: 670px; }
 /* Tab Navigation */
 ul.nav-tabs {
-	margin: 12px 0 0; }
+	margin: 10px 0 0; }
 ul.nav-tabs li:before {
 	content: ""; }
 ul.nav-tabs li {
@@ -851,7 +850,7 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	width: 315px; }
 
 /* Admin Pages */
-h3.dashboard-heading  {
+h1.dashboard-heading, h3.dashboard-heading  {
 	clear: both;
 	-moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -859,6 +858,7 @@ h3.dashboard-heading  {
   box-sizing: border-box;
 	background: #6D6E70;
 	color: #FFFFFF;
+	font-size: 1.125em;
 	text-transform: uppercase;
 	line-height: 43px;
 	width: auto;
@@ -873,10 +873,13 @@ h3.dashboard-heading span.icon {
 	border: 1px solid #C9C9CB;
 	padding: 10px 15px; }
 .requirements_tree_view {
-	font-size: 0.8em;
-	padding-left: 25px; }
+	font-size: 0.8em; }
+.requirements_tree_view ul {
+	margin: 0; }
 .requirements_tree_view ul li:before {
 	content: ""; }
+.requirements_tree_view ul li {
+	margin: 0 0 5px; }
 .requirements_tree_view ul li a:first-child {
 	position: relative;
 	padding-left: 22px; }
