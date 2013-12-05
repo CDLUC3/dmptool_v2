@@ -14,3 +14,4 @@ config/shibboleth.yml
 ehthumbs.db
 Thumbs.db
 tmp/
+config/deploy.yml
