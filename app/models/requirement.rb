@@ -12,10 +12,10 @@ class Requirement < ActiveRecord::Base
   validates :text_brief, presence: true
   validates :requirements_template_id, presence: true
 
-
-  #These don't need to be validated if requirement is not a leaf
+  #These don't need to be validated if it is a requirement group.
   validates :text_full, presence: true, unless: Proc.new { |x| x.is_group? }
   validates :obligation, presence: true, unless: Proc.new { |x| x.is_group? }
+  validates :requirement_type, presence: true, unless: Proc.new { |x| x.is_group? }
 
   def is_group?
     self.group == true

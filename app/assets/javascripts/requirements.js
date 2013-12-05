@@ -30,5 +30,9 @@ $(document).ready(function() {
 		$("#requirement_obligation_optional").prop('checked', false);
   	$("#requirement_text_full, #requirement_requirement_type, #requirement_obligation_mandatory, #requirement_obligation_mandatory_applicable, #requirement_obligation_recommended, #requirement_obligation_optional").prop("disabled", true);
   	$("#if_group").prop('checked', true);
+  	$("#requirement_requirement_type option:selected").remove();
+  	$("#requirement_requirement_type option:selected").remove();
+  	$("#requirement_requirement_type option:selected").remove();
+  	$("#requirement_requirement_type option:selected").remove();
  	}
 });

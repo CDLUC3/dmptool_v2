@@ -5,7 +5,9 @@
 	  <div class="span4">
 	    <div class="tree-view">
 	      <h5>Template Outline</h5>
-	      <%= link_to 'Add Requirements Group', new_requirements_template_requirement_path(@requirements_template, node_type: 'group') %>
+	      <%= link_to 'Add Group', new_requirements_template_requirement_path(@requirements_template, node_type: 'group') %>
+	      <%= link_to 'Add Requirement', new_requirements_template_requirement_path(@requirements_template) %>
+
 	      <hr/>
 	      <div class="requirements_tree_view">
 	        <%= nested_requirements @requirements.arrange(order: :created_at) %>
@@ -13,7 +15,7 @@
 	    </div>
 	    <br/>
 	    <div class="template-status">
-	      <h5>DMP Template Status: 
+	      <h5>DMP Template Status:
 		      <span id="status_<%= @requirements_template.id %>">
 		        <%= @requirements_template.active ? "Active" : "Inactive" %>
 		      </span>
