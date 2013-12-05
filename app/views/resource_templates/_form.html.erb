@@ -65,7 +65,11 @@
         Formal Review Required
         <%= f.radio_button :review_type, :informal_review, class: "radio inline" %>
         Informal Review Required
-        <%= f.radio_button :review_type, :no_review, class: "radio inline", checked: true %>
+        <% unless @resource_template.new_record? %>
+          <%= f.radio_button :review_type, :no_review, class: "radio inline" %>
+        <% else %>
+          <%= f.radio_button :review_type, :no_review, class: "radio inline", checked: true %>
+        <% end %>
         No Review Required
       </div>
     </div>
