@@ -1,4 +1,4 @@
-<h3 class="dashboard-heading"><span class="icon template-resource"></span>Resource Templates</h3>
+<h2 class="dashboard-heading"><span class="icon template-resource"></span>Resource Templates</h2>
 <div class="table-scope">
   <%= link_to(content_tag(:span, "All (#{@all}) ", :class => "current" ), scope: "all_limited") %>
   |
@@ -7,7 +7,7 @@
   <%= link_to(content_tag(:span, "Inactive (#{@inactive}) ", :class => "current"), scope: "inactive") %>
 </div>
 
-<table class="table table-striped table-condensed">
+<table class="table table-striped">
   <thead>
     <tr>
       <th class="span4">Name</th>
@@ -56,7 +56,7 @@
 	<%= link_to "View All", resource_templates_path(:scope => "all"), :method => :get, :class => "btn"%>
 	<%= paginate @resource_templates %>
 </div>
-<%= button_to 'Create Resource template', new_resource_template_path, :method => :get, class: 'btn' %>
+<%= button_to 'Create Resource template', new_resource_template_path, :method => :get, :class => 'btn' %>
 
 <%= render 'remove_resource_editor_role' %>
 

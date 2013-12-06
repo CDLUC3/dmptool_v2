@@ -1,7 +1,7 @@
 <div class="row-fluid">
 	<div class="overview span8">
-		<h3 class="dashboard-heading"><span class="icon overview"></span>Overview</h3>
-		<table class="table table-striped table-condensed">
+		<h2 class="dashboard-heading"><span class="icon overview"></span>Overview</h2>
+		<table class="table table-striped">
 			<thead>
 				<tr>
 					<th>My DMPs</th>
@@ -30,8 +30,8 @@
 		</div>
 		
 		<% if defined? @pending_review %>
-		<h3 class="dashboard-heading"><span class="icon review"></span>DMPs For My Review</h3>
-		<table class="table table-striped table-condensed">
+		<h2 class="dashboard-heading"><span class="icon review"></span>DMPs For My Review</h2>
+		<table class="table table-striped">
 			<tbody>
 				<tr>
 					<td><%= link_to "#{@pending_review} DMPs pending review" %></td>
@@ -45,8 +45,8 @@
 
 
 	<% if defined? @requirements_templates %>
-	<h3 class="dashboard-heading"><span class="icon template-dmp"></span>DMP Templates</h3>
-	<table class="table table-striped table-condensed">
+	<h2 class="dashboard-heading"><span class="icon template-dmp"></span>DMP Templates</h2>
+	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>Within my Institution</th>
@@ -65,8 +65,8 @@
 	</div>
 	<% end %>
 	<% if defined? @resource_templates %>
-	<h3 class="dashboard-heading"><span class="icon template-resouce"></span>Resource Templates</h3>
-	<table class="table table-striped table-condensed">
+	<h2 class="dashboard-heading"><span class="icon template-resource"></span>Resource Templates</h2>
+	<table class="table table-striped">
 		<tbody>
 			<tr>
 				<td><%= link_to "#{@resource_templates} Resource templates", resource_templates_path %></td>

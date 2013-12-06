@@ -1,5 +1,5 @@
-require 'spec_helper'
+# require 'spec_helper'
 
-describe AuthorizationsController do
+# describe AuthorizationsController do
 
-end
+# end

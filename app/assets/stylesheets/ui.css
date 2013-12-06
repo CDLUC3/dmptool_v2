@@ -15,9 +15,11 @@ body {
   width: auto;
   margin: 0;
 	padding: 0; }
-.row, .row-fluid {
+.row-fluid {
 	margin: 20px 35px; }
-.row-fluid [class*="span"] {
+.row-fluid .row-fluid {
+	margin: 20px 0 0; }
+[class*="span"] {
 	margin: 0; }
 	
 /* Alignment */
@@ -38,21 +40,25 @@ h1 {
 	color: #86A641;
 	font-size: 1.5em; }
 h2 {
-	color: #516935;
-	font-size: 1.25em;
-	text-align: left; }
-h3 {
 	color: #4C4C4E;
+	font-size: 1.125em; }
+h3 {
+	color: #516935;
 	font-size: 1.125em; }
 h4 {
 	font-size: 1em;
 	margin: 10px 0; }
-h5, h6 {
+h5 {
+	font-size: 0.9em;
 	margin: 5px 0; }
-h5 span {
+h6 {
+	font-size: 0.9em;
+	margin: 0; }
+h4 span, h5 span, h6 span {
 	font-size: 0.9em;
 	font-weight: normal; }
 hr {
+	border: none;
 	border-top: 1px solid #B6B6B7;
 	margin: 20px 0 5px 0;
 	padding: 0; }
@@ -62,11 +68,11 @@ p {
 ul, ol {
 	line-height: 1.7em;
 	margin: 0 0 20px 25px; }
-ul > li {
+ul li {
 	list-style: none; }
-ul > li:before {
+ul li:before {
 	content: "\00BB\0020"; }
-ol > li {
+ol li {
 	list-style: decimal; }
 ul ul, ol ol {
 	font-size: 1em; }
@@ -76,8 +82,6 @@ ol ol li {
 	list-style: upper-alpha; }
 ol ol ol li {
 	list-style: lower-roman; }
-span.required, span[id*="status_"] {
-	color: #DA0049; }
 
 /* Forms */
 form {
@@ -87,6 +91,8 @@ fieldset {
 	padding: 0; }
 form p {
 	font-size: 1em; }
+span.required, span[id*="status_"] {
+	color: #DA0049; }
 label, input, button, select, textarea {
 	font-size: 1em;
 	line-height: 1.125em; }
@@ -117,12 +123,13 @@ textarea, form.form-horizontal textarea {
 input[type=radio], input[type=checkbox] {
 	vertical-align: top;
 	margin: 0 4px 0 0; }
+select, form.form-horizontal select {
+	padding-top: 6px;
+	padding-bottom: 4px; }
 .controls.radios {
-	line-height: 30px;
-	margin-top: 7px; }
+	margin-top: 12px; }
 .controls > input[type=radio], .controls > input[type=checkbox] 
 .controls > input.radio, .controls > input.checkbox {
-	line-height: 30px;
 	margin-top: 0
 	margin-right: 4px;
 	padding: 0; }
@@ -140,10 +147,12 @@ input.input-large {
   box-sizing: border-box;
 	border: 1px solid #B6B6B7;
 	border-bottom: none;
-	font-size: 0.85em;
 	width: 100%;
 	padding: 6px 9px 5px; }
+.table-scope p {
+	margin: 0; }
 .table-scope a {
+	font-size: 0.85em;
 	color: #4C4C4E; }
 .table-scope a .current {
 	color: #516935;
@@ -151,10 +160,9 @@ input.input-large {
 table.table {
 	border: 1px solid #B6B6B7; }
 .tab-pane.table table.table {
-	margin: 0;
-}
+	margin: 0; }
 table.table thead tr th {
-	border-radius: 0;
+	border-radius: 0 !important;
 	border-left: 1px solid #B6B6B7;
 	background: #DAE4C5;
 	font-size: 0.8em;
@@ -318,6 +326,7 @@ table.table a.delete {
 	overflow: hidden; }
 a.icon {
 	text-decoration: none !important;
+	vertical-align: middle;
 	position: relative; }
 span.icon {
 	position: absolute;
@@ -384,12 +393,10 @@ li.login a:hover span.icon.login, li.login a:focus span.icon.login, li.login a:a
 a.icon.delete {
 	background: none;
 	color: #DA0049 !important;
-	font-size: 0.7em;
+	font-size: 12px;
 	vertical-align: middle;
-	line-height: 16px;
+	line-height: 17px;
 	padding-left: 20px; }
-form a.icon.delete {
-	font-size: 12px; }
 a.icon.delete:hover, a.icon.delete:focus, a.icon.delete:active {
 	text-decoration: underline !important; }
 .icon.trash {
@@ -448,7 +455,7 @@ a.icon.delete:hover, a.icon.delete:focus, a.icon.delete:active {
 	background-position: -30px -80px; width: 30px; height: 25px; }
 .icon.pdf {
 	background-position: -105px 0; width: 20px; height: 20px; }
-.icon.rts {
+.icon.rtf {
 	background-position: -125px 0; width: 20px; height: 20px; }
 .icon.document {
 	background-position: -145px 0; width: 15px; height: 15px; }
@@ -477,6 +484,9 @@ a.icon.delete:hover, a.icon.delete:focus, a.icon.delete:active {
 	margin: 0; }
 .tab-pane.table .buttons, .tab-pane .buttons.pagination {
 	padding-bottom: 10px; }
+.buttons-alpha.row {
+	clear: both;
+	margin: 0 0 20px; }
 a.btn, button, button.btn, input[type=submit], input[type=submit].btn {
 	display: inline-block;
 	border: none;
@@ -512,13 +522,20 @@ button.ui-datepicker-trigger {
 	-webkit-border-radius: 4px;
 	-ms-border-radius: 4px;
 	padding: 0 10px; }
+.btn:hover, .btn:focus, .btn:active,
 a.btn:hover, a.btn:focus, a.btn:active,
 button:hover, button:focus, button:active, 
 button.btn:hover, button.btn:focus, button.btn:active {
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	-ms-box-shadow: none;
+	background-image: url(button_bg.jpg);
 	background-position: 0 -30px; }
 a.btn-green, button.btn-green, input[type=submit], input[type=submit].btn {
 	background-position: 0 -60px;
 	color: #FFFFFF !important; }
+.btn-green:hover, .btn-green:focus, .btn-green:active, 
 a.btn-green:hover, a.btn-green:focus, a.btn-green:active,
 button.btn-green:hover, button.btn-green:focus, button.btn-green:active,
 input[type=submit]:hover, input[type=submit]:focus, input[type=submit]:active, 
@@ -527,6 +544,7 @@ input[type=submit].btn:hover, input[type=submit].btn:focus, input[type=submit].b
 a.btn-gray, button.btn-gray {
 	background-position: 0 -120px;
 	color: #FFFFFF !important; }
+.btn-gray:hover, .btn-gray:focus, .btn-gray:active, 
 a.btn-gray:hover, a.btn-gray:focus, a.btn-gray:active,
 button.btn-gray:hover, button.btn-gray:focus, button.btn-gray:active {
 	background-position: 0 -150px; }
@@ -592,8 +610,6 @@ table a.btn, table button, table button.btn  {
 	border: none;
 	height: 54px;
 	padding: 8px 0; }
-.buckets-header .span4:first-child {
-	padding-left: 35px; }
 .buckets .span4 {
 	border-left: 1px solid #B6B6B7;
 	height: 270px;
@@ -601,10 +617,11 @@ table a.btn, table button, table button.btn  {
 .buckets .span4:first-child {
 	border-left: none;
 	border-right: none;
-	padding-left: 35px; }
+	padding-left: 20px; }
 .buckets-header h2 {
 	border-left: 1px solid #B6B6B7;
 	color: #4C4C4E;
+	text-transform: uppercase;
 	line-height: 40px;
 	height: 40px;
 	margin: 0;
@@ -613,12 +630,9 @@ table a.btn, table button, table button.btn  {
 	overflow: hidden; }
 .buckets-header .span4:first-child h2 {
 	background-position: 20px 0;
-	border-left: none;
-	padding: 0 0 0 53px; }
+	border-left: none; }
 .buckets-header span.icon {
 	left: 20px; }
-.buckets-header .span4:first-child span.icon {
-	left: 0; }
 .buckets p {
 	font-size: 0.9em;
 	line-height: 1.2em;
@@ -662,10 +676,24 @@ table a.btn, table button, table button.btn  {
 	padding: 8px 10px 5px; }
 .alert p {
 	margin: 0; }
+	
+/* Search Area */
+.search {
+	float: right;
+  width: auto;
+  position: relative; }
+.search input[type=search] {
+	display: inline;
+  margin-bottom: 0;
+  padding-left: 30px; }
+span.search {
+	position: absolute;
+	top: 5px;
+	left: 8px; }
 
 /* Dashboard */
 .dashboard {
-	margin: 0; }
+	height: 210px; }
 .dashboard:after {
 	content: "";
 	display: table;
@@ -674,8 +702,9 @@ table a.btn, table button, table button.btn  {
 /* Dashboard Header */
 .dashboard-header.row-fluid {
 	border-bottom: 1px solid #B6B6B7;
-	height: 98px;
-	margin: 9px 0 0; }
+	height: 110px;
+	margin: 0;
+	padding: 10px 0; }
 .dashboard-header .inst-logo {
 	border-right: 1px solid #B6B6B7;
 	width: 230px;
@@ -803,6 +832,7 @@ ul.nav-tabs li {
 ul.nav-tabs li a {
 	display: block;
 	color: #4C4C4E;
+	font-size: 13px;
 	font-weight: bold;
 	line-height: 31px;
 	height: 30px;
@@ -843,14 +873,14 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 .tab-pane form {
 	margin-bottom: 0; }
 .tab-pane input.input-xxlarge {
-	width: 300px; }
+	width: 400px; }
 .tab-pane textarea.input-xxlarge {
 	width: 400px; }
 .tab-pane select.input-xxlarge {
-	width: 315px; }
+	width: 415px; }
 
 /* Admin Pages */
-h1.dashboard-heading, h3.dashboard-heading  {
+h2.dashboard-heading, h3.dashboard-heading  {
 	clear: both;
 	-moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -866,11 +896,14 @@ h1.dashboard-heading, h3.dashboard-heading  {
 	margin: 0;
 	padding: 0 0 0 53px;
 	position: relative; }
-h3.dashboard-heading span.icon {
+h2.dashboard-heading span.icon, h3.dashboard-heading span.icon {
 	top: 7px;
 	left: 11px; }
-.tree-view, .template-status {
+.details[class*="span"] {
+	width: 320px; }
+.border-box {
 	border: 1px solid #C9C9CB;
+	margin-bottom: 20px;
 	padding: 10px 15px; }
 .requirements_tree_view {
 	font-size: 0.8em; }
@@ -889,5 +922,11 @@ h3.dashboard-heading span.icon {
 	border-top-style: dotted;
 	border-top-width: 2px;
 	margin: 5px 0; }
+.nested_requirements {
+	margin-left: 20px; }
 .institutions {
 	margin-bottom: 20px; }
+.nested_institutions {
+	margin-left: 20px; }
+.samples {
+  margin-bottom: 5px; }

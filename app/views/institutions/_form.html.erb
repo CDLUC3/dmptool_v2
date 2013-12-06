@@ -1,7 +1,7 @@
 <% provide(:title, 'Institution Information') %>
+<h5>Institution Information</h5>
+<hr/>
 <%= form_for @current_institution, html:{ :class => 'form-horizontal', multipart: true}  do |f| %>
-	<h5>Institution Information</h5>
-	<hr/>
 	<% if @current_institution.errors.any? %>
 	<div id="error_explanation">
 		<h2><%= "#{pluralize(@current_institution.errors.count, "error")} prohibited this Institution from being saved:" %></h2>

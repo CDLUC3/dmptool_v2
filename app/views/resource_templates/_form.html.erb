@@ -18,12 +18,12 @@
 			    <% end %>
 					
 			    <div class="control-group">
-			      <%= f.label :dmp_template, "Select DMP Template", :class => "control-label" %>
+			      <%= f.label :dmp_template, "Selected DMP Template", :class => "control-label" %>
 			      <div class="controls">
 			      <% if @resource_template.requirements_template_id.nil? %>
-			        <%= text_field_tag(:selected_requirement_template, nil, id: "selected_requirement_template_name", :class => "input-xlarge") %>
+			        <%= text_field_tag(:selected_requirement_template, nil, id: "selected_requirement_template_name", :class => "input-xxlarge") %>
 			      <% else %>
-			        <%= text_field_tag(:selected_requirement_template, @resource_template.requirements_template.name, id: "selected_requirement_template_name", :class => "input-xlarge") %>
+			        <%= text_field_tag(:selected_requirement_template, @resource_template.requirements_template.name, id: "selected_requirement_template_name", :class => "input-xxlarge") %>
 			      <% end %>
 			      </div>
 			    </div>
@@ -34,7 +34,7 @@
 			    <div class="control-group">
 			      <%= f.label :template_name,"Template Name", :class => "control-label" %>
 			      <div class="controls">
-			        <%= f.text_field :name, :class => "input-xlarge" %>
+			        <%= f.text_field :name, :class => "input-xxlarge" %>
 			      </div>
 			    </div>
 			    <%= render partial: 'date_fields' , locals: { f: f } unless @resource_template.new_record? %>
@@ -55,7 +55,7 @@
 			    <div class="control-group">
 			      <%= f.label :institutional_widget, "Institutional Widget", :class => "control-label" %>
 			      <div class="controls">
-			        <%= f.text_field :widget_url, :class => "input-xlarge" %>
+			        <%= f.text_field :widget_url, :class => "input-xxlarge" %>
 			      </div>
 			    </div>
 			    <div class="control-group">

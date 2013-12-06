@@ -7,7 +7,7 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<th><%= (public ? 'Funder' : 'Institution') %></th>
+			<th class="span5"><%= (public ? 'Funder' : 'Institution') %></th>
 			<th>Template</th>
 			<th><%= (public ? 'Funder Links' : 'Institution Links') %></th>
 			<th>Sample Plans</th>
@@ -16,25 +16,29 @@
 	<tbody>
 		<% templates.each do |t| %>
 			<tr>
-				<td><%= t.institution.full_name %></td>
+				<td><strong><%= t.institution.full_name %></strong></td>
 				<td><%= link_to t.name,	basic_requirements_template_path(t, format: :rtf ) %>
-						<%= link_to image_tag('/assets/rtf_icon.png'),	basic_requirements_template_path(t, format: :rtf ) %>
+						<%= link_to '', basic_requirements_template_path(t, format: :rtf), :class => 'icon rtf' %>
 				</td>
 				<td>
 					<% t.additional_informations.each do |info| %>
-						<div class="samples">
-							<%= link_to info.label, info.url %>
-						</div>
+					<div class="samples">
+						<%= link_to info.label, info.url %>
+					</div>
 					<% end %>
 				</td>
 				<td>
 					<% t.sample_plans.each do |s| %>
-						<div class="samples">
-							<%= link_to s.label, s.url %>
-						</div>
+					<div class="samples">
+						<%= link_to s.label, s.url %>
+						<%= link_to '', s.url, :class => 'icon pdf'%>
+					</div>
 					<% end %>
 				</td>
 			</tr>
 		<% end %>
 	</tbody>
 </table>
+<div class="buttons pagination">
+	<%= link_to "View All", resource_templates_path(:scope => "all"), :method => :get, :class => "btn"%>
+</div>
