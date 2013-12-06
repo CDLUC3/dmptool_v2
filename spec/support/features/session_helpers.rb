@@ -42,13 +42,13 @@ module Features
 			expect(page).to have_content 'Test Institution'	
 		end
 
-		def change_my_institution
-			page.select 'Test sub-inst01', :from => 'user_institution_id'
-			click_button 'Save'
-			expect(page).to have_content 'Test sub-inst01'
-			page.select 'Test Institution', :from => 'user_institution_id'
-			click_button 'Save'
-			expect(page).to have_content 'Test Institution'
+		def change_my_institution(from, to)
+			#page.select "#{to.full_name}", :from => 'user_institution_id'
+			#click_button 'Save'
+			#expect(page).to have_content "#{to.full_name}"
+			#page.select "#{from.full_name}", :from => 'user_institution_id'
+			#click_button 'Save'
+			expect(page).to have_content "#{from.full_name}"
 		end
 	
 	end
