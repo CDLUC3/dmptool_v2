@@ -1,6 +1,9 @@
 require "selenium-webdriver"
 require "rspec-expectations"
 require 'spec_helper'
+include  Credentials
+include Module::Credentials
+
 
 describe "SeleniumGenericUserSpec" do
 
@@ -24,8 +27,8 @@ describe "SeleniumGenericUserSpec" do
     @driver.find_element(:link, "Log In").click
     @driver.find_element(:tag_name, "select").find_element(:css,"option[value='1']").click
     @driver.find_element(:name, "commit").click
-    @driver.find_element(:id, "username").send_keys "test_user2"  
-    @driver.find_element(:id, "password").send_keys "test_user2"
+    @driver.find_element(:id, "username").send_keys GENERIC_USERNAME  
+    @driver.find_element(:id, "password").send_keys GENERIC_PASSWORD
     @driver.find_element(:name, "commit").click
     assert_equal "Welcome! test_user2", @driver.find_element(:css, "p").text
 
@@ -48,6 +51,7 @@ describe "SeleniumGenericUserSpec" do
     @driver.find_element(:name, "user[institution_id]").find_element(:css,"option[value='1']").click
     @driver.find_element(tag_name: 'select').find_element(:css,"option[value='1']").selected?.should == true 
 
+    
 
   end
   

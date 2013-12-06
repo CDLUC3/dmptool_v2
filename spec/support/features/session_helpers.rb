@@ -1,7 +1,7 @@
 module Features
 
 	module SessionHelpers
-
+		
 		def logs_in_with(username, password, institution)
 			logs_out
 			click_link 'Log In'
@@ -12,6 +12,7 @@ module Features
 			click_button 'Login'
 			expect(page).to have_content 'Welcome!'
 		end
+
 
 		def logs_out
 			visit logout_path
