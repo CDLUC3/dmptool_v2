@@ -1,11 +1,4 @@
 GIT
-  remote: git://github.com/hading/omniauth-shibboleth.git
-  revision: c5369ce93a299445caba4c8250dbb42fd51a43ce
-  specs:
-    omniauth-shibboleth (1.0.8)
-      omniauth (>= 1.0.0)
-
-GIT
   remote: git://github.com/radar/paranoia.git
   revision: 87fc348171e532a4a39d2f1235056eaebdd4c24e
   branch: rails4
@@ -20,6 +13,12 @@ GIT
     ifad-rtf (0.4.2)
       nokogiri (~> 1.1)
       tidy-ext (~> 0.1)
+
+PATH
+  remote: /Users/localsfisher/workspace/omniauth-shibboleth
+  specs:
+    omniauth-shibboleth (1.0.8)
+      omniauth (>= 1.0.0)
 
 GEM
   remote: https://rubygems.org/
