@@ -29,6 +29,17 @@ describe "SeleniumGenericUserSpec" do
     @driver.find_element(:name, "commit").click
     assert_equal "Welcome! test_user2", @driver.find_element(:css, "p").text
 
+    #he has the generic visibility quick-dashboard
+    @driver.find_element(:link, "My Dashboard").text
+    @driver.find_element(:link, 'My DMPs').text
+    @driver.find_element(:link, 'Create New DMP').text
+    @driver.find_element(:link, 'My Profile').text
+
+    @driver.find_element(:css, "a").text.should_not == 'DMP Templates'
+    @driver.find_element(:css, "a").text.should_not == 'Resources'
+    @driver.find_element(:css, "a").text.should_not == 'Institution Profile' 
+    @driver.find_element(:css, "a").text.should_not == 'DMP Administration'  
+
     #he changes his institution in the My Profile page
     @driver.find_element(:link, "My Profile").click
     assert_equal "Test Institution", @driver.find_element(:css, "option[value='1']").text   
