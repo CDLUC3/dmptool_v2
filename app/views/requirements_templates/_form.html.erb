@@ -94,7 +94,11 @@
 						Formal Review Required<br/>
 						<%= f.radio_button :review_type, :informal_review, :class => "radio inline" %>
 						Informal Review Required<br/>
-						<%= f.radio_button :review_type, :no_review, :class => "radio inline" %>
+						<% unless @requirements_template.new_record? %>
+							<%= f.radio_button :review_type, :no_review, :class => "radio inline" %>
+						<% else %>
+							<%= f.radio_button :review_type, :no_review, :class => "radio inline", checked: true %>
+						<% end %>
 						No Review Required
 					</div>
 				</div>
@@ -120,7 +124,7 @@
 					<%= link_to_add_fields 'Add Sample Plan', f , :sample_plans %>
 				</div>
 			</div>
-			<div class="buttons pagination">
+			<div class="buttons">
 				<%= f.submit 'Save Changes', :class => 'btn btn-green', method: 'post' %>
 			</div>
 			<% end %>

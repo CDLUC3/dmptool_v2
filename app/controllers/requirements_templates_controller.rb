@@ -61,7 +61,7 @@ class RequirementsTemplatesController < ApplicationController
   end
 
   def template_information
-    @requirements_templates = RequirementsTemplate.institutional_visibility.page.per(5)
+    @requirements_templates = RequirementsTemplate.institutional_visibility.page(params[:page]).per(5)
   end
 
   # GET /requirements_templates/1/edit

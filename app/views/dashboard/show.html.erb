@@ -1,91 +1,82 @@
 <div class="row-fluid">
 	<div class="overview span8">
 		<h3 class="dashboard-heading"><span class="icon overview"></span>Overview</h3>
-		<div class="span6">
-			<div>
-				<div class="head">My DMPs</div>
-				<div>
-					<%= link_to "#{current_user.owned_plans.count} plans I own" %>
-				</div>
-				<div>
-					<%= link_to "#{current_user.coowned_plans.count} plans i co-own" %>
-				</div>
-			</div>
+		<table class="table table-striped table-condensed">
+			<thead>
+				<tr>
+					<th>My DMPs</th>
+					<th>My DMPs under review</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><%= link_to "#{current_user.owned_plans.count} plans I own" %></td>
+					<td><% if (current_user.unique_plan_states & PlanState::REVIEW_STATES).empty? %>
+						No DMPs are under review.
+					<% else %>
+						<% (current_user.unique_plan_states & PlanState::REVIEW_STATES).each do |state|%>
+							<%= link_to "#{current_user.plans_by_state(state).count} #{state.capitalize}"%>
+						<% end %>
+					<% end %></td>
+				</tr>
+				<tr>
+					<td><%= link_to "#{current_user.coowned_plans.count} plans i co-own" %></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="buttons">
+			<%= link_to "Create New", "#", :class => "btn btn-green" %>
 		</div>
-		<div class="span6">
-			<div>
-				<div class="head">My DMPs under review</div>
-				<% if (current_user.unique_plan_states & PlanState::REVIEW_STATES).empty? %>
-					<div>No DMPs are under review.</div>
-				<% else %>
-					<% (current_user.unique_plan_states & PlanState::REVIEW_STATES).each do |state|%>
-						<div><%= link_to "#{current_user.plans_by_state(state).count} #{state.capitalize}"%></div>
-					<% end %>
-				<% end %>
-			</div>
-		</div>
-		<div class="button_row"><%= link_to image_tag('create_new.png', size: '108x39') %></div>
+		
+		<% if defined? @pending_review %>
+		<h3 class="dashboard-heading"><span class="icon review"></span>DMPs For My Review</h3>
+		<table class="table table-striped table-condensed">
+			<tbody>
+				<tr>
+					<td><%= link_to "#{@pending_review} DMPs pending review" %></td>
+				</tr>
+				<tr>
+					<td><%= link_to "#{@finished_review} DMPs finished review" %></td>
+				</tr>
+			</tbody>
+		</table>
+		<% end %>
+
+
+	<% if defined? @requirements_templates %>
+	<h3 class="dashboard-heading"><span class="icon template-dmp"></span>DMP Templates</h3>
+	<table class="table table-striped table-condensed">
+		<thead>
+			<tr>
+				<th>Within my Institution</th>
+				<th>Funder Requirements</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><%= link_to "#{@requirements_templates} DMP Templates only for my institution", requirements_templates_path(scope: 'institutional') %></td>
+				<td><%= link_to "#{@public_requirements_templates} Public DMP Templates", requirements_templates_path(scope: 'public') %></td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="buttons">
+		<%= link_to "Create New", requirements_template_information_path, :method => :get, :class => "btn btn-green" %>
+	</div>
+	<% end %>
+	<% if defined? @resource_templates %>
+	<h3 class="dashboard-heading"><span class="icon template-resouce"></span>Resource Templates</h3>
+	<table class="table table-striped table-condensed">
+		<tbody>
+			<tr>
+				<td><%= link_to "#{@resource_templates} Resource templates", resource_templates_path %></td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="buttons">
+		<%= link_to "Create New", new_resource_template_path, :class => "btn btn-green" %>
+	</div>
+	<% end %>
+	
 	</div>
 </div>
-
-
-<% if defined? @pending_review %>
-	<div class="row">
-		<div class="span8 two_col">
-			<div>DMPs for My Review</div>
-			<div class="col1">
-				<div>
-					<div><%= link_to "#{@pending_review} DMPs pending review" %></div>
-					<div><%= link_to "#{@finished_review} DMPs finished review" %></div>
-				</div>
-			</div>
-			<div class="col2">
-			</div>
-		</div>
-	</div>
-<% end %>
-
-
-<% if defined? @requirements_templates %>
-	<div class="row">
-		<div class="span8 two_col">
-			<div>DMP Templates</div>
-			<div class="col1">
-				<div>
-					<div class="head">Within my Institution</div>
-					<div><%= link_to "#{@requirements_templates} DMP Templates only for my institution", requirements_templates_path(scope: 'institutional') %></div>
-				</div>
-			</div>
-			<div class="col2">
-				<div>
-					<div class="head">Funder Requirements</div>
-					<div><%= link_to "#{@public_requirements_templates} Public DMP Templates", requirements_templates_path(scope: 'public') %></div>
-				</div>
-			</div>
-			<div class="button_row">
-				<%= link_to image_tag('create_new.png', size: '108x39'), requirements_template_information_path, :method => :get %>
-			</div>
-		</div>
-	</div>
-<% end %>
-
-
-<% if defined? @resource_templates %>
-	<div class="row">
-		<div class="span8 two_col">
-			<div>Resource Templates</div>
-			<div class="col1">
-				<div>
-					<div><%= link_to "#{@resource_templates} Resource templates", resource_templates_path %></div>
-				</div>
-			</div>
-			<div class="col2">
-			</div>
-			<div class="button_row">
-				<div class="button_row">
-					<%= link_to image_tag('create_new.png', size: '108x39'), new_resource_template_path %>
-				</div>
-			</div>
-		</div>
-	</div>
-<% end %>

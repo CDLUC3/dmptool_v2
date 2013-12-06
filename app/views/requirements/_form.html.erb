@@ -49,7 +49,7 @@
     <div class="control-group">
       <%= f.label :question_type, "Question Type", :class => "control-label" %>
       <div class="controls">
-        <%= f.select :requirement_type, options_for_select([:text, :numeric, :date, :enum], @requirement.requirement_type), include_blank: true %>
+        <%= f.select :requirement_type, options_for_select([:text, :numeric, :date, :enum], @requirement.requirement_type) %>
       </div>
     </div>
     <fieldset class="requirement_type">
@@ -59,7 +59,8 @@
       <%= link_to_add_fields 'Click to Add Item', f, :enumerations %>
     </fieldset>
   </fieldset>
-    <br/>
+  <div class="buttons">
 	  <%= f.submit 'Save', :class => 'btn' %>
 	  <%= link_to 'Finish', '#', :class => 'btn btn-green' %>
+	</div>
 <% end %>
