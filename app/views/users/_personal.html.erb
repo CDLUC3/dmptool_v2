@@ -7,7 +7,7 @@
 <% errors = @user.errors[:login_id] %>
 <% validation_class = errors.empty? ? {} : 'error' %>
 <div class="control-group <%= validation_class %>">
-  <%= f.label :login_id, 'Username', class: 'control-label' %>
+  <%= f.label :login_id, 'Username', :class => 'control-label' %>
   <div class="controls">
     <%= f.text_field :login_id, readonly: !@user.new_record?, :class => "input-xxlarge" %>
     <span class="help-inline">
@@ -17,11 +17,10 @@
 </div>
 
 <% unless @user.new_record? %>
-
   <% errors = @user.errors[:first_name] %>
   <% validation_class = errors.empty? ? {} : 'error' %>
   <div class="control-group <%= validation_class %>">
-    <%= f.label :first_name, class: 'control-label' %>
+    <%= f.label :first_name, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :first_name, :class => "input-xxlarge" %>
       <span class="help-inline">
@@ -33,7 +32,7 @@
   <% errors = @user.errors[:last_name] %>
   <% validation_class = errors.empty? ? {} : 'error' %>
   <div class="control-group <%= validation_class %>">
-    <%= f.label :last_name, class: 'control-label' %>
+    <%= f.label :last_name, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :last_name, :class => "input-xxlarge" %>
         <span class="help-in-line">
@@ -41,13 +40,12 @@
       </span>
     </div>
   </div>
-
 <%end%>
 
 <% errors = @user.errors[:password] %>
 <% validation_class = errors.empty? ? {} : 'error' %>
 <div class="control-group <%= validation_class %>">
-  <%= f.label :password, password_label(@user), class:'control-label' %>
+  <%= f.label :password, password_label(@user), :class => 'control-label' %>
   <div class="controls">
     <%= f.password_field :password, :class => "input-xxlarge" %>
       <span class="help-in-line">
@@ -59,7 +57,7 @@
 <% errors = @user.errors[:password_confirmation] %>
 <% validation_class = errors.empty? ? {} : 'error' %>
 <div class="control-group  <%= validation_class %>">
-  <%= f.label :password_confirmation, class:'control-label' %>
+  <%= f.label :password_confirmation, :class => 'control-label' %>
   <div class="controls">
     <%= f.password_field :password_confirmation, :class => "input-xxlarge" %>
       <span class="help-in-line">
@@ -76,9 +74,9 @@
 <% errors = @user.errors[:email] %>
 <% validation_class = errors.empty? ? {} : 'error' %>
 <div class="control-group <%= validation_class%>">
-  <%= f.label :email, class:'control-label' %>
+  <%= f.label :email, :class => 'control-label' %>
   <div class="controls">
-    <%= f.text_field :email, :class => "input-xxlarge" %>
+    <%= f.text_field :email, :class => 'input-xxlarge' %>
       <span class="help-in-line">
         <%=errors.join (', ')%>
       </span>
@@ -88,14 +86,14 @@
 <% errors = @user.errors[:institution_id] %>
 <% validation_class = errors.empty? ? {} : 'error' %>
 <div class="control-group  <%= validation_class %>">
-  <%= f.label :institution_id, class:'control-label' %>
+  <%= f.label :institution_id, :class => 'control-label' %>
   <div class="controls">
-    <%# filter institution list in my profile page only %>
-    <%if @user.new_record?%>
+    <% # filter institution list in my profile page only %>
+    <% if @user.new_record? %>
       <%= collection_select(:user, :institution_id, Institution.all, :id, :full_name, { prompt: "-Select an Institution-"}, :class => "input-xxlarge") %>
-    <%else%>
+    <% else %>
       <%= f.select( :institution_id, @institution_list, {prompt: 'Select Institution'}, :class => "input-xxlarge")%>
-    <%end%>
+    <% end %>
     
     <span class="help-in-line">
       <%=errors.join (', ')%>
@@ -104,15 +102,14 @@
 </div>
 
 
-<%unless @user.new_record?%>
-  <b>DMP Options</b>
-
+<% unless @user.new_record? %>
+  <h5>DMP Options</h5>
+	<hr/>
   <div class="control-group">
-    <% label_tag :my_roles, 'My Roles', class:'control-label' %>
+    <%= label_tag :my_roles, 'My Roles', :class => 'control-label' %>
     <div class="controls">
-      <%= @roles %>
+      <input type="text" id="my_roles" name="my_roles" value="<%= @roles %>" readonly="readonly" />
     </div>
   </div>
-
-<%end%>
+<% end %>
 

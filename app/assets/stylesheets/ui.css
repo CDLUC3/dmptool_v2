@@ -16,11 +16,13 @@ body {
   margin: 0;
 	padding: 0; }
 .row-fluid {
-	margin: 20px 35px; }
+	margin: 0 35px; }
 .row-fluid .row-fluid {
-	margin: 20px 0 0; }
-[class*="span"] {
+	margin: 20px 0; }
+[class*="span"], .row-fluid [class*="span"] {
 	margin: 0; }
+.text.row-fluid {
+	margin: 20px 35px; }
 	
 /* Alignment */
 .align-center {
@@ -35,27 +37,28 @@ body {
 /* Text */
 h1, h2, h3 {
 	font-weight: normal;
-	letter-spacing: 0; }
+	letter-spacing: 0;
+	line-height: normal; }
 h1 {
 	color: #86A641;
-	font-size: 1.5em; }
+	font-size: 1.75em;
+	line-height: 1.75em; }
 h2 {
 	color: #4C4C4E;
-	font-size: 1.125em; }
+	font-size: 1.5em; }
 h3 {
 	color: #516935;
-	font-size: 1.125em; }
+	font-size: 1.5em; }
 h4 {
-	font-size: 1em;
+	font-size: 1.25em;
 	margin: 10px 0; }
 h5 {
-	font-size: 0.9em;
+	font-size: 1.125em;
 	margin: 5px 0; }
 h6 {
-	font-size: 0.9em;
+	font-size: 1.125em;
 	margin: 0; }
 h4 span, h5 span, h6 span {
-	font-size: 0.9em;
 	font-weight: normal; }
 hr {
 	border: none;
@@ -63,45 +66,42 @@ hr {
 	margin: 20px 0 5px 0;
 	padding: 0; }
 p {
-	line-height: 1.3em;
+	line-height: 1.5em;
 	margin: 0 0 10px 0; }
+.text.row-fluid p, .text.row-fluid ul, .text.row-fluid ol {
+	font-size: 1.125em; }
 ul, ol {
-	line-height: 1.7em;
 	margin: 0 0 20px 25px; }
-ul li {
-	list-style: none; }
+ul li, ol li {
+	margin-bottom: 5px; }
 ul li:before {
 	content: "\00BB\0020"; }
+ul li {
+	list-style: none; }
 ol li {
 	list-style: decimal; }
-ul ul, ol ol {
-	font-size: 1em; }
-ul ul li:before {
-	content: "\0020"; }
 ol ol li {
 	list-style: upper-alpha; }
 ol ol ol li {
 	list-style: lower-roman; }
 
 /* Forms */
-form {
-	font-size: 0.85em; }
+form p {
+	font-size: 1.125em; }
 fieldset {
 	border: none;
 	padding: 0; }
-form p {
-	font-size: 1em; }
 span.required, span[id*="status_"] {
 	color: #DA0049; }
 label, input, button, select, textarea {
-	font-size: 1em;
+	font-size: 1.125em;
 	line-height: 1.125em; }
 label {
 	display: inline-block;
 	margin: 0;
 	padding: 0; }
 label.radio-label, label.checkbox-label {
-	line-height: 1.3em; }
+	line-height: 1.25em; }
 .control-group > label {
 	display: block; }
 label.control-label, form.form-horizontal label.control-label {
@@ -112,6 +112,10 @@ label.control-label, form.form-horizontal label.control-label {
 label.required:before {
 	content: "\002A\0020";
 	color: #DA0049; }
+.control-group label.checkbox-label, .control-group label.checkbox-radio {
+	display: inline-block; }
+.control-group ul li:before {
+	content: ""; }
 input[type=text], input[type=password], textarea, select, 
 form.form-horizontal input[type=text], form.horizonatl input[type=password], 
 form.form-horizontal textarea, form.form-horizontal select {
@@ -152,7 +156,6 @@ input.input-large {
 .table-scope p {
 	margin: 0; }
 .table-scope a {
-	font-size: 0.85em;
 	color: #4C4C4E; }
 .table-scope a .current {
 	color: #516935;
@@ -165,7 +168,6 @@ table.table thead tr th {
 	border-radius: 0 !important;
 	border-left: 1px solid #B6B6B7;
 	background: #DAE4C5;
-	font-size: 0.8em;
 	white-space: nowrap;
 	padding: 4px 9px; }
 table.table thead tr th.span1 {
@@ -173,7 +175,6 @@ table.table thead tr th.span1 {
 table.table tbody tr td {
 	border-radius: 0;
 	border-left: 1px solid #B6B6B7;
-	font-size: 0.75em;
 	line-height: 1.25em;
 	padding: 7px 9px; }
 table.table tbody tr td.span1 {
@@ -202,6 +203,8 @@ table.table a.delete {
 	color: #E02665; }
 .pagination {
 	margin: 10px 0 0; }
+.pagination span {
+	font-size: 1.125em; }
 	
 /* Header */
 .header.container {
@@ -230,7 +233,6 @@ table.table a.delete {
 	top: 30px;
 	right: 35px; }
 .header .welcome p {
-	font-size: 0.85em;
 	margin: 0; }
 /* Header Navigation */
 .header .navbar {
@@ -251,7 +253,7 @@ table.table a.delete {
   -webkit-box-sizing: border-box;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
-	font-size: 0.85em;
+  font-size: 1.125em;
 	width: 100%;
 	margin: 0;
 	padding: 0 20px;
@@ -298,13 +300,13 @@ table.table a.delete {
 	background: url(cdl_logo_sm.png) no-repeat 0 0 transparent;
 	padding: 5px 0 0 45px; }
 .footer .copyright p {
-	font-size: 0.55em;
+	font-size: 0.75em;
 	letter-spacing: 0.1px;
 	line-height: 1.55em; }
 .footer .copyright a {
 	font-weight: bold; }
 .footer .footer-links.span6 {
-	font-size: 0.65em;
+	font-size: 0.9em;
 	text-align: right;
 	line-height: 35px; }
 .footer .footer-links a, .footer .footer-links a:hover, .footer .footer-links a:focus, .footer .footer-links a:active {
@@ -393,7 +395,6 @@ li.login a:hover span.icon.login, li.login a:focus span.icon.login, li.login a:a
 a.icon.delete {
 	background: none;
 	color: #DA0049 !important;
-	font-size: 12px;
 	vertical-align: middle;
 	line-height: 17px;
 	padding-left: 20px; }
@@ -500,7 +501,7 @@ a.btn, button, button.btn, input[type=submit], input[type=submit].btn {
 	-ms-box-shadow: none !important;
 	background: url(button_bg.jpg) repeat-x 0 0 transparent;
 	color: #4C4C4E !important;
-	font-size: 12px;
+	font-size: 1.125em;
 	font-weight: bold;
 	text-shadow: none !important;
 	text-align: center;
@@ -559,7 +560,7 @@ a.btn-large {
 	-ms-box-shadow: 0 0 30px 3px #CCCCCC !important;
 	background-position: 0 -186px;
 	color: #FFFFFF !important;
-	font-size: 1.5em;
+	font-size: 1.75em;
 	font-weight: normal;
 	line-height: 65px;
 	height: 60px;
@@ -567,11 +568,6 @@ a.btn-large {
 	padding-right: 35px; }
 a.btn-large:hover, a.btn-large:focus, a.btn-large:active {
 	background-position: 0 -240px; }
-p a.btn, p button, p button.btn, p input[type=submit], p input[type=submit].btn,
-form a.btn, form button, form button.btn, form input[type=submit], form input[type=submit].btn
-	font-size: 1em;
-table a.btn, table button, table button.btn  {
-	font-size: }
 .btn.pull-right {
 	margin-left: 5px;
 	margin-right: 0; }
@@ -634,12 +630,11 @@ table a.btn, table button, table button.btn  {
 .buckets-header span.icon {
 	left: 20px; }
 .buckets p {
-	font-size: 0.9em;
+	font-size: 1.25em;
 	line-height: 1.2em;
 	margin-bottom: 25px;
 	padding: 0; }
 .buckets ul {
-	font-size: 0.75em;
 	margin: 0;
 	padding: 0; }
 .buckets ul li:before {
@@ -662,15 +657,16 @@ table a.btn, table button, table button.btn  {
 	border: none;
 	margin-top: 20px;
 	margin-bottom: 0; }
+.login p {
+	font-size: 1.125em; }
 .user_login p a {
 	color: #72942E !important; }
 .user_login .control-group.forgot_password p a {
-	color: #DA0049 !important;
-	font-size: 0.85em; }
+	color: #DA0049 !important; }
 .control-group.select_institution select {
 	width: 330px; }
 .control-group.switch_institution {
-	height: 166px; }
+	height: 165px; }
 .alert {
 	margin: 0;
 	padding: 8px 10px 5px; }
@@ -707,6 +703,9 @@ span.search {
 	padding: 10px 0; }
 .dashboard-header .inst-logo {
 	border-right: 1px solid #B6B6B7;
+	font-size: 1.25em;
+	text-transform: capitalize;
+	text-align: center;
 	width: 230px;
 	height: 90px;
 	padding: 10px 25px; }
@@ -715,11 +714,11 @@ span.search {
 	text-align: center;
 	height: 90px;
 	padding: 25px 25px 0; }
-.dashboard-header .inst-title h3 {
+.dashboard-header .inst-title h2 {
 	line-height: 1.3em;
 	margin: 0; }
 .dashboard-header .inst-info {
-	font-size: 0.85em;
+	font-size: 1.25em;
 	height: 90px;
 	padding-left: 30px; }
 .dashboard-header .inst-info a {
@@ -740,6 +739,7 @@ span.search {
 	margin: 0;
 	padding: 0 0 0 35px; }
 .dashboard-nav ul.nav {
+	font-size: 1.125em;
 	margin: 0;
 	padding: 0; }
 .dashboard-nav ul.nav li:before {
@@ -772,7 +772,6 @@ span.search {
 	margin: 0;
 	padding: 11px 0 10px; }
 .dashboard-breadcrumbs ul.nav {
-	font-size: 0.9em;
 	margin: 0; }
 .dashboard-breadcrumbs ul.nav li:before {
 	content: ""; }
@@ -856,7 +855,7 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	background: #FFFFFF;
 	overflow: visible; }
 .tab-pane {
-	padding: 10px 15px 10px; }
+	padding: 20px 15px 10px; }
 .tabbable[class*="span"] .tab-pane {
 	padding-bottom: 10px; }
 .tab-pane.table {
@@ -888,7 +887,6 @@ h2.dashboard-heading, h3.dashboard-heading  {
   box-sizing: border-box;
 	background: #6D6E70;
 	color: #FFFFFF;
-	font-size: 1.125em;
 	text-transform: uppercase;
 	line-height: 43px;
 	width: auto;
@@ -905,8 +903,6 @@ h2.dashboard-heading span.icon, h3.dashboard-heading span.icon {
 	border: 1px solid #C9C9CB;
 	margin-bottom: 20px;
 	padding: 10px 15px; }
-.requirements_tree_view {
-	font-size: 0.8em; }
 .requirements_tree_view ul {
 	margin: 0; }
 .requirements_tree_view ul li:before {

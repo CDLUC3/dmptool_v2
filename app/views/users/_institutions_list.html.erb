@@ -22,6 +22,6 @@
   <%= paginate @users %>
 </div>
 <div class="buttons">
-	<%= link_to "View All", requirements_templates_path(:scope => "all"), :method => :get, :class => "btn"%>
+	<%= link_to "View All", users_path(:scope => "all"), :method => :get, :class => "btn"%>
 	<%= link_to 'Add New Institution', new_institution_path(5), :class => "btn btn-green" %>
 </div>

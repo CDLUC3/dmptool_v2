@@ -1,9 +1,9 @@
 <h2 class="dashboard-heading"><span class="icon inst-profile"></span>Institution Profile</h2>
 <div class="tabbable">
   <ul class="nav nav-tabs">
-    <li class="active"><a href="#tab1" data-toggle="tab">Institution Information</a></li>
-    <li><a href="#tab2" data-toggle="tab">Institution Administrators</a></li>
-    <li><a href="#tab3" data-toggle="tab">Institution Hierarchy</a></li>
+    <li class="active"><%= link_to 'Institution Information', '#tab1', 'data-toggle' => 'tab' %></li>
+    <li><%= link_to 'Institution Administrators', '#tab2', 'data-toggle' => 'tab' %></li>
+    <li><%= link_to 'Institution Hierarchy', '#tab3', 'data-toggle' => 'tab' %></li>
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="tab1">
