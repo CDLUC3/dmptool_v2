@@ -13,16 +13,12 @@ body {
   -ms-box-sizing: border-box;
   box-sizing: border-box;
   width: auto;
-  margin: 0;
+  margin: 0 35px;
 	padding: 0; }
-.row-fluid {
-	margin: 0 35px; }
 .row-fluid .row-fluid {
 	margin: 20px 0; }
 [class*="span"], .row-fluid [class*="span"] {
 	margin: 0; }
-.text.row-fluid {
-	margin: 20px 35px; }
 	
 /* Alignment */
 .align-center {
@@ -68,8 +64,6 @@ hr {
 p {
 	line-height: 1.5em;
 	margin: 0 0 10px 0; }
-.text.row-fluid p, .text.row-fluid ul, .text.row-fluid ol {
-	font-size: 1.125em; }
 ul, ol {
 	margin: 0 0 20px 25px; }
 ul li, ol li {
@@ -88,59 +82,47 @@ ol ol ol li {
 /* Forms */
 form p {
 	font-size: 1.125em; }
+form ul li:before {
+	content: ""; }
+span.required, span[id*="status_"] {
+	color: #DA0049; }
 fieldset {
 	border: none;
 	padding: 0; }
-span.required, span[id*="status_"] {
-	color: #DA0049; }
-label, input, button, select, textarea {
-	font-size: 1.125em;
-	line-height: 1.125em; }
+label, input, input[type=text], input[type=password], input[type=email], input[type=search], button, select, textarea {
+	font-size: 1.25em; }
 label {
 	display: inline-block;
 	margin: 0;
 	padding: 0; }
-label.radio-label, label.checkbox-label {
-	line-height: 1.25em; }
-.control-group > label {
+.control-group label {
 	display: block; }
-label.control-label, form.form-horizontal label.control-label {
+.control-group label.checkbox-label, .control-group label.radio-label {
+	display: inline-block; }
+label.control-label, .form-horizontal label.control-label {
 	line-height: 30px;
-	margin: 7px 0 0;
-	padding: 0;
-	padding-top: 0; }
+	padding-top: 7px; }
 label.required:before {
 	content: "\002A\0020";
 	color: #DA0049; }
-.control-group label.checkbox-label, .control-group label.checkbox-radio {
-	display: inline-block; }
-.control-group ul li:before {
-	content: ""; }
-input[type=text], input[type=password], textarea, select, 
-form.form-horizontal input[type=text], form.horizonatl input[type=password], 
-form.form-horizontal textarea, form.form-horizontal select {
+input, input[type=text], input[type=password], input[type=email], input[type=search], textarea, select {
 	border-color: #B6B6B7;
+	color: #4C4C4E;
 	margin: 5px 10px 5px 0;
 	padding: 4px 6px; }
-textarea, form.form-horizontal textarea {
-	padding-top: 7px; }
-input[type=radio], input[type=checkbox] {
-	vertical-align: top;
-	margin: 0 4px 0 0; }
-select, form.form-horizontal select {
-	padding-top: 6px;
-	padding-bottom: 4px; }
-.controls.radios {
-	margin-top: 12px; }
-.controls > input[type=radio], .controls > input[type=checkbox] 
-.controls > input.radio, .controls > input.checkbox {
-	margin-top: 0
-	margin-right: 4px;
-	padding: 0; }
 input.input-large {
 	width: 200px; }
-.form-horizontal .control-group {
+input[type=radio], input[type=checkbox] {
+	border: none;
+	vertical-align: top;
+	margin: 0 4px 0 0;
+	padding: 0; }
+.radio.inline, .checkbox.inline {
+	vertical-align: top; }
+.control-group {
 	margin-bottom: 10px; }
+.controls.radios {
+	margin-top: 12px; }
 	
 /* Tables */
 .table-scope {
@@ -160,46 +142,39 @@ input.input-large {
 .table-scope a .current {
 	color: #516935;
 	font-weight: bold; }
-table.table {
+.table {
 	border: 1px solid #B6B6B7; }
-.tab-pane.table table.table {
+.tab-pane.table .table {
 	margin: 0; }
-table.table thead tr th {
-	border-radius: 0 !important;
+.table th {
+	border-radius: 0;
 	border-left: 1px solid #B6B6B7;
 	background: #DAE4C5;
+	line-height: 1.25em;
 	white-space: nowrap;
-	padding: 4px 9px; }
-table.table thead tr th.span1 {
-	text-align: center; }
-table.table tbody tr td {
+	padding: 5px 10px; }
+.table td {
 	border-radius: 0;
 	border-left: 1px solid #B6B6B7;
 	line-height: 1.25em;
 	padding: 7px 9px; }
-table.table tbody tr td.span1 {
-	text-align: center; }
-table.table thead tr th:first-child, table.table tbody tr td:first-child {
+.table th:first-child, .table td:first-child,
+.table th:last-child, .table td:last-child {
+	border-radius: 0;
 	border-left: none; }
-table.table-striped tbody > tr:nth-child(2n+1) > td {
+.table-striped tbody > tr:nth-child(2n+1) > td {
 	background-color: #FFFFFF; }
-table.table-striped tbody > tr:nth-child(2n+2) > td {
+.table-striped tbody > tr:nth-child(2n+2) > td {
 	background-color: #F0F0F0; }
-table.table th.align-center, table.table td.align-center {
+.table th.span1, .table td.span1 {
 	text-align: center; }
-table.table th.align-right, table.table td.align-right {
-	text-align: right; }
-table.table th.valign-middle, table.table td.valign-middle {
-	vertical-align: middle; }
-table.table th.valign-bottom, table.table td.valign-bottom {
+.table th.valign-bottom, .table td.valign-bottom {
 	vertical-align: bottom; }
-table.table td .template-links {
+.table td .template-links {
 	visibility: hidden; }
-table.table td .requirements_template_name:hover .template-links {
-	visibility: visibile; }
-table.table a {
+.table a {
 	color: #4C4C4E; }
-table.table a.delete {
+.table a.delete {
 	color: #E02665; }
 .pagination {
 	margin: 10px 0 0; }
@@ -863,7 +838,7 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	margin: 0;
 	margin-top: -1px;
 	padding: 0; }
-.tab-pane.table table.table {
+.tab-pane.table .table {
 	border: none; }
 .tab-pane hr, form hr {
 	border-top: 2px dotted #C9C9CB;
@@ -879,7 +854,7 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	width: 415px; }
 
 /* Admin Pages */
-h2.dashboard-heading, h3.dashboard-heading  {
+h2.dashboard-heading  {
 	clear: both;
 	-moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -894,7 +869,7 @@ h2.dashboard-heading, h3.dashboard-heading  {
 	margin: 0;
 	padding: 0 0 0 53px;
 	position: relative; }
-h2.dashboard-heading span.icon, h3.dashboard-heading span.icon {
+h2.dashboard-heading span.icon {
 	top: 7px;
 	left: 11px; }
 .details[class*="span"] {
@@ -926,3 +901,10 @@ h2.dashboard-heading span.icon, h3.dashboard-heading span.icon {
 	margin-left: 20px; }
 .samples {
   margin-bottom: 5px; }
+  
+  
+/* Static Pages */
+.static-page.row-fluid {
+	margin: 20px 35px; }
+.static-page.row-fluid p, .static-page.row-fluid ul, .static-page.row-fluid ol {
+	font-size: 1.125em; }
