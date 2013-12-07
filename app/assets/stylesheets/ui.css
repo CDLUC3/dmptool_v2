@@ -68,6 +68,8 @@ ul, ol {
 	margin: 0 0 20px 25px; }
 ul li, ol li {
 	margin-bottom: 5px; }
+ul.nav li {
+	margin-bottom: 0; }
 ul li:before {
 	content: "\00BB\0020"; }
 ul li {
@@ -105,7 +107,7 @@ label.control-label, .form-horizontal label.control-label {
 label.required:before {
 	content: "\002A\0020";
 	color: #DA0049; }
-input, input[type=text], input[type=password], input[type=email], input[type=search], textarea, select {
+input[type=text], input[type=password], input[type=email], input[type=search], textarea, select {
 	border-color: #B6B6B7;
 	color: #4C4C4E;
 	margin: 5px 10px 5px 0;
@@ -834,6 +836,7 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 .tabbable[class*="span"] .tab-pane {
 	padding-bottom: 10px; }
 .tab-pane.table {
+	border: none;
 	border-top: 1px solid #B6B6B7;
 	margin: 0;
 	margin-top: -1px;

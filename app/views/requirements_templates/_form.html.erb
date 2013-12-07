@@ -6,7 +6,6 @@
 	<div class="tab-content">
 		<div class="tab-pane active" id="tab1">
 			<%= form_for @requirements_template, html: { :class => 'form-horizontal' } do |f| %>
-			<div class="tab-inner">
 			  <% if @requirements_template.errors.any? %>
 				  <div id="error_explanation">
 					  <h2><%= '#{pluralize(@requirements_template.errors.count, "error")} prohibited this requirements template from being saved:' %></h2>
@@ -124,7 +123,6 @@
 					<%= link_to_add_fields 'Add Sample Plan', f , :sample_plans %>
 				</div>
 				<br/>
-			</div>
 			<div class="buttons">
 				<%= f.submit 'Save Changes', :class => 'btn btn-green', method: 'post' %>
 			</div>

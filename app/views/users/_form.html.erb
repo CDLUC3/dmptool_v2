@@ -1,4 +1,4 @@
-<%= form_for @user, html: { class: 'form-horizontal' } do |f| %>
+<%= form_for @user, html: { :class => 'form-horizontal' } do |f| %>
   <% if @user.errors[:base].any? %>
     <div class="alert alert-error form-errors">
       <% @user.errors[:base].each do |msg| %>
