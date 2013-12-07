@@ -1,21 +1,21 @@
-require 'spec_helper'
+# require 'spec_helper'
 
-describe Role do
+# describe Role do
 
-  before { @role = Role.new(name: 'dmp_administrator')}
+#   before { @role = Role.new(name: 'dmp_administrator')}
 
-  subject { @role }
+#   subject { @role }
 
-  it { should respond_to(:name) }
+#   it { should respond_to(:name) }
 
-  it { should have_many(:authorizations)}
-  it { should have_many(:users).through(:authorizations) }
+#   it { should have_many(:authorizations)}
+#   it { should have_many(:users).through(:authorizations) }
 
-  it { should be_valid }
+#   it { should be_valid }
 
-  describe "when name is blank" do
-    before { @role.name = '' }
-    it { should_not be_valid }
-  end
+#   describe "when name is blank" do
+#     before { @role.name = '' }
+#     it { should_not be_valid }
+#   end
 
-end
+# end

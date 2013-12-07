@@ -20,3 +20,5 @@ public/uploads/
 public/uploads/*
 public/uploads/*/
 
+spec/support/feautures/credentials.rb
+
