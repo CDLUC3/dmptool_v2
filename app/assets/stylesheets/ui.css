@@ -119,9 +119,9 @@ input[type=radio], input[type=checkbox] {
 	padding: 0; }
 .radio.inline, .checkbox.inline {
 	vertical-align: top; }
-.control-group {
+.control-group, .form-horizontal .control-group {
 	margin-bottom: 10px; }
-.controls.radios {
+.controls.radio-controls, .controls.checkbox-controls {
 	margin-top: 12px; }
 	
 /* Tables */

@@ -29,7 +29,7 @@
 
 				<div class="control-group">
 					<%= f.label :visibility, :class => 'control-label' %>
-					<div class="controls radios">
+					<div class="controls radio-controls">
 						<%= f.radio_button :visibility, :public, :class => 'radio inline' %>
 						<%= label_tag :public, 'Public', :class => 'radio-label' %><br/>
 						<%= f.radio_button :visibility, :institutional, :class => 'radio inline' %>
@@ -89,7 +89,7 @@
 
 				<div class="control-group">
 					<%= f.label :review_requirement, :class => 'control-label' %>
-					<div class="controls radios">
+					<div class="controls radio-controls">
 						<%= f.radio_button :review_type, :formal_review, :class => 'radio inline' %>
 						<%= label_tag :formal_review, 'Formal Review Required', :class => 'radio-label' %><br/>
 						<%= f.radio_button :review_type, :informal_review, :class => 'radio inline' %>
