@@ -20,7 +20,7 @@ describe "SeleniumReqEditorUserSpec" do
     @verification_errors.should == []
   end
   
-  it "test_req_editor_user_spec" do
+  it "selenium_req_editor_user_spec" do
 
     #requirement editor logs in with Smithsonian Institution
     @driver.get(@base_url)
@@ -44,19 +44,19 @@ describe "SeleniumReqEditorUserSpec" do
     @driver.find_element(:css, "a").text.should_not == 'DMP Administration'  
 
     #he changes his institution in the My Profile page (from SI to Museum of Natural History)
-    @driver.find_element(:link, "My Profile").click
-    #assert_equal "Smithsonian Institution", @driver.find_element(:css, "option[value='6']").text  
+    @driver.find_element(:link, "My Profile").click 
     @driver.find_element(tag_name: 'select').find_element(:css,"option[value='#{REQ_EDITOR_INSTITUTION_ID}']").selected?.should == true  
     @driver.find_element(:name, "user[institution_id]").find_element(:css,"option[value='#{REQ_EDITOR_INSTITUTION_CHILD_ID}']").click
     @driver.find_element(tag_name: 'select').find_element(:css,"option[value='#{REQ_EDITOR_INSTITUTION_CHILD_ID}']").selected?.should == true 
     @driver.find_element(:name, "user[institution_id]").find_element(:css,"option[value='#{REQ_EDITOR_INSTITUTION_ID}']").click
     @driver.find_element(tag_name: 'select').find_element(:css,"option[value='#{REQ_EDITOR_INSTITUTION_ID}']").selected?.should == true 
 
-    #creates a new public DMP template and then removes it
+    #creates a new public DMP template 
     @driver.find_element(:link, "DMP Templates").click
     @driver.find_element(:xpath, "//input[@value='Create New template']").click
     @driver.find_element(:xpath, "(//input[@value='Template Information'])[2]").click
-    @driver.find_element(:id, "requirements_template_name").send_keys Time.now
+    @template_name = Time.now
+    @driver.find_element(:id, "requirements_template_name").send_keys @template_name
     @driver.find_element(:id, "requirements_template_visibility_public").click
     
     @driver.find_element(:css, "button.ui-datepicker-trigger").click
@@ -64,15 +64,18 @@ describe "SeleniumReqEditorUserSpec" do
     @driver.find_element(:xpath, "(//button[@type='button'])[2]").click
     @driver.find_element(:link, "31").click
     @driver.find_element(:name, "commit").click
-    assert_equal "Requirements template was successfully created.", @driver.find_element(:css, "p").text
-    @driver.find_element(:xpath, "//input[@value='Template Details >>']").click
-    @driver.find_element(:css, "span.icon.remove").click
+    assert_equal "Requirements template was successfully created.", @driver.find_element(:xpath, "//div[2]/p").text
+
+    #makes sure the template is visible under view all
+    @driver.find_element(:link, "DMP Templates").click
+    @driver.find_element(:link, "View All").click
+    @driver.find_element(:link, "#{@template_name}")
+
+    #deletes the template 
+    @driver.find_element(:link, "#{@template_name}").click
+    @driver.find_element(:link, "Delete Template").click
     @driver.find_element(:link, "Delete").click
-
-    @driver.find_element(:xpath, "(//div[@id='confirmationDialog']/div[2])[2]").text.should =~ /^exact:Are you sure you want to delete[\s\S]$/
-    @driver.find_element(:xpath, "(//a[contains(text(),'Delete')])[3]").click
- 
-
+    
   end
   
   def element_present?(how, what)
