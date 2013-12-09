@@ -16,6 +16,7 @@ group :test do
   gem 'capybara', '2.1.0.rc1'
   gem 'factory_girl_rails', '4.2.0'
   gem 'shoulda-matchers'
+
 end
 
 gem 'omniauth'
@@ -44,3 +45,4 @@ gem 'american_date'
 gem 'ifad-rtf', :git => 'https://github.com/clbustos/rtf.git'
 
 gem 'activerecord_any_of'
+

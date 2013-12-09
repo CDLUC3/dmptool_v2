@@ -1,14 +1,14 @@
-<h4> Resource Template Overview </h4>
-<table class="table tablecondensed table-striped" >
+<h3 class="dashboard-heading"><span class="icon overview"></span>Resource Template Overview</h3>
+<table class="table table-condensed table-striped" >
   <thead>
     <tr>
-      <th class="span1"></th>
-      <th> Name </th>
-      <th> Institution </th>
-      <th> Status </th>
-      <th> Visibility </th>
-      <th> Creation Date </th>
-      <th> Last Modification Date </th>
+      <th class="span1 valign-middle"></th>
+      <th>Name</th>
+      <th>Institution</th>
+      <th>Status</th>
+      <th>Visibility</th>
+      <th>Creation Date</th>
+      <th>Last Modification Date</th>
     </tr>
   </thead>
   <tbody>
@@ -26,6 +26,6 @@
   </tbody>
 </table>
 <div class="buttons pagination">
+	<%= link_to "View All", requirements_templates_path(:scope => "all"), :method => :get, :class => "btn"%>
   <%= paginate @requirements_templates %>
 </div>
-

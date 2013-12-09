@@ -21,8 +21,8 @@
       <%= text_field_tag(:selected_requirement_template, @resource_template.requirements_template.name, class: "input-xxlarge", disabled: true) %>
     <% end %>
     </div>
-    <hr/>
     <br/>
+
     <h5> Basic Information </h5>
     <hr/>
     <%= f.hidden_field :requirements_template_id, id: 'requirements_template_id' %>
@@ -59,13 +59,17 @@
     </div>
 
     <div class="control-group">
-      <%= f.label :review_requirement, "Review Requirement", class: "control-label" %>
-      <div class="controls">
-        <%= f.radio_button :review_type, :formal_review, class: "radio inline" %>
-        Formal Review Required
-        <%= f.radio_button :review_type, :informal_review, class: "radio inline" %>
-        Informal Review Required
-        <%= f.radio_button :review_type, :no_review, class: "radio inline", checked: true %>
+      <%= f.label :review_requirement, "Review Requirement", :class => "control-label" %>
+      <div class="controls radios">
+        <%= f.radio_button :review_type, :formal_review, :class => "radio inline" %>
+        Formal Review Required<br/>
+        <%= f.radio_button :review_type, :informal_review, :class => "radio inline" %>
+        Informal Review Required<br/>
+        <% unless @resource_template.new_record? %>
+          <%= f.radio_button :review_type, :no_review, class: "radio inline" %>
+        <% else %>
+          <%= f.radio_button :review_type, :no_review, class: "radio inline", checked: true %>
+        <% end %>
         No Review Required
       </div>
     </div>

@@ -3,8 +3,8 @@ class UserSessionsController < ApplicationController
   def login
     if !params[:institution_id].blank?
       session['institution_id'] = params[:institution_id]
-    elsif params[:instituion_id].blank? && session['institution_id'].blank?
-      redirect_to choose_institution_path, flash: {error: 'Please choose your institution to log in.'}
+    elsif session['institution_id'].blank?
+      redirect_to choose_institution_path, flash: {error: 'Please choose your log in institution.'} and return
     end
     @institution = Institution.find(session[:institution_id])
     if !@institution.shib_domain.blank?

@@ -15,12 +15,10 @@ ehthumbs.db
 Thumbs.db
 tmp/
 config/deploy.yml
-
-
 public/uploads
 public/uploads/
 public/uploads/*
 public/uploads/*/
 
-
+spec/support/features/credentials.rb
 
