@@ -1,4 +1,8 @@
 class UserSessionsController < ApplicationController
+  
+   def my_logger
+    @@my_logger ||= Logger.new("#{Rails.root}/log/shib_debug.log")
+  end
 
   def login
     if !params[:institution_id].blank?
@@ -18,6 +22,13 @@ class UserSessionsController < ApplicationController
 
   def create
     redirect_to choose_institution_path if session[:institution_id].blank?
+    my_logger.info ""
+    env.each do |k,v|
+      if k.starts_with?('omni')
+        my_logger.debug "#{k}=#{v}"
+      end
+    end
+    
     user = User.from_omniauth(env["omniauth.auth"], session['institution_id'])
     session[:user_id] = user.id
     redirect_to dashboard_path #otherwise if old user with institution set, send to dashboard
