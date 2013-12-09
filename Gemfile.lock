@@ -7,18 +7,20 @@ GIT
       activerecord (~> 4.0)
 
 GIT
+  remote: git@bitbucket.org:cdl/omniauth-shibboleth.git
+  revision: 76b0eb998f21a012d22956245f547e1804d37363
+  branch: master
+  specs:
+    omniauth-shibboleth (1.0.8)
+      omniauth (>= 1.0.0)
+
+GIT
   remote: https://github.com/clbustos/rtf.git
   revision: 723b5184559448bc95a0c3464436391c4b992b6e
   specs:
     ifad-rtf (0.4.2)
       nokogiri (~> 1.1)
       tidy-ext (~> 0.1)
-
-PATH
-  remote: /Users/localsfisher/workspace/omniauth-shibboleth
-  specs:
-    omniauth-shibboleth (1.0.8)
-      omniauth (>= 1.0.0)
 
 GEM
   remote: https://rubygems.org/
