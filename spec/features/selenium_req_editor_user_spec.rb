@@ -20,6 +20,7 @@ describe "SeleniumReqEditorUserSpec" do
     @verification_errors.should == []
   end
   
+  #THIS TEST WILL FAIL ON THE 31st OR DURING MONTHS THAT DON'T HAVE THE 31ST 
   it "selenium_req_editor_user_spec" do
 
     #requirement editor logs in with Smithsonian Institution
