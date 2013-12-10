@@ -17,10 +17,15 @@ class UserSessionsController < ApplicationController
   end
 
   def create
-    redirect_to choose_institution_path if session[:institution_id].blank?
+    redirect_to choose_institution_path if session[:institution_id].blank? and return
     user = User.from_omniauth(env["omniauth.auth"], session['institution_id'])
+    redirect_to login_path, flash: { error: 'Invalid Username/Password' } and return if !user.active?
     session[:user_id] = user.id
-    redirect_to dashboard_path #otherwise if old user with institution set, send to dashboard
+    if user.first_name.blank? || user.last_name.blank? || user.prefs.blank?
+      redirect_to edit_user_path(user), flash: {error: 'Please complete your user information.'} and return
+    else
+      redirect_to dashboard_path and return
+    end
   end
 
   def failure

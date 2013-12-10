@@ -55,9 +55,13 @@ class User < ActiveRecord::Base
   def self.create_from_omniauth(auth, institution_id)
     create! do |user|
       user.email = auth[:info][:email]
-      user.first_name = auth[:info][:first_name] if !auth[:info][:first_name].blank?
-      user.last_name = auth[:info][:last_name] if !auth[:info][:last_name].blank?
-      user.login_id = auth[:info][:nickname] if !auth[:info][:nickname].blank?
+      # Set any of the omniauth fields that have values  in the database.
+      # The keys are the omniauth field names, the values are the database field names
+      # for mapping omniauth field names to db field names.
+      {:first_name => :first_name, :last_name => :last_name,
+            :nickname => :login_id, :uid => :login_id}.each do |k, v|
+        user.send("#{v}=", auth[:info][k]) if !auth[:info][k].blank?
+      end
       user.institution_id = institution_id
     end
   end
