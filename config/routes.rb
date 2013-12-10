@@ -42,7 +42,7 @@ Dmptool2::Application.routes.draw do
 
   match 'user_sessions/login', to: 'user_sessions#login', as: 'login', :via => [:get, :post]
   get 'user_sessions/institution', to: 'user_sessions#institution', as: 'choose_institution'
-  match '/auth/:provider/callback', to: 'user_sessions#create', via => [:get, :post]
+  match '/auth/:provider/callback', to: 'user_sessions#create', :via => [:get, :post]
   get '/auth/failure', to: 'user_sessions#failure'
 
   get 'requirements_template_information', to: 'requirements_templates#template_information'
