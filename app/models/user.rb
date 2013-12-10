@@ -9,7 +9,6 @@ class User < ActiveRecord::Base
   has_many :user_plans
   has_many :plans, through: :user_plans
   has_many :comments
-  has_many :authentications
   has_many :authorizations
   has_many :roles, through: :authorizations
 
@@ -38,10 +37,6 @@ class User < ActiveRecord::Base
     (user && user.cookie_salt == cookie_salt) ? user : nil
   end
 
-  def ldap_user?
-    self.authentications.where(:provider => 'ldap').first.present?
-  end
-
   def ensure_ldap_authentication(uid)
     unless Authentication.find_by_user_id_and_provider(self.id, 'ldap')
       Authentication.create(:user => self, :provider => 'ldap', :uid => uid)
@@ -58,16 +53,24 @@ class User < ActiveRecord::Base
       # Set any of the omniauth fields that have values  in the database.
       # The keys are the omniauth field names, the values are the database field names
       # for mapping omniauth field names to db field names.
-      {:first_name => :first_name, :last_name => :last_name, :nickname => :login_id}.each do |k, v|
+      {:first_name => :first_name, :last_name => :last_name}.each do |k, v|
         user.send("#{v}=", auth[:info][k]) if !auth[:info][k].blank?
       end
       #fix login_id for CDL LDAP to be simple username
-      if user.login_id && user.login_id.match(/^uid=\S+?,ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)
-        user.login = user.login.match(/^uid=(\S+?),ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)[1]
-      end
-      user.login_id = auth[:uid] if user.login_id.blank? and auth.has_key?('uid')
+      user.login_id = smart_userid_from_omniauth(auth)
       user.institution_id = institution_id
     end
+  end
+  
+  #returns the userid from omniauth, for LDAP usernames we don't qualify it
+  #while for shibboleth we have a longer qualified string which we need to distinguish
+  #since an unqualified login or an email may not be unique
+  def self.smart_userid_from_omniauth(auth)
+    uid = auth[:info][:uid] || auth[:uid]
+    if uid.match(/^uid=\S+?,ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)
+      return uid.match(/^uid=(\S+?),ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)[1]
+    end
+    uid
   end
 
   def full_name
