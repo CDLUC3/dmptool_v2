@@ -55,9 +55,9 @@ class User < ActiveRecord::Base
   def self.create_from_omniauth(auth, institution_id)
     create! do |user|
       user.email = auth[:info][:email]
-      user.first_name = auth[:info][:first_name]
-      user.last_name = auth[:info][:last_name]
-      user.login_id = auth[:info][:nickname]
+      user.first_name = auth[:info][:first_name] if !auth[:info][:first_name].blank?
+      user.last_name = auth[:info][:last_name] if !auth[:info][:last_name].blank?
+      user.login_id = auth[:info][:nickname] if !auth[:info][:nickname].blank?
       user.institution_id = institution_id
     end
   end
