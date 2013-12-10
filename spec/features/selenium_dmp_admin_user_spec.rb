@@ -47,6 +47,27 @@ describe "SeleniumDmpAdminUserSpec" do
     @driver.find_elements(:css, "h3.dashboard-heading").include?("DMPs For My Review")
     @driver.find_elements(:css, "h3.dashboard-heading").include?("DMP Templates")
     @driver.find_elements(:css, "h3.dashboard-heading").include?("Resource Templates")
+
+    #buttons are functioning (create new dmp is not working)
+    @driver.find_element(:id, "create_new_DMP_template").click
+    @driver.find_element(:link, "My Dashboard").click
+    @driver.find_element(:id, "create_new_resource_template").click
+    @driver.find_elements(:css, "h3.dashboard-heading").include?("Resource Template Overview")
+
+    #links are functioning
+
+    @driver.find_element(:link, "My Dashboard").click
+    @driver.find_element(:id, "institutional_templates").click #DMP Templates for my institution only
+    @driver.find_element(:xpath, "//th[5]").text.should == "Visibility"
+
+    @driver.find_element(:link, "My Dashboard").click
+    @driver.find_element(:id, "public_templates").click #Public DMP Templates
+    @driver.find_element(:xpath, "//th[5]").text.should == "Visibility"
+
+    @driver.find_element(:link, "My Dashboard").click
+    @driver.find_element(:id, "resources_templates").click # Resources Templates
+    @driver.find_elements(:css, "h3.dashboard-heading").include?("Resource Editors")
+    
     
   end
   
