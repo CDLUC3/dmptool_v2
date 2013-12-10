@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
         user.send("#{v}=", auth[:info][k]) if !auth[:info][k].blank?
       end
       #fix login_id for CDL LDAP to be simple username
-      if user.login_id.match(/^uid=\S+?,ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)
+      if user.login_id && user.login_id.match(/^uid=\S+?,ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)
         user.login = user.login.match(/^uid=(\S+?),ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)[1]
       end
       user.login_id = auth[:uid] if user.login_id.blank? and auth.has_key?('uid')
