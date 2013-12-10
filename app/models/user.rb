@@ -58,10 +58,14 @@ class User < ActiveRecord::Base
       # Set any of the omniauth fields that have values  in the database.
       # The keys are the omniauth field names, the values are the database field names
       # for mapping omniauth field names to db field names.
-      {:first_name => :first_name, :last_name => :last_name,
-            :nickname => :login_id, :uid => :login_id}.each do |k, v|
+      {:first_name => :first_name, :last_name => :last_name, :nickname => :login_id}.each do |k, v|
         user.send("#{v}=", auth[:info][k]) if !auth[:info][k].blank?
       end
+      #fix login_id for CDL LDAP to be simple username
+      if user.login_id.match(/^uid=\S+?,ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)
+        user.login = user.login.match(/^uid=(\S+?),ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)[1]
+      end
+      user.login_id = auth[:uid] if user.login_id.blank? and auth.has_key?('uid')
       user.institution_id = institution_id
     end
   end

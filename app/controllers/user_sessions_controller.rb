@@ -22,7 +22,7 @@ class UserSessionsController < ApplicationController
     redirect_to login_path, flash: { error: 'Invalid Username/Password' } and return if !user.active?
     session[:user_id] = user.id
     if user.first_name.blank? || user.last_name.blank? || user.prefs.blank?
-      redirect_to edit_user_path(user), flash: {error: 'Please complete your user information.'} and return
+      redirect_to edit_user_path(user), flash: {error: 'Please complete filling in your profile information.'} and return
     else
       redirect_to dashboard_path and return
     end
