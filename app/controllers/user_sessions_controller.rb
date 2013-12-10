@@ -28,6 +28,10 @@ class UserSessionsController < ApplicationController
         my_logger.debug "#{k}=#{v}"
       end
     end
+    my_logger.debug "env['omniauth.auth']['info']['email']=#{env['omniauth.auth']['info']['email']}"
+    my_logger.debug "env['omniauth.auth']['info']['identity_provider']=#{env['omniauth.auth']['info']['email']}"
+    my_logger.debug "env['omniauth.auth']['provider']=#{env['omniauth.auth']['info']['email']}"
+    my_logger.debug "env['omniauth.auth']['uid']=#{env['omniauth.auth']['info']['email']}"
     
     return
     
