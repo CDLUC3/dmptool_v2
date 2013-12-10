@@ -29,6 +29,8 @@ class UserSessionsController < ApplicationController
       end
     end
     
+    return
+    
     user = User.from_omniauth(env["omniauth.auth"], session['institution_id'])
     session[:user_id] = user.id
     redirect_to dashboard_path #otherwise if old user with institution set, send to dashboard
