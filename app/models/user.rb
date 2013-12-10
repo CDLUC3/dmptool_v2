@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
   end
 
   def self.from_omniauth(auth, institution_id)
-    where(email: auth[:info][:email]).first || create_from_omniauth(auth, institution_id)
+    where(login_id: smart_userid_from_omniauth(auth)).first || create_from_omniauth(auth, institution_id)
   end
 
   def self.create_from_omniauth(auth, institution_id)
