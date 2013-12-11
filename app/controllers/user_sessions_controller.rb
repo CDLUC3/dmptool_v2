@@ -35,7 +35,7 @@ class UserSessionsController < ApplicationController
   end
 
   def failure
-    redirect_to login_path, flash: { error: 'Invalid Username/Password' }
+    redirect_to choose_institution_path, flash: { error: "Incorrect username, password or institution" }
   end
 
   def destroy
