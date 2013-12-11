@@ -41,8 +41,6 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.ldap_create = true
-
-    print user_params
     if [@user.valid?, valid_password(user_params[:password], user_params[:password_confirmation])].all?
       begin
         results = Ldap_User::LDAP.fetch(@user.login_id)
