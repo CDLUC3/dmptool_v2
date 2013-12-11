@@ -20,8 +20,12 @@ class UserSessionsController < ApplicationController
     redirect_to choose_institution_path if session[:institution_id].blank? and return
     auth = env["omniauth.auth"]
     user = User.from_omniauth(auth, session['institution_id'])
-    redirect_to login_path, flash: { error: 'Problem with InCommon login.  Your InCommon provider may not be releasing the necessary attributes.'} and return if auth[:provider] == 'shibboleth' && user.nil?
-    redirect_to login_path, flash: { error: 'Invalid Username/Password' } and return if user.nil? || !user.active?
+    if auth[:provider] == 'shibboleth' && user.nil?
+      redirect_to choose_institution_path, flash: { error: 'Problem with InCommon login.  Your InCommon provider may not be releasing the necessary attributes.'} and return
+    end
+    if user.nil? || !user.active?
+     redirect_to choose_institution_path, flash: { error: "Incorrect username, password or institution" } and return
+    end 
     session[:user_id] = user.id
     if user.first_name.blank? || user.last_name.blank? || user.prefs.blank?
       redirect_to edit_user_path(user), flash: {error: 'Please complete filling in your profile information.'} and return
