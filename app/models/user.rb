@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :user_plans
   has_many :plans, through: :user_plans
   has_many :comments
+  has_many :authentications
   has_many :authorizations
   has_many :roles, through: :authorizations
 
@@ -24,7 +25,7 @@ class User < ActiveRecord::Base
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :institution_id, presence: true, numericality: true
-  validates :email, presence: true, uniqueness: { :case_sensitive => false }, format: { with: VALID_EMAIL_REGEX }
+  validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }
   validates :prefs, presence: true
   validates :login_id, presence: true, uniqueness: { case_sensitive: false }, :if => :ldap_create
 
@@ -44,22 +45,26 @@ class User < ActiveRecord::Base
   end
 
   def self.from_omniauth(auth, institution_id)
-    where(login_id: smart_userid_from_omniauth(auth)).first || create_from_omniauth(auth, institution_id)
+    a = Authentication.find_by_uid(smart_userid_from_omniauth(auth))
+    (a.nil? ? nil: a.user) || create_from_omniauth(auth, institution_id)
   end
 
   def self.create_from_omniauth(auth, institution_id)
-    create! do |user|
-      user.email = auth[:info][:email]
-      # Set any of the omniauth fields that have values  in the database.
-      # The keys are the omniauth field names, the values are the database field names
-      # for mapping omniauth field names to db field names.
-      {:first_name => :first_name, :last_name => :last_name}.each do |k, v|
-        user.send("#{v}=", auth[:info][k]) if !auth[:info][k].blank?
-      end
-      #fix login_id for CDL LDAP to be simple username
-      user.login_id = smart_userid_from_omniauth(auth)
-      user.institution_id = institution_id
+    user = User.new
+    user.email = auth[:info][:email]
+    # Set any of the omniauth fields that have values  in the database.
+    # The keys are the omniauth field names, the values are the database field names
+    # for mapping omniauth field names to db field names.
+    {:first_name => :first_name, :last_name => :last_name}.each do |k, v|
+      user.send("#{v}=", auth[:info][k]) if !auth[:info][k].blank?
     end
+    #fix login_id for CDL LDAP to be simple username
+    user.login_id = smart_userid_from_omniauth(auth)
+    user.institution_id = institution_id
+    user.save!
+    
+    Authentication.create!({:user_id => user.id, :provider => auth[:provider], :uid => smart_userid_from_omniauth(auth)})
+    user
   end
   
   #returns the userid from omniauth, for LDAP usernames we don't qualify it
