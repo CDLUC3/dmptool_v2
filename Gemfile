@@ -9,7 +9,7 @@ group :development, :test do
   gem 'capistrano'
   gem 'capistrano-unicorn'
   gem 'debugger'
-end
+ end
 
 group :test do
   gem 'selenium-webdriver', '~> 2.35.1'
