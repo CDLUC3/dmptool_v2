@@ -44,14 +44,6 @@ describe "SeleniumReqEditorUserSpec" do
     @driver.find_element(:css, "a").text.should_not == 'Institution Profile' 
     @driver.find_element(:css, "a").text.should_not == 'DMP Administration'  
 
-    #he changes his institution in the My Profile page (from SI to Museum of Natural History)
-    @driver.find_element(:link, "My Profile").click 
-    @driver.find_element(tag_name: 'select').find_element(:css,"option[value='#{REQ_EDITOR_INSTITUTION_ID}']").selected?.should == true  
-    @driver.find_element(:name, "user[institution_id]").find_element(:css,"option[value='#{REQ_EDITOR_INSTITUTION_CHILD_ID}']").click
-    @driver.find_element(tag_name: 'select').find_element(:css,"option[value='#{REQ_EDITOR_INSTITUTION_CHILD_ID}']").selected?.should == true 
-    @driver.find_element(:name, "user[institution_id]").find_element(:css,"option[value='#{REQ_EDITOR_INSTITUTION_ID}']").click
-    @driver.find_element(tag_name: 'select').find_element(:css,"option[value='#{REQ_EDITOR_INSTITUTION_ID}']").selected?.should == true 
-
     #creates a new public DMP template 
     @driver.find_element(:link, "DMP Templates").click
     @driver.find_element(:xpath, "//input[@value='Create New template']").click
