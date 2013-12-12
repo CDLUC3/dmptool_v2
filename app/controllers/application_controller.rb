@@ -9,9 +9,9 @@ class ApplicationController < ActionController::Base
 
   protected
 
-    def current_user
-      @current_user ||= User.find_by_login_id(session[:login_id]) if session[:login_id]
-    end
+  	def current_user
+    	@current_user ||= User.find(session[:user_id]) if session[:user_id]
+  	end
     
     def safe_has_role?(role)
       #this returns whether a user has a role, but does it safely.  If no user is logged in

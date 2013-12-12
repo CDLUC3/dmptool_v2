@@ -2,7 +2,7 @@ require "selenium-webdriver"
 require "rspec-expectations"
 require 'spec_helper'
 include  Credentials
-include Module::Credentials
+
 
 
 describe "SeleniumGenericUserSpec" do
@@ -25,12 +25,12 @@ describe "SeleniumGenericUserSpec" do
     #generic user with no specific roles logs in with Test Institution
     @driver.get(@base_url)
     @driver.find_element(:link, "Log In").click
-    @driver.find_element(:tag_name, "select").find_element(:css,"option[value='1']").click
+    @driver.find_element(:tag_name, "select").find_element(:css,"option[value='#{GENERIC_INSTITUTION_ID}']").click
     @driver.find_element(:name, "commit").click
     @driver.find_element(:id, "username").send_keys GENERIC_USERNAME  
     @driver.find_element(:id, "password").send_keys GENERIC_PASSWORD
     @driver.find_element(:name, "commit").click
-    assert_equal "Welcome! test_user2", @driver.find_element(:css, "p").text
+    assert_equal "Welcome! #{GENERIC_FIRST_NAME}", @driver.find_element(:css, "p").text
 
     #he has the generic visibility quick-dashboard
     @driver.find_element(:link, "My Dashboard").text
@@ -45,12 +45,17 @@ describe "SeleniumGenericUserSpec" do
 
     #he changes his institution in the My Profile page
     @driver.find_element(:link, "My Profile").click
-    assert_equal "Test Institution", @driver.find_element(:css, "option[value='1']").text   
-    @driver.find_element(:name, "user[institution_id]").find_element(:css,"option[value='30']").click
-    @driver.find_element(tag_name: 'select').find_element(:css,"option[value='30']").selected?.should == true 
-    @driver.find_element(:name, "user[institution_id]").find_element(:css,"option[value='1']").click
-    @driver.find_element(tag_name: 'select').find_element(:css,"option[value='1']").selected?.should == true 
 
+    @driver.find_element(:tag_name, "select").find_element(:css,"option[value='#{GENERIC_INSTITUTION_ID}']").click
+    # @driver.find_element(:name, "commit").click
+    # @driver.find_element(:link, "My Profile").click
+    # @driver.find_element(:tag_name, "select").find_element(:css,"option[value='#{GENERIC_INSTITUTION_CHILD_ID}']").selected?.should == true 
+    # @driver.find_element(:link, "My Profile").click
+    # @driver.find_element(:tag_name, "select").find_element(:css,"option[value='#{GENERIC_INSTITUTION_ID}']").click
+    # @driver.find_element(:name, "commit").click
+    # @driver.find_element(:link, "My Profile").click
+    # @driver.find_element(:tag_name, "select").find_element(:css,"option[value='#{GENERIC_INSTITUTION_ID}']").selected?.should == true 
+    
     
 
   end

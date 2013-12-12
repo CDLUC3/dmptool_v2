@@ -41,8 +41,6 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.ldap_create = true
-
-    print user_params
     if [@user.valid?, valid_password(user_params[:password], user_params[:password_confirmation])].all?
       begin
         results = Ldap_User::LDAP.fetch(@user.login_id)
@@ -68,7 +66,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if !@user.errors.any? && @user.save
-        session[:login_id] = @user.login_id
+        session[:user_id] = @user.id
         format.html { redirect_to edit_user_path(@user), notice: 'User was successfully created.' }
         format.json { render action: 'show', status: :created, location: @user }
       else
@@ -85,7 +83,7 @@ class UsersController < ApplicationController
     password = user_params[:password]
     password_confirmation = user_params[:password_confirmation]
 
-    if !password.empty?
+    if password && !password.empty?
       if valid_password(password, password_confirmation)
         begin
           reset_ldap_password(@user, password)
@@ -116,12 +114,12 @@ class UsersController < ApplicationController
       end
     end
   rescue LdapMixin::LdapException
-    flash[:notice] = 'Error updating LDAP. Local update also cancelled.'
-    render 'edit'
+    flash[:notice] = 'Error updating LDAP. Local update canceled.'
+    redirect_to edit_user_path(@user)
   rescue Exception => e
     puts e.to_s
     flash[:notice] = 'Unknown error updating user information.'
-    render 'edit'
+    redirect_to edit_user_path(@user)
   end
 
   # DELETE /users/1
@@ -137,6 +135,19 @@ class UsersController < ApplicationController
   def edit_user_roles
     @user = User.find(params[:user_id])
     @roles = Role.all
+  end
+
+  def finish_signup
+    @user.first_name = @user.last_name = ''
+  end
+
+  def finish_signup_update
+    if @user.update_attributes(params[:user].permit(:first_name, :last_name))
+      flash[:notice] = 'You have completed signing up for the DMP tool.'
+      redirect_to user_url(@user, :protocol => 'https')
+    else
+      render 'finish_signup'
+    end
   end
 
   def update_user_roles
@@ -227,5 +238,14 @@ class UsersController < ApplicationController
 
     !@user.errors.any?
   end
+
+  def require_current_user
+    @user = User.find(params[:id])
+    unless @user == current_user
+      flash[:notice] = "User information may only be edited by that user"
+      redirect_to root_path
+    end
+  end
+
 
 end

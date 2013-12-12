@@ -7,6 +7,14 @@ GIT
       activerecord (~> 4.0)
 
 GIT
+  remote: git@bitbucket.org:cdl/omniauth-shibboleth.git
+  revision: 76b0eb998f21a012d22956245f547e1804d37363
+  branch: master
+  specs:
+    omniauth-shibboleth (1.0.8)
+      omniauth (>= 1.0.0)
+
+GIT
   remote: https://github.com/clbustos/rtf.git
   revision: 723b5184559448bc95a0c3464436391c4b992b6e
   specs:
@@ -253,6 +261,7 @@ DEPENDENCIES
   mysql2
   omniauth
   omniauth-ldap
+  omniauth-shibboleth!
   paranoia!
   rails (= 4.0.0)
   rspec-rails (= 2.13.1)

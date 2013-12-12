@@ -12,22 +12,22 @@ class User < ActiveRecord::Base
   has_many :authentications
   has_many :authorizations
   has_many :roles, through: :authorizations
-  
+
   has_many :owned_plans, -> { where user_plans: { owner: true} }, through: :user_plans,
   source: :plan, class_name: 'Plan'
-  
+
   has_many :coowned_plans, -> { where user_plans: { owner: false} }, through: :user_plans,
   source: :plan, class_name: 'Plan'
-  
+
   accepts_nested_attributes_for :user_plans
 
   attr_accessor :ldap_create, :password, :password_confirmation
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :institution_id, presence: true, numericality: true
-  validates :email, presence: true, uniqueness: { :case_sensitive => false }, format: { with: VALID_EMAIL_REGEX }
+  validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }
   validates :prefs, presence: true
-  validates :login_id, presence: true, uniqueness: { case_sensitive: false }
+  validates :login_id, presence: true, uniqueness: { case_sensitive: false }, :if => :ldap_create
 
   before_validation :create_default_preferences, if: Proc.new { |x| x.prefs.empty? }
   before_validation :add_default_institution, if: Proc.new { |x| x.institution_id.nil? }
@@ -38,42 +38,61 @@ class User < ActiveRecord::Base
     (user && user.cookie_salt == cookie_salt) ? user : nil
   end
 
-  def ldap_user?
-    self.authentications.where(:provider => 'ldap').first.present?
-  end
-
   def ensure_ldap_authentication(uid)
     unless Authentication.find_by_user_id_and_provider(self.id, 'ldap')
       Authentication.create(:user => self, :provider => 'ldap', :uid => uid)
     end
   end
-  
+
   def self.from_omniauth(auth, institution_id)
-    where(email: auth[:info][:email]).first || create_from_omniauth(auth, institution_id)
+    uid = smart_userid_from_omniauth(auth)
+    return nil if uid.blank? || auth[:info][:email].blank?
+    a = Authentication.find_by_uid(uid)
+    (a.nil? ? nil: a.user) || create_from_omniauth(auth, institution_id)
+  end
+
+  def self.create_from_omniauth(auth, institution_id)
+    ActiveRecord::Base.transaction do
+      user = User.new
+      user.email = auth[:info][:email]
+      # Set any of the omniauth fields that have values  in the database.
+      # The keys are the omniauth field names, the values are the database field names
+      # for mapping omniauth field names to db field names.
+      {:first_name => :first_name, :last_name => :last_name}.each do |k, v|
+        user.send("#{v}=", auth[:info][k]) if !auth[:info][k].blank?
+      end
+      #fix login_id for CDL LDAP to be simple username
+      user.login_id = smart_userid_from_omniauth(auth)
+      user.institution_id = institution_id
+      user.save!
+    end
+    
+    Authentication.create!({:user_id => user.id, :provider => auth[:provider], :uid => smart_userid_from_omniauth(auth)})
+    user
   end
   
-  def self.create_from_omniauth(auth, institution_id)
-    create! do |user|
-      user.email = auth[:info][:email]
-      user.first_name = auth[:info][:first_name]
-      user.last_name = auth[:info][:last_name]
-      user.login_id = auth[:info][:nickname]
-      user.institution_id = institution_id
+  #returns the userid from omniauth, for LDAP usernames we don't qualify it
+  #while for shibboleth we have a longer qualified string which we need to distinguish
+  #since an unqualified login or an email may not be unique
+  def self.smart_userid_from_omniauth(auth)
+    uid = auth[:info][:uid] || auth[:uid]
+    if uid.match(/^uid=\S+?,ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)
+      return uid.match(/^uid=(\S+?),ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)[1]
     end
+    uid
   end
 
   def full_name
     [first_name, last_name].join(" ")
   end
-  
-  
+
   def plans_by_state(state)
     #get all plans this user has in the state specified
     Plan.joins(:current_state, :user_plans).
           where(:user_plans => { :user_id => self.id }).
           where(:plan_states => { :state => state})
   end
-  
+
   def unique_plan_states
     #returns a list of the unique plan states that this user has
     Plan.joins(:current_state, :user_plans).

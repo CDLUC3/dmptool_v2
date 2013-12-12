@@ -2,13 +2,17 @@ require 'spec_helper'
 
 feature 'generic user' do 
 
+	
 	let(:test_institution) {FactoryGirl.create(:institution, full_name: "Test Institution") }
 	let(:test_institution_child) {FactoryGirl.create(:institution, full_name: "Test sub-inst01", ancestry: test_institution.id) }
-	#let(:dmp_admin_role) { FactoryGirl.create(:role, name: "DMP Administrator") }
-	let(:user) { FactoryGirl.create(:user, first_name: "test_user2", email: "test_user2@gmail.com") }
+	
+	#create method gives validation error mail exists
+	let(:generic_user) { FactoryGirl.build(:user, first_name: "test_user2", email: "test_user2@gmail.com") }
+
+	
 	
 
-	after { @authentication = Authentication.new(user_id: user.id, provider: :ldap, user_id: user.email) }
+	after { @authentication = Authentication.new(user_id: generic_user.id, provider: :ldap, user_id: "test_user2@gmail.com") }
 
 
 	scenario 'scenarios' do

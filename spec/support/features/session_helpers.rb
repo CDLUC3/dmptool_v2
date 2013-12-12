@@ -44,12 +44,13 @@ module Features
 		end
 
 		def change_my_institution(from, to)
-			#page.select "#{to.full_name}", :from => 'user_institution_id'
-			#click_button 'Save'
-			#expect(page).to have_content "#{to.full_name}"
-			#page.select "#{from.full_name}", :from => 'user_institution_id'
-			#click_button 'Save'
+			page.select "#{to.full_name}", :from => 'user_institution_id'
+			click_button 'Save'
+			expect(page).to have_content "#{to.full_name}"
+			page.select "#{from.full_name}", :from => 'user_institution_id'
+			click_button 'Save'
 			expect(page).to have_content "#{from.full_name}"
+			expect {post.publish!}.to change {post.published_on}.from(nil).to(Date.today)
 		end
 	
 	end

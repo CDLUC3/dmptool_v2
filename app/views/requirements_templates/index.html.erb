@@ -37,7 +37,7 @@
 					<div class="toggle-links">
 						<%=link_to (content_tag(:strong, requirements_template.name)), requirements_template_requirements_path(requirements_template) %>
 						<div class="template-links">
-							<%= (link_to 'Overview', edit_requirements_template_path(requirements_template))+' | '+(link_to 'Details',requirements_template_requirements_path(requirements_template))+' | '+(link_to activate_link_text(requirements_template), toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", :class => 'ajax')+' | '+(link_to 'Copy', copy_existing_requirements_template_path(requirements_template))+' | '+(link_to 'Delete', requirements_template_path(requirements_template), :class => "delete", method: :delete, data: { confirm: 'Are you sure?' }) %>
+								<%= (link_to 'Overview', edit_requirements_template_path(requirements_template))+' | '+(link_to 'Details',requirements_template_requirements_path(requirements_template))+' | '+(link_to activate_link_text(requirements_template), toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", :class => 'ajax')+' | '+(link_to 'Copy', copy_existing_requirements_template_path(:requirements_template => requirements_template))+' | '+(link_to 'Delete', requirements_template_path(requirements_template), :class => "delete", method: :delete, data: { confirm: 'Are you sure?' }) %>
 						</div>
 					</div>
 				</td>

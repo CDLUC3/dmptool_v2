@@ -15,7 +15,7 @@
 						No DMPs are under review.
 					<% else %>
 						<% (current_user.unique_plan_states & PlanState::REVIEW_STATES).each do |state|%>
-							<%= link_to "#{current_user.plans_by_state(state).count} #{state.capitalize}"%>
+							<%= link_to "#{current_user.plans_by_state(state).count} #{state.capitalize}" %>
 						<% end %>
 					<% end %></td>
 				</tr>
@@ -26,7 +26,10 @@
 			</tbody>
 		</table>
 		<div class="buttons">
-			<%= link_to "Create New", "#", :class => "btn btn-green" %>
+
+			<!--The following id is used for testing purposes, please do not remove-->
+			<%= link_to "Create New", "#", :class => "btn btn-green", :id => "create_new_DMP" %>
+
 		</div>
 		
 		<% if defined? @pending_review %>
@@ -55,13 +58,17 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td><%= link_to "#{@requirements_templates} DMP Templates only for my institution", requirements_templates_path(scope: 'institutional') %></td>
-				<td><%= link_to "#{@public_requirements_templates} Public DMP Templates", requirements_templates_path(scope: 'public') %></td>
+				<td><%= link_to "#{@requirements_templates} DMP Templates only for my institution", requirements_templates_path(scope: 'institutional'), :id => "institutional_templates" %></td>
+				<!--The following id is used for testing purposes, please do not remove-->
+				<td><%= link_to "#{@public_requirements_templates} Public DMP Templates", requirements_templates_path(scope: 'public'), :id => "public_templates" %></td>
 			</tr>
 		</tbody>
 	</table>
 	<div class="buttons">
-		<%= link_to "Create New", requirements_template_information_path, :method => :get, :class => "btn btn-green" %>
+
+		<!--The following id is used for testing purposes, please do not remove-->
+		<%= link_to "Create New", requirements_template_information_path, :method => :get, :class => "btn btn-green", :id => "create_new_DMP_template" %>
+
 	</div>
 	<% end %>
 	<% if defined? @resource_templates %>
@@ -69,12 +76,16 @@
 	<table class="table table-striped">
 		<tbody>
 			<tr>
-				<td><%= link_to "#{@resource_templates} Resource templates", resource_templates_path %></td>
+				<!--The following id is used for testing purposes, please do not remove-->
+				<td><%= link_to "#{@resource_templates} Resource templates", resource_templates_path, :id => "resources_templates"  %></td>
 			</tr>
 		</tbody>
 	</table>
 	<div class="buttons">
-		<%= link_to "Create New", new_resource_template_path, :class => "btn btn-green" %>
+
+		<!--The following id is used for testing purposes, please do not remove-->
+		<%= link_to "Create New", new_resource_template_path, :class => "btn btn-green", :id => "create_new_resource_template" %>
+
 	</div>
 	<% end %>
 	

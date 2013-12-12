@@ -9,7 +9,7 @@ group :development, :test do
   gem 'capistrano'
   gem 'capistrano-unicorn'
   gem 'debugger'
-end
+ end
 
 group :test do
   gem 'selenium-webdriver', '~> 2.35.1'
@@ -21,6 +21,7 @@ end
 
 gem 'omniauth'
 gem 'omniauth-ldap'
+gem "omniauth-shibboleth", :git => "git@bitbucket.org:cdl/omniauth-shibboleth.git", :branch => 'master'
 
 gem 'mysql2'
 gem 'therubyracer'

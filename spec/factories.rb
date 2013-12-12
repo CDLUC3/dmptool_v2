@@ -33,15 +33,15 @@ FactoryGirl.define do
     # sequence(:url) { |n| "http://moreinformation#{n}.edu" }
     # sequence(:url_text) { |n| "More Information Page #{n}" }
     
-    #full_name "Test Institution"
+    full_name "Test Institution"
 
-    # factory :test_institution do
-    #   full_name "test_institution"
-    # end
-    # factory :test_institution_child do
-    #   full_name "Test sub-inst01"
-    #   ancestry  "1"
-    # end
+    factory :test_institution do
+      full_name "test_institution"
+    end
+    factory :test_institution_child do
+      full_name "Test sub-inst01"
+      ancestry  "1"
+    end
   end
 
   factory :role do
