@@ -25,24 +25,16 @@ FactoryGirl.define do
 
 
   factory :institution do
-    # sequence(:full_name) { |n| "University of California - Campus#{n}" }
-    # sequence(:nickname) { |n| "UC#{n}" }
-    # desc "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis nisi metus, pulvinar pulvinar diam. Curabitur dignissim aliquet lectus in laoreet. Maecenas in commodo nunc. Quisque blandit auctor mollis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut quis nulla ut libero malesuada aliquam porttitor nec erat. Etiam suscipit lectus et ligula varius dictum. Vestibulum venenatis lectus eu leo mattis a dapibus elit congue."
-    # sequence(:contact_info) { |n| "Contact Person #{n}" }
-    # sequence(:contact_email) { |n| "contactemail#{n}@uc.edu" }
-    # sequence(:url) { |n| "http://moreinformation#{n}.edu" }
-    # sequence(:url_text) { |n| "More Information Page #{n}" }
-    
-    full_name "Test Institution"
 
     factory :test_institution do
-      full_name "test_institution"
+      full_name "Test Institution"
     end
     factory :test_institution_child do
       full_name "Test sub-inst01"
-      ancestry  "1"
     end
   end
+
+
 
   factory :role do
     name "DMP Administrator"
