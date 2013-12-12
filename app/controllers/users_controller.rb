@@ -89,10 +89,10 @@ class UsersController < ApplicationController
           reset_ldap_password(@user, password)
         rescue
           flash[:notice] = "Problem updating password in LDAP. Please retry."
-          render :edit and return
+          redirect_to edit_user_path(@user) and return
         end
       else
-        render :edit and return
+        redirect_to edit_user_path(@user) and return
       end
     end
 
@@ -110,16 +110,16 @@ class UsersController < ApplicationController
         flash[:notice] = 'User information updated.'
         redirect_to edit_user_path(@user)
       else
-        render 'edit'
+        redirect_to edit_user_path(@user)
       end
     end
-  rescue LdapMixin::LdapException
-    flash[:notice] = 'Error updating LDAP. Local update also cancelled.'
-    render 'edit'
-  rescue Exception => e
-    puts e.to_s
-    flash[:notice] = 'Unknown error updating user information.'
-    render 'edit'
+  #rescue LdapMixin::LdapException
+  #  flash[:notice] = 'Error updating LDAP. Local update also cancelled.'
+  #  redirect_to edit_user_path(@user)
+  #rescue Exception => e
+  #  puts e.to_s
+  #  flash[:notice] = 'Unknown error updating user information.'
+  #  redirect_to edit_user_path(@user)
   end
 
   # DELETE /users/1
