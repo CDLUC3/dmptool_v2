@@ -48,5 +48,15 @@ class UserSessionsController < ApplicationController
   def institution
      @inst_list = InstitutionsController.institution_select_list
   end
+  
+  #email username from email address -- get is the form, post the submission
+  def username_reminder
+    
+  end
+  
+  #reset the password for an email address and mail it -- get is the form, post the submission
+  def password_reset
+    
+  end
 
 end
