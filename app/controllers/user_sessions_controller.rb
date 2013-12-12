@@ -27,6 +27,7 @@ class UserSessionsController < ApplicationController
      redirect_to choose_institution_path, flash: { error: "Incorrect username, password or institution" } and return
     end 
     session[:user_id] = user.id
+    session[:login_method] = auth[:provider]
     if user.first_name.blank? || user.last_name.blank? || user.prefs.blank?
       redirect_to edit_user_path(user), flash: {error: 'Please complete filling in your profile information.'} and return
     else
