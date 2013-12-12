@@ -83,7 +83,7 @@ class UsersController < ApplicationController
     password = user_params[:password]
     password_confirmation = user_params[:password_confirmation]
 
-    if !password.empty?
+    if password && !password.empty?
       if valid_password(password, password_confirmation)
         begin
           reset_ldap_password(@user, password)
