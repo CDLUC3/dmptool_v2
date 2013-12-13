@@ -640,6 +640,7 @@ a.btn-large:hover, a.btn-large:focus, a.btn-large:active {
 .login.row-fluid .user_login[class*="span"] {
 	border: none;
 	margin-top: 20px;
+	margin-left: 0;
 	margin-bottom: 0; }
 .login p {
 	font-size: 1.125em; }
@@ -650,7 +651,7 @@ a.btn-large:hover, a.btn-large:focus, a.btn-large:active {
 .control-group.select_institution select {
 	width: 330px; }
 .control-group.switch_institution {
-	height: 165px; }
+	height: 181px; }
 .alert {
 	margin: 0;
 	padding: 8px 10px 5px; }
@@ -667,7 +668,7 @@ a.btn-large:hover, a.btn-large:focus, a.btn-large:active {
 	display: inline;
   margin: 0 5px 0 0;
   padding-left: 30px; }
-span.search {
+.search-area .search {
 	position: absolute;
 	top: 5px;
 	left: 8px; }
