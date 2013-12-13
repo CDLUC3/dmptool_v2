@@ -1,6 +1,6 @@
 module DbToFixture
 
-  TEMP_FIXTURE_PATH = Rails.root.join("test", "new_fixtures")
+  TEMP_FIXTURE_PATH = Rails.root.join("spec", "fixtures")
 
   def fixturize(model)
     Dir.mkdir(TEMP_FIXTURE_PATH) unless File.exists?(TEMP_FIXTURE_PATH)
