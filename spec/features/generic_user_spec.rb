@@ -2,7 +2,6 @@ require 'spec_helper'
 
 feature 'generic user' do 
 
-	
 	let(:test_institution) {FactoryGirl.create(:test_institution, full_name: "Test Institution") }
 	let(:test_institution_child) {FactoryGirl.create(:institution, full_name: "Test sub-inst01", ancestry: test_institution.id) }
 	
@@ -16,7 +15,6 @@ feature 'generic user' do
 
 
 	scenario 'scenarios' do
-
 
 		logs_in_with 'test_user2', 'test_user2', "Test Institution"
 

@@ -5,6 +5,9 @@ module Features
 		def logs_in_with(username, password, institution)
 			logs_out
 			click_link 'Log In'
+			
+			puts "institution_id.text = #{page.find_field('institution_id').text}"
+			save_and_open_page
 			page.select institution, :from => 'institution_id'
 			click_button 'Next'
 			fill_in 'username', with: username
