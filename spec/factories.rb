@@ -27,9 +27,11 @@ FactoryGirl.define do
   factory :institution do
 
     factory :test_institution do
+      id        1
       full_name "Test Institution"
     end
     factory :test_institution_child do
+      id        30
       full_name "Test sub-inst01"
     end
   end
