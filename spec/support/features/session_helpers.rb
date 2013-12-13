@@ -9,8 +9,9 @@ module Features
 			#save_and_open_page
 			page.select institution, :from => 'institution_id'
 			click_button 'Next'
-			fill_in 'username', with: 'test_user2'
-			fill_in 'password', with: 'test_user2'
+			fill_in 'username', with: username
+			fill_in 'password', with: password
+			#save_and_open_page
 			click_button 'Login'
 			expect(page).to have_content 'Welcome!'
 		end
