@@ -5,6 +5,8 @@ module Features
 		def logs_in_with(username, password, institution)
 			logs_out
 			click_link 'Log In'
+			#puts "institution_id.text = #{page.find_field('institution_id').text}"
+			#save_and_open_page
 			page.select institution, :from => 'institution_id'
 			click_button 'Next'
 			fill_in 'username', with: 'test_user2'
@@ -48,7 +50,6 @@ module Features
 			page.select "Test sub-inst01", :from => 'user_institution_id'
 			click_button 'Save'
 			expect(page).to have_content "Test sub-inst01"
-			#expect {post.publish!}.to change {post.published_on}.from(nil).to(Date.today)
 		end
 	
 	end

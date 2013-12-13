@@ -4,7 +4,7 @@ feature 'generic user' do
 
 	scenario 'scenarios' do
 
-		logs_in_with 'test_user2', 'test_user2', 'Test Institution'
+		logs_in_with 'test_user2', 'test_user2', "Test Institution"
 
 		check_quick_dashboard_generic_visibility
 	
