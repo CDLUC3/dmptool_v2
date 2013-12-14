@@ -2,10 +2,10 @@
 	<h3 class="dashboard-heading"><span class="icon login"></span>Username reminder</h3>
 	<div class="span5 user_login">
 		<p>Enter your email address below to send an email with the username for your account.</p>	
-	  <%= form_tag action: 'username_reminder', method: :post do %>
+	  <%= form_tag({:action => 'username_reminder'}, {:method => 'post'}) do %>
 			<div class="control-group">
 				<%= label_tag :user_id, 'Email' %>
-				<%= text_field_tag(:email)%>
+				<%= text_field_tag(:email, params[:email])%>
 	  	</div>
 	    <%= submit_tag "Submit" %>
 	  <% end %>

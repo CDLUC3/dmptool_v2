@@ -167,4 +167,34 @@ class User < ActiveRecord::Base
   def secure_hash(string)
     Digest::SHA2.hexdigest(string)
   end
+  
+  public
+  
+  #sets a new token if it's not set or is expired
+  def ensure_token
+    if self.token_expiration and Time.now > self.token_expiration
+      self.token = nil
+    end
+    self.token ||= self.generate_token
+    self.token_expiration = Time.now + 1.day
+    self.save
+    return self.token
+  end
+
+  def clear_token
+    self.token = nil
+    self.token_expiration = nil
+    self.save
+  end
+
+  def ldap_user?
+    self.authentications.where(:provider => 'ldap').first.present?
+  end
+
+  protected
+
+  TOKEN_CHARS = ('a'..'z').to_a + ('A'..'Z').to_a + ('0'..'9').to_a
+  def generate_token
+    40.times.collect {TOKEN_CHARS.sample}.join('')
+  end
 end
