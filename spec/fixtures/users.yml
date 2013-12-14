@@ -1,7 +1,6 @@
 
 
 admin123:
-  #institution_id: 1
   email: admin123@gmail.com
   first_name: Admin123
   last_name: UCOP Admin
@@ -15,8 +14,6 @@ admin123:
   deleted_at: 
 
 resource123:
-  
-  #institution_id: 1
   email: resource123@gmail.com
   first_name: Resource123
   last_name: 
@@ -30,8 +27,6 @@ resource123:
   deleted_at: 
 
 require123:
-  
-  #institution_id: 1
   email: require123@gmail.com
   first_name: Require123
   last_name: 
@@ -45,8 +40,6 @@ require123:
   deleted_at: 
 
 instrev123:
-  
-  #institution_id: 1
   email: instrev123@gmail.com
   first_name: Instrev123
   last_name: 
