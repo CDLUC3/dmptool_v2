@@ -143,13 +143,20 @@ class RequirementsTemplatesController < ApplicationController
         additional_informations_attributes: [:id, :requirements_template_id, :url, :label, :_destroy], sample_plans_attributes: [:id, :requirements_template_id, :url, :label, :_destroy])
     end
 
-    def template_editors
+    def template_editors      
       @user_ids = Authorization.where(role_id: 3).pluck(:user_id) #All the DMP Template Editors
-      if safe_has_role?(Role::DMP_ADMIN)
-        @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
-      else
-        @users = User.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).order('created_at DESC').page(params[:page]).per(10)
+
+      case params[:scope]
+        when "all_editors"
+          @users = User.where(id: @user_ids).page(params[:page])
+        else
+          @users = User.where(id: @user_ids).page(params[:page]).per(3)
       end
+    
+      if !safe_has_role?(Role::DMP_ADMIN)
+         @users = @users.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).page(params[:page])
+      end 
+
     end
 
     def count

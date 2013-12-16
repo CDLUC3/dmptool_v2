@@ -11,7 +11,7 @@
 				<%= link_to "http://#{current_user.institution.url}", :id => "inst-domain" do %>
 					<span class="icon inst-domain"></span><%= current_user.institution.url %>
 				<% end %>
-				<%= link_to "#", :id => "inst-contact" do %>
+				<%= mail_to current_user.institution.contact_email, :id => "inst-contact" do %>
 					<span class="icon inst-contact"></span>Contact <%= current_user.institution.contact_info %>
 				<% end %>
 			</div>
@@ -35,12 +35,12 @@
 	<div class="dashboard-nav row-fluid">
 		<ul class="nav">
 			<li <%= "class=current" if current_page?(dashboard_path) %> ><%= link_to(content_tag(:span, "My Dashboard"),  dashboard_path) %></li>
-			<li><%= link_to(content_tag(:span, "My DMPs"), "#") %></li>
-			<li><%= link_to(content_tag(:span, "Create New DMP"),"#") %></li>
+			<!--<li><%#= link_to(content_tag(:span, "My DMPs"), "#") %></li>
+			<li><%#= link_to(content_tag(:span, "Create New DMP"),"#") %></li>-->
 
-			<% if (safe_has_role?(Role::INSTITUTIONAL_REVIEWER) ||  safe_has_role?(Role::DMP_ADMIN))%>
-				<li><%= link_to(content_tag(:span, "Review DMPs"), "#") %></li>
-			<% end %>
+			<%# if (safe_has_role?(Role::INSTITUTIONAL_REVIEWER) ||  safe_has_role?(Role::DMP_ADMIN))%>
+			<!--	<li><%#= link_to(content_tag(:span, "Review DMPs"), "#") %></li>-->
+			<%# end %>
 
 			<% if (safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::INSTITUTIONAL_ADMIN)|| safe_has_role?(Role::TEMPLATE_EDITOR))%>
 				<li <%= "class=current" if current_page?(requirements_templates_path) %> > <%= link_to(content_tag(:span, "DMP Templates"), requirements_templates_path) %>

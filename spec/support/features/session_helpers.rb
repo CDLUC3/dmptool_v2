@@ -5,10 +5,13 @@ module Features
 		def logs_in_with(username, password, institution)
 			logs_out
 			click_link 'Log In'
+			#puts "institution_id.text = #{page.find_field('institution_id').text}"
+			#save_and_open_page
 			page.select institution, :from => 'institution_id'
 			click_button 'Next'
 			fill_in 'username', with: username
 			fill_in 'password', with: password
+			#save_and_open_page
 			click_button 'Login'
 			expect(page).to have_content 'Welcome!'
 		end
@@ -20,8 +23,6 @@ module Features
 
 		def check_quick_dashboard_generic_visibility
   		expect(page).to have_link('My Dashboard')
-  		expect(page).to have_link('My DMPs')
-  		expect(page).to have_link('Create New DMP')
   		expect(page).to have_link('My Profile')
 			
 			expect(page).to have_no_link('DMP Templates')		
@@ -44,13 +45,12 @@ module Features
 		end
 
 		def change_my_institution(from, to)
-			page.select "#{to.full_name}", :from => 'user_institution_id'
+			page.select "Test Institution", :from => 'user_institution_id'
 			click_button 'Save'
-			expect(page).to have_content "#{to.full_name}"
-			page.select "#{from.full_name}", :from => 'user_institution_id'
+			expect(page).to have_content "Test sub-inst01"
+			page.select "Test sub-inst01", :from => 'user_institution_id'
 			click_button 'Save'
-			expect(page).to have_content "#{from.full_name}"
-			expect {post.publish!}.to change {post.published_on}.from(nil).to(Date.today)
+			expect(page).to have_content "Test sub-inst01"
 		end
 	
 	end
