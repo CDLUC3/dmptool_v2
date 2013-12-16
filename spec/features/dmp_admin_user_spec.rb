@@ -15,7 +15,9 @@ feature 'dmp admin user' do
     	expect(page).to have_link('Institution Profile')	
     	expect(page).to have_link('DMP Administration')	
 
-    	#My Dashboard sections are present
+    #MY DASHBOARD TEST
+
+    #My Dashboard sections are present
     click_link 'My Dashboard'
     expect(page).to have_content("Overview")
     expect(page).to have_content("DMPs For My Review")

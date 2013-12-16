@@ -32,7 +32,7 @@
 			</div>
 		<% end %>
 	</div>
-	<div class="dashboard-nav row-fluid">
+	<div class="dashboard-nav row-fluid" id="quick_dashboard">
 		<ul class="nav">
 			<li <%= "class=current" if current_page?(dashboard_path) %> ><%= link_to(content_tag(:span, "My Dashboard"),  dashboard_path) %></li>
 			<!--<li><%#= link_to(content_tag(:span, "My DMPs"), "#") %></li>

@@ -10,7 +10,7 @@
 		|
 		<%= link_to(content_tag(:span, "Public (#{@public}) ", :class => "current"), scope: "public") %>
 	</div>
-	<table class="table table-striped table-condensed">
+	<table class="table table-striped table-condensed" id="dmp_templates">
 		<thead>
 			<tr>
 				<th class="span4">Name</th>
@@ -58,7 +58,7 @@
 		</tr>
 		</tbody>
 	</table>
-	<%= button_to 'Create New template', requirements_template_information_path, :method => :get, :class => 'btn' %>
+	<%= button_to 'Create New Template', requirements_template_information_path, :method => :get, :class => 'btn' %>
 	<br/>
 	<%= render 'template_editors' %>
 
