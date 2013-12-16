@@ -1,82 +1,83 @@
 <%= render 'requirements_templates' %>
-<br/>
-<div class="form-horizontal">
-  <%= form_for @resource_template do |f| %>
-    <% if @resource_template.errors.any? %>
-      <div id="error_explanation">
-        <h2>= "#{pluralize(@resource_template.errors.count, "error")} prohibited this resource template from being saved:"</h2>
-        <ul>
-          <% @resource_template.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <%= label_tag(:dmp_template, raw("<strong>Selected DMP Template</strong>"), class: "control-label") %>
-    <div class="controls">
-    <% if @resource_template.requirements_template_id.nil? %>
-      <%= text_field_tag(:selected_requirement_template, nil, id: "selected_requirement_template_name", class: "input-xxlarge", disabled: true) %>
-    <% else %>
-      <%= text_field_tag(:selected_requirement_template, @resource_template.requirements_template.name, class: "input-xxlarge", disabled: true) %>
-    <% end %>
-    </div>
-    <br/>
-
-    <h5> Basic Information </h5>
-    <hr/>
-    <%= f.hidden_field :requirements_template_id, id: 'requirements_template_id' %>
-
-    <div class="control-group">
-      <%= f.label :template_name,"Template Name", class: "control-label" %>
-      <div class="controls">
-        <%= f.text_field :name, class: "input-xxlarge" %>
-      </div>
-    </div>
-
-    <%= render partial: 'date_fields' , locals: { f: f } unless @resource_template.new_record? %>
-
-    <div class="control-group">
-      <%= f.label :institution, class: "control-label" %>
-      <div class="controls">
-        <% if safe_has_role?(Role::DMP_ADMIN) %>
-          <%= f.select( :institution_id, options_from_collection_for_select(Institution.all, "id", "full_name")) %>
-        <% else %>
-          <%= f.hidden_field :institution_id, value: current_user.institution.id %>
-          <%= text_field_tag :institution_name, current_user.institution.full_name, disabled: true, class: "input-xxlarge" %>
-        <% end %>
-      </div>
-    </div>
-
-    <h5> Optional Information </h5>
-    <hr/>
-
-    <div class="control-group">
-      <%= f.label :institutional_widget, "Institutional Widget", class: "control-label" %>
-      <div class="controls">
-        <%= f.text_field :widget_url, class: "input-xxlarge" %>
-      </div>
-    </div>
-
-    <div class="control-group">
-      <%= f.label :review_requirement, "Review Requirement", :class => "control-label" %>
-      <div class="controls radios">
-        <%= f.radio_button :review_type, :formal_review, :class => "radio inline" %>
-        Formal Review Required<br/>
-        <%= f.radio_button :review_type, :informal_review, :class => "radio inline" %>
-        Informal Review Required<br/>
-        <% unless @resource_template.new_record? %>
-          <%= f.radio_button :review_type, :no_review, class: "radio inline" %>
-        <% else %>
-          <%= f.radio_button :review_type, :no_review, class: "radio inline", checked: true %>
-        <% end %>
-        No Review Required
-      </div>
-    </div>
-
-    <hr/>
-    <div class="actions">
-      <%= f.submit 'Save Changes', class: 'btn btn-success pull-left', method: 'post' %>
-    </div>
-  <% end %>
+<div class="tabbable">
+	<ul class="nav-tabs">
+		<li class="active"><a href="#" data-toggle="tab">Template Overview</a></li>
+	</ul>
+	<div class="tab-content">
+		<div class="tab-pane active" id="tab1">
+			  <%= form_for @resource_template, html: { :class => 'form-horizontal' } do |f| %>
+			    <% if @resource_template.errors.any? %>
+			      <div id="error_explanation">
+			        <h2><%= "#{pluralize(@resource_template.errors.count, "error")} prohibited this resource template from being saved:" %></h2>
+			        <ul>
+			          <% @resource_template.errors.full_messages.each do |msg| %>
+			            <li><%= msg %></li>
+			          <% end %>
+			        </ul>
+			      </div>
+			    <% end %>
+					
+			    <div class="control-group">
+			      <%= f.label :dmp_template, 'Selected DMP Template', :class => 'control-label' %>
+			      <div class="controls">
+			      <% if @resource_template.requirements_template_id.nil? %>
+			        <%= text_field_tag(:selected_requirement_template, nil, id: 'selected_requirement_template_name', :class => 'input-xxlarge', disabled: true) %>
+			      <% else %>
+			        <%= text_field_tag(:selected_requirement_template, @resource_template.requirements_template.name, id: 'selected_requirement_template_name', :class => 'input-xxlarge', disabled: true) %>
+			      <% end %>
+			      </div>
+			    </div>
+					<br/>
+			    <h5>Basic Information</h5>
+			    <hr/>
+			    <%= f.hidden_field :requirements_template_id, id: 'requirements_template_id' %>
+			    <div class="control-group">
+			      <%= f.label :template_name,'Template Name', :class => 'control-label' %>
+			      <div class="controls">
+			        <%= f.text_field :name, :class => 'input-xxlarge' %>
+			      </div>
+			    </div>
+			    <%= render partial: 'date_fields' , locals: { f: f } unless @resource_template.new_record? %>
+			    <div class="control-group">
+			      <%= f.label :institution, :class => 'control-label' %>
+			      <div class="controls">
+			        <% if safe_has_role?(Role::DMP_ADMIN) %>
+			          <%= f.select( :institution_id, options_from_collection_for_select(Institution.all, 'id', 'full_name')) %>
+			        <% else %>
+			          <%= f.hidden_field :institution_id, value: current_user.institution.id %>
+			          <%= text_field_tag :institution_name, current_user.institution.full_name, disabled: true, :class => 'input-xlarge' %>
+			        <% end %>
+			      </div>
+			    </div>
+					<br/>
+			    <h5>Optional Information</h5>
+			    <hr/>
+			    <div class="control-group">
+			      <%= f.label :institutional_widget, 'Institutional Widget', :class => 'control-label' %>
+			      <div class="controls">
+			        <%= f.text_field :widget_url, :class => 'input-xxlarge' %>
+			      </div>
+			    </div>
+			    <div class="control-group">
+			      <%= f.label :review_requirement, 'Review Requirement', :class => 'control-label' %>
+			      <div class="controls radio-controls">
+			        <%= f.radio_button :review_type, :formal_review, :class => 'radio inline' %>
+			        Formal Review Required<br/>
+			        <%= f.radio_button :review_type, :informal_review, :class => 'radio inline' %>
+			        Informal Review Required<br/>
+			        <% unless @resource_template.new_record? %>
+			          <%= f.radio_button :review_type, :no_review, :class => 'radio inline' %>
+			        <% else %>
+			          <%= f.radio_button :review_type, :no_review, :class => 'radio inline', checked: true %>
+			        <% end %>
+			        No Review Required
+			      </div>
+			    </div>
+			    <br/>
+			    <div class="buttons">
+			      <%= f.submit 'Save Changes', :class => 'btn btn-success pull-left', method: 'post' %>
+			    </div>
+			  <% end %>
+		</div>
+	</div>
 </div>

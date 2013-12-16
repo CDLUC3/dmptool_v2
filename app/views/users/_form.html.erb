@@ -1,4 +1,4 @@
-<%= form_for @user, html: { class: 'form-horizontal' } do |f| %>
+<%= form_for @user, html: { :class => 'form-horizontal' } do |f| %>
   <% if @user.errors[:base].any? %>
     <div class="alert alert-error form-errors">
       <% @user.errors[:base].each do |msg| %>
@@ -11,26 +11,22 @@
   <% unless @user.new_record? %>
   <div class="tabbable">
       <ul class="nav nav-tabs">
-        <li class="active">
-          <%= link_to 'Personal Information', '#tab1', 'data-toggle' => 'tab' %>
-        </li>
-        <li>
-          <%= link_to 'Notification Preferences', '#tab2', 'data-toggle' => 'tab' %>
-        </li>
+        <li class="active"><%= link_to 'Personal Information', '#tab1', 'data-toggle' => 'tab' %></li>
+       	<li><%= link_to 'Notification Preferences', '#tab2', 'data-toggle' => 'tab' %></li>
       </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="tab1">
         <%= render 'personal', f: f %>
-        <div class="buttons">
-			  	<%= f.submit 'Save', :class => 'btn' %>
-			  	<%= link_to 'Cancel', edit_user_path(@user), :class => 'btn' %>
-	  		</div>
       </div>
       <div class="tab-pane" id="tab2">
         <%= render 'notifications' unless @user.new_record? %>
       </div>
     </div>
   </div>
+  <div class="buttons">
+		<%= f.submit 'Save', :class => 'btn' %>
+		<%= link_to 'Cancel', edit_user_path(@user), :class => 'btn' %>
+	</div>
   <% end %>
   <% if @user.new_record? %>
   	<%= render 'personal', f: f %>
