@@ -5,7 +5,7 @@ include Credentials
 
 feature 'generic user' do 
 
-	fixtures :users
+	fixtures :users, :institutions, :authentications
 
 	scenario 'scenarios' do
 

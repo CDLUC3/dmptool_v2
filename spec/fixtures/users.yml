@@ -1,6 +1,7 @@
 
 
 admin123:
+  institution: test_institution (Institution)
   email: admin123@gmail.com
   first_name: Admin123
   last_name: UCOP Admin
@@ -14,6 +15,7 @@ admin123:
   deleted_at: 
 
 resource123:
+  institution: test_institution (Institution)
   email: resource123@gmail.com
   first_name: Resource123
   last_name: 
@@ -27,6 +29,7 @@ resource123:
   deleted_at: 
 
 require123:
+  institution: test_institution (Institution)
   email: require123@gmail.com
   first_name: Require123
   last_name: 
@@ -40,6 +43,7 @@ require123:
   deleted_at: 
 
 instrev123:
+  institution: test_institution (Institution)
   email: instrev123@gmail.com
   first_name: Instrev123
   last_name: 
@@ -53,8 +57,7 @@ instrev123:
   deleted_at: 
 
 instadmin123:
-  
-  #institution_id: 1
+  institution: test_institution (Institution)
   email: instadmin123@gmail.com
   first_name: Instadmin123
   last_name: 
@@ -69,8 +72,7 @@ instadmin123:
 
 
 test_user2:
-  #institution: test_institution
-  ##institution_id: 1
+  institution: test_institution (Institution)
   email: test_user2@gmail.com
   first_name: test_user2
   last_name: ''
