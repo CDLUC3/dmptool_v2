@@ -1,5 +1,3 @@
-
-
 admin123:
   institution: test_institution 
   email: admin123@gmail.com
@@ -13,6 +11,32 @@ admin123:
   login_id: admin123
   active: true
   deleted_at: 
+  prefs:
+    :users:
+      :role_granted: true
+    :dmp_owners_and_co:
+      :new_comment: true
+      :commited: true
+      :published: true
+      :submitted: true
+    :dmp_co:
+      :submitted: false
+      :deactivated: false
+      :deleted: false
+      :new_co_owner: false
+    :requirement_editors:
+      :commited: true
+      :deactived: true
+      :deleted: true
+    :resource_editors:
+      :commited: true
+      :deactived: true
+      :deleted: true
+      :associated_commited: true
+    :institutional_reviewers:
+      :submitted: true
+      :new_comment: true
+      :approved_rejected: true
 
 resource123:
   institution: test_institution 
@@ -27,6 +51,32 @@ resource123:
   login_id: resource123
   active: true
   deleted_at: 
+  prefs:
+    :users:
+      :role_granted: true
+    :dmp_owners_and_co:
+      :new_comment: true
+      :commited: true
+      :published: true
+      :submitted: true
+    :dmp_co:
+      :submitted: false
+      :deactivated: false
+      :deleted: false
+      :new_co_owner: false
+    :requirement_editors:
+      :commited: true
+      :deactived: true
+      :deleted: true
+    :resource_editors:
+      :commited: true
+      :deactived: true
+      :deleted: true
+      :associated_commited: true
+    :institutional_reviewers:
+      :submitted: true
+      :new_comment: true
+      :approved_rejected: true
 
 require123:
   institution: test_institution 
@@ -40,7 +90,33 @@ require123:
   cookie_salt: 1054729183dd06b1a7a40bb18c7991f1840c6bf50475af53c80e4affd950b71d
   login_id: require123
   active: true
-  deleted_at: 
+  deleted_at:
+  prefs:
+    :users:
+      :role_granted: true
+    :dmp_owners_and_co:
+      :new_comment: true
+      :commited: true
+      :published: true
+      :submitted: true
+    :dmp_co:
+      :submitted: false
+      :deactivated: false
+      :deleted: false
+      :new_co_owner: false
+    :requirement_editors:
+      :commited: true
+      :deactived: true
+      :deleted: true
+    :resource_editors:
+      :commited: true
+      :deactived: true
+      :deleted: true
+      :associated_commited: true
+    :institutional_reviewers:
+      :submitted: true
+      :new_comment: true
+      :approved_rejected: true 
 
 instrev123:
   institution: test_institution 
@@ -55,6 +131,32 @@ instrev123:
   login_id: instrev123
   active: true
   deleted_at: 
+  prefs:
+    :users:
+      :role_granted: true
+    :dmp_owners_and_co:
+      :new_comment: true
+      :commited: true
+      :published: true
+      :submitted: true
+    :dmp_co:
+      :submitted: false
+      :deactivated: false
+      :deleted: false
+      :new_co_owner: false
+    :requirement_editors:
+      :commited: true
+      :deactived: true
+      :deleted: true
+    :resource_editors:
+      :commited: true
+      :deactived: true
+      :deleted: true
+      :associated_commited: true
+    :institutional_reviewers:
+      :submitted: true
+      :new_comment: true
+      :approved_rejected: true
 
 instadmin123:
   institution: test_institution 
@@ -69,7 +171,32 @@ instadmin123:
   login_id: instadmin123
   active: true
   deleted_at: 
-
+  prefs:
+    :users:
+      :role_granted: true
+    :dmp_owners_and_co:
+      :new_comment: true
+      :commited: true
+      :published: true
+      :submitted: true
+    :dmp_co:
+      :submitted: false
+      :deactivated: false
+      :deleted: false
+      :new_co_owner: false
+    :requirement_editors:
+      :commited: true
+      :deactived: true
+      :deleted: true
+    :resource_editors:
+      :commited: true
+      :deactived: true
+      :deleted: true
+      :associated_commited: true
+    :institutional_reviewers:
+      :submitted: true
+      :new_comment: true
+      :approved_rejected: true
 
 test_user2:
   institution: test_institution 
@@ -84,4 +211,31 @@ test_user2:
   login_id: test_user2
   active: true
   deleted_at: 
+  prefs:
+    :users:
+      :role_granted: true
+    :dmp_owners_and_co:
+      :new_comment: true
+      :commited: true
+      :published: true
+      :submitted: true
+    :dmp_co:
+      :submitted: false
+      :deactivated: false
+      :deleted: false
+      :new_co_owner: false
+    :requirement_editors:
+      :commited: true
+      :deactived: true
+      :deleted: true
+    :resource_editors:
+      :commited: true
+      :deactived: true
+      :deleted: true
+      :associated_commited: true
+    :institutional_reviewers:
+      :submitted: true
+      :new_comment: true
+      :approved_rejected: true
+
 
