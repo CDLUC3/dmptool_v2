@@ -4,18 +4,18 @@ include Credentials
 
 feature 'dmp admin user' do 
 
-	scenario 'scenarios' do
+    scenario 'scenarios' do
 
-		logs_in_with "#{DMP_ADMIN_USERNAME}", "#{DMP_ADMIN_PASSWORD}", "#{DMP_ADMIN_INSTITUTION_NAME}"
+    	logs_in_with "#{DMP_ADMIN_USERNAME}", "#{DMP_ADMIN_PASSWORD}", "#{DMP_ADMIN_INSTITUTION_NAME}"
 
-		expect(page).to have_link('My Dashboard')
-  	expect(page).to have_link('My Profile')		
-		expect(page).to have_link('DMP Templates')		
-		expect(page).to have_link('Resources')	
-		expect(page).to have_link('Institution Profile')	
-		expect(page).to have_link('DMP Administration')	
+    	expect(page).to have_link('My Dashboard')
+    	expect(page).to have_link('My Profile')		
+    	expect(page).to have_link('DMP Templates')		
+    	expect(page).to have_link('Resources')	
+    	expect(page).to have_link('Institution Profile')	
+    	expect(page).to have_link('DMP Administration')	
 
-		#My Dashboard sections are present
+    	#My Dashboard sections are present
     click_link 'My Dashboard'
     expect(page).to have_content("Overview")
     expect(page).to have_content("DMPs For My Review")
@@ -43,7 +43,7 @@ feature 'dmp admin user' do
     click_on "resources_templates" # Resources Templates
     expect(page).to have_content("Resource Editors")
 
-	end
+    end
 
 	
 end
