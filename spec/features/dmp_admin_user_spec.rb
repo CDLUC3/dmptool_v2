@@ -2,18 +2,18 @@ require 'spec_helper'
 require 'support/features/credentials'
 include Credentials
 
-feature 'dmp admin user' do 
+feature 'dmp admin user' do
 
     scenario 'scenarios' do
 
-    	logs_in_with "#{DMP_ADMIN_USERNAME}", "#{DMP_ADMIN_PASSWORD}", "#{DMP_ADMIN_INSTITUTION_NAME}"
+        logs_in_with "#{DMP_ADMIN_USERNAME}", "#{DMP_ADMIN_PASSWORD}", "#{DMP_ADMIN_INSTITUTION_NAME}"
 
-    	expect(page).to have_link('My Dashboard')
-    	expect(page).to have_link('My Profile')		
-    	expect(page).to have_link('DMP Templates')		
-    	expect(page).to have_link('Resources')	
-    	expect(page).to have_link('Institution Profile')	
-    	expect(page).to have_link('DMP Administration')	
+        expect(page).to have_link('My Dashboard')
+        expect(page).to have_link('My Profile')
+        expect(page).to have_link('DMP Templates')
+        expect(page).to have_link('Resources')
+        expect(page).to have_link('Institution Profile')
+        expect(page).to have_link('DMP Administration')
 
     #MY DASHBOARD TEST
 
@@ -47,7 +47,6 @@ feature 'dmp admin user' do
 
     end
 
-	
+
 end
 
-	
