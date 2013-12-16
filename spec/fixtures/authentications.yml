@@ -1,41 +1,41 @@
 admin123_auth:
-  user: admin123 (User)
-  provider:
+  user: admin123
+  provider: 'ldap'
   uid: 'admin123'
-  created_at: 
-  updated_at: 
+  created_at:
+  updated_at:
 
 resource123_auth:
-  user: resource123 (User)
-  provider:
+  user: resource123
+  provider: 'ldap'
   uid: 'resource123'
-  created_at: 
-  updated_at: 
+  created_at:
+  updated_at:
 
 require123_auth:
-  user: require123 (User)
-  provider:
+  user: require123
+  provider: 'ldap'
   uid: 'require123'
-  created_at: 
-  updated_at: 
+  created_at:
+  updated_at:
 
 instrev123_auth:
-  user: instrev123 (User)
-  provider:
+  user: instrev123
+  provider: 'ldap'
   uid: 'instrev123'
-  created_at: 
-  updated_at:  
+  created_at:
+  updated_at:
 
 instadmin123_auth:
-  user: instadmin123 (User)
-  provider:
+  user: instadmin123
+  provider: 'ldap'
   uid: 'instadmin123'
-  created_at: 
-  updated_at: 
+  created_at:
+  updated_at:
 
 test_user2_auth:
-  user: test_user2 (User)
-  provider:
+  user: test_user2
+  provider: 'ldap'
   uid: 'test_user2'
-  created_at: 
-  updated_at: 
+  created_at:
+  updated_at:
