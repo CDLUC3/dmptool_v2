@@ -1,20 +1,22 @@
-<footer class ="footer row-fluid">
-	<div class="copyright span6">
-		<p>DMPTOOL is a service of the 
-		<%= link_to "University of California Curation Center", "http://www.cdlib.org/services/uc3", :title => "University of California Curation Center", :target => "_blank" %> 
-		of the 
-	  <%= link_to "California Digital Library", "http://cdlib.org", :title => "California Digital Libary", :target => "_blank" %><br/>
-	  Copyright &copy; 2010-<%=Time.new.year%> The Regents of the University of California</p>
-	</div>
-	<div class="footer-links span6">
-		<%= link_to "Privacy Policy", "http://www.cdlib.org/about/privacy.html", :title => "Privacy Policy", :target => "_blank" %> | 
-		<%= link_to "Terms of Use", "#", :title => "Terms of Use" %> | 
-		<%= link_to "Contact Us", contact_path, :title => "Contact Us" %> | 
-		<%= link_to "About", about_path, :title => "About the California Digital Library Data Management Tool" %>
-		<div class="footer-feeds">
-			<%= link_to "", "https://www.facebook.com/DMPTool", :class => "icon facebook", :title => "Follow the California Digital Library on Facebook", :target => "_blank" %>
-			<%= link_to "", "https://twitter.com/TheDMPTool", :class => "icon twitter", :title => "Follow the California Digital Library on Twitter", :target => "_blank" %>
-			<%= link_to "", "http://blog.dmptool.org/feed", :class => "icon rss", :title => "California Digital Library RSS Feed", :target => "_blank" %>
+<footer class="footer container">
+	<div class="row-fluid">
+		<div class="copyright span6">
+			<p>DMPTOOL is a service of the 
+			<%= link_to "University of California Curation Center", "http://www.cdlib.org/services/uc3", :title => "University of California Curation Center", :target => "_blank" %> 
+			of the 
+		  <%= link_to "California Digital Library", "http://cdlib.org", :title => "California Digital Libary", :target => "_blank" %><br/>
+		  Copyright &copy; 2010-<%=Time.new.year%> The Regents of the University of California</p>
+		</div>
+		<div class="footer-links span6">
+			<%= link_to "Privacy Policy", "http://www.cdlib.org/about/privacy.html", :title => "Privacy Policy", :target => "_blank" %> | 
+			<%= link_to "Terms of Use", "#", :title => "Terms of Use" %> | 
+			<%= link_to "Contact Us", contact_path, :title => "Contact Us" %> | 
+			<%= link_to "About", about_path, :title => "About the California Digital Library Data Management Tool" %>
+			<div class="footer-feeds">
+				<%= link_to "", "https://www.facebook.com/DMPTool", :class => "icon facebook", :title => "Follow the California Digital Library on Facebook", :target => "_blank" %>
+				<%= link_to "", "https://twitter.com/TheDMPTool", :class => "icon twitter", :title => "Follow the California Digital Library on Twitter", :target => "_blank" %>
+				<%= link_to "", "http://blog.dmptool.org/feed", :class => "icon rss", :title => "California Digital Library RSS Feed", :target => "_blank" %>
+			</div>
 		</div>
 	</div>
 </footer>

@@ -46,7 +46,8 @@ Dmptool2::Application.routes.draw do
   get '/auth/failure', to: 'user_sessions#failure'
   match 'user_sessions/username_reminder', to: 'user_sessions#username_reminder', :via => [:get, :post]
   match 'user_sessions/password_reset', to: 'user_sessions#password_reset', :via => [:get, :post]
-
+  match 'user_sessions/complete_password_reset', to: 'user_sessions#complete_password_reset', as: 'complete_password_reset', :via => [:get, :post]
+  
   get 'requirements_template_information', to: 'requirements_templates#template_information'
   get 'copy_existing_requirements_template', to: 'requirements_templates#copy_existing_template'
 

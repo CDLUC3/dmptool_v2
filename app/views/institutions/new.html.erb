@@ -1,3 +1,11 @@
-<h4> New institution </h4>
-
-<%= render 'form' %>
+<h2 class="dashboard-heading"><span class="icon inst-profile"></span>New institution</h2>
+<div class="tabbable">
+  <ul class="nav nav-tabs">
+    <li class="active"><%= link_to 'Institution Information', '#tab1', 'data-toggle' => 'tab' %></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+			<%= render 'form' %>
+		</div>
+  </div>
+</div>

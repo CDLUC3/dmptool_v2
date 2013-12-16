@@ -5,7 +5,7 @@
 				<%= image_tag current_user.institution.logo, :alt => "#{current_user.institution.nickname}" %>
 			</div>
 			<div class="inst-title span5">
-				<h3><%= current_user.institution.full_name %></h3>
+				<h2><%= current_user.institution.full_name %></h2>
 			</div>
 			<div class="inst-info span4">
 				<%= link_to "http://#{current_user.institution.url}", :id => "inst-domain" do %>
@@ -20,7 +20,7 @@
 				<%= image_tag("", :width => "164", :height => "51", :alt => "Institution Logo") %>
 			</div>
 			<div class="inst-title">
-				<h3> Institution Name</h3>
+				<h3>Institution Name</h3>
 			</div>
 			<div class="inst-info">
 				<%= link_to "#", :id => "inst-domain" do %>
@@ -67,14 +67,14 @@
 			<% if (safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::INSTITUTIONAL_ADMIN)|| safe_has_role?(Role::TEMPLATE_EDITOR))%>
 				<% if(current_page?(controller: "requirements_templates", action: "new")) || (current_page?(edit_requirements_template_path(@requirements_template))) %>
 				<!-- Highlight the Template Overview link if the user is on this page- Requirements Template Overview -->
-					<li><%= link_to(content_tag(:span, "Template Overview"), "#") %></li>
+					<li class="current"><%= link_to(content_tag(:span, "Template Overview"), "#") %></li>
 					<li><%= link_to(content_tag(:span, "Template Details"), "#") %></li>
 					<li class="last"></li>
 				<% end %>
 				<% if (current_page?(requirements_template_requirements_path(@requirements_template))) %>
 				<!-- Highlight the Template Details link if the user is on this page -Requiremnts Template Details -->
 					<li><%= link_to(content_tag(:span, "Template Overview"), "#") %></li>
-					<li><%= link_to(content_tag(:span, "Template Details"), "#") %></li>
+					<li class="current"><%= link_to(content_tag(:span, "Template Details"), "#") %></li>
 					<li class="last"></li>
 				<% end %>
 			<% end %>

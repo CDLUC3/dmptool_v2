@@ -1,37 +1,36 @@
-	<h3 class="dashboard-heading"><span class="icon template-details"></span>DMP Template Details</h3>
-	<h4>Gordan and Betty Moore Foundation</h4>
-	  <div class="span4">
-	    <div class="tree-view">
-	      <h5>Template Outline</h5>
-	      <%= link_to 'Add Group', new_requirements_template_requirement_path(@requirements_template, node_type: 'group') %>
-	      <%= link_to 'Add Requirement', new_requirements_template_requirement_path(@requirements_template) %>
-
-	      <hr/>
-	      <div class="requirements_tree_view">
-	        <%= nested_requirements @requirements.arrange(order: :created_at) %>
-	      </div>
-	    </div>
-	    <br/>
-	    <div class="template-status">
-	      <h5>DMP Template Status:
-		      <span id="status_<%= @requirements_template.id %>">
-		        <%= @requirements_template.active ? "Active" : "Inactive" %>
-		      </span>
-		    </h5>
-	      <div>
-		      <%= link_to activate_link_text(@requirements_template)+ ' ' +'Template', toggle_active_requirements_template_path(@requirements_template), remote: true, id: "activate_link_#{@requirements_template.id}", :class => "btn" %>
-		      <%= link_to(content_tag(:span, "", :class => "icon remove") + "Delete Template", @requirements_template, method: :delete, data: { confirm: 'Are you sure?' }, :class => "icon delete") %>
-	      </div>
+<h2 class="dashboard-heading"><span class="icon template-details"></span>DMP Template Details</h2>
+<h4>Gordan and Betty Moore Foundation</h4>
+<div class="row-fluid">
+	<div class="details span4">
+	  <div class="tree-view border-box">
+	  	<h5>Template Outline</h5>
+	    <%= link_to 'Add Requirements Group', new_requirements_template_requirement_path(@requirements_template, node_type: 'group') %>
+	    <hr/>
+	    <div class="requirements_tree_view">
+	      <%= nested_requirements @requirements.arrange(order: :created_at) %>
 	    </div>
 	  </div>
-	  <div class="tabbable span8">
-	  	<ul class="nav nav-tabs">
-	  		<li class="active"><%= link_to "Requirements", "#tab1", :data => {:toggle => "tab"} %></li>
-	  	</ul>
-	  	<div class="tab-content">
-	  			<div class="tab-pane active" id="tab1">
-	  				<%= render 'form' %>
-	  			</div>
-	  	</div>
+	  <div class="template-status border-box">
+	    <h5>DMP Template Status: 
+	     <span id="status_<%= @requirements_template.id %>">
+	      <%= @requirements_template.active ? 'Active' : 'Inactive' %>
+		    </span>
+		  </h5>
+	  	<div>
+		    <%= link_to activate_link_text(@requirements_template)+ ' ' +'Template',
+		      toggle_active_requirements_template_path(@requirements_template), remote: true, id: "activate_link_#{@requirements_template.id}", :class => 'btn' %>
+		    <%= link_to(content_tag(:span, '', :class => 'icon remove') + 'Delete Template', @requirements_template, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'icon delete') %>
+	    </div>
 	  </div>
 	</div>
+	<div class="tabbable span8">
+		<ul class="nav nav-tabs">
+	  	<li class="active"><%= link_to 'Requirements', '#tab1', :data => {:toggle => 'tab'} %></li>
+		</ul>
+	 	<div class="tab-content">
+	  	<div class="tab-pane active" id="tab1">
+	  		<%= render 'form' %>
+	  	</div>
+		</div>
+	</div>
+</div>
