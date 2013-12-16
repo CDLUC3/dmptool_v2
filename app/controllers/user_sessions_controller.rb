@@ -16,7 +16,6 @@ class UserSessionsController < ApplicationController
     end
   end
 
-
   def create
     redirect_to choose_institution_path if session[:institution_id].blank? and return
     auth = env["omniauth.auth"]
