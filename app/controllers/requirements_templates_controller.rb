@@ -61,7 +61,11 @@ class RequirementsTemplatesController < ApplicationController
   end
 
   def template_information
-    @requirements_templates = RequirementsTemplate.institutional_visibility.page(params[:page]).per(5)
+    if !safe_has_role?(Role::DMP_ADMIN)
+      @requirements_templates = RequirementsTemplate.where(institution_id: [current_user.institution.subtree_ids]).institutional_visibility.page(params[:page]).per(5)
+    else
+      @requirements_templates = RequirementsTemplate.institutional_visibility.page(params[:page]).per(5)
+    end
   end
 
   # GET /requirements_templates/1/edit
@@ -115,8 +119,7 @@ class RequirementsTemplatesController < ApplicationController
     id = params[:requirements_template].to_i unless params[:requirements_template].blank?
 
     if !safe_has_role?(Role::DMP_ADMIN)
-      requirements_template = RequirementsTemplate.
-                            where(id: id, institution_id: [current_user.institution.subtree_ids]).first
+      requirements_template = RequirementsTemplate.where(id: id, institution_id: [current_user.institution.subtree_ids]).first
     else
       requirements_template = RequirementsTemplate.where(id: id).first
     end
@@ -143,7 +146,7 @@ class RequirementsTemplatesController < ApplicationController
         additional_informations_attributes: [:id, :requirements_template_id, :url, :label, :_destroy], sample_plans_attributes: [:id, :requirements_template_id, :url, :label, :_destroy])
     end
 
-    def template_editors      
+    def template_editors
       @user_ids = Authorization.where(role_id: 3).pluck(:user_id) #All the DMP Template Editors
 
       case params[:scope]
@@ -152,10 +155,10 @@ class RequirementsTemplatesController < ApplicationController
         else
           @users = User.where(id: @user_ids).page(params[:page]).per(3)
       end
-    
+
       if !safe_has_role?(Role::DMP_ADMIN)
          @users = @users.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).page(params[:page])
-      end 
+      end
 
     end
 
