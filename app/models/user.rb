@@ -52,6 +52,7 @@ class User < ActiveRecord::Base
   end
 
   def self.create_from_omniauth(auth, institution_id)
+    user = nil
     ActiveRecord::Base.transaction do
       user = User.new
       user.email = auth[:info][:email]
@@ -65,9 +66,9 @@ class User < ActiveRecord::Base
       user.login_id = smart_userid_from_omniauth(auth)
       user.institution_id = institution_id
       user.save!
+      
+      Authentication.create!({:user_id => user.id, :provider => auth[:provider], :uid => smart_userid_from_omniauth(auth)})
     end
-    
-    Authentication.create!({:user_id => user.id, :provider => auth[:provider], :uid => smart_userid_from_omniauth(auth)})
     user
   end
   
