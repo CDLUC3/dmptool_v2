@@ -47,7 +47,7 @@ RSpec.configure do |config|
 
   config.include Features::SessionHelpers, type: :feature
 
-  #Capybara.javascript_driver = :webkit
+  Capybara.javascript_driver = :selenium
   
 
 end
