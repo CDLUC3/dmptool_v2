@@ -1,6 +1,4 @@
 <% provide(:title, 'Institution Information') %>
-<h5>Institution Information</h5>
-<hr/>
 <%= form_for @current_institution, html:{ :class => 'form-horizontal', multipart: true}  do |f| %>
 	<% if @current_institution.errors.any? %>
 	<div id="error_explanation">
