@@ -52,22 +52,28 @@ class User < ActiveRecord::Base
   end
 
   def self.create_from_omniauth(auth, institution_id)
+    user = User.find_by_email(auth[:info][:email])
     ActiveRecord::Base.transaction do
-      user = User.new
-      user.email = auth[:info][:email]
-      # Set any of the omniauth fields that have values  in the database.
-      # The keys are the omniauth field names, the values are the database field names
-      # for mapping omniauth field names to db field names.
-      {:first_name => :first_name, :last_name => :last_name}.each do |k, v|
-        user.send("#{v}=", auth[:info][k]) if !auth[:info][k].blank?
+      if user.nil?
+        user = User.new
+        user.email = auth[:info][:email]
+        # Set any of the omniauth fields that have values  in the database.
+        # The keys are the omniauth field names, the values are the database field names
+        # for mapping omniauth field names to db field names.
+        {:first_name => :first_name, :last_name => :last_name}.each do |k, v|
+          user.send("#{v}=", auth[:info][k]) if !auth[:info][k].blank?
+        end
+        #fix login_id for CDL LDAP to be simple username
+        user.login_id = smart_userid_from_omniauth(auth)
+        user.institution_id = institution_id
+        user.save!
+      else
+        user.institution_id = institution_id
+        user.save!
       end
-      #fix login_id for CDL LDAP to be simple username
-      user.login_id = smart_userid_from_omniauth(auth)
-      user.institution_id = institution_id
-      user.save!
+      
+      Authentication.create!({:user_id => user.id, :provider => auth[:provider], :uid => smart_userid_from_omniauth(auth)})
     end
-    
-    Authentication.create!({:user_id => user.id, :provider => auth[:provider], :uid => smart_userid_from_omniauth(auth)})
     user
   end
   
