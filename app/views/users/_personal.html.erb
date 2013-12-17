@@ -94,13 +94,12 @@
     <% else %>
       <%= f.select( :institution_id, @institution_list, {prompt: 'Select Institution'}, :class => "input-xxlarge")%>
     <% end %>
-    
+
     <span class="help-in-line">
       <%=errors.join (', ')%>
     </span>
   </div>
 </div>
-
 
 <% unless @user.new_record? %>
   <h5>DMP Options</h5>
@@ -108,7 +107,7 @@
   <div class="control-group">
     <%= label_tag :my_roles, 'My Roles', :class => 'control-label' %>
     <div class="controls">
-      <input type="text" id="my_roles" name="my_roles" value="<%= @roles %>" readonly="readonly" />
+      <%= text_field_tag(:my_roles, "My Roles", value: @roles, disabled: true, :class => "input-xxlarge") %>
     </div>
   </div>
 <% end %>
