@@ -4,7 +4,7 @@ include Credentials
 
 feature 'req editor user' do 
 
-	scenario 'scenarios', :js => true do
+	scenario 'requirement editor creates and removes a DMP Template', :js => true do
 
 		logs_in_with "#{REQ_EDITOR_USERNAME}", "#{REQ_EDITOR_PASSWORD}", "#{REQ_EDITOR_INSTITUTION_NAME}"
 
