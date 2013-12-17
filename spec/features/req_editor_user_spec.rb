@@ -45,7 +45,8 @@ feature 'req editor user' do
 		expect(page).to have_content("DMP TEMPLATE OVERVIEW")
 		expect(page).to have_field("institution_name", :disabled => true)
 		expect(page).to have_content("Test Institution")
-		fill_in 'requirements_template_name', with: 'test-template-1-public'
+		@temp = Time.now.to_s
+		fill_in 'requirements_template_name', with: "test-template-1-public_#{@temp}"
 		page.choose 'public'
 		click_button 'Save Changes'
 		expect(page).to have_content("Requirements template was successfully created.")
@@ -54,14 +55,11 @@ feature 'req editor user' do
 		within('#quick_dashboard') do
 			click_link 'DMP Templates'
 		end
-		click_link 'view_all_templates'
-		
+		click_link 'view_all_templates'	
 		#find('#test-template-1-public').hover.find('.template-links').hover.find('.delete').click
 		#click_button 'Delete'	
-		find('#test-template-1-public').click
-		#find('#delete_template').click
-			
-		
+		#find("#test-template-1-public_#{@temp}").click
+		click_link "test-template-1-public_#{@temp}"
 		click_link "Delete Template"
 		click_link 'Delete'
 		
