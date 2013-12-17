@@ -49,6 +49,19 @@ module Features
 			click_button 'Save'
 			expect(page).to have_content "Test sub-inst01"
 		end
+
+		def accept_browser_dialog
+		  if page.driver.class == Capybara::Selenium::Driver
+  			page.driver.browser.switch_to.alert.accept
+			elsif page.driver.class == Capybara::Webkit::Driver
+  			sleep 1 # prevent test from failing by waiting for popup
+  			page.driver.browser.accept_js_confirms
+			else
+  			raise "Unsupported driver"
+			end
+		end
+
+
 	
 	end
 
