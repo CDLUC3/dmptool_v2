@@ -9,9 +9,9 @@ class RequirementsTemplatesController < ApplicationController
   def index
     case params[:scope]
       when "all"
-        @requirements_templates = RequirementsTemplate.all.page(params[:page])
+        @requirements_templates = RequirementsTemplate.page(params[:page])
       when "all_limited"
-        @requirements_templates = RequirementsTemplate.all.page(params[:page]).per(5)
+        @requirements_templates = RequirementsTemplate.page(params[:page]).per(5)
       when "active"
         @requirements_templates = RequirementsTemplate.active.page(params[:page]).per(5)
       when "inactive"
@@ -164,14 +164,14 @@ class RequirementsTemplatesController < ApplicationController
 
     def count
     if current_user.has_role?(Role::DMP_ADMIN)
-      @all = RequirementsTemplate.all.count
+      @all = RequirementsTemplate.count
       @active = RequirementsTemplate.active.count
       @inactive = RequirementsTemplate.inactive.count
       @public = RequirementsTemplate.public_visibility.count
       @institutional = RequirementsTemplate.institutional_visibility.count
     else
       @institution = current_user.institution
-      @all = @institution.requirements_templates_deep.all.count
+      @all = @institution.requirements_templates_deep.count
       @active = @institution.requirements_templates_deep.active.count
       @inactive = @institution.requirements_templates_deep.inactive.count
       @public = @institution.requirements_templates_deep.public_visibility.count

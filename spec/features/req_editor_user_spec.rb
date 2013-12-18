@@ -4,7 +4,7 @@ include Credentials
 
 feature 'req editor user' do 
 
-	scenario 'scenarios' do
+	scenario 'requirement editor creates and removes a DMP Template', :js => true do
 
 		logs_in_with "#{REQ_EDITOR_USERNAME}", "#{REQ_EDITOR_PASSWORD}", "#{REQ_EDITOR_INSTITUTION_NAME}"
 
@@ -20,7 +20,7 @@ feature 'req editor user' do
 
 		#My Dashboard sections are present
 		click_link 'My Dashboard'
-		expect(page).to have_content("Overview")
+		expect(page).to have_content("OVERVIEW")
 		expect(page).to have_content("DMP Templates")
 
 		expect(page).to have_no_content("DMPs For My Review")
@@ -36,16 +36,40 @@ feature 'req editor user' do
 		within('#dmp_templates') do
   		expect(page).to have_content("Visibility")
 		end
-		expect(page).to have_content("DMP Template Editors")
+		expect(page).to have_content("DMP TEMPLATE EDITORS")
 
 		#create new DMP template
 		click_button 'Create New Template'
 		expect(page).to have_content("Create New DMP")
 		click_button 'create_new_template'
-		expect(page).to have_content("DMP Template Overview")
-
+		expect(page).to have_content("DMP TEMPLATE OVERVIEW")
 		expect(page).to have_field("institution_name", :disabled => true)
-		find_field('institution_name').should have_content('John')
+		expect(page).to have_content("Test Institution")
+		@temp = Time.now.to_s
+		fill_in 'requirements_template_name', with: "test-template-1-public_#{@temp}"
+		page.choose 'public'
+		click_button 'Save Changes'
+		expect(page).to have_content("Requirements template was successfully created.")
+
+		#delete DMP template just created
+		within('#quick_dashboard') do
+			click_link 'DMP Templates'
+		end
+		click_link 'view_all_templates'	
+		#find('#test-template-1-public').hover.find('.template-links').hover.find('.delete').click
+		#click_button 'Delete'	
+		click_link "test-template-1-public_#{@temp}"
+		click_link "Delete Template"
+		
+		find('.confirm').click
+		
+		
+		click_link 'view_all_templates'	
+		expect(page).to have_no_content("test-template-1-public_#{@temp}")
+
+		#GRANT TEMPLATE EDITOR ROLE
+
+		
 	end
 
 end
