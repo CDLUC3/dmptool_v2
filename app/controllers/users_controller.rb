@@ -7,9 +7,13 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all.page(params[:page]).per(10)
+    case params[:scope]
+      when "all_users"
+        @users = User.page(params[:page]).order(login_id: :asc)
+      else
+        @users = User.page(params[:page]).order(login_id: :asc).per(10)
+    end
     @institutions = Institution.all
-
   end
 
   # GET /users/1
