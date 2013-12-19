@@ -9,9 +9,9 @@ class RequirementsTemplatesController < ApplicationController
   def index
     case params[:scope]
       when "all"
-        @requirements_templates = RequirementsTemplate.all.page(params[:page])
+        @requirements_templates = RequirementsTemplate.page(params[:page])
       when "all_limited"
-        @requirements_templates = RequirementsTemplate.all.page(params[:page]).per(5)
+        @requirements_templates = RequirementsTemplate.page(params[:page]).per(5)
       when "active"
         @requirements_templates = RequirementsTemplate.active.page(params[:page]).per(5)
       when "inactive"
@@ -61,7 +61,11 @@ class RequirementsTemplatesController < ApplicationController
   end
 
   def template_information
-    @requirements_templates = RequirementsTemplate.institutional_visibility.page(params[:page]).per(5)
+    if !safe_has_role?(Role::DMP_ADMIN)
+      @requirements_templates = RequirementsTemplate.where(institution_id: [current_user.institution.subtree_ids]).institutional_visibility.page(params[:page]).per(5)
+    else
+      @requirements_templates = RequirementsTemplate.institutional_visibility.page(params[:page]).per(5)
+    end
   end
 
   # GET /requirements_templates/1/edit
@@ -115,8 +119,7 @@ class RequirementsTemplatesController < ApplicationController
     id = params[:requirements_template].to_i unless params[:requirements_template].blank?
 
     if !safe_has_role?(Role::DMP_ADMIN)
-      requirements_template = RequirementsTemplate.
-                            where(id: id, institution_id: [current_user.institution.subtree_ids]).first
+      requirements_template = RequirementsTemplate.where(id: id, institution_id: [current_user.institution.subtree_ids]).first
     else
       requirements_template = RequirementsTemplate.where(id: id).first
     end
@@ -145,23 +148,30 @@ class RequirementsTemplatesController < ApplicationController
 
     def template_editors
       @user_ids = Authorization.where(role_id: 3).pluck(:user_id) #All the DMP Template Editors
-      if safe_has_role?(Role::DMP_ADMIN)
-        @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
-      else
-        @users = User.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).order('created_at DESC').page(params[:page]).per(10)
+
+      case params[:scope]
+        when "all_editors"
+          @users = User.where(id: @user_ids).page(params[:page])
+        else
+          @users = User.where(id: @user_ids).page(params[:page]).per(3)
       end
+
+      if !safe_has_role?(Role::DMP_ADMIN)
+         @users = @users.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).page(params[:page])
+      end
+
     end
 
     def count
     if current_user.has_role?(Role::DMP_ADMIN)
-      @all = RequirementsTemplate.all.count
+      @all = RequirementsTemplate.count
       @active = RequirementsTemplate.active.count
       @inactive = RequirementsTemplate.inactive.count
       @public = RequirementsTemplate.public_visibility.count
       @institutional = RequirementsTemplate.institutional_visibility.count
     else
       @institution = current_user.institution
-      @all = @institution.requirements_templates_deep.all.count
+      @all = @institution.requirements_templates_deep.count
       @active = @institution.requirements_templates_deep.active.count
       @inactive = @institution.requirements_templates_deep.inactive.count
       @public = @institution.requirements_templates_deep.public_visibility.count

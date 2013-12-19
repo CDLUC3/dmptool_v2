@@ -52,22 +52,28 @@ class User < ActiveRecord::Base
   end
 
   def self.create_from_omniauth(auth, institution_id)
+    user = User.find_by_email(auth[:info][:email])
     ActiveRecord::Base.transaction do
-      user = User.new
-      user.email = auth[:info][:email]
-      # Set any of the omniauth fields that have values  in the database.
-      # The keys are the omniauth field names, the values are the database field names
-      # for mapping omniauth field names to db field names.
-      {:first_name => :first_name, :last_name => :last_name}.each do |k, v|
-        user.send("#{v}=", auth[:info][k]) if !auth[:info][k].blank?
+      if user.nil?
+        user = User.new
+        user.email = auth[:info][:email]
+        # Set any of the omniauth fields that have values  in the database.
+        # The keys are the omniauth field names, the values are the database field names
+        # for mapping omniauth field names to db field names.
+        {:first_name => :first_name, :last_name => :last_name}.each do |k, v|
+          user.send("#{v}=", auth[:info][k]) if !auth[:info][k].blank?
+        end
+        #fix login_id for CDL LDAP to be simple username
+        user.login_id = smart_userid_from_omniauth(auth)
+        user.institution_id = institution_id
+        user.save!
+      else
+        user.institution_id = institution_id
+        user.save!
       end
-      #fix login_id for CDL LDAP to be simple username
-      user.login_id = smart_userid_from_omniauth(auth)
-      user.institution_id = institution_id
-      user.save!
+      
+      Authentication.create!({:user_id => user.id, :provider => auth[:provider], :uid => smart_userid_from_omniauth(auth)})
     end
-    
-    Authentication.create!({:user_id => user.id, :provider => auth[:provider], :uid => smart_userid_from_omniauth(auth)})
     user
   end
   
@@ -166,5 +172,35 @@ class User < ActiveRecord::Base
 
   def secure_hash(string)
     Digest::SHA2.hexdigest(string)
+  end
+  
+  public
+  
+  #sets a new token if it's not set or is expired
+  def ensure_token
+    if self.token_expiration and Time.now > self.token_expiration
+      self.token = nil
+    end
+    self.token ||= self.generate_token
+    self.token_expiration = Time.now + 1.day
+    self.save
+    return self.token
+  end
+
+  def clear_token
+    self.token = nil
+    self.token_expiration = nil
+    self.save
+  end
+
+  def ldap_user?
+    self.authentications.where(:provider => 'ldap').first.present?
+  end
+
+  protected
+
+  TOKEN_CHARS = ('a'..'z').to_a + ('A'..'Z').to_a + ('0'..'9').to_a
+  def generate_token
+    40.times.collect {TOKEN_CHARS.sample}.join('')
   end
 end

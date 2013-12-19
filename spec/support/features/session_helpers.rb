@@ -20,8 +20,6 @@ module Features
 
 		def check_quick_dashboard_generic_visibility
   		expect(page).to have_link('My Dashboard')
-  		expect(page).to have_link('My DMPs')
-  		expect(page).to have_link('Create New DMP')
   		expect(page).to have_link('My Profile')
 			
 			expect(page).to have_no_link('DMP Templates')		
@@ -44,14 +42,26 @@ module Features
 		end
 
 		def change_my_institution(from, to)
-			page.select "#{to.full_name}", :from => 'user_institution_id'
+			page.select "Test Institution", :from => 'user_institution_id'
 			click_button 'Save'
-			expect(page).to have_content "#{to.full_name}"
-			page.select "#{from.full_name}", :from => 'user_institution_id'
+			expect(page).to have_content "Test sub-inst01"
+			page.select "Test sub-inst01", :from => 'user_institution_id'
 			click_button 'Save'
-			expect(page).to have_content "#{from.full_name}"
-			expect {post.publish!}.to change {post.published_on}.from(nil).to(Date.today)
+			expect(page).to have_content "Test sub-inst01"
 		end
+
+		def accept_browser_dialog
+		  if page.driver.class == Capybara::Selenium::Driver
+  			page.driver.browser.switch_to.alert.accept
+			elsif page.driver.class == Capybara::Webkit::Driver
+  			sleep 1 # prevent test from failing by waiting for popup
+  			page.driver.browser.accept_js_confirms
+			else
+  			raise "Unsupported driver"
+			end
+		end
+
+
 	
 	end
 

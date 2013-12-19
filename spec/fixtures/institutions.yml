@@ -1,0 +1,72 @@
+
+
+nonpartner:  
+  #id: 0
+  full_name: NonPartner Institution
+  nickname: Unknown
+  desc: description
+  contact_info: Unknown
+  contact_email: unknown@unknown.com
+  url: ''
+  url_text: ''
+  shib_entity_id: ''
+  shib_domain: ''
+  created_at: 2011-08-03 11:48:40.000000000 Z
+  updated_at: 2013-11-21 18:48:32.000000000 Z
+  logo:
+  ancestry:
+  deleted_at:
+
+test_institution:  
+  #id: 1
+  full_name: Test Institution
+  nickname: testy
+  desc: desc
+  contact_info: Scott Fisher
+  contact_email: scott.fisher@ucop.edu
+  url: http://test.cdlib.org
+  url_text: CDL Test
+  shib_entity_id: ''
+  shib_domain: ''
+  created_at: 2011-08-01 11:32:10.000000000 Z
+  updated_at: 2013-12-13 20:31:15.000000000 Z
+  logo: CDL_Logo.png
+  ancestry:
+  deleted_at:
+
+
+ucop:  
+  #id: 8
+  full_name: University of California Office of the President
+  nickname: UCOP
+  desc: description
+  contact_info: UC Curation Center
+  contact_email: uc3_wrong@ucop.edu
+  url: http://www.cdlib.org/uc3/dmp/
+  url_text: 'UC3: Data management planning'
+  shib_entity_id: urn:mace:incommon:ucop.edu
+  shib_domain: ucop.edu
+  created_at: 2011-11-03 09:45:31.000000000 Z
+  updated_at: 2013-12-11 00:55:48.000000000 Z
+  logo: CDL_Logo.png
+  ancestry:
+  deleted_at:
+
+testsubinst01:
+  #id: 30
+  full_name: Test sub-inst01
+  nickname: testsub01
+  desc: description
+  contact_info: Scott Fisher
+  contact_email: scott.fisher@ucop.edu
+  url: http://test.cdlib.org
+  url_text: CDL Test
+  shib_entity_id:
+  shib_domain:
+  created_at: 2013-11-05 14:09:56.000000000 Z
+  updated_at: 2013-11-05 14:09:58.000000000 Z
+  logo:
+  ancestry: test_institution (Institution)
+  deleted_at:
+
+

@@ -27,12 +27,19 @@
 				<div class="control-group">
 					<%= f.label :visibility, :class => 'control-label' %>
 					<div class="controls radio-controls">
-						<%= f.radio_button :visibility, :public, :class => 'radio inline' %>
-						<%= label_tag :public, 'Public', :class => 'radio-label' %><br/>
-						<%= f.radio_button :visibility, :institutional, :class => 'radio inline' %>
-						<%= label_tag :institutional, 'Institutional', :class => 'radio-label' %>
+						<%= f.radio_button :visibility, :public, :class => 'radio inline', :id => 'public'  %>
+						<%= label_tag :public, 'public', :class => 'radio-label'%><br/>
+						<%= f.radio_button :visibility, :institutional, :class => 'radio inline', :id => 'institutional'  %>
+						<%= label_tag :institutional, 'institutional', :class => 'radio-label'%>
 					</div>
 				</div>
+
+				<li>
+  <input id="current_client_id_3"
+    name="current_client_id"
+    value="3" type="radio">
+  <label for="current_client_id_3">  TestClientA</label>
+</li>
 
 				<%= render partial: 'date_fields' , locals: { f: f } unless @requirements_template.new_record? %>
 				<% if safe_has_role?(Role::DMP_ADMIN) %>

@@ -36,7 +36,7 @@ class UserSessionsController < ApplicationController
   end
 
   def failure
-    redirect_to choose_institution_path, flash: { error: "Incorrect username, password or institution" }
+    redirect_to choose_institution_path, flash: { error: "Failure: Incorrect username, password or institution" }
   end
 
   def destroy
@@ -48,5 +48,105 @@ class UserSessionsController < ApplicationController
   def institution
      @inst_list = InstitutionsController.institution_select_list
   end
-
+  
+  #email username from email address -- get is the form, post the submission
+  def username_reminder
+    if request.post?
+      email = params[:email]
+      if email.present? && email.match(/^.+\@.+\..+$/)
+        users =  User.where(email: email).includes(:authentications).where(active: true).where(authentications: {:provider => 'ldap'})
+        if users.length > 0
+          uid = users.first.authentications.first.uid
+          UsersMailer.username_reminder(uid, email).deliver
+          flash[:notice] = "Your username has been emailed to #{email}."
+          redirect_to login_path
+        else
+          flash[:notice] = "No user found with email address #{email}."
+          redirect_to(:action => 'username_reminder', email: email) and return
+        end
+      else
+        flash[:notice] = "You must supply a valid email to obtain a username reminder."
+        redirect_to(:action => 'username_reminder', email: email) and return
+      end
+    end
+  end
+  
+  #reset the password for an email address and mail it -- get is the form, post the submission
+  def password_reset
+    if request.post?
+      email = params[:email]
+      if email.present?
+        if email.match(/^.+\@.+\..+$/)
+          users =  User.where(email: email).includes(:authentications).where(active: true).where(authentications: {:provider => 'ldap'})
+        else
+          users =  User.includes(:authentications).where(active: true).where(authentications: {:provider => 'ldap', :uid => email})
+        end
+        if users.length > 0
+          user = users.first
+          email = user.email
+          token = user.ensure_token
+          reset_url = complete_password_reset_url(:id => user.id, :token => token, :protocol => 'https')
+          UsersMailer.password_reset(user.authentications.first.uid, email, reset_url).deliver
+          
+          flash[:notice] = "An email has been sent to #{email} with instructions for resetting your password."
+          redirect_to login_path and return
+        else
+          flash[:notice] = "No user found with email or username #{email}."
+          redirect_to(:action => 'password_reset', email: email) and return
+        end
+      else
+        flash[:notice] = "You must supply an email or username to request a password reset."
+        redirect_to(:action => 'password_reset', email: email) and return
+      end
+    end
+  end
+  
+  def complete_password_reset
+    user_id = params[:id]
+    token = params[:token]
+    @user = User.find_by_id(user_id)
+    unless @user && @user.token && @user.token_expiration
+      flash[:notice] = 'User not found or password reset not requested'
+      redirect_to(root_path) and return
+    end
+    if @user.token_expiration < Time.now
+      flash[:notice] = 'Password reset token has expired. Please request a reset again.'
+      redirect_to(:action => 'password_reset') and return
+    end
+    unless @user.token == token
+      flash[:notice] = 'Invalid password reset token. Please request a reset again.'
+      redirect_to(:action => 'password_reset') and return
+    end
+    
+    
+    if request.post?
+      password = params[:password]
+      password_confirmation = params[:password_confirmation]
+  
+      unless legal_password(password)
+        flash[:notice] = 'Your password must be at least eight characters long and have at least one letter and at least one number.'
+        redirect_to(complete_password_reset_path(:id => @user.id, :token => @user.token)) and return
+      end
+      
+      unless password == password_confirmation
+        flash[:notice] = 'Password and confirmation do no match. Please try again.'
+        redirect_to(complete_password_reset_path(:id => @user.id, :token => @user.token)) and return
+      end
+  
+      begin
+        Ldap_User.find_by_email(@user.email).change_password(password)
+      rescue
+        flash[:notice] = "Problem updating password in LDAP. Please retry."
+        redirect_to(complete_password_reset_path(:id => @user.id, :token => @user.token)) and return
+      end
+  
+      @user.clear_token
+      flash[:notice] = "You have successfully updated your password."
+      redirect_to login_path and return
+    end
+  end
+  
+  def legal_password(password)
+    (8..30).include?(password.length) and password.match(/\d/) and password.match(/[A-Za-z]/)
+  end
 end

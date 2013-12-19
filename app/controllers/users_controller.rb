@@ -4,13 +4,16 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :check_dmp_admin_access, only: [:index, :edit_user_roles, :update_user_roles, :destroy]
 
-
   # GET /users
   # GET /users.json
   def index
-    @users = User.all.page(params[:page]).per(10)
+    case params[:scope]
+      when "all_users"
+        @users = User.page(params[:page]).order(login_id: :asc)
+      else
+        @users = User.page(params[:page]).order(login_id: :asc).per(10)
+    end
     @institutions = Institution.all
-
   end
 
   # GET /users/1
@@ -194,11 +197,10 @@ class UsersController < ApplicationController
   end
 
   def update_ldap_if_necessary(user, params)
-    return unless authentication = user.authentications.detect { |a| a.provider == :ldap }
+    return unless session[:login_method] == 'ldap'
     ldap_user = Ldap_User.find_by_id(authentication.uid)
     {:email => :mail, :last_name => :sn, :first_name => :givenname}.each do |k, v|
       if params[k]
-        puts "Updating #{k}"
         ldap_user.set_attrib_dn(v, params[k]) unless params[k].empty?
       end
     end

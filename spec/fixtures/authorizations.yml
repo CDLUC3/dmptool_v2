@@ -1,0 +1,30 @@
+admin123_dmp_admin:
+  role: dmp_admin
+  user: admin123
+  created_at:
+  updated_at:
+
+resource123_resources_editor:
+  role: resources_editor
+  user: resource123
+  created_at:
+  updated_at:
+
+require123_requirements_editor:
+  role: requirements_editor
+  user: require123
+  created_at:
+  updated_at:
+
+instrev123_institutional_reviewer:
+  role: institutional_reviewer
+  user: instrev123
+  created_at:
+  updated_at:
+
+instadmin123_institutional_administrator:
+  role: institutional_administrator
+  user: instadmin123
+  created_at:
+  updated_at:
+
