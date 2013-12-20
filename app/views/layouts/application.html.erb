@@ -6,6 +6,11 @@
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
     <%= render 'layouts/shim' %>
+    <script>
+    	if (navigator.userAgent.match(/AppleWebKit/) && ! navigator.userAgent.match(/Chrome/)) {
+   			document.write('<link rel="stylesheet" media="all" href="/assets/safari.css?body=1" data-tubolinks-track="true" />')
+			}
+    </script>
   </head>
   <body>
   <%= render 'layouts/header' %>

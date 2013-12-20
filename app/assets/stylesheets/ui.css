@@ -79,7 +79,7 @@ ul.nav li {
 	margin-bottom: 0; }
 ul li:before {
 	content: "\00BB\0020"; }
-ul li {
+li, ul li {
 	list-style: none; }
 ol li {
 	list-style: decimal; }
@@ -273,13 +273,14 @@ input[type=radio], input[type=checkbox] {
 	left: 15px; }
 
 /* Footer */
-.footer  {
+.footer.container  {
 	border-top: 1px solid #B6B6B7;
 	margin-top: 15px;
-	padding: 14px 35px 8px;
+	padding: 14px 0 8px;
 	position: relative; }
 .footer .copyright.span6 {
 	background: url(cdl_logo_sm.png) no-repeat 0 0 transparent;
+	margin-left: 35px;
 	padding: 5px 0 0 45px; }
 .footer .copyright p {
 	font-size: 0.75em;
@@ -291,7 +292,8 @@ input[type=radio], input[type=checkbox] {
 	float: right;
 	font-size: 0.9em;
 	text-align: right;
-	line-height: 35px; }
+	line-height: 35px;
+	margin-right: 35px; }
 .footer .footer-links a, .footer .footer-links a:hover, .footer .footer-links a:focus, .footer .footer-links a:active {
 	color: #4C4C4E;
 	letter-spacing: -0.2px; }
@@ -502,7 +504,7 @@ a.btn, button, button.btn, input[type=submit], input[type=submit].btn {
 	-ms-box-shadow: none !important;
 	background: url(button_bg.jpg) repeat-x 0 0 transparent;
 	color: #4C4C4E !important;
-	font-size: 1.125em;
+	font-size: 14px;
 	font-weight: bold;
 	text-shadow: none !important;
 	text-align: center;
@@ -562,7 +564,7 @@ a.btn-large {
 	color: #FFFFFF !important;
 	font-size: 1.75em;
 	font-weight: normal;
-	line-height: 65px;
+	line-height: 65px !important;
 	height: 60px;
 	padding-left: 35px;
 	padding-right: 35px; }
@@ -660,10 +662,6 @@ a.btn-large:hover, a.btn-large:focus, a.btn-large:active {
 	margin-bottom: 0; }
 .login p {
 	font-size: 1.125em; }
-.user_login p a {
-	color: #72942E !important; }
-.user_login .control-group.forgot_password p a {
-	color: #DA0049 !important; }
 .control-group.select_institution select {
 	width: 330px; }
 .control-group.switch_institution {

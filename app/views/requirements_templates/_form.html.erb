@@ -34,12 +34,12 @@
 					</div>
 				</div>
 
-				<li>
-  <input id="current_client_id_3"
-    name="current_client_id"
-    value="3" type="radio">
-  <label for="current_client_id_3">  TestClientA</label>
-</li>
+				<!--<li>
+				  <input id="current_client_id_3"
+				    name="current_client_id"
+				    value="3" type="radio">
+				  <label for="current_client_id_3">TestClientA</label>
+				</li>-->
 
 				<%= render partial: 'date_fields' , locals: { f: f } unless @requirements_template.new_record? %>
 				<% if safe_has_role?(Role::DMP_ADMIN) %>
