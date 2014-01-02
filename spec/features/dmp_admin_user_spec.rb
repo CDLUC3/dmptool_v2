@@ -19,7 +19,7 @@ feature 'dmp admin user' do
 
     #My Dashboard sections are present
     click_link 'My Dashboard'
-    expect(page).to have_content("Overview")
+    expect(page).to have_content(%r{#{"Overview"}}i)
     expect(page).to have_content("DMPs For My Review")
     expect(page).to have_content("DMP Templates")
     expect(page).to have_content("Resource Templates")
