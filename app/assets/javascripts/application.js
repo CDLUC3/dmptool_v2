@@ -41,3 +41,25 @@ $.rails.showConfirmDialog = function(link) {
     return $.rails.confirmed(link);
   });
 };
+
+function tab_jump(){
+	// allows jumping to specific tab with Twitter Bootstrap on page load
+	// The tab to jump to is specified in the url hash with something like #tab_tab2
+	// it must start with 'tab_' and after that have the string for the tab to go to.
+	// see http://stackoverflow.com/questions/7862233/twitter-bootstrap-tabs-go-to-specific-tab-on-page-reload
+	// and the answer by greggdavis
+	var hash = document.location.hash;
+	var prefix = "tab_";
+
+	if (hash) {
+    hash = hash.replace(prefix,'');
+    var hashPieces = hash.split('?');
+    activeTab = $('.nav-tabs a[href=' + hashPieces[0] + ']');
+    activeTab && activeTab.tab('show');
+	} 
+
+	// Change hash for page-reload
+	$('.nav-tabs a').on('shown', function (e) {
+    window.location.hash = e.target.hash.replace("#", "#" + prefix);
+	});
+}
