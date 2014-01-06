@@ -1,6 +1,5 @@
 class User < ActiveRecord::Base
 
-  validates :email, presence: true
   acts_as_paranoid
 
   serialize :prefs, Hash
@@ -25,7 +24,7 @@ class User < ActiveRecord::Base
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :institution_id, presence: true, numericality: true
-  validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }
+  validates :email, presence: true, uniqueness: true ,format: { with: VALID_EMAIL_REGEX }
   validates :prefs, presence: true
   validates :login_id, presence: true, uniqueness: { case_sensitive: false }, :if => :ldap_create
 
@@ -71,12 +70,12 @@ class User < ActiveRecord::Base
         user.institution_id = institution_id
         user.save!
       end
-      
+
       Authentication.create!({:user_id => user.id, :provider => auth[:provider], :uid => smart_userid_from_omniauth(auth)})
     end
     user
   end
-  
+
   #returns the userid from omniauth, for LDAP usernames we don't qualify it
   #while for shibboleth we have a longer qualified string which we need to distinguish
   #since an unqualified login or an email may not be unique
@@ -109,7 +108,7 @@ class User < ActiveRecord::Base
   def role_ids
     @role_id ||= self.authorizations.pluck(:role_id) #caches role ids
   end
-  
+
   def role_names
     @role_names ||= self.roles.pluck(:name)
   end
@@ -117,7 +116,7 @@ class User < ActiveRecord::Base
   def has_role?(role_id)
     role_ids.include?(role_id)
   end
-  
+
   def has_role_name?(role_name)
     role_names.include?(role_name)
   end
@@ -173,9 +172,9 @@ class User < ActiveRecord::Base
   def secure_hash(string)
     Digest::SHA2.hexdigest(string)
   end
-  
+
   public
-  
+
   #sets a new token if it's not set or is expired
   def ensure_token
     if self.token_expiration and Time.now > self.token_expiration
