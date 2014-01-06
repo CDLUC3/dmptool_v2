@@ -9,15 +9,15 @@ class ResourceTemplatesController < ApplicationController
   def index
     case params[:scope]
       when "all"
-        @resource_templates = ResourceTemplate.all.page(params[:page])
+        @resource_templates = ResourceTemplate.page(params[:page])
       when "all_limited"
-        @resource_templates = ResourceTemplate.all.page(params[:page]).per(5)
+        @resource_templates = ResourceTemplate.page(params[:page]).per(5)
       when "active"
         @resource_templates = ResourceTemplate.where(active: true).page(params[:page]).per(5)
       when "inactive"
         @resource_templates = ResourceTemplate.where(active: false).page(params[:page]).per(5)
       else
-        @resource_templates = ResourceTemplate.all.page(params[:page]).per(5)
+        @resource_templates = ResourceTemplate.page(params[:page]).per(5)
     end
 
     if !safe_has_role?(Role::DMP_ADMIN)
@@ -132,7 +132,7 @@ class ResourceTemplatesController < ApplicationController
         @inactive = ResourceTemplate.inactive.count
       else
         @institution = current_user.institution
-        @all = @institution.resource_templates_deep.all.count
+        @all = @institution.resource_templates_deep.count
         @active = @institution.resource_templates_deep.active.count
         @inactive = @institution.resource_templates_deep.inactive.count
       end
