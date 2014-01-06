@@ -56,14 +56,11 @@ feature 'req editor user' do
 			click_link 'DMP Templates'
 		end
 		click_link 'view_all_templates'	
-		#find('#test-template-1-public').hover.find('.template-links').hover.find('.delete').click
-		#click_button 'Delete'	
 		click_link "test-template-1-public_#{@temp}"
 		click_link "Delete Template"
 		
 		find('.confirm').click
-		
-		
+			
 		click_link 'view_all_templates'	
 		expect(page).to have_no_content("test-template-1-public_#{@temp}")
 
