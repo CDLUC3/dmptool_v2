@@ -672,6 +672,11 @@ a.btn-large:hover, a.btn-large:focus, a.btn-large:active {
 	position: absolute;
 	top: 5px;
 	left: 8px; }
+	
+.dmp_tool_news{
+	height: 140px;
+	overflow: auto;
+}
 
 /* Dashboard */
 .dashboard {

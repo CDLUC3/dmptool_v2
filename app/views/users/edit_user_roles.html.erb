@@ -10,10 +10,12 @@
 				<hr/>
 				<div class="control-group">
 					<ul>
-					<% @roles.each do |role| %>
-				  	<li><%= check_box_tag 'role_ids[]', role.id, checked = @user.has_role?(role.id) %>
-				    <%= label_tag role.name, role.name, :class => 'checkbox-label' %></li>
-					<% end %>
+						<% @roles.each do |role| %>
+							<div id=<%="role_#{role.id}"%> >
+						  	<li><%= check_box_tag "role_ids[]", role.id, checked = @user.has_role?(role.id) %>
+						    <%= label_tag role.name, role.name, :class => 'checkbox-label' %></li>
+							</div>
+						<% end %>
 					</ul>
 				</div>
 				<br/>
