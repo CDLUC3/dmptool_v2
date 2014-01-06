@@ -1,8 +1,20 @@
+require 'rss'
+
 class StaticPagesController < ApplicationController
   
   layout 'application', only: [:guidance]
   
   def home
+    @rss = Rails.cache.read('rss')
+    if @rss.nil?
+      begin
+        rss_xml = open(APP_CONFIG['rss']).read
+        @rss = RSS::Parser.parse(rss_xml, false).items.first(5)
+        Rails.cache.write("rss", @rss, :expires_in => 15.minutes)
+      rescue Exception => e
+        logger.error("Caught exception: #{e}.")
+      end
+    end
   end
 
   def about

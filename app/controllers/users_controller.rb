@@ -13,7 +13,12 @@ class UsersController < ApplicationController
       else
         @users = User.page(params[:page]).order(login_id: :asc).per(10)
     end
-    @institutions = Institution.all
+    case params[:scope]
+      when "all_institutions"
+        @institutions = Institution.page(params[:page])
+      else
+        @institutions = Institution.page(params[:page]).per(10)
+    end
   end
 
   # GET /users/1
@@ -159,12 +164,12 @@ class UsersController < ApplicationController
     @role_ids = params[:role_ids] ||= []  #"role_ids"=>["1", "2", "3"]
 
     remove_all_user_authorizations(@user_id)
-    
+
     @role_ids.each do |role_id|
       role_id = role_id.to_i
       authorization = Authorization.create(role_id: role_id, user_id: @user_id)
       authorization.save!
-    end  
+    end
 
     respond_to do |format|
       format.html { redirect_to users_url, notice: 'User was successfully updated.'}
@@ -175,7 +180,7 @@ class UsersController < ApplicationController
 
   private
 
-  
+
 
   def remove_all_user_authorizations(user_id)
     @authorization = Authorization.where(user_id: user_id)

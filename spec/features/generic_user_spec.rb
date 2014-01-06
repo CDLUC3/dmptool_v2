@@ -5,8 +5,6 @@ include Credentials
 
 feature 'generic user' do 
 
-	#fixtures :users, :institutions, :authentications, :authorizations, :roles
-
 	scenario 'generic user can change his institution' do
 
 		logs_in_with "test_user2", "test_user2", "Test Institution"

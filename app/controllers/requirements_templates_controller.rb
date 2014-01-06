@@ -35,6 +35,7 @@ class RequirementsTemplatesController < ApplicationController
   # GET /requirements_templates/1
   # GET /requirements_templates/1.json
   def show
+    render 'edit'
   end
 
   # GET /requirements_templates/1/basic and basic_requirements_template_path
