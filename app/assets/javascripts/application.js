@@ -63,3 +63,15 @@ function tab_jump(){
     window.location.hash = e.target.hash.replace("#", "#" + prefix);
 	});
 }
+
+function add_tab_to_pagination(div_class){
+	var hash = document.location.hash;
+
+	if (hash) {
+    var m = hash.match(/tab_[a-zA-Z0-9_-]+/);
+    if(m.length==1){
+    	$(div_class + " a").attr("href", function(i, href) { return href + "#" + m[0]; });
+    }
+	} 
+	
+}
