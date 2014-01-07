@@ -1,14 +1,13 @@
 <p>Latest information about data management and the DMPTool.</p>
-
-<div class="dmp_tool_news">
 	<% if @rss %>
+	<div class="scrollbox">
 		<ul>
 			<% @rss.each do |i| %>
 				<li><%= link_to(i.title, i.link, :target => '_blank') %></li>
 			<% end %>
 		</ul>
-		<%= link_to('More News', APP_CONFIG['blog'], :class => "btn btn-gray", :target => '_blank') %>
+	</div>
+	<%= link_to('More News', APP_CONFIG['blog'], :class => "btn btn-gray", :target => '_blank') %>
 	<% else %>
-		<p>News is currently unavailable</p>
+	<p>News is currently unavailable</p>
 	<% end %>
-</div>

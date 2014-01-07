@@ -112,6 +112,7 @@ label {
 	display: inline-block; }
 label.control-label, .form-horizontal label.control-label {
 	line-height: 30px;
+	width: 180px;
 	padding-top: 7px; }
 label.required:before {
 	content: "\002A\0020";
@@ -132,6 +133,8 @@ input[type=radio], input[type=checkbox] {
 	vertical-align: top; }
 .control-group, .form-horizontal .control-group {
 	margin-bottom: 10px; }
+.form-horizontal .controls {
+	margin-left: 200px; }
 .controls.radio-controls, .controls.checkbox-controls {
 	margin-top: 12px; }
 	
@@ -278,9 +281,11 @@ input[type=radio], input[type=checkbox] {
 	margin-top: 15px;
 	padding: 14px 0 8px;
 	position: relative; }
-.footer .copyright.span6 {
+.footer .row-fluid {
+	margin: 0 35px; }
+.footer .copyright[class*="span"] {
 	background: url(cdl_logo_sm.png) no-repeat 0 0 transparent;
-	margin-left: 35px;
+	margin: 0;
 	padding: 5px 0 0 45px; }
 .footer .copyright p {
 	font-size: 0.75em;
@@ -288,12 +293,12 @@ input[type=radio], input[type=checkbox] {
 	line-height: 1.55em; }
 .footer .copyright a {
 	font-weight: bold; }
-.footer .footer-links.span6 {
+.footer .footer-links[class*="span"] {
 	float: right;
 	font-size: 0.9em;
 	text-align: right;
 	line-height: 35px;
-	margin-right: 35px; }
+	margin: 0; }
 .footer .footer-links a, .footer .footer-links a:hover, .footer .footer-links a:focus, .footer .footer-links a:active {
 	color: #4C4C4E;
 	letter-spacing: -0.2px; }
@@ -430,7 +435,7 @@ a.icon.new-requirement {
 .icon.arrow-right {
 	background-position: -90px -10px; width: 15px; height: 10px; }
 .icon.arrow-right:hover, .icon.arrow-right:focus, .icon.arrow-right:active {
-	background-position: -90 -15px; }
+	background-position: -90px -15px; }
 .icon.edit-user {
 	background-position: 0 -30px; width: 33px; height: 25px; }
 .icon.remove-user {
@@ -452,9 +457,8 @@ a.icon.new-requirement {
 .icon.search {
 	background-position: -180px -80px; width: 20px; height: 20px; }
 .icon.inst {
-	background-position: -180px 0; width: 20px; height: 15px; }
-.institution .icon.inst {
-	position: static; }
+	background-position: -180px 0; width: 20px; height: 15px;
+	top: -3px; }
 .icon.inst-domain {
 	background-position: 0 -80px; width: 30px; height: 25px; }
 .icon.inst-contact {
@@ -639,13 +643,26 @@ a.btn-large:hover, a.btn-large:focus, a.btn-large:active {
 .buckets ul {
 	margin: 0;
 	padding: 0; }
+.buckets .dmp_tool_news .scrollbox {
+	border: 1px solid #B6B6B7;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-ms-border-radius: 4px;
+	overflow: hidden; }
+.buckets .dmp_tool_news ul {
+	height: 120px;
+	padding: 7px;
+	overflow: auto; }
 .buckets ul li:before {
 	content: "\00BB\0020"; }
 .buckets ul li {
 	list-style: none;
-	line-height: 1.35em;
-	margin: 0 0 7px;
+	line-height: 1.25em;
+	margin: 0 0 5px;
 	padding: 0; }
+.buckets .dmp_tool_news ul li {
+	margin-bottom: 8px; }
 .buckets a {
 	font-weight: bold; }
 .buckets a.btn {
@@ -686,11 +703,6 @@ a.btn-large:hover, a.btn-large:focus, a.btn-large:active {
 	position: absolute;
 	top: 5px;
 	left: 8px; }
-	
-.dmp_tool_news{
-	height: 140px;
-	overflow: auto;
-}
 
 /* Dashboard */
 .dashboard {
@@ -800,6 +812,7 @@ a.btn-large:hover, a.btn-large:focus, a.btn-large:active {
 .dashboard-nav ul.nav ul li a {
 	float: left;
 	background: url(tab_arrow.png) no-repeat 0 0 transparent;
+	color: #516935;
 	font-weight: bold;
 	letter-spacing: -0.2px;
 	text-align: right;
@@ -817,12 +830,9 @@ a.btn-large:hover, a.btn-large:focus, a.btn-large:active {
 .dashboard-nav ul.nav ul li:first-child a:hover, .dashboard-nav ul.nav ul li:first-child a:focus, .dashboard-nav ul.nav ul li:first-child a:active {
 	background-position: -15px -29px; }
 .dashboard-nav ul.nav ul li.current a {
-	background-position: 0 -58px;
-	color: #516935; }
+	background-position: 0 -58px; }
 .dashboard-nav ul.nav ul li:first-child.current a {
-	background-position: -15px -58px;
-	color: #516935; }
-
+	background-position: -15px -58px; }
 .dashboard-breadcrumbs.row-fluid {
 	float: left;
 	background: #E9E9E9;
@@ -943,7 +953,7 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	margin: 10px 0; }
 .requirements_tree_view {
 	margin-top: 10px; }
-.nested_requirements, .nested_institutions {
+.nested_requirements {
 	margin-left: 20px; }
 .requirements_tree_view ul {
 	margin: 0; }
@@ -956,6 +966,13 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	bottom: 1px; }
 .institutions {
 	margin-bottom: 20px; }
+.institution {
+	margin-bottom: 10px; }
+.nested_institutions {
+	margin-left: 35px; }
+.institution a {
+	padding-left: 35px;
+	position: relative; }
 
 /* Admin Pages */
 h2.dashboard-heading  {
