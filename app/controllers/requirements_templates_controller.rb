@@ -177,7 +177,6 @@ class RequirementsTemplatesController < ApplicationController
       @public = RequirementsTemplate.public_visibility.count
       @institutional = RequirementsTemplate.institutional_visibility.count
     else
-      @institution = current_user.institution
       @all =  RequirementsTemplate.where.
                                 any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public).count
       @active = RequirementsTemplate.where.
