@@ -13,8 +13,7 @@ feature 'req editor user' do
 		
 		find('#NSF-BIO').hover
 		find('.details').click
-
-		expect(page).to have_content "Gordan and Betty Moore Foundation"
+		expect(page).to have_content "NSF-BIO"
 		click_link 'Add Group'
 		fill_in 'requirement_text_brief', with: 'new_group'
 		click_button 'Save'
@@ -90,11 +89,9 @@ feature 'req editor user' do
 		within('#quick_dashboard') do
 			click_link 'DMP Templates'
 		end
-		
 		find('#NSF-BIO').hover
 		find('.details').click
-
-		expect(page).to have_content "Gordan and Betty Moore Foundation"
+		expect(page).to have_content "NSF-BIO"
 		fill_in 'requirement_text_brief', with: 'bla'
 		fill_in 'requirement_text_full', with: 'bla_question'
 		click_button 'Save'
@@ -107,7 +104,6 @@ feature 'req editor user' do
 		expect(page).to have_no_content("bla")
 
 	end
-
 	
 
 
