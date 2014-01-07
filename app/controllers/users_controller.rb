@@ -202,7 +202,7 @@ class UsersController < ApplicationController
 
   def update_ldap_if_necessary(user, params)
     return unless session[:login_method] == 'ldap'
-    ldap_user = Ldap_User.find_by_id(authentication.uid)
+    ldap_user = Ldap_User.find_by_id(user.login_id)
     {:email => :mail, :last_name => :sn, :first_name => :givenname}.each do |k, v|
       if params[k]
         ldap_user.set_attrib_dn(v, params[k]) unless params[k].empty?

@@ -64,14 +64,19 @@ function tab_jump(){
 	});
 }
 
-function add_tab_to_pagination(div_class){
-	var hash = document.location.hash;
-
-	if (hash) {
-    var m = hash.match(/tab_[a-zA-Z0-9_-]+/);
-    if(m.length==1){
-    	$(div_class + " a").attr("href", function(i, href) { return href + "#" + m[0]; });
-    }
-	} 
-	
+function add_tab_to_pagination(){
+	// this adds the #tab_tab1 (example) to the pagination links
+	// so that the correct tab is selected.  It is based on div.tab-pane
+	// and nav.pagination css classes it can find in the page.
+	$( "div.tab-pane" ).each(function( index ) {
+  	//console.log( index + ": " + this.id );
+  	var my_id = this.id;
+  	$("#" + my_id + " nav.pagination a").attr("href", function(i, href) {
+  		if(href.match(/#tab_[a-zA-Z0-9_-]+$/)){
+  			return href;
+  		}else{
+  			return href + "#tab_" + my_id;
+  		} 
+  	});
+	});
 }

@@ -10,7 +10,7 @@
       <li><%= link_to "About", about_path, :title => "About" %></li>
       <li><%= link_to "DMP Requirements", guidance_path, :title => "DMP Requirements" %></li>
       <li><%= link_to "Sample DMPs", "#", :title => "Sample DMPs" %></li>
-      <li><%= link_to "News", "#", :title => "News" %></li>
+      <li><%= link_to "News", APP_CONFIG['blog'], :title => "News", :target => "_blank" %></li>
       <li><%= link_to "Help", help_path, :title => "Help" %></li>
       <li><%= link_to "Contact Us", contact_path, :title => "Contact Us" %></li>
 			<% if current_user %>
