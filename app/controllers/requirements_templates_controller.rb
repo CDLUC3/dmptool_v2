@@ -178,11 +178,15 @@ class RequirementsTemplatesController < ApplicationController
       @institutional = RequirementsTemplate.institutional_visibility.count
     else
       @institution = current_user.institution
-      @all = @institution.requirements_templates_deep.count
-      @active = @institution.requirements_templates_deep.active.count
-      @inactive = @institution.requirements_templates_deep.inactive.count
-      @public = @institution.requirements_templates_deep.public_visibility.count
-      @institutional = @institution.requirements_templates_deep.institutional_visibility.count
+      @all =  RequirementsTemplate.where.
+                                any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public).count
+      @active = RequirementsTemplate.where.
+                                any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public).active.count
+      @inactive = RequirementsTemplate.where.
+                                any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public).inactive.count
+      @public = RequirementsTemplate.public_visibility.count
+      @institutional = RequirementsTemplate.where(institution_id: [current_user.institution.subtree_ids]).institutional_visibility.count
     end
+
   end
 end
