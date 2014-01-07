@@ -113,7 +113,6 @@ class UsersController < ApplicationController
         # LDAP will not except for these two fields to be empty.
         user_params[:first_name] = " " if user_params[:first_name].empty?
         user_params[:last_name] = " " if user_params[:last_name].empty?
-
         update_ldap_if_necessary(@user, user_params)
         flash[:notice] = 'User information updated.'
         redirect_to edit_user_path(@user)
