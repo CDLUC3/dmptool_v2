@@ -1,5 +1,5 @@
 <p>Latest information about data management and the DMPTool.</p>
-	<% if @rss %>
+<% if @rss %>
 	<div class="scrollbox">
 		<ul>
 			<% @rss.each do |i| %>
@@ -7,7 +7,7 @@
 			<% end %>
 		</ul>
 	</div>
-	<%= link_to('More News', APP_CONFIG['blog'], :class => "btn btn-gray", :target => '_blank') %>
-	<% else %>
+<%= link_to('More News', APP_CONFIG['blog'], :class => "btn btn-gray", :target => '_blank') %>
+<% else %>
 	<p>News is currently unavailable</p>
-	<% end %>
+<% end %>

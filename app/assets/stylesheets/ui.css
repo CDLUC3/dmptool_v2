@@ -13,7 +13,6 @@ body {
   -ms-box-sizing: border-box;
   box-sizing: border-box;
   width: auto;
-  
 	padding: 0; }
 .row-fluid .row-fluid {
 	margin: 20px 0; }
@@ -703,6 +702,11 @@ a.btn-large:hover, a.btn-large:focus, a.btn-large:active {
 	position: absolute;
 	top: 5px;
 	left: 8px; }
+	
+.dmp_tool_news{
+	height: 140px;
+	overflow: auto;
+}
 
 /* Dashboard */
 .dashboard {

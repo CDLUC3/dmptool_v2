@@ -48,7 +48,7 @@ feature 'dmp admin user' do
 		
 	end
 
-	scenario 'dmp admin grants and revokes roles' do
+	scenario 'dmp admin grants and revokes roles through the DMP Admin page' do
 		
 		logs_in_with "#{DMP_ADMIN_USERNAME}", "#{DMP_ADMIN_PASSWORD}", "#{DMP_ADMIN_INSTITUTION_NAME}"
 		click_link 'DMP Administration'

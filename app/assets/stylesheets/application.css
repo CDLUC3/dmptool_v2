@@ -11,6 +11,8 @@
  *= require jquery.ui.all
  *= require_self
  *= require custom
+ *= require authorizations
+ *= require dashboard
  *= require institutions
  *= require plans
  *= require requirements_templates
@@ -21,6 +23,7 @@
  *= require static_pages
  *= require user_sessions
  *= require users
+ *= require user_sessions
  *= require ui
  *= require_tree
  */
