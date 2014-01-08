@@ -63,6 +63,53 @@
 	<%= button_to 'Create New Template', requirements_template_information_path, :method => :get, :class => 'btn' %>
 	<br/>
 	<%= render 'template_editors' %>
+	
+	
+<!-- TESTING AUTOCOMPLETE -->
+
+	<%= javascript_include_tag 'application' %>
+	
+	 <%= form_tag users_autocomplete_path, :remote => true, :id => 'user_autocomplete_form' do %>
+  	<p>
+    	<%= text_field_tag('term', nil, {:style=> "width:105px;"}) %><%= submit_tag "add" %>
+  		<div class="dropdown" id="user_autocomplete">
+  		</div>
+  	</p>
+	<% end %>
+
+<style type="text/css">
+div.auto_complete {
+  width: 300px;
+  background: #fff ;
+}
+div.auto_complete ul {
+  border:1px solid #888 ;
+  margin:0;
+  padding:0;
+  width:100%;
+  list-style-type:none;
+}
+div.auto_complete ul li {
+  font-size: 110%;
+  margin:0;
+  padding:3px;
+}
+div.auto_complete ul li.selected {
+  background-color: #ffb ;
+}
+div.auto_complete ul strong.highlight {
+  color: #800 ;
+  margin:0;
+  padding:0;
+}
+</style>
+
+<script type="text/javascript">
+  $('#term').on('input', function() {
+		$('form#user_autocomplete_form').trigger('submit.rails');
+	})
+</script>
+<!-- END TESTING AUTOCOMPLETE -->
 
 	<%= button_to 'Add New Template Editor', add_authorization_path, method: :post, id: 'add_authorization_view', :class => 'btn' %>
 

@@ -1,0 +1,2 @@
+$("#user_autocomplete").html("<%= escape_javascript(render(:partial => "autocomplete_name" , :locals => {:users => @users})) %>");
+$("#users_dd_list").show();
