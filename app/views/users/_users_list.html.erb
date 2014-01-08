@@ -21,7 +21,7 @@
 	</tbody>
 </table>
 <div class="buttons pagination">
-	<%= link_to 'View All', users_path(:scope => 'all_users'), :method => :get, :class => 'btn' %>
+	<%= link_to 'View All', users_path(:scope => 'all_users', :anchor => 'tab_tab1'), :method => :get, :class => 'btn' %>
   <%= paginate @users %>
 </div>
 
