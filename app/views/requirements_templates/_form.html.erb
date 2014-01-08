@@ -75,7 +75,7 @@
 				<div class="control-group">
 					<%= f.label :start_date, :class => "control-label" %>
 					<div class="controls">
-						<%= f.text_field :start_date, value: @requirements_template.start_date.blank? ? " " : @requirements_template.start_date.strftime(')%m/%d/%Y'), id: 'start_date', :class => 'datepicker' %>
+						<%= f.text_field :start_date, value: @requirements_template.start_date.blank? ? " " : @requirements_template.start_date.strftime('%m/%d/%Y'), id: 'start_date', :class => 'datepicker' %>
 					</div>
 				</div>
 
