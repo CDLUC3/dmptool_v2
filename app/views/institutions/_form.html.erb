@@ -67,7 +67,9 @@
   </div>
 
   <div class="control-group">
-    <%= f.label "Institutional Logo", :class => "control-label" %>
+
+    <p  class=" control-label tip" data-toggle="tooltip" data-placement="left" title="Suggested Logo Size 170x60">Institutional Logo  </p>
+
     <div class="controls">
       <%= image_tag @current_institution.logo.url if @current_institution.logo? %>
       <%= f.file_field :logo %>
