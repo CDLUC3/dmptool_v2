@@ -19,6 +19,13 @@ class RequirementsTemplate < ActiveRecord::Base
   validates :visibility, presence: true
   validates :version, presence: true, numericality: true
   validates :name, presence: true
+  
+  
+  #validates :start_date, date: true
+
+  # validates_each :start_date, :end_date do |record, attr, value|
+  #   record.errors.add(attr, 'must start with upper case') if value =~ /\A[a-z]/
+  # end
 
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
