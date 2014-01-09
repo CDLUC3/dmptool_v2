@@ -20,6 +20,8 @@ class RequirementsTemplate < ActiveRecord::Base
   validates :version, presence: true, numericality: true
   validates :name, presence: true
   
+  validates :start_date, date: true
+  validates :end_date, date: true
 
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }

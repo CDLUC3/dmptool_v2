@@ -8,7 +8,7 @@
 			<%= form_for @requirements_template, html: { :class => 'form-horizontal' } do |f| %>
 			  <% if @requirements_template.errors.any? %>
 				  <div id="error_explanation">
-					  <h2><%= '#{pluralize(@requirements_template.errors.count, "error")} prohibited this requirements template from being saved:' %></h2>
+					  <h2><%= "#{pluralize(@requirements_template.errors.count, "error")} prohibited this requirements template from being saved:" %></h2>
 					  <ul>
 					  	<% @requirements_template.errors.full_messages.each do |msg| %>
 					  		<li><%= msg %></li>
