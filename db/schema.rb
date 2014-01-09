@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140109195002) do
+ActiveRecord::Schema.define(version: 20140109195750) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -128,7 +128,7 @@ ActiveRecord::Schema.define(version: 20140109195002) do
     t.string   "name"
     t.boolean  "active"
     t.date     "start_date"
-    t.datetime "end_date"
+    t.date     "end_date"
     t.enum     "visibility",     limit: [:public, :institutional]
     t.integer  "version"
     t.integer  "parent_id"
