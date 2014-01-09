@@ -178,13 +178,14 @@ class UsersController < ApplicationController
   end
   
   def autocomplete
-    if !params[:term].blank?
-      like= "%".concat(params[:term].concat("%"))
-      @users = User.where("first_name like ? OR last_name like ?", like, like)
+    if !params[:name_term].blank?
+      like = "%".concat(params[:name_term].concat("%"))
+      @users = User.where("CONCAT(first_name, ' ', last_name) LIKE ?", like)
     end
-    
-    #list = users.map {|u| Hash[ id: u.id, label: u.full_name, name: u.full_name]}
-    #render json: list
+    list = @users.map {|u| Hash[ id: u.id,
+      name: u.full_name,
+      label: "#{u.full_name} <#{u.email}>"]}
+    render json: list
   end
 
   private

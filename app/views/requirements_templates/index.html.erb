@@ -67,50 +67,64 @@
 	
 <!-- TESTING AUTOCOMPLETE -->
 
-	<%= javascript_include_tag 'application' %>
-	
-	 <%= form_tag users_autocomplete_path, :remote => true, :id => 'user_autocomplete_form' do %>
-  	<p>
-    	<%= text_field_tag('term', nil, {:style=> "width:105px;"}) %><%= submit_tag "add" %>
-  		<div class="dropdown" id="user_autocomplete">
-  		</div>
-  	</p>
-	<% end %>
+<style>
+  /*
+  .ui-autocomplete-loading {
+    background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat;
+  }*/
+  #user { width: 25em; }
+  </style>
+  
+  <script>
+  // based on example at http://jqueryui.com/autocomplete/#remote-jsonp
+ 	$(function() {
+    $( "#user" ).autocomplete({
+      source: function( request, response ) {
+        $.ajax({
+          url: "<%=users_autocomplete_url%>",
+          dataType: "json",
+          data: {
+            name_term: request.term
+          },
+          success: function( data ) {
+            response( $.map( data, function( item ) {
+              return {
+                label: item.label,
+                value: item.name,
+                id: item.id
+              }
+            }
+            ));
+          }
+        });
+      },
+      minLength: 2,
+      select: function( event, ui ) {
+      	  console.log((this));
+      	  console.log(ui.item.id);
+      	  $('#p').val(ui.item.id); // set hidden field id
+      	  
+      },
+      open: function() {
+        $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+      },
+      close: function() {
+        $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+      }
+    });
+  });
+  </script>
+  
+  <div class="ui-widget">
+  	<label for="User">User:</label>
+  	<input id="user">
+	</div>
 
-<style type="text/css">
-div.auto_complete {
-  width: 300px;
-  background: #fff ;
-}
-div.auto_complete ul {
-  border:1px solid #888 ;
-  margin:0;
-  padding:0;
-  width:100%;
-  list-style-type:none;
-}
-div.auto_complete ul li {
-  font-size: 110%;
-  margin:0;
-  padding:3px;
-}
-div.auto_complete ul li.selected {
-  background-color: #ffb ;
-}
-div.auto_complete ul strong.highlight {
-  color: #800 ;
-  margin:0;
-  padding:0;
-}
-</style>
-
-<script type="text/javascript">
-  $('#term').on('input', function() {
-		$('form#user_autocomplete_form').trigger('submit.rails');
-	})
-</script>
+  
 <!-- END TESTING AUTOCOMPLETE -->
-
-	<%= button_to 'Add New Template Editor', add_authorization_path, method: :post, id: 'add_authorization_view', :class => 'btn' %>
+<%= form_tag(add_authorization_path, method: :post, remote: true, html: { :class => "form-horizontal"}) do %>
+	<%= hidden_field_tag 'p', p%>
+	<%= submit_tag 'Add New Template Editor', :class => 'btn' %>
+<% end %>
 
 	<%= render partial: "/authorizations/add_authorization" , :locals => { :role_type => 3, :role_name => 'DMP Template Editor'}%>

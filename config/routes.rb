@@ -20,7 +20,7 @@ Dmptool2::Application.routes.draw do
     resources :additonal_informations
   end
 
-  post 'users/autocomplate', to: 'users#autocomplete', as: 'users_autocomplete'
+  get 'users/autocomplate', to: 'users#autocomplete', as: 'users_autocomplete'
   resources :resource_templates do
     resources :resources
     member do
