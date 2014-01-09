@@ -19,6 +19,7 @@ class RequirementsTemplate < ActiveRecord::Base
   validates :visibility, presence: true
   validates :version, presence: true, numericality: true
   validates :name, presence: true
+  
 
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
