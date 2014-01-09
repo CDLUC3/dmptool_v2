@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131114000149) do
+ActiveRecord::Schema.define(version: 20140109190401) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -136,6 +136,20 @@ ActiveRecord::Schema.define(version: 20131114000149) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "resource_contexts", force: true do |t|
+    t.integer  "institution_id"
+    t.integer  "requirements_template_id"
+    t.integer  "resource_template_id"
+    t.integer  "requirement_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "resource_contexts", ["institution_id"], name: "index_resource_contexts_on_institution_id", using: :btree
+  add_index "resource_contexts", ["requirement_id"], name: "index_resource_contexts_on_requirement_id", using: :btree
+  add_index "resource_contexts", ["requirements_template_id"], name: "index_resource_contexts_on_requirements_template_id", using: :btree
+  add_index "resource_contexts", ["resource_template_id"], name: "index_resource_contexts_on_resource_template_id", using: :btree
 
   create_table "resource_templates", force: true do |t|
     t.integer  "institution_id"
