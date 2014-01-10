@@ -7,6 +7,7 @@ class Institution < ActiveRecord::Base
 	has_many :users
 	has_many :resource_templates
 	has_many :requirements_templates
+  has_many :resource_contexts
 
 	validates :full_name, presence: true
 

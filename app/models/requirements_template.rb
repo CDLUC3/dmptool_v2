@@ -7,6 +7,7 @@ class RequirementsTemplate < ActiveRecord::Base
   has_many :tags, inverse_of: :requirements_template
   has_many :additional_informations, inverse_of: :requirements_template
   has_many :sample_plans, inverse_of: :requirements_template
+  has_many :resource_contexts
 
   accepts_nested_attributes_for :resource_templates, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
   accepts_nested_attributes_for :requirements, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }

@@ -3,6 +3,7 @@ class ResourceTemplate < ActiveRecord::Base
 	belongs_to :institution
 	belongs_to :requirements_template
 	has_many :resources
+	has_many :resource_contexts
 
   validates_columns :review_type
 	validates :name, presence: true

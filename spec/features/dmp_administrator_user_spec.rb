@@ -29,7 +29,7 @@ feature 'dmp admin user' do
     click_on "create_new_DMP_template"
     click_link "My Dashboard"
     click_on "create_new_resource_template"
-    expect(page).to have_content("Resource Template Overview")
+    expect(page).to have_content("DMP Template Overview")
 
     #links are functioning
     click_link 'My Dashboard'

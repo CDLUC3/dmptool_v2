@@ -2,6 +2,7 @@ class Resource < ActiveRecord::Base
 
   belongs_to :requirement
   belongs_to :resource_template
+  has_many :resource_contexts
 
   validates_columns :resource_type
   validates :resource_type, presence: true
