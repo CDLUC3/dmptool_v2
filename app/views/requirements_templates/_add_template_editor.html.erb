@@ -12,7 +12,7 @@ $(function() {
   $( "#user" ).autocomplete({
     source: function( request, response ) {
       $.ajax({
-        url: "<%=users_autocomplete_url%>",
+        url: "<%=users_autocomplete_path%>",
         dataType: "json",
         data: {
           name_term: request.term
