@@ -64,67 +64,7 @@
 	<br/>
 	<%= render 'template_editors' %>
 	
-	
-<!-- TESTING AUTOCOMPLETE -->
-
-<style>
-  /*
-  .ui-autocomplete-loading {
-    background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat;
-  }*/
-  #user { width: 25em; }
-  </style>
+	<%= render partial: 'add_template_editor'%>
   
-  <script>
-  // based on example at http://jqueryui.com/autocomplete/#remote-jsonp
- 	$(function() {
-    $( "#user" ).autocomplete({
-      source: function( request, response ) {
-        $.ajax({
-          url: "<%=users_autocomplete_url%>",
-          dataType: "json",
-          data: {
-            name_term: request.term
-          },
-          success: function( data ) {
-            response( $.map( data, function( item ) {
-              return {
-                label: item.label,
-                value: item.name,
-                id: item.id
-              }
-            }
-            ));
-          }
-        });
-      },
-      minLength: 2,
-      select: function( event, ui ) {
-      	  console.log((this));
-      	  console.log(ui.item.id);
-      	  $('#p').val(ui.item.id); // set hidden field id
-      	  
-      },
-      open: function() {
-        $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
-      },
-      close: function() {
-        $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
-      }
-    });
-  });
-  </script>
-  
-  <div class="ui-widget">
-  	<label for="User">User:</label>
-  	<input id="user">
-	</div>
-
-  
-<!-- END TESTING AUTOCOMPLETE -->
-<%= form_tag(add_authorization_path, method: :post, remote: true, html: { :class => "form-horizontal"}) do %>
-	<%= hidden_field_tag 'p', p%>
-	<%= submit_tag 'Add New Template Editor', :class => 'btn' %>
-<% end %>
 
 	<%= render partial: "/authorizations/add_authorization" , :locals => { :role_type => 3, :role_name => 'DMP Template Editor'}%>

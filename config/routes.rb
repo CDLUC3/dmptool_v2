@@ -60,6 +60,7 @@ Dmptool2::Application.routes.draw do
 
   post 'add_authorization', to: 'authorizations#add_authorization'
   get 'remove_authorization', to: 'authorizations#remove_authorization'
+  post 'add_editor', to: 'authorizations#add_editor'
 
   #these are old routes from DMP1
   #get '/auth/:provider/callback', :to => 'authentications#create'
