@@ -8,7 +8,7 @@
 			<%= form_for @requirements_template, html: { :class => 'form-horizontal' } do |f| %>
 			  <% if @requirements_template.errors.any? %>
 				  <div id="error_explanation">
-					  <h2><%= '#{pluralize(@requirements_template.errors.count, "error")} prohibited this requirements template from being saved:' %></h2>
+					  <h2><%= "#{pluralize(@requirements_template.errors.count, "error")} prohibited this requirements template from being saved:" %></h2>
 					  <ul>
 					  	<% @requirements_template.errors.full_messages.each do |msg| %>
 					  		<li><%= msg %></li>
@@ -75,7 +75,7 @@
 				<div class="control-group">
 					<%= f.label :start_date, :class => "control-label" %>
 					<div class="controls">
-						<%= f.text_field :start_date, value: @requirements_template.start_date.blank? ? " " : @requirements_template.start_date.strftime('%m/%d/%Y'), id: 'start_date', :class => 'datepicker' %>
+						<%= f.text_field :start_date, value: @requirements_template.start_date.blank? ? " " : @requirements_template.start_date.strftime('%m/%d/%Y'), id: 'start_date', :class => 'datepicker' %>					
 					</div>
 				</div>
 
