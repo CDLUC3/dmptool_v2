@@ -33,6 +33,11 @@ class Institution < ActiveRecord::Base
     #gets the deep list of all resource templates for this and all sub-institutions under it
     ResourceTemplate.where(institution_id: self.subtree_ids)
   end
+  
+  def users_deep
+    #gets the list of all users associated with this institution and sub-institutions
+    Users.where(institution_id: self.subtree_ids)
+  end
 
   def users_in_role(role_name)
     User.joins({:authorizations => :role}).where("roles.name = ?", role_name).where(institution_id: self.id)

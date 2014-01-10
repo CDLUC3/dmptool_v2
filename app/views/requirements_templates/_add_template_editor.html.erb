@@ -1,46 +1,39 @@
-
-<style>
-  /*
-  .ui-autocomplete-loading {
-    background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat;
-  }*/
-</style>
-  
 <script>
-// based on example at http://jqueryui.com/autocomplete/#remote-jsonp
-$(function() {
-  $( "#user" ).autocomplete({
-    source: function( request, response ) {
-      $.ajax({
-        url: "<%=users_autocomplete_path%>",
-        dataType: "json",
-        data: {
-          name_term: request.term
-        },
-        success: function( data ) {
-          response( $.map( data, function( item ) {
-            return {
-              label: item.label,
-              value: item.name,
-              id: item.id
-            }
-          }
-          ));
-        }
-      });
-    },
-    minLength: 2,
-    select: function( event, ui ) {
-    	$('#template_editor_user_id').val(ui.item.id); // set hidden field id  
-    },
-    open: function() {
-      $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
-    },
-    close: function() {
-      $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
-    }
-  });
-});
+	// based on example at http://jqueryui.com/autocomplete/#remote-jsonp
+	$(function() {
+	  $( "#user" ).autocomplete({
+	    source: function( request, response ) {
+	      $.ajax({
+	        url: "<%=template_editor_users_autocomplete_path%>",
+	        dataType: "json",
+	        data: {
+	          name_term: request.term
+	        },
+	        success: function( data ) {
+	          response( $.map( data, function( item ) {
+	            return {
+	              label: item.label,
+	              value: item.name,
+	              id: item.id
+	            }
+	          }
+	          ));
+	        }
+	      });
+	    },
+	    minLength: 2,
+	    select: function( event, ui ) {
+	    	$('#template_editor_user_id').val(ui.item.id); // set hidden field id  
+	    },
+	    open: function() {
+	      $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+	    },
+	    close: function() {
+	    	return false;
+	      $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+	    }
+	  });
+	});
 </script>
 
 <%= form_tag(add_editor_path, method: :post, :id => 'template_editor_add_form', :class => "form-horizontal") do %>

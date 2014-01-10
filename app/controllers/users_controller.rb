@@ -177,10 +177,15 @@ class UsersController < ApplicationController
 
   end
   
-  def autocomplete
+  def autocomplete_template_editors
     if !params[:name_term].blank?
       like = "%".concat(params[:name_term].concat("%"))
-      @users = User.where("CONCAT(first_name, ' ', last_name) LIKE ?", like)
+      if current_user.has_role?(Role::DMP_ADMIN)
+        u = User
+      elsif current_user.has_role?(Role::INSTITUTIONAL_ADMIN) || current_user.has_role?(Role::TEMPLATE_EDITOR)
+        u = current_user.institution.users_deep
+      end
+      @users = u.where("CONCAT(first_name, ' ', last_name) LIKE ?", like).active
     end
     list = @users.map {|u| Hash[ id: u.id,
       name: u.full_name,
