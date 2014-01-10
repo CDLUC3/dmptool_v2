@@ -16,6 +16,9 @@ class Plan < ActiveRecord::Base
   validates :name, presence: true
   validates :visibility, presence: true
 
+  accepts_nested_attributes_for :comments, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
+  accepts_nested_attributes_for :responses, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
+
   def public?
     visibility == :public
   end
@@ -26,5 +29,13 @@ class Plan < ActiveRecord::Base
 
   def institutional?
     visibility == :institutional
+  end
+
+  def owned
+   self.user_plans.where(owner: true)
+  end
+
+  def coowned
+   self.user_plans.where(owner: false)
   end
 end

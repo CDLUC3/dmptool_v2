@@ -28,6 +28,8 @@ Dmptool2::Application.routes.draw do
   end
 
   resources :users do
+    resources :comments
+    resources :plan_states
     member do
       get :edit_roles
       get :finish_signup
@@ -35,8 +37,14 @@ Dmptool2::Application.routes.draw do
     end
   end
 
+  resources :plans do
+    resources :comments
+    resources :plan_states
+    member do
+      post :add_coowner
+    end
+  end
   resources :roles
-  resources :plans
   resources :institutions
   resources :authorizations
 
@@ -47,9 +55,13 @@ Dmptool2::Application.routes.draw do
   match 'user_sessions/username_reminder', to: 'user_sessions#username_reminder', :via => [:get, :post]
   match 'user_sessions/password_reset', to: 'user_sessions#password_reset', :via => [:get, :post]
   match 'user_sessions/complete_password_reset', to: 'user_sessions#complete_password_reset', as: 'complete_password_reset', :via => [:get, :post]
-  
+
   get 'requirements_template_information', to: 'requirements_templates#template_information'
   get 'copy_existing_requirements_template', to: 'requirements_templates#copy_existing_template'
+
+  get 'plan_template_information', to: 'plans#template_information'
+  get 'copy_existing_plans_template', to: 'plans#copy_existing_template'
+  get 'select_dmp_template', to: 'plans#select_dmp_template'
 
   get  'remove_resource_editor_role', to: 'resource_templates#remove_resource_editor_role'
   get  'remove_requirements_editor_role', to: 'requirements_templates#remove_requirements_editor_role'
@@ -63,7 +75,7 @@ Dmptool2::Application.routes.draw do
   #these are old routes from DMP1
   #get '/auth/:provider/callback', :to => 'authentications#create'
   #get '/auth/failure', :to => 'authentications#failure'
-  
+
   get  'edit_user_roles', to: 'users#edit_user_roles'
   post  'update_user_roles', to: 'users#update_user_roles'
 

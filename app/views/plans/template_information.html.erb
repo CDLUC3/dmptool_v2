@@ -1,0 +1,39 @@
+<h2 class="dashboard-heading"><span class="icon template-new"></span>Create New DMP</h2>
+<div class="row-fluid">
+	<div class="span6">
+		<h4>Copy an Existing DMP </h4>
+		<p>Select an existing DMP below and amend the requirement responses.</p>
+		<%= form_tag copy_existing_plans_template_path, method: :get do %>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th class="span1"></th>
+						<th>Name</th>
+						<th>Owner</th>
+						</tr>
+					</thead>
+				<tbody>
+				<% @plans.each do |plan| %>
+					<tr>
+						<td class="span1"><%= radio_button_tag :plan, plan.id, checked: false %></td>
+						<td><%= plan.name %></td>
+						<td><%= plan.name %></td>
+					</tr>
+				<% end %>
+				</tbody>
+			</table>
+			<div class="buttons pagination">
+				<%= paginate @plans %>
+			</div>
+			<%= submit_tag "DMP Information >>", :class => "btn" %>
+		<% end %>
+	</div>
+
+	<div class="span6">
+		<h4>Start from a DMP Template</h4>
+		<p>Select a template based on funder guidances and provide resonses to those requirements.</p>
+		<%= button_to "Select Template >>", select_dmp_template_path, :method => :get, :class => "btn" %>
+	</div>
+
+
+</div>

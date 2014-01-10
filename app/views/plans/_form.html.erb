@@ -1,0 +1,125 @@
+<div class="tabbable">
+  <ul class="nav-tabs">
+    <li class="active"><a href="#" data-toggle="tab">DMP Overview</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      <%= form_for @plan, html: { :class => 'form-horizontal' }  do |f| %>
+        <% if @plan.errors.any? %>
+          <div id="error_explanation">
+            <h2>
+              <%= "#{pluralize(@plan.errors.count, "error")} prohibited this DMP from being saved:" %>
+            </h2>
+            <ul>
+              <% @plan.errors.full_messages.each do |msg| %>
+                <li>
+                  <%= msg %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="control-group">
+          <%= f.label :dmp_template_name, 'DMP Template', :class => 'control-label' %>
+          <div class="controls">
+            <%= f.hidden_field :requirements_template_id %>
+            <%= text_field_tag :requirements_template_name, '', disabled: true, :class => "input-xxlarge" %>
+          </div>
+        </div>
+        <div class="control-group">
+          <%= f.label :name , 'DMP Plan', :class => 'control-label' %>
+          <div class="controls">
+            <%= f.text_field :name , :class => 'input-xxlarge'%>
+          </div>
+        </div>
+        <div class="control-group">
+          <%= f.label :solicitation_identifier , 'Solicitation Identifier ', :class => 'control-label' %>
+          <div class="controls">
+            <%= f.text_field :solicitation_identifier  , :class => 'input-xxlarge'%>
+          </div>
+        </div>
+        <div class="control-group">
+          <%= f.label :submission_deadline, 'Submission Deadline',:class => "control-label" %>
+          <div class="controls">
+            <%= f.text_field :submission_deadline, value: @plan.submission_deadline.blank? ? " " : @plan.submission_deadline.strftime('%m/%d/%Y'), id: 'submission_deadline', :class => 'datepicker' %>
+          </div>
+        </div>
+        <div class="control-group">
+          <%= f.label :visibility, :class => 'control-label' %>
+          <div class="controls radio-controls">
+            <%= f.radio_button :visibility, :public, :class => 'radio inline', :id => 'public'  %>
+            <%= label_tag :public, 'public', :class => 'radio-label'%><br/>
+            <%= f.radio_button :visibility, :institutional, :class => 'radio inline', :id => 'institutional'  %>
+            <%= label_tag :institutional, 'institutional', :class => 'radio-label'%><br/>
+            <%= f.radio_button :visibility, :public_browsable, :class => 'radio inline', :id => 'public_browsable'  %>
+            <%= label_tag :public_browsable, 'public_browsable', :class => 'radio-label'%>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class ="control-label"> Coowners: </label>
+          <div class="controls">
+            <p><%= link_to "Add Coowners", add_coowner_plan_path(@plan), method: :post, id: 'add_coonwers_view' %></p>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class ="control-label"> Comments: </label>
+          <div class="controls">
+            <p><%= link_to "Add Comments", plan_comments_path(@plan) %></p>
+          </div>
+        </div>
+
+        <% unless @plan.new_record? %>
+        <hr/>
+        <div class="control-group">
+          <label class ="control-label"> Current Status: </label>
+          <div class="controls">
+            <strong><%= @plan.plan_states.last.state.to_s.capitalize %></strong><%= link_to "(Show History)", plan_plan_states_path(@plan) %>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class ="control-label"> Reviewer Comments: </label>
+          <div class="controls">
+            <p><%= link_to "View", plan_comments_path(@plan) %></p>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class ="control-label"> Owner Comments: </label>
+          <div class="controls">
+            <p><%= link_to "View", plan_comments_path(@plan) %></p>
+          </div>
+        </div>
+
+        <hr/>
+
+        <div class="control-group">
+          <label class ="control-label"> Visibility: </label>
+          <div class="controls">
+            <p> This DMP is <span style="color:blue;"><%=@plan.visibility.capitalize %></span> </p>
+            <p><%= link_to "Change Settings", '#' %></p>
+          </div>
+        </div>
+
+        <hr/>
+
+        <div class="control-group">
+          <label class ="control-label"> Available Actions: </label>
+            <div class="controls">
+            <p><%= link_to "Preview DMP", "#" %> |
+              <%= link_to "Submit DMP", "#" %> |
+              <%= link_to "Deactivate DMP", "#" %> |
+              <%= link_to "Delete DMP",@plan, method: :delete,  style: 'color:red;', data: { confirm: 'Are you sure?', :id => 'delete_template' }%>
+            </p>
+          </div>
+        </div>
+
+        <% end %>
+
+        <div class="buttons">
+          <%= f.submit 'Save Changes', :class => 'btn btn-success pull-left', method: 'post' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

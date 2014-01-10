@@ -1,0 +1,45 @@
+<h2 class="dashboard-heading"><span class="icon template-dmp"></span>Active DMPs </h2>
+<div class="table-scope">
+  <%= link_to(content_tag(:span, "All (#{@all}) ", :class => "current" ), scope: "all_limited") %>
+  |
+  <%= link_to(content_tag(:span, "Shared (#{@shared}) ", :class => "current"), scope: "shared") %>
+  |
+  <%= link_to(content_tag(:span, "Approved (#{@approved}) ", :class => "current"), scope: "approved") %>
+  |
+  <%= link_to(content_tag(:span, "Submitted (#{@submitted}) ", :class => "current"), scope: "submitted") %>
+  |
+  <%= link_to(content_tag(:span, "Rejected (#{@rejected}) ", :class => "current"), scope: "rejected") %>
+</div>
+
+<table class="table table-striped" id="dmp_plans">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Owner</th>
+      <th>Status</th>
+      <th>Visibility</th>
+      <th>Last Modification Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @plans.each do |plan| %>
+      <tr>
+        <td class="plan_name">
+          <div class="toggle-links">
+            <%=link_to (content_tag(:strong, plan.name)), '#', :id => "#{plan.name}" %>
+            <div class="plan-links">
+              <%= (link_to 'Overview', edit_plan_path(plan))+' | '+(link_to 'Details','#')+' | '+(link_to 'Export','#')+' | '+(link_to 'Publish','#')+' | '+(link_to 'Submit','#')+' | '+(link_to 'Copy', copy_existing_plans_template_path(:plan => plan))+' | '+(link_to 'Delete', plan_path(plan), :class => "delete", :id => "delete_#{plan.name}", method: :delete, data: { confirm: 'Are you sure?' }) %>
+            </div>
+          </div>
+        </td>
+        <td><%= plan.name %></td>
+        <td><%= state(plan) %></td>
+        <td><%= plan.visibility.capitalize %></td>
+        <td><%= plan.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+      </tr>
+    <% end %>
+  <tbody>
+</table>
+
+<%= button_to 'Create New DMP', plan_template_information_path, :method => :get, :class => 'btn' %>
+<br/>
