@@ -3,4 +3,5 @@ class ResourceContext < ActiveRecord::Base
   belongs_to :requirements_template
   belongs_to :resource_template
   belongs_to :requirement
+  belongs_to :resource
 end

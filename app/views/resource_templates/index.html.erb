@@ -58,7 +58,8 @@
 </div>
 <%= button_to 'Create Resource template', new_resource_template_path, :method => :get, :class => 'btn' %>
 
-<%= render 'remove_resource_editor_role' %>
+<%#= render 'remove_resource_editor_role' %>
+<%= render 'resource_editors' %>
 
 <%= render partial: "/authorizations/add_authorization" , :locals => { :role_type => 2, :role_name => 'Resources Editor'}%>
 

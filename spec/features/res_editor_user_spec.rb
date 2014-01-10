@@ -62,7 +62,9 @@ feature 'res editor user' do
 		#revoke role just granted
 		click_link 'remove_27'
 		find('.confirm').click
-		click_link 'remove_27'
+		if page.has_content? "test_user2"
+			click_link 'remove_27'
+		end
 		expect(page).to have_no_content("test_user2")
 
 		
