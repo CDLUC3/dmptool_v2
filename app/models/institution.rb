@@ -37,7 +37,7 @@ class Institution < ActiveRecord::Base
   
   def users_deep
     #gets the list of all users associated with this institution and sub-institutions
-    Users.where(institution_id: self.subtree_ids)
+    User.where(institution_id: self.subtree_ids)
   end
 
   def users_in_role(role_name)
