@@ -32,7 +32,7 @@
             </div>
           </div>
         </td>
-        <td><%= plan.name %></td>
+        <td><%= owner_name(plan) %></td>
         <td><%= state(plan) %></td>
         <td><%= plan.visibility.capitalize %></td>
         <td><%= plan.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>

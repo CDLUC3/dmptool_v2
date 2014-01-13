@@ -1,0 +1,26 @@
+<h2 class="dashboard-heading"><span class="icon template-dmp"></span>History</h2>
+
+<table class="table table-striped" id="dmp_planstates">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Name</th>
+      <th>Owner</th>
+      <th>Status</th>
+      <th>Last Modification Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @planstates.each do |planstate| %>
+      <tr>
+        <td class="span1"><%= radio_button_tag :planstate, planstate.id, checked: false %></td>
+        <td><%= plan_name(planstate)%></td>
+        <td><%= plan_user(planstate) %></td>
+        <td><%= planstate.state %></td>
+        <td><%= planstate.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+      </tr>
+    <% end %>
+  <tbody>
+</table>
+
+<%= button_to 'Delete Selected DMPs', plan_path(@plan), : method: :delete, data: { confirm: 'Are you sure?' }) %>
