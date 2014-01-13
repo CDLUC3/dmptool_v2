@@ -13,7 +13,7 @@ class ResourceTemplatesController < ApplicationController
     resource_editors
 
     count
-    
+
   end
 
 
@@ -91,15 +91,15 @@ class ResourceTemplatesController < ApplicationController
     def get_requirements_template
       if !safe_has_role?(Role::DMP_ADMIN)
         unless params[:show_all] == 'true'
-          @requirements_templates = RequirementsTemplate.where.any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public).order(created_at: :asc).page(params[:page]).per(5)
+          @requirements_templates = RequirementsTemplate.where.any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public).active.order(created_at: :asc).page(params[:page]).per(5)
         else
-          @requirements_templates = RequirementsTemplate.where.any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public).order(created_at: :asc).page(params[:page])
+          @requirements_templates = RequirementsTemplate.where.any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public).active.order(created_at: :asc).page(params[:page])
         end
       else
         unless params[:show_all] == 'true'
-          @requirements_templates = RequirementsTemplate.all.order(created_at: :asc).page(params[:page]).per(5)
+          @requirements_templates = RequirementsTemplate.active.order(created_at: :asc).page(params[:page]).per(5)
         else
-          @requirements_templates = RequirementsTemplate.all.order(created_at: :asc).page(params[:page])
+          @requirements_templates = RequirementsTemplate.active.order(created_at: :asc).page(params[:page])
         end
       end
     end
