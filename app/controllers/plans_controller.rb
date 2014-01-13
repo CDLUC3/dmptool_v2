@@ -4,7 +4,30 @@ class PlansController < ApplicationController
   # GET /plans
   # GET /plans.json
   def index
-    @plans = Plan.all
+    if !safe_has_role?(Role::DMP_ADMIN)
+      user = current_user.id
+      userplans = UserPlan.where(user_id: user.id)
+      @plans = Plan.includes(:userplans).where('userplans.plan_id =?', 'userplans').references(:userplans)
+    else
+      @plans = Plan.all
+    end
+
+    case params[:scope]
+      when "all"
+        @plans = @plans.page(params[:page])
+      # when "all_limited"
+      #   @plans = @plans.page(params[:page]).per(5)
+      # when "shared"
+      #   @plans = @plans.active.page(params[:page]).per(5)
+      # when "approved"
+      #   @plans = @plans.inactive.page(params[:page]).per(5)
+      # when "submitted"
+      #   @plans = @plans.public_visibility.page(params[:page]).per(5)
+      # when "rejected"
+      #   @plans = @plans.institutional_visibility.page(params[:page]).per(5)
+      else
+        @plans = @plans.order(created_at: :asc).page(params[:page]).per(5)
+    end
   end
 
   # GET /plans/1

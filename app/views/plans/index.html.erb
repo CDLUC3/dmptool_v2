@@ -40,6 +40,12 @@
     <% end %>
   <tbody>
 </table>
-
+    <div class="buttons pagination">
+      <%= link_to "View All", plans_path(:scope => "all"), :method => :get, :class => "btn", :id => 'view_all_plans'%>
+      <%= paginate @plans %>
+    </div>
+    </tr>
+  </tbody>
+</table>
 <%= button_to 'Create New DMP', plan_template_information_path, :method => :get, :class => 'btn' %>
 <br/>
