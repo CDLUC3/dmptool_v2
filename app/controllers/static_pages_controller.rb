@@ -24,6 +24,10 @@ class StaticPagesController < ApplicationController
   end
 
   def contact
+    if request.post?
+      flash[:alert] = "this is a post request where the form is submitted and en email may be sent."
+      redirect_to :back
+    end
   end
   
   def guidance

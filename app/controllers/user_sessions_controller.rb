@@ -55,7 +55,7 @@ class UserSessionsController < ApplicationController
      end
   end
   
-  #email username from email address -- get is the form, post the submission
+  #email username from email address -- get the form, post the submission
   def username_reminder
     if request.post?
       email = params[:email]
