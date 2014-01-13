@@ -20,6 +20,7 @@
 
 
 $.rails.allowAction = function(link) {
+	console.log('*rails.allowAction*');
   if (!link.attr('data-confirm')) {
     return true;
   }
@@ -28,11 +29,14 @@ $.rails.allowAction = function(link) {
 };
 
 $.rails.confirmed = function(link) {
+	console.log('*rails.confirmed*');
+	console.log(link.attr('data-confirm'));
   link.removeAttr('data-confirm');
   return link.trigger('click.rails');
 };
 
 $.rails.showConfirmDialog = function(link) {
+	console.log('*rails.showConfirmDialog*');
   var html, message;
   message = link.attr('data-confirm');
   html = "<div class=\"modal\" id=\"confirmationDialog\">\n  <div class=\"modal-header\">\n    <a class=\"close\" data-dismiss=\"modal\">×</a>\n    <h3><strong>" + message + "</strong></h3>\n  </div>\n  <div class=\"modal-footer\">\n    <a data-dismiss=\"modal\" class=\"btn\">Cancel</a>\n    <a data-dismiss=\"modal\" class=\"btn btn-primary confirm\">Delete</a>\n  </div>\n</div>";
