@@ -3,9 +3,13 @@ Dmptool2::Application.routes.draw do
  get "dashboard/show"
  root 'static_pages#home'
  get 'about', to: 'static_pages#about'
+ get 'video', to: 'static_pages#video'
+ get 'partners', to: 'static_pages#partners'
  get 'guidance', to: 'static_pages#guidance'
  get 'help', to: 'static_pages#help'
  get 'contact', to: 'static_pages#contact'
+ get 'privacy', to: 'static_pages#privacy'
+ get 'terms_of_use', to: 'static_pages#terms_of_use'
  get 'logout', to: 'user_sessions#destroy'
  get 'dashboard', to: 'dashboard#show', as: 'dashboard'
  get 'dashboard/test', to: 'dashboard#test'

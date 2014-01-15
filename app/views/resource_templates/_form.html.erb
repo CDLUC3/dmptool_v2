@@ -62,15 +62,15 @@
 			      <%= f.label :review_requirement, 'Review Requirement', :class => 'control-label' %>
 			      <div class="controls radio-controls">
 			        <%= f.radio_button :review_type, :formal_review, :class => 'radio inline' %>
-			        Formal Review Required<br/>
+			        <%= label_tag :formal_review, 'Formal Review Required', :class => 'radio-label'%><br/>
 			        <%= f.radio_button :review_type, :informal_review, :class => 'radio inline' %>
-			        Informal Review Required<br/>
+			        <%= label_tag :informal_review, 'Informal Review Required', :class => 'radio-label'%><br/>
 			        <% unless @resource_template.new_record? %>
 			          <%= f.radio_button :review_type, :no_review, :class => 'radio inline' %>
 			        <% else %>
 			          <%= f.radio_button :review_type, :no_review, :class => 'radio inline', checked: true %>
 			        <% end %>
-			        No Review Required
+			        <%= label_tag :no_review, 'No Review Required', :class => 'radio-label'%>
 			      </div>
 			    </div>
 			    <br/>

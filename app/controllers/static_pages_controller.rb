@@ -19,11 +19,20 @@ class StaticPagesController < ApplicationController
 
   def about
   end
+  
+  def video
+  end
+  
+  def partners
+  end
 
   def help
   end
 
   def contact
+  end
+  
+  def privacy
   end
   
   def guidance

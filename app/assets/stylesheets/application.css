@@ -25,5 +25,8 @@
  *= require users
  *= require user_sessions
  *= require ui
- *= require_tree
+ *= require_tree .
+ *= stub chrome
+ *= stub safari
+ *= stub ie
  */
