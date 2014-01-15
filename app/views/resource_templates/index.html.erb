@@ -1,64 +1,6 @@
-<h2 class="dashboard-heading"><span class="icon template-resource"></span>Resource Templates</h2>
-<div class="table-scope">
-  <%= link_to(content_tag(:span, "All (#{@all}) ", :class => "current" ), scope: "all_limited") %>
-  |
-  <%= link_to(content_tag(:span, "Active (#{@active}) ", :class => "current"), scope: "active") %>
-  |
-  <%= link_to(content_tag(:span, "Inactive (#{@inactive}) ", :class => "current"), scope: "inactive") %>
-</div>
+<%= render 'resource_customization' %>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th class="span4">Name</th>
-      <th>Institution</th>
-      <th>Status</th>
-      <th>Creation Date</th>
-      <th>Last Modification Date</th>
-    </tr>
-  </thead>
-  <tbody>
-  <% @resource_templates.each do |resource_template| %>
-    <tr>
-      <td class="resource_template_name">
-      	<script>
-						jQuery(function(){
-							jQuery(".toggle-links").hover(
-								function(){jQuery(this).parent().find(".template-links").css("visibility", "visible")},
-								function(){jQuery(this).parent().find(".template-links").css("visibility", "hidden")}
-							);
-						})
-				</script>
-				<div class="toggle-links">
-        	<%= link_to (content_tag(:strong, resource_template.name)), resource_template_resources_path(resource_template) %>
-        	<div class="template-links">
-        		<%= (link_to 'Overview', edit_resource_template_path(resource_template))+' | '+(link_to 'Details',resource_template_resources_path(resource_template))+' | '+(link_to activate_link_text(resource_template), toggle_active_resource_template_path(resource_template),remote: true, id: "activate_link_#{resource_template.id}")+' | '+(link_to 'Delete', resource_template_path(resource_template), :class => "delete",  method: :delete, data: { confirm: 'Are you sure?' }) %>
-        	</div>
-        </div>
-      </td>
-      <td>
-        <%= resource_template.institution.full_name %>
-      </td>
-      <td id="status_<%= resource_template.id %>">
-        <%= resource_template.active? ? 'Active' : 'Inactive' %>
-      </td>
-      <td>
-        <%= resource_template.created_at.strftime("%m/%d/%Y %I:%M%p") %>
-      </td>
-      <td>
-        <%= resource_template.updated_at.strftime("%m/%d/%Y %I:%M%p") %>
-      </td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
-<div class="buttons pagination">
-	<%= link_to "View All", resource_templates_path(:scope => "all"), :method => :get, :class => "btn"%>
-	<%= paginate @resource_templates %>
-</div>
-<%= button_to 'Create Resource template', new_resource_template_path, :method => :get, :class => 'btn' %>
-
-<%= render 'remove_resource_editor_role' %>
+<%= render 'resource_editors' %>
 
 <%= render partial: "/authorizations/add_authorization" , :locals => { :role_type => 2, :role_name => 'Resources Editor'}%>
 

@@ -17,6 +17,8 @@ class User < ActiveRecord::Base
 
   has_many :coowned_plans, -> { where user_plans: { owner: false} }, through: :user_plans,
   source: :plan, class_name: 'Plan'
+  
+  scope :active, -> { where(active: true, deleted_at: nil) }
 
   accepts_nested_attributes_for :user_plans
 

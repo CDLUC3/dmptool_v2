@@ -1,4 +1,6 @@
 class AuthorizationsController < ApplicationController
+  
+  before_action :check_DMPTemplate_editor_access, only: [:add_editor]
 	
 	def add_authorization
 
@@ -81,6 +83,28 @@ class AuthorizationsController < ApplicationController
       redirect_to @path, notice: "You don't have permission to revoke this role."
     end
     return
+  end
+  
+  def add_editor
+    if params[:user].blank?
+      redirect_to :back, notice: "Please select a person to add as a template editor" and return 
+    end
+    if !params[:template_editor_user_id].blank?
+      user = User.find(params[:template_editor_user_id])
+    else
+      first, last = params[:user].split(" ", 2)
+      redirect_to :back, notice: "Please type or select the full name of a user" and return if first.nil? || last.nil?
+      users = User.where("first_name = ? and last_name = ?", first, last)
+      redirect_to :back, notice: "Please select the user with this name from the list.  There is more than one user with this name." and return if users.length > 1
+      redirect_to :back, notice: "The user you entered was not found" and return if users.length < 1
+      user = users.first
+    end
+    if user.roles.map{|i| i.id}.include?(Role::TEMPLATE_EDITOR)
+      redirect_to :back, notice: "The user you chose is already a template editor" and return
+    end
+    authorization = Authorization.create(role_id: Role::TEMPLATE_EDITOR, user_id: user.id)
+    authorization.save!
+    redirect_to :back, notice: "#{user.full_name} has been added as a template editor"
   end
 
    

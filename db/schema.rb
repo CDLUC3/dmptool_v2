@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131114000149) do
+ActiveRecord::Schema.define(version: 20140110192327) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -127,8 +127,8 @@ ActiveRecord::Schema.define(version: 20131114000149) do
     t.integer  "institution_id"
     t.string   "name"
     t.boolean  "active"
-    t.datetime "start_date"
-    t.datetime "end_date"
+    t.date     "start_date"
+    t.date     "end_date"
     t.enum     "visibility",     limit: [:public, :institutional]
     t.integer  "version"
     t.integer  "parent_id"
@@ -136,6 +136,22 @@ ActiveRecord::Schema.define(version: 20131114000149) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "resource_contexts", force: true do |t|
+    t.integer  "institution_id"
+    t.integer  "requirements_template_id"
+    t.integer  "resource_template_id"
+    t.integer  "requirement_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "resource_id"
+  end
+
+  add_index "resource_contexts", ["institution_id"], name: "index_resource_contexts_on_institution_id", using: :btree
+  add_index "resource_contexts", ["requirement_id"], name: "index_resource_contexts_on_requirement_id", using: :btree
+  add_index "resource_contexts", ["requirements_template_id"], name: "index_resource_contexts_on_requirements_template_id", using: :btree
+  add_index "resource_contexts", ["resource_id"], name: "index_resource_contexts_on_resource_id", using: :btree
+  add_index "resource_contexts", ["resource_template_id"], name: "index_resource_contexts_on_resource_template_id", using: :btree
 
   create_table "resource_templates", force: true do |t|
     t.integer  "institution_id"

@@ -30,6 +30,10 @@ class StaticPagesController < ApplicationController
   end
 
   def contact
+    if request.post?
+      flash[:alert] = "this is a post request where the form is submitted and en email may be sent."
+      redirect_to :back
+    end
   end
   
   def privacy
@@ -42,7 +46,7 @@ class StaticPagesController < ApplicationController
       @public_templates = @public_templates.letter_range_by_institution(params[:s], params[:e])
     end
     
-    if params[:q]
+    if !params[:q].blank?
       @public_templates = @public_templates.search_terms(params[:q])
     end
     

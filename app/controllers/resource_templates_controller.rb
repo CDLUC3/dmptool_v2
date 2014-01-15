@@ -7,27 +7,15 @@ class ResourceTemplatesController < ApplicationController
   # GET /resource_templates
   # GET /resource_templates.json
   def index
-    case params[:scope]
-      when "all"
-        @resource_templates = ResourceTemplate.page(params[:page])
-      when "all_limited"
-        @resource_templates = ResourceTemplate.page(params[:page]).per(5)
-      when "active"
-        @resource_templates = ResourceTemplate.where(active: true).page(params[:page]).per(5)
-      when "inactive"
-        @resource_templates = ResourceTemplate.where(active: false).page(params[:page]).per(5)
-      else
-        @resource_templates = ResourceTemplate.page(params[:page]).per(5)
-    end
 
-    if !safe_has_role?(Role::DMP_ADMIN)
-      @resource_templates = @resource_templates.
-                            where(institution_id: [current_user.institution.subtree_ids])
+    resource_customizations
 
-    end
     resource_editors
+
     count
+    
   end
+
 
   # GET /resource_templates/1
   # GET /resource_templates/1.json
@@ -124,6 +112,27 @@ class ResourceTemplatesController < ApplicationController
         @users = User.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).order('created_at DESC').page(params[:page]).per(10)
       end
     end
+
+    def resource_customizations
+      case params[:scope]
+        when "all"
+          @resource_templates = ResourceTemplate.page(params[:page])
+        when "all_limited"
+          @resource_templates = ResourceTemplate.page(params[:page]).per(5)
+        when "active"
+          @resource_templates = ResourceTemplate.where(active: true).page(params[:page]).per(5)
+        when "inactive"
+          @resource_templates = ResourceTemplate.where(active: false).page(params[:page]).per(5)
+        else
+          @resource_templates = ResourceTemplate.page(params[:page]).per(5)
+      end
+
+      if !safe_has_role?(Role::DMP_ADMIN)
+        @resource_templates = @resource_templates.
+                              where(institution_id: [current_user.institution.subtree_ids])
+      end
+    end
+
 
     def count
       if current_user.has_role?(Role::DMP_ADMIN)

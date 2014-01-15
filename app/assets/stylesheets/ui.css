@@ -1082,3 +1082,15 @@ h2.dashboard-heading span.icon {
 	margin: 0; }
 .modal-footer .btn + .btn {
 	margin: 0 5px 0 0; }
+	
+/* autocomplete lists need styles overrident to get ride of crazy list styles */
+ul.ui-autocomplete>li.ui-menu-item{
+	list-style-type: none;
+	list-style: none;
+}
+ul.ui-autocomplete>li.ui-menu-item:before{
+	content: ""
+}
+.ui-autocomplete-loading {
+  background: white url('/assets/throbber.gif') right center no-repeat;
+}

@@ -29,7 +29,7 @@ $.rails.allowAction = function(link) {
 
 $.rails.confirmed = function(link) {
   link.removeAttr('data-confirm');
-  return link.trigger('click.rails');
+  return link.simulate('click');
 };
 
 $.rails.showConfirmDialog = function(link) {
