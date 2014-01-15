@@ -1,9 +1,11 @@
 module PlansHelper
 	def owner_name(plan)
 		plan_id= plan.id
-		user_id= UserPlan.where(plan_id: plan_id).first.user_id
-		owner = User.find(user_id).full_name
-		return owner
+		unless !Plan.exists?(plan_id)
+			user_id= UserPlan.where(plan_id: plan_id).first.user_id
+			owner = User.find(user_id).full_name
+			return owner
+		end
 	end
 
 	def state(plan)
@@ -13,12 +15,17 @@ module PlansHelper
 	end
 
 	def plan_name(planstate)
-		plan_id= planstate.plan_id
-		Plan.find(plan_id).name
+		plan_id = planstate.plan_id
+		unless !Plan.exists?(plan_id)
+			Plan.find(plan_id).name
+		end
 	end
 
 	def plan_user(planstate)
-		plan_id= planstate.user_id
-		User.find(user_id).full_name
+		plan_id = planstate.plan_id
+		unless !Plan.exists?(plan_id)
+			user_id= UserPlan.where(plan_id: plan_id).first.user_id
+			User.find(user_id).full_name
+		end
 	end
 end

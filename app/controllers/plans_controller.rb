@@ -15,19 +15,21 @@ class PlansController < ApplicationController
     case params[:scope]
       when "all"
         @plans = @plans.page(params[:page])
-      # when "all_limited"
-      #   @plans = @plans.page(params[:page]).per(5)
+      when "all_limited"
+        @plans = @plans.page(params[:page]).per(5)
       # when "shared"
-      #   @plans = @plans.active.page(params[:page]).per(5)
+      #   @plans = @plans.shared.page(params[:page]).per(5)
       # when "approved"
-      #   @plans = @plans.inactive.page(params[:page]).per(5)
+      #   @plans = @plans.approved.page(params[:page]).per(5)
       # when "submitted"
-      #   @plans = @plans.public_visibility.page(params[:page]).per(5)
+      #   @plans = @plans.submitted.page(params[:page]).per(5)
       # when "rejected"
-      #   @plans = @plans.institutional_visibility.page(params[:page]).per(5)
+      #   @plans = @plans.rejected.page(params[:page]).per(5)
       else
         @plans = @plans.order(created_at: :asc).page(params[:page]).per(5)
     end
+
+    @planstates = PlanState.page(params[:page]).per(5)
   end
 
   # GET /plans/1

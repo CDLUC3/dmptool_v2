@@ -13,7 +13,7 @@
   <tbody>
     <% @planstates.each do |planstate| %>
       <tr>
-        <td class="span1"><%= radio_button_tag :planstate, planstate.id, checked: false %></td>
+        <td class="span1"><%= check_box_tag :planstate, planstate.id %></td>
         <td><%= plan_name(planstate)%></td>
         <td><%= plan_user(planstate) %></td>
         <td><%= planstate.state %></td>
@@ -22,5 +22,12 @@
     <% end %>
   <tbody>
 </table>
-
-<%= button_to 'Delete Selected DMPs', plan_path(@plan), : method: :delete, data: { confirm: 'Are you sure?' }) %>
+    <div class="buttons pagination">
+      <%= link_to "View All", plans_path(:scope => "all"), :method => :get, :class => "btn", :id => 'view_all_plans'%>
+      <%= paginate @plans %>
+    </div>
+    </tr>
+  </tbody>
+</table>
+  <%= button_to 'Delete Selected DMPs', plan_path(@plan), method: :delete, data: { confirm: 'Are you sure?' } %>
+<br/>
