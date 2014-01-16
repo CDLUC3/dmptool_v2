@@ -46,9 +46,9 @@
 	</p>
 	
 	<h2>Contact Information</h2>
-	<p>For more information about the DMPTool, please [contact us - link to page].
+	<p>For more information about the DMPTool, please <%= link_to "contact us", contact_path, :title => "contact us" %>.
 		<blockquote>
-			<h3>Mailing Address:</h3>
+			<strong>Mailing Address:</strong><br/>
 			California Digital Library<br />
 			UC Office of the President<br />
 			415 20th St, 4th Floor<br />
@@ -57,10 +57,8 @@
 	</p>
 	
 	
-	
-	
-	
-  <!--<p> U.S. funding agencies such as the National Science Foundation and the National Institutes of Health require researchers to supply detailed, cost-effective plans for managing research data, called Data Management Plans.</p>
+  <!-- The Following is old content 
+  <p> U.S. funding agencies such as the National Science Foundation and the National Institutes of Health require researchers to supply detailed, cost-effective plans for managing research data, called Data Management Plans.</p>
   <p> Several universities and organizations are developing the DMPTool to help researchers meet these new requirements. In specific, the DMPTool will help researchers:</p>
   <ul>
     <li> Create ready-to-use data management plans for specific funding agencies </li>
