@@ -16,7 +16,8 @@
       <td><%= user.email %></td>
       <td class="span1">
       	<%= link_to raw(''), remove_authorization_path(user_id: user.id, role_id: 3, p: 'requirements_templates'),
-      		:class => "icon remove", :data => { :confirm => 'Are you sure you want to revoke this role?' } %>
+      		:class => "icon remove", :data => { :confirm => 'Are you sure you want to revoke this role?',
+      			:yesval => 'Revoke', :noval => 'Cancel' } %>
 			</td>
     </tr>
     <% end %>

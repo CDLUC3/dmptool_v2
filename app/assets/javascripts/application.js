@@ -33,9 +33,20 @@ $.rails.confirmed = function(link) {
 };
 
 $.rails.showConfirmDialog = function(link) {
-  var html, message;
+  var html, message, yesVal, noVal;
   message = link.attr('data-confirm');
-  html = "<div class=\"modal\" id=\"confirmationDialog\">\n  <div class=\"modal-header\">\n    <a class=\"close\" data-dismiss=\"modal\">×</a>\n    <h3><strong>" + message + "</strong></h3>\n  </div>\n  <div class=\"modal-footer\">\n    <a data-dismiss=\"modal\" class=\"btn\">Cancel</a>\n    <a data-dismiss=\"modal\" class=\"btn btn-primary confirm\">Delete</a>\n  </div>\n</div>";
+  yesVal = (typeof link.attr('data-yesval') === 'undefined' ? 'Delete': link.attr('data-yesval'));
+  noVal = (typeof link.attr('data-noval') === 'undefined' ? 'Cancel': link.attr('data-noval'));
+  html =	"<div class=\"modal\" id=\"confirmationDialog\">\n" +
+  					"<div class=\"modal-header\">\n" +
+  						"<a class=\"close\" data-dismiss=\"modal\">×</a>\n" +
+  						"<h3><strong>" + message + "</strong></h3>\n" +
+  					"</div>\n" +
+  					"<div class=\"modal-footer\">\n" +
+  						"<a data-dismiss=\"modal\" class=\"btn\">" + noVal + "</a>\n" +
+  						"<a data-dismiss=\"modal\" class=\"btn btn-primary confirm\">" + yesVal + "</a>\n" +
+  					"</div>\n" +
+  				"</div>";
   $(html).modal();
   return $('#confirmationDialog .confirm').on('click', function() {
     return $.rails.confirmed(link);
