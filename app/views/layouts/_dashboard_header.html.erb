@@ -35,8 +35,8 @@
 	<div class="dashboard-nav row-fluid" id="quick_dashboard">
 		<ul class="nav">
 			<li <%= "class=current" if current_page?(dashboard_path) %> ><%= link_to(content_tag(:span, "My Dashboard"),  dashboard_path) %></li>
-			<!--<li><%#= link_to(content_tag(:span, "My DMPs"), "#") %></li>
-			<li><%#= link_to(content_tag(:span, "Create New DMP"),"#") %></li>-->
+			<li><%= link_to(content_tag(:span, "My DMPs"), plans_path) %></li>
+			<li><%= link_to(content_tag(:span, "Create New DMP"), plan_template_information_path) %></li>
 
 			<%# if (safe_has_role?(Role::INSTITUTIONAL_REVIEWER) ||  safe_has_role?(Role::DMP_ADMIN))%>
 			<!--	<li><%#= link_to(content_tag(:span, "Review DMPs"), "#") %></li>-->
