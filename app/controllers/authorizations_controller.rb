@@ -86,13 +86,15 @@ class AuthorizationsController < ApplicationController
   end
   
   def add_editor
-    if params[:user].blank?
+    u_name = params[:template_editor_name]
+    u_id = params[:template_editor_id]
+    if u_name.blank?
       redirect_to :back, notice: "Please select a person to add as a template editor" and return 
     end
-    if !params[:template_editor_user_id].blank?
-      user = User.find(params[:template_editor_user_id])
+    if !u_id.blank?
+      user = User.find(u_id)
     else
-      first, last = params[:user].split(" ", 2)
+      first, last = u_name.split(" ", 2)
       redirect_to :back, notice: "Please type or select the full name of a user" and return if first.nil? || last.nil?
       users = User.where("first_name = ? and last_name = ?", first, last)
       redirect_to :back, notice: "Please select the user with this name from the list.  There is more than one user with this name." and return if users.length > 1

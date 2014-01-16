@@ -188,8 +188,8 @@ class UsersController < ApplicationController
       @users = u.where("CONCAT(first_name, ' ', last_name) LIKE ?", like).active
     end
     list = @users.map {|u| Hash[ id: u.id,
-      name: u.full_name,
-      label: "#{u.full_name} <#{u.email}>"]}
+      full_name: u.full_name,
+      label: u.label]}
     render json: list
   end
 

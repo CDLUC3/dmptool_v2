@@ -16,7 +16,8 @@
       <td><%= user.email %></td>
       <td class="span1">
       	<%= link_to raw(''), remove_authorization_path(user_id: user.id, role_id: 3, p: 'requirements_templates'),
-      		:class => "icon remove", :data => { :confirm => 'Are you sure you want to revoke this role?' } %>
+      		:class => "icon remove", :data => { :confirm => 'Are you sure you want to revoke this role?',
+      			:yesval => 'Revoke', :noval => 'Cancel' } %>
 			</td>
     </tr>
     <% end %>
@@ -26,6 +27,13 @@
 	<%= link_to "View All", requirements_templates_path(:scope => "all_editors"), :method => :get, :class => "btn"%>
 	<%= paginate @users %>
 	<div style="clear:both"></div><br/>
-	<%= render partial: 'add_template_editor'%>
+	<%= render partial: '/users/user_autocomplete_widget',
+				:locals =>
+					 {  autocomplete_path: template_editor_users_autocomplete_path,
+							user_role: 'template_editor',
+							submit_text: 'Add As Template Editor',
+							submit_url: add_editor_path
+					 }
+	 %>
 	
 </div>
