@@ -1,0 +1,53 @@
+<%
+#	THIS PARTIAL TAKES LOCALS from the caller:
+#	autocomplete_path -- the path for the AJAX call for getting autocomplete list
+#	user_role -- The role of the user-form. such as "template_editor."
+#	             Used to create unique ids and names of elements if more than one user autocomplete on a page
+#	submit_text -- the text to show on the submit button
+#	submit_url -- the URL to submit the form to once a user has been filled in
+%>
+
+<script>
+	// based on example at http://jqueryui.com/autocomplete/#remote-jsonp
+	$(function() {
+	  $( "#<%= user_role %>_name" ).autocomplete({
+	    source: function( request, response ) {
+	      $.ajax({
+	        url: "<%=autocomplete_path%>",
+	        dataType: "json",
+	        data: {
+	          name_term: request.term
+	        },
+	        success: function( data ) {
+	          response( $.map( data, function( item ) {
+	            return {
+	              label: item.label,
+	              value: item.full_name,
+	              id: item.id
+	            }
+	          }
+	          ));
+	        }
+	      });
+	    },
+	    minLength: 1,
+	    select: function( event, ui ) {
+	    	$('#<%= user_role %>_id').val(ui.item.id); // set hidden field id  
+	    },
+	    open: function() {
+	      $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+	    },
+	    close: function() {
+	    	return false;
+	      $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+	    }
+	  });
+	});
+</script>
+
+<%= form_tag(submit_url, method: :post, :id => "#{user_role}_autocomplete_form", :class => "form-horizontal") do %>
+  <label for="<%= user_role %>_name">Name:</label>
+  <%= text_field_tag "#{user_role}_name", '' %>
+	<%= hidden_field_tag "#{user_role}_id", '' %>
+	<%= submit_tag submit_text, :class => 'btn' %>
+<% end %>

@@ -63,8 +63,5 @@
 	<%= button_to 'Create New Template', requirements_template_information_path, :method => :get, :class => 'btn' %>
 	<br/>
 	<%= render 'template_editors' %>
-	
-	<%# render partial: 'add_template_editor'%>
-  
 
 	<%= render partial: "/authorizations/add_authorization" , :locals => { :role_type => 3, :role_name => 'DMP Template Editor'}%>
