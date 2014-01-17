@@ -28,10 +28,10 @@
 		<div class="buttons">
 
 			<!--The following id is used for testing purposes, please do not remove-->
-			<%= link_to "Create New", "#", :class => "btn btn-green", :id => "create_new_DMP" %>
+			<%= link_to "Create a New DMP", plan_template_information_path	, :class => "btn btn-green", :id => "create_new_DMP" %>
 
 		</div>
-		
+
 		<% if defined? @pending_review %>
 		<h2 class="dashboard-heading"><span class="icon review"></span>DMPs For My Review</h2>
 		<table class="table table-striped">
@@ -88,6 +88,6 @@
 
 	</div>
 	<% end %>
-	
+
 	</div>
 </div>
