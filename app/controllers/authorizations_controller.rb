@@ -1,6 +1,4 @@
 class AuthorizationsController < ApplicationController
-  
-  before_action :check_DMPTemplate_editor_access, only: [:add_editor]
 	
 	def add_authorization
 
@@ -85,11 +83,17 @@ class AuthorizationsController < ApplicationController
     return
   end
   
-  def add_editor
-    u_name = params[:template_editor_name]
-    u_id = params[:template_editor_id]
+  def add_role_autocomplete
+    u_name, u_id = nil, nil
+    params.each do |k,v|
+      u_name = v if k.end_with?('_name')
+      u_id = v if k.end_with?('_id')
+    end
+    role_number = params[:role_number].to_i
+    item_description = params[:item_description]
+    
     if u_name.blank?
-      redirect_to :back, notice: "Please select a person to add as a template editor" and return 
+      redirect_to :back, notice: "Please select a person to add as a #{item_description}" and return 
     end
     if !u_id.blank?
       user = User.find(u_id)
@@ -101,12 +105,13 @@ class AuthorizationsController < ApplicationController
       redirect_to :back, notice: "The user you entered was not found" and return if users.length < 1
       user = users.first
     end
-    if user.roles.map{|i| i.id}.include?(Role::TEMPLATE_EDITOR)
-      redirect_to :back, notice: "The user you chose is already a template editor" and return
+    if user.roles.map{|i| i.id}.include?(role_number)
+      redirect_to :back, notice: "The user you chose is already a #{item_description}" and return
     end
-    authorization = Authorization.create(role_id: Role::TEMPLATE_EDITOR, user_id: user.id)
+    redirect_to :back, notice: "You do not have permission to assign this role" and return if !check_correct_permissions(user.id, role_number)
+    authorization = Authorization.create(role_id: role_number, user_id: user.id)
     authorization.save!
-    redirect_to :back, notice: "#{user.full_name} has been added as a template editor"
+    redirect_to :back, notice: "#{user.full_name} has been added as a #{item_description}"
   end
 
    
@@ -114,26 +119,13 @@ class AuthorizationsController < ApplicationController
   def check_correct_permissions(user_id, role_id)
     
     user = User.find(user_id)  
-    a =   safe_has_role?(Role::DMP_ADMIN) || 
-
-          (   
-
-            current_user.has_role?(Role::INSTITUTIONAL_ADMIN) && 
-
-            current_user.institution.subtree_ids.include?(user.institution_id) 
-
-          )  || 
-
-          (
-
-            safe_has_role?(role_id) && 
-
-            current_user.institution.subtree_ids.include?(user.institution_id) 
-
-          )
-
-    return a
-            
+    safe_has_role?(Role::DMP_ADMIN) || 
+      ( current_user.has_role?(Role::INSTITUTIONAL_ADMIN) && 
+        current_user.institution.subtree_ids.include?(user.institution_id) 
+      ) || 
+      ( safe_has_role?(role_id) && 
+        current_user.institution.subtree_ids.include?(user.institution_id) 
+      )     
   end
 
   private
@@ -148,23 +140,3 @@ class AuthorizationsController < ApplicationController
 
 
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

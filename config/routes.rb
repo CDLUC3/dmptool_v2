@@ -21,6 +21,7 @@ Dmptool2::Application.routes.draw do
   end
 
   get 'users/autocomplate_template_editors', to: 'users#autocomplete_template_editors', as: 'template_editor_users_autocomplete'
+  get 'users/autocomplate_resource_editors', to: 'users#autocomplete_resource_editors', as: 'resource_editor_users_autocomplete'
   resources :resource_templates do
     resources :resources
     member do
@@ -60,7 +61,8 @@ Dmptool2::Application.routes.draw do
 
   post 'add_authorization', to: 'authorizations#add_authorization'
   get 'remove_authorization', to: 'authorizations#remove_authorization'
-  post 'add_editor', to: 'authorizations#add_editor'
+  post 'add_role_autocomplete', to: 'authorizations#add_role_autocomplete'
+
 
   #these are old routes from DMP1
   #get '/auth/:provider/callback', :to => 'authentications#create'

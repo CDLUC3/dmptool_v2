@@ -5,6 +5,8 @@
 #	             Used to create unique ids and names of elements if more than one user autocomplete on a page
 #	submit_text -- the text to show on the submit button
 #	submit_url -- the URL to submit the form to once a user has been filled in
+# role_number -- the role number to be added
+# item_description --  the name of the role to be used in messages such as 'template editor'
 %>
 
 <script>
@@ -49,5 +51,7 @@
   <label for="<%= user_role %>_name">Name:</label>
   <%= text_field_tag "#{user_role}_name", '' %>
 	<%= hidden_field_tag "#{user_role}_id", '' %>
+	<%= hidden_field_tag "role_number", role_number %>
+	<%= hidden_field_tag "item_description", item_description %>
 	<%= submit_tag submit_text, :class => 'btn' %>
 <% end %>

@@ -187,13 +187,29 @@ class UsersController < ApplicationController
       end
       @users = u.where("CONCAT(first_name, ' ', last_name) LIKE ?", like).active
     end
-    list = @users.map {|u| Hash[ id: u.id,
-      full_name: u.full_name,
-      label: u.label]}
+    list = map_users_for_autocomplete(@users)
+    render json: list
+  end
+
+  def autocomplete_resource_editors
+    if !params[:name_term].blank?
+      like = params[:name_term].concat("%")
+      if current_user.has_role?(Role::DMP_ADMIN)
+        u = User
+      elsif current_user.has_role?(Role::INSTITUTIONAL_ADMIN) || current_user.has_role?(Role::RESOURCE_EDITOR)
+        u = current_user.institution.users_deep
+      end
+      @users = u.where("CONCAT(first_name, ' ', last_name) LIKE ?", like).active
+    end
+    list = map_users_for_autocomplete(@users)
     render json: list
   end
 
   private
+  
+  def map_users_for_autocomplete(users)
+    @users.map {|u| Hash[ id: u.id, full_name: u.full_name, label: u.label]}
+  end
 
 
 
