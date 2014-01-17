@@ -109,14 +109,27 @@ class PlansController < ApplicationController
     render action: "copy_existing_template"
   end
 
-  def select_dmp_template
-
-  end
-
 # To be completed
   # def add_coowner
 
   # end
+
+  def select_dmp_template
+    @dmp_templates = RequirementsTemplate.public_visibility.includes(:institution)
+
+    if params[:s] && params[:e]
+      @dmp_templates = @dmp_templates.letter_range_by_institution(params[:s], params[:e])
+    end
+
+    if params[:q]
+      @dmp_templates = @dmp_templates.search_terms(params[:q])
+    end
+
+    if current_user
+      institution = current_user.institution
+      @institution_templates = institution.requirements_templates_deep.includes(:institution)
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
