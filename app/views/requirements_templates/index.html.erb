@@ -1,16 +1,16 @@
 	<h2 class="dashboard-heading"><span class="icon template-dmp"></span>DMP Templates</h2>
+	
 	<div class="table-scope">
-		<%= link_to(content_tag(:span, "All (#{@all}) ", :class => "current" ), scope: "all_limited") %>
-		|
-		<%= link_to(content_tag(:span, "Active (#{@active}) ", :class => "current"), scope: "active") %>
-		|
-		<%= link_to(content_tag(:span, "Inactive (#{@inactive}) ", :class => "current"), scope: "inactive") %>
-		|
-		<%= link_to(content_tag(:span, "Institutional-Only (#{@institutional}) ", :class => "current"), scope: "institutional") %>
-		|
-		<%= link_to(content_tag(:span, "Public (#{@public}) ", :class => "current"), scope: "public") %>
+		<%= link_to(content_tag(:span, "All (#{@all})", :class => "all_limited"), scope: "all_limited") %> 
+		| 
+		<%= link_to(content_tag(:span, "Active  (#{@active})", :class => "active"), scope: "active") %> 
+		| 
+		<%= link_to(content_tag(:span, "Inactive (#{@inactive})", :class => "inactive"), scope: "inactive") %> 
+		| 
+		<%= link_to(content_tag(:span, "Institutional-Only (#{@institutional})", :class => "institutional"), scope: "institutional") %> 
+		| 
+		<%= link_to(content_tag(:span, "Public (#{@public})", :class => "public"), scope: "public") %>
 	</div>
-
 	<table class="table table-striped" id="dmp_templates">
 
 		<thead>
@@ -28,14 +28,6 @@
 		<% @requirements_templates.each do |requirements_template| %>
 			<tr>
 				<td class="requirements_template_name">
-					<script>
-						jQuery(function(){
-							jQuery(".toggle-links").hover(
-								function(){jQuery(this).parent().find(".template-links").css("visibility", "visible")},
-								function(){jQuery(this).parent().find(".template-links").css("visibility", "hidden")}
-							);
-						})
-					</script>
 					<div class="toggle-links">
 						<%=link_to (content_tag(:strong, requirements_template.name)), requirements_template_requirements_path(requirements_template), :id => "#{requirements_template.name}"%>
 						<div class="template-links">
@@ -44,7 +36,7 @@
 					</div>
 				</td>
 				<td class="span1"><%= requirements_template.version %></td>
-				<td><%= requirements_template.institution.full_name %></td>
+				<td><%= requirements_template.institution %></td>
 				<td id="status_#{requirements_template.id}"><%= requirements_template.active ? "Active" : "Inactive" %></td>
 				<td><%= requirements_template.visibility.capitalize %></td>
 				<td><%= requirements_template.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
@@ -64,7 +56,7 @@
 	<br/>
 	<%= render 'template_editors' %>
 	
-	<%= render partial: 'add_template_editor'%>
+	<%# render partial: 'add_template_editor'%>
   
 
 	<%= render partial: "/authorizations/add_authorization" , :locals => { :role_type => 3, :role_name => 'DMP Template Editor'}%>

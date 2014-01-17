@@ -158,9 +158,10 @@ input[type=radio], input[type=checkbox] {
 	margin: 0; }
 .table-scope a {
 	color: #4C4C4E; }
-.table-scope a .current {
+.table-scope a.current span {
 	color: #516935;
-	font-weight: bold; }
+	font-weight: bold;
+}
 .table {
 	border: 1px solid #B6B6B7; }
 .tab-pane.table .table {
@@ -748,7 +749,7 @@ a.btn-large:hover, a.btn-large:focus, a.btn-large:active {
 	line-height: 1.5em;
 	margin: 0; }
 .dashboard-header .inst-info {
-	font-size: 1.25em;
+	font-size: 1.15em;
 	width: 360px;
 	padding-left: 30px; }
 .dashboard-header .inst-info a {

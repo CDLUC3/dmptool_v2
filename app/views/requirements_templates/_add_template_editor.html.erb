@@ -37,8 +37,10 @@
 </script>
 
 <%= form_tag(add_editor_path, method: :post, :id => 'template_editor_add_form', :class => "form-horizontal") do %>
-  <label for="User">Name:</label>
-  <%= text_field_tag 'user', '' %>
-	<%= hidden_field_tag 'template_editor_user_id', '' %>
-	<%= submit_tag 'Add As Template Editor', :class => 'btn' %>
+	<div class="control-group">
+		<%= label_tag :user, "Name", :class => 'control-label'%>
+		  <%= text_field_tag 'user', '' %>
+			<%= hidden_field_tag 'template_editor_user_id', '' %>
+			<%= submit_tag 'Add As Template Editor', :class => 'btn' %>
+	</div>
 <% end %>
