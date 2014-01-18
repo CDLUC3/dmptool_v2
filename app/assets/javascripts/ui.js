@@ -1,3 +1,4 @@
+/* Table view add styles */
 jQuery(function(){
 	if(window.location.href.indexOf("scope=all_limited") != -1){
 		jQuery(".all_limited").parent().addClass("current");
@@ -18,7 +19,7 @@ jQuery(function(){
 		jQuery(".all_limited").parent().addClass("current");
 	}
 });
-
+/* Table details show/hide */
 jQuery(function(){
 	jQuery(".toggle-links").hover(
 		function(){jQuery(this).parent().find(".template-links").css("visibility", "visible");},

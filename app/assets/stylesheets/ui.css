@@ -1031,6 +1031,25 @@ h2.dashboard-heading span.icon {
   
 /* Contact Form */
 
+
+/* Custom File Upload Styles */
+.file-upload {
+	position: relative; }
+.file-upload input[type=file] {
+	cursor: pointer;
+	width: 190px;
+	margin: 5px 10px 5px 0;
+	position: relative;
+	z-index: 2;
+	opacity: 0; }
+.file-upload input[type=text] {
+	width: 180px;
+	position: absolute;
+	z-index: 1; }
+.file-upload button {
+	margin: 5px;
+	position: absolute;
+	z-index: 1; }
   
 /* Modal Windows */
 .ui-widget-overlay {
