@@ -40,7 +40,9 @@ feature 'req editor user' do
 		expect(page).to have_no_link('DMP Administration')	
 
 		#My Dashboard sections are present
-		click_link 'My Dashboard'
+		within('#quick_dashboard') do
+			click_link 'My Dashboard'
+		end
 		expect(page).to have_content(%r{#{"Overview"}}i)
 		expect(page).to have_content("DMP Templates")
 

@@ -31,7 +31,9 @@ module Features
 		end
 
 		def my_dashboard_page
-			click_link 'My Dashboard'
+			within('#quick_dashboard') do
+				click_link 'My Dashboard'
+			end
 			expect(page).to have_content 'My DMPs'
 		end
 
