@@ -1,0 +1,47 @@
+<h2 class="dashboard-heading"><span class="icon template-resource"></span>
+  <%= @title %>
+</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Details</th>
+      <th>Institution</th>
+      <th>Creation Date</th>
+      <th>Last Modification Date</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @new_resources.each do |new_resource| %>
+    <tr>
+      
+    	<td>
+      <%= new_resource.resource.nil? ? " " : new_resource.resource.resource_type %>
+      </td>
+			
+      <td>
+      	<%= new_resource.resource.nil? ? " " : new_resource.resource.label %>
+      </td>
+         
+      <td>
+        <%= new_resource.institution.nil? ? " " : new_resource.institution.full_name %>
+      </td>
+      <td>
+        <%= new_resource.created_at.nil? ? " " : new_resource.created_at.strftime("%m/%d/%Y %I:%M%p") %>
+      </td>
+      <td>
+        <%= new_resource.updated_at.nil? ? " " : new_resource.updated_at.strftime("%m/%d/%Y %I:%M%p") %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<div class="buttons pagination">
+	<%#= link_to "View All", resources_path(:scope => "all"), :method => :get, :class => "btn"%>
+	<%#= paginate @resources %>
+</div>
+<%#= button_to 'Create New Resource', new_resource_path, :method => :get, :class => 'btn' %>
+
+
+
