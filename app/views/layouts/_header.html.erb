@@ -7,15 +7,15 @@
   <nav class="navbar">
     <ul class="nav">
       <li><%= link_to "Home", root_path, :title => "Home" %></li>
-      <li><%= link_to "About", about_path, :title => "About" %></li>
+      <% if current_user %>
+      	<li><%= link_to "My Dashboard", dashboard_show_path, :title => "My Dashboard" %></li>
+			<% end %>
       <li><%= link_to "DMP Requirements", guidance_path, :title => "DMP Requirements" %></li>
       <li><%= link_to "Sample DMPs", "#", :title => "Sample DMPs" %></li>
       <li><%= link_to "News", APP_CONFIG['blog'], :title => "News", :target => "_blank" %></li>
       <li><%= link_to "Help", help_path, :title => "Help" %></li>
       <li><%= link_to "Contact Us", contact_path, :title => "Contact Us" %></li>
-			<% if current_user %>
-      	<li><%= link_to "Dashboard", dashboard_show_path, :title => "Dashboard" %></li>
-			<% end %>
+      <li><%= link_to "About", about_path, :title => "About" %></li>
 			<li class="login">
 	      <%= link_to(content_tag(:span, "", :class => "icon login") + "Log In", choose_institution_path) if !current_user %>
 	      <%= link_to(content_tag(:span, "", :class => "icon login") + "Log Out", logout_path) if current_user %></li>

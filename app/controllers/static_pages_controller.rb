@@ -19,6 +19,12 @@ class StaticPagesController < ApplicationController
 
   def about
   end
+  
+  def video
+  end
+  
+  def partners
+  end
 
   def help
   end
@@ -28,6 +34,9 @@ class StaticPagesController < ApplicationController
       flash[:alert] = "this is a post request where the form is submitted and en email may be sent."
       redirect_to :back
     end
+  end
+  
+  def privacy
   end
   
   def guidance

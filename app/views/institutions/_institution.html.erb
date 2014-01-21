@@ -1,4 +1,4 @@
 
 <div class="institution">
-  <span class="icon inst"></span><%= link_to institution.full_name, edit_institution_path(institution)%>
+  <%= link_to(content_tag(:span, '', :class => 'icon inst') + institution.full_name, edit_institution_path(institution))%>
 </div>

@@ -1,6 +1,4 @@
 <% provide(:title, 'Institution Information') %>
-<h5>Institution Information</h5>
-<hr/>
 <%= form_for @current_institution, html:{ :class => 'form-horizontal', multipart: true}  do |f| %>
 	<% if @current_institution.errors.any? %>
 	<div id="error_explanation">
@@ -72,8 +70,12 @@
 
     <div class="controls">
       <%= image_tag @current_institution.logo.url if @current_institution.logo? %>
-      <%= f.file_field :logo %>
-      <%= f.hidden_field :logo_cache %>
+      <div class="file-upload">
+	      <%= f.text_field :logo %>
+	      <%= f.file_field :logo %>
+	      <%= button_tag "Browse", :class => "btn" %>
+	      <%= f.hidden_field :logo_cache %>
+      </div>
     </div>
   </div>
 

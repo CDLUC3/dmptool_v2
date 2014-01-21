@@ -13,8 +13,6 @@
       	<%= render 'institutional_administrators' %>
     </div>
     <div class="tab-pane" id="tab3">
-    	<h5>Institution Hierarchy</h5>
-    	<hr/>
     	<div class="institutions">
 	      <%= nested_institutions @institutions.arrange(order: :created_at) %>
 	    </div>
