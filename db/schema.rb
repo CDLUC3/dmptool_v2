@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140122193925) do
+ActiveRecord::Schema.define(version: 20140122210810) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -164,7 +164,6 @@ ActiveRecord::Schema.define(version: 20140122193925) do
     t.integer  "institution_id"
     t.integer  "requirements_template_id"
     t.string   "name"
-    t.boolean  "active",                                                                          default: false
     t.enum     "review_type",              limit: [:formal_review, :informal_review, :no_review]
     t.string   "widget_url"
     t.datetime "created_at"
