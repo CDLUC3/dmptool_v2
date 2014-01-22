@@ -664,7 +664,7 @@ a.btn-large:hover, a.btn-large:focus, a.btn-large:active {
 .buckets ul li:before {
 	content: "\00BB\0020"; }
 .buckets ul li {
-	color: ;
+	/* color: ; */
 	list-style: none;
 	line-height: 1.25em;
 	margin: 0 0 5px;
