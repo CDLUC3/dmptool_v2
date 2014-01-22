@@ -22,7 +22,7 @@
   </tbody>
 </table>
 <div class="buttons pagination">
-	<%= paginate @users %>
+	<%= paginate @users, :param_name => :editor_page %>
 		<%= render partial: '/users/user_autocomplete_widget',
 				:locals =>
 					 {  autocomplete_path: resource_editor_users_autocomplete_path,
