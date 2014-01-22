@@ -42,18 +42,19 @@ class StaticPagesController < ApplicationController
   def guidance
     @public_templates = RequirementsTemplate.public_visibility.includes(:institution, :sample_plans)
     
-    if params[:s] && params[:e]
+    unless params[:s].blank? || params[:e].blank?
       @public_templates = @public_templates.letter_range_by_institution(params[:s], params[:e])
     end
     
     if !params[:q].blank?
       @public_templates = @public_templates.search_terms(params[:q])
     end
-    @public_templates = @public_templates.page(params[:page]).per(10)
+    page_size = (params[:all_records] == 'true'? 999999 : 10)
+    @public_templates = @public_templates.page(params[:page]).per(page_size)
     
     if current_user
       inst = current_user.institution
-      @institution_templates = inst.requirements_templates_deep.#institutional_visibility.
+      @institution_templates = inst.requirements_templates_deep.institutional_visibility.
               includes(:institution, :sample_plans)
     end
   end
