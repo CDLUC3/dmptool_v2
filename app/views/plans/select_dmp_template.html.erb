@@ -19,6 +19,24 @@
 	<%= link_to('T-Z', { :s => 't', :e => 'z' }, :class => 'btn') %>
 	<%= link_to('View All', '', :class => 'btn') %>
 </div>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Select</th>
+			<th>Template Name</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @dmp_templates.each do |t| %>
+			<tr>
+				<td><%= link_to 'Select', '#' %></td>
+				<td><%= link_to t.name, requirements_template_path(t) %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+
 <%= link_to "<< Create New DMP <<", plan_template_information_path, :method => :get, :class => "btn pull-left"%>
 
 

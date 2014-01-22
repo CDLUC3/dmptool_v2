@@ -1,13 +1,13 @@
 class PlansController < ApplicationController
-  before_action :set_plan, only: [:show, :edit, :update, :destroy]
+  before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export]
 
   # GET /plans
   # GET /plans.json
   def index
     if !safe_has_role?(Role::DMP_ADMIN)
-      user = current_user.id
-      userplans = UserPlan.where(user_id: user.id)
-      @plans = Plan.includes(:userplans).where('userplans.plan_id =?', 'userplans').references(:userplans)
+      user_id = current_user.id
+      user_plans = UserPlan.where(user_id: user_id).pluck(:id)
+      @plans = Plan.where(id: user_plans)
     else
       @plans = Plan.all
     end
@@ -94,10 +94,10 @@ class PlansController < ApplicationController
 
   def template_information
     if !safe_has_role?(Role::DMP_ADMIN)
-      @plans = Plan.page(params[:page]).per(5)
-    else
       user_plans = UserPlan.where(user_id: current_user.id)
       plan_ids=user_plans.pluck(:plan_id)
+      @plans = Plan.page(params[:page]).per(5)
+    else
       @plans = Plan.page(params[:page]).per(5)
     end
   end
@@ -114,6 +114,33 @@ class PlansController < ApplicationController
 
   # end
 
+  def export
+
+  end
+
+  def publish
+
+  end
+
+  def review_dmps
+    if safe_has_role?(Role::INSTITUTIONAL_REVIEWER)
+      user = current_user.id
+      user_plans = UserPlan.where(user_id: user_id).pluck(:id)
+      @plans = Plan.where(id: user_plans)
+    end
+    if safe_has_role?(Role::DMP_ADMIN)
+      @plans = Plan.all
+    end
+
+    case params[:scope]
+      when "all"
+        @plans = @plans.page(params[:page])
+      else
+        @plans = @plans.order(created_at: :asc).page(params[:page]).per(5)
+    end
+  end
+
+
   def select_dmp_template
     @dmp_templates = RequirementsTemplate.public_visibility.includes(:institution)
 
@@ -123,11 +150,6 @@ class PlansController < ApplicationController
 
     if params[:q]
       @dmp_templates = @dmp_templates.search_terms(params[:q])
-    end
-
-    if current_user
-      institution = current_user.institution
-      @institution_templates = institution.requirements_templates_deep.includes(:institution)
     end
   end
 
