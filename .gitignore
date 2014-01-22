@@ -19,6 +19,7 @@ public/uploads
 public/uploads/
 public/uploads/*
 public/uploads/*/
-
+.idea/
+.idea/*
 spec/support/features/credentials.rb
 
