@@ -5,7 +5,7 @@ class CreatePlans < ActiveRecord::Migration
       t.integer :requirements_template_id
       t.string :solicitation_identifier
       t.timestamp :submission_deadline
-      t.column :visibility, :enum, limit: [:institutional, :public, :public_browsable]
+      t.column :visibility, :enum, limit: [:institutional, :public, :shared]
 
       t.timestamps
     end
