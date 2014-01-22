@@ -23,7 +23,7 @@
         <div class="control-group">
           <%= f.label :dmp_template_name, 'DMP Template', :class => 'control-label' %>
           <div class="controls">
-            <%= f.hidden_field :requirements_template_id %>
+            <%= f.text_field :requirements_template_id%>
             <%= text_field_tag :requirements_template_name, '', disabled: true, :class => "input-xxlarge" %>
           </div>
         </div>
@@ -52,8 +52,8 @@
             <%= label_tag :public, 'public', :class => 'radio-label'%><br/>
             <%= f.radio_button :visibility, :institutional, :class => 'radio inline', :id => 'institutional'  %>
             <%= label_tag :institutional, 'institutional', :class => 'radio-label'%><br/>
-            <%= f.radio_button :visibility, :public_browsable, :class => 'radio inline', :id => 'public_browsable'  %>
-            <%= label_tag :public_browsable, 'public_browsable', :class => 'radio-label'%>
+            <%= f.radio_button :visibility, :private, :class => 'radio inline', :id => 'private'  %>
+            <%= label_tag :private, 'private', :class => 'radio-label'%>
           </div>
         </div>
         <div class="control-group">
