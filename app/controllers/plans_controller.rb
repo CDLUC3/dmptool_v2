@@ -17,8 +17,8 @@ class PlansController < ApplicationController
         @plans = @plans.page(params[:page])
       when "all_limited"
         @plans = @plans.page(params[:page]).per(5)
-      # when "shared"
-      #   @plans = @plans.shared.page(params[:page]).per(5)
+      when "shared"
+        @plans = @plans.shared.page(params[:page]).per(5)
       # when "approved"
       #   @plans = @plans.approved.page(params[:page]).per(5)
       # when "submitted"

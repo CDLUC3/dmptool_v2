@@ -19,16 +19,12 @@ class Plan < ActiveRecord::Base
   accepts_nested_attributes_for :comments, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
   accepts_nested_attributes_for :responses, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
 
-  def public?
-    visibility == :public
-  end
+  scope :institutional_visibility, -> { where(visibility: :institutional) }
+  scope :public_visibility, -> { where(visibility: :public) }
+  scope :private_visibility, -> { where(visibility: :private) }
 
-  def private?
-    visibility == :private
-  end
-
-  def institutional?
-    visibility == :institutional
+  def shared
+    self.user_plans.count > 1
   end
 
   def owned
