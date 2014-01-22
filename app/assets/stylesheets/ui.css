@@ -657,10 +657,10 @@ a.btn-large:hover, a.btn-large:focus, a.btn-large:active {
 	-webkit-border-radius: 4px;
 	-ms-border-radius: 4px;
 	overflow: hidden; }
-.buckets .dmp_tool_news ul {
+/* .buckets .dmp_tool_news ul {
 	height: 120px;
 	padding: 7px;
-	overflow: auto; }
+	overflow: auto; } */
 .buckets ul li:before {
 	content: "\00BB\0020"; }
 .buckets ul li {

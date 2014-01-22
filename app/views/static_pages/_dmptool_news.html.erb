@@ -1,12 +1,10 @@
 <p>Latest information about data management and the DMPTool.</p>
 <% if @rss %>
-	<div class="scrollbox">
 		<ul>
 			<% @rss.each do |i| %>
 				<li><%= link_to(i.title, i.link, :target => '_blank') %></li>
 			<% end %>
 		</ul>
-	</div>
 <%= link_to('More News', APP_CONFIG['blog'], :class => "btn btn-gray", :target => '_blank') %>
 <% else %>
 	<p>News is currently unavailable</p>
