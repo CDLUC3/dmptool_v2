@@ -39,7 +39,7 @@
 			<li><%= link_to(content_tag(:span, "Create New DMP"), plan_template_information_path) %></li>
 
 			<% if (safe_has_role?(Role::INSTITUTIONAL_REVIEWER) ||  safe_has_role?(Role::DMP_ADMIN))%>
-			<li><%= link_to(content_tag(:span, "Review DMPs"), review_dmps_path) %></li>-->
+			<li><%= link_to(content_tag(:span, "Review DMPs"), review_dmps_path) %></li>
 			<% end %>
 
 			<% if (safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::INSTITUTIONAL_ADMIN)|| safe_has_role?(Role::TEMPLATE_EDITOR))%>
