@@ -92,6 +92,11 @@ class User < ActiveRecord::Base
   def full_name
     [first_name, last_name].join(" ")
   end
+  
+  #label for dropdown for autocomplete
+  def label
+    "#{self.full_name} <#{self.email}>"
+  end
 
   def plans_by_state(state)
     #get all plans this user has in the state specified

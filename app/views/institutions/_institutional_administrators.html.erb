@@ -1,5 +1,3 @@
-<h5>Institutional Adminitrators</h5>
-<hr/>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -26,7 +24,7 @@
 	<%= link_to 'Add New Institutional Administrator', add_authorization_path, method: :post, id: 'add_authorization_view', :class => 'btn btn-green'%>
 </div>
 
-<%= render partial: "/authorizations/add_authorization" , :locals => { :role_type => 5, :role_name => 'Institutional Administrator', :p => 'institutions'}%>
+<%= render partial: '/authorizations/add_authorization' , :locals => { :role_type => 5, :role_name => 'Institutional Administrator', :p => 'institutions'}%>
 
 
 

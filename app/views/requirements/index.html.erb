@@ -1,12 +1,14 @@
-<h2 class="dashboard-heading"><span class="icon template-details"></span>DMP Template Details</h2>
+<h2 class="dashboard-heading" id="jump"><span class="icon template-details"></span>DMP Template Details</h2>
 <h4><%= @requirements_template.name %></h4>
 <div class="row-fluid">
 	<div class="details span4">
 	  <div class="tree-view border-box">
 	  	<h5>Template Outline</h5>
-	  	<%= link_to 'Add Group', new_requirements_template_requirement_path(@requirements_template, node_type: 'group') %>
-
-			<%= link_to 'Add Requirement', new_requirements_template_requirement_path(@requirements_template) %>
+	  	<div class="actions">
+		    <%= link_to(content_tag(:span, '', :class => 'icon new-requirements-group') + 'Add Group', new_requirements_template_requirement_path(@requirements_template, node_type: 'group') + '#jump', :class => 'icon new') %>
+		    <%=  raw('&nbsp;') %>
+		    <%= link_to(content_tag(:span, '', :class => 'icon new-requirement') + 'Add Requirement', new_requirements_template_requirement_path(@requirements_template) + '#jump', :class => 'icon new new-requirement') %>
+		  </div>
 	    <hr/>
 	    <div class="requirements_tree_view">
 	      <%= nested_requirements @requirements.arrange(order: :created_at) %>
@@ -19,7 +21,7 @@
 		    </span>
 		  </h5>
 	  	<div>
-		    <%= link_to activate_link_text(@requirements_template)+ ' ' +'Template',
+		    <%= link_to activate_link_text(@requirements_template),
 		      toggle_active_requirements_template_path(@requirements_template), remote: true, id: "activate_link_#{@requirements_template.id}", :class => 'btn' %>
 		    <%= link_to(content_tag(:span, '', :class => 'icon remove') + 'Delete Template', @requirements_template, method: :delete, data: { confirm: 'Are you sure?', :id => 'delete_template'}, :class => 'icon delete') %>
 	    </div>

@@ -5,7 +5,7 @@ include Credentials
 
 feature 'generic user' do 
 
-	scenario 'generic user can change his institution' do
+	scenario 'generic user dashboard visibility', :js => true do
 
 		logs_in_with "test_user2", "test_user2", "Test Institution"
 
@@ -15,7 +15,7 @@ feature 'generic user' do
 	
 		edit_my_profile
 
-		change_my_institution("Test Institution", 'Test sub-inst01')
+		#change_my_institution("Test Institution", 'Test sub-inst01')
 
 	end
 

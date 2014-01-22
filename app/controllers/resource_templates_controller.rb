@@ -10,6 +10,8 @@ class ResourceTemplatesController < ApplicationController
 
     resource_customizations
 
+    resources
+
     resource_editors
 
     count
@@ -104,14 +106,6 @@ class ResourceTemplatesController < ApplicationController
       end
     end
 
-    def resource_editors
-      @user_ids = Authorization.where(role_id: 2).pluck(:user_id) #All the Resources Editors
-      if safe_has_role?(Role::DMP_ADMIN)
-        @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
-      else
-        @users = User.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).order('created_at DESC').page(params[:page]).per(10)
-      end
-    end
 
     def resource_customizations
       case params[:scope]
@@ -133,12 +127,26 @@ class ResourceTemplatesController < ApplicationController
       end
     end
 
+    def resources #TO BE COMPLETED
+      @title = "Resources Available at " + current_user.institution.full_name 
+      @new_resources = ResourceContext.where(institution_id: [current_user.institution.subtree_ids], 
+                                            requirement_id: nil, resource_template_id: nil,
+                                            requirements_template_id: nil)     
+    end
+
+    def resource_editors
+      @user_ids = Authorization.where(role_id: 2).pluck(:user_id) #All the Resources Editors
+      if safe_has_role?(Role::DMP_ADMIN)
+        @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
+      else
+        @users = User.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).order('created_at DESC').page(params[:page]).per(10)
+      end
+      @users = @users.order(first_name: :asc, last_name: :asc).page(params[:editor_page]).per(5)
+    end
 
     def count
       if current_user.has_role?(Role::DMP_ADMIN)
         @all = ResourceTemplate.all.count
-        @active = ResourceTemplate.active.count
-        @inactive = ResourceTemplate.inactive.count
       else
         @institution = current_user.institution
         @all = @institution.resource_templates_deep.count

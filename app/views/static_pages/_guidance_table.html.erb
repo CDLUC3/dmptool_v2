@@ -16,18 +16,18 @@
 	<tbody>
 		<% templates.each do |t| %>
 			<tr>
-				<td><strong><%= t.institution.full_name %></strong></td>
-				<td><%= link_to t.name,	basic_requirements_template_path(t, format: :rtf ) %>
+				<td><strong><%= (t.institution ? t.institution.full_name: '') %></strong></td>
+				<td class="nowrap"><%= link_to t.name,	basic_requirements_template_path(t, format: :rtf ) %>
 						<%= link_to '', basic_requirements_template_path(t, format: :rtf), :class => 'icon rtf' %>
 				</td>
-				<td>
+				<td class="nowrap">
 					<% t.additional_informations.each do |info| %>
 					<div class="samples">
 						<%= link_to info.label, info.url %>
 					</div>
 					<% end %>
 				</td>
-				<td>
+				<td class="nowrap">
 					<% t.sample_plans.each do |s| %>
 					<div class="samples">
 						<%= link_to s.label, s.url %>
@@ -40,5 +40,6 @@
 	</tbody>
 </table>
 <div class="buttons pagination">
-	<%= link_to "View All", resource_templates_path(:scope => "all"), :method => :get, :class => "btn"%>
+	<%= link_to "View All",{:all_records => 'true'}, :method => :get, :class => "btn"%>
+	<%= paginate(templates)%>
 </div>

@@ -31,7 +31,9 @@ module Features
 		end
 
 		def my_dashboard_page
-			click_link 'My Dashboard'
+			within('#quick_dashboard') do
+				click_link 'My Dashboard'
+			end
 			expect(page).to have_content 'My DMPs'
 		end
 
@@ -46,10 +48,10 @@ module Features
 		def change_my_institution(from, to)
 			page.select "Test Institution", :from => 'user_institution_id'
 			click_button 'Save'
-			expect(page).to have_content "Test sub-inst01"
-			page.select "Test sub-inst01", :from => 'user_institution_id'
+			expect(page).to have_content "Smithsonian Institution"
+			page.select "Test Institution", :from => 'user_institution_id'
 			click_button 'Save'
-			expect(page).to have_content "Test sub-inst01"
+			expect(page).to have_content "Test Institution"
 		end
 
 		def accept_browser_dialog
