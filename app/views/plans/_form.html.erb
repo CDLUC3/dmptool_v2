@@ -23,8 +23,7 @@
         <div class="control-group">
           <%= f.label :dmp_template_name, 'DMP Template', :class => 'control-label' %>
           <div class="controls">
-            <%= f.text_field :requirements_template_id%>
-            <%= text_field_tag :requirements_template_name, '', disabled: true, :class => "input-xxlarge" %>
+            <%= f.text_field :requirements_template_id, id: 'dmp_template_id' %>
           </div>
         </div>
         <div class="control-group">

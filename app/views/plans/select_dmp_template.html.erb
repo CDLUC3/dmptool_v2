@@ -30,7 +30,7 @@
 	<tbody>
 		<% @dmp_templates.each do |t| %>
 			<tr>
-				<td><%= link_to 'Select', '#' %></td>
+				<td><%= link_to 'Select', new_plan_path( { :requirements_template_id => t.id } ) %></td>
 				<td><%= link_to t.name, requirements_template_path(t) %></td>
 			</tr>
 		<% end %>
