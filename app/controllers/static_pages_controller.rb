@@ -49,6 +49,7 @@ class StaticPagesController < ApplicationController
     if !params[:q].blank?
       @public_templates = @public_templates.search_terms(params[:q])
     end
+    @public_templates = @public_templates.page(params[:page]).per(10)
     
     if current_user
       inst = current_user.institution
