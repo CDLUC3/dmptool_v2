@@ -12,8 +12,8 @@ class PublishedPlan < ActiveRecord::Base
     visibility == :public
   end
 
-  def public_browsable?
-    visibility == :public_browsable
+  def private?
+    visibility == :private
   end
 
   def institutional?

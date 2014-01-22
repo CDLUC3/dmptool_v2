@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(version: 20140110192327) do
     t.integer  "requirements_template_id"
     t.string   "solicitation_identifier"
     t.datetime "submission_deadline"
-    t.enum     "visibility",               limit: [:institutional, :public, :shared]
+    t.enum     "visibility",               limit: [:institutional, :public, :private]
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "current_plan_state_id"
@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(version: 20140110192327) do
   create_table "published_plans", force: true do |t|
     t.integer  "plan_id"
     t.string   "file_name"
-    t.enum     "visibility", limit: [:institutional, :public, :public_browsable]
+    t.enum     "visibility", limit: [:institutional, :public, :private]
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -177,7 +177,6 @@ ActiveRecord::Schema.define(version: 20140110192327) do
     t.enum     "resource_type",           limit: [:actionable_url, :expository_guidance, :example_response, :suggested_response]
     t.string   "value"
     t.string   "label"
-    t.integer  "requirement_id"
     t.integer  "resource_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
