@@ -31,8 +31,13 @@ class StaticPagesController < ApplicationController
 
   def contact
     if request.post?
-      flash[:alert] = "this is a post request where the form is submitted and en email may be sent."
-      redirect_to :back
+      if verify_recaptcha
+        GenericMailer.contact_email(params).deliver
+        flash[:alert] = "Your email message was sent to the DMPTool team."
+        redirect_to :back and return
+      end
+      redirect_to contact_path(question_about: params['question_about'], name: params['name'],
+                          email: params['email'], message: params[:message]) and return
     end
   end
   

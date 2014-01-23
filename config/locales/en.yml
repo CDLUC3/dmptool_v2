@@ -28,3 +28,7 @@ en:
       previous: "&lsaquo; Previous"
       next: "Next &rsaquo;"
       truncate: "..."
+
+  recaptcha:
+    errors:
+      incorrect-captcha-sol: "ReCaptcha word verification didn't match."
