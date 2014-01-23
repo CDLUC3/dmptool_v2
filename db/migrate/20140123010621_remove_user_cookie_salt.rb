@@ -5,5 +5,4 @@ class RemoveUserCookieSalt < ActiveRecord::Migration
   def down
     add_column :users, :cookie_salt, :string
   end
-  end
 end
