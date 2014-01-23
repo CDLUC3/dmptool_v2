@@ -7,27 +7,17 @@ class ResourceTemplatesController < ApplicationController
   # GET /resource_templates
   # GET /resource_templates.json
   def index
-    case params[:scope]
-      when "all"
-        @resource_templates = ResourceTemplate.page(params[:page])
-      when "all_limited"
-        @resource_templates = ResourceTemplate.page(params[:page]).per(5)
-      when "active"
-        @resource_templates = ResourceTemplate.where(active: true).page(params[:page]).per(5)
-      when "inactive"
-        @resource_templates = ResourceTemplate.where(active: false).page(params[:page]).per(5)
-      else
-        @resource_templates = ResourceTemplate.page(params[:page]).per(5)
-    end
 
-    if !safe_has_role?(Role::DMP_ADMIN)
-      @resource_templates = @resource_templates.
-                            where(institution_id: [current_user.institution.subtree_ids])
+    resource_customizations
 
-    end
+    resources
+
     resource_editors
+
     count
+
   end
+
 
   # GET /resource_templates/1
   # GET /resource_templates/1.json
@@ -103,17 +93,45 @@ class ResourceTemplatesController < ApplicationController
     def get_requirements_template
       if !safe_has_role?(Role::DMP_ADMIN)
         unless params[:show_all] == 'true'
-          @requirements_templates = RequirementsTemplate.where.any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public).order(created_at: :asc).page(params[:page]).per(5)
+          @requirements_templates = RequirementsTemplate.where.any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public).active.order(created_at: :asc).page(params[:page]).per(5)
         else
-          @requirements_templates = RequirementsTemplate.where.any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public).order(created_at: :asc).page(params[:page])
+          @requirements_templates = RequirementsTemplate.where.any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public).active.order(created_at: :asc).page(params[:page])
         end
       else
         unless params[:show_all] == 'true'
-          @requirements_templates = RequirementsTemplate.all.order(created_at: :asc).page(params[:page]).per(5)
+          @requirements_templates = RequirementsTemplate.active.order(created_at: :asc).page(params[:page]).per(5)
         else
-          @requirements_templates = RequirementsTemplate.all.order(created_at: :asc).page(params[:page])
+          @requirements_templates = RequirementsTemplate.active.order(created_at: :asc).page(params[:page])
         end
       end
+    end
+
+
+    def resource_customizations
+      case params[:scope]
+        when "all"
+          @resource_templates = ResourceTemplate.page(params[:page])
+        when "all_limited"
+          @resource_templates = ResourceTemplate.page(params[:page]).per(5)
+        when "active"
+          @resource_templates = ResourceTemplate.where(active: true).page(params[:page]).per(5)
+        when "inactive"
+          @resource_templates = ResourceTemplate.where(active: false).page(params[:page]).per(5)
+        else
+          @resource_templates = ResourceTemplate.page(params[:page]).per(5)
+      end
+
+      if !safe_has_role?(Role::DMP_ADMIN)
+        @resource_templates = @resource_templates.
+                              where(institution_id: [current_user.institution.subtree_ids])
+      end
+    end
+
+    def resources #TO BE COMPLETED
+      @title = "Resources Available at " + current_user.institution.full_name 
+      @new_resources = ResourceContext.where(institution_id: [current_user.institution.subtree_ids], 
+                                            requirement_id: nil, resource_template_id: nil,
+                                            requirements_template_id: nil)     
     end
 
     def resource_editors
@@ -123,13 +141,12 @@ class ResourceTemplatesController < ApplicationController
       else
         @users = User.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).order('created_at DESC').page(params[:page]).per(10)
       end
+      @users = @users.order(first_name: :asc, last_name: :asc).page(params[:editor_page]).per(5)
     end
 
     def count
       if current_user.has_role?(Role::DMP_ADMIN)
         @all = ResourceTemplate.all.count
-        @active = ResourceTemplate.active.count
-        @inactive = ResourceTemplate.inactive.count
       else
         @institution = current_user.institution
         @all = @institution.resource_templates_deep.count

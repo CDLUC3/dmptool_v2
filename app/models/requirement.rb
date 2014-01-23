@@ -1,9 +1,10 @@
 class Requirement < ActiveRecord::Base
 
   has_ancestry
-  has_many :resources
+  #has_many :resources
   has_many :responses
   has_many :enumerations, inverse_of: :requirement
+  has_many :resource_contexts
   belongs_to :requirements_template
 
   accepts_nested_attributes_for :enumerations, allow_destroy: true, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }

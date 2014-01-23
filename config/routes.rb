@@ -3,9 +3,13 @@ Dmptool2::Application.routes.draw do
  get "dashboard/show"
  root 'static_pages#home'
  get 'about', to: 'static_pages#about'
+ get 'video', to: 'static_pages#video'
+ get 'partners', to: 'static_pages#partners'
  get 'guidance', to: 'static_pages#guidance'
  get 'help', to: 'static_pages#help'
- get 'contact', to: 'static_pages#contact'
+ match 'contact', to: 'static_pages#contact', :via => [:get, :post], as: 'contact'
+ get 'privacy', to: 'static_pages#privacy'
+ get 'terms_of_use', to: 'static_pages#terms_of_use'
  get 'logout', to: 'user_sessions#destroy'
  get 'dashboard', to: 'dashboard#show', as: 'dashboard'
  get 'dashboard/test', to: 'dashboard#test'
@@ -20,6 +24,8 @@ Dmptool2::Application.routes.draw do
     resources :additonal_informations
   end
 
+  get 'users/autocomplate_template_editors', to: 'users#autocomplete_template_editors', as: 'template_editor_users_autocomplete'
+  get 'users/autocomplate_resource_editors', to: 'users#autocomplete_resource_editors', as: 'resource_editor_users_autocomplete'
   resources :resource_templates do
     resources :resources
     member do
@@ -74,6 +80,8 @@ Dmptool2::Application.routes.draw do
 
   post 'add_authorization', to: 'authorizations#add_authorization'
   get 'remove_authorization', to: 'authorizations#remove_authorization'
+  post 'add_role_autocomplete', to: 'authorizations#add_role_autocomplete'
+
 
   #these are old routes from DMP1
   #get '/auth/:provider/callback', :to => 'authentications#create'

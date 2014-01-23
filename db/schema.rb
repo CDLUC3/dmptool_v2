@@ -164,7 +164,6 @@ ActiveRecord::Schema.define(version: 20140110192327) do
     t.integer  "institution_id"
     t.integer  "requirements_template_id"
     t.string   "name"
-    t.boolean  "active",                                                                          default: false
     t.enum     "review_type",              limit: [:formal_review, :informal_review, :no_review]
     t.string   "widget_url"
     t.datetime "created_at"
@@ -177,7 +176,6 @@ ActiveRecord::Schema.define(version: 20140110192327) do
     t.enum     "resource_type",           limit: [:actionable_url, :expository_guidance, :example_response, :suggested_response]
     t.string   "value"
     t.string   "label"
-    t.integer  "resource_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "old_help_text_id"

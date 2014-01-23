@@ -19,7 +19,9 @@ feature 'dmp admin user' do
 		#MY DASHBOARD TEST
 
     #My Dashboard sections are present
-    click_link 'My Dashboard'
+    within('#quick_dashboard') do
+    	click_link 'My Dashboard'
+    end
     expect(page).to have_content(%r{#{"Overview"}}i)
     expect(page).to have_content("DMPs For My Review")
     expect(page).to have_content("DMP Templates")
@@ -27,22 +29,30 @@ feature 'dmp admin user' do
 
     #buttons are functioning (create new dmp is not working)
     click_on "create_new_DMP_template"
-    click_link "My Dashboard"
+    within('#quick_dashboard') do
+    	click_link 'My Dashboard'
+    end
     click_on "create_new_resource_template"
-    expect(page).to have_content("Resource Template Overview")
+    expect(page).to have_content("DMP Template Overview")
 
     #links are functioning
-    click_link 'My Dashboard'
+    within('#quick_dashboard') do
+    	click_link 'My Dashboard'
+    end
     click_on "institutional_templates" #DMP Templates for my institution only
     expect(page).to have_content("Visibility")
     expect(page).to have_content("Institutional")
 
-    click_link 'My Dashboard'
+    within('#quick_dashboard') do
+    	click_link 'My Dashboard'
+    end
     click_on "public_templates" #Public DMP Templates
     expect(page).to have_content("Visibility")
     expect(page).to have_content("Public")
 
-    click_link 'My Dashboard'
+    within('#quick_dashboard') do
+    	click_link 'My Dashboard'
+    end
     click_on "resources_templates" # Resources Templates
     expect(page).to have_content("Resource Editors")
 		

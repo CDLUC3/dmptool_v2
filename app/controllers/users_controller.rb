@@ -113,7 +113,6 @@ class UsersController < ApplicationController
         # LDAP will not except for these two fields to be empty.
         user_params[:first_name] = " " if user_params[:first_name].empty?
         user_params[:last_name] = " " if user_params[:last_name].empty?
-
         update_ldap_if_necessary(@user, user_params)
         flash[:notice] = 'User information updated.'
         redirect_to edit_user_path(@user)
@@ -177,8 +176,40 @@ class UsersController < ApplicationController
     end
 
   end
+  
+  def autocomplete_template_editors
+    if !params[:name_term].blank?
+      like = params[:name_term].concat("%")
+      if current_user.has_role?(Role::DMP_ADMIN)
+        u = User
+      elsif current_user.has_role?(Role::INSTITUTIONAL_ADMIN) || current_user.has_role?(Role::TEMPLATE_EDITOR)
+        u = current_user.institution.users_deep
+      end
+      @users = u.where("CONCAT(first_name, ' ', last_name) LIKE ?", like).active
+    end
+    list = map_users_for_autocomplete(@users)
+    render json: list
+  end
+
+  def autocomplete_resource_editors
+    if !params[:name_term].blank?
+      like = params[:name_term].concat("%")
+      if current_user.has_role?(Role::DMP_ADMIN)
+        u = User
+      elsif current_user.has_role?(Role::INSTITUTIONAL_ADMIN) || current_user.has_role?(Role::RESOURCE_EDITOR)
+        u = current_user.institution.users_deep
+      end
+      @users = u.where("CONCAT(first_name, ' ', last_name) LIKE ?", like).active
+    end
+    list = map_users_for_autocomplete(@users)
+    render json: list
+  end
 
   private
+  
+  def map_users_for_autocomplete(users)
+    @users.map {|u| Hash[ id: u.id, full_name: u.full_name, label: u.label]}
+  end
 
 
 
@@ -203,7 +234,7 @@ class UsersController < ApplicationController
 
   def update_ldap_if_necessary(user, params)
     return unless session[:login_method] == 'ldap'
-    ldap_user = Ldap_User.find_by_id(authentication.uid)
+    ldap_user = Ldap_User.find_by_id(user.login_id)
     {:email => :mail, :last_name => :sn, :first_name => :givenname}.each do |k, v|
       if params[k]
         ldap_user.set_attrib_dn(v, params[k]) unless params[k].empty?

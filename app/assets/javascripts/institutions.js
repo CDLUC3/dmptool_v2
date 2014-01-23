@@ -36,4 +36,10 @@ $(function() {
 	$("#cancel_action").bind("click",function() {
 		$("#flash_notice").remove();
 	});
-})
+});
+
+$(function() {
+	$(".tip").tooltip();
+});
+
+

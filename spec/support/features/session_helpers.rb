@@ -19,17 +19,21 @@ module Features
 		end
 
 		def check_quick_dashboard_generic_visibility
-  		expect(page).to have_link('My Dashboard')
-  		expect(page).to have_link('My Profile')
-			
-			expect(page).to have_no_link('DMP Templates')		
-			expect(page).to have_no_link('Resources')	
-			expect(page).to have_no_link('Institution Profile')	
-			expect(page).to have_no_link('DMP Administration')		
+			within('#quick_dashboard') do
+	  		expect(page).to have_link('My Dashboard')
+	  		expect(page).to have_link('My Profile')
+				
+				expect(page).to have_no_link('DMP Templates')		
+				expect(page).to have_no_link('Resources')	
+				expect(page).to have_no_link('Institution Profile')	
+				expect(page).to have_no_link('DMP Administration')	
+			end	
 		end
 
 		def my_dashboard_page
-			click_link 'My Dashboard'
+			within('#quick_dashboard') do
+				click_link 'My Dashboard'
+			end
 			expect(page).to have_content 'My DMPs'
 		end
 
@@ -44,10 +48,10 @@ module Features
 		def change_my_institution(from, to)
 			page.select "Test Institution", :from => 'user_institution_id'
 			click_button 'Save'
-			expect(page).to have_content "Test sub-inst01"
-			page.select "Test sub-inst01", :from => 'user_institution_id'
+			expect(page).to have_content "Smithsonian Institution"
+			page.select "Test Institution", :from => 'user_institution_id'
 			click_button 'Save'
-			expect(page).to have_content "Test sub-inst01"
+			expect(page).to have_content "Test Institution"
 		end
 
 		def accept_browser_dialog

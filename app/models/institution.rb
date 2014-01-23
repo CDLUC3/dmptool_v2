@@ -7,6 +7,7 @@ class Institution < ActiveRecord::Base
 	has_many :users
 	has_many :resource_templates
 	has_many :requirements_templates
+  has_many :resource_contexts
 
 	validates :full_name, presence: true
 
@@ -32,6 +33,11 @@ class Institution < ActiveRecord::Base
   def resource_templates_deep
     #gets the deep list of all resource templates for this and all sub-institutions under it
     ResourceTemplate.where(institution_id: self.subtree_ids)
+  end
+  
+  def users_deep
+    #gets the list of all users associated with this institution and sub-institutions
+    User.where(institution_id: self.subtree_ids)
   end
 
   def users_in_role(role_name)

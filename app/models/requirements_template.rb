@@ -6,6 +6,7 @@ class RequirementsTemplate < ActiveRecord::Base
   has_many :tags, inverse_of: :requirements_template
   has_many :additional_informations, inverse_of: :requirements_template
   has_many :sample_plans, inverse_of: :requirements_template
+  has_many :resource_contexts
 
   accepts_nested_attributes_for :resource_templates, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
   accepts_nested_attributes_for :requirements, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
@@ -18,6 +19,9 @@ class RequirementsTemplate < ActiveRecord::Base
   validates :visibility, presence: true
   validates :version, presence: true, numericality: true
   validates :name, presence: true
+  
+  validates :start_date, date: true, unless: "start_date.nil?"
+  validates :end_date, date: true, unless: "end_date.nil?"
 
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }

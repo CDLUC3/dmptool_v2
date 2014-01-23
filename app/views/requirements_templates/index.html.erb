@@ -1,69 +1,60 @@
 <h2 class="dashboard-heading"><span class="icon template-dmp"></span>DMP Templates</h2>
-<div class="table-scope">
-	<%= link_to(content_tag(:span, "All (#{@all}) ", :class => "current" ), scope: "all_limited") %>
-	|
-	<%= link_to(content_tag(:span, "Active (#{@active}) ", :class => "current"), scope: "active") %>
-	|
-	<%= link_to(content_tag(:span, "Inactive (#{@inactive}) ", :class => "current"), scope: "inactive") %>
-	|
-	<%= link_to(content_tag(:span, "Institutional-Only (#{@institutional}) ", :class => "current"), scope: "institutional") %>
-	|
-	<%= link_to(content_tag(:span, "Public (#{@public}) ", :class => "current"), scope: "public") %>
-</div>
 
-<table class="table table-striped" id="dmp_templates">
-
-	<thead>
-		<tr>
-			<th class="span4">Name</th>
-			<th class="span1">Version</th>
-			<th class="span3">Institution</th>
-			<th>Status</th>
-			<th>Visibility</th>
-			<th>Creation Date</th>
-			<th>Last Modification Date</th>
-		</tr>
-	</thead>
-	<tbody>
-	<% @requirements_templates.each do |requirements_template| %>
-		<tr>
-			<td class="requirements_template_name">
-				<script>
-					jQuery(function(){
-						jQuery(".toggle-links").hover(
-							function(){jQuery(this).parent().find(".template-links").css("visibility", "visible")},
-							function(){jQuery(this).parent().find(".template-links").css("visibility", "hidden")}
-						);
-					})
-				</script>
-				<div class="toggle-links">
-					<%=link_to (content_tag(:strong, requirements_template.name)), requirements_template_requirements_path(requirements_template), :id => "#{requirements_template.name}"%>
-					<div class="template-links">
-							<%= (link_to 'Overview', edit_requirements_template_path(requirements_template))+' | '+(link_to 'Details',requirements_template_requirements_path(requirements_template), :class => 'details')+' | '+(link_to activate_link_text(requirements_template), toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", :class => 'ajax')+' | '+(link_to 'Copy', copy_existing_requirements_template_path(:requirements_template => requirements_template))+' | '+(link_to 'Delete', requirements_template_path(requirements_template), :class => "delete", :id => "delete_#{requirements_template.name}", method: :delete, data: { confirm: 'Are you sure?' }) %>
-					</div>
-				</div>
-			</td>
-			<td class="span1"><%= requirements_template.version %></td>
-			<td><%= requirements_template.institution.full_name %></td>
-			<td id="status_#{requirements_template.id}"><%= requirements_template.active ? "Active" : "Inactive" %></td>
-			<td><%= requirements_template.visibility.capitalize %></td>
-			<td><%= requirements_template.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
-			<td><%= requirements_template.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
-		</tr>
-	<% end %>
-	<tbody>
-</table>
-	<div class="buttons pagination">
-		<%= link_to "View All", requirements_templates_path(:scope => "all"), :method => :get, :class => "btn", :id => 'view_all_templates'%>
-		<%= paginate @requirements_templates %>
+	<div class="table-scope">
+		<%= link_to(content_tag(:span, "All (#{@all})", :class => "all_limited"), scope: "all_limited") %>
+		|
+		<%= link_to(content_tag(:span, "Active  (#{@active})", :class => "active"), scope: "active") %>
+		|
+		<%= link_to(content_tag(:span, "Inactive (#{@inactive})", :class => "inactive"), scope: "inactive") %>
+		|
+		<%= link_to(content_tag(:span, "Institutional-Only (#{@institutional})", :class => "institutional"), scope: "institutional") %>
+		|
+		<%= link_to(content_tag(:span, "Public (#{@public})", :class => "public"), scope: "public") %>
 	</div>
-	</tr>
-	</tbody>
-</table>
-<%= button_to 'Create New Template', requirements_template_information_path, :method => :get, :class => 'btn' %>
-<br/>
-<%= render 'template_editors' %>
+	<table class="table table-striped" id="dmp_templates">
 
-<%= button_to 'Add New Template Editor', add_authorization_path, method: :post, id: 'add_authorization_view', :class => 'btn' %>
+		<thead>
+			<tr>
+				<th class="span4">Name</th>
+				<th class="span1">Version</th>
+				<th class="span3">Institution</th>
+				<th>Status</th>
+				<th>Visibility</th>
+				<th>Creation Date</th>
+				<th>Last Modification Date</th>
+			</tr>
+		</thead>
+		<tbody>
+		<% @requirements_templates.each do |requirements_template| %>
+			<tr>
+				<td class="requirements_template_name">
+					<div class="toggle-links">
+						<%=link_to (content_tag(:strong, requirements_template.name)), requirements_template_requirements_path(requirements_template), :id => "#{requirements_template.name}"%>
+						<div class="template-links">
+								<%= (link_to 'Overview', edit_requirements_template_path(requirements_template))+' | '+(link_to 'Details',requirements_template_requirements_path(requirements_template), :class => 'details')+' | '+(link_to activate_link_text(requirements_template), toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", :class => 'ajax')+' | '+(link_to 'Copy', copy_existing_requirements_template_path(:requirements_template => requirements_template))+' | '+(link_to 'Delete', requirements_template_path(requirements_template), :class => "delete", :id => "delete_#{requirements_template.name}", method: :delete, data: { confirm: 'Are you sure?' }) %>
+						</div>
+					</div>
+				</td>
+				<td class="span1"><%= requirements_template.version %></td>
+				<td><%= requirements_template.institution.nil? ? " " :  requirements_template.institution.full_name %></td>
+				<td id="status_#{requirements_template.id}"><%= requirements_template.active ? "Active" : "Inactive" %></td>
+				<td><%= requirements_template.visibility.capitalize %></td>
+				<td><%= requirements_template.created_at.nil? ? " " :  requirements_template.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+				<td><%= requirements_template.updated_at.nil? ? " " :  requirements_template.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 
-<%= render partial: "/authorizations/add_authorization" , :locals => { :role_type => 3, :role_name => 'DMP Template Editor'}%>
+			</tr>
+		<% end %>
+		<tbody>
+	</table>
+		<div class="buttons pagination">
+			<%= link_to "View All", requirements_templates_path(:scope => "all"), :method => :get, :class => "btn", :id => 'view_all_templates'%>
+			<%= paginate @requirements_templates %>
+		</div>
+		</tr>
+		</tbody>
+	</table>
+	<%= button_to 'Create New Template', requirements_template_information_path, :method => :get, :class => 'btn' %>
+	<br/>
+	<%= render 'template_editors' %>
+
+	<%= render partial: "/authorizations/add_authorization" , :locals => { :role_type => 3, :role_name => 'DMP Template Editor'}%>

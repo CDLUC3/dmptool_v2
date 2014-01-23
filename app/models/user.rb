@@ -17,6 +17,8 @@ class User < ActiveRecord::Base
 
   has_many :coowned_plans, -> { where user_plans: { owner: false} }, through: :user_plans,
   source: :plan, class_name: 'Plan'
+  
+  scope :active, -> { where(active: true, deleted_at: nil) }
 
   accepts_nested_attributes_for :user_plans
 
@@ -89,6 +91,11 @@ class User < ActiveRecord::Base
 
   def full_name
     [first_name, last_name].join(" ")
+  end
+  
+  #label for dropdown for autocomplete
+  def label
+    "#{self.full_name} <#{self.email}>"
   end
 
   def plans_by_state(state)
