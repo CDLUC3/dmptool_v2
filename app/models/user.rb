@@ -32,12 +32,6 @@ class User < ActiveRecord::Base
 
   before_validation :create_default_preferences, if: Proc.new { |x| x.prefs.empty? }
   before_validation :add_default_institution, if: Proc.new { |x| x.institution_id.nil? }
-  before_create :create_cookie_salt, if: Proc.new { |x| x.cookie_salt.nil? }
-
-  def self.authenticate_with_salt(id, cookie_salt)
-    user = find_by_id(id)
-    (user && user.cookie_salt == cookie_salt) ? user : nil
-  end
 
   def ensure_ldap_authentication(uid)
     unless Authentication.find_by_user_id_and_provider(self.id, 'ldap')
@@ -129,10 +123,6 @@ class User < ActiveRecord::Base
   end
 
   private
-
-  def create_cookie_salt
-    self.cookie_salt = secure_hash("#{self.created_at}--UCOP--DMP")
-  end
 
   def add_default_institution
     self.institution_id = 0

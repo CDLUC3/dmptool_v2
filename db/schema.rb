@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140122210810) do
+ActiveRecord::Schema.define(version: 20140123010621) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -23,10 +23,11 @@ ActiveRecord::Schema.define(version: 20140122210810) do
 
   create_table "authentications", force: true do |t|
     t.integer  "user_id"
-    t.enum     "provider",   limit: [:shibboleth, :ldap]
+    t.enum     "provider",    limit: [:shibboleth, :ldap]
     t.string   "uid"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "old_user_id"
   end
 
   add_index "authentications", ["provider", "uid"], name: "provider_and_uid", unique: true, using: :btree
@@ -81,6 +82,32 @@ ActiveRecord::Schema.define(version: 20140122210810) do
     t.string   "group"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "old_authentications", force: true do |t|
+    t.integer  "user_id"
+    t.enum     "provider",   limit: [:shibboleth, :ldap]
+    t.string   "uid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "old_authentications", ["provider", "uid"], name: "provider_and_uid", unique: true, using: :btree
+
+  create_table "old_users", force: true do |t|
+    t.integer  "institution_id"
+    t.string   "email"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "token"
+    t.datetime "token_expiration"
+    t.binary   "prefs"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "cookie_salt"
+    t.string   "login_id"
+    t.boolean  "active",           default: true
+    t.datetime "deleted_at"
   end
 
   create_table "plan_states", force: true do |t|
@@ -231,10 +258,10 @@ ActiveRecord::Schema.define(version: 20140122210810) do
     t.binary   "prefs"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "cookie_salt"
     t.string   "login_id"
     t.boolean  "active",           default: true
     t.datetime "deleted_at"
+    t.integer  "old_user_id"
   end
 
 end
