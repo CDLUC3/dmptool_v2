@@ -6,7 +6,7 @@ class GenericMailer < ActionMailer::Base
     @form_hash = form_hash
     emails = APP_CONFIG['feedback_email_to'] + addl_emails
     mail :to => emails.join(","),
-         :reply_to => form_hash[:email]
+         :reply_to => form_hash[:email],
          :subject => 'DMPTool2 Contact Us Form Feedback',
          :from => APP_CONFIG['feedback_email_from']
          #:from => form_hash[:email]
