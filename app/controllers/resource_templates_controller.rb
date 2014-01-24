@@ -1,21 +1,15 @@
 class ResourceTemplatesController < ApplicationController
 
   before_filter :get_requirements_template
-  before_action :set_resource_template, only: [:show, :edit, :update, :destroy, :toggle_active, :template_details]
+  before_action :set_resource_template, only: [:show, :edit, :update, :destroy, :resources ]
   before_action :check_resource_editor_access, only: [:show, :edit, :update, :destroy, :template_details, :index]
 
   # GET /resource_templates
   # GET /resource_templates.json
   def index
-
     resource_customizations
 
     resources
-
-    resource_editors
-
-    count
-
   end
 
 
@@ -72,40 +66,31 @@ class ResourceTemplatesController < ApplicationController
     end
   end
 
-  def toggle_active
-    @resource_template.toggle!(:active)
-    respond_to do |format|
-      format.js
-    end
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_resource_template
       @resource_template = ResourceTemplate.find(params[:id])
     end
 
-
     def resource_template_params
-      params.require(:resource_template).permit(:institution_id, :resource_template_id, :requirements_template_id, :name, :active, :mandatory_review, :contact_info, :contact_email, :review_type, :widget_url)
+      params.require(:resource_template).permit(:institution_id, :resource_template_id, :requirements_template_id, :name, :contact_info, :contact_email, :review_type, :widget_url)
     end
 
     def get_requirements_template
       if !safe_has_role?(Role::DMP_ADMIN)
         unless params[:show_all] == 'true'
-          @requirements_templates = RequirementsTemplate.where.any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public).order(created_at: :asc).page(params[:page]).per(5)
+          @requirements_templates = RequirementsTemplate.where.any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public).active.order(created_at: :asc).page(params[:page]).per(5)
         else
-          @requirements_templates = RequirementsTemplate.where.any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public).order(created_at: :asc).page(params[:page])
+          @requirements_templates = RequirementsTemplate.where.any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public).active.order(created_at: :asc).page(params[:page])
         end
       else
         unless params[:show_all] == 'true'
-          @requirements_templates = RequirementsTemplate.all.order(created_at: :asc).page(params[:page]).per(5)
+          @requirements_templates = RequirementsTemplate.active.order(created_at: :asc).page(params[:page]).per(5)
         else
-          @requirements_templates = RequirementsTemplate.all.order(created_at: :asc).page(params[:page])
+          @requirements_templates = RequirementsTemplate.active.order(created_at: :asc).page(params[:page])
         end
       end
     end
-
 
     def resource_customizations
       case params[:scope]
@@ -113,10 +98,6 @@ class ResourceTemplatesController < ApplicationController
           @resource_templates = ResourceTemplate.page(params[:page])
         when "all_limited"
           @resource_templates = ResourceTemplate.page(params[:page]).per(5)
-        when "active"
-          @resource_templates = ResourceTemplate.where(active: true).page(params[:page]).per(5)
-        when "inactive"
-          @resource_templates = ResourceTemplate.where(active: false).page(params[:page]).per(5)
         else
           @resource_templates = ResourceTemplate.page(params[:page]).per(5)
       end
@@ -128,10 +109,10 @@ class ResourceTemplatesController < ApplicationController
     end
 
     def resources #TO BE COMPLETED
-      @title = "Resources Available at " + current_user.institution.full_name 
-      @new_resources = ResourceContext.where(institution_id: [current_user.institution.subtree_ids], 
-                                            requirement_id: nil, resource_template_id: nil,
-                                            requirements_template_id: nil)     
+      @title = "Resources Available at " + current_user.institution.full_name
+      @new_resources = ResourceContext.where(institution_id: [current_user.institution.subtree_ids],
+                                            requirement_id: nil, resource_template_id: @resource_template.id,
+                                            requirements_template_id: @resource_template.requirements_template_id)
     end
 
     def resource_editors
@@ -142,16 +123,5 @@ class ResourceTemplatesController < ApplicationController
         @users = User.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).order('created_at DESC').page(params[:page]).per(10)
       end
       @users = @users.order(first_name: :asc, last_name: :asc).page(params[:editor_page]).per(5)
-    end
-
-    def count
-      if current_user.has_role?(Role::DMP_ADMIN)
-        @all = ResourceTemplate.all.count
-      else
-        @institution = current_user.institution
-        @all = @institution.resource_templates_deep.count
-        @active = @institution.resource_templates_deep.active.count
-        @inactive = @institution.resource_templates_deep.inactive.count
-      end
     end
 end

@@ -2,24 +2,12 @@
   <div class="details span4">
     <div class="template-outline border-box">
       <h5>Selected DMP Template</h5>
-      <p><%= link_to @requirements_template.name, edit_requirements_template_path(@requirements_template) %></p>
+      <p><%#= link_to @requirements_template.name, edit_requirements_template_path(@requirements_template) %></p>
       <hr/>
       <div id="requirements_tree">
-        <%= render partial: 'requirements_tree', locals: { requirements: @requirements } %>
+        <%#= render partial: 'requirements_tree', locals: { requirements: @requirements } %>
       </div>
     </div>
-    <div class="template-status border-box">
-      <h5>Resource Template Status:
-      	<span id="status_<%= @resource_template.id %>">
-        	<%= @resource_template.active ? 'Active' : 'Inactive' %>
-      	</span>
-     	</h5>
-      <div>
-      	<%= link_to activate_link_text(@resource_template)+ ' ' +'Template',
-        toggle_active_resource_template_path(@resource_template), remote: true, id: "activate_link_#{@resource_template.id}", :class => 'btn' %>
-      	<%= link_to(content_tag(:span, '', :class => 'icon remove') + 'Delete Template', @resource_template, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'icon delete') %>
-    	</div>
-  	</div>
   </div>
   <div class="tabbable span8">
   	<ul class="nav nav-tabs">
@@ -33,7 +21,7 @@
       		<td><%= render :partial => 'form', :locals => {resource: resource} %></td>
     		</tr>
     		<% end %>
-    		<%= link_to 'Add New Resource', new_resource_template_resource_path(@resource_template, requirement_id: params[:requirement_id]), id: 'add_new_resource', :class => 'btn btn-green' %>
+    		<%= link_to 'Add New Resource', new_resource_path, id: 'add_new_resource', :class => 'btn btn-green' %>
     	</div>
   	</div>
   </div>
