@@ -19,12 +19,10 @@ class ResourcesController < ApplicationController
   # GET /resources/new
   def new
     @resource = Resource.new
-    render 'index'
   end
 
   # GET /resources/1/edit
   def edit
-    render 'index'
   end
 
   # POST /resources

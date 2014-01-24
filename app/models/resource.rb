@@ -3,7 +3,7 @@ class Resource < ActiveRecord::Base
 
   validates_columns :resource_type
   validates :resource_type, presence: true
-  validates :value, presence: true
+  # validates :value, presence: true
   validates :label, presence: true
 
   scope :guidance, -> { where(resource_type: 'expository_guidance') }

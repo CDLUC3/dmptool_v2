@@ -2,7 +2,7 @@
   <div class="details span4">
     <div class="template-outline border-box">
       <h5>Selected DMP Template</h5>
-      <p><%#= link_to @requirements_template.name, edit_requirements_template_path(@requirements_template) %></p>
+      <p><%#= link_to @resource.name, edit_resource_path(@resource) %></p>
       <hr/>
       <div id="requirements_tree">
         <%#= render partial: 'requirements_tree', locals: { requirements: @requirements } %>
@@ -15,12 +15,26 @@
   	</ul>
   	<div class="tab-content">
   		<div class="tab-pane active">
-    		<p> Click on a Requirement to view the list of Related Resources </p>
-    		<% @resources.each do |resource| %>
-    		<tr>
-      		<td><%= render :partial => 'form', :locals => {resource: resource} %></td>
-    		</tr>
-    		<% end %>
+
+<!--   TO BE MODIFIED as per latest wireframes -->
+  <table>
+    <thead>
+      <tr>
+        <th>Label</th>
+<!--         <th>Value</th>
+        <th>Text</th> -->
+      </tr>
+    </thead>
+    <tbody>
+    <% @resources.each do |resource| %>
+      <tr>
+        <td><%= resource.label %></td>
+        <td><%#= resource.value %></td>
+        <td><%#= resource.text %></td>
+      </tr>
+    <% end %>
+    <tbody>
+  </table>
     		<%= link_to 'Add New Resource', new_resource_path, id: 'add_new_resource', :class => 'btn btn-green' %>
     	</div>
   	</div>
