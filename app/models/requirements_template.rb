@@ -1,6 +1,5 @@
 class RequirementsTemplate < ActiveRecord::Base
 
-  
   belongs_to :institution
   has_many :resource_templates
   has_many :requirements
@@ -20,7 +19,7 @@ class RequirementsTemplate < ActiveRecord::Base
   validates :visibility, presence: true
   validates :version, presence: true, numericality: true
   validates :name, presence: true
-  
+
   validates :start_date, date: true, unless: "start_date.nil?"
   validates :end_date, date: true, unless: "end_date.nil?"
 
@@ -28,8 +27,6 @@ class RequirementsTemplate < ActiveRecord::Base
   scope :inactive, -> { where(active: false) }
   scope :institutional_visibility, -> { where(visibility: :institutional) }
   scope :public_visibility, -> { where(visibility: :public) }
-
-
 
   after_initialize :default_values
   after_initialize :version_number
@@ -45,12 +42,12 @@ class RequirementsTemplate < ActiveRecord::Base
       self.version = RequirementsTemplate.where(id: parent_id).version + 1
     end
   end
-  
+
   def self.letter_range_by_institution(s, e)
     #add as a scope where s=start and e=end letter
     joins(:institution).where("full_name REGEXP ?", "^[#{s}-#{e}]")
   end
-  
+
   def self.search_terms(terms)
     #searches both institution name and template name
     items = terms.split
