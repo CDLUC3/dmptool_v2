@@ -5,6 +5,7 @@ Dmptool2::Application.routes.draw do
  get 'about', to: 'static_pages#about'
  get 'video', to: 'static_pages#video'
  get 'partners', to: 'static_pages#partners'
+ get 'partners_list', to: 'static_pages#partners_list'
  get 'guidance', to: 'static_pages#guidance'
  get 'help', to: 'static_pages#help'
  match 'contact', to: 'static_pages#contact', :via => [:get, :post], as: 'contact'

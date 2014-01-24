@@ -1,15 +1,15 @@
 	<h2 class="dashboard-heading"><span class="icon template-dmp"></span>DMP Templates</h2>
 	
 	<div class="table-scope">
-		<%= link_to(content_tag(:span, "All (#{@all})", :class => "all_limited"), scope: "all_limited") %> 
+		<%= link_to "All (#{@all})", { :scope => "all_limited" }, :class => "all_limited" %> 
 		| 
-		<%= link_to(content_tag(:span, "Active  (#{@active})", :class => "active"), scope: "active") %> 
+		<%= link_to "Active  (#{@active})", { :scope => "active" }, :class => "active" %> 
 		| 
-		<%= link_to(content_tag(:span, "Inactive (#{@inactive})", :class => "inactive"), scope: "inactive") %> 
+		<%= link_to "Inactive (#{@inactive})", { :scope => "inative" }, :class => "inactive" %> 
 		| 
-		<%= link_to(content_tag(:span, "Institutional-Only (#{@institutional})", :class => "institutional"), scope: "institutional") %> 
+		<%= link_to "Institution-only (#{@institutional})", { :scope => "institutional" }, :class => "institutional" %> 
 		| 
-		<%= link_to(content_tag(:span, "Public (#{@public})", :class => "public"), scope: "public") %>
+		<%= link_to "Public (#{@public})", { :scope => "public" }, :class => "public" %>
 	</div>
 	<table class="table table-striped" id="dmp_templates">
 
@@ -36,11 +36,12 @@
 					</div>
 				</td>
 				<td class="span1"><%= requirements_template.version %></td>
-				<td><%= requirements_template.institution %></td>
+				<td><%= requirements_template.institution.full_name %></td>
 				<td id="status_#{requirements_template.id}"><%= requirements_template.active ? "Active" : "Inactive" %></td>
 				<td><%= requirements_template.visibility.capitalize %></td>
 				<td><%= requirements_template.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
-				<td><%= requirements_template.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+				<td><%= # requirements_template.updated_at.strftime("%m/%d/%Y %I:%M%p") 
+				%></td>
 			</tr>
 		<% end %>
 		<tbody>
