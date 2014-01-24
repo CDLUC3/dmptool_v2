@@ -23,8 +23,16 @@
   		<%= render 'layouts/dashboard_header' unless ['static_pages', 'user_sessions'].include?(controller_name) && !['guidance'].include?(action_name) %>
   	<% end %>
     <% flash.each do |key, value| %>
-      <div class="alert alert-#{key}">
-        <p><%= value %></p>
+      <div class="alert alert-<%= key %>">
+        <% if value.class == Array
+          txt = value.map{|i| h(i)}.join("<br/>")
+        %>
+          <p>
+            <%= raw txt %>
+          </p>
+        <% else %>
+          <p><%= value %></p>
+        <% end %>
       </div>
     <% end %>
 
