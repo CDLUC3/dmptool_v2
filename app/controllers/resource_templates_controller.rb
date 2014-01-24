@@ -111,8 +111,8 @@ class ResourceTemplatesController < ApplicationController
     def resources #TO BE COMPLETED
       @title = "Resources Available at " + current_user.institution.full_name
       @new_resources = ResourceContext.where(institution_id: [current_user.institution.subtree_ids],
-                                            requirement_id: nil, resource_template_id: @resource_template.id,
-                                            requirements_template_id: @resource_template.requirements_template_id)
+                                            requirement_id: nil, resource_template_id: nil,
+                                            requirements_template_id: nil)
     end
 
     def resource_editors
