@@ -1,5 +1,5 @@
 class InstitutionsController < ApplicationController
-  before_action :set_institution, only: [:show, :edit, :update, :destroy]
+  before_action :set_institution, only: [:show, :destroy]
   before_action :check_for_cancel, :update => [:create, :update, :destroy]
   before_filter :populate_institution_select_list
   before_action :check_institution_admin_access
@@ -13,13 +13,13 @@ class InstitutionsController < ApplicationController
     else
       @institutions = Institution.where(id: [current_user.institution.subtree_ids])
     end
-    
+
     @institution = Institution.new(:parent_id => params[:parent_id])
 
     @current_institution = current_user.institution
-    
+
     @institution_users = institutional_admins
-    
+
     @categories.delete_if {|i| i[1] == @institution.id}
   end
 
@@ -42,15 +42,15 @@ class InstitutionsController < ApplicationController
   # POST /institutions
   # POST /institutions.json
   def create
-    @institution = Institution.new(institution_params)
+    @current_institution = Institution.new(institution_params)
 
     respond_to do |format|
-      if @institution.save
-        format.html { redirect_to @institution, notice: 'Institution was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @institution }
+      if @current_institution.save
+        format.html { redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully created.' }
+        format.json { render action: 'show', status: :created, location: @current_institution }
       else
         format.html { render action: 'new' }
-        format.json { render json: @institution.errors, status: :unprocessable_entity }
+        format.json { render json: @current_institution.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -58,13 +58,14 @@ class InstitutionsController < ApplicationController
   # PATCH/PUT /institutions/1
   # PATCH/PUT /institutions/1.json
   def update
+    @current_institution = Institution.find(params[:id])
     respond_to do |format|
-      if @institution.update(institution_params)
-        format.html { redirect_to @institution, notice: 'Institution was successfully updated.' }
+      if @current_institution.update(institution_params)
+        format.html { redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
-        format.json { render json: @institution.errors, status: :unprocessable_entity }
+        format.json { render json: @current_institution.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -78,7 +79,7 @@ class InstitutionsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
   def populate_institution_select_list
     @categories = InstitutionsController.institution_select_list
   end
@@ -111,9 +112,9 @@ class InstitutionsController < ApplicationController
     @user_ids = Authorization.where(role_id: 5).pluck(:user_id) #All the institutional_admins
     if safe_has_role?(Role::DMP_ADMIN)
       @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
-    else     
+    else
       @users = User.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).order('created_at DESC').page(params[:page]).per(10)
-    end  
+    end
   end
 
   private
