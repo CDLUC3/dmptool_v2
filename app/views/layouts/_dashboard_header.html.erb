@@ -92,7 +92,7 @@
 				<% end %>
 			<% end %>
 			<% if (safe_has_role?(Role::RESOURCE_EDITOR) || safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::INSTITUTIONAL_ADMIN))%>
-				<li <%= 'class=current' if current_page?(resource_templates_path)%> > <%= link_to(content_tag(:span, 'Resources'), resource_templates_path) %></li>
+				<li <%= 'class=current' if current_page?(resource_templates_path)%> > <%= link_to(content_tag(:span, 'Customizations'), resource_templates_path) %></li>
 			<% end %>
 
 			<% if ( safe_has_role?(Role::INSTITUTIONAL_ADMIN)||  safe_has_role?(Role::DMP_ADMIN) )%>
