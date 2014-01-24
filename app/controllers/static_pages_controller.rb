@@ -33,7 +33,9 @@ class StaticPagesController < ApplicationController
     if request.post?
       if verify_recaptcha
         addl_to = (current_user ? [current_user.institution.contact_email] : [])
-        GenericMailer.contact_email(params, addl_to).deliver
+        (APP_CONFIG['feedback_email_to'] + addl_to).each do |i|
+          GenericMailer.contact_email(params, i).deliver
+        end
         flash[:alert] = "Your email message was sent to the DMPTool team."
         redirect_to :back and return
       end
