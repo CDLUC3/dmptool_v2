@@ -3,17 +3,20 @@ Dmptool2::Application.routes.draw do
  get "dashboard/show"
  root 'static_pages#home'
  get 'about', to: 'static_pages#about'
- get 'video', to: 'static_pages#video'
- get 'partners', to: 'static_pages#partners'
- get 'partners_list', to: 'static_pages#partners_list'
- get 'guidance', to: 'static_pages#guidance'
- get 'help', to: 'static_pages#help'
+ get 'community_resources', to: 'static_pages#community_resources'
  match 'contact', to: 'static_pages#contact', :via => [:get, :post], as: 'contact'
- get 'privacy', to: 'static_pages#privacy'
- get 'terms_of_use', to: 'static_pages#terms_of_use'
- get 'logout', to: 'user_sessions#destroy'
  get 'dashboard', to: 'dashboard#show', as: 'dashboard'
  get 'dashboard/test', to: 'dashboard#test'
+ get 'data_management_guidance', to: 'static_pages#data_management_guidance'
+ get 'guidance', to: 'static_pages#guidance'
+ get 'help', to: 'static_pages#help'
+ get 'logout', to: 'user_sessions#destroy'
+ get 'partners', to: 'static_pages#partners'
+ get 'partners_list', to: 'static_pages#partners_list'
+ get 'privacy', to: 'static_pages#privacy'
+ get 'promote', to: 'static_pages#promote'
+ get 'terms_of_use', to: 'static_pages#terms_of_use'
+ get 'video', to: 'static_pages#video'
 
   resources :requirements_templates do
     resources :requirements
