@@ -26,8 +26,8 @@
 <div class="buttons pagination">
 	<%= link_to "View All", requirements_templates_path(:scope => "all_editors"), :method => :get, :class => "btn"%>
 	<%= paginate @users %>
-	<div style="clear:both"></div><br/>
-	<%= render partial: '/users/user_autocomplete_widget',
+</div>
+<%= render partial: '/users/user_autocomplete_widget',
 				:locals =>
 					 {  autocomplete_path: template_editor_users_autocomplete_path,
 							user_role: 'template_editor',
@@ -37,5 +37,4 @@
 							item_description: 'template editor'
 					 }
 	 %>
-</div>
 <%#= render partial: 'add_template_editor'%>

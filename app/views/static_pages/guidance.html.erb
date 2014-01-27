@@ -15,11 +15,11 @@
 </div>
 <br/>
 <div class="buttons-alpha row">
-	<%= link_to('A-F', { :s => 'a', :e => 'f' }, :class => 'btn') %> 
-	<%= link_to('G-L', { :s => 'g', :e => 'l' }, :class => 'btn') %> 
-	<%= link_to('M-S', { :s => 'm', :e => 's' }, :class => 'btn') %> 
-	<%= link_to('T-Z', { :s => 't', :e => 'z' }, :class => 'btn') %> 
-	<%= link_to('View All', { :s => '', :e => '' }, :class => 'btn') %>
+	<%= link_to('A-F', { :s => 'a', :e => 'f' }, :class => 'btn viewA-F') %> 
+	<%= link_to('G-L', { :s => 'g', :e => 'l' }, :class => 'btn viewG-L') %> 
+	<%= link_to('M-S', { :s => 'm', :e => 's' }, :class => 'btn viewM-S') %> 
+	<%= link_to('T-Z', { :s => 't', :e => 'z' }, :class => 'btn viewT-Z') %> 
+	<%= link_to('View All', { :s => '', :e => '' }, :class => 'btn viewA-Z') %>
 </div>
 
 <%= render partial: 'guidance_table', :locals => {templates: @public_templates, public: true} %>
