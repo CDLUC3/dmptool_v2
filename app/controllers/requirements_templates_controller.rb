@@ -141,6 +141,22 @@ class RequirementsTemplatesController < ApplicationController
     end
   end
 
+  #to test the requirements templates tree view
+  def test
+    req_temp = RequirementsTemplates.all  #apply any other constraints/scopes here
+
+    @rt_tree = {}
+    req_temp.each do |rt|
+      root_inst = rt.institution.root
+      if @rt_tree.has_key?(root_inst)
+        @rt_tree[root_inst].push(rt)
+      else
+        @rt_tree[root_inst] = [ rt ]
+      end
+    end
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_requirements_template
@@ -169,7 +185,7 @@ class RequirementsTemplatesController < ApplicationController
 
     end
 
-    def count
+  def count
     if current_user.has_role?(Role::DMP_ADMIN)
       @all = RequirementsTemplate.count
       @active = RequirementsTemplate.active.count

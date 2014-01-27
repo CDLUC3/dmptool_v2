@@ -12,7 +12,7 @@ Dmptool2::Application.routes.draw do
  get 'terms_of_use', to: 'static_pages#terms_of_use'
  get 'logout', to: 'user_sessions#destroy'
  get 'dashboard', to: 'dashboard#show', as: 'dashboard'
- get 'dashboard/test', to: 'dashboard#test'
+ get 'requirements_templates/test', to: 'requirements_templates#test'
 
   resources :requirements_templates do
     resources :requirements
