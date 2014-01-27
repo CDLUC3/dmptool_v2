@@ -19,7 +19,7 @@ class RequirementsTemplate < ActiveRecord::Base
   validates :visibility, presence: true
   validates :version, presence: true, numericality: true
   validates :name, presence: true
-  
+
   validates :start_date, date: true, unless: "start_date.nil?"
   validates :end_date, date: true, unless: "end_date.nil?"
 

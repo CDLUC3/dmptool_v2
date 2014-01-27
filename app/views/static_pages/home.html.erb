@@ -1,5 +1,5 @@
 <div class="banner row-fluid">
-	<%= link_to "Get Started", choose_institution_path, :class => "btn btn-large" %>
+	<%= link_to "Get Started", (current_user ? dashboard_path: choose_institution_path), :class => "btn btn-large" %>
 </div>
 <div class="buckets-header row-fluid">
   <div class="span4">

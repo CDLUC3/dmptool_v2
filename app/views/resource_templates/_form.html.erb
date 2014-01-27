@@ -1,4 +1,3 @@
-<%= render 'requirements_templates' %>
 <div class="tabbable">
 	<ul class="nav-tabs">
 		<li class="active"><a href="#" data-toggle="tab">Resource Customization</a></li>
@@ -16,9 +15,9 @@
 			        </ul>
 			      </div>
 			    <% end %>
-					
+
 			    <div class="control-group">
-			      <%= f.label :dmp_template, 'Selected DMP Template', :class => 'control-label' %>
+			      <%= f.label :dmp_template, 'Associated DMP Template', :class => 'control-label' %>
 			      <div class="controls">
 			      <% if @resource_template.requirements_template_id.nil? %>
 			        <%= text_field_tag(:selected_requirement_template, nil, id: 'selected_requirement_template_name', :class => 'input-xxlarge', disabled: true) %>
@@ -27,35 +26,11 @@
 			      <% end %>
 			      </div>
 			    </div>
-					<br/>
-			    <h5>Basic Information</h5>
-			    <hr/>
 			    <%= f.hidden_field :requirements_template_id, id: 'requirements_template_id' %>
 			    <div class="control-group">
-			      <%= f.label :template_name,'Template Name', :class => 'control-label' %>
+			      <%= f.label :template_name,'Customization Name', :class => 'control-label' %>
 			      <div class="controls">
 			        <%= f.text_field :name, :class => 'input-xxlarge' %>
-			      </div>
-			    </div>
-			    <%= render partial: 'date_fields' , locals: { f: f } unless @resource_template.new_record? %>
-			    <div class="control-group">
-			      <%= f.label :institution, :class => 'control-label' %>
-			      <div class="controls">
-			        <% if safe_has_role?(Role::DMP_ADMIN) %>
-			          <%= f.select( :institution_id, options_from_collection_for_select(Institution.all, 'id', 'full_name')) %>
-			        <% else %>
-			          <%= f.hidden_field :institution_id, value: current_user.institution.id %>
-			          <%= text_field_tag :institution_name, current_user.institution.full_name, disabled: true, :class => 'input-xlarge' %>
-			        <% end %>
-			      </div>
-			    </div>
-					<br/>
-			    <h5>Optional Information</h5>
-			    <hr/>
-			    <div class="control-group">
-			      <%= f.label :institutional_widget, 'Institutional Widget', :class => 'control-label' %>
-			      <div class="controls">
-			        <%= f.text_field :widget_url, :class => 'input-xxlarge' %>
 			      </div>
 			    </div>
 			    <div class="control-group">
@@ -73,6 +48,37 @@
 			        <%= label_tag :no_review, 'No Review Required', :class => 'radio-label'%>
 			      </div>
 			    </div>
+			    <div class="control-group">
+			      <%= f.label :contact_info, 'Contact Information', :class => 'control-label' %>
+			      <div class="controls">
+			        <%= f.text_field :contact_info, :class => 'input-xxlarge' %>
+			      </div>
+			    </div>
+			    <div class="control-group">
+			      <%= f.label :contact_email, 'Contact Email', :class => 'control-label' %>
+			      <div class="controls">
+			        <%= f.text_field :contact_email, :class => 'input-xxlarge' %>
+			      </div>
+			    </div>
+			    <%= render partial: 'date_fields' , locals: { f: f } unless @resource_template.new_record? %>
+			    <div class="control-group">
+			      <%= f.label :institution, :class => 'control-label' %>
+			      <div class="controls">
+			        <% if safe_has_role?(Role::DMP_ADMIN) %>
+			          <%= f.select( :institution_id, options_from_collection_for_select(Institution.all, 'id', 'full_name')) %>
+			        <% else %>
+			          <%= f.hidden_field :institution_id, value: current_user.institution.id %>
+			          <%= text_field_tag :institution_name, current_user.institution.full_name, disabled: true, :class => 'input-xlarge' %>
+			        <% end %>
+			      </div>
+			    </div>
+			    <div class="control-group">
+			      <%= f.label :institutional_widget, 'Institutional Widget', :class => 'control-label' %>
+			      <div class="controls">
+			        <%= f.text_field :widget_url, :class => 'input-xxlarge' %>
+			      </div>
+			    </div>
+
 			    <br/>
 			    <div class="buttons">
 			      <%= f.submit 'Save Changes', :class => 'btn btn-success pull-left', method: 'post' %>

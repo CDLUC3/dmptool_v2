@@ -16,6 +16,7 @@ Dmptool2::Application.routes.draw do
 
   resources :requirements_templates do
     resources :requirements
+    resources :resource_contexts
     member do
       get :toggle_active
       get :basic
@@ -24,13 +25,8 @@ Dmptool2::Application.routes.draw do
     resources :additonal_informations
   end
 
-  get 'users/autocomplate_template_editors', to: 'users#autocomplete_template_editors', as: 'template_editor_users_autocomplete'
-  get 'users/autocomplate_resource_editors', to: 'users#autocomplete_resource_editors', as: 'resource_editor_users_autocomplete'
   resources :resource_templates do
-    resources :resources
-    member do
-      get :toggle_active
-    end
+    resources :resource_contexts
   end
 
   resources :users do
@@ -43,15 +39,10 @@ Dmptool2::Application.routes.draw do
     end
   end
 
-  resources :plans do
-    resources :comments
-    resources :plan_states
-    member do
-      post :add_coowner
-      get :publish
-      get :export
-    end
+  resources :resources do
+    resources :resource_contexts
   end
+
   resources :roles
   resources :institutions
   resources :authorizations
@@ -64,13 +55,11 @@ Dmptool2::Application.routes.draw do
   match 'user_sessions/password_reset', to: 'user_sessions#password_reset', :via => [:get, :post]
   match 'user_sessions/complete_password_reset', to: 'user_sessions#complete_password_reset', as: 'complete_password_reset', :via => [:get, :post]
 
+  get 'users/autocomplate_template_editors', to: 'users#autocomplete_template_editors', as: 'template_editor_users_autocomplete'
+  get 'users/autocomplate_resource_editors', to: 'users#autocomplete_resource_editors', as: 'resource_editor_users_autocomplete'
+
   get 'requirements_template_information', to: 'requirements_templates#template_information'
   get 'copy_existing_requirements_template', to: 'requirements_templates#copy_existing_template'
-
-  get 'plan_template_information', to: 'plans#template_information'
-  get 'copy_existing_plans_template', to: 'plans#copy_existing_template'
-  get 'select_dmp_template', to: 'plans#select_dmp_template'
-  get 'review_dmps', to: 'plans#review_dmps'
 
   get  'remove_resource_editor_role', to: 'resource_templates#remove_resource_editor_role'
   get  'remove_requirements_editor_role', to: 'requirements_templates#remove_requirements_editor_role'
@@ -81,11 +70,6 @@ Dmptool2::Application.routes.draw do
   post 'add_authorization', to: 'authorizations#add_authorization'
   get 'remove_authorization', to: 'authorizations#remove_authorization'
   post 'add_role_autocomplete', to: 'authorizations#add_role_autocomplete'
-
-
-  #these are old routes from DMP1
-  #get '/auth/:provider/callback', :to => 'authentications#create'
-  #get '/auth/failure', :to => 'authentications#failure'
 
   get  'edit_user_roles', to: 'users#edit_user_roles'
   post  'update_user_roles', to: 'users#update_user_roles'

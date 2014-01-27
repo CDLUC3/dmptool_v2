@@ -71,7 +71,7 @@ class RequirementsTemplatesController < ApplicationController
     if !safe_has_role?(Role::DMP_ADMIN)
       @requirements_templates = RequirementsTemplate.where(institution_id: [current_user.institution.subtree_ids]).institutional_visibility.active.page(params[:page]).per(5)
     else
-      @requirements_templates = RequirementsTemplate.institutional_visibility.active.page(params[:page]).per(5)
+      @requirements_templates = RequirementsTemplate.public_visibility.active.page(params[:page]).per(5)
     end
   end
 
@@ -130,8 +130,16 @@ class RequirementsTemplatesController < ApplicationController
     else
       requirements_template = RequirementsTemplate.where(id: id).first
     end
-    @requirements_template = requirements_template.dup include: [:resource_templates, :sample_plans, :additional_informations]
-    render action: "copy_existing_template"
+    @requirements_template = requirements_template.dup include: [:resource_templates, :sample_plans, :additional_informations, :requirements], validate: false
+    respond_to do |format|
+      if @requirements_template.save
+        format.html { redirect_to edit_requirements_template_path(@requirements_template), notice: 'Requirements template was successfully created.' }
+        format.json { render action: 'edit', status: :created, location: @requirements_template }
+      else
+        format.html { render action: 'new' }
+        format.json { render json: @requirements_template.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def toggle_active
