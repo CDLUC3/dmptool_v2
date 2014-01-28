@@ -66,11 +66,11 @@
 		<tbody>
 			<tr>
 				<td>
-          <%= link_to "#{@requirements_templates} DMP Templates only for my institution",
+          <%= link_to "#{@requirements_templates} DMP Templates only visible to my institution",
                      requirements_templates_path(scope: 'institutional'), :id => "institutional_templates" %>
         </td>
 				<!--The following id is used for testing purposes, please do not remove-->
-				<td><%= link_to "#{@public_requirements_templates} Public DMP Templates", requirements_templates_path(scope: 'public'), :id => "public_templates" %></td>
+				<td><%= link_to "#{@public_requirements_templates} Public DMP Templates from my institution", requirements_templates_path(scope: 'public'), :id => "public_templates" %></td>
 			</tr>
 		</tbody>
 	</table>
