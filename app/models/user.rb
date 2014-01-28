@@ -83,10 +83,14 @@ class User < ActiveRecord::Base
     uid
   end
 
-
-  def self.letter_range_by_user_last_name(s, e)
-    #add as a scope where s=start and e=end letter
-    joins(:institution).where("last_name REGEXP ?", "^[#{s}-#{e}]")
+   def self.search_terms(terms)
+    #searches both institution name and template name
+    items = terms.split
+    conditions1 = items.map{|item| "CONCAT(first_name, ' ', last_name) LIKE ?" }
+    #conditions2 = items.map{|item| "last_name LIKE ?" }
+    conditions = "#{conditions1.join(' AND ')}" #+ ' OR ' + "(#{conditions2.join(' AND ')}) )"
+    values = items.map{|item| "%#{item}%" }
+    self.where(conditions, *(values) )
   end
 
   def full_name

@@ -32,18 +32,13 @@ class UsersController < ApplicationController
 
   def index
 
-    @users = User.page(params[:page]).order(last_name: :asc).per(10)
+    @users = User.page(params[:page]).order(last_name: :asc).per(50)
     
-    unless params[:s].blank? || params[:e].blank?
-      @users = @users.letter_range_by_user_last_name(params[:s], params[:e])
+    
+    if !params[:q].blank?
+      @users = @users.search_terms(params[:q])
     end
-
-    # case params[:scope]
-    #   when "all_users"
-    #     @users = User.page(params[:page]).order(login_id: :asc)
-    #   else
-      # @users = User.page(params[:page]).order(login_id: :asc).per(10)
-    # end
+   
     case params[:scope]
       when "all_institutions"
         @institutions = Institution.page(params[:page])

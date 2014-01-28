@@ -1,50 +1,33 @@
 
-<br/>
-<div class="span8">
-	<p>Use the A-Z links below to narrow down the list of users or
-		use the search box. </p>
-</div>
-<div class="search-area span4">
-		<%= form_tag('', {:method => :get}) do %>
-			<%= search_field_tag(:q, params[:q], :class => 'input-large') %>
-			<span class="icon search"></span>
-			<%= submit_tag('Search') %>
-		<% end %>
-</div>
-<br/>
-<div class="buttons-alpha row">
-	<%= link_to('A-F', { :s => 'a', :e => 'f' }, :class => 'btn viewA-F') %> 
-	<%= link_to('G-L', { :s => 'g', :e => 'l' }, :class => 'btn viewG-L') %> 
-	<%= link_to('M-S', { :s => 'm', :e => 's' }, :class => 'btn viewM-S') %> 
-	<%= link_to('T-Z', { :s => 't', :e => 'z' }, :class => 'btn viewT-Z') %> 
-	<%= link_to('View All', { :s => '', :e => '' }, :class => 'btn viewA-Z') %>
-</div>
+<br>
 
-<table class ="table table-striped">
-	<thead>
-	  <tr>
-	    <th>User Name</th>
-	    <th>Institution</th>
-	    <th>Current Role</th>
-	    <th width="span1">Edit User Role</th>
-	    <th width="span1" class="align-center">Remove User</th>
-	  </tr>
-	</thead>
-	<tbody>
-	<% @users.each do |user| %>     
-  	<tr class='user_row' id=<%="user_#{user.id}"%>>        
-  		<td><%= link_to user.full_name_last_first, edit_user_path(user) %></td>
-    	<td><%#= link_to user.full_name, edit_user_path(user) %></td>
-    	<td><%= link_to user.institution.full_name, edit_institution_path(user.institution) %></td>
-    	<td><%= user.role_names.join(' | ') %></td>
-     	<td class="span1"><%=link_to raw(''), edit_user_roles_path(user_id: user), :class => 'icon edit-user', :id => "edit_#{user.id}"%></td>
-    	<td class="span1"><%= link_to raw(''), user, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'icon remove-user' %></td>           
-      </tr>       
-  <% end %>
-	</tbody>
-</table>
-<div class="buttons pagination">
-	<%#= link_to 'View All', users_path(:scope => 'all_users', :anchor => 'tab_tab1'), :method => :get, :class => 'btn' %>
-  <%= paginate @users %>
-</div>
+
+	<table class ="table table-striped">
+		<thead>
+		  <tr>
+		    <th>User Name</th>
+		    <th>Institution</th>
+		    <th>Current Role</th>
+		    <th width="span1">Edit User Role</th>
+		    <th width="span1" class="align-center">Remove User</th>
+		  </tr>
+		</thead>
+		<tbody>
+		<% @users.each do |user| %>     
+	  	<tr class='user_row' id=<%="user_#{user.id}"%>>        
+	  		<td><%= link_to user.full_name_last_first, edit_user_path(user) %></td>
+	    	<td><%= link_to user.institution.full_name, edit_institution_path(user.institution) %></td>
+	    	<td><%= user.role_names.join(' | ') %></td>
+	     	<td class="span1"><%=link_to raw(''), edit_user_roles_path(user_id: user), :class => 'icon edit-user', :id => "edit_#{user.id}"%></td>
+	    	<td class="span1"><%= link_to raw(''), user, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'icon remove-user' %></td>           
+	      </tr>       
+	  <% end %>
+		</tbody>
+	</table>
+	<div class="buttons pagination">
+		<%#= link_to 'View All', users_path(:scope => 'all_users', :anchor => 'tab_tab1'), :method => :get, :class => 'btn' %>
+	  <%= paginate @users %>
+	</div>
+
+
 
