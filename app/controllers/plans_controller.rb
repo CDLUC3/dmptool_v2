@@ -142,6 +142,7 @@ class PlansController < ApplicationController
 
 
   def select_dmp_template
+    @institutions = current_user.institution.subtree
     @dmp_templates = RequirementsTemplate.public_visibility.includes(:institution)
 
     if params[:s] && params[:e]
