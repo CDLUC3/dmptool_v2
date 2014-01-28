@@ -9,20 +9,27 @@
 				</tr>
 			</thead>
 			<tbody>
+        <%
+          #this layout is a PITA and really should NOT be a table, but since
+          #the UI developer isn't going to change it, I'll do some gymnastics
+          #to make things pretty within a table
+           col1 = []
+           col1[0] = link_to "#{current_user.owned_plans.count} plans I own"
+           col1[1] = link_to "#{current_user.coowned_plans.count} plans i co-own"
+           col2 = (current_user.unique_plan_states & PlanState::REVIEW_STATES).map do |state|
+             link_to "#{current_user.plans_by_state(state).count} #{state.capitalize}"
+           end
+           if col2.length < 1
+             col2[0] = "No DMPs are under review."
+           end
+           max_item = [col1.length, col2.length].max - 1
+        %>
+        <% 0.upto(max_item) do |i| %>
 				<tr>
-					<td><%= link_to "#{current_user.owned_plans.count} plans I own" %></td>
-					<td><% if (current_user.unique_plan_states & PlanState::REVIEW_STATES).empty? %>
-						No DMPs are under review.
-					<% else %>
-						<% (current_user.unique_plan_states & PlanState::REVIEW_STATES).each do |state|%>
-							<%= link_to "#{current_user.plans_by_state(state).count} #{state.capitalize}" %>
-						<% end %>
-					<% end %></td>
+					<td><%= (col1[i].nil? ? '' : col1[i] ) %></td>
+					<td><%= (col2[i].nil? ? '' : col2[i] ) %></td>
 				</tr>
-				<tr>
-					<td><%= link_to "#{current_user.coowned_plans.count} plans i co-own" %></td>
-					<td></td>
-				</tr>
+        <% end %>
 			</tbody>
 		</table>
 		<div class="buttons">
