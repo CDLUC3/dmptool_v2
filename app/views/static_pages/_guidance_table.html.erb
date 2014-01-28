@@ -40,6 +40,6 @@
 	</tbody>
 </table>
 <div class="buttons pagination">
-	<%= link_to "View All",{:all_records => 'true'}, :method => :get, :class => "btn"%>
-	<%= paginate(templates)%>
+	<%= link_to "View All",{"all_records_#{(public ? "public" : "institution")}".intern => 'true'}, :method => :get, :class => "btn"%>
+	<%= paginate(templates, param_name: (public ? "public_page" : "institution_page" ) )%>
 </div>
