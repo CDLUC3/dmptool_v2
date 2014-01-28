@@ -83,9 +83,20 @@ class User < ActiveRecord::Base
     uid
   end
 
+
+  def self.letter_range_by_user_last_name(s, e)
+    #add as a scope where s=start and e=end letter
+    joins(:institution).where("last_name REGEXP ?", "^[#{s}-#{e}]")
+  end
+
   def full_name
     [first_name, last_name].join(" ")
   end
+
+  def full_name_last_first
+    [last_name, first_name].join(" ")
+  end
+ 
   
   #label for dropdown for autocomplete
   def label

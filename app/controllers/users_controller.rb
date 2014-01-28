@@ -6,13 +6,44 @@ class UsersController < ApplicationController
 
   # GET /users
   # GET /users.json
+
+
+# def guidance
+#   @public_templates = RequirementsTemplate.public_visibility.includes(:institution, :sample_plans)
+    
+#   unless params[:s].blank? || params[:e].blank?
+#     @public_templates = @public_templates.letter_range_by_institution(params[:s], params[:e])
+#   end
+  
+#   if !params[:q].blank?
+#     @public_templates = @public_templates.search_terms(params[:q])
+#   end
+#   page_size = (params[:all_records] == 'true'? 999999 : 10)
+#   @public_templates = @public_templates.page(params[:page]).per(page_size)
+  
+#   if current_user
+#     inst = current_user.institution
+#     @institution_templates = inst.requirements_templates_deep.institutional_visibility.
+#             includes(:institution, :sample_plans)
+#   end
+
+# end
+
+
   def index
-    case params[:scope]
-      when "all_users"
-        @users = User.page(params[:page]).order(login_id: :asc)
-      else
-        @users = User.page(params[:page]).order(login_id: :asc).per(10)
+
+    @users = User.page(params[:page]).order(last_name: :asc).per(10)
+    
+    unless params[:s].blank? || params[:e].blank?
+      @users = @users.letter_range_by_user_last_name(params[:s], params[:e])
     end
+
+    # case params[:scope]
+    #   when "all_users"
+    #     @users = User.page(params[:page]).order(login_id: :asc)
+    #   else
+      # @users = User.page(params[:page]).order(login_id: :asc).per(10)
+    # end
     case params[:scope]
       when "all_institutions"
         @institutions = Institution.page(params[:page])
