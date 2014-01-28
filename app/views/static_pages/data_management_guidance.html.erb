@@ -1,0 +1,537 @@
+<div class="static-page row-fluid">
+	<h1 class"title">Data Management General Guidance</h1>
+	
+	<h2>Introduction</h2>
+	
+	<h3>What is a data management plan?</h3>
+	<p>A data management plan is a formal document that outlines what you will do with your data during and after a research project. Most researchers collect data with some form of plan in mind, but it's often inadequately documented and incompletely thought out. Many data management issues can be handled easily or avioded entirely by planning ahead. With the right process and framework it doesn't take too long and can pay-off enormously in the long run.</p>
+	
+	<h3>Who requires a plan?</h3>
+	<p>In February of 2013, the White House <a href="http://www.whitehouse.gov/administration/eop/ostp">Office of Science and Technology Policy (OSTP)</a> issued a <a href="http://www.whitehouse.gov/sites/default/files/microsites/ostp/ostp_public_access_memo_2013.pdf">memoradum</a> directing Federal agencies that provide significant research funding to develop a plan to expand public access to research. Among other requriments, the plans must </p>
+	<blockquote>
+	<p>Ensure that all extramural researchers receiving Federal grants and contracts for scientific research and intramural researchers develop data management plans, as appropriate, describing how they will provide for long-term preservation of, and access to, scientific data in digital formats resulting from federally funded research, or explaining why long-term preservation and access cannot be justified</p>
+	</blockquote>
+	<p>The National Science Foundation (NSF) already requires a 2-page plan as part of the funding proposal process. Soon most or all US Federally funded grants will require some form of data management plan.</p>
+	
+	<h3>We can help</h3>
+	<p>We have been working with internal and external partners to make data management plan development less complicated. By getting to know your research and data, we can match your specific needs with data management best practices in your field to develop a data management plan that works for you. If you do this work at the beginning of your research process, you will have a far easier time following-through and complying with funding agency and publisher requirements.</p>
+	<p>We recommend that those applying for funding from US Federal agencies, such as the NSF, use the <a href="">DMPTool</a>. The DMPTool provides guidance for many of the NSF Directorate and Division requirements, along with links to UC resources, services, and help. <a href="http://www.cdlib.org/services/uc3/contact.html">Contact UC3</a> if you have questions and would like feedback on your plan.</p>
+	
+	<!-- NEXT SECTION -->
+	
+	<h2>Types of Data</h2>
+	<p>Research projects generate and collect countelss varieties of data. To forumulate a data management plan, it's useful to categorize  your data in four ways: by source, format, stability, and volume.</p>
+	
+	<h3>What's the source of the data?</h3>
+	<p>Although data comes from many different sources, but they can be grouped into four main categories. The category(ies) your data comes from will affect the choices that you make throughout your data management plan.</p>
+	<h4>Observational</h4>
+	<ul>
+	<li>Captured in real-time, typically outside the lab</li>
+	<li>Usually irreplaceable and therefore the most important to safeguard</li>
+	<li>Examples: Sensor readings, telemetry, survey results, images</li>
+	</ul>
+	<h4>Experimental</h4>
+	<ul>
+	<li>Typically generated in the lab or under controlled conditions</li>
+	<li>Often reproducible, but can be expensive or time-consuming</li>
+	<li>Examples: gene sequences, chromatograms, magnetic field readings</li>
+	</ul>
+	<h4>Simulation</h4>
+	<ul>
+	<li>Machine generated from test models</li>
+	<li>Likely to be reproducible if the model and inputs are preserved</li>
+	<li>Examples: climate models, economic models</li>
+	</ul>
+	<h4>Derived / Compiled</h4>
+	<ul>
+	<li>Generated from existing datasets</li>
+	<li>Reproducible, but can be very expensive and time-consuming</li>
+	<li>Examples: text and data mining, compiled database, 3D models</li>
+	</ul>
+	
+	<h3>What's the form of the data?</h3>
+	<p>Data can come in many forms, including </p>
+	<ul>
+	<li><strong>Text:</strong> field or laboratory notes, survey responses</li>
+	<li><strong>Numeric:</strong> tables, counts, measurements </li>
+	<li><strong>Audiovisual:</strong> images, sound recordings, video</li>
+	<li><strong>Models, computer code</strong></li>
+	<li><strong>Discipline-specific:</strong> FITS in astronomy, CIF in chemistry</li>
+	<li><strong>Instrument-specific:</strong> equipment outputs</li>
+	</ul>
+	
+	<h3>How stable is the data?</h3>
+	<p>Data can also be fixed or changing over the course of the project (and perhaps beyond the project's end). Do the data ever change? Do they grow? Is previously recorded data subject to correction? Will you need to keep track of data versions? With respect to time, the common categories of dataset are</p>
+	<ul>
+	<li><strong>Fixed datasets:</strong> never change after being collected or generated</li>
+	<li><strong>Growing datasets:</strong> new data may be added, but the old data is never changed or deleted</li>
+	<li><strong>Revisable datasets:</strong> new data may be added, and old data may be changed or deleted</li>
+	</ul>
+	<p>The answer to this question affects how you organize the data as well as the level of versioning you will need to undertake. Keeping track of rapidly changing datasets can be a challenge, so it is imperative that you begin with a plan to carry you through the entire data management process.</p>
+	
+	<h3>How much data will the project produce?</h3>
+	<p>For instance, image data typically requires a lot of storage space, so you'll want to decide whether to retain all your images (and, if not, how you will decide which to discard) and where such large data can be housed. Be sure to know your archiving organization's capacity for storage and backups.</p>
+	<p>To avoid being under-prepared, estimate the growth rate of your data. Some questions to consider are</p>
+	<ul>
+	<li>Are you manually collecting and recording data? </li>
+	<li>Are you using observational instruments and computers to collect data?</li>
+	<li>Is your data collection highly iterative? </li>
+	<li>How much data will you accumluate every month or every 90 days?</li>
+	<li>How much data do you anticipate collecting and generating by the end of your project?</li>
+	</ul>
+	
+	<!-- NEXT SECTION -->
+	
+	<h2>File Formats</h2>
+	<p>The file format you choose for your data is a primary factor in someone else's ability to access it in the future. Tthink carefully about what file format will be best to manage, share, and preserve your data. Technology continually changes and all contemporary hardware and software should be expected to become obsolete.  Consider how your data will be read if the software used to produce it becomes unavailable.  Although any file format you choose today may become unreadable in the future, some formats are more likely to be readable than others.</p>
+	
+	<h3>Formats likely to be accessible in the future are:</h3>
+	<ul>
+	<li>Non-proprietary</li>
+	<li>Open, with documented standards</li>
+	<li>In common usage by the research community</li>
+	<li>Using standard character encodings (i.e., ASCII, UTF-8)</li>
+	<li>Uncompressed (space permitting)</li>
+	</ul>
+	
+	<h3>Examples of preferred format choices:</h3>
+	<ul>
+	<li>Image: JPEG, JPG-2000, PNG, TIFF</li>
+	<li>Text: plain text (TXT), HTML, XML, PDF/A</li>
+	<li>Audio: AIFF, WAVE</li>
+	<li>Containers: TAR, GZIP, ZIP</li>
+	<li>Databases: prefer XML or CSV to native binary formats</li>
+	</ul>
+	
+	<h3>Examples of discouraged format choices and better alternatives:</h3>
+	<p><table>
+	<tr>
+	<th>Discouraged Format</th>
+	<th>Alternative Format</th>
+	</tr>
+	<tr>
+	<td>Excel (.xls, .xlsx)</td>
+	<td>Comma Separated Values (.csv)</td>
+	</tr>
+	<tr>
+	<td>Word (.doc, .docx)</td>
+	<td>plain text (.txt), or if formatting is needed,  PDF/A (.pdf)</td>
+	</tr>
+	<tr>
+	<td>PowerPoint (.ppt, .pptx)</td>
+	<td>PDF/A (.pdf)</td>
+	</tr>
+	<tr>
+	<td>Photoshop (.psd)</td>
+	<td>TIFF (.tif, .tiff)</td>
+	</tr>
+	<tr>
+	<td>Quicktime (.mov)</td>
+	<td>MPEG-4 (.mp4)</td>
+	</table></p>
+	
+	<p>If you find it necessary or convenient to work with data in a proprietary/discouraged file format, do so, but consider saving your work in a more archival format when you are finished.</p>
+	<p>For more information on recommended formats, see the <a href="http://www.cdlib.org/gateways/docs/cdl_dffr.pdf">CDL Digital File Format Recommendations</a>.</p>
+	
+	<h3>Tabular data</h3>
+	<p>Tabular data warrants special mention because it is so common across disciplines, mostly as Excel spreadsheets. If you do your analysis in Excel, you should use the "Save As..." command to export your work to .csv format when you are done. Your spreadsheets will be easier to understand and to export if you follow best practices when you set them up, such as:</p>
+	<ul>
+	<li>Don't put more than one table on a worksheet</li>
+	<li>Include a header row with understandable title for each column</li>
+	<li>Create charts on new sheets- don't embed them in the worksheet with the data</li>
+	</ul>
+	
+	<h3>Other risks to accessibility</h3>
+	<ul>
+	<li>Encrypted data may be effectively lost if it was encrypted with a key that has been lost (e.g., a forgotten password). For this reason, encrypted data representations are strongly discouraged.</li>
+	<li>Data that is legally encumbered may also be considered lost. So may data bound by ambiguous or unknown access and archiving rights, because the cost of clarifying the rights situation is often prohibitive.  See <a href="">data rights and licensing</a> for guidance.</li>
+	</ul>
+	
+	<!-- NEXT SECTION -->
+	
+	<h2>Organizing Files</h2>
+	
+	<h3>Basic Directory and File Naming Conventions</h3>
+	<p>These are rough guidelines to follow to help manage your data files in case you don't already have your own internal conventions.  When organizing files, the top-level directory/folder should include: </p>
+	<ul>
+	<li>Project title</li>
+	<li>Unique identifier (Guidance on <a href="">persistent external identifiers</a> is available)</li>
+	<li>Date (yyyy or yyyy.mm.dd)</li>
+	</ul>
+	<p>The sub-directory structure should have clear, documented naming conventions. Separate files or directories could apply, for example, to each run of an experiment, each version of a dataset, and/or each person in the group.</p>
+	<ul>
+	<li>Reserve the 3-letter file extension for the file format, such as .txt, .pdf, or .csv.</li>
+	<li>Identify the activity or project in the file name.</li>
+	<li>Identify separate versions of files and datasets using file or directory naming conventions.  It can quickly become difficult to identify the 'correct' version of a file.</li>
+	<li>Record all changes to a file no matter how small. Discard obsolete versions after making backups.</li>
+	</ul>
+	
+	<h3>File Renaming</h3>
+	<p>Tools to help you:</p>
+	<ul>
+	<li><a href="http://www.bulkrenameutility.co.uk">Bulk Rename Utility</a> (Windows; free)</li>
+	<li><a href="http://renamer.com">Renamer</a> (Mac; free trial)</li>
+	<li><a href="http://www.powersurgepub.com/products/psrenamer.html">PSRenamer</a> (Linux, Mac, Windows; free)</li>
+	</ul>
+	
+	<h3>File Naming Conventions for Specific Disciplines</h3>
+	<p>Many disciplines have recommendations, for example:</p>
+	<ul>
+	<li><a href="http://www.arm.gov/data/docs/plan">DOE's Atmospheric Radiation Measurement (ARM) program</a></li>
+	</ul>
+	
+	<!-- NEXT SECTION -->
+	
+	<h2>Metadata: Data Documentation</h2>
+	
+	<h3>Why document data?</h3>
+	<p>Clear and detailed documentation is essential for data to be understood, interpreted, and used. Data documentation describes the content, formats, and internal relationships of your data in detail and will enable other researchers to find, use and properly cite your data. </p>
+	<p>Begin to document your data at the very beginning of your research project and continue throughout the project. Doing so will make the process much easier. If you have to construct the documentation at the end of the project, the process will be painful and important details will have been lost or forgotten. Don't wait to document your data!</p>
+	<h3>What to document?</h3>
+	<h4>Research Project Documentation</h4>
+	<ul>
+	<li>Rationale and context for data collection</li>
+	<li>Data collection methods</li>
+	<li>Structure and organization of data files</li>
+	<li>Data sources used (see <a href="">citing data</a>)</li>
+	<li>Data validation and quality assurance</li>
+	<li>Transformations of data from the raw data through analysis</li>
+	<li>Information on confidentiality, access &amp; use conditions</li>
+	</ul>
+	
+	<h4>Dataset documentation</h4>
+	<ul>
+	<li>Variable names and descriptions</li>
+	<li>Explanation of codes and classification schemes used</li>
+	<li>Algorithms used to transform data (may include computer code)</li>
+	<li>File format and software (including version) used</li>
+	</ul>
+	
+	<h3>How will you document your data?</h3>
+	<p>Data documentation is commonly called metadata��� "data about data". Researchers can document their data according to various metadata standards. Some metadata standards are designed for the purpose of documenting the contents of files, others for documenting the technical characteristics of files, and yet others for expressing relationships between files within a set of data. If you want to be able to share or publish your data, the <a href="http://schema.datacite.org/">DataCite metadata standard</a> is of particular signficiance. It is important to establish a metadata strategy that is capable of describing your data and satisfying your data management needs. For assistance in defining an adequate metadata strategy, please contact uc3@ucop.edu.</p>
+	<p>Below are some general aspects of your data that you should document, regardless of your discipline. At minimum, store this documentation in a "readme.txt" file, or the equivalent, with the data itself. You can also reference a published article that may contain some of this information.</p>
+	<p><br />
+	<table class="mdtable">
+	<tr>
+	<td class="mdcategory" rowspan="8">General overview</td>
+	<td class="mdlabel1">Title</td>
+	<td class="mddesc1">Name of the dataset or research project that produced it</td>
+	</tr>
+	<tr>
+	<td class="mdlabel1">Creator</td>
+	<td class="mddesc1">Names and addresses of the organizations or people who created the data; preferred format for personal names is surname first (e.g., Smith, Jane).</td>
+	</tr>
+	<tr>
+	<td class="mdlabel1">Identifier</td>
+	<td class="mddesc1">Unique number used to identify the data, even if it is just an internal project reference number</td>
+	</tr>
+	<tr>
+	<td class="mdlabel1">Date</td>
+	<td class="mddesc1">Key dates associated with the data, including: project start and end date; release date; time period covered by the data; and other dates associated with the data lifespan, such as maintenance cycle, update schedule; preferred format is yyyy-mm-dd, or yyyy.mm.dd-yyyy.mm.dd for a range</td>
+	</tr>
+	<tr>
+	<td class="mdlabel1">Method</td>
+	<td class="mddesc1">How the data were generated, listing equipment and software used (including model and version numbers), formulae, algorithms, experimental protocols, and other things one might include in a lab notebook</td>
+	</tr>
+	<tr>
+	<td class="mdlabel1">Processing</td>
+	<td class="mddesc1">How the data have been altered or processed (e.g., normalized)</td>
+	</tr>
+	<tr>
+	<td class="mdlabel1">Source</td>
+	<td class="mddesc1">Citations to data derived from other sources, including details of where the source data is held and how it was accessed</td>
+	</tr>
+	<tr>
+	<td class="mdlabel1">Funder</td>
+	<td class="mddesc1">Organizations or agencies who funded the research</td>
+	</tr>
+	<tr>
+	<td class="mdcategory" rowspan="5">Content description</td>
+	<td class="mdlabel2">Subject</td>
+	<td class="mddesc2">Keywords or phrases describing the subject or content of the data</td>
+	</tr>
+	<tr>
+	<td class="mdlabel2">Place</td>
+	<td class="mddesc2">All applicable physical locations</td>
+	</tr>
+	<tr>
+	<td class="mdlabel2">Language</td>
+	<td class="mddesc2">All languages used in the dataset</td>
+	</tr>
+	<tr>
+	<td class="mdlabel2">Variable list</td>
+	<td class="mddesc2">All variables in the data files, where applicable</td>
+	</tr>
+	<tr>
+	<td class="mdlabel2">Code list</td>
+	<td class="mddesc2">Explanation of codes or abbreviations used in either the file names or the variables in the data files (e.g. '999 indicates a missing value in the data')</td>
+	</tr>
+	<tr>
+	<td class="mdcategory" rowspan="6">Technical description</td>
+	<td class="mdlabel1">File inventory</td>
+	<td class="mddesc1">All files associated with the project, including extensions (e.g. 'NWPalaceTR.WRL', 'stone.mov')</td>
+	</tr>
+	<tr>
+	<td class="mdlabel1">File Formats</td>
+	<td class="mddesc1">Formats of the data, e.g., FITS, SPSS, HTML, JPEG, etc.</td>
+	</tr>
+	<tr>
+	<td class="mdlabel1">File structure</td>
+	<td class="mddesc1">Organization of the data file(s) and layout of the variables, where applicable</td>
+	</tr>
+	<tr>
+	<td class="mdlabel1">Version</td>
+	<td class="mddesc1">Unique date/time stamp and identifier for each version</td>
+	</tr>
+	<tr>
+	<td class="mdlabel1">Checksum</td>
+	<td class="mddesc1">A digest value computed for each file that can be used to detect changes; if a recomputed digest differs from the stored digest, the file must have changed</td>
+	</tr>
+	<tr>
+	<td class="mdlabel1">Necessary software</td>
+	<td class="mddesc1">Names of any special-purpose software packages required to create, view, analyze, or otherwise use the data</td>
+	</tr>
+	<tr>
+	<td class="mdcategory" rowspan="2">Access</td>
+	<td class="mdlabel2">Rights</td>
+	<td class="mddesc2">Any known intellectual property rights, statutory rights, licenses, or restrictions on use of the data</td>
+	</tr>
+	<tr>
+	<td class="mdlabel2">Access information</td>
+	<td class="mddesc2">Where and how your data can be accessed by other researchers</td>
+	</tr>
+	</table></p>
+	
+	<!-- NEXT SECTION -->
+	
+	<h2>Persistent Identifiers</h2>
+	<p>If you want to be able to <a href="">share</a> or <a href="">cite</a> your dataset, you'll want to assign a public persistent unqiue identifier to it. There are a variety of public identifier schemes, but common properties of good schemes are that they are </p>
+	<ul>
+	<li>Actionable (you can "click" on them in a web browser)</li>
+	<li>Globally unique across the internet</li>
+	<li>Persistent for at least the life of your data</li>
+	</ul>
+	<p>Today, this means data identifiers should fit inside a web address (URL) and be well-enough managed to remain actionable over the long-term. The most important factors in long-term data sharing are stable data storage and well-managed identifier redirection.<br />
+	</p>
+	<p>Any URL can be thought of as "resolving" either directly to its target (via the URL's hostname) or indirectly through one or more "redirects" to a final target URL. If your dataset is moved (e.g., from one archive to another) redirection allows the identifier to continue to resolve to the dataset, now at its new location.</p>
+	<p>An important factor to consider is choice of URL hostname. This is the domain name at the beginning of a URL (right after the "http://") that determines where URL resolution starts (for example, daac.ornl.gov). An identifier that doesn't contain a hostname may implicitly use a well-known hostname as the starting point for resolution. For example, dx.doi.org is the hostname for DOIs, so the document identified by doi:10.1000/182 can be found by typing "http://dx.doi.org/10.1000/182" in a web browser.</p>
+	<p>Because persistent (long-term) identifiers tend to be opaque (e.g., a string of digits) and reveal little or nothing about the nature of the identified object, it is also important for you to maintain metadata associated with the object. Among the most important pieces of metadata for you to maintain is the target URL that ensures that the identifier remains actionable.  Whatever identifier scheme you choose, if you don't update the target URL when your data is moved, the identifier will break.</p>
+	<h3>Here are some identifier schemes:</h3>
+	<ul>
+	<li><a href="http://www.cdlib.org/services/uc3/curation/ark.html">ARK</a> (Archival Resource Key) ��� a URL with extra features allowing you to ask for descriptive and archival metadata and to recognize certain kinds of relationships between identifiers. ARKs are used by memory organizations such as libraries, archives, and museums. They are resolved at "http://www.nt2.net".  Resolution depends on HTTP redirection and can be managed through an API or a user interface. There are no usage fees.</li>
+	<li><a href="http://www.doi.org/">DOI</a> (Digital Object Identifier) ��� an identifier that becomes actionable when embedded in a URL. DOIs are very popular in academic journal publishing.  They are resolved at "http://dx.doi.org".  Resolution depends on HTTP redirection and the Handle identifier protocol, and can be managed through an API or a user interface.  Annual fees apply to each DOI.</li>
+	<li><a href="http://www.handle.net/">Handle</a> ��� an identifier that becomes actionable when embedded in a URL.  Handles are resolved at "http://handle.net". Resolution depends on HTTP redirection and the Handle protocol, and can be managed through an API or a user interface. Annual fees apply to each local Handle server.</li>
+	<li><a href="http://www.iupac.org/inchi/">InChI</a> (IUPAC International Chemical Identifier) ��� a non-actionable identifier for chemical substances that can be used in printed and electronic data sources, thus enabling easier linking of diverse data compilations.</li>
+	<li><a href="http://en.wikipedia.org/wiki/LSID">LSID</a> (Life Sciences Identifier) ��� a kind of URN that identifies a biologically significant resources, including species names, concepts, occurrences, and genes or proteins, or data objects that encode information about them. Like other URNs, it becomes actionable when embedded in a URL.</li>
+	<li><a href="http://www.ncbi.nlm.nih.gov/Sequin/acc.html">NCBI</a> (National Center for Biotechnology Information) ACCESSION ��� a non-actionable number in use by NCBI.</li>
+	<li><a href="http://www.purl.org/">PURL</a> (Persistent Uniform Resource Locator) ��� a URL that is always redirected through a hostname (often purl.org). Resolution depends on HTTP redirection and can be managed through an API or a user interface. There are no usage fees.</li>
+	<li>URL (Uniform Resource Locator) ��� the typical "address" of web content. It is a kind of URI (Uniform Resource Identifier) that begins with "http://" and consists of a string of characters used to identify or name a resource on the Internet. Such identification enables interaction with representations of the resource over a network, typically the World Wide Web, using the HTTP protocol. Well-managed URL redirection can make URLs as persistent as any identifier. Resolution depends on HTTP redirection and can be managed through an API or a user interface. There are no usage fees.</li>
+	<li>URN (Uniform Resource Name) ��� an identifier that becomes actionable when embedded in a URL. Resolution depends on HTTP redirection and the DDDS protocol, and can be managed through an API or a user interface. A browser plug-in can save you from typing a hostname in front of it. There are no usage fees.</li>
+	</ul>
+	
+	<h3>EZID: Identifiers Made Easy</h3>
+	<p>CDL provides an identifier service called <a href="http://www.cdlib.org/services/uc3/ezid/">EZID</a> that offers several choices of identifier. EZID enables you to take control of the management and distribution of your datasets, share and get credit for your datasets, and build your reputation for the collection and documentation of research. By making data resources easier to access, re-use, and verify, EZID helps you to build on previous work, conduct new research, and avoid duplicating previous work.</p>
+	
+	<!-- NEXT SECTION -->
+	
+	<h2>Security and Storage</h2>
+	
+	<h3>Data Security</h3>
+	<p>Data security is the protection of data from unauthorized access, use, change, disclosure and destruction. Make sure your data is safe in regards to:</p>
+	<ul>
+	<li>Network security
+	<ul>
+	<li>Keep confidential data off the Internet</li>
+	<li>In extreme cases, put sensitive materials on computers not connected to the internet</li>
+	</ul><li>
+	<li>Physical security
+	<ul>
+	<li>Restrict access to buildings and rooms where computers or media are kept</li>
+	<li>Only let trusted individuals troubleshoot computer problems</li>
+	</ul></li>
+	<li>Computer systems and files
+	<ul>
+	<li>Keep virus protection up to date</li>
+	<li>Don't send confidential data via e-mail or FTP (or, if you must, use encryption)</li>
+	<li>Set passwords on files and computers</li>
+	<li>React with skepticism to phone calls and emails that claim to be from your insitution's IT department</li>
+	</ul></li>
+	
+	<h3>Encryption and Compression</h3>
+	<p>Unencrypted data will be more easily read by you and others in the future, but you may need to encrypt sensitive data.</p>
+	<ul>
+	<li>Use mainstream encryption tools (e.g., PGP)</li>
+	<li>Don't rely on 3rd party encryption alone</li>
+	<li>Keep passwords and keys on paper (2 copies)</li>
+	</ul>
+	<p>Uncompressed data will be also be easier to read in the future, but you may need to compress files to conserve disk space.</p>
+	<ul>
+	<li>Use a mainstream compression tool (e.g., ZIP, GZIP, TAR)</li>
+	<li>Limit compression to the 3rd backup copy</li>
+	</ul>
+	
+	<h3>Backups and storage</h3>
+	<p>Making regular backups is an integral part of data management. You can backup data to your personal computer, external hard drives, or departmental or university servers. Software that makes backups for you automatically can simplify this process considerably. CDs or DVDs are not recommended because they are easily lost, decay rapidly, and fail frequently. The UK Data Archive provides additional <a href="http://www.data-archive.ac.uk/create-manage/storage">guidelines on data storage, backup and security</a>.</p>
+	<h4>Backup Your Data</h4>
+	<ul>
+	<li>Good practice is to have three copies in at least two locations (e.g. original + external/local backup + external/remote backup)</li>
+	<li>Geographically distribute your local and remote copies to reduce risk of calamity at the same location (power outage, flood, fire, etc.)</li>
+	</ul>
+	<h4>Data Backup Options</h4>
+	<ul>
+	<li>Hard drive using software like:
+	<ul>
+	<li>Windows 8 <a href="http://windows.microsoft.com/en-us/windows-8/set-drive-file-history">File History</a></li>
+	<li>OS X <a href="http://www.apple.com/support/timemachine/">Time Machine</a></li>
+	<li>Linux/UNIX <a href="http://en.wikipedia.org/wiki/Rsync">rsync</a>)</li></ul></li>
+	<li>Tape backup system</li>
+	<li>Many institutions provide a service similar to <a href="http://ist.berkeley.edu/ucbackup/">UCBackup</a> at UC Berkeley. Check with your campus IT support to see if backup service is available. Althernately, your academic department may provide storage space and backup services.</li>
+	<li>Cloud storage - some examples of private sector storage resources include:
+	<ul>
+	<li>Amazon <a href="http://aws.amazon.com/s3/">S3</a> and <a href="http://aws.amazon.com/glacier/">Glacier</a>��� Requires client software, no encryption support</li>
+	<li>S3-based Remote Hard Drive Services such as <a href="http://home.elephantdrive.com/">Elephant Drive</a> and <a href="https://www.jungledisk.com/">Jungle Disk</a>.</li>
+	<li><a href="http://mozy.com/">Mozy</a> (from EMC) Free client software, 448-bit Blowfish encryption or AES key</li>
+	<li><a href="http://www.carbonite.com/">Carbonite Free</a></li>
+	</ul></li>
+	</ul>
+	
+	<h4>Test your backup system</h4>
+	<p>To be sure that your backup system is working, periodically retrieve your data files and confirm that you can read them. You should do this when you initially set up the system and on a regular schedule thereafter.</p>
+	
+	<h3>Other data preservation considerations</h3>
+	<h4>Who is responsible for managing and controlling the data?</h4>
+	<p>Who controls the data (e.g., the PI, a student, your lab, your university, your funder)? Before you spend a lot of time figuring out how to store the data, to share it, to name it, etc. you should make sure you have the authority to do so.</p>
+	<h4>For what or whom are the data intended?</h4>
+	<p>Who is your intended audience for the data? How do you expect they will use the data? The answer to these questions will help inform <a href="">structuring</a> and <a href="">distributing</a> the data.</p>
+	<h4>How long should the data be retained?</h4>
+	<p>Is there any requirement that the data be retained? If so, for how long? 3-5 years, 10-20 years, permanently? Not all data need to be retained, and some data required to be retained need not be retained indefinitely. Have a good understanding of your obligation for the data's retention.</p>
+	<p>Beyond any externally imposed requirments, think about the long-term usefulness of the data.  If the data is from an experiment that you anticipate will be repeatable more quickly, inexpensively, and accurately as technology progresses, you may want to store it for a relatively brief period.  If the data consists of observations made outside the laborartory that can never be repeated, you may wish to store it indefinitely.</p>
+	
+	<!-- NEXT SECTION -->
+	
+	<h2>Sharing and Archiving</h2>
+	
+	<h3>Why share your data?</h3>
+	<ul>
+	<li>Required by publishers (e.g., <a href="http://www.cell.com/authors#ed_policies">Cell</a>, <a href="http://www.nature.com/authors/policies/availability.html">Nature</a>, <a href="http://www.sciencemag.org/site/feature/contribinfo/prep/gen_info.xhtml#dataavail">Science</a>).</li>
+	<li>Required by government <a href="">funding agencies</a> (e.g., <a href="http://grants.nih.gov/grants/policy/data_sharing/">NIH</a>, <a href="http://www.nsf.gov/bfa/dias/policy/dmp.jsp">NSF</a>)</li>
+	<li>Allows data to be used to answer new questions</li>
+	<li>Makes research more open</li>
+	<li>Makes your papers more useful and citable by other researchers</li>
+	</ul>
+	
+	<h3>Considerations when preparing to share data</h3>
+	<ul>
+	<li><strong>File Formats for Long Term Access:</strong> The file format in which you keep your data is a primary factor in one's ability to use your data in the future. Plan for both hardware and software obsolescence. See <a href="">file formats and organization</a> for details on long-term storage formats.</li>
+	<li><strong>Don't Forget the Documentation:</strong> Document your research and data so others can interpret the data. Begin to document your data at the very beginning of your research project and continue throughout the project.  See <a href="">data documentation and metadata</a> for details.</li>
+	<li><strong>Ownership and Privacy:</strong> Make sure that you have considered the implications of sharing data in terms of copyright, IP ownership, and subject confidentiality.  See <a href="">copyright and confidentiality</a> for details.</li>
+	</ul>
+	
+	<h3>Ways to share your data</h3>
+	<ul>
+	<li>Email to individual requesters </li>
+	<li>Post online via a project or personal web site</li>
+	<li>Submit as supplemental material to be hosted on a journal publisher's website</li>
+	<li>Deposit in an open repository or archive</li>
+	<li>Deposit in an open repository and publish a "data paper" describing the data</li>
+	</ul>
+	<p>While the first three options above are valid ways to share data, a repository is much more able to provide long-term access. Data deposited in a repository can be supplemented with a "data paper"��� a relatively new type of publication that describes a dataset, but does not analyze it or draw any conclusions���  published in a journal such as <a href="http://www.nature.com/scientificdata/">Nature Scientific Data</a> or [Geoscience Data Journal](http://onlinelibrary.wiley.com/journal/10.1002/(ISSN)2049-6060).</p>
+	
+	<h3>Finding a data repository</h3>
+	<p>You should select a repository or archive for your data based on the long-term security offered and the ease of discovery and access by colleagues in your field. There are two common types of repository to look for:</p>
+	<ul>
+	<li><strong>Discipline specific:</strong> accepts data in a particluar field or of a particluar type (e.g., <a href="http://www.ncbi.nlm.nih.gov/genbank/">GenBank</a> accepts nucleotide sequence data)</li>
+	<li><strong>Institutional:</strong> accepts data of any type proudced within the institution that maintains it (e.g., the University of California's <a href="http://www.cdlib.org/services/uc3/merritt/">Merritt</a>)<br />
+	</li>
+	</ul>
+	<p>A searchable and browsable list of repositories can be found at these websites:</p>
+	<ul>
+	<li><a href="http://databib.org/">DataBib</a>: a directory of research data repositories</li>
+	<li><a href="http://www.re3data.org">re3data.org</a>: a REgistry of REsearch data REpositories</li>
+	<li><a href="http://oad.simmons.edu/oadwiki/Data_repositories">Data Repositories</a> in the Open Access Directory: a list of repositories hosted by Simmons College</li>
+	<li><a href="http://www.biosharing.org/">BioSharing</a>: a directory of life sciences databases and reporting standards</li>
+	</ul>
+	
+	<!-- NEXT SECTION -->
+	
+	<h2>Citing Data</h2>
+	
+	<p>Citing data is important in order to:
+	<ul>
+	<li>Give the data producer appropriate credit</li>
+	<li>Allow easier access to the data for re-purposing or re-use</li>
+	<li>Enable readers to verify your results</li>
+	</ul></p>
+	
+	<h3>Citation Elements</h3>
+	<p>A dataset should be cited formally in an article's reference list, not just informally in the text. Many data repositories and publishers provide explict instructions for citing their contents. If no citation information is provided, you can still construct a citation following generally agreed-upon guidelines from sources such as the <a href="https://www.jstage.jst.go.jp/article/dsj/12/0/12_OSOM13-043/_article">CODATA Report on data citation</a>, the <a href="http://wiki.esipfed.org/index.php/Interagency_Data_Stewardship/Citations">ESIP Federation Data Citation Guidelines</a>, and the current <a href="http://schema.datacite.org/">DataCite Metadata Schema</a>.</p>
+	
+	<h4>Core elements</h4>
+	<p>There are 5 core elements usually included in a dataset citation, with additional elements added as appropriate.</p>
+	<ul>
+	<li><strong>Creator(s)</strong> ��� may be individuals or organizations</li>
+	<li><strong>Title</strong></li>
+	<li><strong>Publication year</strong> when the dataset was released (may be different from the <strong>Access date</strong>)</li>
+	<li><strong>Publisher</strong> ��� the data center, archive, or repository</li>
+	<li><strong>Identifier</strong> ��� a <a href="">unique public identifier</a> (e.g., an ARK or DOI)</li>
+	</ul>
+	<p>Creator names in non-Roman scripts should be transliterated using the <a href="http://www.loc.gov/catdir/cpso/roman.html">ALA-LC Romanization Tables</a>.</p>
+	
+	<h4>Common additional elements</h4>
+	<p>Although the core elements are sufficient in the simplest case��� citation to the entirety of a static dataset��� additional elements may be needed if you wish to cite a dynamic dataset or a subset of a larger dataset. <br />
+	</p>
+	<ul>
+	<li><strong>Version</strong> of the dataset analyzed in the citing paper</li>
+	<li><strong>Access date</strong> when the data was accessed for analysis in the citing paper</li>
+	<li><strong>Subset</strong> of the dataset analyzed (e.g., a range of dates or record numbers, a list of variables)</li>
+	<li><strong>Verifier</strong> that the dataset or subset accessed by a reader is identical to the one analyzed by the author (e.g., a <a href="http://en.wikipedia.org/wiki/Checksum">Checksum</a>)</li>
+	<li><strong>Location</strong> of the dataset on the internet, needed if the identifier is not "actionable" (convertable to a web address)</li>
+	</ul>
+	
+	<h3>Example citations</h3>
+	<ul>
+	<li>Laurance, Megan (2013): Re-analysis of microarray data from rapamycin resistant DLBCL cell lines. University of California, San Francisco. Dataset. <a href="http://dx.doi.org/doi:10.7272/q6td9v7j">http://dx.doi.org/doi:10.7272/q6td9v7j</a></li>
+	<li>Kumar, Sujai (2012): 20 Nematode Proteomes. Figshare. Dataset. doi:10.6084/m9.figshare.96035.</li>
+	<li>Morran LT, Parrish II RC, Gelarden IA, Lively CM (2012) Data from: Temporal dynamics of outcrossing and host mortality rates in host-pathogen experimental coevolution. Evolution doi:10.5061/dryad.c3gh6</li>
+	<li>Donna Strahan. "Petra Great Temple Excavations: 08-B-1 (Small Find)" (Released 2009-10-26). Martha Sharp Joukowsky (Ed.) Open Context. <a href="http://opencontext.org/subjects/30C3F340-5D14-497A-B9D0-7A0DA2C019F1">http://opencontext.org/subjects/30C3F340-5D14-497A-B9D0-7A0DA2C019F1</a></li>
+	<li>OECD (2008), ���Social Expenditures aggregates���, OECD Social Expenditure Statistics (database). doi: 10.1787/000530172303 <a href="http://dx.doi.org/10.1787/000530172303">http://dx.doi.org/10.1787/000530172303</a> (Accessed on 2008-12-02).</li>
+	<li>Cavalieri, D., C. Parkinson, P. Gloersen, and H. J. Zwally. 1996, updated 2006. Sea ice concentrations from Nimbus-7 SMMR and DMSP SSM/I passive microwave data, March 2002���Sept. 2003. Boulder, Colorado USA: National Snow and Ice Data Center. url: <a href="http://nsidc.org/data/nsidc-0051.html">http://nsidc.org/data/nsidc-0051.html</a> (Accessed on 2008-05-14).</li>
+	<li>Denhard, Michael (2009): dphase_mpeps: MicroPEPS LAF-Ensemble run by DWD for the MAP D-PHASE project. World Data Center for Climate. <a href="http://dx.doi.org/10.1594/WDCC/dphase_mpeps">http://dx.doi.org/10.1594/WDCC/dphase_mpeps</a></li>
+	<li>Manoug, J L (1882): Useful data on the rise of the Nile. Alexandria : Printing-Office V Penasson. <a href="http://n2t.net/ark:/13960/t44q88124">http://n2t.net/ark:/13960/t44q88124</a></li>
+	</ul>
+	
+	<!-- NEXT SECTION -->
+	
+	<h2>Copyright and Privacy</h2>
+	
+	<h3>Sharing data that you produced/collected yourself</h3>
+	<ul>
+	<li><strong>Data is not copyrightable.</strong> However, a presentation of data (such as a chart or table) may be.</li>
+	<li><strong>Data can be licensed.</strong> Some data providers apply licenses that limit how the data can be used to protect the privacy of study participants or to guide downstream uses of the data (e.g., requiring attribution or forbidding for-profit use)<br />
+	</li>
+	<li>If you want to promote sharing and unlimited use of your data, you can make your data available under a Creative Commons <a href="http://creativecommons.org/choose/zero/">CC0 Declaration</a> to make your wishes explicit.</li>
+	</ul>
+	
+	<h3>Sharing data that you have collected from other sources</h3>
+	<ul>
+	<li>You may or may not have the rights to do so, depending upon whether that data were accessed under a license with terms of use.</li>
+	<li>Most databases to which the UC Libraries subscribe are licensed and prohibit redistribution of data outside of UC. For more information on terms of use for databases licensed by the Libraries, <a href="http://www.cdlib.org/services/uc3/contact.html">contact UC3</a>.</li>
+	</ul>
+	<p>If you are uncertain as to your rights to disseminate data, UC researchers can consult with your campus Office of General Council. Note: Laws about data vary outside the U.S.</p>
+	<p>For a general discussion about publishing your data, applicable to many disciplines, see the ICPSR <a href="http://www.icpsr.umich.edu/files/ICPSR/access/dataprep.pdf">Guide to Social Science Data Preparation and Archiving</a>.</p>
+	
+	<h3>Confidendiality and Ethical Concerns</h3>
+	<p>It is vital to maintain the confidentiality of research subjects both as an ethical matter and to ensure continuing participation in research. Researchers need to understand and manage tensions between confidentiality requirements and the potential benefits of archiving and publishing the data.</p>
+	<ul>
+	<li><strong>Evaluate the anonymity of your data.</strong>  Consider to what extent your data contains <a href="http://www.icpsr.umich.edu/icpsrweb/content/datamanagement/confidentiality/">direct or indirect identifiers</a> that could be combined with other public information to identify research participants.</li>
+	<li><strong>Obtain a confidentiality review.</strong>  A benefit of depositing your data with <a href="http://www.icpsr.umich.edu/">ICPSR</a> is that their staff offers a <a href="http://www.icpsr.umich.edu/icpsrweb/content/datamanagement/confidentiality/index.html">Disclosure review service</a> to check your data for confidential information.</li>
+	<li><strong>Comply with UC regulations.</strong>   researchers concerned about confidentiality issues with their data should consult the UC policy for <a href="http://policy.ucop.edu/doc/2500499">Protection of Human Subjects in Research</a>.</li>
+	<li><strong>Comply with regulations for health research</strong> set forth in the <a href="http://privacyruleandresearch.nih.gov/">Heatlth Insurance Portability and Accountability Act (HIPPA)</a>.</li>
+	</ul>
+	<p>To ethically share confidential data, you may be able to</p>
+	<ul>
+	<li><strong>Gain informed consent</strong> for data sharing (e.g. deposit in a repository or archive)</li>
+	<li><strong>Anonymize</strong> the data by removing identifying information.  Be aware, however, that any dataset that contains enough information to be useful will always present some risk.</li>
+	<li><strong>Restrict the use</strong> of your data.  The ICPSR <a href="http://www.icpsr.umich.edu/icpsrweb/DSDR/">DSDR</a> provides a tool for <a href="http://www.icpsr.umich.edu/icpsrweb/DSDR/rduc/">Designing a Restricted Data Use Contract</a>.</li>
+	</ul>
+</div>
