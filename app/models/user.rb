@@ -83,9 +83,24 @@ class User < ActiveRecord::Base
     uid
   end
 
+   def self.search_terms(terms)
+    #searches both institution name and template name
+    items = terms.split
+    conditions1 = items.map{|item| "CONCAT(first_name, ' ', last_name) LIKE ?" }
+    #conditions2 = items.map{|item| "last_name LIKE ?" }
+    conditions = "#{conditions1.join(' AND ')}" #+ ' OR ' + "(#{conditions2.join(' AND ')}) )"
+    values = items.map{|item| "%#{item}%" }
+    self.where(conditions, *(values) )
+  end
+
   def full_name
     [first_name, last_name].join(" ")
   end
+
+  def full_name_last_first
+    [last_name, first_name].join(" ")
+  end
+ 
   
   #label for dropdown for autocomplete
   def label

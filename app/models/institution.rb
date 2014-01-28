@@ -48,4 +48,8 @@ class Institution < ActiveRecord::Base
     full_name
   end
 
+  def is_shibboleth?
+    self.shib_entity_id.to_s != ''
+  end
+
 end
