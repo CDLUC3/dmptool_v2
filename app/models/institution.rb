@@ -44,4 +44,8 @@ class Institution < ActiveRecord::Base
     User.joins({:authorizations => :role}).where("roles.name = ?", role_name).where(institution_id: self.id)
   end
 
+  def name #alias name to full name for ease of use, but don't change to alias command because it breaks activerecord
+    full_name
+  end
+
 end

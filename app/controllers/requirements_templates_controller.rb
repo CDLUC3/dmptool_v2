@@ -71,7 +71,7 @@ class RequirementsTemplatesController < ApplicationController
     if !safe_has_role?(Role::DMP_ADMIN)
       @requirements_templates = RequirementsTemplate.where(institution_id: [current_user.institution.subtree_ids]).institutional_visibility.active.page(params[:page]).per(5)
     else
-      @requirements_templates = RequirementsTemplate.institutional_visibility.active.page(params[:page]).per(5)
+      @requirements_templates = RequirementsTemplate.public_visibility.active.page(params[:page]).per(5)
     end
   end
 
@@ -130,14 +130,65 @@ class RequirementsTemplatesController < ApplicationController
     else
       requirements_template = RequirementsTemplate.where(id: id).first
     end
-    @requirements_template = requirements_template.dup include: [:resource_templates, :sample_plans, :additional_informations]
-    render action: "copy_existing_template"
+    @requirements_template = requirements_template.dup include: [:resource_templates, :sample_plans, :additional_informations, :requirements], validate: false
+    respond_to do |format|
+      if @requirements_template.save
+        format.html { redirect_to edit_requirements_template_path(@requirements_template), notice: 'Requirements template was successfully created.' }
+        format.json { render action: 'edit', status: :created, location: @requirements_template }
+      else
+        format.html { render action: 'new' }
+        format.json { render json: @requirements_template.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def toggle_active
     @requirements_template.toggle!(:active)
     respond_to do |format|
       format.js
+    end
+  end
+
+  #to test the requirements templates tree view
+  def test
+    req_temp = RequirementsTemplate.all  #apply any other constraints/scopes here
+
+    rt_tree = {}
+    #this creates a hash with institutions as keys and requirements_templates as values like below
+    # { <institution_object1> => [<requirements_template_1>, <requirements_template_2> ],
+    #     <institution_object2> => [<requirements_template_1>] }
+    req_temp.each do |rt|
+      unless rt.institution.nil?
+        root_inst = rt.institution.root
+        if rt_tree.has_key?(root_inst)
+          rt_tree[root_inst].push(rt)
+        else
+          rt_tree[root_inst] = [ rt ]
+        end
+      end
+    end
+
+    #this transforms the hash so that there is a possible 2-level heirarchy like institution => [req_template1, req_template2] or
+    # req_template => nil, see example below:
+    # { <institution_object1> => [<requirements_template_1>, <requirements_template_2> ],
+    #     <requirements_template_1> => nil }
+    @rt_tree = {}
+    rt_tree.each do |k,v|
+      if v.length > 1
+        @rt_tree[k] = v
+      else
+        v.each do |i|
+          @rt_tree[i] = nil
+        end
+      end
+    end
+
+    #sort first level items by name (both institutions and requirements templates)
+    @rt_tree = Hash[@rt_tree.sort{|x,y| x[0].name.downcase <=> y[0].name.downcase}]
+
+    #sort any second level items by name (just requirements templates within an institution)
+    @rt_tree.each do |k, v|
+      v.sort!{|x, y| x.name.downcase <=> y.name.downcase} unless v.nil?
     end
   end
 
@@ -169,7 +220,7 @@ class RequirementsTemplatesController < ApplicationController
 
     end
 
-    def count
+  def count
     if current_user.has_role?(Role::DMP_ADMIN)
       @all = RequirementsTemplate.count
       @active = RequirementsTemplate.active.count
