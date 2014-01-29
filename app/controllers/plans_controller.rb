@@ -6,7 +6,7 @@ class PlansController < ApplicationController
   def index
     if !safe_has_role?(Role::DMP_ADMIN)
       user_id = current_user.id
-      user_plans = UserPlan.where(user_id: user_id).pluck(:id)
+      user_plans = UserPlan.where(user_id: user_id).pluck(:id) unless user_id.nil?
       @plans = Plan.where(id: user_plans)
     else
       @plans = Plan.all
