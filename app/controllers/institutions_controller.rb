@@ -21,6 +21,43 @@ class InstitutionsController < ApplicationController
     @institution_users = institutional_admins
 
     @categories.delete_if {|i| i[1] == @institution.id}
+
+    manage_users
+
+  end
+
+
+  def manage_users
+    @users = current_user.institution.users_deep_in_any_role.order(last_name: :asc)
+  end
+
+  #every roles except DMP Admin
+  def edit_user_roles_inst_admin
+    @user = User.find(params[:user_id])
+    @roles = Role.where(['id NOT IN (?)', 1]) 
+  end
+
+  def update_user_roles_inst_admin
+    @user_id = params[:user_id]
+    @role_ids = params[:role_ids] ||= []  #"role_ids"=>["1", "2", "3"]
+
+    remove_user_authorizations_not_dmp_admin(@user_id)
+
+    @role_ids.each do |role_id|
+      role_id = role_id.to_i
+      authorization = Authorization.create(role_id: role_id, user_id: @user_id)
+      authorization.save!
+    end
+
+    respond_to do |format|
+      format.html { redirect_to institutions_url, notice: 'User was successfully updated.'}
+      format.json { head :no_content }
+    end
+  end
+
+  def remove_user_authorizations_not_dmp_admin(user_id)
+    @authorization = Authorization.where(user_id: user_id)
+    @authorization.delete_all(['role_id NOT IN (?)', 1])  
   end
 
   # GET /institutions/1
