@@ -1,0 +1,11 @@
+<% @rt_tree.each do |k, v| %>
+  <div>
+    <%= (v.nil? ? "(requirement template)" : "(institution)" ) %>
+    <%=k.name%>
+  </div>
+  <% if v %>
+    <% v.each do |i| %>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;(requirement template) <%= i.name %></div>
+    <% end %>
+  <% end %>
+<% end %>
