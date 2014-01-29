@@ -17,7 +17,7 @@
 					<tr>
 						<td class="span1"><%= radio_button_tag :plan, plan.id, checked: false %></td>
 						<td><%= plan.name %></td>
-						<td><%= plan.name %></td>
+						<td><%= owner_name(plan)%></td>
 					</tr>
 				<% end %>
 				</tbody>
@@ -34,6 +34,4 @@
 		<p>Select a template based on funder guidances and provide resonses to those requirements.</p>
 		<%= button_to "Select Template >>", select_dmp_template_path, :method => :get, :class => "btn" %>
 	</div>
-
-
 </div>
