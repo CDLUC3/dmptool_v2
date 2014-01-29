@@ -21,7 +21,7 @@
   <div class="control-group">
     <%= f.label :shib_entity_id, "Entity_id", :class => "control-label required" %>
     <div class="controls">
-      <%= f.text_field :shib_entity_id, readonly: (@current_institution.shib_entity_id.to_s != ''), :class => "required" %>
+      <%= f.text_field :shib_entity_id, readonly: @current_institution.is_shibboleth?, :class => "required" %>
       ( <span class="required">*</span> Required Field )
     </div>
   </div>
@@ -29,7 +29,7 @@
   <div class="control-group">
     <%= f.label :shib_domain , "Shibboleth Domain", :class => "control-label required"%>
     <div class="controls">
-      <%= f.text_field :shib_domain, readonly: (@current_institution.shib_domain.to_s != ''), :class => "required" %>
+      <%= f.text_field :shib_domain, readonly: @current_institution.is_shibboleth?, :class => "required" %>
       ( <span class="required">*</span> Required Field )
     </div>
   </div>
@@ -37,7 +37,7 @@
   <div class="control-group">
     <%= f.label :parent_id , "Parent Institution", :class => "control-label"%>
     <div class="controls">
-      <%= f.select(:parent_id, options_for_select(@categories), :prompt => 'Select', :include_blank => 'none') %>
+      <%= f.select :parent_id, options_for_select(@categories), {:prompt => 'Select', :include_blank => 'none'}, :disabled => !@current_institution.is_shibboleth? %>
     </div>
   </div>
 
