@@ -34,9 +34,8 @@ Dmptool2::Application.routes.draw do
     resources :resource_contexts
   end
 
-  #these routes need to stay above the other user ones to take priority
-  get 'users/autocomplate_template_editors', to: 'users#autocomplete_template_editors', as: 'template_editor_users_autocomplete'
-  get 'users/autocomplate_resource_editors', to: 'users#autocomplete_resource_editors', as: 'resource_editor_users_autocomplete'
+  #this routes needs to stay above the other user ones to take priority
+  get 'users/autocomplate_users', to: 'users#autocomplete_users', as: 'users_autocomplete'
 
   resources :users do
     member do
