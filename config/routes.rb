@@ -34,6 +34,8 @@ Dmptool2::Application.routes.draw do
     resources :resource_contexts
   end
 
+  resources :resource_contexts
+
   #this routes needs to stay above the other user ones to take priority
   get 'users/autocomplate_users', to: 'users#autocomplete_users', as: 'users_autocomplete'
 
