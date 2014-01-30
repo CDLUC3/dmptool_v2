@@ -34,6 +34,9 @@ Dmptool2::Application.routes.draw do
     resources :resource_contexts
   end
 
+  #this routes needs to stay above the other user ones to take priority
+  get 'users/autocomplate_users', to: 'users#autocomplete_users', as: 'users_autocomplete'
+
   resources :users do
     member do
       get :edit_roles
@@ -58,9 +61,6 @@ Dmptool2::Application.routes.draw do
   match 'user_sessions/username_reminder', to: 'user_sessions#username_reminder', :via => [:get, :post]
   match 'user_sessions/password_reset', to: 'user_sessions#password_reset', :via => [:get, :post]
   match 'user_sessions/complete_password_reset', to: 'user_sessions#complete_password_reset', as: 'complete_password_reset', :via => [:get, :post]
-
-  get 'users/autocomplate_template_editors', to: 'users#autocomplete_template_editors', as: 'template_editor_users_autocomplete'
-  get 'users/autocomplate_resource_editors', to: 'users#autocomplete_resource_editors', as: 'resource_editor_users_autocomplete'
 
   get 'requirements_template_information', to: 'requirements_templates#template_information'
   get 'copy_existing_requirements_template', to: 'requirements_templates#copy_existing_template'

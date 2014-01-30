@@ -25,8 +25,7 @@
 	<%= paginate @users, :param_name => :editor_page %>
 		<%= render partial: '/users/user_autocomplete_widget',
 				:locals =>
-					 {  autocomplete_path: resource_editor_users_autocomplete_path,
-							user_role: 'template_editor',
+					 {  user_role: 'template_editor',
 							submit_text: 'Add As Resource Editor',
 							submit_url: add_role_autocomplete_path,
 							role_number: Role::RESOURCE_EDITOR,
