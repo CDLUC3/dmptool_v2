@@ -4,14 +4,17 @@
     <li class="active"><%= link_to 'Institution Information', '#tab1', 'data-toggle' => 'tab' %></li>
     <li><%= link_to 'Institution Administrators', '#tab2', 'data-toggle' => 'tab' %></li>
     <li><%= link_to 'Institution Hierarchy', '#tab3', 'data-toggle' => 'tab' %></li>
+    <li><%= link_to 'Manage Users', '#tab4', 'data-toggle' => 'tab' %></li>
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="tab1">
       <%= render 'form' %>
     </div>
+
     <div class="tab-pane" id="tab2">
       	<%= render 'institutional_administrators' %>
     </div>
+
     <div class="tab-pane" id="tab3">
     	<div class="institutions">
 	      <%= nested_institutions @institutions.arrange(order: :created_at) %>
@@ -20,5 +23,10 @@
 	     <%= link_to 'Add New Institution', new_institution_path(5), :class => "btn btn-green" %>
 	    </div>
     </div>
+
+    <div class="tab-pane" id="tab4">
+        <%= render 'manage_users' %>
+    </div>
+
   </div>
 </div>

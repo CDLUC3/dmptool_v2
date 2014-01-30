@@ -55,4 +55,21 @@ class Requirement < ActiveRecord::Base
     end
   end
 
+  # gets resources that are not attached to a resource_template and not customized for an institution (nils)
+  # this hinges on resource_contexts table and these fields set various ways:
+  #
+  # requirements_template_id: nil, requirements_id: nil -- resources for all req_templates and questions
+  # requirements_template_id: curr_id, requirements_id: nil -- resources for all questions in this req_template
+  # requirements_template_id: curr_id, requirements_id: curr_id -- resources for this template and question
+  # (by question I mean "requirement", but I find it easier to think of them as questions)
+  def non_customized_resources
+    rt = self.requirements_template
+    return [] if rt.blank?
+    Resource.joins(:resource_contexts).where(resource_contexts: {:institution_id => nil, :resource_template_id => nil}).
+        where('(resource_contexts.requirements_template_id IS NULL AND resource_contexts.requirement_id IS NULL) OR
+             (resource_contexts.requirements_template_id = ? AND resource_contexts.requirement_id IS NULL) OR
+             (resource_contexts.requirements_template_id = ? AND resource_contexts.requirement_id = ?)',
+            rt.id, rt.id, self.id)
+  end
+
 end

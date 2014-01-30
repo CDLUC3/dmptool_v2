@@ -95,15 +95,15 @@ class ResourceTemplatesController < ApplicationController
     def resource_customizations
       case params[:scope]
         when "all"
-          @resource_templates = ResourceTemplate.page(params[:page])
+          @resource_contexts = ResourceContext.page(params[:page])
         when "all_limited"
-          @resource_templates = ResourceTemplate.page(params[:page]).per(5)
+          @resource_contexts = ResourceContext.page(params[:page]).per(5)
         else
-          @resource_templates = ResourceTemplate.page(params[:page]).per(5)
+          @resource_contexts = ResourceContext.page(params[:page]).per(5)
       end
 
       if !safe_has_role?(Role::DMP_ADMIN)
-        @resource_templates = @resource_templates.
+        @resource_contexts = @resource_contexts.
                               where(institution_id: [current_user.institution.subtree_ids])
       end
     end

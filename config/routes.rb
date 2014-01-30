@@ -93,6 +93,9 @@ Dmptool2::Application.routes.draw do
   get  'edit_user_roles', to: 'users#edit_user_roles'
   post  'update_user_roles', to: 'users#update_user_roles'
 
+  get  'edit_user_roles_inst_admin', to: 'institutions#edit_user_roles_inst_admin'
+  post  'update_user_roles_inst_admin', to: 'institutions#update_user_roles_inst_admin'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

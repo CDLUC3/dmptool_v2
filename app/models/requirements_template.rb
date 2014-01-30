@@ -29,19 +29,19 @@ class RequirementsTemplate < ActiveRecord::Base
   scope :public_visibility, -> { where(visibility: :public) }
 
   after_initialize :default_values
-  after_initialize :version_number
+  # after_initialize :version_number
 
   def default_values
     self.active ||= false
   end
 
-  def version_number
-    if parent_id.nil?
-      self.version = 1
-    else
-      self.version = RequirementsTemplate.where(id: parent_id).version + 1
-    end
-  end
+  # def version_number
+  #   if parent_id.nil?
+  #     self.version = 1
+  #   else
+  #     self.version = RequirementsTemplate.where(id: parent_id).version + 1
+  #   end
+  # end
 
   def self.letter_range_by_institution(s, e)
     #add as a scope where s=start and e=end letter
