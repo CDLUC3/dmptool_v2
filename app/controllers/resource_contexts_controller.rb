@@ -55,7 +55,7 @@ class ResourceContextsController < ApplicationController
         @resource_contexts = ResourceContext.page(params[:page]).per(5)
     end
 
-    if !safe_has_role?(Role::DMP_ADMIN)
+    unless safe_has_role?(Role::DMP_ADMIN)
       @resource_contexts = @resource_contexts.
                             where(institution_id: [current_user.institution.subtree_ids])
     end
