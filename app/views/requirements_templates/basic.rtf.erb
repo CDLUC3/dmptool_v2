@@ -108,7 +108,7 @@ def create_level(nodes, par)
 		else
 			style(par, "question_brief"){|s| s << node.text_brief }
 			style(par, "question_full"){|s| s << node.text_full }
-			node.resources.guidance.each do |g|
+			node.non_customized_resources.guidance.each do |g|
 				style(par, "help"){|s| s << g.value }
 			end
 			style(par, "help"){|s| s << '' } # adds a blank line
