@@ -7,7 +7,7 @@ Dmptool2::Application.routes.draw do
  match 'contact', to: 'static_pages#contact', :via => [:get, :post], as: 'contact'
  get 'dashboard', to: 'dashboard#show', as: 'dashboard'
  get 'dashboard/test', to: 'dashboard#test'
- get 'data_management_guidance', to: 'static_pages#data_management_guidance'
+ get 'dm_guidance', to: 'static_pages#data_management_guidance'
  get 'guidance', to: 'static_pages#guidance'
  get 'help', to: 'static_pages#help'
  get 'logout', to: 'user_sessions#destroy'

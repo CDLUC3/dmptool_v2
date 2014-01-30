@@ -10,10 +10,11 @@
  *
  *= require jquery.ui.all
  *= require_self
- *= require custom
  *= require scaffolds
- *= require layouts
  *= require forms
+ *= require tables
+ *= require buttons
+ *= require layouts
  *= require ui
  *= require static_pages
  *= require_tree .
