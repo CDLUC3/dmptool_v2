@@ -41,7 +41,7 @@ class PlansController < ApplicationController
   # GET /plans/new
   def new
     @plan = Plan.new
-    @comment = @plan.comments.build
+    @plan.comments.build
     @comments = @plan.comments
   end
 
@@ -54,6 +54,8 @@ class PlansController < ApplicationController
   # POST /plans.json
   def create
     @plan = Plan.new(plan_params)
+    @plan.comments.build
+    @comments = @plan.comments
 
     respond_to do |format|
       if @plan.save
@@ -71,6 +73,7 @@ class PlansController < ApplicationController
   # PATCH/PUT /plans/1
   # PATCH/PUT /plans/1.json
   def update
+    @comments = @plan.comments
     respond_to do |format|
       if @plan.update(plan_params)
         format.html { redirect_to plans_path, notice: 'Plan was successfully updated.' }

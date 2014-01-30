@@ -4,7 +4,7 @@ class Plan < ActiveRecord::Base
   has_many :users, through: :user_plans
   has_many :plan_states
   has_many :published_plans
-  has_many :comments
+  has_many :comments, :dependent => :destroy
   has_many :responses
   has_one  :current_state,
            :class_name => 'PlanState',
