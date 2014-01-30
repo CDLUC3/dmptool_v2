@@ -48,7 +48,7 @@
 </script>
 <%= form_tag(submit_url, method: :post, :id => "#{user_role}_autocomplete_form") do %>
 <div class="control-group">
-  <%= label_tag :user_role, "Name:", :class => "control-label" %>
+    <%= label_tag "#{user_role}_name", "Name:", :class => "control-label" %>
   	<%= text_field_tag "#{user_role}_name", '' %>
 		<%= hidden_field_tag "#{user_role}_id", '' %>
 		<%= hidden_field_tag "role_number", role_number %>
