@@ -1,5 +1,8 @@
 Dmptool2::Application.routes.draw do
 
+  get "comments/index"
+  get "comments/new"
+  get "comments/edit"
  get "dashboard/show"
  root 'static_pages#home'
  get 'about', to: 'static_pages#about'
@@ -35,7 +38,6 @@ Dmptool2::Application.routes.draw do
   end
 
   resources :users do
-    resources :comments
     resources :plan_states
     member do
       get :edit_roles
@@ -49,7 +51,6 @@ Dmptool2::Application.routes.draw do
   end
 
   resources :plans do
-    resources :comments
     resources :plan_states
     member do
       post :add_coowner
@@ -57,7 +58,7 @@ Dmptool2::Application.routes.draw do
       get :export
     end
   end
-
+  resources :comments
   resources :institutions
   resources :authorizations
 

@@ -64,12 +64,7 @@
         <div class="control-group">
           <label class ="control-label"> Comments: </label>
           <div class="controls">
-            <p id="add_comments_link"><%= link_to "Add Comments", '#' %></p>
-            <div class= 'accordian'>
-              <%= fields_for :comments do |builder| %>
-                <%= render 'comments', :f => builder %>
-              <% end %>
-            </div>
+            <p><%= link_to "Add Comments", new_comment_path %></p>
           </div>
         </div>
 
