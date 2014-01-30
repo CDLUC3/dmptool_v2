@@ -1,28 +1,28 @@
 body {
-  background-color: #FFFFFF;
+  background: #FFF;
   color: #4C4C4E;
   font-family: Helvetica, sans-serif;
   font-size: 12px;
-  line-height: 1.3; }
-p {
-	font-size: 1.167em;
-}
-ol, ul {
-	font-size: 1em;
-}
+  line-height: 1.333;
+  margin: 0;
+  padding: 0; }
+p, ul, ol {
+	font-size: 1em; }
 td, th {
-	font-size: 1em;
-}
+	font-size: 1em; }
 pre {
-  background-color: #eee;
-  font-size: 0.9em;
+  font-size: 0.917em;
+  line-height: 2;
+  margin: 10px 0;
   padding: 10px; }
 a {
   color: #72942E;
   &:visited {
     color: #72942E; }
   &:hover {
-    color: #72942E; } }
+    color: #516935; }
+  &:active {
+  	color: #72942E; } }
 #notice {
   color: green; }
 .field_with_errors {
@@ -34,7 +34,7 @@ a {
   background-color: #F0F0F0;
   width: 450px;
   padding: 7px 7px 0;
-  margin-bottom: 20px;
+  margin-bottom: 20px; 
   h2 {
     background-color: #CC0000;
     color: #FFF;
@@ -42,6 +42,4 @@ a {
   	font-weight: bold;
     text-align: left;
     margin: -7px -7px 0;
-    padding: 5px 5px 5px 15px; }
-  ul li {
-    list-style: square; } }
+    padding: 5px 5px 5px 15px; } }

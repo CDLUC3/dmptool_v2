@@ -31,8 +31,30 @@ class StaticPagesController < ApplicationController
 
   def contact
     if request.post?
-      flash[:alert] = "this is a post request where the form is submitted and en email may be sent."
-      redirect_to :back
+      if verify_recaptcha
+        msg = []
+        msg.push('Please indicate what your question is about') if params[:question_about].blank?
+        msg.push('Please enter your name') if params[:name].blank?
+        msg.push('Please enter your email') if params[:email].blank?
+        msg.push('Please enter a message') if params[:message].blank?
+        if !params[:email].blank? && !params[:email].match(/^\S+@\S+$/)
+          msg.push('Please enter a valid email address')
+        end
+        if msg.length > 0
+          flash[:error] = msg
+          redirect_to contact_path(question_about: params['question_about'], name: params['name'],
+                                   email: params['email'], message: params[:message]) and return
+        end
+
+        addl_to = (current_user ? [current_user.institution.contact_email] : [])
+        (APP_CONFIG['feedback_email_to'] + addl_to).each do |i|
+          GenericMailer.contact_email(params, i).deliver
+        end
+        flash[:alert] = "Your email message was sent to the DMPTool team."
+        redirect_to :back and return
+      end
+      redirect_to contact_path(question_about: params['question_about'], name: params['name'],
+                          email: params['email'], message: params[:message]) and return
     end
   end
   
@@ -42,18 +64,19 @@ class StaticPagesController < ApplicationController
   def guidance
     @public_templates = RequirementsTemplate.public_visibility.includes(:institution, :sample_plans)
     
-    if params[:s] && params[:e]
+    unless params[:s].blank? || params[:e].blank?
       @public_templates = @public_templates.letter_range_by_institution(params[:s], params[:e])
     end
     
     if !params[:q].blank?
       @public_templates = @public_templates.search_terms(params[:q])
     end
-    @public_templates = @public_templates.page(params[:page]).per(10)
+    page_size = (params[:all_records] == 'true'? 999999 : 10)
+    @public_templates = @public_templates.page(params[:page]).per(page_size)
     
     if current_user
       inst = current_user.institution
-      @institution_templates = inst.requirements_templates_deep.#institutional_visibility.
+      @institution_templates = inst.requirements_templates_deep.institutional_visibility.
               includes(:institution, :sample_plans)
     end
   end

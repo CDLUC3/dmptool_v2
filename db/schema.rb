@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140110192327) do
+ActiveRecord::Schema.define(version: 20140123010621) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -23,11 +23,14 @@ ActiveRecord::Schema.define(version: 20140110192327) do
 
   create_table "authentications", force: true do |t|
     t.integer  "user_id"
-    t.enum     "provider",   limit: [:shibboleth, :ldap]
+    t.enum     "provider",    limit: [:shibboleth, :ldap]
     t.string   "uid"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "old_user_id"
   end
+
+  add_index "authentications", ["provider", "uid"], name: "provider_and_uid", unique: true, using: :btree
 
   create_table "authorizations", force: true do |t|
     t.integer  "role_id"
@@ -69,6 +72,7 @@ ActiveRecord::Schema.define(version: 20140110192327) do
     t.string   "logo"
     t.string   "ancestry"
     t.datetime "deleted_at"
+    t.integer  "old_key"
   end
 
   add_index "institutions", ["ancestry"], name: "index_institutions_on_ancestry", using: :btree
@@ -78,6 +82,31 @@ ActiveRecord::Schema.define(version: 20140110192327) do
     t.string   "group"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "old_authentications", force: true do |t|
+    t.integer  "user_id"
+    t.string   "provider"
+    t.string   "uid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "new_user_id"
+  end
+
+  create_table "old_users", force: true do |t|
+    t.integer  "institution_id"
+    t.string   "email"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "token"
+    t.datetime "token_expiration"
+    t.binary   "prefs"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "cookie_salt"
+    t.string   "login_id"
+    t.boolean  "active",           default: true
+    t.datetime "deleted_at"
   end
 
   create_table "plan_states", force: true do |t|
@@ -93,7 +122,7 @@ ActiveRecord::Schema.define(version: 20140110192327) do
     t.integer  "requirements_template_id"
     t.string   "solicitation_identifier"
     t.datetime "submission_deadline"
-    t.enum     "visibility",               limit: [:institutional, :public, :public_browsable]
+    t.enum     "visibility",               limit: [:institutional, :public, :private]
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "current_plan_state_id"
@@ -102,7 +131,7 @@ ActiveRecord::Schema.define(version: 20140110192327) do
   create_table "published_plans", force: true do |t|
     t.integer  "plan_id"
     t.string   "file_name"
-    t.enum     "visibility", limit: [:institutional, :public, :public_browsable]
+    t.enum     "visibility", limit: [:institutional, :public, :private]
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -129,12 +158,13 @@ ActiveRecord::Schema.define(version: 20140110192327) do
     t.boolean  "active"
     t.date     "start_date"
     t.date     "end_date"
-    t.enum     "visibility",     limit: [:public, :institutional]
+    t.enum     "visibility",      limit: [:public, :institutional]
     t.integer  "version"
     t.integer  "parent_id"
-    t.enum     "review_type",    limit: [:formal_review, :informal_review, :no_review]
+    t.enum     "review_type",     limit: [:formal_review, :informal_review, :no_review]
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "old_foreign_key"
   end
 
   create_table "resource_contexts", force: true do |t|
@@ -145,6 +175,9 @@ ActiveRecord::Schema.define(version: 20140110192327) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "resource_id"
+    t.integer  "old_funder_id"
+    t.integer  "old_help_text_id"
+    t.integer  "old_suggested_answer_id"
   end
 
   add_index "resource_contexts", ["institution_id"], name: "index_resource_contexts_on_institution_id", using: :btree
@@ -157,7 +190,6 @@ ActiveRecord::Schema.define(version: 20140110192327) do
     t.integer  "institution_id"
     t.integer  "requirements_template_id"
     t.string   "name"
-    t.boolean  "active",                                                                          default: false
     t.enum     "review_type",              limit: [:formal_review, :informal_review, :no_review]
     t.string   "widget_url"
     t.datetime "created_at"
@@ -167,13 +199,13 @@ ActiveRecord::Schema.define(version: 20140110192327) do
   end
 
   create_table "resources", force: true do |t|
-    t.enum     "resource_type",        limit: [:actionable_url, :expository_guidance, :example_response, :suggested_response]
+    t.enum     "resource_type",           limit: [:actionable_url, :expository_guidance, :example_response, :suggested_response]
     t.string   "value"
     t.string   "label"
-    t.integer  "requirement_id"
-    t.integer  "resource_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "old_help_text_id"
+    t.integer  "old_suggested_answer_id"
     t.text     "text"
   end
 
@@ -225,10 +257,10 @@ ActiveRecord::Schema.define(version: 20140110192327) do
     t.binary   "prefs"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "cookie_salt"
     t.string   "login_id"
     t.boolean  "active",           default: true
     t.datetime "deleted_at"
+    t.integer  "old_user_id"
   end
 
 end

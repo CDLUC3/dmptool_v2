@@ -7,7 +7,7 @@ class RequirementsTemplatesController < ApplicationController
   # GET /requirements_templates
   # GET /requirements_templates.json
   def index
-    
+
     if !safe_has_role?(Role::DMP_ADMIN)
       #@requirements_templates = @requirements_templates.where.
                                 #any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public)
@@ -16,7 +16,7 @@ class RequirementsTemplatesController < ApplicationController
     else
       @requirements_templates = RequirementsTemplate.all
     end
-    
+
     case params[:scope]
       when "all"
         @requirements_templates = @requirements_templates.page(params[:page])
@@ -69,9 +69,9 @@ class RequirementsTemplatesController < ApplicationController
 
   def template_information
     if !safe_has_role?(Role::DMP_ADMIN)
-      @requirements_templates = RequirementsTemplate.where(institution_id: [current_user.institution.subtree_ids]).institutional_visibility.page(params[:page]).per(5)
+      @requirements_templates = RequirementsTemplate.where(institution_id: [current_user.institution.subtree_ids]).institutional_visibility.active.page(params[:page]).per(5)
     else
-      @requirements_templates = RequirementsTemplate.institutional_visibility.page(params[:page]).per(5)
+      @requirements_templates = RequirementsTemplate.institutional_visibility.active.page(params[:page]).per(5)
     end
   end
 

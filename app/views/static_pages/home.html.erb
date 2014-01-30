@@ -1,5 +1,5 @@
 <div class="banner row-fluid">
-	<%= link_to "Get Started", choose_institution_path, :class => "btn btn-large" %>
+	<%= link_to "Get Started", (current_user ? dashboard_path: choose_institution_path), :class => "btn btn-large" %>
 </div>
 <div class="buckets-header row-fluid">
   <div class="span4">
@@ -9,7 +9,7 @@
   	<h2><span class="icon news"></span>DMPTool News</h2>
   </div>
   <div class="span4">
-  	<h2><span class="icon how-to"></span>How To Use</h2>
+  	<h2><span class="icon how-to"></span>DMPTool Help</h2>
   </div>
 </div>
 <div class="buckets row-fluid">

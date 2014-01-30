@@ -1,0 +1,62 @@
+/* Forms */
+form p {
+	font-size: 1.125em; }
+form ul li:before {
+	content: ''; }
+span.required, span[id*="status_"] {
+	color: #DA0049; }
+fieldset {
+	border: none;
+	padding: 0; }
+label, input, input[type=text], input[type=password], input[type=email], input[type=search], button, select, textarea {
+	font-size: 1.25em; }
+label {
+	display: inline-block;
+	font-size: 1em;
+	margin: 0;
+	padding: 0; }
+label.control-label {
+	font-weight: bold; }
+.control-group label {
+	display: block; }
+.control-group label.checkbox-label, .control-group label.radio-label {
+	display: inline-block; }
+label.control-label, .form-horizontal label.control-label {
+	line-height: 30px;
+	padding-top: 7px; }
+.form-horizontal label.control-label {
+	width: 180px; }
+label.required:before {
+	content: "\002A\0020";
+	color: #DA0049; }
+input[type=text], input[type=password], input[type=email], input[type=search], textarea, select {
+	border-color: #B6B6B7;
+	color: #4C4C4E;
+	margin: 5px 10px 5px 0;
+	padding: 4px 6px; }
+input.input-large {
+	width: 200px; }
+input[type=radio], input[type=checkbox] {
+	border: none;
+	vertical-align: top;
+	height: 17px;
+	margin: 0 4px 0 0;
+	padding: 0; }
+	
+textarea {
+  resize: vertical;
+}
+.radio.inline, .checkbox.inline {
+	vertical-align: top; }
+.control-group, .form-horizontal .control-group {
+	margin-bottom: 10px; }
+.form-horizontal .controls {
+	margin-left: 200px; }
+.controls.radio-controls, .controls.checkbox-controls {
+	margin-top: 12px; }
+	
+.alert {
+	border-radius: 0;
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	-ms-border-radius: 0; }

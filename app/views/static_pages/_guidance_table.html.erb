@@ -40,6 +40,7 @@
 	</tbody>
 </table>
 <div class="buttons pagination">
-	<%= link_to "View All", { :scope => "all" }, :method => :get, :class => "btn" %>
-	<%= paginate(templates)%>
+	<%= link_to "View All",{:all_records => 'true'}, :method => :get, :class => "btn"%>
+	<%= # paginate(templates) 
+	%>
 </div>
