@@ -10,34 +10,34 @@
     </tr>
   </thead>
   <tbody>
-  <% @resource_contexts.each do |resource_contexts| %>
+  <% @resource_contexts.each do |resource_context| %>
     <tr>
       <td class="resource_contexts_name">
 				<div class="toggle-links">
-        	<%= link_to (content_tag(:strong, resource_contexts.name)), '#' %>
+        	<%= link_to (content_tag(:strong, resource_context.name)), '#' %>
         	<div class="template-links">
-        		<%#= (link_to 'Overview', edit_resource_template_path(resource_template))+' | '+(link_to 'Details', resources_path)+' | '+(link_to 'Delete', resource_template_path(resource_template), :class => "delete",  method: :delete, data: { confirm: 'Are you sure?' }) %>
+        		<%= (link_to 'Overview', edit_resource_template_path(resource_context))+' | '+(link_to 'Details', resources_path)+' | '+(link_to 'Delete', resource_template_path(resource_context), :class => "delete",  method: :delete, data: { confirm: 'Are you sure?' }) %>
         	</div>
         </div>
       </td>
       <td>
-        <%= resource_contexts.requirements_template.nil? ? " " : resource_contexts.requirements_template.name %>
+        <%= resource_context.requirements_template.nil? ? " " : resource_context.requirements_template.name %>
       </td>
       <td>
-        <%= resource_contexts.institution.nil? ? " " :  resource_contexts.institution.full_name %>
+        <%= resource_context.institution.nil? ? " " :  resource_context.institution.full_name %>
       </td>
       <td>
-        <%= resource_contexts.created_at.nil? ? " " :  resource_contexts.created_at.strftime("%m/%d/%Y %I:%M%p") %>
+        <%= resource_context.created_at.nil? ? " " :  resource_context.created_at.strftime("%m/%d/%Y %I:%M%p") %>
       </td>
       <td>
-        <%= resource_contexts.updated_at.nil? ? " " :  resource_contexts.updated_at.strftime("%m/%d/%Y %I:%M%p") %>
+        <%= resource_context.updated_at.nil? ? " " :  resource_context.updated_at.strftime("%m/%d/%Y %I:%M%p") %>
       </td>
     </tr>
   <% end %>
   </tbody>
 </table>
 <div class="buttons pagination">
-	<%#= link_to "View All", resource_contexts_path(:scope => "all"), :method => :get, :class => "btn"%>
+	<%#= link_to "View All", resource_context_path(:scope => "all"), :method => :get, :class => "btn"%>
 	<%= paginate @resource_contexts %>
 </div>
 <!-- To be replaced with the commented out path -->
