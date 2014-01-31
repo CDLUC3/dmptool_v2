@@ -1,11 +1,106 @@
-<% @rt_tree.each do |k, v| %>
-  <div>
-    <%= (v.nil? ? "(requirement template)" : "(institution)" ) %>
-    <%=k.name%>
-  </div>
-  <% if v %>
-    <% v.each do |i| %>
-      <div>&nbsp;&nbsp;&nbsp;&nbsp;(requirement template) <%= i.name %></div>
+<style>
+  div.option_area {
+    float: left;
+    clear: left;
+    width: 50px;
+    height: 20px;
+    text-align: right;
+    padding: 5px 5px 5px 0px;
+  }
+  div.label_area {
+    float:left;
+    clear: right;
+    height: 20px;
+    padding: 5px 0 5px 0;
+  }
+  div.folder_label {
+    font-size: 1.25em;
+    font-weight: bold;
+  }
+
+  ul.closed_list {
+    display: none;
+  }
+  ul.opened_list {
+    display: block;
+  }
+</style>
+
+<div class="span8">
+  <% unless @rt_tree.empty? %>
+  <ul>
+    <% @rt_tree.each do |k, v| %>
+      <% if v.nil? %>
+        <li>
+          <div class="option_area">
+            <%= radio_button_tag(:requirement_id, k.id, false, :class => 'fun') %>
+            <i class="icon-file"></i>
+          </div>
+          <div class="label_area">
+            <%= label_tag("requirement_id_#{k.id}", k.name) %>
+          </div>
+        </li>
+      <% else %>
+        <li>
+          <div class="option_area">
+            <a href="#" class="accordioner" id="inst_opener1_<%= k.id %>">
+              <i class="icon-chevron-right" id="inst_chevron_<%= k.id %>"></i>
+            </a>
+            <i class="icon-folder-close" id="<%= "inst_folder_#{k.id}" %>"></i>
+          </div>
+          <div class="label_area folder_label">
+            <%= link_to(k.name, '#', :id => "inst_opener2_#{k.id}", :class => 'accordioner') %>
+          </div>
+        </li>
+          <ul class="closed_list" id="<%= "inst_list_#{k.id}" %>">
+            <% v.each do |i| %>
+              <li>
+                <div class="option_area">
+                  <%= radio_button_tag(:requirement_id, i.id) %>
+                  <i class="icon-file"></i>
+                </div>
+                <div class="label_area">
+                  <%= label_tag("requirement_id_#{i.id}", i.name) %>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+      <% end %>
     <% end %>
+  </ul>
+  <% else %>
+    No results were found for your search terms, please modify your search terms to show results.
   <% end %>
-<% end %>
+  &nbsp;
+</div>
+
+<div class="search-area span4">
+  <%= form_tag('', {:method => :get}) do %>
+    <%= search_field_tag(:q, params[:q], :class => 'input-large') %>
+    <span class="icon search"></span>
+    <%= submit_tag('Search') %>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  $('.accordioner').click(function(event) {
+    event.preventDefault();
+    var target_id = event.target.id.replace(/^inst_[a-z0-9]+_/g, '');
+    // console.log(target_id);
+
+    //toggle folder
+    var icon = $('#inst_folder_' + target_id);
+    var new_icon_class = ( icon.attr('class') == 'icon-folder-close' ? 'icon-folder-open' : 'icon-folder-close' );
+    icon.removeClass(icon.attr('class')).addClass(new_icon_class);
+
+    //toggle chevrons
+    icon = $('#inst_chevron_' + target_id);
+    new_icon_class = ( icon.attr('class') == 'icon-chevron-right' ? 'icon-chevron-down' : 'icon-chevron-right' );
+    icon.removeClass(icon.attr('class')).addClass(new_icon_class);
+
+    //hide/show list under
+    var list = $('#inst_list_' + target_id);
+    list.toggle('drop');
+
+  });
+</script>
