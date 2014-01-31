@@ -16,7 +16,6 @@
 		<thead>
 			<tr>
 				<th class="span4">Name</th>
-				<th class="span1">Version</th>
 				<th class="span3">Institution</th>
 				<th>Status</th>
 				<th>Visibility</th>
@@ -31,11 +30,10 @@
 					<div class="toggle-links">
 						<%=link_to (content_tag(:strong, requirements_template.name)), requirements_template_requirements_path(requirements_template), :id => "#{requirements_template.name}"%>
 						<div class="template-links">
-								<%= (link_to 'Overview', edit_requirements_template_path(requirements_template))+' | '+(link_to 'Details',requirements_template_requirements_path(requirements_template), :class => 'details')+' | '+(link_to activate_link_text(requirements_template), toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", :class => 'ajax')+' | '+(link_to 'Copy', copy_existing_requirements_template_path(:requirements_template => requirements_template))+' | '+(link_to 'Delete', requirements_template_path(requirements_template), :class => "delete", :id => "delete_#{requirements_template.name}", method: :delete, data: { confirm: 'Are you sure?' }) %>
+								<%= (link_to 'Overview', edit_requirements_template_path(requirements_template))+' | '+(link_to 'Details',requirements_template_requirements_path(requirements_template), :class => 'details')+' | '+(link_to activate_link_text(requirements_template), toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", :class => 'ajax')+' | '+(link_to 'Copy', copy_existing_requirements_template_path(:requirements_template => requirements_template))%>
 						</div>
 					</div>
 				</td>
-				<td class="span1"><%= requirements_template.version %></td>
 				<td><%= requirements_template.institution.nil? ? " " :  requirements_template.institution.full_name %></td>
 				<td id="status_#{requirements_template.id}"><%= requirements_template.active ? "Active" : "Inactive" %></td>
 				<td><%= requirements_template.visibility.capitalize %></td>

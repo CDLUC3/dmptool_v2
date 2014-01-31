@@ -5,12 +5,19 @@
     <li><a href="#tab2" data-toggle="tab">Institutions</a></li>
   </ul>
   <div class="tab-content">
+    
     <div class="tab-pane table active" id="tab1">
-      <%= render 'users_list' %>
+      <%= render 'user_search' %>
+      
+      <%if params[:q].to_s != '' %>
+        <%= render 'users_list' %>
+      <% end %>
+    
     </div>
     <div class="tab-pane table" id="tab2">
       <%= render 'institutions_list' %>
     </div>
+  
   </div>
 </div>
 

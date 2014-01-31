@@ -17,6 +17,7 @@ Dmptool2::Application.routes.draw do
  get 'promote', to: 'static_pages#promote'
  get 'terms_of_use', to: 'static_pages#terms_of_use'
  get 'video', to: 'static_pages#video'
+ get 'requirements_templates/test', to: 'requirements_templates#test'
 
   resources :requirements_templates do
     resources :requirements
@@ -32,6 +33,11 @@ Dmptool2::Application.routes.draw do
   resources :resource_templates do
     resources :resource_contexts
   end
+
+  resources :resource_contexts
+
+  #this routes needs to stay above the other user ones to take priority
+  get 'users/autocomplate_users', to: 'users#autocomplete_users', as: 'users_autocomplete'
 
   resources :users do
     member do
@@ -58,9 +64,6 @@ Dmptool2::Application.routes.draw do
   match 'user_sessions/password_reset', to: 'user_sessions#password_reset', :via => [:get, :post]
   match 'user_sessions/complete_password_reset', to: 'user_sessions#complete_password_reset', as: 'complete_password_reset', :via => [:get, :post]
 
-  get 'users/autocomplate_template_editors', to: 'users#autocomplete_template_editors', as: 'template_editor_users_autocomplete'
-  get 'users/autocomplate_resource_editors', to: 'users#autocomplete_resource_editors', as: 'resource_editor_users_autocomplete'
-
   get 'requirements_template_information', to: 'requirements_templates#template_information'
   get 'copy_existing_requirements_template', to: 'requirements_templates#copy_existing_template'
 
@@ -76,6 +79,9 @@ Dmptool2::Application.routes.draw do
 
   get  'edit_user_roles', to: 'users#edit_user_roles'
   post  'update_user_roles', to: 'users#update_user_roles'
+
+  get  'edit_user_roles_inst_admin', to: 'institutions#edit_user_roles_inst_admin'
+  post  'update_user_roles_inst_admin', to: 'institutions#update_user_roles_inst_admin'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -71,13 +71,14 @@ class StaticPagesController < ApplicationController
     if !params[:q].blank?
       @public_templates = @public_templates.search_terms(params[:q])
     end
-    page_size = (params[:all_records] == 'true'? 999999 : 10)
-    @public_templates = @public_templates.page(params[:page]).per(page_size)
+    page_size = (params[:all_records_public] == 'true'? 999999 : 10)
+    @public_templates = @public_templates.page(params[:public_page]).per(page_size)
     
     if current_user
       inst = current_user.institution
+      page_size = (params[:all_records_institution] == 'true'? 999999 : 10)
       @institution_templates = inst.requirements_templates_deep.institutional_visibility.
-              includes(:institution, :sample_plans)
+              includes(:institution, :sample_plans).page(params[:institution_page]).per(page_size)
     end
   end
 end

@@ -6,3 +6,5 @@ class Authorization < ActiveRecord::Base
 
   validates :id, uniqueness: { scope: [:user_id, :role_id] , message: "This Role for this User has already been taken." }
 end
+
+

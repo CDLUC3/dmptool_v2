@@ -17,21 +17,21 @@
 		<% templates.each do |t| %>
 			<tr>
 				<td><strong><%= (t.institution ? t.institution.full_name: '') %></strong></td>
-				<td class="nowrap"><%= link_to t.name,	basic_requirements_template_path(t, format: :rtf ) %>
-						<%= link_to '', basic_requirements_template_path(t, format: :rtf), :class => 'icon rtf' %>
+				<td class="nowrap"><%= link_to t.name,	basic_requirements_template_path(t, format: :rtf ), :target => '_blank' %>
+						<%= link_to '', basic_requirements_template_path(t, format: :rtf), :class => 'icon rtf', :target => '_blank' %>
 				</td>
 				<td class="nowrap">
 					<% t.additional_informations.each do |info| %>
 					<div class="samples">
-						<%= link_to info.label, info.url %>
+						<%= link_to info.label, info.url, :target => '_blank' %>
 					</div>
 					<% end %>
 				</td>
 				<td class="nowrap">
 					<% t.sample_plans.each do |s| %>
 					<div class="samples">
-						<%= link_to s.label, s.url %>
-						<%= link_to '', s.url, :class => 'icon pdf'%>
+						<%= link_to s.label, s.url, :target => '_blank' %>
+						<%= link_to '', s.url, :class => 'icon pdf', :target => '_blank' %>
 					</div>
 					<% end %>
 				</td>
@@ -40,7 +40,6 @@
 	</tbody>
 </table>
 <div class="buttons pagination">
-	<%= link_to "View All",{:all_records => 'true'}, :method => :get, :class => "btn"%>
-	<%= # paginate(templates) 
-	%>
+	<%= link_to "View All",{"all_records_#{(public ? "public" : "institution")}".intern => 'true'}, :method => :get, :class => "btn"%>
+	<%= paginate(templates, param_name: (public ? "public_page" : "institution_page" ) )%>
 </div>

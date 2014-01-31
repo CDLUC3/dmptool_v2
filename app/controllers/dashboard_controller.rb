@@ -11,7 +11,7 @@ class DashboardController < ApplicationController
       @public_requirements_templates = current_user.institution.requirements_templates_deep.where(visibility: 'public').count
     end
     if safe_has_role?(Role::RESOURCE_EDITOR) || safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::INSTITUTIONAL_ADMIN)
-      @resource_templates = current_user.institution.resource_templates_deep.count
+      #@resource_templates = current_user.institution.resource_templates_deep.count
     end
   end
   
