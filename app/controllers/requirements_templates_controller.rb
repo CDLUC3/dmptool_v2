@@ -155,7 +155,7 @@ class RequirementsTemplatesController < ApplicationController
     if current_user.has_role?(Role::DMP_ADMIN)
       #all records
     elsif current_user.has_role?(Role::TEMPLATE_EDITOR) || current_user.has_role?(Role::INSTITUTIONAL_ADMIN)
-      req_temp = req_temp.where(institution_id: current_user.institution_id)
+      req_temp = req_temp.where(institution_id: current_user.institution.subtree_ids)
     else
       @rt_tree = {}
       return
