@@ -57,4 +57,13 @@ class RequirementsTemplate < ActiveRecord::Base
     values = items.map{|item| "%#{item}%" }
     joins(:institution).where(conditions, *(values * 2) )
   end
+
+  def self.name_search_terms(terms)
+    #searches only template name
+    items = terms.split
+    conditions = items.map{|item| "name LIKE ?" }
+    conditions = "#{conditions.join(' AND ')}"
+    values = items.map{|item| "%#{item}%" }
+    joins(:institution).where(conditions, *values )
+  end
 end

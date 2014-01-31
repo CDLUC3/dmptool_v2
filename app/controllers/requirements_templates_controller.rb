@@ -151,7 +151,18 @@ class RequirementsTemplatesController < ApplicationController
 
   #to test the requirements templates tree view
   def test
-    req_temp = RequirementsTemplate.includes(:institution).all  #apply any other constraints/scopes here
+    req_temp = RequirementsTemplate.includes(:institution)
+    if current_user.has_role?(Role::DMP_ADMIN)
+      #all records
+    elsif current_user.has_role?(Role::TEMPLATE_EDITOR) || current_user.has_role?(Role::INSTITUTIONAL_ADMIN)
+      req_temp = req_temp.where(institution_id: current_user.institution_id)
+    else
+      @rt_tree = {}
+      return
+    end
+    if !params[:q].blank?
+      req_temp = req_temp.name_search_terms(params[:q])
+    end
 
     rt_tree = {}
     #this creates a hash with institutions as keys and requirements_templates as values like below
@@ -189,6 +200,15 @@ class RequirementsTemplatesController < ApplicationController
     #sort any second level items by name (just requirements templates within an institution)
     @rt_tree.each do |k, v|
       v.sort!{|x, y| x.name.downcase <=> y.name.downcase} unless v.nil?
+    end
+
+    #put all results at top level if only one institution has results
+    if @rt_tree.length == 1 && !@rt_tree.first[1].nil?
+      temp = {}
+      @rt_tree.first[1].each do |i|
+        temp[i] = nil
+      end
+      @rt_tree = temp
     end
   end
 

@@ -26,15 +26,8 @@
   }
 </style>
 
-<div class="search-area span4">
-  <%= form_tag('', {:method => :get}) do %>
-    <%= search_field_tag(:q, params[:q], :class => 'input-large') %>
-    <span class="icon search"></span>
-    <%= submit_tag('Search') %>
-  <% end %>
-</div>
-<div style="clear:both;"></div>
-
+<div class="span8">
+  <% unless @rt_tree.empty? %>
   <ul>
     <% @rt_tree.each do |k, v| %>
       <% if v.nil? %>
@@ -75,6 +68,19 @@
       <% end %>
     <% end %>
   </ul>
+  <% else %>
+    No results were found for your search terms, please modify your search terms to show results.
+  <% end %>
+  &nbsp;
+</div>
+
+<div class="search-area span4">
+  <%= form_tag('', {:method => :get}) do %>
+    <%= search_field_tag(:q, params[:q], :class => 'input-large') %>
+    <span class="icon search"></span>
+    <%= submit_tag('Search') %>
+  <% end %>
+</div>
 
 <script type="text/javascript">
   $('.accordioner').click(function(event) {
