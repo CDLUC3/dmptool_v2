@@ -151,7 +151,7 @@ class RequirementsTemplatesController < ApplicationController
 
   #to test the requirements templates tree view
   def test
-    req_temp = RequirementsTemplate.all  #apply any other constraints/scopes here
+    req_temp = RequirementsTemplate.includes(:institution).all  #apply any other constraints/scopes here
 
     rt_tree = {}
     #this creates a hash with institutions as keys and requirements_templates as values like below
