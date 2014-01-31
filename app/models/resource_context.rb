@@ -5,7 +5,17 @@ class ResourceContext < ActiveRecord::Base
   belongs_to :resource
 
 
-  scope :institution_set, where("institution_id IS NOT NULL")
-  scope :template_set, where("requirements_template_id IS NOT NULL")
+  def self.no_resource_no_requirement
+  	 where(:requirement_id => nil, :resource_id => nil)
+  end
+
+  def self.institutional_level
+  	 where("institution_id IS NOT NULL") 
+  end
+
+  def self.template_level
+  	 where("requirements_template_id IS NOT NULL")
+  end
 
 end
+

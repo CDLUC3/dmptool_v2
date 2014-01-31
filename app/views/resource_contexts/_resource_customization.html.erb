@@ -16,7 +16,7 @@
         <div class="toggle-links">
           <%= link_to (content_tag(:strong, resource_context.name)), '#' %>
           <div class="template-links">
-            <%= (link_to 'Overview', edit_resource_template_path(resource_context))+' | '+(link_to 'Details', resources_path)+' | '+(link_to 'Delete', resource_template_path(resource_context), :class => "delete",  method: :delete, data: { confirm: 'Are you sure?' }) %>
+            <%= (link_to 'Overview', edit_resource_context_path(resource_context))+' | '+(link_to 'Details', resources_path)+' | '+(link_to 'Delete', resource_context_path(resource_context), :class => "delete",  method: :delete, data: { confirm: 'Are you sure?' }) %>
           </div>
         </div>
       </td>
