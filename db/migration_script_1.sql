@@ -151,7 +151,7 @@ TRUNCATE TABLE `dmp2`.`authorizations`;
 INSERT INTO `dmp2`.`authorizations` (`role_id`, `user_id`, `created_at`, `updated_at`)
 SELECT  	1, `id`, `created_at`, `updated_at` 
 FROM  `dmp2`.`users`
-WHERE users.email = 'admin123@gmail.com';
+WHERE dmp2.users.email = 'admin123@gmail.com';
 
 
 

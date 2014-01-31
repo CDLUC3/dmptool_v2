@@ -37,8 +37,11 @@
   </tbody>
 </table>
 <div class="buttons pagination">
-  <%#= link_to "View All", resource_context_path(:scope => "all"), :method => :get, :class => "btn"%>
-  <%#= paginate @resource_contexts %>
+  <%= paginate @resource_contexts %>
+</div>
+<div class="buttons">
+  <%= link_to "View All", resource_contexts_path(:scope => "all"), :method => :get, :class => "btn"%>
+  <%= link_to 'Add New Customization', new_resource_context_path, :class => "btn btn-green" %>
 </div>
 <!-- To be replaced with the commented out path -->
 <%#= button_to 'Create New Customization', select_dmp_template_path, :method => :get, :class => 'btn' %>
