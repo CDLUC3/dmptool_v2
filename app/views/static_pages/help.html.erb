@@ -1,105 +1,20 @@
 <div class="static-page">
-	<h1>DMPTool Guide</h1>
+	<h1>DMPTool Help</h1>
 	<hr/>
 	
-	<h3>Table of Contents</h3>
-	<ul>
-		<li><a title="Who Can Use" href="#who-can-use">Who Can Use</a></li>
-		<li><a title="Getting Started" href="#getting-started">Getting Started</a></li>
-		<li><a title="Using the DMPTool" href="#using-dmptool">Using the DMPTool</a></li>
-	</ul>
-	<p>With the Data Management Plan tool (DMPTool) you can:</p>
-	<ul>
-		<li>Create ready-to-use data management plans for specific funding agencies</li>
-		<li>Meet funder requirements for data management plans</li>
-		<li>Get step-by-step instructions and guidance for your data</li>
-		<li>Learn about resources and services available at your institution to help fulfill the data management requirements of your grant</li>
-	</ul>
+	<h3><em>What do you want to do?</em></h3>
 	
-	<h2 id="who-can-use">Who can use the tool:</h2>
-	<ul>
-		<li>Anyone can create data management plans.</li>
-		<li> If you are a researcher from one of the partner institutions, you can log in as a user from your institution. By being affiliated with your institution, you will be presented with institution specific guidance (displayed as resource web links) to help you complete your plan.</li>
-		<li> If your institution is not a partner, you can create your own account.</li>
-	</ul>
+	<h2><a title="I want to see frequently asked question and answers" href="http://dmptool.askbot.com" target="_blank">I want to see frequently asked question and answers</a></h2>
 	
-	<h2 id="getting-started">Getting Started:</h2>
-	<p> To start a data management plan or to edit an existing plan, click on the Get Started button or click on the Login link at the top of the page.</p>
+	<h2><%= link_to(html:{"I want to " + content_tag(:strong, "create") + " a data management plan.", "#", :title => "I want to create a data management plan.") %></h2>
 	
-	<h3>How to sign up</h3>
+	<h2><%= link_to("I want to " + content_tag(:strong, "administer") + " the DMPTool.", users_path, :title => "I want to administer the DMPTool") if current_user %>
+		<%= link_to("I want to " + content_tag(:strong, "administer") + " the DMPTool.", choose_institution_path, :title => "I want to administer the DMPTool") if !current_user %>
+	</h2>
 	
-	<h4>First-time Login:</h4>
-	<ul>
-		<li> On the Login page, search for your institution in the drop-down box.</li>
-		<li> If available, select your institution from the list. If your institution is not listed, select "None of the above."</li>
-		<li> Select new user</li>
-		<li> Click Go</li>
-		<li> Researchers at some institutions will then be presented with your institution's authentication page. Log in as you usually do for your institution.</li>
-		<li> Researchers at some institutions will be asked to Create a DMPTool account. Fill in the required fields (marked with an asterisk) and click Create Account. NOTE: Your password must be 8 to 30 characters long and must contain at least one number and at least one letter.</li>
-	</ul>
+	<h2><%= link_to("I want general " + content_tag(:strong, "data management guidance") + ".", dm_guidance_path, :title => "I want general data management guidance.") %></h2>
 	
-	<h4>Subsequent Logins:</h4>
-		<ul>
-			<li> On the Login page, select your institution from the list if available. If your institution is not listed, select "None of the above."</li>
-			<li> Select returning user</li>
-			<li> Click Go</li>
-			<li> Researchers at some institutions will be presented with your institution's authentication page. Log in as you usually do for your institution.</li>
-			<li> Researchers who have created an account within the DMPTool will be asked for their DMPTool username and login. Use the Manage Profile option at the upper right to manage your password and other information.</li>
-	</ul>
+	<h2><%= link_to("I want to " + content_tag(:strong, "promote the DMPTool") + " at my institution", promote_path, :title => "I want to promote the DMPTool at my institution") %></h2>
 	
-	<h4>How to start a new plan.</h4>
-	<ul>
-		<li>To begin you must have an account. Sign up using the instructions in the previous section.</li>
-		<li>
-			After logging in, you will be taken to the MyPlans page titled "My Data Management Plans." At the top of this page you will see a drop down menu labeled Create a new plan. The drop down menu offers a list of data management plan templates to choose from. The link Funder Requirements lists the funder templates available in the DMPTool.</li>
-		<li>
-			Select the plan that is appropriate for you, and click Go. If you do not see a plan for the specific directorate you are responding to, use NSF-GEN: Generic. As new plans become available they will be added to this list. Check DMP News (links located on the right) for updates.</li>
-	</ul>
-	
-	<h4>Plan description</h4>
-	<ul>
-		<li>
-			Every plan must have a plan name. The name should help you identify your data management plans and will be listed on the My Plans page. On the Plan description page, you can also enter the funder solicitation number and comments/notes. This information only appears on the My Plans page, not your final data management plan.</li>
-		<li>
-			After entering in a plan name and Solicitation and Comment (if needed), click Save and next to start creating your data management plan. You can come back and change or add information on the Plan description page by clicking the "Plan description" link on the left-side of any section editing page.</li>
-	</ul>
-	<hr/>
-	
-	<h4>Enter data management plan contents</h4>
-	<ul>
-		<li>
-			Each funder has specific requirements for their data management plan. When you start a data management plan, the DMPTool steps you through the specific sections for the funding agency (or directorate or division) chosen.</li>
-		<li>
-			Each section page displays the funder requirements at the top. The middle column on your screen is where you'll be inputting the text of your data management plan. Click in the text entry box to begin. Help text is offered for each section. It appears above the text entry box and can be expanded to view more. Use the information in the Help box and the questions within the box, to develop your responses to that specific requirement (section).</li>
-		<li>
-			The text box offers a few editing features (located above the text entry box): bold, italic, underline, strikeout, superscript, subscript, find, replace, spell check, cut, copy, paste, undo, redo, bullet lists, link and unlink. As you input text in the box, it is automatically saved. You can also use the Save button (located at the bottom of the text box) to save your text at any time.</li>
-		<li>
-			The Preview button opens a new window and displays the contents of your entire data management plan you have so far.</li>
-		<li>
-			Click the Save and next button to navigate to the next section in your data management plan. To navigate to other sections of your data management plan, use the section links in left hand column of your screen.</li>
-		<li>
-			If you are on the last section, clicking the Save and next button displays your data management plan. At this point you can export your plan (as plain text or rich text- RTF format), or go back to edit sections. Use the section links on the left hand column of your screen to go to the section of your plan you wish to edit.</li>
-	</ul>
-	
-	<h2 id="using-dmptool">Using the DMPTool:</h2>
-	<p><strong>Moving through the sections</strong><br/>
-			Click the Save and next button to navigate to the next section in your data management plan. To navigate to other sections of your data management plan, use the section links in left hand column of your screen. Simply click on the section you wish to go to, and you will be taken to that section of your plan. Reminder: as you input text in the box, it is automatically saved. You can also use the Save button (located at the bottom of the text box) to save your text at any time. Each section of the plan is numbered, and a check mark will appear beside each section you have completed.
-	</p>
-	<p><strong>Resources links</strong><br/>
-			Resource links located in the right-hand column of each section of the DMP interface, offers a series of available links that will assist in the creation of your personal data management plan. Each link opens in a new window. You will have access to both institution-specific resources (dependent upon what institution you are partnered with), as well as general resources.</p>
-		<p><strong>Help text</strong><br/>
-			Help text is offered for each section. It appears above the text entry box. The Help box defaults to the smallest size, but if you'd like to see more help text, you can select the medium box size option. If you'd like to see all of the help text available, click full. Select small to return the Help box to its default size.</p>
-		<p><strong>Suggested response text</strong><br/>
-			Not every section will offer suggested response text. However, when a section does offer suggested answer text, this will be available in an enclosed box directly above the Help box. Similar to the Help box, you can change between small, medium, and full text. If you decide to use the suggested answer text, highlight the portion that you are interested in, copy it, and paste it into the input box. Then, if necessary, edit the text to meet the needs of your data management plan.</p>
-		<p><strong>Edit an existing plan</strong><br/>
-			Once you have begun a plan, you will have the option to edit it. From the My Data Management Plans Page (found by clicking My Plans on the top navigation bar), you will see a list of existing plans. To edit an existing plan, click [edit]. This will send you to the Plan description page of your plan. From here, on the left-side, click on whichever section of the plan you are interested in editing.</p>
-		<p><strong>Export a plan</strong><br/>
-			There are two ways to export your plan:</p>
-		<ol>
-			<li>After completing the final section for your specific grant, press Save and next. Your data management plan is displayed. At the top of this page, you have the option to export your plan as "Plain Text" or as "Rich Text" (which can be used in Microsoft Word). To export your plan, choose your format and then click the Export button. This will save the plan you have just generated to your computer.</li>
-			<li>There is an export feature available from the My Plans page. Locate the plan you wish to export, select whether you would like to export your plan to a plain text or a rich text file, and then click the Export button. This will save the plan to your computer.</li>
-		</ol>
-		<p><strong>Sharing a plan</strong><br/>
-			The DMPTool allows you to share, via a web link, your data management plan. The shared plan will be a PDF version of your plan. Only those with the link will be able to view your plan. They will not be able to edit your version of the plan. To share a plan, and create a web link, click [share] under the plan you wish to share. An active URL, link, will appear. You can send the link to those you wish to view your plan. You can stop sharing your plan by selecting [retract].
-		</p>
+	<h2><%= link_to("I want to access " + content_tag(:strong, "community resources") + " for understanding and using the DMPTool.", community_resources_path, :title => "I want to access community resources for understanding and using the DMPTool.") %></h2>
 </div>
