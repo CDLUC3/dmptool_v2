@@ -1,6 +1,6 @@
 class PlansController < ApplicationController
   before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export]
-
+  before_action :select_requirements_template, only: [:select_dmp_template]
   # GET /plans
   # GET /plans.json
   def index
@@ -137,16 +137,6 @@ class PlansController < ApplicationController
   end
 
   def select_dmp_template
-    @institutions = current_user.institution.subtree
-    @dmp_templates = RequirementsTemplate.public_visibility.includes(:institution)
-
-    if params[:s] && params[:e]
-      @dmp_templates = @dmp_templates.letter_range_by_institution(params[:s], params[:e])
-    end
-
-    if params[:q]
-      @dmp_templates = @dmp_templates.search_terms(params[:q])
-    end
   end
 
   private
