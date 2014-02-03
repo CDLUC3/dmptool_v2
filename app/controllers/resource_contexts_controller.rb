@@ -46,13 +46,13 @@ class ResourceContextsController < ApplicationController
  
 
   def resource_customizations
+    @resource_contexts = ResourceContext.template_level.institutional_level.no_resource_no_requirement.page(params[:page])
     case params[:scope]
       when "all"
-        @resource_contexts = ResourceContext.page(params[:page])
-      when "all_limited"
-        @resource_contexts = ResourceContext.page(params[:page]).per(5)
+        @resource_contexts 
+    
       else
-        @resource_contexts = ResourceContext.page(params[:page]).per(5)
+        @resource_contexts = @resource_contexts.per(5)
     end
 
     unless safe_has_role?(Role::DMP_ADMIN)

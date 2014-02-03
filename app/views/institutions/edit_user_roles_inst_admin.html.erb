@@ -5,7 +5,7 @@
 	</ul>
 	<div class="tab-content">
 		<div class="tab-pane active" id="tab1">
-				<%= form_tag(update_user_roles_inst_admin_path(user_id: @user.id), method: 'post') do %>
+				<%= form_tag(update_user_roles_inst_admin_path(user_id: @user.id, anchor: 'tab_tab4'), method: 'post') do %>
 				<h5><%= @user.first_name %> Current Roles:</h5>
 				<hr/>
 				<div class="control-group">
@@ -20,8 +20,8 @@
 				</div>
 				<br/>
 				<div class="buttons">
-				<%=  submit_tag 'Save Changes',  :class => 'btn btn-green' %>
-				<%= link_to 'Back', institutions_path, :class => 'btn' %>
+				<%=  submit_tag 'Save Changes', :anchor => 'tab_tab4',  :class => 'btn btn-green' %>
+				<%= link_to 'Back', institutions_path( :anchor => 'tab_tab4'), :class => 'btn' %>
 			</div>
 		<%end%>
 		</div>
