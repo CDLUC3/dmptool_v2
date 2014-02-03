@@ -1,3 +1,24 @@
+<br/>
+<h2 class="dashboard-heading"><span class="icon select_DMP_template"></span>Select DMP Template</h2>
+<br/>
+<div class="span8">
+  <p>Select one of the funder DMP Templates listed to proceed to the next step. The type of template chosen can affect what information you will need to provide in the following steps.</p>
+  <div class="buttons-alpha row">
+    <%= link_to('A-F', { :s => 'a', :e => 'f' }, :class => 'btn') %>
+    <%= link_to('G-L', { :s => 'g', :e => 'l' }, :class => 'btn') %>
+    <%= link_to('M-S', { :s => 'm', :e => 's' }, :class => 'btn') %>
+    <%= link_to('T-Z', { :s => 't', :e => 'z' }, :class => 'btn') %>
+    <%= link_to('View All', '', :class => 'btn') %>
+  </div>
+</div>
+<div class="search-area span4">
+    <%= form_tag('', {:method => :get}) do %>
+      <%= search_field_tag(:q, params[:q], :class => 'input-large') %>
+      <span class="icon search"></span>
+      <%= submit_tag('Search') %>
+    <% end %>
+  </div>
+  <br/>
 <div class="span8">
   <% unless @rt_tree.empty? %>
   <ul>
@@ -45,15 +66,6 @@
   <% end %>
   &nbsp;
 </div>
-
-<div class="search-area span4">
-  <%= form_tag('', {:method => :get}) do %>
-    <%= search_field_tag(:q, params[:q], :class => 'input-large') %>
-    <span class="icon search"></span>
-    <%= submit_tag('Search') %>
-  <% end %>
-</div>
-
 <script type="text/javascript">
   $('.accordioner').click(function(event) {
     event.preventDefault();
