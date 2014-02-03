@@ -23,10 +23,11 @@ ActiveRecord::Schema.define(version: 20140130232451) do
 
   create_table "authentications", force: true do |t|
     t.integer  "user_id"
-    t.enum     "provider",   limit: [:shibboleth, :ldap]
+    t.enum     "provider",    limit: [:shibboleth, :ldap]
     t.string   "uid"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "old_user_id"
   end
 
   add_index "authentications", ["provider", "uid"], name: "provider_and_uid", unique: true, using: :btree
