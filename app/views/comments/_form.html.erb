@@ -1,4 +1,5 @@
-<%= form_for @comment, html: { :class => 'form-horizontal' }  do |f| %>
+<div id="comment_dialog_form">
+<%= form_for(@comment, remote: true, html: { :class => 'form-horizontal' }) do |f| %>
   <% if @comment.errors.any? %>
     <div id="error_excommentation">
       <h2>
@@ -15,23 +16,24 @@
   <% end %>
   <div class="control-group">
     <%= f.hidden_field :user_id, value: current_user.id %>
-    <%= f.hidden_field :plan_id, value: '' %>
+    <%= f.hidden_field :plan_id, value: params[:plan_id] %>
   </div>
   <div class="control-group">
   	<%= f.label :comments, :class => 'control-label' %>
   	<div class="controls">
-  		<%= f.text_area :value, placeholder: 'Comment' %>
+  		<%= f.text_area :value, placeholder: 'Comment', :class => 'input-xxlarge', rows: '10' %>
   	</div>
   </div>
   <div class="control-group">
-    <%= f.label :visibility, :class => 'control-label' %>
-    <div class="controls radio-controls">
-      <%= f.radio_button :visibility, :public, :class => 'radio inline', :id => 'public'  %>
-      <%= label_tag :public, 'public', :class => 'radio-label'%>
-      <%= f.radio_button :visibility, :institutional, :class => 'radio inline', :id => 'institutional'  %>
-      <%= label_tag :institutional, 'institutional', :class => 'radio-label'%>
-      <%= f.radio_button :visibility, :private, :class => 'radio inline', :id => 'private'  %>
-      <%= label_tag :private, 'private', :class => 'radio-label'%>
-    </div>
+  <% if safe_has_role?(Role::INSTITUTIONAL_REVIEWER) %>
+    <%= f.hidden_field :visibility, value: :reviewer %>
+  <% else %>
+    <%= f.hidden_field :visibility, value: :owner %>
+  <% end %>
+  </div>
+  <div class="buttons">
+    <%= f.submit "Submit", :class => 'btn btn-success pull-left', method: 'post' %>
+    <%= button_tag "Cancel", type: :reset, :class => "btn", id: "cancel_action" %>
   </div>
 <% end %>
+</div>

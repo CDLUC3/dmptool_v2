@@ -30,4 +30,19 @@ module PlansHelper
 			User.find(user_id).full_name
 		end
 	end
+
+	def requirements_template(requirements_template_id)
+		requirements_template_id = requirements_template_id
+		unless requirements_template_id.nil?
+			requirements_template_name = RequirementsTemplate.find(requirements_template_id).name
+		end
+	end
+
+	def owner_role(plan)
+		plan = plan
+		user_id = UserPlan.where(plan_id: plan.id, owner: true).first.user_id
+		if user_id == current_user.id
+			return true
+		end
+	end
 end

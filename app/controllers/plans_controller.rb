@@ -6,7 +6,7 @@ class PlansController < ApplicationController
   def index
     if !safe_has_role?(Role::DMP_ADMIN)
       user_id = current_user.id
-      user_plans = UserPlan.where(user_id: user_id).pluck(:id) unless user_id.nil?
+      user_plans = UserPlan.where(user_id: user_id).pluck(:plan_id) unless user_id.nil?
       @plans = Plan.where(id: user_plans)
     else
       @plans = Plan.all
@@ -55,7 +55,7 @@ class PlansController < ApplicationController
       if @plan.save
         UserPlan.create!(user_id: current_user.id, plan_id: @plan.id, owner: true)
         PlanState.create!(plan_id: @plan.id, state: :new, user_id: current_user.id )
-        format.html { redirect_to plans_path, notice: 'Plan was successfully created.' }
+        format.html { redirect_to edit_plan_path(@plan), notice: 'Plan was successfully created.' }
         format.json { render action: 'show', status: :created, location: @plan }
       else
         format.html { render action: 'new' }
@@ -69,7 +69,7 @@ class PlansController < ApplicationController
   def update
     respond_to do |format|
       if @plan.update(plan_params)
-        format.html { redirect_to plans_path, notice: 'Plan was successfully updated.' }
+        format.html { redirect_to edit_plan_path(@plan), notice: 'Plan was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -135,7 +135,6 @@ class PlansController < ApplicationController
         @plans = @plans.order(created_at: :asc).page(params[:page]).per(5)
     end
   end
-
 
   def select_dmp_template
     @institutions = current_user.institution.subtree

@@ -21,9 +21,15 @@
         <% end %>
 
         <div class="control-group">
-          <%= f.label :dmp_template_name, 'DMP Template', :class => 'control-label' %>
+          <%= f.label :equirements_template_name, 'DMP Template', :class => 'control-label' %>
           <div class="controls">
-            <%= f.text_field :requirements_template_id, id: 'dmp_template_id' %>
+            <% if @plan.new_record? %>
+              <%= f.hidden_field :requirements_template_id, value: params[:requirements_template_id], id: 'dmp_template_id' %>
+              <%= text_field_tag(:selected_requirement_template, requirements_template(params[:requirements_template_id]), id: 'selected_requirement_template_name', :class => 'input-xxlarge', disabled: true) %>
+            <% else %>
+              <%= f.hidden_field :requirements_template_id, value: @plan.requirements_template_id, id: 'dmp_template_id' %>
+              <%= text_field_tag(:selected_requirement_template, requirements_template(@plan.requirements_template_id), id: 'selected_requirement_template_name', :class => 'input-xxlarge', disabled: true) %>
+            <% end %>
           </div>
         </div>
         <div class="control-group">
@@ -61,14 +67,16 @@
             <p><%= link_to "Add Coowners", add_coowner_plan_path(@plan), method: :post, id: 'add_coonwers_view' %></p>
           </div>
         </div>
-        <div class="control-group">
-          <label class ="control-label"> Comments: </label>
-          <div class="controls">
-            <p><%= link_to "Add Comments", new_comment_path %></p>
-          </div>
-        </div>
 
         <% unless @plan.new_record? %>
+          <% if owner_role(@plan) || (safe_has_role?(Role::INSTITUTIONAL_REVIEWER)) %>
+            <div class="control-group">
+              <label class ="control-label"> Comments: </label>
+              <div class="controls">
+                <p><%= link_to "Add Comments", new_comment_path(plan_id: @plan.id), id: 'add_comments_link' %></p>
+              </div>
+            </div>
+          <% end %>
         <hr/>
         <div class="control-group">
           <label class ="control-label"> Current Status: </label>
