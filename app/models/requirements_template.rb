@@ -48,6 +48,10 @@ class RequirementsTemplate < ActiveRecord::Base
     joins(:institution).where("full_name REGEXP ?", "^[#{s}-#{e}]")
   end
 
+  def self.letter_range(s, e)
+    where("requirements_templates.name REGEXP ?", "^[#{s}-#{e}]")
+  end
+
   def self.search_terms(terms)
     #searches both institution name and template name
     items = terms.split
