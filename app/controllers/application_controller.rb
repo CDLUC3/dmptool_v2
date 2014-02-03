@@ -105,8 +105,8 @@ class ApplicationController < ActionController::Base
       if !params[:q].blank?
         req_temp = req_temp.name_search_terms(params[:q])
       end
-      if !params[:s].blank? && params[:e].blank?
-        req_temp = req_temp.letter_range_by_institution(params[:s], params[:e])
+      if !params[:s].blank? && !params[:e].blank?
+        req_temp = req_temp.letter_range(params[:s], params[:e])
       end
 
       rt_tree = {}
