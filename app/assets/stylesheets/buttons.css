@@ -81,7 +81,7 @@ a.btn.current {
 	padding: 0 18px; }
 a.btn-green, button.btn-green, input[type=submit], input[type=submit].btn {
 	background-position: 0 -60px;
-	color: #FFFFFF !important; }=
+	color: #FFFFFF !important; }
 a.btn-green:hover, a.btn-green:focus, a.btn-green:active,
 button.btn-green:hover, button.btn-green:focus, button.btn-green:active,
 input[type=submit]:hover, input[type=submit]:focus, input[type=submit]:active, 

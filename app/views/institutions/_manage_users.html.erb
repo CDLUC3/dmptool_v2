@@ -8,14 +8,26 @@
 		  </tr>
 		</thead>
 		<tbody>
-		<% @users.each do |user| %>     
-	  	<tr class='user_row' id=<%="user_#{user.id}"%>>        
-	  		<td><%= link_to user.full_name_last_first, edit_user_path(user) %></td>
-	    	<td><%= link_to user.institution.full_name, edit_institution_path(user.institution) %></td>
-	    	<td><%= user.role_names.join(' | ') %></td>
-	     	<td class="span1"><%=link_to raw(''), edit_user_roles_inst_admin_path(user_id: user), :class => 'icon edit-user', :id => "edit_#{user.id}"%></td>           
-	      </tr>       
-	  <% end %>
+			<% @users.each do |user| %>     
+		  	<tr class='user_row' id=<%="user_#{user.id}"%>>        
+		  		<td><%= link_to user.full_name_last_first, edit_user_path(user) %></td>
+		    	<td><%= link_to user.institution.full_name, edit_institution_path(user.institution) %></td>
+		    	<td><%= user.role_names.join(' | ') %></td>
+		     	<td class="span1"><%=link_to raw(''), edit_user_roles_inst_admin_path(user_id: user), :class => 'icon edit-user', :id => "edit_#{user.id}"%></td>           
+		      </tr>       
+		  <% end %>
 		</tbody>
-	</table>
+</table>
+
+<%#= render partial: '/users/user_autocomplete_widget',
+    :locals =>
+       {  user_role: 'template_editor',
+          #submit_text: 'Add As Template Editor',
+          submit_text: 'User Search',
+          submit_url: add_role_autocomplete_path,
+          role_number: Role::TEMPLATE_EDITOR,
+          item_description: 'template editor'
+       }
+%>
+
 	
