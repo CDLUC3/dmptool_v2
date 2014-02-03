@@ -152,10 +152,14 @@ class RequirementsTemplatesController < ApplicationController
   #to test the requirements templates tree view
   def test
     req_temp = RequirementsTemplate.includes(:institution)
+    valid_buckets = nil
     if current_user.has_role?(Role::DMP_ADMIN)
       #all records
     elsif current_user.has_role?(Role::TEMPLATE_EDITOR) || current_user.has_role?(Role::INSTITUTIONAL_ADMIN)
       req_temp = req_temp.where(institution_id: current_user.institution.subtree_ids)
+      valid_buckets = current_user.institution.child_ids
+      base_inst = current_user.institution.id
+      valid_buckets = [ current_user.institution.id ] if valid_buckets.length < 1
     else
       @rt_tree = {}
       return
@@ -168,9 +172,17 @@ class RequirementsTemplatesController < ApplicationController
     #this creates a hash with institutions as keys and requirements_templates as values like below
     # { <institution_object1> => [<requirements_template_1>, <requirements_template_2> ],
     #     <institution_object2> => [<requirements_template_1>] }
+    # This works slightly different between institutional admins and WAS admins since the tree
+    # is not the same.
     req_temp.each do |rt|
       unless rt.institution.nil?
-        root_inst = rt.institution.root
+        if valid_buckets.nil?
+          root_inst = rt.institution.root
+        else
+          inst_id = valid_buckets & rt.institution.path_ids
+          inst_id = [ base_inst ] if inst_id.empty?
+          root_inst = Institution.find(inst_id.first)
+        end
         if rt_tree.has_key?(root_inst)
           rt_tree[root_inst].push(rt)
         else
@@ -191,6 +203,14 @@ class RequirementsTemplatesController < ApplicationController
         v.each do |i|
           @rt_tree[i] = nil
         end
+      end
+    end
+
+    # sort out for institutional admins so that their institution templates appear on first level if any
+    if !valid_buckets.nil? && @rt_tree.has_key?(current_user.institution)
+      templates = @rt_tree.delete(current_user.institution)
+      templates.each do |t|
+        @rt_tree[t] = nil
       end
     end
 

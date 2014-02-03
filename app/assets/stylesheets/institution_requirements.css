@@ -1,0 +1,25 @@
+div.option_area {
+  float: left;
+  clear: left;
+  width: 50px;
+  height: 20px;
+  text-align: right;
+  padding: 5px 5px 5px 0px;
+}
+div.label_area {
+  float:left;
+  clear: right;
+  height: 20px;
+  padding: 5px 0 5px 0;
+}
+div.folder_label {
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+ul.closed_list {
+  display: none;
+}
+ul.opened_list {
+  display: block;
+}
