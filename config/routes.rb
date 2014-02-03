@@ -1,5 +1,8 @@
 Dmptool2::Application.routes.draw do
 
+  get "comments/index"
+  get "comments/new"
+  get "comments/edit"
  get "dashboard/show"
  root 'static_pages#home'
  get 'about', to: 'static_pages#about'
@@ -40,6 +43,7 @@ Dmptool2::Application.routes.draw do
   get 'users/autocomplate_users', to: 'users#autocomplete_users', as: 'users_autocomplete'
 
   resources :users do
+    resources :plan_states
     member do
       get :edit_roles
       get :finish_signup
@@ -51,8 +55,15 @@ Dmptool2::Application.routes.draw do
     resources :resource_contexts
   end
 
-  resources :roles
-  resources :plans
+  resources :plans do
+    resources :plan_states
+    member do
+      post :add_coowner
+      get :publish
+      get :export
+    end
+  end
+  resources :comments
   resources :institutions
   resources :authorizations
 
@@ -66,6 +77,11 @@ Dmptool2::Application.routes.draw do
 
   get 'requirements_template_information', to: 'requirements_templates#template_information'
   get 'copy_existing_requirements_template', to: 'requirements_templates#copy_existing_template'
+
+  get 'plan_template_information', to: 'plans#template_information'
+  get 'copy_existing_plans_template', to: 'plans#copy_existing_template'
+  get 'select_dmp_template', to: 'plans#select_dmp_template'
+  get 'review_dmps', to: 'plans#review_dmps'
 
   get  'remove_resource_editor_role', to: 'resource_templates#remove_resource_editor_role'
   get  'remove_requirements_editor_role', to: 'requirements_templates#remove_requirements_editor_role'

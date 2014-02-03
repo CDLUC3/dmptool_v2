@@ -48,7 +48,7 @@
 
 #   describe "when the visibility is set to a valid value" do
 #     it "should be valid" do
-#       valid_visibilities = %w[public institutional public_browsable]
+#       valid_visibilities = %w[public institutional private]
 #       valid_visibilities.each do |valid_visibility|
 #         @published_plan.visibility = valid_visibility
 #         @published_plan.should be_valid

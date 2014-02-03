@@ -1,5 +1,9 @@
 class AddCurrentStatusToPlans < ActiveRecord::Migration
-  def change
-    add_column :plans, :current_plan_state_id, :integer
+	def self.up
+		add_column :plans, :current_plan_state_id, :integer
   end
+
+	def self.down
+		add_column :plans, :current_plan_state_id, :integer
+	end
 end

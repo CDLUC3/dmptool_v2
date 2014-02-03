@@ -1,0 +1,8 @@
+<%- if @comment.errors.any? %>
+  console.log('Error');
+  $('#comment_dialog-form').html('<%= escape_javascript(render('form')) %>');
+<%- else %>
+  console.log('Created');
+  $('#comment_dialog-form').dialog('close');
+  $('#comment_dialog-form').remove();
+<%- end %>

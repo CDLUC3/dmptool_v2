@@ -2,7 +2,7 @@
 
 # describe Plan do
 
-#   before { @plan = Plan.new(name: "My Test Plan", visibility: :public_browsable) }
+#   before { @plan = Plan.new(name: "My Test Plan", visibility: :private) }
 
 #   subject { @plan }
 
@@ -30,7 +30,7 @@
 
 #   describe "when trying to set a valid visibility" do
 #     it "should be valid" do
-#       valid_visibilities = %w[institutional public public_browsable]
+#       valid_visibilities = %w[institutional public private]
 #       valid_visibilities.each do |valid_visibility|
 #         @plan.visibility = valid_visibility
 #         @plan.should be_valid

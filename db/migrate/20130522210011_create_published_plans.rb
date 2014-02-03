@@ -3,7 +3,7 @@ class CreatePublishedPlans < ActiveRecord::Migration
     create_table :published_plans do |t|
       t.integer :plan_id
       t.string :file_name
-      t.column :visibility, :enum, limit: [:institutional, :public, :public_browsable]
+      t.column :visibility, :enum, limit: [:institutional, :public, :private]
 
       t.timestamps
     end

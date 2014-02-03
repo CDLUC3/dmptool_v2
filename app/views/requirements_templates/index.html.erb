@@ -1,15 +1,15 @@
 	<h2 class="dashboard-heading"><span class="icon template-dmp"></span>DMP Templates</h2>
 	
 	<div class="table-scope">
-		<%= link_to "All (#{@all})", { :scope => "all_limited" }, :class => "all_limited" %> 
+		<%= link_to(content_tag(:span, "All (#{@all})", :class => "all_limited"), scope: "all_limited") %> 
 		| 
-		<%= link_to "Active  (#{@active})", { :scope => "active" }, :class => "active" %> 
+		<%= link_to(content_tag(:span, "Active  (#{@active})", :class => "active"), scope: "active") %> 
 		| 
-		<%= link_to "Inactive (#{@inactive})", { :scope => "inactive" }, :class => "inactive" %> 
+		<%= link_to(content_tag(:span, "Inactive (#{@inactive})", :class => "inactive"), scope: "inactive") %> 
 		| 
-		<%= link_to "Institution-only (#{@institutional})", { :scope => "institutional" }, :class => "institutional" %> 
+		<%= link_to(content_tag(:span, "Institutional-Only (#{@institutional})", :class => "institutional"), scope: "institutional") %> 
 		| 
-		<%= link_to "Public (#{@public})", { :scope => "public" }, :class => "public" %>
+		<%= link_to(content_tag(:span, "Public (#{@public})", :class => "public"), scope: "public") %>
 	</div>
 	<table class="table table-striped" id="dmp_templates">
 
