@@ -1,6 +1,6 @@
 <%= render  partial: "/shared/select_requirements_template" %>
-
-<%= link_to "<< Create New DMP <<", plan_template_information_path, :method => :get, :class => "btn pull-left"%>
-
-
-<%= link_to ">> DMP Overview >>", new_plan_path, :method => :get, :class => "btn pull-right"%>
+<div class="span12">
+	<br/>
+	<%= link_to "<< Create New DMP <<", plan_template_information_path, :method => :get, :class => "btn pull-left"%>
+	<%= link_to ">> DMP Overview >>", new_plan_path({ :requirements_template_id => k.id }), :method => :get, :class => "btn pull-right", id: 'selected_dmp_template'%>
+</div>
