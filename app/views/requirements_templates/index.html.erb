@@ -16,7 +16,6 @@
 		<thead>
 			<tr>
 				<th class="span4">Name</th>
-				<th class="span1">Version</th>
 				<th class="span3">Institution</th>
 				<th>Status</th>
 				<th>Visibility</th>
@@ -35,13 +34,11 @@
 						</div>
 					</div>
 				</td>
-				<td class="span1"><%= requirements_template.version %></td>
 				<td><%= requirements_template.institution.nil? ? " " :  requirements_template.institution.full_name %></td>
 				<td id="status_#{requirements_template.id}"><%= requirements_template.active ? "Active" : "Inactive" %></td>
 				<td><%= requirements_template.visibility.capitalize %></td>
 				<td><%= requirements_template.created_at.nil? ? " " :  requirements_template.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 				<td><%= requirements_template.updated_at.nil? ? " " :  requirements_template.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
-				
 			</tr>
 		<% end %>
 		<tbody>

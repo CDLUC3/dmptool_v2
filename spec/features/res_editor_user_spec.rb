@@ -10,7 +10,7 @@ feature 'res editor user' do
 
 		expect(page).to have_link('My Dashboard')
 		expect(page).to have_link('My Profile')				
-		expect(page).to have_link('Resources') 
+		expect(page).to have_link('Customizations') 
 		
 		expect(page).to have_no_link('Institution Profile') 
 		expect(page).to have_no_link('DMP Administration')	

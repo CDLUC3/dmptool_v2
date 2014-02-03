@@ -1,12 +1,13 @@
 <h2 class="dashboard-heading"><span class="icon inst-profile"></span>Institution Profile</h2>
 <div class="tabbable">
   <ul class="nav nav-tabs">
-    <li class="active"><%= link_to 'Institution Information', '#tab1', 'data-toggle' => 'tab' %></li>
-    <li><%= link_to 'Institution Administrators', '#tab2', 'data-toggle' => 'tab' %></li>
-    <li><%= link_to 'Institution Hierarchy', '#tab3', 'data-toggle' => 'tab' %></li>
-    <li><%= link_to 'Manage Users', '#tab4', 'data-toggle' => 'tab' %></li>
+    <li class="active"><a href="#tab1" data-toggle="tab">Institution Information</a></li>
+    <li><a href="#tab2" data-toggle="tab">Institution Administrators</a></li>
+    <li><a href="#tab3" data-toggle="tab">Institution Hierarchy</a></li>
+    <li><a href="#tab4" data-toggle="tab">Manage Users</a></li>
   </ul>
   <div class="tab-content">
+
     <div class="tab-pane active" id="tab1">
       <%= render 'form' %>
     </div>
@@ -15,7 +16,7 @@
       	<%= render 'institutional_administrators' %>
     </div>
 
-    <div class="tab-pane" id="tab3">
+    <div class="tab-pane " id="tab3">
     	<div class="institutions">
 	      <%= nested_institutions @institutions.arrange(order: :created_at) %>
 	    </div>
@@ -30,3 +31,15 @@
 
   </div>
 </div>
+
+<script type="text/javascript">
+  tab_jump();
+  add_tab_to_pagination();
+</script>
+
+
+
+ 
+    
+  
+

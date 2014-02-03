@@ -1,9 +1,10 @@
-<p>Overview of DMPTool features and functions that will help you create great data management plans.</p>
+<p>Overview of how to use the tool, plus resources and guidance on data management.</p>
 <ul>
 	<li><a title="Frequently Asked Questions" href="http://dmptool.askbot.com" target="_blank">Frequently Asked Questions</a></li>
 	<li><%= link_to "Create a DMP", "#" %></li>
-	<li><%= link_to "Administer the DMPTool", users_url %></li>
-	<li><%= link_to "Data management guidance", data_management_guidance_path %></li>
+	<li><%= link_to "Administer the DMPTool", users_url if current_user %>
+		<%= link_to "Administer the DMPTool", choose_institution_path if !current_user %></li>
+	<li><%= link_to "Data management guidance", dm_guidance_path %></li>
 	<li><%= link_to "Community resources", community_resources_path %></li>
 </ul>
 <%= link_to "View All", "#", :class => "btn btn-gray" %>

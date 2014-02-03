@@ -10,21 +10,13 @@
  *
  *= require jquery.ui.all
  *= require_self
- *= require custom
- *= require authorizations
- *= require dashboard
- *= require institutions
- *= require plans
- *= require requirements_templates
- *= require requirements
- *= require resource_templates
- *= require resources
  *= require scaffolds
- *= require static_pages
- *= require user_sessions
- *= require users
- *= require user_sessions
+ *= require forms
+ *= require tables
+ *= require buttons
+ *= require layouts
  *= require ui
+ *= require static_pages
  *= require_tree .
  *= stub chrome
  *= stub safari

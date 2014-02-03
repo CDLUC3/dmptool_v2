@@ -1,11 +1,20 @@
 <%
 #	THIS PARTIAL TAKES LOCALS from the caller:
-#	autocomplete_path -- the path for the AJAX call for getting autocomplete list
+#	user_context -- The context the autocomplete should pull users for (the numbers for our roles 1 to 5).
+#                 We need this since template editors can add other template editors, etc,
+#                 so the available people in the user list may vary by the current user role and also
+#                 the context to which the user can be added.  Depending on context, some users may
+#                 show up in the list and some may not.
 #	user_role -- The role of the user-form. such as "template_editor."
 #	             Used to create unique ids and names of elements if more than one user autocomplete on a page
 #	submit_text -- the text to show on the submit button
 #	submit_url -- the URL to submit the form to once a user has been filled in
-# role_number -- the role number to be added
+# role_number -- the role number to be added.  This is for form submission and also
+#                may change the list of users displayed.
+#                This is because template editors can add other template editors, etc,
+#                so the available people in the user list may vary by the current user role and also
+#                the role to which the user will be added.  Depending on context, some users may
+#                show up in the list and some may not and it differs by role.
 # item_description --  the name of the role to be used in messages such as 'template editor'
 %>
 
@@ -15,7 +24,7 @@
 	  $( "#<%= user_role %>_name" ).autocomplete({
 	    source: function( request, response ) {
 	      $.ajax({
-	        url: "<%=autocomplete_path%>",
+	        url: "<%=users_autocomplete_path(role_number: role_number)%>",
 	        dataType: "json",
 	        data: {
 	          name_term: request.term
@@ -47,12 +56,10 @@
 	});
 </script>
 <%= form_tag(submit_url, method: :post, :id => "#{user_role}_autocomplete_form") do %>
-<div class="control-group">
-  <%= label_tag :user_role, "Name:", :class => "control-label" %>
+    <%= label_tag "#{user_role}_name", "Name:", :class => "control-label" %>
   	<%= text_field_tag "#{user_role}_name", '' %>
 		<%= hidden_field_tag "#{user_role}_id", '' %>
 		<%= hidden_field_tag "role_number", role_number %>
 		<%= hidden_field_tag "item_description", item_description %>
 		<%= submit_tag submit_text, :class => 'btn' %>
-</div>
 <% end %>

@@ -10,7 +10,7 @@ Dmptool2::Application.routes.draw do
  match 'contact', to: 'static_pages#contact', :via => [:get, :post], as: 'contact'
  get 'dashboard', to: 'dashboard#show', as: 'dashboard'
  get 'dashboard/test', to: 'dashboard#test'
- get 'data_management_guidance', to: 'static_pages#data_management_guidance'
+ get 'dm_guidance', to: 'static_pages#data_management_guidance'
  get 'guidance', to: 'static_pages#guidance'
  get 'help', to: 'static_pages#help'
  get 'logout', to: 'user_sessions#destroy'
@@ -36,6 +36,11 @@ Dmptool2::Application.routes.draw do
   resources :resource_templates do
     resources :resource_contexts
   end
+
+  resources :resource_contexts
+
+  #this routes needs to stay above the other user ones to take priority
+  get 'users/autocomplate_users', to: 'users#autocomplete_users', as: 'users_autocomplete'
 
   resources :users do
     resources :plan_states
@@ -69,9 +74,6 @@ Dmptool2::Application.routes.draw do
   match 'user_sessions/username_reminder', to: 'user_sessions#username_reminder', :via => [:get, :post]
   match 'user_sessions/password_reset', to: 'user_sessions#password_reset', :via => [:get, :post]
   match 'user_sessions/complete_password_reset', to: 'user_sessions#complete_password_reset', as: 'complete_password_reset', :via => [:get, :post]
-
-  get 'users/autocomplate_template_editors', to: 'users#autocomplete_template_editors', as: 'template_editor_users_autocomplete'
-  get 'users/autocomplate_resource_editors', to: 'users#autocomplete_resource_editors', as: 'resource_editor_users_autocomplete'
 
   get 'requirements_template_information', to: 'requirements_templates#template_information'
   get 'copy_existing_requirements_template', to: 'requirements_templates#copy_existing_template'

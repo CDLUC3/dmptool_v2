@@ -40,7 +40,7 @@ jQuery(function(){
 		jQuery(".all_limited").addClass("current");
 	}
 });
-/* Toggle  */
+/* Toggle Tabular data links */
 jQuery(function(){
 	jQuery(".toggle-links").hover(
 		function(){jQuery(this).parent().find(".template-links").css("visibility", "visible");},

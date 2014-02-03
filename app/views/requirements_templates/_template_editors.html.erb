@@ -29,8 +29,7 @@
 </div>
 <%= render partial: '/users/user_autocomplete_widget',
 				:locals =>
-					 {  autocomplete_path: template_editor_users_autocomplete_path,
-							user_role: 'template_editor',
+					 {  user_role: 'template_editor',
 							submit_text: 'Add As Template Editor',
 							submit_url: add_role_autocomplete_path,
 							role_number: Role::TEMPLATE_EDITOR,

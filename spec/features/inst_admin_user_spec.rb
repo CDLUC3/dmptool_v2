@@ -10,7 +10,7 @@ feature 'inst admin user' do
 
 		expect(page).to have_link('My Dashboard')	
 		expect(page).to have_link('DMP Templates')		
-		expect(page).to have_link('Resources') 
+		expect(page).to have_link('Customizations') 
 		expect(page).to have_link('Institution Profile') 
 		expect(page).to have_link('My Profile')	
 		
@@ -24,7 +24,7 @@ feature 'inst admin user' do
 		click_link 'Add New Institution'
 		@temp = Time.now
 		fill_in 'institution_full_name', with: "institution_test_#{@temp}"
-		page.select "#{INST_ADMIN_INSTITUTION_NAME}", :from => 'institution_parent_id'
+		#page.select "#{INST_ADMIN_INSTITUTION_NAME}", :from => 'institution_parent_id'
 		click_button 'Save Changes'
 		expect(page).to have_content("Institution was successfully created.")
 		
