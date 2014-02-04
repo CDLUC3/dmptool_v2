@@ -63,7 +63,8 @@
         <% end %>
       </ul>
       <div style="clear:both"></div>
-      <%= submit_tag('Next -->', id: 'next',  :class => "btn pull-right",) %>
+      <%= link_to(@back_text, @back_to, :class => 'btn') %>
+      <%= submit_tag(@submit_text, id: 'next') %>
     <% end %>
   <% else %>
     No results were found for your search terms, please modify your search terms to show results.

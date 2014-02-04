@@ -157,7 +157,7 @@ class RequirementsTemplatesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def requirements_template_params
-      params.require(:requirements_template).permit(:institution_id, :name, :active, :start_date, :end_date, :visibility, :version, :review_type, tags_attributes: [:id, :requirements_template_id, :tag, :_destroy],
+      params.require(:requirements_template).permit(:institution_id, :name, :active, :start_date, :end_date, :visibility, :review_type, tags_attributes: [:id, :requirements_template_id, :tag, :_destroy],
         additional_informations_attributes: [:id, :requirements_template_id, :url, :label, :_destroy], sample_plans_attributes: [:id, :requirements_template_id, :url, :label, :_destroy])
     end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140130232451) do
+ActiveRecord::Schema.define(version: 20140204195127) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -23,10 +23,11 @@ ActiveRecord::Schema.define(version: 20140130232451) do
 
   create_table "authentications", force: true do |t|
     t.integer  "user_id"
-    t.enum     "provider",   limit: [:shibboleth, :ldap]
+    t.enum     "provider",    limit: [:shibboleth, :ldap]
     t.string   "uid"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "old_user_id"
   end
 
   add_index "authentications", ["provider", "uid"], name: "provider_and_uid", unique: true, using: :btree
@@ -165,7 +166,6 @@ ActiveRecord::Schema.define(version: 20140130232451) do
     t.date     "start_date"
     t.date     "end_date"
     t.enum     "visibility",     limit: [:public, :institutional]
-    t.integer  "version"
     t.enum     "review_type",    limit: [:formal_review, :informal_review, :no_review]
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -249,6 +249,7 @@ ActiveRecord::Schema.define(version: 20140130232451) do
     t.string   "login_id"
     t.boolean  "active",           default: true
     t.datetime "deleted_at"
+    t.integer  "old_user_id"
   end
 
 end

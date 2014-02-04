@@ -28,6 +28,20 @@ class InstitutionsController < ApplicationController
 
 
   def manage_users
+    case params[:scope]
+      when "resources_editor"
+        @users = current_user.institution.users_in_role("Resources Editor").order(last_name: :asc)
+      when "template_editor"
+         @users = current_user.institution.users_in_role("Template Editor").order(last_name: :asc)
+      when "institutional_administrator"
+         @users = current_user.institution.users_in_role("Institutional Administrator").order(last_name: :asc)
+      when "institutional_reviewer"
+        @users = current_user.institution.users_in_role("Institutional Reviewer").order(last_name: :asc)
+      when "dmp_administrator"
+        @users = current_user.institution.users_in_role("DMP Administrator").order(last_name: :asc)
+      else
+        @users = current_user.institution.users_deep_in_any_role.order(last_name: :asc)
+    end
     @users = current_user.institution.users_deep_in_any_role.order(last_name: :asc)
     @roles = Role.where(['id NOT IN (?)', 1])
   end
