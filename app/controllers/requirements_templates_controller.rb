@@ -149,11 +149,6 @@ class RequirementsTemplatesController < ApplicationController
     end
   end
 
-  #to test the requirements templates tree view
-  def test
-    select_requirements_template
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_requirements_template
