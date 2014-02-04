@@ -63,7 +63,8 @@
         <% end %>
       </ul>
       <div style="clear:both"></div>
-      <%= submit_tag('Next -->', id: 'next') %>
+      <%= link_to(@back_text, @back_to, :class => 'btn') %>
+      <%= submit_tag(@submit_text, id: 'next') %>
     <% end %>
   <% else %>
     No results were found for your search terms, please modify your search terms to show results.
@@ -97,10 +98,6 @@
 
   });
 
-  /*
-  $('.req_chooser').on("change", function () {
-    alert("requirement template " + this.value + " was chosen.  Proceed to next action with requirement filled in.");
-  });*/
   $('#requirements_template_form').on('submit', function(e){
     var selected = $('input[name=requirement_id]:checked', '#requirements_template_form').val();
     if(selected == undefined){
