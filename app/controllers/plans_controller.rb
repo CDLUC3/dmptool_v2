@@ -137,6 +137,10 @@ class PlansController < ApplicationController
   end
 
   def select_dmp_template
+    @back_to = plan_template_information_path
+    @back_text = "<< Create New DMP <<"
+    @submit_to = new_plan_path
+    @submit_text = ">> DMP Overview Page"
   end
 
   private

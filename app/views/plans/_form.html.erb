@@ -21,7 +21,7 @@
         <% end %>
 
         <div class="control-group">
-          <%= f.label :equirements_template_name, 'DMP Template', :class => 'control-label' %>
+          <%= f.label :requirements_template_name, 'DMP Template', :class => 'control-label' %>
           <div class="controls">
             <% if @plan.new_record? %>
               <%= f.hidden_field :requirements_template_id, value: params[:requirements_template_id], id: 'dmp_template_id' %>
