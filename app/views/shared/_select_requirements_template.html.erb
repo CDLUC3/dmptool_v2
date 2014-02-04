@@ -94,7 +94,7 @@
 
     //hide/show list under
     var list = $('#inst_list_' + target_id);
-    list.toggle('drop');
+    list.toggle('fold');
 
   });
 
@@ -109,6 +109,7 @@
   });
 
   $('#dialog').dialog({
+      autoOpen: false,
       width: 400,
       height: 100,
       modal: true,
