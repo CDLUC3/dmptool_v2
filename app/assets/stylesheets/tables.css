@@ -26,6 +26,7 @@ table {
 .table td.nowrap {
 	white-space: nowrap; }
 .template-links {
+	margin-top: 5px;
 	visibility: hidden; }
 .template-links a {
 	color: #4C4C4E; }
