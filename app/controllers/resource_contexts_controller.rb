@@ -63,5 +63,6 @@ class ResourceContextsController < ApplicationController
 
   def dmp_for_customization
     select_requirements_template
+    @submit_to = new_resource_context_path
   end
 end
