@@ -14,6 +14,7 @@ $(function() {
 $(function() {
 	$('#comment_dialog_form').hide();
 	$('#add_comments_link').click(function() {
+		e.preventDefault();
 		$('#comment_dialog_form').dialog( {
 			width: 800,
 			height: 200,
