@@ -22,6 +22,8 @@ Dmptool2::Application.routes.draw do
  get 'video', to: 'static_pages#video'
  get 'requirements_templates/test', to: 'requirements_templates#test'
 
+ get 'institutions', to: 'institutions#index'
+
   resources :requirements_templates do
     resources :requirements
     resources :resource_contexts
