@@ -125,6 +125,11 @@ class User < ActiveRecord::Base
     @role_id ||= self.authorizations.pluck(:role_id) #caches role ids
   end
 
+
+  def has_any_role?
+    self.authorizations.count > 0
+  end
+  
   def role_names
     @role_names ||= self.roles.pluck(:name)
   end

@@ -114,6 +114,49 @@ class AuthorizationsController < ApplicationController
     redirect_to :back, notice: "#{user.full_name} has been added as a #{item_description}"
   end
 
+  def add_authorization_manage_users
+     @role_ids = params[:role_ids] ||= []  #"role_ids"=>["1", "2", "3"]
+    u_name, u_id = nil, nil
+    params.each do |k,v|
+      u_name = v if k.end_with?('_name')
+      u_id = v if k.end_with?('_id')
+    end
+    role_number = params[:role_number].to_i
+    #item_description = params[:item_description]
+    
+    if u_name.blank?
+      redirect_to :back, notice: "Please select a user" and return 
+    end
+    if !u_id.blank?
+      user = User.find(u_id)
+    else
+      first, last = u_name.split(" ", 2)
+      redirect_to :back, notice: "Please type or select the full name of a user" and return if first.nil? || last.nil?
+      users = User.where("first_name = ? and last_name = ?", first, last)
+      redirect_to :back, notice: "Please select the user with this name from the list.  There is more than one user with this name." and return if users.length > 1
+      redirect_to :back, notice: "The user you entered was not found" and return if users.length < 1
+      user = users.first
+    end
+    if user.has_any_role?
+      redirect_to :back, notice: "The user you chose has already been granted a role. You can click on 'Edit User' to grant other roles." and return
+    end
+    if  @role_ids == []
+      redirect_to :back, notice: "Please select at least a role to grant" and return
+    end
+     @role_ids.each do |role_id|
+      role_id = role_id.to_i
+      authorization = Authorization.create(role_id: role_id, user_id: user.id)
+      authorization.save!
+    end
+    # unless check_correct_permissions(user.id, role_number)
+    #   redirect_to :back, notice: "You do not have permission to assign this role" and return 
+    # end
+    # authorization = Authorization.create(role_id: role_number, user_id: user.id)
+    # authorization.save!
+    #redirect_to :back, notice: "#{user.full_name} has been added as a #{item_description}"
+    redirect_to :back, notice: "#{user.full_name} has been updated"
+  end
+
    
 
   def check_correct_permissions(user_id, role_id)

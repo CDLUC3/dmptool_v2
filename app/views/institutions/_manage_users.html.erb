@@ -19,15 +19,43 @@
 		</tbody>
 </table>
 
-<%#= render partial: '/users/user_autocomplete_widget',
-    :locals =>
-       {  user_role: 'template_editor',
-          #submit_text: 'Add As Template Editor',
-          submit_text: 'User Search',
-          submit_url: add_role_autocomplete_path,
-          role_number: Role::TEMPLATE_EDITOR,
-          item_description: 'template editor'
-       }
-%>
+
+<table class ="table table-striped">
+
+	<tr class='user_row'>  
+		<td>
+
+<%= form_tag(add_authorization_manage_users_path(anchor: 'tab_tab4'), method: 'post') do %>
+			<div class="control-group">
+					<ul>
+						<% @roles.each do |role| %>
+							<div id=<%="role_#{role.id}"%> >
+						  	<li><%= check_box_tag "role_ids[]", role.id %>
+						    <%= label_tag role.name, role.name, :class => 'checkbox-label' %></li>
+							</div>
+						<% end %>
+					</ul>
+				</div>
+
+		</td>
+
+		<td>
+
+			<%= render partial: '/users/user_autocomplete_widget',
+			:locals =>
+				       {  user_role: 'template_editor',
+				          #submit_text: 'Add As Template Editor',
+				          submit_text: 'Grant Role',
+				          submit_url: add_authorization_manage_users_path( anchor: 'tab_tab4'),
+				          role_number: Role::TEMPLATE_EDITOR,
+				          
+				          item_description: 'template editor'
+				       }
+			%>
+<%end%>
+		</td>
+	 </tr>
+		
+</table>
 
 	

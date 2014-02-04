@@ -29,7 +29,10 @@ class InstitutionsController < ApplicationController
 
   def manage_users
     @users = current_user.institution.users_deep_in_any_role.order(last_name: :asc)
+    @roles = Role.where(['id NOT IN (?)', 1])
   end
+
+  
 
   #every roles except DMP Admin
   def edit_user_roles_inst_admin
