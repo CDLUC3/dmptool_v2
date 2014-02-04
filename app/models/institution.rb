@@ -59,4 +59,7 @@ class Institution < ActiveRecord::Base
     self.shib_entity_id.to_s != ''
   end
 
+  def is_customized?
+    self.resource_contexts.where("requirements_template_id IS NOT NULL").where("resource_id IS NULL").count > 0
+  end
 end
