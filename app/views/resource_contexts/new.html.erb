@@ -1,1 +1,18 @@
-<%= render 'form' %>
+<h2 class="dashboard-heading>
+  <span class="icon template-resource"></span>
+  Customization Overview
+</h2>
+
+<h3>Basic Information</h3>
+<%= form_for @resource_context, html:{ :class => 'form-horizontal', multipart: true}  do |f| %>
+
+  <div class="control-group">
+    <%= f.label :name , "Customization Name", :class=> "control-label required" %>
+    <div class="controls">
+      <%= f.text_field :name, :class => "input-xxlarge required" %>
+      ( <span class="required">*</span> Required Field )
+    </div>
+  </div>
+
+
+<% end %>
