@@ -1,0 +1,22 @@
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Shibboleth enabled?</th>
+    <th>DMPTool Customized?</th>
+  </tr>
+  <% @institutions.each do |institution| %>o
+    <tr>
+      <td><%= link_to institution.full_name, edit_institution_path(institution) %></td>
+      <td><%- if institution.is_shibboleth? then %>
+        Yes
+      <%- else %>
+        No
+      <%- end %></td>
+      <td><%- if institution.is_customized? then %>
+        Yes
+      <%- else %>
+        No
+      <%- end %></td>
+    </tr>
+  <% end %>
+</table>

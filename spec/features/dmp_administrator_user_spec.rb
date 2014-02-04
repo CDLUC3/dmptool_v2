@@ -111,6 +111,11 @@ feature 'dmp admin user' do
 
 	end
 
+  scenario 'partners page works', :js => true do
+    logs_in_with "#{DMP_ADMIN_USERNAME}", "#{DMP_ADMIN_PASSWORD}", "#{DMP_ADMIN_INSTITUTION_NAME}"
+    visit("/partners_list")
+    expect(page).to have_content("Shibboleth enabled?")
+  end
 end
 
 
