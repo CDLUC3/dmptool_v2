@@ -20,7 +20,7 @@ Dmptool2::Application.routes.draw do
  get 'promote', to: 'static_pages#promote'
  get 'terms_of_use', to: 'static_pages#terms_of_use'
  get 'video', to: 'static_pages#video'
- get 'requirements_templates/test', to: 'requirements_templates#test'
+ get 'resource_contexts/dmp_for_customization', to: 'resource_contexts#dmp_for_customization', as: "dmp_for_customization"
 
   resources :requirements_templates do
     resources :requirements
