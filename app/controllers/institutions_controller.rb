@@ -171,6 +171,10 @@ class InstitutionsController < ApplicationController
     end
   end
 
+  def partners_list
+    @institutions = Institution.page(params[:page]).per(10)
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_institution
@@ -185,7 +189,6 @@ class InstitutionsController < ApplicationController
     def check_for_cancel
       redirect_to :back if params[:commit] == "Cancel"
     end
-
 end
 
 

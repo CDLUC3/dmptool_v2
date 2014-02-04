@@ -15,7 +15,7 @@ Dmptool2::Application.routes.draw do
  get 'help', to: 'static_pages#help'
  get 'logout', to: 'user_sessions#destroy'
  get 'partners', to: 'static_pages#partners'
- get 'partners_list', to: 'static_pages#partners_list'
+ get 'partners_list', to: 'institutions#partners_list'
  get 'privacy', to: 'static_pages#privacy'
  get 'promote', to: 'static_pages#promote'
  get 'terms_of_use', to: 'static_pages#terms_of_use'
