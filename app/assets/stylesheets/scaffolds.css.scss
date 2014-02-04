@@ -29,7 +29,7 @@ h6 {
 	margin: 0; }
 h4 span, h5 span, h6 span {
 	font-weight: normal; }
-p, ul, ol, blockquote {
+p, ul, ol {
 	font-size: 1em;
 	margin: 10px 0; }
 ul, ol {
@@ -48,6 +48,9 @@ ul.nav li {
 	margin-bottom: 0; }
 td, th {
 	font-size: 1em; }
+blockquote {
+	font-size: 1em;
+	margin: 20px 10px; }
 pre {
   font-size: 0.917em;
   line-height: 2;
@@ -71,3 +74,6 @@ a {
     color: #516935; }
   &:active {
   	color: #72942E; } }
+
+.red {
+	color: #DA0049; }
