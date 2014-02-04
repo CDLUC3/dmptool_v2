@@ -1,41 +1,4 @@
-<br/>
-<h2 class="dashboard-heading"><span class="icon select_DMP_template"></span>Select DMP Template</h2>
-<br/>
-<div class="span8">
-	<p>Select one of the funder DMP Templates listed to proceed to the next step. The type of template chosen can affect what information you will need to provide in the following steps.</p>
-</div>
-<div class="search-area span4">
-	<%= form_tag('', method: :get) do %>
-		<%= search_field_tag(:q, params[:q], :class => "input-large") %>
-		<span class = "icon-search"></span>
-		<%= submit_tag('Search') %>
-	<% end %>
-</div>
-<br/>
-<div class="buttons-alpha row">
-	<%= link_to('A-F', { :s => 'a', :e => 'f' }, :class => 'btn') %>
-	<%= link_to('G-L', { :s => 'g', :e => 'l' }, :class => 'btn') %>
-	<%= link_to('M-S', { :s => 'm', :e => 's' }, :class => 'btn') %>
-	<%= link_to('T-Z', { :s => 't', :e => 'z' }, :class => 'btn') %>
-	<%= link_to('View All', '', :class => 'btn') %>
-</div>
-
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th>Select</th>
-			<th>Template Name</th>
-		</tr>
-	</thead>
-	<tbody>
-		<% @dmp_templates.each do |t| %>
-			<tr>
-				<td><%= link_to 'Select', new_plan_path( { :requirements_template_id => t.id } ) %></td>
-				<td><%= link_to t.name, requirements_template_path(t) %></td>
-			</tr>
-		<% end %>
-	</tbody>
-</table>
+<%= render  partial: "/shared/select_requirements_template" %>
 
 <%= link_to "<< Create New DMP <<", plan_template_information_path, :method => :get, :class => "btn pull-left"%>
 
