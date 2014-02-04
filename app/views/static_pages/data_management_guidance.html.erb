@@ -28,7 +28,7 @@
 	
 	<h3>We can help</h3>
 	<p>We have been working with internal and external partners to make data management plan development less complicated. By getting to know your research and data, we can match your specific needs with data management best practices in your field to develop a data management plan that works for you. If you do this work at the beginning of your research process, you will have a far easier time following-through and complying with funding agency and publisher requirements.</p>
-	<p>We recommend that those applying for funding from US Federal agencies, such as the NSF, use the <a href="">DMPTool</a>. The DMPTool provides guidance for many of the NSF Directorate and Division requirements, along with links to UC resources, services, and help. <a href="http://www.cdlib.org/services/uc3/contact.html">Contact UC3</a> if you have questions and would like feedback on your plan.</p>
+	<p>We recommend that those applying for funding from US Federal agencies, such as the NSF, use the DMPTool. The DMPTool provides guidance for many of the NSF Directorate and Division requirements, along with links to UC resources, services, and help. <a title="Contact UC3" href="http://www.cdlib.org/services/uc3/contact.html" target="_blank">Contact UC3</a> if you have questions and would like feedback on your plan.</p>
 	
 	<h2 id="types">Types of Data</h2>
 	<p>Research projects generate and collect countelss varieties of data. To forumulate a data management plan, it's useful to categorize  your data in four ways: by source, format, stability, and volume.</p>
@@ -117,7 +117,7 @@
 	</ul>
 	
 	<h3>Examples of discouraged format choices and better alternatives:</h3>
-	<table>
+	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>Discouraged Format</th>
@@ -149,7 +149,7 @@
 	</table>
 	
 	<p>If you find it necessary or convenient to work with data in a proprietary/discouraged file format, do so, but consider saving your work in a more archival format when you are finished.</p>
-	<p>For more information on recommended formats, see the <a title="CDL Digital File Format Recommendations" href="http://www.cdlib.org/gateways/docs/cdl_dffr.pdf">CDL Digital File Format Recommendations</a>.</p>
+	<p>For more information on recommended formats, see the <a title="CDL Digital File Format Recommendations" href="http://www.cdlib.org/gateways/docs/cdl_dffr.pdf" target="_blank">CDL Digital File Format Recommendations</a>.</p>
 	
 	<h3>Tabular data</h3>
 	<p>Tabular data warrants special mention because it is so common across disciplines, mostly as Excel spreadsheets. If you do your analysis in Excel, you should use the "Save As..." command to export your work to .csv format when you are done. Your spreadsheets will be easier to understand and to export if you follow best practices when you set them up, such as:</p>
@@ -162,7 +162,7 @@
 	<h3>Other risks to accessibility</h3>
 	<ul>
 		<li>Encrypted data may be effectively lost if it was encrypted with a key that has been lost (e.g., a forgotten password). For this reason, encrypted data representations are strongly discouraged.</li>
-		<li>Data that is legally encumbered may also be considered lost. So may data bound by ambiguous or unknown access and archiving rights, because the cost of clarifying the rights situation is often prohibitive.  See <a href="">data rights and licensing</a> for guidance.</li>
+		<li>Data that is legally encumbered may also be considered lost. So may data bound by ambiguous or unknown access and archiving rights, because the cost of clarifying the rights situation is often prohibitive.  See <a title="data rights and licensing" href="#copyright">data rights and licensing</a> for guidance.</li>
 	</ul>
 	
 	<h2 id="organize">Organizing Files</h2>
@@ -171,7 +171,7 @@
 	<p>These are rough guidelines to follow to help manage your data files in case you don't already have your own internal conventions.  When organizing files, the top-level directory/folder should include: </p>
 	<ul>
 		<li>Project title</li>
-		<li>Unique identifier (Guidance on <a href="">persistent external identifiers</a> is available)</li>
+		<li>Unique identifier (Guidance on <a title="identifiers" href="#identifiers">persistent external identifiers</a> is available)</li>
 		<li>Date (yyyy or yyyy.mm.dd)</li>
 	</ul>
 	<p>The sub-directory structure should have clear, documented naming conventions. Separate files or directories could apply, for example, to each run of an experiment, each version of a dataset, and/or each person in the group.</p>
@@ -224,104 +224,124 @@
 	</ul>
 	
 	<h3>How will you document your data?</h3>
-	<p>Data documentation is commonly called metadata��� "data about data". Researchers can document their data according to various metadata standards. Some metadata standards are designed for the purpose of documenting the contents of files, others for documenting the technical characteristics of files, and yet others for expressing relationships between files within a set of data. If you want to be able to share or publish your data, the <a href="http://schema.datacite.org/">DataCite metadata standard</a> is of particular signficiance. It is important to establish a metadata strategy that is capable of describing your data and satisfying your data management needs. For assistance in defining an adequate metadata strategy, please contact uc3@ucop.edu.</p>
+	<p>Data documentation is commonly called metadata &#8211; "data about data". Researchers can document their data according to various metadata standards. Some metadata standards are designed for the purpose of documenting the contents of files, others for documenting the technical characteristics of files, and yet others for expressing relationships between files within a set of data. If you want to be able to share or publish your data, the <a title="DataCite metadata standard" href="http://schema.datacite.org/" target="_blank">DataCite metadata standard</a> is of particular signficiance. It is important to establish a metadata strategy that is capable of describing your data and satisfying your data management needs. For assistance in defining an adequate metadata strategy, please contact <a title="uc3@ucop.edu" href="mailto:uc3@ucop.edu">uc3@ucop.edu</a>.</p>
 	<p>Below are some general aspects of your data that you should document, regardless of your discipline. At minimum, store this documentation in a "readme.txt" file, or the equivalent, with the data itself. You can also reference a published article that may contain some of this information.</p>
 	
-	<table class="mdtable">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th colspan="2">General Overview</th>
+			</tr>
+		</thead>
 		<tbody>
 			<tr>
-				<td class="mdcategory" rowspan="8">General overview</td>
-				<td class="mdlabel1">Title</td>
-				<td class="mddesc1">Name of the dataset or research project that produced it</td>
+				<td><strong>Title</strong></td>
+				<td>Name of the dataset or research project that produced it</td>
 			</tr>
 			<tr>
-				<td class="mdlabel1">Creator</td>
-				<td class="mddesc1">Names and addresses of the organizations or people who created the data; preferred format for personal names is surname first (e.g., Smith, Jane).</td>
+				<td><strong>Creator</strong></td>
+				<td>Names and addresses of the organizations or people who created the data; preferred format for personal names is surname first (e.g., Smith, Jane).</td>
 			</tr>
 			<tr>
-				<td class="mdlabel1">Identifier</td>
-				<td class="mddesc1">Unique number used to identify the data, even if it is just an internal project reference number</td>
+				<td><strong>Identifier</strong></td>
+				<td>Unique number used to identify the data, even if it is just an internal project reference number</td>
 			</tr>
 			<tr>
-				<td class="mdlabel1">Date</td>
-				<td class="mddesc1">Key dates associated with the data, including: project start and end date; release date; time period covered by the data; and other dates associated with the data lifespan, such as maintenance cycle, update schedule; preferred format is yyyy-mm-dd, or yyyy.mm.dd-yyyy.mm.dd for a range</td>
+				<td><strong>Date</strong></td>
+				<td>Key dates associated with the data, including: project start and end date; release date; time period covered by the data; and other dates associated with the data lifespan, such as maintenance cycle, update schedule; preferred format is yyyy-mm-dd, or yyyy.mm.dd-yyyy.mm.dd for a range</td>
 			</tr>
 			<tr>
-				<td class="mdlabel1">Method</td>
-				<td class="mddesc1">How the data were generated, listing equipment and software used (including model and version numbers), formulae, algorithms, experimental protocols, and other things one might include in a lab notebook</td>
+				<td><strong>Method</strong></td>
+				<td>How the data were generated, listing equipment and software used (including model and version numbers), formulae, algorithms, experimental protocols, and other things one might include in a lab notebook</td>
 			</tr>
 			<tr>
-				<td class="mdlabel1">Processing</td>
-				<td class="mddesc1">How the data have been altered or processed (e.g., normalized)</td>
+				<td><strong>Processing</td>
+				<td>How the data have been altered or processed (e.g., normalized)</td>
 			</tr>
 			<tr>
-				<td class="mdlabel1">Source</td>
-				<td class="mddesc1">Citations to data derived from other sources, including details of where the source data is held and how it was accessed</td>
+				<td><strong>Source</strong></td>
+				<td>Citations to data derived from other sources, including details of where the source data is held and how it was accessed</td>
 			</tr>
 			<tr>
-				<td class="mdlabel1">Funder</td>
-				<td class="mddesc1">Organizations or agencies who funded the research</td>
+				<td><strong>Funder</strong></td>
+				<td>Organizations or agencies who funded the research</td>
+			</tr>
+		</tbody>
+		<thead>
+			<tr>
+				<th colspan="2">Content Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><strong>Subject</strong></td>
+				<td>Keywords or phrases describing the subject or content of the data</td>
 			</tr>
 			<tr>
-				<td class="mdcategory" rowspan="5">Content description</td>
-				<td class="mdlabel2">Subject</td>
-				<td class="mddesc2">Keywords or phrases describing the subject or content of the data</td>
+				<td><strong>Place</strong></td>
+				<td>All applicable physical locations</td>
 			</tr>
 			<tr>
-				<td class="mdlabel2">Place</td>
-				<td class="mddesc2">All applicable physical locations</td>
+				<td><strong>Language</strong></td>
+				<td>All languages used in the dataset</td>
 			</tr>
 			<tr>
-				<td class="mdlabel2">Language</td>
-				<td class="mddesc2">All languages used in the dataset</td>
+				<td><strong>Variable list</strong></td>
+				<td>All variables in the data files, where applicable</td>
 			</tr>
 			<tr>
-				<td class="mdlabel2">Variable list</td>
-				<td class="mddesc2">All variables in the data files, where applicable</td>
+				<td><strong>Code list</strong></td>
+				<td>Explanation of codes or abbreviations used in either the file names or the variables in the data files (e.g. '999 indicates a missing value in the data')</td>
+			</tr>
+		</tbody>
+		<thead>
+			<tr>
+				<th colspan="2">Technical Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><strong>File inventory</strong></td>
+				<td>All files associated with the project, including extensions (e.g. 'NWPalaceTR.WRL', 'stone.mov')</td>
 			</tr>
 			<tr>
-				<td class="mdlabel2">Code list</td>
-				<td class="mddesc2">Explanation of codes or abbreviations used in either the file names or the variables in the data files (e.g. '999 indicates a missing value in the data')</td>
+				<td><strong>File Formats</strong></td>
+				<td>Formats of the data, e.g., FITS, SPSS, HTML, JPEG, etc.</td>
 			</tr>
 			<tr>
-				<td class="mdcategory" rowspan="6">Technical description</td>
-				<td class="mdlabel1">File inventory</td>
-				<td class="mddesc1">All files associated with the project, including extensions (e.g. 'NWPalaceTR.WRL', 'stone.mov')</td>
+				<td><strong>File structure</strong></td>
+				<td>Organization of the data file(s) and layout of the variables, where applicable</td>
 			</tr>
 			<tr>
-				<td class="mdlabel1">File Formats</td>
-				<td class="mddesc1">Formats of the data, e.g., FITS, SPSS, HTML, JPEG, etc.</td>
+				<td><strong>Version</strong></td>
+				<td>Unique date/time stamp and identifier for each version</td>
 			</tr>
 			<tr>
-				<td class="mdlabel1">File structure</td>
-				<td class="mddesc1">Organization of the data file(s) and layout of the variables, where applicable</td>
+				<td><strong>Checksum</strong></td>
+				<td>A digest value computed for each file that can be used to detect changes; if a recomputed digest differs from the stored digest, the file must have changed</td>
 			</tr>
 			<tr>
-				<td class="mdlabel1">Version</td>
-				<td class="mddesc1">Unique date/time stamp and identifier for each version</td>
+				<td><strong>Necessary software</td>
+				<td>Names of any special-purpose software packages required to create, view, analyze, or otherwise use the data</td>
+			</tr>
+		</tbody>
+		<thead>
+			<th colspan="2">Access</th>
+		</thead>
+		<tbody>
+			<tr>
+				<td><strong>Rights</strong></td>
+				<td>Any known intellectual property rights, statutory rights, licenses, or restrictions on use of the data</td>
 			</tr>
 			<tr>
-				<td class="mdlabel1">Checksum</td>
-				<td class="mddesc1">A digest value computed for each file that can be used to detect changes; if a recomputed digest differs from the stored digest, the file must have changed</td>
-			</tr>
-			<tr>
-				<td class="mdlabel1">Necessary software</td>
-				<td class="mddesc1">Names of any special-purpose software packages required to create, view, analyze, or otherwise use the data</td>
-			</tr>
-			<tr>
-				<td class="mdcategory" rowspan="2">Access</td>
-				<td class="mdlabel2">Rights</td>
-				<td class="mddesc2">Any known intellectual property rights, statutory rights, licenses, or restrictions on use of the data</td>
-			</tr>
-			<tr>
-				<td class="mdlabel2">Access information</td>
-				<td class="mddesc2">Where and how your data can be accessed by other researchers</td>
+				<td><strong>Access information</strong></td>
+				<td>Where and how your data can be accessed by other researchers</td>
 			</tr>
 		</tbody>
 	</table>
 	
 	<h2 id="identifiers">Persistent Identifiers</h2>
-	<p>If you want to be able to <a href="#share">share</a> or <a href="#cite">cite</a> your dataset, you'll want to assign a public persistent unqiue identifier to it. There are a variety of public identifier schemes, but common properties of good schemes are that they are:</p>
+	<p>If you want to be able to <a title="share" href="#share">share</a> or <a title="cite" href="#cite">cite</a> your dataset, you'll want to assign a public persistent unqiue identifier to it. There are a variety of public identifier schemes, but common properties of good schemes are that they are:</p>
 	<ul>
 		<li>Actionable (you can "click" on them in a web browser)</li>
 		<li>Globally unique across the internet</li>
@@ -429,7 +449,7 @@
 	<h4>Who is responsible for managing and controlling the data?</h4>
 	<p>Who controls the data (e.g., the PI, a student, your lab, your university, your funder)? Before you spend a lot of time figuring out how to store the data, to share it, to name it, etc. you should make sure you have the authority to do so.</p>
 	<h4>For what or whom are the data intended?</h4>
-	<p>Who is your intended audience for the data? How do you expect they will use the data? The answer to these questions will help inform <a href="#">structuring</a> and <a href="#">distributing</a> the data.</p>
+	<p>Who is your intended audience for the data? How do you expect they will use the data? The answer to these questions will help inform <a title="structuring" href="#share">structuring</a> and <a title="distributing" href="#share">distributing</a> the data.</p>
 	<h4>How long should the data be retained?</h4>
 	<p>Is there any requirement that the data be retained? If so, for how long? 3-5 years, 10-20 years, permanently? Not all data need to be retained, and some data required to be retained need not be retained indefinitely. Have a good understanding of your obligation for the data's retention.</p>
 	<p>Beyond any externally imposed requirments, think about the long-term usefulness of the data.  If the data is from an experiment that you anticipate will be repeatable more quickly, inexpensively, and accurately as technology progresses, you may want to store it for a relatively brief period.  If the data consists of observations made outside the laborartory that can never be repeated, you may wish to store it indefinitely.</p>
@@ -438,8 +458,8 @@
 	
 	<h3>Why share your data?</h3>
 	<ul>
-	<li>Required by publishers (e.g., <a title="Cell" href="http://www.cell.com/authors#ed_policies" target="_blank">Cell</a>, <a title="Nature" href="http://www.nature.com/authors/policies/availability.html" target="_blank">Nature</a>, <a title="Science" href="http://www.sciencemag.org/site/feature/contribinfo/prep/gen_info.xhtml#dataavail">Science</a>).</li>
-	<li>Required by government <a href="">funding agencies</a> (e.g., <a title="NIH" href="http://grants.nih.gov/grants/policy/data_sharing/" target="_blank">NIH</a>, <a title="NSF" href="http://www.nsf.gov/bfa/dias/policy/dmp.jsp" target="_blank">NSF</a>)</li>
+	<li>Required by publishers (e.g., <a title="Cell" href="http://www.cell.com/authors#ed_policies" target="_blank">Cell</a>, <a title="Nature" href="http://www.nature.com/authors/policies/availability.html" target="_blank">Nature</a>, <a title="Science" href="http://www.sciencemag.org/site/feature/contribinfo/prep/gen_info.xhtml#dataavail" target="_blank">Science</a>).</li>
+	<li>Required by government <a href="#">funding agencies</a> (e.g., <a title="NIH" href="http://grants.nih.gov/grants/policy/data_sharing/" target="_blank">NIH</a>, <a title="NSF" href="http://www.nsf.gov/bfa/dias/policy/dmp.jsp" target="_blank">NSF</a>)</li>
 	<li>Allows data to be used to answer new questions</li>
 	<li>Makes research more open</li>
 	<li>Makes your papers more useful and citable by other researchers</li>
@@ -447,8 +467,8 @@
 	
 	<h3>Considerations when preparing to share data</h3>
 	<ul>
-		<li><strong>File Formats for Long Term Access:</strong> The file format in which you keep your data is a primary factor in one's ability to use your data in the future. Plan for both hardware and software obsolescence. See <a href="">file formats and organization</a> for details on long-term storage formats.</li>
-		<li><strong>Don't Forget the Documentation:</strong> Document your research and data so others can interpret the data. Begin to document your data at the very beginning of your research project and continue throughout the project.  See <a href="">data documentation and metadata</a> for details.</li>
+		<li><strong>File Formats for Long Term Access:</strong> The file format in which you keep your data is a primary factor in one's ability to use your data in the future. Plan for both hardware and software obsolescence. See <a title="formats" href="#formats">file formats and organization</a> for details on long-term storage formats.</li>
+		<li><strong>Don't Forget the Documentation:</strong> Document your research and data so others can interpret the data. Begin to document your data at the very beginning of your research project and continue throughout the project.  See <a title="data documentation and metadata" href="#metadata">data documentation and metadata</a> for details.</li>
 		<li><strong>Ownership and Privacy:</strong> Make sure that you have considered the implications of sharing data in terms of copyright, IP ownership, and subject confidentiality.  See <a title="copyright" href="#copyright">copyright and confidentiality</a> for details.</li>
 	</ul>
 	
@@ -487,7 +507,7 @@
 	</ul></p>
 	
 	<h3>Citation Elements</h3>
-	<p>A dataset should be cited formally in an article's reference list, not just informally in the text. Many data repositories and publishers provide explict instructions for citing their contents. If no citation information is provided, you can still construct a citation following generally agreed-upon guidelines from sources such as the <a href="https://www.jstage.jst.go.jp/article/dsj/12/0/12_OSOM13-043/_article">CODATA Report on data citation</a>, the <a href="http://wiki.esipfed.org/index.php/Interagency_Data_Stewardship/Citations">ESIP Federation Data Citation Guidelines</a>, and the current <a href="http://schema.datacite.org/">DataCite Metadata Schema</a>.</p>
+	<p>A dataset should be cited formally in an article's reference list, not just informally in the text. Many data repositories and publishers provide explict instructions for citing their contents. If no citation information is provided, you can still construct a citation following generally agreed-upon guidelines from sources such as the <a title="CODATA Report on data citation" href="https://www.jstage.jst.go.jp/article/dsj/12/0/12_OSOM13-043/_article" target="_blank">CODATA Report on data citation</a>, the <a title="ESIP Federation Data Citation Guidelines" href="http://wiki.esipfed.org/index.php/Interagency_Data_Stewardship/Citations" target="_blank">ESIP Federation Data Citation Guidelines</a>, and the current <a title="DataCite Metadata Schema" href="http://schema.datacite.org/" target="_blank">DataCite Metadata Schema</a>.</p>
 	
 	<h4>Core elements</h4>
 	<p>There are 5 core elements usually included in a dataset citation, with additional elements added as appropriate.</p>
@@ -501,28 +521,27 @@
 	<p>Creator names in non-Roman scripts should be transliterated using the <a title="ALA-LC Romanization Tables" href="http://www.loc.gov/catdir/cpso/roman.html" target="_blank">ALA-LC Romanization Tables</a>.</p>
 	
 	<h4>Common additional elements</h4>
-	<p>Although the core elements are sufficient in the simplest case��� citation to the entirety of a static dataset��� additional elements may be needed if you wish to cite a dynamic dataset or a subset of a larger dataset. <br />
+	<p>Although the core elements are sufficient in the simplest case &#8211; citation to the entirety of a static dataset &#8211; additional elements may be needed if you wish to cite a dynamic dataset or a subset of a larger dataset. <br />
 	</p>
 	<ul>
 		<li><strong>Version</strong> of the dataset analyzed in the citing paper</li>
 		<li><strong>Access date</strong> when the data was accessed for analysis in the citing paper</li>
 		<li><strong>Subset</strong> of the dataset analyzed (e.g., a range of dates or record numbers, a list of variables)</li>
-		<li><strong>Verifier</strong> that the dataset or subset accessed by a reader is identical to the one analyzed by the author (e.g., a <a href="http://en.wikipedia.org/wiki/Checksum">Checksum</a>)</li>
+		<li><strong>Verifier</strong> that the dataset or subset accessed by a reader is identical to the one analyzed by the author (e.g., a <a title="Checksum" href="http://en.wikipedia.org/wiki/Checksum" target="_blank">Checksum</a>)</li>
 		<li><strong>Location</strong> of the dataset on the internet, needed if the identifier is not "actionable" (convertable to a web address)</li>
 	</ul>
 	
 	<h3>Example citations</h3>
 	<ul>
 		<li> 
-			<a href="Laurance, Megan (2013): Re-analysis of microarray data from rapamycin resistant DLBCL cell lines. University of California, San Francisco. Dataset." target="_blank">Laurance, Megan (2013): Re-analysis of microarray data from rapamycin resistant DLBCL cell lines. University of California, San Francisco. Dataset.</a></li>
+			Laurance, Megan (2013): Re-analysis of microarray data from rapamycin resistant DLBCL cell lines. University of California, San Francisco. Dataset.</li>
 		<li>Kumar, Sujai (2012): 20 Nematode Proteomes. Figshare. Dataset. doi:10.6084/m9.figshare.96035.</li>
 		<li>Morran LT, Parrish II RC, Gelarden IA, Lively CM (2012) Data from: Temporal dynamics of outcrossing and host mortality rates in host-pathogen experimental coevolution. Evolution doi:10.5061/dryad.c3gh6</li>
-		<li><a title="Donna Strahan. "Petra Great Temple Excavations: 08-B-1 (Small Find)" (Released 2009-10-26). Martha Sharp Joukowsky (Ed.) Open Context." href="http://opencontext.org/subjects/30C3F340-5D14-497A-B9D0-7A0DA2C019F1" target="_blank">Donna Strahan. "Petra Great Temple Excavations: 08-B-1 (Small Find)" (Released 2009-10-26). Martha Sharp Joukowsky (Ed.) Open Context.</a></li>
-		<li><a title="OECD (2008), Social Expenditures aggregates, OECD Social Expenditure Statistics (database). doi: 10.1787/000530172303 " href="http://dx.doi.org/10.1787/000530172303" target="_blank">OECD (2008), Social Expenditures aggregates, OECD Social Expenditure Statistics (database). doi: 10.1787/000530172303 </a> (Accessed on 2008-12-02).</li>
+		<li><a title="Donna Strahan. 'Petra Great Temple Excavations: 08-B-1' (Small Find) (Released 2009-10-26). Martha Sharp Joukowsky (Ed.) Open Context." href="http://opencontext.org/subjects/30C3F340-5D14-497A-B9D0-7A0DA2C019F1" target="_blank">Donna Strahan. "Petra Great Temple Excavations: 08-B-1 (Small Find)" (Released 2009-10-26). Martha Sharp Joukowsky (Ed.) Open Context.</a></li>
+		<li><a title="OECD (2008), Social Expenditures aggregates, OECD Social Expenditure Statistics (database). doi: 10.1787/000530172303" href="http://dx.doi.org/10.1787/000530172303" target="_blank">OECD (2008), Social Expenditures aggregates, OECD Social Expenditure Statistics (database). doi: 10.1787/000530172303</a> (Accessed on 2008-12-02).</li>
 			
-		<li>Cavalieri, D., C. Parkinson, P. Gloersen, and H. J. Zwally. 1996, updated 2006. Sea ice concentrations from Nimbus-7 SMMR and DMSP SSM/I passive microwave data, March 2002 &#8211; Sept. 2003. Boulder, Colorado USA: National Snow and Ice Data Center. <a title="" href="http://nsidc.org/data/nsidc-0051.html" target="_blank">http://nsidc.org/data/nsidc-0051.html</a> (Accessed on 2008-05-14).</li>	
+		<li><a title="Cavalieri, D., C. Parkinson, P. Gloersen, and H. J. Zwally. 1996, updated 2006. Sea ice concentrations from Nimbus-7 SMMR and DMSP SSM/I passive microwave data, March 2002 &#8211; Sept. 2003. Boulder, Colorado USA: National Snow and Ice Data Center. http://nsidc.org/data/nsidc-0051.html" href="http://nsidc.org/data/nsidc-0051.html" target="_blank">Cavalieri, D., C. Parkinson, P. Gloersen, and H. J. Zwally. 1996, updated 2006. Sea ice concentrations from Nimbus-7 SMMR and DMSP SSM/I passive microwave data, March 2002 &#8211; Sept. 2003. Boulder, Colorado USA: National Snow and Ice Data Center.</a> (Accessed on 2008-05-14).</li>	
 		<li><a title="Denhard, Michael (2009): dphase_mpeps: MicroPEPS LAF-Ensemble run by DWD for the MAP D-PHASE project. World Data Center for Climate." href="http://dx.doi.org/10.1594/WDCC/dphase_mpeps" target="_blank">Denhard, Michael (2009): dphase_mpeps: MicroPEPS LAF-Ensemble run by DWD for the MAP D-PHASE project. World Data Center for Climate.</a></li>
-			k
 		<li> <a title="Manoug, J L (1882): Useful data on the rise of the Nile. Alexandria : Printing-Office V Penasson." href="http://n2t.net/ark:/13960/t44q88124" target="_blank">Manoug, J L (1882): Useful data on the rise of the Nile. Alexandria : Printing-Office V Penasson.</a></li>
 	</ul>
 	
@@ -549,7 +568,7 @@
 	<ul>
 		<li><strong>Evaluate the anonymity of your data.</strong> Consider to what extent your data contains <a title="direct or indirect identifiers" href="http://www.icpsr.umich.edu/icpsrweb/content/datamanagement/confidentiality/" target="_blank">direct or indirect identifiers</a> that could be combined with other public information to identify research participants.</li>
 		<li><strong>Obtain a confidentiality review.</strong> A benefit of depositing your data with <a title="ICPSR" href="http://www.icpsr.umich.edu/" target="_blank">ICPSR</a> is that their staff offers a <a title="Disclosure review service" href="http://www.icpsr.umich.edu/icpsrweb/content/datamanagement/confidentiality/index.html" target="_blank">Disclosure review service</a> to check your data for confidential information.</li>
-		<li><strong>Comply with UC regulations.</strong> researchers concerned about confidentiality issues with their data should consult the UC policy for <a href="http://policy.ucop.edu/doc/2500499">Protection of Human Subjects in Research</a>.</li>
+		<li><strong>Comply with UC regulations.</strong> researchers concerned about confidentiality issues with their data should consult the UC policy for <a title="Protection of Human Subjects in Research" href="http://policy.ucop.edu/doc/2500499" target="_blank">Protection of Human Subjects in Research</a>.</li>
 		<li><strong>Comply with regulations for health research</strong> set forth in the <a title="Health Insurance Portability and Accountability Act (HIPPA)" href="http://privacyruleandresearch.nih.gov/" target="_blank">Heatlth Insurance Portability and Accountability Act (HIPPA)</a>.</li>
 	</ul>
 	<p>To ethically share confidential data, you may be able to</p>

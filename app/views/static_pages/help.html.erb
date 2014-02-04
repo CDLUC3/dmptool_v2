@@ -3,18 +3,18 @@
 	<hr/>
 	
 	<h3><em>What do you want to do?</em></h3>
-	
-	<h2><a title="I want to see frequently asked question and answers" href="http://dmptool.askbot.com" target="_blank">I want to see frequently asked question and answers</a></h2>
-	
-	<h2><%= link_to(html:{"I want to " + content_tag(:strong, "create") + " a data management plan.", "#", :title => "I want to create a data management plan.") %></h2>
-	
-	<h2><%= link_to("I want to " + content_tag(:strong, "administer") + " the DMPTool.", users_path, :title => "I want to administer the DMPTool") if current_user %>
-		<%= link_to("I want to " + content_tag(:strong, "administer") + " the DMPTool.", choose_institution_path, :title => "I want to administer the DMPTool") if !current_user %>
+	<br/>
+	<h2><a title="I want to see frequently asked question and answers." href="http://dmptool.askbot.com" target="_blank">I want to see frequently asked question and answers.</a></h2>
+	<br/>
+	<h2><%= link_to raw("I want to <strong>create</strong> a data management plan."), "#", :title => "I want to create a data management plan." %></h2>
+	<br/>
+	<h2><%= link_to raw("I want to <strong>administer</strong> the DMPTool."), users_path, :title => "I want to administer the DMPTool" if current_user %>
+		<%= link_to raw("I want to <strong>administer</strong> the DMPTool."), choose_institution_path, :title => "I want to administer the DMPTool" if !current_user %>
 	</h2>
-	
-	<h2><%= link_to("I want general " + content_tag(:strong, "data management guidance") + ".", dm_guidance_path, :title => "I want general data management guidance.") %></h2>
-	
-	<h2><%= link_to("I want to " + content_tag(:strong, "promote the DMPTool") + " at my institution", promote_path, :title => "I want to promote the DMPTool at my institution") %></h2>
-	
-	<h2><%= link_to("I want to access " + content_tag(:strong, "community resources") + " for understanding and using the DMPTool.", community_resources_path, :title => "I want to access community resources for understanding and using the DMPTool.") %></h2>
+	<br/>
+	<h2><%= link_to raw("I want general <strong>data management guidance</strong>."), dm_guidance_path, :title => "I want general data management guidance." %></h2>
+	<br/>
+	<h2><%= link_to raw("I want to <strong>promote the DMPTool</strong> at my institution"), promote_path, :title => "I want to promote the DMPTool at my institution" %></h2>
+	<br/>
+	<h2><%= link_to raw("I want to access <strong>community resources</strong> for understanding and using the DMPTool."), community_resources_path, :title => "I want to access community resources for understanding and using the DMPTool." %></h2>
 </div>
