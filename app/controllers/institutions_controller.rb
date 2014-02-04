@@ -42,7 +42,7 @@ class InstitutionsController < ApplicationController
       else
         @users = current_user.institution.users_deep_in_any_role.order(last_name: :asc)
     end
-    @users = current_user.institution.users_deep_in_any_role.order(last_name: :asc)
+    #@users = current_user.institution.users_deep_in_any_role.order(last_name: :asc)
     @roles = Role.where(['id NOT IN (?)', 1])
   end
 

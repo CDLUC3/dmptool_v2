@@ -37,8 +37,8 @@ SELECT  `name`, `name`,`desc`,NULL, NULL,NULL,NULL,NULL,NULL,`created_at`, `upda
 FROM `dmp`.`funders`;
 
 TRUNCATE TABLE `dmp2`.`requirements_templates`;
-INSERT INTO `dmp2`.`requirements_templates` (`id`, `institution_id`, `name`, `active`, `start_date`, `end_date`, `visibility`, `version`, `review_type`, `created_at`, `updated_at`, `old_foreign_key`)						
-SELECT  `id`, NULL, `name`, `active`, `start_date`, `end_date`,'public',NULL,NULL, `created_at`, `updated_at`, `dmp`.`funder_templates`.`funder_id` 
+INSERT INTO `dmp2`.`requirements_templates` (`id`, `institution_id`, `name`, `active`, `start_date`, `end_date`, `visibility`, `review_type`, `created_at`, `updated_at`, `old_foreign_key`)						
+SELECT  `id`, NULL, `name`, `active`, `start_date`, `end_date`,'public',NULL, `created_at`, `updated_at`, `dmp`.`funder_templates`.`funder_id` 
 FROM `dmp`.`funder_templates`;
 
 UPDATE `dmp2`.requirements_templates AS r
