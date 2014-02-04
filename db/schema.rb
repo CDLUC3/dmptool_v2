@@ -23,11 +23,10 @@ ActiveRecord::Schema.define(version: 20140130232451) do
 
   create_table "authentications", force: true do |t|
     t.integer  "user_id"
-    t.enum     "provider",    limit: [:shibboleth, :ldap]
+    t.enum     "provider",   limit: [:shibboleth, :ldap]
     t.string   "uid"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "old_user_id"
   end
 
   add_index "authentications", ["provider", "uid"], name: "provider_and_uid", unique: true, using: :btree
@@ -72,7 +71,6 @@ ActiveRecord::Schema.define(version: 20140130232451) do
     t.string   "logo"
     t.string   "ancestry"
     t.datetime "deleted_at"
-    t.integer  "old_key"
   end
 
   add_index "institutions", ["ancestry"], name: "index_institutions_on_ancestry", using: :btree
@@ -86,13 +84,21 @@ ActiveRecord::Schema.define(version: 20140130232451) do
 
   create_table "old_authentications", force: true do |t|
     t.integer  "user_id"
-    t.enum     "provider",   limit: [:shibboleth, :ldap]
+    t.string   "provider"
     t.string   "uid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "new_user_id"
+  end
+
+  create_table "old_authorizations", force: true do |t|
+    t.integer  "role_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "old_authentications", ["provider", "uid"], name: "provider_and_uid", unique: true, using: :btree
+  add_index "old_authorizations", ["user_id", "role_id"], name: "index_authorizations_on_user_id_and_role_id", unique: true, using: :btree
 
   create_table "old_users", force: true do |t|
     t.integer  "institution_id"
@@ -104,7 +110,6 @@ ActiveRecord::Schema.define(version: 20140130232451) do
     t.binary   "prefs"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "cookie_salt"
     t.string   "login_id"
     t.boolean  "active",           default: true
     t.datetime "deleted_at"
@@ -176,7 +181,7 @@ ActiveRecord::Schema.define(version: 20140130232451) do
     t.string   "name"
     t.string   "contact_info"
     t.string   "contact_email"
-    t.enum     "review_type",              limit: [:formal_review, :informal_review, :no_review]
+    t.boolean  "review_type"
   end
 
   add_index "resource_contexts", ["institution_id"], name: "index_resource_contexts_on_institution_id", using: :btree
