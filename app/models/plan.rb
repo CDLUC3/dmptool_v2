@@ -16,15 +16,19 @@ class Plan < ActiveRecord::Base
   validates :name, presence: true
   validates :visibility, presence: true
 
-  def public?
-    visibility == :public
+  scope :institutional_visibility, -> { where(visibility: :institutional) }
+  scope :public_visibility, -> { where(visibility: :public) }
+  scope :private_visibility, -> { where(visibility: :private) }
+
+  def shared
+    self.user_plans.count > 1
   end
 
-  def public_browsable?
-    visibility == :public_browsable
+  def owned
+   self.user_plans.where(owner: true)
   end
 
-  def institutional?
-    visibility == :institutional
+  def coowned
+   self.user_plans.where(owner: false)
   end
 end

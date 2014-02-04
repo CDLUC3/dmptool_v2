@@ -149,69 +149,6 @@ class RequirementsTemplatesController < ApplicationController
     end
   end
 
-  #to test the requirements templates tree view
-  def test
-    req_temp = RequirementsTemplate.includes(:institution)
-    if current_user.has_role?(Role::DMP_ADMIN)
-      #all records
-    elsif current_user.has_role?(Role::TEMPLATE_EDITOR) || current_user.has_role?(Role::INSTITUTIONAL_ADMIN)
-      req_temp = req_temp.where(institution_id: current_user.institution.subtree_ids)
-    else
-      @rt_tree = {}
-      return
-    end
-    if !params[:q].blank?
-      req_temp = req_temp.name_search_terms(params[:q])
-    end
-
-    rt_tree = {}
-    #this creates a hash with institutions as keys and requirements_templates as values like below
-    # { <institution_object1> => [<requirements_template_1>, <requirements_template_2> ],
-    #     <institution_object2> => [<requirements_template_1>] }
-    req_temp.each do |rt|
-      unless rt.institution.nil?
-        root_inst = rt.institution.root
-        if rt_tree.has_key?(root_inst)
-          rt_tree[root_inst].push(rt)
-        else
-          rt_tree[root_inst] = [ rt ]
-        end
-      end
-    end
-
-    #this transforms the hash so that there is a possible 2-level heirarchy like institution => [req_template1, req_template2] or
-    # req_template => nil, see example below:
-    # { <institution_object1> => [<requirements_template_1>, <requirements_template_2> ],
-    #     <requirements_template_1> => nil }
-    @rt_tree = {}
-    rt_tree.each do |k,v|
-      if v.length > 1
-        @rt_tree[k] = v
-      else
-        v.each do |i|
-          @rt_tree[i] = nil
-        end
-      end
-    end
-
-    #sort first level items by name (both institutions and requirements templates)
-    @rt_tree = Hash[@rt_tree.sort{|x,y| x[0].name.downcase <=> y[0].name.downcase}]
-
-    #sort any second level items by name (just requirements templates within an institution)
-    @rt_tree.each do |k, v|
-      v.sort!{|x, y| x.name.downcase <=> y.name.downcase} unless v.nil?
-    end
-
-    #put all results at top level if only one institution has results
-    if @rt_tree.length == 1 && !@rt_tree.first[1].nil?
-      temp = {}
-      @rt_tree.first[1].each do |i|
-        temp[i] = nil
-      end
-      @rt_tree = temp
-    end
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_requirements_template

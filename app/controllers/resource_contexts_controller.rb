@@ -60,4 +60,8 @@ class ResourceContextsController < ApplicationController
                             where(institution_id: [current_user.institution.subtree_ids])
     end
   end
+
+  def dmp_for_customization
+    select_requirements_template
+  end
 end

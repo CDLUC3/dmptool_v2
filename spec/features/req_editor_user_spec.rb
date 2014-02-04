@@ -15,7 +15,12 @@ feature 'req editor user' do
 		find('.details').click
 		expect(page).to have_content "NSF-BIO"
 		click_link 'Add Group'
+		
 		fill_in 'requirement_text_brief', with: 'new_group'
+		
+		fill_in 'requirement_text_full', with: 'new_group'
+
+
 		click_button 'Save'
 		expect(page).to have_content("Requirement was successfully created.")
 		expect(page).to have_content("new_group")
@@ -27,7 +32,7 @@ feature 'req editor user' do
 
 	end
 
-	scenario 'requirement editor creates and removes a DMP Template' , :js => true do
+	scenario 'requirement editor creates a DMP Template' , :js => true do
 
 		logs_in_with "#{REQ_EDITOR_USERNAME}", "#{REQ_EDITOR_PASSWORD}", "#{REQ_EDITOR_INSTITUTION_NAME}"
 
@@ -35,7 +40,7 @@ feature 'req editor user' do
 		expect(page).to have_link('My Profile')		
 		expect(page).to have_link('DMP Templates')		
 
-		expect(page).to have_no_link('Resources') 
+		expect(page).to have_no_link('Customizations')  
 		expect(page).to have_no_link('Institution Profile') 
 		expect(page).to have_no_link('DMP Administration')	
 
@@ -46,9 +51,7 @@ feature 'req editor user' do
 		expect(page).to have_content(%r{#{"Overview"}}i)
 		expect(page).to have_content("DMP Templates")
 
-		expect(page).to have_no_content("DMPs For My Review")
-		expect(page).to have_no_content("Resource Templates")
-
+		
 		within('#quick_dashboard') do
 			click_link 'DMP Templates'
 		end
@@ -60,7 +63,13 @@ feature 'req editor user' do
 		#create new DMP template
 		click_button 'Create New Template'
 		expect(page).to have_content("Create New DMP")
-		click_button 'create_new_template'
+
+
+		within('#create_new_template_test') do
+  			click_on("Template Information")
+		end
+
+		
 		expect(page).to have_content(%r{#{"DMP TEMPLATE OVERVIEW"}}i)
 		expect(page).to have_field("institution_name", :disabled => true)
 		expect(page).to have_content("Test Institution")
@@ -99,11 +108,11 @@ feature 'req editor user' do
 		click_button 'Save'
 		expect(page).to have_content("Requirement was successfully created.")
 		expect(page).to have_content("bla")
-		within('#req_bla') do
-			click_link 'delete_requirement'
-		end
-		find('.confirm').click
-		expect(page).to have_no_content("bla")
+		# within('#req_bla') do
+		# 	click_link 'delete_requirement'
+		# end
+		# find('.confirm').click
+		# expect(page).to have_no_content("bla")
 
 	end
 	

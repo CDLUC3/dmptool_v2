@@ -1,0 +1,34 @@
+<h3>Review DMPS</h3>
+
+<strong>DMPs Pending My Review</strong>
+<br/>
+<table class="table table-striped" id="review_dmps">
+  <thead>
+    <tr>
+      <th>DMP Name</th>
+      <th>Owner</th>
+      <th>Submission Date</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @plans.each do |plan| %>
+      <tr>
+				<td><%=link_to (content_tag(:strong, plan.name)), '#', :id => "#{plan.name}" %></td>
+        <td><%= owner_name(plan) %></td>
+        <td><%= plan.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+        <td><%= state(plan) %></td>
+        <td><%=(link_to raw('<i class="icon-ok"> </i>'), '#')+' | '+(link_to raw('<i class="icon-remove"> </i>'),'#')+' | '+(link_to raw('<i class="icon-comment"> </i>'),'#')%></td>
+      </tr>
+    <% end %>
+  <tbody>
+</table>
+    <div class="buttons pagination">
+      <%= link_to "View All", review_dmps_path(:scope => "all"), :method => :get, :class => "btn" %>
+      <%= paginate @plans %>
+    </div>
+    </tr>
+  </tbody>
+</table>
+<br/>

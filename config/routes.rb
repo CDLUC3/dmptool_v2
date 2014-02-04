@@ -1,5 +1,8 @@
 Dmptool2::Application.routes.draw do
 
+  get "comments/index"
+  get "comments/new"
+  get "comments/edit"
  get "dashboard/show"
  root 'static_pages#home'
  get 'about', to: 'static_pages#about'
@@ -17,7 +20,7 @@ Dmptool2::Application.routes.draw do
  get 'promote', to: 'static_pages#promote'
  get 'terms_of_use', to: 'static_pages#terms_of_use'
  get 'video', to: 'static_pages#video'
- get 'requirements_templates/test', to: 'requirements_templates#test'
+ get 'resource_contexts/dmp_for_customization', to: 'resource_contexts#dmp_for_customization', as: "dmp_for_customization"
 
   resources :requirements_templates do
     resources :requirements
@@ -40,6 +43,7 @@ Dmptool2::Application.routes.draw do
   get 'users/autocomplate_users', to: 'users#autocomplete_users', as: 'users_autocomplete'
 
   resources :users do
+    resources :plan_states
     member do
       get :edit_roles
       get :finish_signup
@@ -51,8 +55,15 @@ Dmptool2::Application.routes.draw do
     resources :resource_contexts
   end
 
-  resources :roles
-  resources :plans
+  resources :plans do
+    resources :plan_states
+    member do
+      post :add_coowner
+      get :publish
+      get :export
+    end
+  end
+  resources :comments
   resources :institutions
   resources :authorizations
 
@@ -66,6 +77,11 @@ Dmptool2::Application.routes.draw do
 
   get 'requirements_template_information', to: 'requirements_templates#template_information'
   get 'copy_existing_requirements_template', to: 'requirements_templates#copy_existing_template'
+
+  get 'plan_template_information', to: 'plans#template_information'
+  get 'copy_existing_plans_template', to: 'plans#copy_existing_template'
+  get 'select_dmp_template', to: 'plans#select_dmp_template'
+  get 'review_dmps', to: 'plans#review_dmps'
 
   get  'remove_resource_editor_role', to: 'resource_templates#remove_resource_editor_role'
   get  'remove_requirements_editor_role', to: 'requirements_templates#remove_requirements_editor_role'
@@ -82,6 +98,8 @@ Dmptool2::Application.routes.draw do
 
   get  'edit_user_roles_inst_admin', to: 'institutions#edit_user_roles_inst_admin'
   post  'update_user_roles_inst_admin', to: 'institutions#update_user_roles_inst_admin'
+
+  post  'add_authorization_manage_users', to: 'authorizations#add_authorization_manage_users'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

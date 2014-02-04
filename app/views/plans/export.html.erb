@@ -1,0 +1,14 @@
+<h3>Export my DMP: </h3>
+
+<%= form_for @plan do %>
+	<div class="control-group">
+	  <div class="controls radio-controls">
+			<%= radio_button_tag :plan, @plan.id %>
+			<label>Plain Text</label>
+			<%= radio_button_tag :plan, @plan.id %>
+			<label>Rich Format Text</label>
+			<%= radio_button_tag :plan, @plan.id %>
+			<label>PDF</label>
+		</div>
+	</div>
+<% end %>

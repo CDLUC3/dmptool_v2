@@ -181,6 +181,8 @@ class UsersController < ApplicationController
 
   end
   
+  
+
   def autocomplete_users
     role_number = params[:role_number].to_i
     if !params[:name_term].blank?
@@ -190,11 +192,14 @@ class UsersController < ApplicationController
       elsif current_user.has_role?(Role::INSTITUTIONAL_ADMIN) || current_user.has_role?(role_number)
         u = current_user.institution.users_deep
       end
-      @users = u.where("CONCAT(first_name, ' ', last_name) LIKE ?", like).active
+      @users = u.where("CONCAT(first_name, ' ', last_name) LIKE ? ", like).active
+
     end
     list = map_users_for_autocomplete(@users)
     render json: list
   end
+
+
 
   private
   
