@@ -75,8 +75,7 @@
             <div class="control-group">
               <label class ="control-label"> Comments: </label>
               <div class="controls">
-                <p><%= link_to "Add Comments", '#', id: 'add_comments_link' %></p>
-                <% render 'comments/form' %>
+                <p><%= link_to "Add Comments", new_comment_path(plan_id: @plan.id), remote: true, id: 'add_comments_link' %></p>
               </div>
             </div>
           <% end %>
@@ -133,3 +132,4 @@
     </div>
   </div>
 </div>
+<%= render 'comments/form' %>
