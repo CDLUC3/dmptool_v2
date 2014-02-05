@@ -49,11 +49,3 @@ $(function() {
 		$("#flash_notice").remove();
 	});
 })
-
-$(document).ready(function() {
-  return $("##comment_dialog_form").on("ajax:success", function(e, data, status, xhr) {
-    return $("#comment_dialog_form").append(xhr.responseText);
-  }).bind("ajax:error", function(e, xhr, status, error) {
-    return $("#comment_dialog_form").append("<p>ERROR</p>");
-  });
-});

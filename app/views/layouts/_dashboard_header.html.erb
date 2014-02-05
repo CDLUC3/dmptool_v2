@@ -47,13 +47,13 @@
 							<% if(current_page?(controller: 'requirements_templates', action: 'new')) || (current_page?(edit_requirements_template_path(@requirements_template))) %>
 							<!-- Highlight the DMP Template link if the user is on this page- Requirements Template Overview -->
 								<li class="current"><%= link_to(content_tag(:span, 'DMP Template'), '#') %></li>
-								<li><%= link_to(content_tag(:span, 'DMP Overview'), '#') %></li>
+								<li><%= link_to(content_tag(:span, 'DMP Overview'), edit_requirements_template_path(@requirements_template)) %></li>
 								<li class="last"></li>
 							<% end %>
 							<% if (current_page?(requirements_template_requirements_path(@requirements_template))) %>
 							<!-- Highlight the DMP Overview link if the user is on this page -Requiremnts Template Details -->
 								<li><%= link_to(content_tag(:span, 'DMP Template'), '#') %></li>
-								<li class="current"><%= link_to(content_tag(:span, 'DMP Overview'), '#') %></li>
+								<li class="current"><%= link_to(content_tag(:span, 'DMP Overview'), requirements_template_requirements_path(@requirements_template)) %></li>
 								<li class="last"><%= content_tag(:span, '') %></li>
 							<% end %>
 					</ul>
@@ -75,14 +75,14 @@
 					<ul class="dmp-templates-children">
 							<% if(current_page?(controller: 'requirements_templates', action: 'new')) || (current_page?(edit_requirements_template_path(@requirements_template))) %>
 							<!-- Highlight the Template Overview link if the user is on this page- Requirements Template Overview -->
-								<li class="current"><%= link_to(content_tag(:span, 'Template Overview'), '#') %></li>
-								<li><%= link_to(content_tag(:span, 'Template Details'), '#') %></li>
+								<li class="current"><%= link_to(content_tag(:span, 'Template Overview'), edit_requirements_template_path(@requirements_template)) %></li>
+								<li><%= link_to(content_tag(:span, 'Template Details'), requirements_template_requirements_path(@requirements_template)) %></li>
 								<li class="last"></li>
 							<% end %>
 							<% if (current_page?(requirements_template_requirements_path(@requirements_template))) %>
 							<!-- Highlight the Template Details link if the user is on this page -Requiremnts Template Details -->
-								<li><%= link_to(content_tag(:span, 'Template Overview'), '#') %></li>
-								<li class="current"><%= link_to(content_tag(:span, 'Template Details'), '#') %></li>
+								<li><%= link_to(content_tag(:span, 'Template Overview'), edit_requirements_template_path(@requirements_template)) %></li>
+								<li class="current"><%= link_to(content_tag(:span, 'Template Details'), edit_requirements_template_path(@requirements_template)) %></li>
 								<li class="last"><%= content_tag(:span, '') %></li>
 							<% end %>
 					</ul>
@@ -92,7 +92,7 @@
 				<% end %>
 			<% end %>
 			<% if (safe_has_role?(Role::RESOURCE_EDITOR) || safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::INSTITUTIONAL_ADMIN))%>
-				
+
 				<li <%= 'class=current' if current_page?(resource_contexts_path)%> > <%= link_to(content_tag(:span, 'Customizations'), resource_contexts_path) %></li>
 			<% end %>
 
