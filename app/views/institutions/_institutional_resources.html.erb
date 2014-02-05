@@ -1,38 +1,44 @@
-<h2 class="dashboard-heading"><span class="icon template-dmp"></span>Resources Available at </h2>
+<h2> Resources Available at <%= @current_institution.full_name %> </h2>
 	
-	<table class="table table-striped">
+<table class="table table-striped">
 
-		<thead>
-			<tr>
-				<th class="span4">Details</th>
-				<th>Edit</th>
-				<th>Institution</th>
-				<th>Creation Date</th>
-				<th>Last Modification Date</th>
-			</tr>
-		</thead>
-		<tbody>
-		<% @resource_contexts.each do |resource_context| %>
-			<tr>
-				<td>
-					<div class="toggle-links">
-						<%=link_to (content_tag(:strong, resource_context.resource.label)), resource_context_path(resource_context), :id => "#{resource_context.resource.label}"%>
-					</div>
-				</td>
-				<td><%= link_to "edit resource_context", edit_resource_context_path(resource_context) %></td>
-				<td><%= resource_context.institution.nil? ? " " :  resource_context.institution.nickname %></td>
-				<td><%= resource_context.resource.created_at.nil? ? " " :  resource_context.resource.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
-				<td><%= resource_context.resource.updated_at.nil? ? " " :  resource_context.resource.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
-			</tr>
-		<% end %>
-		<tbody>
-	</table>
-		<div class="buttons pagination">
-			<%#= link_to "View All", resources_path(:scope => "all"), :method => :get, :class => "btn", :id => 'view_all_resources'%>
-			<%#= paginate @resources %>
-		</div>
+	<thead>
+		<tr>
+			<th class="span4">Details</th>
+			<th width="span1">Edit</th>
+			<th>Institution</th>
+			<th>Creation Date</th>
+			<th>Last Modification Date</th>
 		</tr>
-		</tbody>
-	</table>
-	<%= button_to 'Create New Resource', new_resource_path, :method => :get, :class => 'btn' %>
-	<br/>
+	</thead>
+	<tbody>
+	<% @resource_contexts.each do |resource_context| %>
+		<tr>
+			<td>
+				<div class="toggle-links">
+					<%=link_to (content_tag(:strong, resource_context.resource.label)), resource_context_path(resource_context), :id => "#{resource_context.resource.label}"%>
+				</div>
+			</td>
+			<td class="span1"><%= link_to raw(''), edit_resource_context_path(resource_context), :class => 'icon edit-user' %></td>
+			<td><%= resource_context.institution.nil? ? " " :  resource_context.institution.nickname %></td>
+			<td><%= resource_context.resource.created_at.nil? ? " " :  resource_context.resource.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+			<td><%= resource_context.resource.updated_at.nil? ? " " :  resource_context.resource.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+
+		</tr>
+	<% end %>
+	<tbody>
+</table>
+
+<div class="buttons pagination">		
+	<%= paginate @resource_contexts %>
+</div>
+
+
+<div class="buttons">
+	<%= link_to "View All", institutions_path(anchor: 'tab_tab2', scope: "all"), :method => :get, :class => "btn" %>
+</div>
+
+<div class="buttons">
+	<%= button_to 'Create New Resource', new_resource_path, :class => "btn btn-green" %>
+</div>
+		

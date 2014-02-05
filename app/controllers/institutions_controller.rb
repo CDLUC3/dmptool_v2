@@ -30,13 +30,19 @@ class InstitutionsController < ApplicationController
 
 
   def institutional_resources
-    #@resource_contexts = ResourceContext.includes(:resource).where(requirements_template_id: nil, requirement_id: nil, institution_id: [current_user.institution.subtree_ids])
+    @resource_contexts = ResourceContext.includes(:resource).where(requirements_template_id: nil, requirement_id: nil, institution_id: [current_user.institution.subtree_ids])
+    #@resource_contexts = ResourceContext.includes(:resource).where( institution_id: [current_user.institution.subtree_ids])
+    case params[:scope]
+      when "all"
+        @resource_contexts = @resource_contexts.page(params[:page]).per(100)
+      else
+        @resource_contexts = @resource_contexts.page(params[:page]).per(5)
+    end
 
-@resource_contexts = ResourceContext.includes(:resource).where(requirements_template_id: nil, requirement_id: nil, institution_id: [current_user.institution.subtree_ids])
   end
 
-  def manage_users
 
+  def manage_users
     case params[:scope]
       when "resources_editor"
         @users = @current_institution.users_in_role("Resources Editor").order(last_name: :asc)
@@ -50,20 +56,17 @@ class InstitutionsController < ApplicationController
         @users =  @current_institution.users_in_role("DMP Administrator").order(last_name: :asc)
       else
         @users = @current_institution.users_deep_in_any_role.order(last_name: :asc)
-        
     end
     @roles = Role.where(['id NOT IN (?)', 1])
     count
   end
 
-  def count
-    
+  def count  
     @all = @current_institution.users_deep_in_any_role.count
     @resources_editor =@current_institution.users_in_role("Resources Editor").count
     @template_editor = @current_institution.users_in_role("Template Editor").count
     @institutional_administrator =@current_institution.users_in_role("Institutional Administrator").count
     @dmp_administrator = @current_institution.users_in_role("DMP Administrator").count
-
   end
 
   #every roles except DMP Admin
