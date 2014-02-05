@@ -41,10 +41,12 @@ class PlansController < ApplicationController
   # GET /plans/new
   def new
     @plan = Plan.new
+    @comment = Comment.new
   end
 
   # GET /plans/1/edit
   def edit
+    @comment = Comment.new
   end
 
   # POST /plans
