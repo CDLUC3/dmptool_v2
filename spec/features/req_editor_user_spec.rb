@@ -4,31 +4,31 @@ include Credentials
 
 feature 'req editor user' do 
 
-	scenario 'requirement editor creates a requirement group' , :js => true do
+	# scenario 'requirement editor creates a requirement group' , :js => true do
 
-		logs_in_with "#{REQ_EDITOR_USERNAME}", "#{REQ_EDITOR_PASSWORD}", "#{REQ_EDITOR_INSTITUTION_NAME}"
-		within('#quick_dashboard') do
-			click_link 'DMP Templates'
-		end
+	# 	logs_in_with "#{REQ_EDITOR_USERNAME}", "#{REQ_EDITOR_PASSWORD}", "#{REQ_EDITOR_INSTITUTION_NAME}"
+	# 	within('#quick_dashboard') do
+	# 		click_link 'DMP Templates'
+	# 	end
 		
-		find('#NSF-BIO').hover
-		find('.details').click
-		expect(page).to have_content "NSF-BIO"
-		click_link 'Add Group'
-		@temp = Time.now.to_s
-		fill_in "requirement_text_brief", with: "new_group_#{@temp}"
-		within('.buttons') do
-			click_button 'Save'
-		end
-		expect(page).to have_content("Requirement was successfully created.")
-		expect(page).to have_content("new_group_#{@temp}")
+	# 	find('#NSF-BIO').hover
+	# 	find('.details').click
+	# 	expect(page).to have_content "NSF-BIO"
+	# 	click_link 'Add Group'
+	# 	@temp = Time.now.to_s
+	# 	fill_in "requirement_text_brief", with: "new_group_#{@temp}"
+	# 	within('.buttons') do
+	# 		click_button 'Save'
+	# 	end
+	# 	expect(page).to have_content("Requirement was successfully created.")
+	# 	expect(page).to have_content("new_group_#{@temp}")
 		# within('#req_new_group') do
 		# 	click_link 'delete_requirement'
 		# end
 		# find('.confirm').click
 		# expect(page).to have_no_content("new_group")
 
-	end
+	#end
 
 	scenario 'requirement editor creates a DMP Template' , :js => true do
 
@@ -88,7 +88,7 @@ feature 'req editor user' do
 
 
 
-	scenario 'requirement editor creates and removes a  single requirement' , :js => true do
+	scenario 'requirement editor creates a  single requirement' , :js => true do
 
 		logs_in_with "#{REQ_EDITOR_USERNAME}", "#{REQ_EDITOR_PASSWORD}", "#{REQ_EDITOR_INSTITUTION_NAME}"
 		within('#quick_dashboard') do
