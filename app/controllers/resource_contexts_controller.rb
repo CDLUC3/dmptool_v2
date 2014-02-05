@@ -6,7 +6,16 @@ class ResourceContextsController < ApplicationController
 
   # GET /resource_templates/new
   def new
+    redirect_to :back and return if params[:requirements_template_id].blank?
+    @req_temp = RequirementsTemplate.find(params[:requirements_template_id])
+    redirect_to :back and return if @req_temp.nil?
     @resource_context = ResourceContext.new
+    @resource_context.requirements_template_id = @req_temp.id
+    @resource_context.name = "#{@req_temp.name} for #{current_user.institution.name}"
+    @resource_context.review_type = "formal_review"
+    @resource_context.institution_id = current_user.institution.id
+    @resource_context.contact_email = @req_temp.institution.contact_email
+    @resource_context.contact_info = @req_temp.institution.contact_info
   end
 
   def create

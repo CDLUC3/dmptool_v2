@@ -13,11 +13,11 @@ $(function() {
 
 $(function() {
 	$('#comment_dialog_form').hide();
-	$('#add_comments_link').click(function() {
-		e.preventDefault();
+	$('#add_comments_link').click(function(event) {
+		event.preventDefault();
 		$('#comment_dialog_form').dialog( {
-			width: 800,
-			height: 200,
+			width: 650,
+			height: 380,
 			modal: true,
 			closeOnEscape: true,
 			draggable: true,
@@ -31,15 +31,15 @@ $(function() {
 				effect: "toggle",
 				duration: 1000
 			},
-			open: function()
-			{
-				$("#comment_dialog_form").dialog("open");
-			},
-      close: function() {
-        $('#comment_dialog_form').dialog("close");
-        $(this).find('form')[0].reset();
-      }
-		}).prev ().find (".ui-dialog-titlebar-close").show();
+      "Submit": function()
+        {
+        	$("#comment_dialog_form").submit();
+        },
+        "Cancel" : function()
+        {
+        	$("#comment_dialog_form").dialog("close");
+        }
+		});
 		return false
 	});
 });
