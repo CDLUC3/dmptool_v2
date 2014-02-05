@@ -1,0 +1,36 @@
+<h2 class="dashboard-heading"><span class="icon template-dmp"></span>Resources Available at </h2>
+	
+	<table class="table table-striped">
+
+		<thead>
+			<tr>
+				<th class="span4">Details</th>
+				<th>Edit</th>
+				<th>Creation Date</th>
+				<th>Last Modification Date</th>
+			</tr>
+		</thead>
+		<tbody>
+		<% @resources.each do |resource| %>
+			<tr>
+				<td class="resource_name">
+					<div class="toggle-links">
+						<%=link_to (content_tag(:strong, resource.label)), resource_path(resource), :id => "#{resource.label}"%>
+					</div>
+				</td>
+				<td><%= link_to "edit resource", edit_resource_path(resource) %></td>
+				<td><%= resource.created_at.nil? ? " " :  resource.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+				<td><%= resource.updated_at.nil? ? " " :  resource.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+			</tr>
+		<% end %>
+		<tbody>
+	</table>
+		<div class="buttons pagination">
+			<%#= link_to "View All", resources_path(:scope => "all"), :method => :get, :class => "btn", :id => 'view_all_resources'%>
+			<%#= paginate @resources %>
+		</div>
+		</tr>
+		</tbody>
+	</table>
+	<%= button_to 'Create New Resource', new_resource_path, :method => :get, :class => 'btn' %>
+	<br/>

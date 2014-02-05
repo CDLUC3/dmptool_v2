@@ -48,19 +48,22 @@ SET r.institution_id = i.id;
 
 TRUNCATE TABLE `dmp2`.`resources`;
 INSERT INTO `dmp2`.`resources` (`id`, `resource_type`, 	`value`	, `label`	, `created_at`, `updated_at`, `text`)						
-SELECT 			`id`, 	'actionable_url',  `url`	,`desc`		, 	`created_at`, `updated_at`,`desc`	
+SELECT 			`id`, 	'actionable_url',  `url`	,LEFT(`desc` ,50)		, 	`created_at`, `updated_at`,`desc`	
 FROM `dmp`.`resources`;
 
 INSERT INTO `dmp2`.`resources` (`resource_type`, `value`	, `label`	,  `created_at`, `updated_at`, `text`, `old_help_text_id`)						
-SELECT 			'expository_guidance',  `help_text`	,' '	, `created_at`, `updated_at`,`help_text`	,  `id`
+SELECT 			'expository_guidance',  `help_text`	,LEFT(`help_text` ,50)	, `created_at`, `updated_at`,`help_text`	,  `id`
 FROM `dmp`.`help_texts`;
 
 #suggested_answers
 INSERT INTO `dmp2`.`resources` (`resource_type`, `value`	, `label`	,  `created_at`, `updated_at`, `text`, `old_help_text_id`, `old_suggested_answer_id`)						
-SELECT 			'suggested_response',  `suggested_answer_text`	,' ', `created_at`, `updated_at`,`suggested_answer_text`	,  NULL, `id`
+SELECT 			'suggested_response',  `suggested_answer_text`	,LEFT(`suggested_answer_text` ,50), `created_at`, `updated_at`,`suggested_answer_text`	,  NULL, `id`
 FROM `dmp`.`suggested_answers`;
 
-
+#-- SET SQL_SAFE_UPDATES=0;
+#-- UPDATE `dmp2`.resources
+#-- SET label = LEFT(text ,20)
+#-- WHERE label IS NULL OR label = "";
 
 TRUNCATE TABLE `dmp2`.`resource_contexts`;
 INSERT INTO `dmp2`.`resource_contexts` (	`id`, `institution_id`, `requirements_template_id`,  `requirement_id`, `created_at`, `updated_at`, `resource_id`, `old_funder_id`)
@@ -99,6 +102,12 @@ INNER JOIN `dmp2`.requirements_templates AS rt ON rc.requirements_template_id = 
 INNER JOIN `dmp2`.institutions AS i ON rc.institution_id = i.id
 SET rc.name = CONCAT(rt.name ,' - ',i.nickname)
 WHERE rc.requirement_id IS NULL AND rc.resource_id IS NULL AND rc.institution_id IS NOT NULL AND rc.requirements_template_id IS NOT NULL;
+
+#naming customization for dmp template resources across institutions
+UPDATE `dmp2`.resource_contexts AS rc
+INNER JOIN `dmp2`.requirements_templates AS rt ON rc.requirements_template_id = rt.id
+SET rc.name = rt.name 
+WHERE rc.requirement_id IS NULL AND rc.resource_id IS NULL AND rc.institution_id IS NULL AND rc.requirements_template_id IS NOT NULL;
 
 
 #put negative resource_contexts in additional_info (-1) and sample plans (-2)
