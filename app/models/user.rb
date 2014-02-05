@@ -134,6 +134,8 @@ class User < ActiveRecord::Base
     @role_names ||= self.roles.pluck(:name)
   end
 
+  
+
   def has_role?(role_id)
     role_ids.include?(role_id)
   end

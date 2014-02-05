@@ -4,3 +4,4 @@ role :db,  'dmp2-stage.cdlib.org', :primary => true # This is where Rails migrat
 
 set :deploy_to, "/dmp2/apps/dmp2/"
 set :unicorn_pid, "/dmp2/apps/dmp2/shared/tmp/unicorn.dmp2.pid"
+set :rails_env, "stage"

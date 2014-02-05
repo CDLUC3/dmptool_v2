@@ -28,25 +28,66 @@ class InstitutionsController < ApplicationController
 
 
   def manage_users
-    case params[:scope]
-      when "resources_editor"
-        @users = current_user.institution.users_in_role("Resources Editor").order(last_name: :asc)
-      when "template_editor"
-         @users = current_user.institution.users_in_role("Template Editor").order(last_name: :asc)
-      when "institutional_administrator"
-         @users = current_user.institution.users_in_role("Institutional Administrator").order(last_name: :asc)
-      when "institutional_reviewer"
-        @users = current_user.institution.users_in_role("Institutional Reviewer").order(last_name: :asc)
-      when "dmp_administrator"
-        @users = current_user.institution.users_in_role("DMP Administrator").order(last_name: :asc)
-      else
-        @users = current_user.institution.users_deep_in_any_role.order(last_name: :asc)
-    end
-    @users = current_user.institution.users_deep_in_any_role.order(last_name: :asc)
+
+    
+    # if !safe_has_role?(Role::DMP_ADMIN)
+
+      case params[:scope]
+        when "resources_editor"
+          @users = @current_institution.users_in_role("Resources Editor").order(last_name: :asc)
+        when "template_editor"
+           @users = @current_institution.users_in_role("Template Editor").order(last_name: :asc)
+        when "institutional_administrator"
+           @users = @current_institution.users_in_role("Institutional Administrator").order(last_name: :asc)
+        when "institutional_reviewer"
+          @users = @current_institution.users_in_role("Institutional Reviewer").order(last_name: :asc)
+        when "dmp_administrator"
+          @users =  @current_institution.users_in_role("DMP Administrator").order(last_name: :asc)
+        else
+          @users = @current_institution.users_deep_in_any_role.order(last_name: :asc)
+          
+      end
+    # end
+
+    # if safe_has_role?(Role::DMP_ADMIN)
+
+    #   case params[:scope]
+    #     when "resources_editor"
+    #       @users = users_in_role_for_any_institutions("Resources Editor").order(last_name: :asc)
+    #     when "template_editor"
+    #        @users = users_in_role_for_any_institutions("Template Editor").order(last_name: :asc)
+    #     when "institutional_administrator"
+    #        @users = users_in_role_for_any_institutions("Institutional Administrator").order(last_name: :asc)
+    #     when "institutional_reviewer"
+    #       @users = users_in_role_for_any_institutions("Institutional Reviewer").order(last_name: :asc)
+    #     when "dmp_administrator"
+    #       @users =  users_in_role_for_any_institutions("DMP Administrator").order(last_name: :asc)
+    #     else
+    #       @users = users_in_any_role_for_any_institutions.order(last_name: :asc)
+    #   end
+
+    # end
+
     @roles = Role.where(['id NOT IN (?)', 1])
+    count
   end
 
-  
+  def count
+    # if safe_has_role?(Role::DMP_ADMIN)
+    #   @all = users_in_any_role_for_any_institutions.count
+    #   @resources_editor =users_in_role_for_any_institutions("Resources Editor").count
+    #   @template_editor =users_in_role_for_any_institutions("Template Editor").count
+    #   @institutional_administrator =users_in_role_for_any_institutions("Institutional Administrator").count
+    #   @dmp_administrator = users_in_role_for_any_institutions("DMP Administrator").count
+    # else
+      @all = @current_institution.users_deep_in_any_role.count
+      @resources_editor =@current_institution.users_in_role("Resources Editor").count
+      @template_editor = @current_institution.users_in_role("Template Editor").count
+      @institutional_administrator =@current_institution.users_in_role("Institutional Administrator").count
+      @dmp_administrator = @current_institution.users_in_role("DMP Administrator").count
+    # end
+
+  end
 
   #every roles except DMP Admin
   def edit_user_roles_inst_admin
@@ -176,19 +217,30 @@ class InstitutionsController < ApplicationController
   end
   
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_institution
-      @institution = Institution.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_institution
+    @institution = Institution.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def institution_params
-      params.require(:institution).permit(:full_name, :nickname, :desc, :contact_info, :contact_email, :url, :url_text, :shib_entity_id, :shib_domain, :logo, :remote_logo_url, :parent_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def institution_params
+    params.require(:institution).permit(:full_name, :nickname, :desc, :contact_info, :contact_email, :url, :url_text, :shib_entity_id, :shib_domain, :logo, :remote_logo_url, :parent_id)
+  end
 
-    def check_for_cancel
-      redirect_to :back if params[:commit] == "Cancel"
-    end
+  def check_for_cancel
+    redirect_to :back if params[:commit] == "Cancel"
+  end
+
+  def users_in_any_role_for_any_institutions
+    @user_ids = Authorization.pluck(:user_id) 
+    @users = User.where(id: @user_ids)
+  end
+
+  def users_in_role_for_any_institutions(role_name)
+    @user_ids = Authorization.pluck(:user_id)
+    @users = User.joins({:authorizations => :role}).where("roles.name = ?", role_name)
+  end
+
 end
 
 
