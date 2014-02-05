@@ -6,21 +6,23 @@
 			<tr>
 				<th class="span4">Details</th>
 				<th>Edit</th>
+				<th>Institution</th>
 				<th>Creation Date</th>
 				<th>Last Modification Date</th>
 			</tr>
 		</thead>
 		<tbody>
-		<% @resources.each do |resource| %>
+		<% @resource_contexts.each do |resource_context| %>
 			<tr>
-				<td class="resource_name">
+				<td>
 					<div class="toggle-links">
-						<%=link_to (content_tag(:strong, resource.label)), resource_path(resource), :id => "#{resource.label}"%>
+						<%=link_to (content_tag(:strong, resource_context.resource.label)), resource_context_path(resource_context), :id => "#{resource_context.resource.label}"%>
 					</div>
 				</td>
-				<td><%= link_to "edit resource", edit_resource_path(resource) %></td>
-				<td><%= resource.created_at.nil? ? " " :  resource.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
-				<td><%= resource.updated_at.nil? ? " " :  resource.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+				<td><%= link_to "edit resource_context", edit_resource_context_path(resource_context) %></td>
+				<td><%= resource_context.institution.nil? ? " " :  resource_context.institution.nickname %></td>
+				<td><%= resource_context.resource.created_at.nil? ? " " :  resource_context.resource.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+				<td><%= resource_context.resource.updated_at.nil? ? " " :  resource_context.resource.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 			</tr>
 		<% end %>
 		<tbody>

@@ -30,7 +30,9 @@ class InstitutionsController < ApplicationController
 
 
   def institutional_resources
-    @resources = Resource.all
+    #@resource_contexts = ResourceContext.includes(:resource).where(requirements_template_id: nil, requirement_id: nil, institution_id: [current_user.institution.subtree_ids])
+
+@resource_contexts = ResourceContext.includes(:resource).where(requirements_template_id: nil, requirement_id: nil, institution_id: [current_user.institution.subtree_ids])
   end
 
   def manage_users
