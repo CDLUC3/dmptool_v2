@@ -16,8 +16,8 @@ $(function() {
 	$('#add_comments_link').click(function(event) {
 		event.preventDefault();
 		$('#comment_dialog_form').dialog( {
-			width: 650,
-			height: 380,
+			width: 600,
+			height: 300,
 			modal: true,
 			closeOnEscape: true,
 			draggable: true,
@@ -49,3 +49,33 @@ $(function() {
 		$("#flash_notice").remove();
 	});
 })
+
+$(function() {
+	$("#reviewer_comments").hide();
+	$("#view_reviewer_comments").click(function(event){
+		event.preventDefault();
+		$("#reviewer_comments").show();
+	});
+});
+
+$(function() {
+	$("#hide_reviewer_comments").click(function(event){
+		event.preventDefault();
+		$("#reviewer_comments").hide();
+	});
+});
+
+$(function() {
+	$("#owner_comments").hide();
+	$("#view_owner_comments").click(function(event){
+		event.preventDefault();
+		$("#owner_comments").show();
+	});
+});
+
+$(function() {
+	$("#hide_owner_comments").click(function(event){
+		event.preventDefault();
+		$("#owner_comments").hide();
+	});
+});

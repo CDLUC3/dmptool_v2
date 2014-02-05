@@ -47,6 +47,12 @@ class PlansController < ApplicationController
   # GET /plans/1/edit
   def edit
     @comment = Comment.new
+    comments = Comment.all
+    if safe_has_role?(Role::INSTITUTIONAL_REVIEWER) || safe_has_role?(Role::DMP_ADMIN)
+      @comments = comments.reviewer
+    else
+      @comments = comments.owner
+    end
   end
 
   # POST /plans
