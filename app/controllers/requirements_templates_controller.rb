@@ -19,7 +19,7 @@ class RequirementsTemplatesController < ApplicationController
 
     case params[:scope]
       when "all"
-        @requirements_templates = @requirements_templates.page(params[:page])
+        @requirements_templates = @requirements_templates.page(params[:page]).per(100)
       when "all_limited"
         @requirements_templates = @requirements_templates.page(params[:page]).per(5)
       when "active"

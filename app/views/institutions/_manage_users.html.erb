@@ -1,17 +1,18 @@
 <table class ="table table-striped">
 
 	<div class="table-scope">
-		<%= link_to "All", institutions_path(anchor: 'tab_tab4', scope: "all") %> 
+		
+		<%= link_to "All(#{@all})", institutions_path(anchor: 'tab_tab4', scope: "all") %> 
 		| 
-		<%= link_to "Resources Editors ",institutions_path(anchor: 'tab_tab4', scope:  "resources_editor")  %> 
+		<%= link_to "Resources Editors(#{@resources_editor})",institutions_path(anchor: 'tab_tab4', scope:  "resources_editor")  %> 
 		| 
-		<%= link_to(content_tag(:span, "Template Editors (#{@template_editor})", :class => "template_editor"), scope: "template_editor", anchor: 'tab_tab4') %> 
+		<%= link_to "Template Editor(#{@template_editor})", institutions_path(anchor: 'tab_tab4', scope: "template_editor")%> 
 		| 
-		<%= link_to(content_tag(:span, "Institutional Administrators (#{@institutional_administrator})", :class => "institutional_administrator"), scope: "institutional_administrator", anchor: 'tab_tab4') %> 
+		<%= link_to "Institutional Administrator(#{@institutional_administrator})" , institutions_path(anchor: 'tab_tab4', scope: "institutional_administrator") %> 
 		| 
-		<%= link_to(content_tag(:span, "institutional Reviewers (#{@institutional_reviewer})", :class => "institutional_reviewer"), scope: "institutional_reviewer", anchor: 'tab_tab4') %>
+		<%= link_to "Institutional Reviewers(#{@institutional_reviewer})",  institutions_path(anchor: 'tab_tab4', scope: "institutional_reviewer") %>
 		|
-		<%= link_to(content_tag(:span, "DMP Administrators (#{@dmp_administrator})", :class => "dmp_administrator"), scope: "dmp_administrator", anchor: 'tab_tab4') %>
+		<%= link_to "DMP Administrators(#{@dmp_administrator})",  institutions_path(anchor: 'tab_tab4', scope: "dmp_administrator") %>
 	</div>
 
 
