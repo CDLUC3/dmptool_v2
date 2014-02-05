@@ -9,6 +9,9 @@ class Comment < ActiveRecord::Base
   validates :visibility, presence: true
   validates :value, presence: true
 
+  scope :owner, -> { where(visibility: :owner) }
+  scope :reviewer, -> { where(visibility: :reviewer) }
+
   def owner?
     visibility == :owner
   end
