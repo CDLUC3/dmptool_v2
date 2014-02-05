@@ -14,6 +14,8 @@ class ResourceContextsController < ApplicationController
     @resource_context.name = "#{@req_temp.name} for #{current_user.institution.name}"
     @resource_context.review_type = "formal_review"
     @resource_context.institution_id = current_user.institution.id
+    @resource_context.contact_email = @req_temp.institution.contact_email
+    @resource_context.contact_info = @req_temp.institution.contact_info
   end
 
   def create
