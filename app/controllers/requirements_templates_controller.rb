@@ -130,7 +130,7 @@ class RequirementsTemplatesController < ApplicationController
     else
       requirements_template = RequirementsTemplate.where(id: id).first
     end
-    @requirements_template = requirements_template.dup include: [:resource_templates, :sample_plans, :additional_informations, :requirements], validate: false
+    @requirements_template = requirements_template.dup include: [:sample_plans, :additional_informations, :requirements], validate: false
     respond_to do |format|
       if @requirements_template.save
         format.html { redirect_to edit_requirements_template_path(@requirements_template), notice: 'Requirements template was successfully created.' }
