@@ -1,5 +1,7 @@
+<%# this partial requires plan_id to be passed in as a local variable %>
+
 <div id="comment_dialog_form">
-  <%= form_for(@comment, remote: true, html: { :class => 'form-horizontal' }) do |f| %>
+  <%= form_for(@comment, remote: true,  html: { :class => 'form-horizontal' }) do |f| %>
     <% if @comment.errors.any? %>
       <div id="error_excommentation">
         <h2>
@@ -16,7 +18,7 @@
     <% end %>
     <div class="control-group">
       <%= f.hidden_field :user_id, value: current_user.id %>
-      <%= f.hidden_field :plan_id, value: params[:plan_id] %>
+      <%= f.hidden_field :plan_id, value: plan_id %>
     </div>
     <div class="control-group">
     	<%= f.label :comment, :class => 'control-label' %>

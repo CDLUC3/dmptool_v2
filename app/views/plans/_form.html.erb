@@ -132,4 +132,4 @@
     </div>
   </div>
 </div>
-<%= render 'comments/form' %>
+<%= render partial: 'comments/form', locals: {:plan_id => params[:id]} %>
