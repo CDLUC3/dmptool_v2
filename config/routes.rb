@@ -63,6 +63,7 @@ Dmptool2::Application.routes.draw do
       post :add_coowner
       get :publish
       get :export
+      get :details
     end
   end
   resources :comments
