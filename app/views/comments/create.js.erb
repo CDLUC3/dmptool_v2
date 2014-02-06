@@ -4,5 +4,5 @@
 <%- else %>
   console.log('Created');
   $('#comment_dialog_form').dialog('close');
-  $('#comment_dialog_form').remove();
+  location.reload(true);
 <%- end %>

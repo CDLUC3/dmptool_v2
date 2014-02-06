@@ -75,7 +75,7 @@
             <div class="control-group">
               <label class ="control-label"> Comments: </label>
               <div class="controls">
-                <p><%= link_to "Add Comments", new_comment_path(plan_id: @plan.id), remote: true, id: 'add_comments_link' %></p>
+                <p><%= link_to "Add Comments", '#', remote: true, id: 'add_comments_link' %></p>
               </div>
             </div>
           <% end %>
@@ -97,7 +97,8 @@
               </fieldset>
             </div>
           </div>
-        <% else %>
+        <% end %>
+        <% if safe_has_role?(Role::DMP_ADMIN) || owner_role(@plan) %>
           <div class="control-group">
             <label class ="control-label"> Owner Comments: </label>
             <div class="controls">

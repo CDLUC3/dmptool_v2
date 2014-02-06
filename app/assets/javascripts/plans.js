@@ -31,22 +31,22 @@ $(function() {
 				effect: "toggle",
 				duration: 1000
 			},
-      "Submit": function()
-        {
-        	$("#comment_dialog_form").submit();
-        },
-        "Cancel" : function()
-        {
-        	$("#comment_dialog_form").dialog("close");
-        }
-		});
+			open: function()
+			{
+				$("#comment_dialog_form").dialog("open");
+			},
+      close: function() {
+        $('#comment_dialog-form').dialog("close");
+        $(this).find('form')[0].reset();
+      }
+		}).prev ().find(".ui-dialog-titlebar-close").show();
 		return false
 	});
 });
 
 $(function() {
 	$("#cancel_action").bind("click",function() {
-		$("#flash_notice").remove();
+		$("#comment_dialog_form").reset();
 	});
 })
 
