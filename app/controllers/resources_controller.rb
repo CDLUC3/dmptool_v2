@@ -30,17 +30,17 @@ class ResourcesController < ApplicationController
   # POST /resources.json
   def create
     @resource = Resource.new(resource_params)
-    @value = params[:value]
-    @text = params[:text]
-    @label = params[:label]
-    @resource_type = params[:resource_type]
-    #@resource_context = ResourceContext.new(resource_id: @resource.id)
+    @current_institution = current_user.institution
     respond_to do |format|
-      if @resource.save
-        format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: 'Resource was successfully created.' }
-        #format.json { render action: 'show', status: :created, location: @resource }
+      if @resource.save 
+        @resource_id = @resource.id
+        @resource_context = ResourceContext.new(resource_id: @resource_id, institution_id: @current_institution.id)
+        if @resource_context.save
+          format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: "Resource was successfully created." }
+        end
+          #format.json { render action: 'show', status: :created, location: @resource }
       else
-        format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: "A problem prevented this resource to be created. Value=#{@value}" }
+        format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: "A problem prevented this resource to be created. " }
         #format.json { render json: @resource.errors, status: :unprocessable_entity }
       end
     end
