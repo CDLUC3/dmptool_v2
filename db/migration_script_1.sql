@@ -52,7 +52,7 @@ SELECT 			`id`, 	'actionable_url',  `url`	,LEFT(`desc` ,50)		, 	`created_at`, `u
 FROM `dmp`.`resources`;
 
 INSERT INTO `dmp2`.`resources` (`resource_type`, `value`	, `label`	,  `created_at`, `updated_at`, `text`, `old_help_text_id`)						
-SELECT 			'expository_guidance',  `help_text`	,LEFT(`help_text` ,50)	, `created_at`, `updated_at`,`help_text`	,  `id`
+SELECT 			'help_text',  `help_text`	,LEFT(`help_text` ,50)	, `created_at`, `updated_at`,`help_text`	,  `id`
 FROM `dmp`.`help_texts`;
 
 #suggested_answers
