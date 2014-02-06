@@ -37,9 +37,7 @@ Dmptool2::Application.routes.draw do
     resources :additonal_informations
   end
 
-  resources :resource_templates do
-    resources :resource_contexts
-  end
+  resources :resources
 
   resources :resource_contexts
 
@@ -55,9 +53,9 @@ Dmptool2::Application.routes.draw do
     end
   end
 
-  resources :resources do
-    resources :resource_contexts
-  end
+  # resources :resources do
+  #   resources :resource_contexts
+  # end
 
   resources :plans do
     resources :plan_states
