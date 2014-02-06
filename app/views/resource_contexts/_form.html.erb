@@ -55,11 +55,32 @@
     </div>
   </div>
 
-  <div class="control-group">
+  <div class="control-group" id="inst_text">
     <label class ="control-label">Institution</label>
     <div class="controls">
-      <p><%= @resource_context.institution.name %></p>
+      <p>
+        <%= @resource_context.institution.name %>
+        <% if current_user.has_role?(Role::DMP_ADMIN) %>
+          &nbsp;&nbsp;<a href="#" id="toggle_edit">edit</a>
+        <% end %>
+      </p>
+    </div>
+  </div>
+
+  <div class="control-group hidden_inst" id="inst_list">
+    <label class ="control-label">Institution</label>
+    <div class="controls">
+      <%= f.select(:institution_id, options_for_select(@inst_list, :selected => @resource_context.institution_id),
+                     :class => "institution") %>
     </div>
   </div>
 
 <% end %>
+
+<script type="text/javascript">
+  $( "#toggle_edit" ).click(function(event) {
+    event.preventDefault();
+    $('#inst_text').addClass('hidden_inst');
+    $('#inst_list').removeClass('hidden_inst');
+  });
+</script>
