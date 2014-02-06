@@ -27,14 +27,17 @@ class ResourceContextsController < ApplicationController
   end
 
   def create
-    @resource_context = ResourceContext.new(resource_context_params)
+    pare_to = ['institution_id', 'requirements_template_id', 'requirement_id', 'resource_id',
+              'name', 'contact_info', 'contact_email', 'review_type']
+    to_save = pare_to.inject({}){|result, key| result[key] = params['resource_context'][key];result}
+    @resource_context = ResourceContext.new(to_save)
     respond_to do |format|
       if @resource_context.save
-        format.html { redirect_to edit_resource_context_path(@resource_context), notice: 'Resource template was successfully created.' }
-        format.json { render action: 'edit', status: :created, location: @resource_context }
+        format.html { redirect_to customization_details_path(@resource_context.id), notice: 'Customization was successfully created.' }
+        #format.json { render action: 'edit', status: :created, location: @resource_context }
       else
         format.html { render action: 'new' }
-        format.json { render json: @resource_context.errors, status: :unprocessable_entity }
+        #format.json { render json: @resource_context.errors, status: :unprocessable_entity }
       end
     end
   end
