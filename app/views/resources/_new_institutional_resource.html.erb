@@ -24,7 +24,7 @@
       </div>
 
       <div class="control-group">
-        <%= f.label :details, "Details", :class => "control-label", id: "text_details" %>
+        <%= f.label :text, "Text", :class => "control-label", id: "text_details" %>
         <div class="controls">
           <%= f.text_area :text, size: "20x10",placeholder: "Enter the text", :class => "input-xlarge" %>
         </div>
@@ -32,13 +32,14 @@
 
 
       <div class="control-group">
-        <%= f.label :details, "Details", :class => "control-label", id: "value_details" %>
+        <%= f.label :label, "Label", :class => "control-label", id: "value_details" %>
         <div class="controls">
           <%= f.text_field :label, placeholder: "URL Label", :class => "input-xlarge" %>
         </div>
       </div>
 
       <div class="control-group">
+         <%= f.label :value, "Value", :class => "control-label", id: "value_details" %>
         <div class="controls">
           <%= f.text_field :value, placeholder: "URL", :class => "input-xlarge" %>
         </div>
@@ -50,3 +51,13 @@
       </div>
     </fieldset>
   <% end %>
+
+
+
+
+
+
+
+
+
+
