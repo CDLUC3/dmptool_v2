@@ -7,10 +7,12 @@
         <%= "#{pluralize(@resource_context.errors.count, "error")} prohibited this customization from being saved:" %>
       </h2>
       <ul>
-        <% @resource_context.errors.each do |msg| %>
-          <li>
-            <%= msg %>
-          </li>
+        <% @resource_context.errors.messages.each_pair do |k, v| %>
+          <% v.each do |v1| %>
+            <li>
+              <%= v1 %>
+            </li>
+          <% end %>
         <% end %>
       </ul>
     </div>

@@ -9,8 +9,11 @@
 
 <%= render 'form' %>
 
-<%# this is a new record since this is in the new action %>
-<%= link_to('<< Choose DMP Template', dmp_for_customization_path, method: :get, :class => "btn pull-left") %>
+<% if @resource_context.new_record? %>
+  <%= link_to('<< Choose DMP Template', dmp_for_customization_path, method: :get, :class => "btn pull-left") %>
+<% else %>
+  <%= link_to('<< Customization', resource_contexts_path, method: :get, :class => "btn pull-left") %>
+<% end %>
 <%= link_to('Customization Details >>', '#', :class => "btn pull-right", :id => 'next_btn') %>
 
 <script type="text/javascript">
