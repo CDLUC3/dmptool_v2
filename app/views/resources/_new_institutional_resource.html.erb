@@ -1,0 +1,52 @@
+  <h2> New Resource For  <%= @current_institution.full_name %> </h2>
+
+
+  <%= form_for @resource, html: { :class => 'form-horizontal' } do |f| %>
+
+    <% if @resource.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= "#{pluralize(@resource.errors.count, "error")} prohibited this resource from being saved:" %></h2>
+        <ul>
+          <% @resource.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <fieldset>
+      <div class="control-group">
+        <%= f.label :resource_type, "Resource Type", :class => "control-label" %>
+        <div class="controls">
+          <%= f.select :resource_type,
+          		options_for_select([ :actionable_url, :expository_guidance], @resource.resource_type) %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :details, "Details", :class => "control-label", id: "text_details" %>
+        <div class="controls">
+          <%= f.text_area :text, size: "20x10",placeholder: "Enter the text", :class => "input-xlarge" %>
+        </div>
+      </div>
+
+
+      <div class="control-group">
+        <%= f.label :details, "Details", :class => "control-label", id: "value_details" %>
+        <div class="controls">
+          <%= f.text_field :label, placeholder: "URL Label", :class => "input-xlarge" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="controls">
+          <%= f.text_field :value, placeholder: "URL", :class => "input-xlarge" %>
+        </div>
+      </div>
+
+      <div class="actions pull-right">
+        <%= f.submit 'Save Changes', :class => "btn" %>
+        <%= button_tag 'Cancel', type: :reset, :class => "btn" %>
+      </div>
+    </fieldset>
+  <% end %>
