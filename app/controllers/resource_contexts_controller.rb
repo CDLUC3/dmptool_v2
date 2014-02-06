@@ -26,6 +26,22 @@ class ResourceContextsController < ApplicationController
     end
   end
 
+  # GET /resource_templates/edit
+  def edit
+    @resource_context = ResourceContext.find(params[:id])
+    debugger
+    @req_temp = @resource_context.requirements_template
+
+    @inst_list = InstitutionsController.institution_select_list
+    non_partner = @inst_list.map{|i| i[1]}.index(0) #find non-partner institution, ie none of the above, always index 0
+    if non_partner
+      item = @inst_list.delete_at(non_partner)
+      item = ["None of the above", 0] # This institution is always renamed because we like it that way in the list
+      @inst_list.push(item) #put it at the end of the list cause we like it that way
+    end
+    render :new
+  end
+
   def create
     pare_to = ['institution_id', 'requirements_template_id', 'requirement_id', 'resource_id',
               'name', 'contact_info', 'contact_email', 'review_type']
