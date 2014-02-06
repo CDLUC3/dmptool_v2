@@ -24,22 +24,22 @@
       </div>
 
       <div class="control-group">
-        <%= f.label :text, "Text", :class => "control-label", id: "text_details" %>
+        <%= f.label :label, "Label", :class => "control-label", id: "label" %>
+        <div class="controls">
+          <%= f.text_field :label, placeholder: "Enter a name for this Resource", :class => "input-xlarge" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :text, "Text", :class => "control-label", id: "text" %>
         <div class="controls">
           <%= f.text_area :text, size: "20x10",placeholder: "Enter the text", :class => "input-xlarge" %>
         </div>
       </div>
-
-
-      <div class="control-group">
-        <%= f.label :label, "Label", :class => "control-label", id: "value_details" %>
-        <div class="controls">
-          <%= f.text_field :label, placeholder: "URL Label", :class => "input-xlarge" %>
-        </div>
-      </div>
+      
 
       <div class="control-group">
-         <%= f.label :value, "Value", :class => "control-label", id: "value_details" %>
+         <%= f.label :value, "Value", :class => "control-label", id: "value" %>
         <div class="controls">
           <%= f.text_field :value, placeholder: "URL", :class => "input-xlarge" %>
         </div>
