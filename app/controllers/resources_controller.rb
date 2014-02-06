@@ -19,6 +19,7 @@ class ResourcesController < ApplicationController
   # GET /resources/new
   def new
     @resource = Resource.new
+    @current_institution = current_user.institution
   end
 
   # GET /resources/1/edit
