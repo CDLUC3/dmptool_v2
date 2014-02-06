@@ -1,6 +1,33 @@
 
 <%= form_for @resource_context, html:{ :class => 'form-horizontal', multipart: true}  do |f| %>
 
+  <% unless current_user.has_role?(Role::DMP_ADMIN) %>
+    <div class="control-group" id="inst_text">
+      <label class ="control-label">Customized for</label>
+      <div class="controls">
+        <p>
+          <%= @resource_context.institution.name %>
+        </p>
+      </div>
+    </div>
+  <% else %>
+    <div class="control-group">
+      <%= label_tag :customized_for, 'Customize for', :class => 'control-label' %>
+      <div class="controls radio-controls">
+        <%= radio_button_tag :customized_for, :general, :class => 'radio inline', :id => 'general_customization' %>
+        <%= label_tag :general, 'General customization, affiliated with all institutions', :class => 'radio-label'%><br/>
+
+        <%= radio_button_tag :customized_for, :user_institution, :class => 'radio inline', :id => 'user_institution' %>
+        <%= label_tag :user_institution, "User affiliated institution — #{current_user.institution.name}", :class => 'radio-label'%><br/>
+
+        <%= radio_button_tag :customized_for, :select_institution, :class => 'radio inline', :id => 'select_institution' %>
+        <%= label_tag :select_institution, 'Select Institution from list below', :class => 'radio-label'%><br/>
+        <%= select_tag(:list_institution_id, options_for_select(@inst_list, :selected => @resource_context.institution_id),
+                       :class => "input-xxlarge") %>
+      </div>
+    </div>
+  <% end %>
+
   <div class="control-group">
     <%= f.label :name , "Customization Name", :class=> "control-label required" %>
     <div class="controls">
@@ -55,32 +82,31 @@
     </div>
   </div>
 
-  <div class="control-group" id="inst_text">
-    <label class ="control-label">Institution</label>
-    <div class="controls">
-      <p>
-        <%= @resource_context.institution.name %>
-        <% if current_user.has_role?(Role::DMP_ADMIN) %>
-          &nbsp;&nbsp;<a href="#" id="toggle_edit">edit</a>
-        <% end %>
-      </p>
-    </div>
-  </div>
 
-  <div class="control-group hidden_inst" id="inst_list">
-    <label class ="control-label">Institution</label>
-    <div class="controls">
-      <%= f.select(:institution_id, options_for_select(@inst_list, :selected => @resource_context.institution_id),
-                     :class => "institution") %>
-    </div>
-  </div>
 
 <% end %>
 
 <script type="text/javascript">
+
+  function updateButtonState(){
+    // this function needs to update the state of the drop-down hiding
+    // and also fill in hidden field for target institution as needed
+    alert($('input[name=customized_for]:radio:checked').val());
+  };
+
+  $( document).ready(function(){
+    updateButtonState();
+  });
+
+  $("input[name=customized_for]:radio").change(function () {
+    updateButtonState();
+  });
+  /*
   $( "#toggle_edit" ).click(function(event) {
     event.preventDefault();
     $('#inst_text').addClass('hidden_inst');
     $('#inst_list').removeClass('hidden_inst');
   });
+  */
+
 </script>
