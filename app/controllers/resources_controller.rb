@@ -24,6 +24,9 @@ class ResourcesController < ApplicationController
 
   # GET /resources/1/edit
   def edit
+    #@resource = Resource.find(params[:resource])
+    @resource = Resource.find(params[:id])
+    @current_institution = current_user.institution
   end
 
   # POST /resources
@@ -50,10 +53,10 @@ class ResourcesController < ApplicationController
   def update
     respond_to do |format|
       if @resource.update(resource_params)
-        format.html { redirect_to resources_path, notice: 'Resource was successfully updated.' }
+        format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: 'Resource was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: 'index' }
+        format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: "A problem prevented this resource to be created. " }
         format.json { render json: @resource.errors, status: :unprocessable_entity }
       end
     end
