@@ -107,6 +107,8 @@ class PlansController < ApplicationController
   end
 
   def copy_existing_template
+    @comment = Comment.new
+    comments = Comment.all
     id = params[:plan].to_i unless params[:plan].blank?
     plan = Plan.where(id: id).first
     @plan = plan.dup
