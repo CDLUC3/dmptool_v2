@@ -4,10 +4,10 @@
   <% if @resource_context.errors.any? %>
     <div id="error_explanation">
       <h2>
-        <%= "#{pluralize(@requirement.errors.count, "error")} prohibited this requirement from being saved:" %>
+        <%= "#{pluralize(@resource_context.errors.count, "error")} prohibited this customization from being saved:" %>
       </h2>
       <ul>
-        <% @requirement.errors.full_messages.each do |msg| %>
+        <% @resource_context.errors.each do |msg| %>
           <li>
             <%= msg %>
           </li>
