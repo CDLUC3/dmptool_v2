@@ -13,10 +13,10 @@ $(function() {
 			if (type == "actionable_url")
 			{
 
-				$("#value").show();
+				$("#value_label").show();
 				$("#resource_value").show();
 
-				$("#label").show();
+				$("#label_label").show();
 				$("#resource_label").show();
 				
 				$("#text").hide();
@@ -26,13 +26,13 @@ $(function() {
 
 			else {
 
-				$("#label").show();
+				$("#label_label").show();
 				$("#resource_label").show();
 
 				$("#text").show();
 				$("#resource_text").show();
 
-				$("#value").hide();
+				$("#value_label").hide();
 				$("#resource_value").hide();				
 				
 			}

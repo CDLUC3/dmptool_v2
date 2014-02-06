@@ -38,10 +38,9 @@ class ResourcesController < ApplicationController
         if @resource_context.save
           format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: "Resource was successfully created." }
         end
-          #format.json { render action: 'show', status: :created, location: @resource }
+         
       else
         format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: "A problem prevented this resource to be created. " }
-        #format.json { render json: @resource.errors, status: :unprocessable_entity }
       end
     end
   end
