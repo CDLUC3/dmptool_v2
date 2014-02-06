@@ -1,6 +1,58 @@
 
 <%= form_for @resource_context, html:{ :class => 'form-horizontal', multipart: true}  do |f| %>
 
+  <% if @resource_context.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= "#{pluralize(@requirement.errors.count, "error")} prohibited this requirement from being saved:" %>
+      </h2>
+      <ul>
+        <% @requirement.errors.full_messages.each do |msg| %>
+          <li>
+            <%= msg %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% unless current_user.has_role?(Role::DMP_ADMIN) %>
+    <div class="control-group" id="inst_text">
+      <label class ="control-label">Customized for</label>
+      <div class="controls">
+        <p>
+          <%= @resource_context.institution.name %>
+        </p>
+      </div>
+    </div>
+  <% else %>
+    <div class="control-group">
+      <%= label_tag :customized_for, 'Customize for', :class => 'control-label' %>
+      <div class="controls radio-controls">
+        <%= radio_button_tag :customized_for, :general, (@resource_context.institution_id.blank?),
+                             :class => 'radio inline', :id => 'general_customization' %>
+        <%= label_tag :general, 'General customization, affiliated with all institutions', :class => 'radio-label'%><br/>
+
+        <%= radio_button_tag :customized_for, :user_institution,
+               (@resource_context.institution_id.blank? ? false : @resource_context.institution_id == current_user.institution_id ),
+               :class => 'radio inline', :id => 'user_institution' %>
+        <%= label_tag :user_institution, "User affiliated institution — #{current_user.institution.name}",
+                      :class => 'radio-label'%><br/>
+
+        <%= radio_button_tag :customized_for, :select_institution,
+               (@resource_context.institution_id.blank? ? false : @resource_context.institution_id != current_user.institution_id ),
+               :class => 'radio inline', :id => 'select_institution' %>
+        <%= label_tag :select_institution, 'Select Institution from list', :class => 'radio-label'%><br/>
+        <%= select_tag(:list_institution_id,
+                       options_for_select(@inst_list, :selected => @resource_context.institution_id),
+                       :class => "input-xxlarge", :style => 'display: none;') %>
+      </div>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :institution_id %>
+  <%= f.hidden_field :requirements_template_id %>
+
   <div class="control-group">
     <%= f.label :name , "Customization Name", :class=> "control-label required" %>
     <div class="controls">
@@ -37,7 +89,7 @@
   <div class="control-group">
     <%= f.label :contact_email, 'Contact Email', :class => "control-label" %>
     <div class="controls">
-      <%= f.text_field :contact_info, :class => 'input-xlarge required' %>
+      <%= f.text_field :contact_email, :class => 'input-xlarge required' %>
     </div>
   </div>
 
@@ -55,11 +107,43 @@
     </div>
   </div>
 
-  <div class="control-group">
-    <label class ="control-label">Institution</label>
-    <div class="controls">
-      <p><%= @resource_context.institution.name %></p>
-    </div>
-  </div>
-
 <% end %>
+
+
+<script type="text/javascript">
+
+  function updateButtonState(){
+    // this function needs to update the state of the drop-down hiding
+    // and also fill in hidden field for target institution as needed
+    // values are general, user_institution or select institution
+    var type = $('input[name=customized_for]:radio:checked').val();
+    var list_ctrl = $('#list_institution_id');
+    var hidden_ctrl = $('#resource_context_institution_id');
+    if(type == 'general' || type == 'user_institution'){
+      list_ctrl.hide('fold');
+    }else{
+      list_ctrl.show('fold');
+    }
+    if(type == 'general'){
+      hidden_ctrl.val('');
+    }else if(type == 'user_institution'){
+      hidden_ctrl.val('<%= @resource_context.institution_id %>');
+    }else{
+      hidden_ctrl.val($('#list_institution_id').val());
+    }
+  };
+
+  $( document).ready(function(){
+    updateButtonState();
+  });
+
+  $("input[name=customized_for]:radio").change(function () {
+    updateButtonState();
+  });
+
+  $("#list_institution_id").change(function(e){
+    var hidden_ctrl = $('#resource_context_institution_id');
+    hidden_ctrl.val($('#list_institution_id').val());
+  })
+
+</script>

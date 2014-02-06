@@ -12,18 +12,29 @@ $(function() {
 			var type = $("#resource_resource_type").val();
 			if (type == "actionable_url")
 			{
-				$("#text_details").hide();
-				$("#resource_text").hide();
-				$("#value_details").show();
-				$("#resource_label").show();
+
+				$("#value_label").show();
 				$("#resource_value").show();
+
+				$("#label_label").show();
+				$("#resource_label").show();
+				
+				$("#text").hide();
+				$("#resource_text").hide();
+
 			}
+
 			else {
-				$("#text_details").show();
+
+				$("#label_label").show();
+				$("#resource_label").show();
+
+				$("#text").show();
 				$("#resource_text").show();
-				$("#value_details").hide();
-				$("#resource_label").hide();
-				$("#resource_value").hide();
+
+				$("#value_label").hide();
+				$("#resource_value").hide();				
+				
 			}
 		}
 });

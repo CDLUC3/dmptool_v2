@@ -22,6 +22,8 @@ Dmptool2::Application.routes.draw do
  get 'video', to: 'static_pages#video'
  get 'resource_contexts/dmp_for_customization', to: 'resource_contexts#dmp_for_customization', as: "dmp_for_customization"
 
+ get 'customizations/:id/details', to: 'customizations#details', as: 'customization_details'
+
  get 'institutions', to: 'institutions#index'
 
   resources :requirements_templates do
@@ -35,9 +37,7 @@ Dmptool2::Application.routes.draw do
     resources :additonal_informations
   end
 
-  resources :resource_templates do
-    resources :resource_contexts
-  end
+  resources :resources
 
   resources :resource_contexts
 
@@ -53,9 +53,9 @@ Dmptool2::Application.routes.draw do
     end
   end
 
-  resources :resources do
-    resources :resource_contexts
-  end
+  # resources :resources do
+  #   resources :resource_contexts
+  # end
 
   resources :plans do
     resources :plan_states

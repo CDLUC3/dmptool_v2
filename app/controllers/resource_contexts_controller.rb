@@ -16,17 +16,44 @@ class ResourceContextsController < ApplicationController
     @resource_context.institution_id = current_user.institution.id
     @resource_context.contact_email = @req_temp.institution.contact_email
     @resource_context.contact_info = @req_temp.institution.contact_info
+
+    @inst_list = InstitutionsController.institution_select_list
+    non_partner = @inst_list.map{|i| i[1]}.index(0) #find non-partner institution, ie none of the above, always index 0
+    if non_partner
+      item = @inst_list.delete_at(non_partner)
+      item = ["None of the above", 0] # This institution is always renamed because we like it that way in the list
+      @inst_list.push(item) #put it at the end of the list cause we like it that way
+    end
+  end
+
+  # GET /resource_templates/edit
+  def edit
+    @resource_context = ResourceContext.find(params[:id])
+    debugger
+    @req_temp = @resource_context.requirements_template
+
+    @inst_list = InstitutionsController.institution_select_list
+    non_partner = @inst_list.map{|i| i[1]}.index(0) #find non-partner institution, ie none of the above, always index 0
+    if non_partner
+      item = @inst_list.delete_at(non_partner)
+      item = ["None of the above", 0] # This institution is always renamed because we like it that way in the list
+      @inst_list.push(item) #put it at the end of the list cause we like it that way
+    end
+    render :new
   end
 
   def create
-    @resource_context = ResourceContext.new(resource_context_params)
+    pare_to = ['institution_id', 'requirements_template_id', 'requirement_id', 'resource_id',
+              'name', 'contact_info', 'contact_email', 'review_type']
+    to_save = pare_to.inject({}){|result, key| result[key] = params['resource_context'][key];result}
+    @resource_context = ResourceContext.new(to_save)
     respond_to do |format|
       if @resource_context.save
-        format.html { redirect_to edit_resource_context_path(@resource_context), notice: 'Resource template was successfully created.' }
-        format.json { render action: 'edit', status: :created, location: @resource_context }
+        format.html { redirect_to customization_details_path(@resource_context.id), notice: 'Customization was successfully created.' }
+        #format.json { render action: 'edit', status: :created, location: @resource_context }
       else
         format.html { render action: 'new' }
-        format.json { render json: @resource_context.errors, status: :unprocessable_entity }
+        #format.json { render json: @resource_context.errors, status: :unprocessable_entity }
       end
     end
   end
