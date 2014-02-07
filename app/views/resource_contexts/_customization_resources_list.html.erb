@@ -1,0 +1,30 @@
+<h2> <%= @resource_context.name %> for <%= @current_institution.full_name %> Resources </h2>
+	
+<table class="table table-striped">
+
+	<thead>
+		<tr>
+			<th class="span4">Details</th>
+			<th width="span1">Edit</th>
+			<th>Institution</th>
+			<th>Creation Date</th>
+			<th>Last Modification Date</th>
+		</tr>
+	</thead>
+	<tbody>
+	<%# @resources.each do |resource| %>
+		<tr>
+			<td>
+				<div class="toggle-links">
+					<%#= resource.resource.label %>
+				</div>
+			</td>
+			<td class="span1"><%#= link_to raw(''), edit_resource_path(resource.resource_id), :class => 'icon edit-user' %></td>
+			<td><%#= resource.institution.nil? ? " " :  resource.institution.nickname %></td>
+			<td><%#= resource.resource.created_at.nil? ? " " :  resource.resource.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+			<td><%#= resource.resource.updated_at.nil? ? " " :  resource.resource.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+
+		</tr>
+	<%# end %>
+	<tbody>
+</table>

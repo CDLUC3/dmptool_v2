@@ -26,6 +26,8 @@ class ResourceContextsController < ApplicationController
     @req_temp = @resource_context.requirements_template
 
     make_institution_dropdown_list
+    customization_resources_list
+
   end
 
   def create
@@ -92,4 +94,16 @@ class ResourceContextsController < ApplicationController
     @submit_to = new_resource_context_path
     @submit_text = "Next page"
   end
+
+  def customization_resources_list
+    @resource_context = ResourceContext.find(params[:id])
+    @customization_institution = @resource_context.institution
+    @template = @resource_context.requirements_template
+    
+
+    #@resources = @resource_context.resources.includes(:resource, :requirements_template).where(institution_id: [current_user.institution.subtree_ids])
+    @resources = ResourceContext.includes(:resources).where(institution_id: [current_user.institution.subtree_ids], requirements_template_id: @template.id)
+  end
+
+
 end
