@@ -8,7 +8,6 @@ class PlansController < ApplicationController
       user_id = current_user.id
       plan_ids = UserPlan.where(user_id: user_id).pluck(:plan_id) unless user_id.nil?
       @plans = Plan.where(id: plan_ids)
-            debugger
     else
       @plans = Plan.all
     end

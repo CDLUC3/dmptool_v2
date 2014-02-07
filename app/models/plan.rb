@@ -22,7 +22,7 @@ class Plan < ActiveRecord::Base
   scope :private_visibility, -> { where(visibility: :private) }
 
   # scopes for plan's states
-  scope :owned, -> { leftjoins(:user_plans).where('user_plans.owner =?', true) }
+  scope :owned, -> { joins(:user_plans).where('user_plans.owner =?', true) }
   scope :coowned, -> {  joins(:user_plans).where('user_plans.owner =?', false) }
   scope :submitted, -> { joins(:plan_states).where('plan_states.state =?', :submitted)}
   scope :approved, -> { joins(:plan_states).where('plan_states.state =?', :approved)}
