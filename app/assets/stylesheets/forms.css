@@ -87,8 +87,8 @@ textarea {
     
 /* Search Area */
 .search-area {
-	float: right;
   width: auto;
+  margin-bottom: 10px;
   position: relative; }
 .search-area input[type=search] {
 	display: inline;

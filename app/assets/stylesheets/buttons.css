@@ -8,13 +8,13 @@
 	border-top: none;
 	width: auto;
 	min-height: 30px;
-	margin: -20px 0 20px;
+	margin: -10px 0 10px;
 	padding: 10px;
 	position: relative; }
 .tab-pane .buttons {
 	border: none;
 	border-top: 1px solid #B6B6B7;
-	margin: 0 -15px 0;
+	margin: 0 -10px 0;
 	padding-bottom: 0; }
 .tab-pane.table .buttons {
 	border: none;
@@ -132,55 +132,128 @@ a.icon {
 	position: relative; }
 span.icon {
 	position: absolute;
-	left: 0; }
-
-/* Heading Icons */
-.icon.data-plans {
-	background-position: 0 -105px; width: 40px; height: 35px; }	
-.icon.how-to {
-	background-position: -40px -105px; width: 40px; height: 35px; }
-.icon.news {
-	background-position: -80px -105px; width: 40px; height: 35px; }
-.icon.admin {
-	background-position: -99px -30px; width: 33px; height: 25px; }
-.icon.funder-guidance {
-	background-position: -166px -30px; width: 33px; height: 25px; }
-.icon.inst-guidance {
-	background-position: -133px -30px; width: 33px; height: 25px; }
-.icon.inst-profile {
-	background-position: -90px -80px; width: 30px; height: 25px; }
-.icon.profile {
-	background-position: -66px -30px; width: 33px; height: 25px; }
-.icon.template-editor {
-	background-position: -75px -55px; width: 25px; height: 25px; }
-.icon.template-new {
-	background-position: 0 -55px; width: 25px; height: 25px; }
-.icon.template-dmp {
-	background-position: -25px -55px; width: 25px; height: 25px; }
-.icon.template-resource {
-	background-position: -50px -55px; width: 25px; height: 25px; }
-.icon.template-details {
-	background-position: -100px -55px; width: 25px; height: 25px; }
-.icon.template-preview {
-	background-position: -125px -55px; width: 25px; height: 25px; }
-.icon.select {
-	background-position: -120px -80px; width: 30px; height: 20px; }
-.icon.review {
-	background-position: -150px -55px; width: 25px; height: 25px; }
-.icon.overview {
-	background-position: -150px -80px; width: 30px; height: 20px; }
-.icon.login {
-	background-position: -175px -55px; width: 25px; height: 25px; }
+	left: 0; }	
 	
-/* Action Icons */
-.icon.add {
-	background-position: -25px 0; width: 15px; height: 15px; }
-.icon.cancel {
-	background-position: -40px -15px; width: 15px; height: 15px; }
-.icon.checkmark {
-	background-position: -25px -15px; width: 15px; height: 15px; }
-.icon.remove {
-	background-position: -40px 0; width: 15px; height: 15px; }
+/* first row */
+.add.icon {
+	background-position: 0 0; width: 15px; height: 15px; }
+.remove.icon {
+	background-position: -15px 0; width: 15px; height: 15px; }
+.confirm.icon {
+	background-position: -30px 0; width: 15px; height: 15px; }
+.cancel.icon {
+	background-position: -45px 0; width: 15px; height: 15px; }
+.add-group.icon {
+	background-position: -60px 0; width: 20px; height: 15px; }
+.add-requirement.icon {
+	background-position: -80px 0; width: 14px; height: 15px; }
+.requirement.icon {
+	background-position: -95px 0; width: 14px; height: 15px; }
+.trash.icon {
+	background-position: -110px 0; width: 14px; height: 15px; }
+.institution.icon {
+	background-position: -125px 0; width: 15px; height: 15px; }
+.comment.icon {
+	background-position: -140px 0; width: 20px; height: 15px; }
+.folder-open.icon {
+	background-position: -160px 0; width: 20px; height: 12px; }
+.folder-closed.icon {
+	background-position: -185px 0; width: 20px; height: 12px; }
+/* second row */
+.arrow-up.icon {
+	background-position: 0px -15px; width: 10px; height: 15px; }
+.arrow-up.icon:hover, .arrow-up.icon:focus, .arrow-up.icon:active {
+	background-position: -25px -15px; }
+.arrow-right.icon {
+	background-position: -15px -15px; width: 15px; height: 10px; }
+	.arrow-right.icon:hover, .arrow-right.icon:focus, .arrow-right.icon:active {
+	background-position: -40px -15px; }
+.arrow-down.icon {
+	background-position: -15px -25px; width: 10px; height: 15px; }
+	.arrow-down.icon:hover, .arrow-down.icon:focus, .arrow-down.icon:active {
+	background-position: -40px -25px; }
+.arrow-left.icon {
+	background-position: 0px -30px; width: 15px; height: 10px; }
+.arrow-left.icon:hover, .arrow-left.icon:focus, .arrow-left.icon:active {
+	background-position: -25px -030px; }
+.close.icon {
+	background-position: -50px -15px; width: 25px; height: 25px; }
+.print.icon {
+	background-position: -85px -15px; width: 30px; height: 25px; }
+.institution-contact.icon {
+	background-position: -115px -15px; width: 30px; height: 25px; }
+.institution-domain.icon {
+	background-position: -145px -15px; width: 30px; height: 25px; }
+.login.icon {
+	background-position: -175px -15px; width: 25px; height: 25px; }
+/* third row */
+.new-template.icon {
+	background-position: 0px -40px; width: 25px; height: 25px; }
+.dmp-template.icon {
+	background-position: -25px -40px; width: 25px; height: 25px; }
+.resource-template.icon {
+	background-position: -50px -40px; width: 25px; height: 25px; }
+.template-editors.icon {
+	background-position: -75px -40px; width: 25px; height: 25px; }
+.template-details.icon {
+	background-position: -100px -40px; width: 25px; height: 25px; }
+.template-preview.icon {
+	background-position: -125px -40px; width: 25px; height: 25px; }
+.review.icon {
+	background-position: -150px -40px; width: 25px; height: 25px; }
+.institution-profile.icon {
+	background-position: -175px -40px; width: 25px; height: 25px; }
+/* fourth row */
+.edit-user.icon {
+	background-position: 0 -65px; width: 32px; height: 25px; }
+.remove-user.icon {
+	background-position: -35px -65px; width: 32px; height: 25px; }
+.administrator.icon {
+	background-position: -70px -65px; width: 32px; height: 25px; }
+.institution-guidance.icon {
+	background-position: -105px -65px; width: 32px; height: 25px; }
+.funder-guidance.icon {
+	background-position: -140px -65px; width: 32px; height: 25px; }
+.profile.icon {
+	background-position: -175px -65px; width: 25px; height: 25px; }
+/* fifth row */
+.overview.icon {
+	background-position: 0 -90px; width: 30px; height: 20px; }
+.select.icon {
+	background-position: -30px -90px; width: 30px; height: 20px; }
+.search.icon {
+	background-position: -60px -90px; width: 20px; height: 20px; }
+.pdf.icon {
+	background-position: -80px -90px; width: 20px; height: 20px; }
+.rtf.icon {
+	background-position: -100px -90px; width: 20px; height: 20px; }
+.facebook.icon {
+	background-position: -120px -90px; width: 20px; height: 20px; }
+.facebook.icon:hover, .facebook.icon:focus, .facebook.icon:active {
+	background-position: -120px	-110px; }
+.twitter.icon {
+	background-position: -140px -90px; width: 20px; height: 20px; }
+.twitter.icon:hover, .twitter.icon:focus, .twitter.icon:active {
+	background-position: -140px -110px; }
+.rss.icon {
+	background-position: -160px -90px; width: 20px; height: 20px; }
+.rss.icon:hover, .rss.icon:focus, .rss.icon:active {
+	background-position: -160px -110px; }
+.user-login.icon {
+	background-position: -180px -90px; width: 20px; height: 20px; }
+.user-login.icon:hover, .user-login.icon:focus, .user-login.icon:active {
+	background-position: -180px -110px; }
+/* sixth row */
+.public-dmps.icon {
+	background-position: 0 -110px; width: 40px; height: 35px; }
+.help.icon {
+	background-position: -40px -110px; width: 40px; height: 35px; }
+.news.icon {
+	background-position: -80px -110px; width: 40px; height: 35px; }
+.email.icon {
+	background-position: -120px -130px; width: 15px; height: 10px; }
+.email.icon:hover, .email.icon:focus, .email.icon:active {
+	background-position: -140px -130px; }
 
 /* Tree View Icons */
 a.icon.new, a.icon.delete {
@@ -196,63 +269,19 @@ a.icon.new:hover, a.icon.new:focus, a.icon.new:active,
 a.icon.delete:hover, a.icon.delete:focus, a.icon.delete:active {
 	text-decoration: underline !important; }
 .icon.requirements-group-open {
-	background-position: -90px -20px; width: 18px; height: 10px;
+	background-position: -160px 0px; width: 20px; height: 12px;
 	top: 2px; }
 .icon.requirements-group-closed {
-	background-position: -125px -20px; width: 18px; height: 10px;
+	background-position: -185px 0px; width: 20px; height: 12px;
 	top: 2px;  }
 .icon.new-requirements-group {
-	background-position: -160px 0; width: 20px; height: 15px; }
-.icon.requirement {
-	background-position: -145px -15px; width: 15px; height: 15px; left: 2px; bottom: 1px; }
+	background-position: -60px 0; width: 20px; height: 15px; }
 span.icon.new-requirement {
-	background-position: -145px 0; width: 15px; height: 15px; }
+	background-position: -80px 0; width: 15px; height: 15px; }
+.icon.requirement {
+	background-position: -95px 0; width: 15px; height: 15px; left: 2px; bottom: 1px; }
 a.icon.new-requirement {
-	background:none;
-	padding-left: 17px }
-	
-.icon.trash {
-	background-position: -145px -15px; width :15px; height: 15px; }
-.icon.close {
-	background-position: 0 0; width: 30px; height: 30px; }
-.icon.comment {
-	background-position: -160px -15px; width: 20px; height: 15px;  }
-.icon.mail {
-	background-position: -75px -20px; width: 15px; height: 10px; }
-.icon.mail:hover, .icon.mail:focus, .icon.mail:active {
-	background-position: -90px -20px; }
-.icon.arrow-up {
-	background-position: -55px 0; width: 10px; height: 15px; }
-.icon.arrow-up:hover, .icon.arrow-up:focus, .icon.arrow-up:active {
-	background-position: -55px -15px; }
-.icon.arrow-down {
-	background-position: -65px 0px; width: 10px; height: 15px; }
-.icon.arrow-down:hover, .icon.arrow-down:focus, .icon.arrow-down:active {
-	background-position: -65px -15px; }
-.icon.arrow-left {
-	background-position: -75px 0; width: 15px; height: 10px; }
-.icon.arrow-left:hover, .icon.arrow-left:focus, .icon.arrow-left:active {
-	background-position: -75px -15px; }
-.icon.arrow-right {
-	background-position: -90px -10px; width: 15px; height: 10px; }
-.icon.arrow-right:hover, .icon.arrow-right:focus, .icon.arrow-right:active {
-	background-position: -90px -15px; }
-.icon.edit-user {
-	background-position: 0 -30px; width: 33px; height: 25px; }
-.icon.remove-user {
-	background-position: -33px -30px; width: 33px; height: 25px; }
-
-/* Other Icons */
-.icon.search {
-	background-position: -180px -80px; width: 20px; height: 20px; }
-.icon.inst {
-	background-position: -180px 0; width: 20px; height: 15px;
-	top: -3px; }
-.icon.inst-domain {
-	background-position: 0 -80px; width: 30px; height: 25px; }
-.icon.inst-contact {
-	background-position: -30px -80px; width: 30px; height: 25px; }
-.icon.pdf {
-	background-position: -105px 0; width: 20px; height: 20px; }
-.icon.rtf {
-	background-position: -125px 0; width: 20px; height: 20px; }
+	background: none;
+	padding-left: 17px; }
+.icon.institution {
+	top: -2px; }

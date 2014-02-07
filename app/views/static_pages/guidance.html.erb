@@ -6,7 +6,7 @@
 		use the search box to search for specific DMP Templates.  Sample
 		plans are not necessarily from the funder.</p>
 </div>
-<div class="search-area span4">
+<div class="search-area span4 pull-right">
 		<%= form_tag('', {:method => :get}) do %>
 			<%= search_field_tag(:q, params[:q], :class => 'input-large') %>
 			<span class="icon search"></span>
@@ -25,7 +25,7 @@
 <%= render partial: 'guidance_table', :locals => {templates: @public_templates, public: true} %>
 
 <% if defined?(@institution_templates) && @institution_templates.length > 0 %>
-<h2 class="dashboard-heading"><span class="icon inst-guidance"></span>Guidance Within Institution</h2>
+<h2 class="dashboard-heading"><span class="icon institution-guidance"></span>Guidance Within Institution</h2>
 	<div class="table-scope">
 		<p>Below is a list of DMP templates available in your institution</p>
 	</div>

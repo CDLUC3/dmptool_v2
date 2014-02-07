@@ -17,8 +17,8 @@
       <li><%= link_to "Contact Us", contact_path, :title => "Contact Us" %></li>
       <li><%= link_to "About", about_path, :title => "About" %></li>
       <li class="login">
-        <%= link_to(content_tag(:span, "", :class => "icon login") + "Log In", choose_institution_path) if !current_user %>
-        <%= link_to(content_tag(:span, "", :class => "icon login") + "Log Out", logout_path) if current_user %></li>
+        <%= link_to(content_tag(:span, "", :class => "icon user-login") + "Log In", choose_institution_path) if !current_user %>
+        <%= link_to(content_tag(:span, "", :class => "icon user-login") + "Log Out", logout_path) if current_user %></li>
     </ul>
   </nav>
 </header>
