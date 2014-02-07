@@ -1,0 +1,35 @@
+<%
+# this is a partial which displays errors
+# pass in a hash of models followed by the friendly name for each as the "models" local.
+# For example, call like
+#
+# :locals => { :models => { @resource_context => 'customization', @plan => 'DMP plan' }
+#
+# You may only need one model.  In that case it would look like this:
+# :locals => { :models => { @resource_context => 'customization'}
+%>
+
+<%
+  errors = false
+  models.each{|k,v| errors = true if k.errors.any? }
+%>
+
+
+<% if errors %>
+  <div id="error_explanation">
+    <% models.each do |model, friendly_name| %>
+      <h2>
+        <%= "#{pluralize(model.errors.count, "error")} prohibited this #{friendly_name} from being saved:" %>
+      </h2>
+      <ul>
+        <% model.errors.messages.each_pair do |k, v| %>
+          <% v.each do |v1| %>
+            <li>
+              <%= v1 %>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+<% end %>
