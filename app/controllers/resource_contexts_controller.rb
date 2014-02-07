@@ -26,6 +26,8 @@ class ResourceContextsController < ApplicationController
     @req_temp = @resource_context.requirements_template
 
     make_institution_dropdown_list
+    customization_resources_list
+
   end
 
   def create
@@ -98,4 +100,27 @@ class ResourceContextsController < ApplicationController
     @submit_to = new_resource_context_path
     @submit_text = "Next page"
   end
+
+  def customization_resources_list
+    @customization = ResourceContext.find(params[:id])
+    @customization_institution = @customization.institution
+    @template= @customization.requirements_template
+    @customization_institution_name = "All the Institutions"
+    @template_name = @customization.requirements_template.name
+
+    @resource_contexts = ResourceContext.includes(:resource).
+                          per_template(@template).
+                          resource_level
+
+    unless safe_has_role?(Role::DMP_ADMIN)
+
+      @customization_institution_name = @customization.institution.full_name
+      @resource_contexts = @resource_contexts.
+                          per_institution( @customization_institution)
+                         
+    end
+                         
+  end
+
+
 end

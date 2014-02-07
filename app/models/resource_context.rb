@@ -18,8 +18,25 @@ class ResourceContext < ActiveRecord::Base
   	 where("institution_id IS NOT NULL") 
   end
 
+  def self.resource_level
+     where("resource_id IS NOT NULL") 
+  end
+
+  def self.per_institution(institution)
+     where(institution_id: [institution.subtree_ids]) 
+  end
+
+  def self.per_template(template)
+     where(requirements_template_id: template.id) 
+  end
+
+
   def self.template_level
   	 where("requirements_template_id IS NOT NULL")
+  end
+
+  def self.resource_not_null
+    where("resource_id IS NOT NULL") 
   end
 
 end
