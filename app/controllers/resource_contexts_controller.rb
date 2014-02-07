@@ -26,7 +26,6 @@ class ResourceContextsController < ApplicationController
     @req_temp = @resource_context.requirements_template
 
     make_institution_dropdown_list
-    render :new
   end
 
   def create
