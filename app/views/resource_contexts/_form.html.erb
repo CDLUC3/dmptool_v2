@@ -1,7 +1,7 @@
 
 <%= form_for @resource_context, html:{ :class => 'form-horizontal', multipart: true}  do |f| %>
 
-  <%= render partial: "shared/errors", locals: {models: { @resource_context => 'customization'}} %>
+  <%= render partial: "shared/errors", locals: {model: @resource_context } %>
 
   <% unless current_user.has_role?(Role::DMP_ADMIN) %>
     <div class="control-group" id="inst_text">

@@ -5,7 +5,7 @@
   <div class="tab-content">
     <div class="tab-pane active" id="tab1">
       <%= form_for @plan, html: { :class => 'form-horizontal' }  do |f| %>
-        <%= render partial: "shared/errors", locals: {models: { @plan => 'DMP'}} %>
+        <%= render partial: "shared/errors", locals: {model: @plan } %>
 
         <div class="control-group">
           <%= f.label :requirements_template_name, 'DMP Template', :class => 'control-label' %>

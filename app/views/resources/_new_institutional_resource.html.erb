@@ -3,7 +3,7 @@
 
   <%= form_for @resource, html: { :class => 'form-horizontal' } do |f| %>
 
-    <%= render partial: "shared/errors", locals: {models: { @resource=> 'resource'}} %>
+    <%= render partial: "shared/errors", locals: {model: @resource } %>
 
     <fieldset>
       <div class="control-group">

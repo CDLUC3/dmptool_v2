@@ -4,10 +4,10 @@ class ResourceContext < ActiveRecord::Base
   belongs_to :requirement
   belongs_to :resource
 
-  validates :name, presence: {message: 'Customization name must be filled in'}, if: "resource_id.blank?"
-  validates :contact_info, presence: {message: 'Contact information must be filled in'}, if: "resource_id.blank?"
+  validates :name, presence: {message: "%{value} must be filled in"}, if: "resource_id.blank?"
+  validates :contact_info, presence: {message: "%{value} must be filled in"}, if: "resource_id.blank?"
   validates :contact_email, format: { with: /.+\@.+\..+/,
-                                      message: "Contact email address must be valid" }, if: "resource_id.blank?"
+                                      message: "%{value} address must be valid" }, if: "resource_id.blank?"
   validates :review_type, presence: true, if: "resource_id.blank?"
 
   def self.no_resource_no_requirement

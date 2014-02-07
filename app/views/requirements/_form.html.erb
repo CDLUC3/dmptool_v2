@@ -1,5 +1,5 @@
 <%= form_for ([@requirement.requirements_template, @requirement]), html: { :class => 'form-horizontal' } do |f| %>
-  <%= render partial: "shared/errors", locals: {models: { @requirement => 'requirement'}} %>
+  <%= render partial: "shared/errors", locals: {model: @requirement } %>
   <fieldset>
     <div class="control-group">
       <%= f.hidden_field :parent_id %>

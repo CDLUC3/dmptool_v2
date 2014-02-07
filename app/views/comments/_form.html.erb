@@ -1,7 +1,7 @@
 <%# this partial requires plan_id to be passed in as a local variable %>
 <fieldset id="comment_dialog_form">
   <%= form_for(@comment, remote: true,  html: { :class => 'form-horizontal' }) do |f| %>
-    <%= render partial: "shared/errors", locals: {models: { @comment => 'comment'}} %>
+    <%= render partial: "shared/errors", locals: {model: @comment} %>
     <div class="control-group">
         <%= f.hidden_field :user_id, value: current_user.id %>
         <%= f.hidden_field :plan_id, value: plan_id %>

@@ -1,33 +1,49 @@
 <%
 # this is a partial which displays errors
-# pass in a hash of models followed by the friendly name for each as the "models" local.
+# pass in an array of models followed by the friendly name for each as the "models" local.
 # For example, call like
 #
-# :locals => { :models => { @resource_context => 'customization', @plan => 'DMP plan' }
+# :locals => { :models => [ @resource_context, @plan ]
 #
 # You may only need one model.  In that case it would look like this:
-# :locals => { :models => { @resource_context => 'customization'}
+# :locals => { :model => @resource_context }
+
+# To change the model names and field names you may modify config/locales/en.yml (or the language)
+#en:
+#  activerecord:
+#    models:
+#      resource_context:     "Customization"
+#
+#    attributes:
+#      resource_context:
+#        name:              "Customization Name"
+#        contact_info:      "Contact Information"
+#        contact_email:     "Contact Email"
+
+# To modify the error messages displayed by a validation, modify the model and set the message
+# for example:
+#
+# validates :name, presence: {message: "%{value} must be filled in"}
 %>
 
 <%
+  models = model if defined? model
+  models = [ models ] if models.class != Array
   errors = false
-  models.each{|k,v| errors = true if k.errors.any? }
+  models.each{|model| errors = true if model.errors.any? }
 %>
-
 
 <% if errors %>
   <div id="error_explanation">
-    <% models.each do |model, friendly_name| %>
+    <% models.each do |model| %>
       <h2>
-        <%= "#{pluralize(model.errors.count, "error")} prohibited this #{friendly_name} from being saved:" %>
+        <%= "#{pluralize(model.errors.count, "error")} prohibited this #{model.class.model_name.human.downcase} from being saved:" %>
       </h2>
       <ul>
-        <% model.errors.messages.each_pair do |k, v| %>
-          <% v.each do |v1| %>
-            <li>
-              <%= v1 %>
-            </li>
-          <% end %>
+        <% model.errors.full_messages.each do |m| %>
+          <li>
+            <%= m %>
+          </li>
         <% end %>
       </ul>
     <% end %>

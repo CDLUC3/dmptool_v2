@@ -1,6 +1,6 @@
 <% provide(:title, 'Institution Information') %>
 <%= form_for @current_institution, html:{ :class => 'form-horizontal', multipart: true}  do |f| %>
-  <%= render partial: "shared/errors", locals: {models: { @current_institution => 'institution'}} %>
+  <%= render partial: "shared/errors", locals: {model: @current_institution } %>
   <div class="control-group">
     <%= f.label :full_name , "Institution Full Name", :class=> "control-label required" %>
     <div class="controls">
