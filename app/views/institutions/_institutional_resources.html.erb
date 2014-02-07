@@ -16,7 +16,7 @@
 		<tr>
 			<td>
 				<div class="toggle-links">
-					<%=link_to (content_tag(:strong, resource_context.resource.label)), resource_context_path(resource_context), :id => "#{resource_context.resource.label}"%>
+					<%= resource_context.resource.label %>
 				</div>
 			</td>
 			<td class="span1"><%= link_to raw(''), edit_resource_path(resource_context.resource_id), :class => 'icon edit-user' %></td>

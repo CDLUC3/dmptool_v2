@@ -9,7 +9,7 @@ class Resource < ActiveRecord::Base
   validates_columns :value
 
 
-  scope :guidance, -> { where(resource_type: 'expository_guidance') }
+  scope :guidance, -> { where(resource_type: 'help_text') }
 
   def actionable_url
   	resource_type == "actionable_url"

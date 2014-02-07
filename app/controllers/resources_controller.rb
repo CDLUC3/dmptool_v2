@@ -23,14 +23,15 @@ class ResourcesController < ApplicationController
   end
 
   # GET /resources/1/edit
+  #edit institutional resource
   def edit
-    #@resource = Resource.find(params[:resource])
     @resource = Resource.find(params[:id])
     @current_institution = current_user.institution
   end
 
   # POST /resources
   # POST /resources.json
+  #create new institutional resource
   def create
     @resource = Resource.new(resource_params)
     @current_institution = current_user.institution

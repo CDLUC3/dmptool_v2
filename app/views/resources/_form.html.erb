@@ -6,7 +6,7 @@
         <%= f.label :resource_type, "Resource Type", :class => "control-label" %>
         <div class="controls">
           <%= f.select :resource_type,
-          		options_for_select([ :actionable_url, :expository_guidance, :example_response, :suggested_response], @resource.resource_type) %>
+          		options_for_select([ :actionable_url, :help_text, :example_response, :suggested_response], @resource.resource_type) %>
         </div>
       </div>
 
