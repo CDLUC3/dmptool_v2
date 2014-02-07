@@ -1,21 +1,3 @@
-<h2 class="dashboard-heading">
-  <span class="icon template-resource"></span>
-    Customization Overview
-</h2>
-<h5>
-  Basic Information
-</h5>
-<hr/>
-
 <%= render 'form' %>
 
-<%# this is a new record since this is in the new action %>
-<%= link_to('<< Choose DMP Template', dmp_for_customization_path, method: :get, :class => "btn pull-left") %>
-<%= link_to('Customization Details >>', '#', :class => "btn pull-right", :id => 'next_btn') %>
-
-<script type="text/javascript">
-  $('#next_btn').click(function(e) {
-    e.preventDefault();
-    $('#new_resource_context').submit();
-  });
-</script>
+<%= render 'display_buttons' %>

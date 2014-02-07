@@ -1,20 +1,7 @@
 <%# this partial requires plan_id to be passed in as a local variable %>
 <fieldset id="comment_dialog_form">
   <%= form_for(@comment, remote: true,  html: { :class => 'form-horizontal' }) do |f| %>
-    <% if @comment.errors.any? %>
-      <div id="error_excommentation">
-        <h2>
-          <%= "#{pluralize(@comment.errors.count, "error")} prohibited this Comment from being saved:" %>
-        </h2>
-        <ul>
-          <% @comment.errors.full_messages.each do |msg| %>
-            <li>
-              <%= msg %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
+    <%= render partial: "shared/errors", locals: {model: @comment} %>
     <div class="control-group">
         <%= f.hidden_field :user_id, value: current_user.id %>
         <%= f.hidden_field :plan_id, value: plan_id %>

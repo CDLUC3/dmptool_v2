@@ -1,0 +1,23 @@
+<h2 class="dashboard-heading" id="jump"><span class="icon template-details"></span>Customization Details</h2>
+<h4><%= @requirements_template.name %></h4>
+<div class="row-fluid">
+  <div class="details span4">
+    <div class="tree-view border-box">
+      <h5>Template Outline</h5>
+      <hr/>
+      <div class="requirements_tree_view">
+        <%= bested_requirements @requirements.arrange(order: :created_at) %>
+      </div>
+    </div>
+  </div>
+  <div class="tabbable span8">
+    <ul class="nav nav-tabs">
+      <li class="active"><%# link_to 'Requirements', '#tab1', :data => {:toggle => 'tab'} %></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="tab1">
+        <%# render 'form' %>
+      </div>
+    </div>
+  </div>
+</div>

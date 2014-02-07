@@ -88,6 +88,16 @@ class ApplicationController < ActionController::Base
       ActiveSupport::Inflector.transliterate filename.downcase.gsub(/[\\\/?:*"><|]+/,"_").gsub(/\s/,"_")
     end
 
+    def make_institution_dropdown_list
+      @inst_list = InstitutionsController.institution_select_list
+      non_partner = @inst_list.map{|i| i[1]}.index(0) #find non-partner institution, ie none of the above, always index 0
+      if non_partner
+        item = @inst_list.delete_at(non_partner)
+        item = ["None of the above", 0] # This institution is always renamed because we like it that way in the list
+        @inst_list.push(item) #put it at the end of the list cause we like it that way
+      end
+    end
+
     def select_requirements_template
       req_temp = RequirementsTemplate.includes(:institution)
       valid_buckets = nil

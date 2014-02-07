@@ -1,22 +1,12 @@
   <%= form_for @resource, html: { :class => 'form-horizontal' } do |f| %>
-
-    <% if @resource.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= "#{pluralize(@resource.errors.count, "error")} prohibited this resource from being saved:" %></h2>
-        <ul>
-          <% @resource.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
+    <%= render partial: "shared/errors", locals: {model: @resource } %>
 
     <fieldset>
       <div class="control-group">
         <%= f.label :resource_type, "Resource Type", :class => "control-label" %>
         <div class="controls">
           <%= f.select :resource_type,
-          		options_for_select([ :actionable_url, :expository_guidance, :example_response, :suggested_response], @resource.resource_type) %>
+          		options_for_select([ :actionable_url, :help_text, :example_response, :suggested_response], @resource.resource_type) %>
         </div>
       </div>
 

@@ -1,4 +1,4 @@
-  <h2> New Resource For  <%= @current_institution.full_name %> </h2>
+<h2> Edit <%= @resource.label %> Resource For  <%= @current_institution.full_name %> </h2>
 
 
   <%= form_for @resource, html: { :class => 'form-horizontal' } do |f| %>
@@ -42,10 +42,6 @@
       </div>
     </fieldset>
   <% end %>
-
-
-
-
 
 
 

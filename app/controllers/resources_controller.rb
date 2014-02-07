@@ -23,11 +23,17 @@ class ResourcesController < ApplicationController
   end
 
   # GET /resources/1/edit
+  #edit institutional resource
   def edit
+    @resource = Resource.find(params[:id])
+    @current_institution = current_user.institution
   end
+
+  
 
   # POST /resources
   # POST /resources.json
+  #create new institutional resource
   def create
     @resource = Resource.new(resource_params)
     @current_institution = current_user.institution
@@ -50,10 +56,10 @@ class ResourcesController < ApplicationController
   def update
     respond_to do |format|
       if @resource.update(resource_params)
-        format.html { redirect_to resources_path, notice: 'Resource was successfully updated.' }
+        format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: 'Resource was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: 'index' }
+        format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: "A problem prevented this resource to be created. " }
         format.json { render json: @resource.errors, status: :unprocessable_entity }
       end
     end

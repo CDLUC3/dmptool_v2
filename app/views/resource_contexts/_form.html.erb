@@ -1,20 +1,15 @@
+<h2 class="dashboard-heading">
+  <span class="icon template-resource"></span>
+  Customization Overview
+</h2>
+<h5>
+  Basic Information
+</h5>
+<hr/>
 
 <%= form_for @resource_context, html:{ :class => 'form-horizontal', multipart: true}  do |f| %>
 
-  <% if @resource_context.errors.any? %>
-    <div id="error_explanation">
-      <h2>
-        <%= "#{pluralize(@requirement.errors.count, "error")} prohibited this requirement from being saved:" %>
-      </h2>
-      <ul>
-        <% @requirement.errors.full_messages.each do |msg| %>
-          <li>
-            <%= msg %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render partial: "shared/errors", locals: {model: @resource_context } %>
 
   <% unless current_user.has_role?(Role::DMP_ADMIN) %>
     <div class="control-group" id="inst_text">
@@ -80,14 +75,14 @@
   </div>
 
   <div class="control-group">
-    <%= f.label :contact_info, 'Contact Information',:class => "control-label" %>
+    <%= f.label :contact_info, 'Contact Information',:class => "control-label required" %>
     <div class="controls">
       <%= f.text_field :contact_info, :class => 'input-xlarge required' %>
     </div>
   </div>
 
   <div class="control-group">
-    <%= f.label :contact_email, 'Contact Email', :class => "control-label" %>
+    <%= f.label :contact_email, 'Contact Email', :class => "control-label required" %>
     <div class="controls">
       <%= f.text_field :contact_email, :class => 'input-xlarge required' %>
     </div>

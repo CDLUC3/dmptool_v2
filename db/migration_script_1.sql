@@ -52,7 +52,7 @@ SELECT 			`id`, 	'actionable_url',  `url`	,LEFT(`desc` ,50)		, 	`created_at`, `u
 FROM `dmp`.`resources`;
 
 INSERT INTO `dmp2`.`resources` (`resource_type`, `value`	, `label`	,  `created_at`, `updated_at`, `text`, `old_help_text_id`)						
-SELECT 			'expository_guidance',  `help_text`	,LEFT(`help_text` ,50)	, `created_at`, `updated_at`,`help_text`	,  `id`
+SELECT 			'help_text',  `help_text`	,LEFT(`help_text` ,50)	, `created_at`, `updated_at`,`help_text`	,  `id`
 FROM `dmp`.`help_texts`;
 
 #suggested_answers
@@ -219,3 +219,19 @@ ALTER TABLE dmp2.`resource_contexts` DROP COLUMN `old_suggested_answer_id`;
 ALTER TABLE dmp2.`users` DROP COLUMN `old_user_id`;
 ALTER TABLE dmp2.`authentications` DROP COLUMN `old_user_id`;
 
+
+
+############HELPER FOR CUSTOMIZATIONS###############
+
+#INSERT INTO `dmp2`.`resource_contexts` (`name`, `institution_id`, `requirements_template_id`, `requirement_id`, `created_at`, `updated_at`, `resource_id`)						
+#VALUES ('Z-4 for UVA - institutional',2, 1004,null,null,null,null);
+
+#INSERT INTO `dmp2`.`requirements_templates` (`id`, `institution_id`, `name`, `active`, `start_date`, `end_date`, `visibility`, `review_type`, `created_at`, `updated_at`)						
+#VALUES (1004, 2, 'Z-4', true, null,null,"institutional", null, null,null);
+
+
+#INSERT INTO `dmp2`.`resource_contexts` (`name`, `institution_id`, `requirements_template_id`, `requirement_id`, `created_at`, `updated_at`, `resource_id`)						
+#VALUES ('T-8 for Test Institution - public',1, 1008,null,null,null,null);
+
+#INSERT INTO `dmp2`.`requirements_templates` (`id`, `institution_id`, `name`, `active`, `start_date`, `end_date`, `visibility`, `review_type`, `created_at`, `updated_at`)						
+#VALUES (1008, 1, 'T-8', true, null,null,"public", null, null,null);
