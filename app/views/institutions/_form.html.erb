@@ -1,15 +1,6 @@
 <% provide(:title, 'Institution Information') %>
 <%= form_for @current_institution, html:{ :class => 'form-horizontal', multipart: true}  do |f| %>
-	<% if @current_institution.errors.any? %>
-	<div id="error_explanation">
-		<h2><%= "#{pluralize(@current_institution.errors.count, "error")} prohibited this Institution from being saved:" %></h2>
-		<ul>
-  	<% @current_institution.errors.full_messages.each do |msg| %>
-			<li><%= msg %></li>
-		<% end %>
-    </ul>
-  </div>
-  <% end %>
+  <%= render partial: "shared/errors", locals: {models: { @current_institution => 'institution'}} %>
   <div class="control-group">
     <%= f.label :full_name , "Institution Full Name", :class=> "control-label required" %>
     <div class="controls">

@@ -6,16 +6,7 @@
 	<div class="tab-content">
 		<div class="tab-pane active" id="tab1">
 			<%= form_for @requirements_template, html: { :class => 'form-horizontal' } do |f| %>
-			  <% if @requirements_template.errors.any? %>
-				  <div id="error_explanation">
-					  <h2><%= "#{pluralize(@requirements_template.errors.count, "error")} prohibited this requirements template from being saved:" %></h2>
-					  <ul>
-					  	<% @requirements_template.errors.full_messages.each do |msg| %>
-					  		<li><%= msg %></li>
-					  	<% end %>
-					  </ul>
-				  </div>
-			  <% end %>
+        <%= render partial: "shared/errors", locals: {models: { @requirements_template => 'requirements template'}} %>
 			  
 				<div class="control-group">
 					<%= f.label :template_name, :class => 'control-label' %>

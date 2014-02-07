@@ -1,18 +1,5 @@
 <%= form_for ([@requirement.requirements_template, @requirement]), html: { :class => 'form-horizontal' } do |f| %>
-  <% if @requirement.errors.any? %>
-    <div id="error_explanation">
-      <h2>
-        <%= '#{pluralize(@requirement.errors.count, "error")} prohibited this requirement from being saved:' %>
-      </h2>
-      <ul>
-        <% @requirement.errors.full_messages.each do |msg| %>
-          <li>
-            <%= msg %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render partial: "shared/errors", locals: {models: { @requirement => 'requirement'}} %>
   <fieldset>
     <div class="control-group">
       <%= f.hidden_field :parent_id %>
