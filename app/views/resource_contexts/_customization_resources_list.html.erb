@@ -1,4 +1,4 @@
-<h2> <%#= @resource_context.name %> for <%#= @current_institution.full_name %> Resources </h2>
+<h2> <%= @template.name %>  for <%= @customization_institution.full_name %> Resources </h2>
 	
 <table class="table table-striped">
 
@@ -12,19 +12,19 @@
 		</tr>
 	</thead>
 	<tbody>
-	<%# @resources.each do |resource| %>
+	<% @resource_contexts.each do |resource_context| %>
 		<tr>
 			<td>
 				<div class="toggle-links">
-					<%#= resource.resource.label %>
+					<%= resource_context.resource.nil? ? " " :  resource_context.resource.label %>
 				</div>
 			</td>
-			<td class="span1"><%#= link_to raw(''), edit_resource_path(resource.resource_id), :class => 'icon edit-user' %></td>
-			<td><%#= resource.institution.nil? ? " " :  resource.institution.nickname %></td>
-			<td><%#= resource.resource.created_at.nil? ? " " :  resource.resource.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
-			<td><%#= resource.resource.updated_at.nil? ? " " :  resource.resource.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+			<td class="span1"><%= link_to raw(''), :class => 'icon edit-user' %></td>
+			<td><%= resource_context.institution.nil? ? " " :  resource_context.institution.nickname %></td>
+			<td><%= resource_context.created_at.nil? ? " " :  resource_context.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+			<td><%= resource_context.updated_at.nil? ? " " :  resource_context.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 
 		</tr>
-	<%# end %>
+	<% end %>
 	<tbody>
 </table>

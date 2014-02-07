@@ -96,13 +96,15 @@ class ResourceContextsController < ApplicationController
   end
 
   def customization_resources_list
-    @resource_context = ResourceContext.find(params[:id])
-    @customization_institution = @resource_context.institution
-    @template = @resource_context.requirements_template
+    @customization = ResourceContext.find(params[:id])
+    @customization_institution = @customization.institution
+    @template = @customization.requirements_template
     
-
-    #@resources = @resource_context.resources.includes(:resource, :requirements_template).where(institution_id: [current_user.institution.subtree_ids])
-    @resources = ResourceContext.includes(:resources).where(institution_id: [current_user.institution.subtree_ids], requirements_template_id: @template.id)
+    @resource_contexts = ResourceContext.includes(:resource).template_level.
+                        per_institution( @customization_institution).
+                        per_template(@template).
+                        resource_level
+                       
   end
 
 
