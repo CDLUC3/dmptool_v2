@@ -1,13 +1,17 @@
 <% if @resource_context.new_record? %>
   <%= link_to('<< Choose DMP Template', dmp_for_customization_path, method: :get, :class => "btn pull-left") %>
 <% else %>
-  <%= link_to('<< Customization', resource_contexts_path, method: :get, :class => "btn pull-left") %>
+  <%= link_to('<< Customizations', resource_contexts_path, method: :get, :class => "btn pull-left") %>
 <% end %>
 <%= link_to('Customization Details >>', '#', :class => "btn pull-right", :id => 'next_btn') %>
 
 <script type="text/javascript">
   $('#next_btn').click(function(e) {
     e.preventDefault();
-    $('#new_resource_context').submit();
+    <% if @resource_context.new_record? %>
+      $('#new_resource_context').submit();
+    <% else %>
+      $('#edit_resource_context_<%= params[:id] %>').submit();
+    <% end %>
   });
 </script>

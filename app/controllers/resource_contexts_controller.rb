@@ -48,11 +48,17 @@ class ResourceContextsController < ApplicationController
 
 
   def update
+    pare_to = ['institution_id', 'requirements_template_id', 'requirement_id', 'resource_id',
+               'name', 'contact_info', 'contact_email', 'review_type']
+    to_save = pare_to.inject({}){|result, key| result[key] = params['resource_context'][key];result}
+    @resource_context = ResourceContext.find(params[:id])
     respond_to do |format|
-      if @resource_context.update(resource_context_params)
-        format.html { redirect_to edit_resource_context_path(@resource_context), notice: 'Resource context was successfully updated.' }
+      if @resource_context.update(to_save)
+        format.html { redirect_to customization_details_path(@resource_context.id), notice: 'Customization was successfully updated.' }
         format.json { head :no_content }
       else
+        make_institution_dropdown_list
+        @req_temp = @resource_context.requirements_template
         format.html { render action: 'edit' }
         format.json { render json: @resource_context.errors, status: :unprocessable_entity }
       end
