@@ -2,7 +2,7 @@
 <div class="table-scope">
   <%= link_to(content_tag(:span, "All (#{@all}) ", :class => "current" ), scope: "all_limited") %>
   |
-  <%= link_to(content_tag(:span, "Shared (#{@shared}) ", :class => "current"), scope: "shared") %>
+  <%= link_to(content_tag(:span, "Coowned (#{@coowned}) ", :class => "current"), scope: "coowned") %>
   |
   <%= link_to(content_tag(:span, "Approved (#{@approved}) ", :class => "current"), scope: "approved") %>
   |
@@ -28,7 +28,7 @@
           <div class="toggle-links">
             <%=link_to (content_tag(:strong, plan.name)), '#', :id => "#{plan.name}" %>
             <div class="template-links">
-              <%= (link_to 'Overview', edit_plan_path(plan))+' | '+(link_to 'Details', details_plan_path(plan))+' | '+(link_to 'Export', export_plan_path(plan))+' | '+(link_to 'Publish','#')+' | '+(link_to 'Submit','#')+' | '+(link_to 'Copy', copy_existing_plans_template_path(:plan => plan))+' | '+(link_to 'Delete', plan_path(plan), :class => "delete", :id => "delete_#{plan.name}", method: :delete, data: { confirm: 'Are you sure?' }) %>
+              <%= (link_to 'Overview', edit_plan_path(plan))+' | '+(link_to 'Details', details_plan_path(plan))+' | '+(link_to 'Export', export_plan_path(plan))+' | '+(link_to 'Publish', publish_plan_path(plan))+' | '+(link_to 'Submit','#')+' | '+(link_to 'Copy', copy_existing_plans_template_path(:plan => plan))+' | '+(link_to 'Delete', plan_path(plan), :class => "delete", :id => "delete_#{plan.name}", method: :delete, data: { confirm: 'Are you sure?' }) %>
             </div>
           </div>
         </td>
