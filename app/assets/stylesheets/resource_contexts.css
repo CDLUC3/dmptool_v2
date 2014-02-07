@@ -1,0 +1,6 @@
+.hidden_inst{
+  display: none;
+}
+.shown_inst{
+  display: block;
+}

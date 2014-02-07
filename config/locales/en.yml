@@ -32,3 +32,13 @@ en:
   recaptcha:
     errors:
       incorrect-captcha-sol: "ReCaptcha word verification didn't match."
+
+  activerecord:
+    models:
+      resource_context:     "Customization"
+
+    attributes:
+      resource_context:
+         name:              "Customization Name"
+         contact_info:      "Contact Information"
+         contact_email:     "Contact Email"

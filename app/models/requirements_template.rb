@@ -17,7 +17,6 @@ class RequirementsTemplate < ActiveRecord::Base
   validates_columns :visibility, :review_type
   validates :institution_id, presence: true, numericality: true
   validates :visibility, presence: true
-  validates :version, presence: true, numericality: true
   validates :name, presence: true
 
   validates :start_date, date: true, unless: "start_date.nil?"

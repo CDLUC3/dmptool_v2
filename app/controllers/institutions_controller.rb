@@ -24,15 +24,50 @@ class InstitutionsController < ApplicationController
 
     manage_users
 
+    institutional_resources
+
+  end
+
+
+  def institutional_resources
+    @resource_contexts = ResourceContext.includes(:resource).where(requirements_template_id: nil, requirement_id: nil, institution_id: [current_user.institution.subtree_ids])
+    #@resource_contexts = ResourceContext.includes(:resource).where( institution_id: [current_user.institution.subtree_ids])
+    case params[:scope]
+      when "all"
+        @resource_contexts = @resource_contexts.page(params[:page]).per(100)
+      else
+        @resource_contexts = @resource_contexts.page(params[:page]).per(5)
+    end
+
   end
 
 
   def manage_users
-    @users = current_user.institution.users_deep_in_any_role.order(last_name: :asc)
+    case params[:scope]
+      when "resources_editor"
+        @users = @current_institution.users_in_role("Resources Editor").order(last_name: :asc)
+      when "template_editor"
+         @users = @current_institution.users_in_role("Template Editor").order(last_name: :asc)
+      when "institutional_administrator"
+         @users = @current_institution.users_in_role("Institutional Administrator").order(last_name: :asc)
+      when "institutional_reviewer"
+        @users = @current_institution.users_in_role("Institutional Reviewer").order(last_name: :asc)
+      when "dmp_administrator"
+        @users =  @current_institution.users_in_role("DMP Administrator").order(last_name: :asc)
+      else
+        @users = @current_institution.users_deep_in_any_role.order(last_name: :asc)
+    end
     @roles = Role.where(['id NOT IN (?)', 1])
+    count
   end
 
-  
+  def count  
+    @all = @current_institution.users_deep_in_any_role.count
+    @resources_editor =@current_institution.users_in_role("Resources Editor").count
+    @template_editor = @current_institution.users_in_role("Template Editor").count
+    @institutional_administrator =@current_institution.users_in_role("Institutional Administrator").count
+    @dmp_administrator = @current_institution.users_in_role("DMP Administrator").count
+  end
 
   #every roles except DMP Admin
   def edit_user_roles_inst_admin
@@ -157,20 +192,34 @@ class InstitutionsController < ApplicationController
     end
   end
 
+  def partners_list
+    @institutions = Institution.page(params[:page]).per(10)
+  end
+  
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_institution
-      @institution = Institution.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_institution
+    @institution = Institution.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def institution_params
-      params.require(:institution).permit(:full_name, :nickname, :desc, :contact_info, :contact_email, :url, :url_text, :shib_entity_id, :shib_domain, :logo, :remote_logo_url, :parent_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def institution_params
+    params.require(:institution).permit(:full_name, :nickname, :desc, :contact_info, :contact_email, :url, :url_text, :shib_entity_id, :shib_domain, :logo, :remote_logo_url, :parent_id)
+  end
 
-    def check_for_cancel
-      redirect_to :back if params[:commit] == "Cancel"
-    end
+  def check_for_cancel
+    redirect_to :back if params[:commit] == "Cancel"
+  end
+
+  def users_in_any_role_for_any_institutions
+    @user_ids = Authorization.pluck(:user_id) 
+    @users = User.where(id: @user_ids)
+  end
+
+  def users_in_role_for_any_institutions(role_name)
+    @user_ids = Authorization.pluck(:user_id)
+    @users = User.joins({:authorizations => :role}).where("roles.name = ?", role_name)
+  end
 
 end
 

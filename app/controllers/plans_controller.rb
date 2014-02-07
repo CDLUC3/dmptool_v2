@@ -41,10 +41,18 @@ class PlansController < ApplicationController
   # GET /plans/new
   def new
     @plan = Plan.new
+    @comment = Comment.new
   end
 
   # GET /plans/1/edit
   def edit
+    @comment = Comment.new
+    comments = Comment.all
+    if safe_has_role?(Role::INSTITUTIONAL_REVIEWER) || safe_has_role?(Role::DMP_ADMIN)
+      @comments = comments.reviewer
+    else
+      @comments = comments.owner
+    end
   end
 
   # POST /plans
@@ -99,6 +107,8 @@ class PlansController < ApplicationController
   end
 
   def copy_existing_template
+    @comment = Comment.new
+    comments = Comment.all
     id = params[:plan].to_i unless params[:plan].blank?
     plan = Plan.where(id: id).first
     @plan = plan.dup
@@ -137,6 +147,10 @@ class PlansController < ApplicationController
   end
 
   def select_dmp_template
+    @back_to = plan_template_information_path
+    @back_text = "<< Create New DMP <<"
+    @submit_to = new_plan_path
+    @submit_text = ">> DMP Overview Page"
   end
 
   private

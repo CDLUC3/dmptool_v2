@@ -19,23 +19,32 @@ class ResourcesController < ApplicationController
   # GET /resources/new
   def new
     @resource = Resource.new
+    @current_institution = current_user.institution
   end
 
   # GET /resources/1/edit
+  #edit institutional resource
   def edit
+    @resource = Resource.find(params[:id])
+    @current_institution = current_user.institution
   end
 
   # POST /resources
   # POST /resources.json
+  #create new institutional resource
   def create
     @resource = Resource.new(resource_params)
+    @current_institution = current_user.institution
     respond_to do |format|
-      if @resource.save
-        format.html { redirect_to resources_path, notice: 'Resource was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @resource }
+      if @resource.save 
+        @resource_id = @resource.id
+        @resource_context = ResourceContext.new(resource_id: @resource_id, institution_id: @current_institution.id)
+        if @resource_context.save
+          format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: "Resource was successfully created." }
+        end
+         
       else
-        format.html { render action: 'index'}
-        format.json { render json: @resource.errors, status: :unprocessable_entity }
+        format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: "A problem prevented this resource to be created. " }
       end
     end
   end
@@ -45,10 +54,10 @@ class ResourcesController < ApplicationController
   def update
     respond_to do |format|
       if @resource.update(resource_params)
-        format.html { redirect_to resources_path, notice: 'Resource was successfully updated.' }
+        format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: 'Resource was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: 'index' }
+        format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: "A problem prevented this resource to be created. " }
         format.json { render json: @resource.errors, status: :unprocessable_entity }
       end
     end

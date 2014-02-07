@@ -1,4 +1,8 @@
+  <h2> New Resource For  <%= @current_institution.full_name %> </h2>
+
+
   <%= form_for @resource, html: { :class => 'form-horizontal' } do |f| %>
+
     <%= render partial: "shared/errors", locals: {model: @resource } %>
 
     <fieldset>
@@ -6,26 +10,27 @@
         <%= f.label :resource_type, "Resource Type", :class => "control-label" %>
         <div class="controls">
           <%= f.select :resource_type,
-          		options_for_select([ :actionable_url, :help_text, :example_response, :suggested_response], @resource.resource_type) %>
+          		options_for_select([ :actionable_url, :help_text], @resource.resource_type) %>
         </div>
       </div>
 
       <div class="control-group">
-        <%= f.label :details, "Details", :class => "control-label", id: "text_details" %>
+        <%= f.label :label_label, "Label", :class => "control-label", id: "label_label" %>
+        <div class="controls">
+          <%= f.text_field :label, placeholder: "Enter a name for this Resource", :class => "input-xlarge" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :text, "Text", :class => "control-label", id: "text" %>
         <div class="controls">
           <%= f.text_area :text, size: "20x10",placeholder: "Enter the text", :class => "input-xlarge" %>
         </div>
       </div>
-
-
-      <div class="control-group">
-        <%= f.label :details, "Details", :class => "control-label", id: "value_details" %>
-        <div class="controls">
-          <%= f.text_field :label, placeholder: "URL Label", :class => "input-xlarge" %>
-        </div>
-      </div>
+      
 
       <div class="control-group">
+         <%= f.label :value_label, "Value", :class => "control-label", id: "value_label" %>
         <div class="controls">
           <%= f.text_field :value, placeholder: "URL", :class => "input-xlarge" %>
         </div>
@@ -34,8 +39,16 @@
       <div class="actions pull-right">
         <%= f.submit 'Save Changes', :class => "btn" %>
         <%= button_tag 'Cancel', type: :reset, :class => "btn" %>
-        <%= link_to 'Delete Resource', @resource, :method => :delete,
-        data: { confirm: 'Are you sure?' }, :class => "btn" %>
       </div>
     </fieldset>
   <% end %>
+
+
+
+
+
+
+
+
+
+

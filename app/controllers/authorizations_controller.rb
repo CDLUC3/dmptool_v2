@@ -137,6 +137,9 @@ class AuthorizationsController < ApplicationController
       redirect_to :back, notice: "The user you entered was not found" and return if users.length < 1
       user = users.first
     end
+     if (user.institution != current_user.institution)
+      redirect_to :back, notice: "The user you chose belongs to a different institution." and return
+    end
     if user.has_any_role?
       redirect_to :back, notice: "The user you chose has already been granted a role. You can click on 'Edit User' to grant other roles." and return
     end

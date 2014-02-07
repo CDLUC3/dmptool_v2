@@ -21,51 +21,61 @@
   <br/>
 <div class="span8">
   <% unless @rt_tree.empty? %>
-  <ul>
-    <% @rt_tree.each do |k, v| %>
-      <% if v.nil? %>
-        <li>
-          <div class="option_area">
-            <%= radio_button_tag(:requirement_id, k.id, false, :class => 'req_chooser') %>
-            <i class="icon-file"></i>
-          </div>
-          <div class="label_area">
-            <%= label_tag("requirement_id_#{k.id}", k.name) %>
-          </div>
-        </li>
-      <% else %>
-        <li>
-          <div class="option_area">
-            <a href="#" class="accordioner" id="inst_opener1_<%= k.id %>">
-              <i class="icon-chevron-right" id="inst_chevron_<%= k.id %>"></i>
-            </a>
-            <i class="icon-folder-close" id="<%= "inst_folder_#{k.id}" %>"></i>
-          </div>
-          <div class="label_area folder_label">
-            <%= link_to(k.name, '#', :id => "inst_opener2_#{k.id}", :class => 'accordioner') %>
-          </div>
-        </li>
-          <ul class="closed_list" id="<%= "inst_list_#{k.id}" %>">
-            <% v.each do |i| %>
-              <li>
-                <div class="option_area">
-                  <%= radio_button_tag(:requirement_id, i.id, false, :class => 'req_chooser') %>
-                  <i class="icon-file"></i>
-                </div>
-                <div class="label_area">
-                  <%= label_tag("requirement_id_#{i.id}", i.name) %>
-                </div>
-              </li>
-            <% end %>
-          </ul>
-      <% end %>
+    <%= form_tag(@submit_to, method: "get", id: 'requirements_template_form') do %>
+      <ul>
+        <% @rt_tree.each do |k, v| %>
+          <% if v.nil? %>
+            <li>
+              <div class="option_area">
+                <%= radio_button_tag(:requirements_template_id, k.id, false, :class => 'req_chooser') %>
+                <i class="icon-file"></i>
+              </div>
+              <div class="label_area">
+                <%= label_tag("requirements_template_id_#{k.id}", k.name) %>
+              </div>
+            </li>
+          <% else %>
+            <li>
+              <div class="option_area">
+                <a href="#" class="accordioner" id="inst_opener1_<%= k.id %>">
+                  <i class="icon-chevron-right" id="inst_chevron_<%= k.id %>"></i>
+                </a>
+                <i class="icon-folder-close" id="<%= "inst_folder_#{k.id}" %>"></i>
+              </div>
+              <div class="label_area folder_label">
+                <%= link_to(k.name, '#', :id => "inst_opener2_#{k.id}", :class => 'accordioner') %>
+              </div>
+            </li>
+              <ul class="closed_list" id="<%= "inst_list_#{k.id}" %>">
+                <% v.each do |i| %>
+                  <li>
+                    <div class="option_area">
+                      <%= radio_button_tag(:requirements_template_id, i.id, false, :class => 'req_chooser') %>
+                      <i class="icon-file"></i>
+                    </div>
+                    <div class="label_area">
+                      <%= label_tag("requirements_template_id_#{i.id}", i.name) %>
+                    </div>
+                  </li>
+                <% end %>
+              </ul>
+          <% end %>
+        <% end %>
+      </ul>
+      <div style="clear:both"></div>
+      <%= link_to(@back_text, @back_to, method: :get, :class => "btn pull-left") %>
+      <%= submit_tag(@submit_text, id: 'next', method: :get, :class => "btn pull-right") %>
     <% end %>
-  </ul>
   <% else %>
     No results were found for your search terms, please modify your search terms to show results.
   <% end %>
   &nbsp;
 </div>
+
+<div id="dialog" title="Please select a DMP Template">
+  You must select a DMP template before continuing.
+</div>
+
 <script type="text/javascript">
   $('.accordioner').click(function(event) {
     event.preventDefault();
@@ -84,11 +94,44 @@
 
     //hide/show list under
     var list = $('#inst_list_' + target_id);
-    list.toggle('drop');
+    list.toggle('fold');
 
   });
 
-  $('.req_chooser').on("change", function () {
-    alert("requirement template " + this.value + " was chosen.  Proceed to next action with requirement filled in.");
+  $('#requirements_template_form').on('submit', function(e){
+    var selected = $('input[name=requirements_template_id]:checked', '#requirements_template_form').val();
+    if(selected == undefined){
+      $('#dialog').dialog('open');
+      e.preventDefault();
+    }else{
+      // let it go ahead
+    }
+  });
+
+  $('#dialog').dialog({
+      autoOpen: false,
+      width: 400,
+      height: 100,
+      modal: true,
+      closeOnEscape: true,
+      draggable: true,
+      resizable: false,
+      autoOpen: false,
+      title: "Please Select a Template ",
+      show: {
+        effect: "blind",
+        duration: 1000
+      },
+      hide: {
+        effect: "toggle",
+        duration: 1000
+      },
+      open: function()
+      {
+        $("#dialog").dialog("open");
+      },
+      close: function() {
+        $('#dialog').dialog("close");
+      }
   });
 </script>

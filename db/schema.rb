@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140130232451) do
+ActiveRecord::Schema.define(version: 20140206225417) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -165,7 +165,6 @@ ActiveRecord::Schema.define(version: 20140130232451) do
     t.date     "start_date"
     t.date     "end_date"
     t.enum     "visibility",     limit: [:public, :institutional]
-    t.integer  "version"
     t.enum     "review_type",    limit: [:formal_review, :informal_review, :no_review]
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -190,7 +189,7 @@ ActiveRecord::Schema.define(version: 20140130232451) do
   add_index "resource_contexts", ["resource_id"], name: "index_resource_contexts_on_resource_id", using: :btree
 
   create_table "resources", force: true do |t|
-    t.enum     "resource_type", limit: [:actionable_url, :expository_guidance, :example_response, :suggested_response]
+    t.enum     "resource_type", limit: [:actionable_url, :help_text, :example_response, :suggested_response]
     t.string   "value"
     t.string   "label"
     t.datetime "created_at"

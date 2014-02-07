@@ -13,10 +13,11 @@ $(function() {
 
 $(function() {
 	$('#comment_dialog_form').hide();
-	$('#add_comments_link').click(function() {
+	$('#add_comments_link').click(function(event) {
+		event.preventDefault();
 		$('#comment_dialog_form').dialog( {
-			width: 800,
-			height: 200,
+			width: 600,
+			height: 300,
 			modal: true,
 			closeOnEscape: true,
 			draggable: true,
@@ -35,16 +36,46 @@ $(function() {
 				$("#comment_dialog_form").dialog("open");
 			},
       close: function() {
-        $('#comment_dialog_form').dialog("close");
+        $('#comment_dialog-form').dialog("close");
         $(this).find('form')[0].reset();
       }
-		}).prev ().find (".ui-dialog-titlebar-close").show();
+		}).prev ().find(".ui-dialog-titlebar-close").show();
 		return false
 	});
 });
 
 $(function() {
 	$("#cancel_action").bind("click",function() {
-		$("#flash_notice").remove();
+		$("#comment_dialog_form").reset();
 	});
 })
+
+$(function() {
+	$("#reviewer_comments").hide();
+	$("#view_reviewer_comments").click(function(event){
+		event.preventDefault();
+		$("#reviewer_comments").show();
+	});
+});
+
+$(function() {
+	$("#hide_reviewer_comments").click(function(event){
+		event.preventDefault();
+		$("#reviewer_comments").hide();
+	});
+});
+
+$(function() {
+	$("#owner_comments").hide();
+	$("#view_owner_comments").click(function(event){
+		event.preventDefault();
+		$("#owner_comments").show();
+	});
+});
+
+$(function() {
+	$("#hide_owner_comments").click(function(event){
+		event.preventDefault();
+		$("#owner_comments").hide();
+	});
+});

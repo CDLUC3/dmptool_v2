@@ -19,7 +19,7 @@ class RequirementsTemplatesController < ApplicationController
 
     case params[:scope]
       when "all"
-        @requirements_templates = @requirements_templates.page(params[:page])
+        @requirements_templates = @requirements_templates.page(params[:page]).per(100)
       when "all_limited"
         @requirements_templates = @requirements_templates.page(params[:page]).per(5)
       when "active"
@@ -130,7 +130,7 @@ class RequirementsTemplatesController < ApplicationController
     else
       requirements_template = RequirementsTemplate.where(id: id).first
     end
-    @requirements_template = requirements_template.dup include: [:resource_templates, :sample_plans, :additional_informations, :requirements], validate: false
+    @requirements_template = requirements_template.dup include: [:sample_plans, :additional_informations, :requirements], validate: false
     respond_to do |format|
       if @requirements_template.save
         format.html { redirect_to edit_requirements_template_path(@requirements_template), notice: 'Requirements template was successfully created.' }
@@ -157,7 +157,7 @@ class RequirementsTemplatesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def requirements_template_params
-      params.require(:requirements_template).permit(:institution_id, :name, :active, :start_date, :end_date, :visibility, :version, :review_type, tags_attributes: [:id, :requirements_template_id, :tag, :_destroy],
+      params.require(:requirements_template).permit(:institution_id, :name, :active, :start_date, :end_date, :visibility, :review_type, tags_attributes: [:id, :requirements_template_id, :tag, :_destroy],
         additional_informations_attributes: [:id, :requirements_template_id, :url, :label, :_destroy], sample_plans_attributes: [:id, :requirements_template_id, :url, :label, :_destroy])
     end
 

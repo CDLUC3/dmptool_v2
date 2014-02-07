@@ -15,12 +15,16 @@ Dmptool2::Application.routes.draw do
  get 'help', to: 'static_pages#help'
  get 'logout', to: 'user_sessions#destroy'
  get 'partners', to: 'static_pages#partners'
- get 'partners_list', to: 'static_pages#partners_list'
+ get 'partners_list', to: 'institutions#partners_list'
  get 'privacy', to: 'static_pages#privacy'
  get 'promote', to: 'static_pages#promote'
  get 'terms_of_use', to: 'static_pages#terms_of_use'
  get 'video', to: 'static_pages#video'
  get 'resource_contexts/dmp_for_customization', to: 'resource_contexts#dmp_for_customization', as: "dmp_for_customization"
+
+ get 'customizations/:id/details', to: 'customizations#details', as: 'customization_details'
+
+ get 'institutions', to: 'institutions#index'
 
   resources :requirements_templates do
     resources :requirements
@@ -33,9 +37,7 @@ Dmptool2::Application.routes.draw do
     resources :additonal_informations
   end
 
-  resources :resource_templates do
-    resources :resource_contexts
-  end
+  resources :resources
 
   resources :resource_contexts
 
@@ -51,9 +53,9 @@ Dmptool2::Application.routes.draw do
     end
   end
 
-  resources :resources do
-    resources :resource_contexts
-  end
+  # resources :resources do
+  #   resources :resource_contexts
+  # end
 
   resources :plans do
     resources :plan_states
