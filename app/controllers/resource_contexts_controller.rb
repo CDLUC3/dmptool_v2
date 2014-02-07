@@ -35,7 +35,7 @@ class ResourceContextsController < ApplicationController
     @resource_context = ResourceContext.new(to_save)
     respond_to do |format|
       if @resource_context.save
-        format.html { redirect_to customization_details_path(@resource_context.id), notice: 'Customization was successfully created.' }
+        format.html { redirect_to customization_requirement_path(@resource_context.id), notice: 'Customization was successfully created.' }
         #format.json { render action: 'edit', status: :created, location: @resource_context }
       else
         make_institution_dropdown_list
@@ -54,7 +54,7 @@ class ResourceContextsController < ApplicationController
     @resource_context = ResourceContext.find(params[:id])
     respond_to do |format|
       if @resource_context.update(to_save)
-        format.html { redirect_to customization_details_path(@resource_context.id), notice: 'Customization was successfully updated.' }
+        format.html { redirect_to customization_requirement_path(@resource_context.id), notice: 'Customization was successfully updated.' }
         format.json { head :no_content }
       else
         make_institution_dropdown_list
