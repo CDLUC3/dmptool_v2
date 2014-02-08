@@ -104,25 +104,8 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	padding-left: 35px;
 	position: relative; }
 
-/* Admin Pages */
-h2.dashboard-heading  {
-	clear: both;
-	-moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  box-sizing: border-box;
-	background: #6D6E70;
-	color: #FFFFFF;
-	text-transform: uppercase;
-	line-height: 43px;
-	width: auto;
-	height: 39px;
-	margin: 0;
-	padding: 0 0 0 53px;
-	position: relative; }
-h2.dashboard-heading span.icon {
-	top: 7px;
-	left: 11px; }
+	
+/* Misc. */
 .details[class*="span"] {
 	width: 328px; }
 .border-box {
