@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140206225417) do
+ActiveRecord::Schema.define(version: 20140207062910) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -190,7 +190,7 @@ ActiveRecord::Schema.define(version: 20140206225417) do
 
   create_table "resources", force: true do |t|
     t.enum     "resource_type", limit: [:actionable_url, :help_text, :example_response, :suggested_response]
-    t.string   "value"
+    t.text     "value"
     t.string   "label"
     t.datetime "created_at"
     t.datetime "updated_at"

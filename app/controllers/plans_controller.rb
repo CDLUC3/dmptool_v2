@@ -6,30 +6,31 @@ class PlansController < ApplicationController
   def index
     if !safe_has_role?(Role::DMP_ADMIN)
       user_id = current_user.id
-      user_plans = UserPlan.where(user_id: user_id).pluck(:plan_id) unless user_id.nil?
-      @plans = Plan.where(id: user_plans)
+      plan_ids = UserPlan.where(user_id: user_id).pluck(:plan_id) unless user_id.nil?
+      @plans = Plan.where(id: plan_ids)
     else
       @plans = Plan.all
     end
 
     case params[:scope]
       when "all"
-        @plans = @plans.page(params[:page])
+        @plans
       when "all_limited"
         @plans = @plans.page(params[:page]).per(5)
-      when "shared"
-        @plans = @plans.shared.page(params[:page]).per(5)
-      # when "approved"
-      #   @plans = @plans.approved.page(params[:page]).per(5)
-      # when "submitted"
-      #   @plans = @plans.submitted.page(params[:page]).per(5)
-      # when "rejected"
-      #   @plans = @plans.rejected.page(params[:page]).per(5)
+      when "coowned"
+        @plans = @plans.coowned.page(params[:page]).per(5)
+      when "approved"
+        @plans = @plans.approved.page(params[:page]).per(5)
+      when "submitted"
+        @plans = @plans.submitted.page(params[:page]).per(5)
+      when "rejected"
+        @plans = @plans.rejected.page(params[:page]).per(5)
       else
         @plans = @plans.order(created_at: :asc).page(params[:page]).per(5)
     end
 
     @planstates = PlanState.page(params[:page]).per(5)
+    count
   end
 
   # GET /plans/1
@@ -153,6 +154,10 @@ class PlansController < ApplicationController
     @submit_text = ">> DMP Overview Page"
   end
 
+  def details
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_plan
@@ -162,5 +167,14 @@ class PlansController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def plan_params
       params.require(:plan).permit(:name, :requirements_template_id, :solicitation_identifier, :submission_deadline, :visibility, :current_plan_state_id)
+    end
+
+    def count
+      @all = @plans.count
+      @owned = @plans.owned.count
+      @coowned = @plans.coowned.count
+      @approved = @plans.approved.count
+      @submitted = @plans.submitted.count
+      @rejected = @plans.rejected.count
     end
 end

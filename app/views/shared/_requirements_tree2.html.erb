@@ -1,0 +1,16 @@
+<ul>
+	<% requirements.each do |requirement| %>
+		<li>
+			<% if requirement.group? %>
+				<i class="icon-folder-open icon-black"></i>
+        <%= link_to requirement.text_brief,
+	          customization_requirement_path(@customization, requirement_id: requirement.id, node_type: 'group') %>
+				<%= render partial: 'shared/requirements_tree2', locals: { requirements: requirement.children } %>
+			<% else %>
+				<%= link_to requirement.text_brief,
+	          customization_requirement_path(@customization, requirement_id: requirement.id, node_type: 'group') %>
+				<%= render partial: 'shared/requirements_tree2', locals: { requirements: requirement.children } %>
+			<% end %>
+		</li>
+	<% end %>
+</ul>

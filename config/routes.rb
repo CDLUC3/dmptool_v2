@@ -22,7 +22,7 @@ Dmptool2::Application.routes.draw do
  get 'video', to: 'static_pages#video'
  get 'resource_contexts/dmp_for_customization', to: 'resource_contexts#dmp_for_customization', as: "dmp_for_customization"
 
- get 'customizations/:id/details', to: 'customizations#details', as: 'customization_details'
+ get 'customizations/:id/requirements/(:requirement_id)', to: 'customizations#show', as: 'customization_requirement'
 
  get 'institutions', to: 'institutions#index'
 
@@ -63,6 +63,7 @@ Dmptool2::Application.routes.draw do
       post :add_coowner
       get :publish
       get :export
+      get :details
     end
   end
   resources :comments

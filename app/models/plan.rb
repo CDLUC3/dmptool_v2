@@ -16,19 +16,17 @@ class Plan < ActiveRecord::Base
   validates :name, presence: true
   validates :visibility, presence: true
 
+  # scopes for plan's visibility
   scope :institutional_visibility, -> { where(visibility: :institutional) }
   scope :public_visibility, -> { where(visibility: :public) }
   scope :private_visibility, -> { where(visibility: :private) }
 
-  def shared
-    self.user_plans.count > 1
-  end
-
-  def owned
-   self.user_plans.where(owner: true)
-  end
-
-  def coowned
-   self.user_plans.where(owner: false)
-  end
+  # scopes for plan's states
+  scope :owned, -> { joins(:user_plans).where('user_plans.owner =?', true) }
+  scope :coowned, -> {  joins(:user_plans).where('user_plans.owner =?', false) }
+  scope :submitted, -> { joins(:plan_states).where('plan_states.state =?', :submitted)}
+  scope :approved, -> { joins(:plan_states).where('plan_states.state =?', :approved)}
+  scope :rejected, -> { joins(:plan_states).where('plan_states.state =?', :rejected)}
+  scope :revised, -> { joins(:plan_states).where('plan_states.state =?', :revised)}
+  scope :committed, -> { joins(:plan_states).where('plan_states.state =?', :committed)}
 end
