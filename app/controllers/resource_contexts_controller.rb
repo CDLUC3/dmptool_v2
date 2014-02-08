@@ -26,7 +26,8 @@ class ResourceContextsController < ApplicationController
     @req_temp = @resource_context.requirements_template
 
     make_institution_dropdown_list
-    render :new
+    customization_resources_list
+
   end
 
   def create
@@ -36,7 +37,7 @@ class ResourceContextsController < ApplicationController
     @resource_context = ResourceContext.new(to_save)
     respond_to do |format|
       if @resource_context.save
-        format.html { redirect_to customization_details_path(@resource_context.id), notice: 'Customization was successfully created.' }
+        format.html { redirect_to customization_requirement_path(@resource_context.id), notice: 'Customization was successfully created.' }
         #format.json { render action: 'edit', status: :created, location: @resource_context }
       else
         make_institution_dropdown_list
@@ -49,11 +50,17 @@ class ResourceContextsController < ApplicationController
 
 
   def update
+    pare_to = ['institution_id', 'requirements_template_id', 'requirement_id', 'resource_id',
+               'name', 'contact_info', 'contact_email', 'review_type']
+    to_save = pare_to.inject({}){|result, key| result[key] = params['resource_context'][key];result}
+    @resource_context = ResourceContext.find(params[:id])
     respond_to do |format|
-      if @resource_context.update(resource_context_params)
-        format.html { redirect_to edit_resource_context_path(@resource_context), notice: 'Resource context was successfully updated.' }
+      if @resource_context.update(to_save)
+        format.html { redirect_to customization_requirement_path(@resource_context.id), notice: 'Customization was successfully updated.' }
         format.json { head :no_content }
       else
+        make_institution_dropdown_list
+        @req_temp = @resource_context.requirements_template
         format.html { render action: 'edit' }
         format.json { render json: @resource_context.errors, status: :unprocessable_entity }
       end
@@ -93,4 +100,27 @@ class ResourceContextsController < ApplicationController
     @submit_to = new_resource_context_path
     @submit_text = "Next page"
   end
+
+  def customization_resources_list
+    @customization = ResourceContext.find(params[:id])
+    @customization_institution = @customization.institution
+    @template= @customization.requirements_template
+    @customization_institution_name = "All the Institutions"
+    @template_name = @customization.requirements_template.name
+
+    @resource_contexts = ResourceContext.includes(:resource).
+                          per_template(@template).
+                          resource_level
+
+    unless safe_has_role?(Role::DMP_ADMIN)
+
+      @customization_institution_name = @customization.institution.full_name
+      @resource_contexts = @resource_contexts.
+                          per_institution( @customization_institution)
+                         
+    end
+                         
+  end
+
+
 end

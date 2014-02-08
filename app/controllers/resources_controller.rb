@@ -29,6 +29,8 @@ class ResourcesController < ApplicationController
     @current_institution = current_user.institution
   end
 
+  
+
   # POST /resources
   # POST /resources.json
   #create new institutional resource
