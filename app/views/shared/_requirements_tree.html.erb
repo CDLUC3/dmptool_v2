@@ -2,14 +2,13 @@
 	<% requirements.each do |requirement| %>
 		<li>
 			<% if requirement.group? %>
-				<i class="icon-folder-open icon-black"></i><%= link_to requirement.text_brief,
-	            			resource_template_resources_path(@resource_template,
-	            			requirement_id: requirement.id, node_type: 'group') %>
+				<i class="icon-folder-open icon-black"></i>
+        <%= link_to requirement.text_brief,
+	          resource_template_resources_path(@resource_template, requirement_id: requirement.id, node_type: 'group') %>
 				<%= render partial: 'requirements_tree', locals: { requirements: requirement.children } %>
 			<% else %>
 				<%= link_to requirement.text_brief,
-	            			resource_template_resources_path(@resource_template,
-	            			requirement_id: requirement.id, node_type: 'group') %>
+	          resource_template_resources_path(@resource_template, requirement_id: requirement.id, node_type: 'group') %>
 				<%= render partial: 'requirements_tree', locals: { requirements: requirement.children } %>
 			<% end %>
 		</li>
