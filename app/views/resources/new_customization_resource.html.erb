@@ -1,7 +1,10 @@
-  <h2> New Resource For  <%= @current_institution.full_name %> </h2>
+<h2> New Resource for <%= @template_name %> </h2>
 
 
-  <%= form_for @resource, html: { :class => 'form-horizontal' } do |f| %>
+  <%= form_for @resource, url: create_customization_resource_path(template_id: @template_id, 
+                          current_institution_id: @current_institution_id,
+                          customization_overview_id: @customization_overview_id), 
+                          html: { :class => 'form-horizontal' } do |f| %>
 
     <%= render partial: "shared/errors", locals: {model: @resource } %>
 
@@ -10,7 +13,7 @@
         <%= f.label :resource_type, "Resource Type", :class => "control-label" %>
         <div class="controls">
           <%= f.select :resource_type,
-          		options_for_select([ :actionable_url, :help_text], @resource.resource_type) %>
+          		options_for_select([:actionable_url, :help_text, :example_response, :suggested_response], @resource.resource_type) %>
         </div>
       </div>
 
@@ -42,13 +45,4 @@
       </div>
     </fieldset>
   <% end %>
-
-
-
-
-
-
-
-
-
 

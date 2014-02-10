@@ -107,6 +107,9 @@ Dmptool2::Application.routes.draw do
   get 'edit_customization_resource', to: 'resources#edit_customization_resource'
   patch 'update_customization_resource', to: 'resources#update_customization_resource'
 
+  post 'new_customization_resource', to: 'resources#new_customization_resource'
+  post 'create_customization_resource', to: 'resources#create_customization_resource'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -90,6 +90,34 @@ class ResourcesController < ApplicationController
     end
   end
 
+  def new_customization_resource
+    @template_id = params[:template_id]
+    @template_name = RequirementsTemplate.find(@template_id).name
+    @resource = Resource.new
+    @current_institution_id = params[:institution_id]
+    @customization_overview_id = params[:customization_overview_id]
+  end
+
+  def create_customization_resource
+    @template_id = params[:template_id]
+    @resource = Resource.new(resource_params)
+    @current_institution_id = params[:current_institution_id]
+    @customization_overview_id = params[:customization_overview_id]
+    respond_to do |format|
+      if @resource.save 
+        @resource_id = @resource.id
+        @resource_context = ResourceContext.new(resource_id: @resource_id, institution_id: @current_institution_id, 
+                                                requirements_template_id: @template_id)
+        if @resource_context.save
+          format.html { redirect_to edit_resource_context_path(@customization_overview_id), notice: "Resource was successfully created." }
+        end
+         
+      else
+        format.html { redirect_to edit_resource_context_path(@customization_overview_id), notice: "A problem prevented this resource to be created. " }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_resource
