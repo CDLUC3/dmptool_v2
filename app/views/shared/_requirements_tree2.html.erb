@@ -13,10 +13,14 @@
       </li>
       </ul>
     <% else %>
-      <li class="li_requirement" id="requirement_<%= requirement.id %>">
+      <li class="li_requirement<%= (requirement.id.to_s == params[:requirement_id] ? ' current': '') %>" id="requirement_<%= requirement.id %>">
         <i class="icon requirement"></i>
-        <%= link_to requirement.text_brief,
-            customization_requirement_path(@customization, requirement_id: requirement.id, node_type: 'requirement') %>
+        <% if requirement.id.to_s == params[:requirement_id] %>
+          <%= requirement.text_brief %>
+        <% else %>
+          <%= link_to requirement.text_brief,
+              customization_requirement_path(@customization, requirement_id: requirement.id, node_type: 'requirement') %>
+        <% end %>
       </li>
     <% end %>
 		</li>

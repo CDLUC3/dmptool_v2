@@ -8,6 +8,11 @@
   div.customization_tree li{
     position: relative;
   }
+
+  div.customization_tree li.current{
+    font-weight: bold;
+  }
+
   div.customization_tree li .icon {
     position: absolute;
     left: -20px;
@@ -18,7 +23,7 @@
 
 </style>
 
-<h2 class="dashboard-heading" id="jump"><span class="icon template-details"></span>Customization Details</h2>
+<h1 class="row-fluid" id="jump"><span class="icon template-details"></span>Customization Details</h2>
 <h4><%= @requirements_template.name %></h4>
 <div class="row-fluid">
   <div class="details span4">
@@ -34,12 +39,29 @@
   </div>
   <div class="tabbable span8">
     <ul class="nav nav-tabs">
-      <li class="active"><%# link_to 'Requirements', '#tab1', :data => {:toggle => 'tab'} %></li>
+      <li class="active"><a href="#tab1" data-toggle="tab">Guidance</a></li>
+      <li><a href="#tab2" data-toggle="tab">Actionable Links</a></li>
+      <li><a href="#tab3" data-toggle="tab">Suggested Response</a></li>
+      <li><a href="#tab4" data-toggle="tab">Example Response</a></li>
     </ul>
     <div class="tab-content">
+
       <div class="tab-pane active" id="tab1">
-        <%# render 'form' %>
+        Guidance here
       </div>
+
+      <div class="tab-pane" id="tab2">
+        Actionable Links here
+      </div>
+
+      <div class="tab-pane " id="tab3">
+        Suggested Response here
+      </div>
+
+      <div class="tab-pane" id="tab4">
+        Example Response here
+      </div>
+
     </div>
   </div>
 </div>
