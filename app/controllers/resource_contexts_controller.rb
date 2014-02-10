@@ -35,6 +35,7 @@ class ResourceContextsController < ApplicationController
               'name', 'contact_info', 'contact_email', 'review_type']
     to_save = pare_to.inject({}){|result, key| result[key] = params['resource_context'][key];result}
     @resource_context = ResourceContext.new(to_save)
+    
     respond_to do |format|
       if @resource_context.save
         format.html { redirect_to customization_requirement_path(@resource_context.id), notice: 'Customization was successfully created.' }
