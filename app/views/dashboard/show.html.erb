@@ -14,8 +14,8 @@
           #the UI developer isn't going to change it, I'll do some gymnastics
           #to make things pretty within a table
            col1 = []
-           col1[0] = link_to "#{current_user.owned_plans.count} plans I own"
-           col1[1] = link_to "#{current_user.coowned_plans.count} plans i co-own"
+           col1[0] = link_to "#{current_user.owned_plans.count} plans I own", plans_path(:scope => "all_limited")
+           col1[1] = link_to "#{current_user.coowned_plans.count} plans i co-own", plans_path(:scope => "coowned")
            col2 = (current_user.unique_plan_states & PlanState::REVIEW_STATES).map do |state|
              link_to "#{current_user.plans_by_state(state).count} #{state.capitalize}"
            end
@@ -35,7 +35,7 @@
 		<div class="buttons">
 
 			<!--The following id is used for testing purposes, please do not remove-->
-			<%= link_to "Create New DMP", "#", :class => "btn btn-green", :id => "create_new_DMP", :onclick => 'return false;' %>
+			<%= link_to "Create New DMP", plan_template_information_path, :class => "btn btn-green", :id => "create_new_DMP", :onclick => 'return false;' %>
 
 		</div>
 
