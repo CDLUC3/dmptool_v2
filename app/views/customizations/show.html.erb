@@ -1,3 +1,23 @@
+<style>
+  div.customization_tree{}
+
+  div.customization_tree ul{
+    margin: 5px 0px 0px 25px;
+  }
+
+  div.customization_tree li{
+    position: relative;
+  }
+  div.customization_tree li .icon {
+    position: absolute;
+    left: -20px;
+  }
+  div.customization_tree li .icon.larger{
+    left: -23px;
+  }
+
+</style>
+
 <h2 class="dashboard-heading" id="jump"><span class="icon template-details"></span>Customization Details</h2>
 <h4><%= @requirements_template.name %></h4>
 <div class="row-fluid">
@@ -5,8 +25,10 @@
     <div class="tree-view border-box">
       <h5>Template Outline</h5>
       <hr/>
-      <div class="requirements_tree_view">
-        <%= render partial: 'shared/requirements_tree2', locals: { requirements: @requirements } %>
+      <div class="customization_tree">
+        <ul>
+          <%= render partial: 'shared/requirements_tree2', locals: { requirements: @requirements.roots } %>
+        </ul>
       </div>
     </div>
   </div>
