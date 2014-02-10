@@ -1,5 +1,7 @@
-<ul>
-	<% requirements.each do |requirement| %>
+<% # this partial should take a local of requirements for it's level in the tree %>
+
+<% requirements.each do |requirement| %>
+  <ul>
 		<li>
 			<% if requirement.group? %>
 				<i class="icon-folder-open icon-black"></i>
@@ -7,10 +9,10 @@
 	          customization_requirement_path(@customization, requirement_id: requirement.id, node_type: 'group') %>
 				<%= render partial: 'shared/requirements_tree2', locals: { requirements: requirement.children } %>
 			<% else %>
+        <span class="icon requirement"></span>
 				<%= link_to requirement.text_brief,
-	          customization_requirement_path(@customization, requirement_id: requirement.id, node_type: 'group') %>
-				<%= render partial: 'shared/requirements_tree2', locals: { requirements: requirement.children } %>
+	          customization_requirement_path(@customization, requirement_id: requirement.id, node_type: 'requirement') %>
 			<% end %>
 		</li>
-	<% end %>
-</ul>
+  </ul>
+<% end %>
