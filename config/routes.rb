@@ -85,6 +85,7 @@ Dmptool2::Application.routes.draw do
   get 'copy_existing_plans_template', to: 'plans#copy_existing_template'
   get 'select_dmp_template', to: 'plans#select_dmp_template'
   get 'review_dmps', to: 'plans#review_dmps'
+  post 'change_visiblity', to: 'plans#change_visiblity'
 
   get  'remove_resource_editor_role', to: 'resource_templates#remove_resource_editor_role'
   get  'remove_requirements_editor_role', to: 'requirements_templates#remove_requirements_editor_role'
