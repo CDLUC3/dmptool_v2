@@ -47,7 +47,7 @@
             <%= label_tag :public, 'public', :class => 'radio-label'%><br/>
             <%= f.radio_button :visibility, :institutional, :class => 'radio inline', :id => 'institutional'  %>
             <%= label_tag :institutional, 'institutional', :class => 'radio-label'%><br/>
-            <%= f.radio_button :visibility, :private, :class => 'radio inline', :id => 'private'  %>
+            <%= f.radio_button :visibility, :private, :class => 'radio inline', :id => 'private', checked: true  %>
             <%= label_tag :private, 'private', :class => 'radio-label'%>
           </div>
         </div>
