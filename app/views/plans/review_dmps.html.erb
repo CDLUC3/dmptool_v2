@@ -1,25 +1,24 @@
-<h3>Review DMPS</h3>
+<h1 class="row-fluid"><span class="icon review"></span>Review DMPS</h1>
 
-<strong>DMPs Pending My Review</strong>
-<br/>
+<h4>DMPs Pending My Review</h4>
 <table class="table table-striped" id="review_dmps">
   <thead>
     <tr>
       <th>DMP Name</th>
       <th>Owner</th>
       <th>Submission Date</th>
-      <th>Status</th>
-      <th>Action</th>
+      <th class="span1">Status</th>
+      <th class="span1">Action</th>
     </tr>
   </thead>
   <tbody>
     <% @plans.each do |plan| %>
       <tr>
-				<td><%=link_to (content_tag(:strong, plan.name)), '#', :id => "#{plan.name}" %></td>
+				<td class="span7"><%=link_to (content_tag(:strong, plan.name)), '#', :id => "#{plan.name}" %></td>
         <td><%= owner_name(plan) %></td>
         <td><%= plan.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
         <td><%= state(plan) %></td>
-        <td><%=(link_to raw('<i class="icon-ok"> </i>'), '#')+' | '+(link_to raw('<i class="icon-remove"> </i>'),'#')+' | '+(link_to raw('<i class="icon-comment"> </i>'),'#')%></td>
+        <td class="nowrap"><%=(link_to raw('<i class="icon-ok"> </i>'), '#')+' | '+(link_to raw('<i class="icon-remove"> </i>'),'#')+' | '+(link_to raw('<i class="icon-comment"> </i>'),'#')%></td>
       </tr>
     <% end %>
   <tbody>

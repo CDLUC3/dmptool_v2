@@ -1,4 +1,4 @@
-<h2 class="dashboard-heading"><span class="icon template-resource"></span>DMP Template Customizations</h2>
+<h1 class="row-fluid"><span class="icon resource-template"></span>DMP Template Customizations</h1>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -10,41 +10,46 @@
     </tr>
   </thead>
   <tbody>
-  <% @resource_contexts.each do |resource_context| %>
-    <tr>
-      <td class="resource_contexts_name">
-        <div class="toggle-links">
-          <%= link_to (content_tag(:strong, resource_context.name)), '#' %>
-          <div class="template-links">
-            <%= (link_to 'Overview', edit_resource_context_path(resource_context))+' | '+(link_to 'Details', resources_path)+' | '+(link_to 'Delete', resource_context_path(resource_context), :class => "delete",  method: :delete, data: { confirm: 'Are you sure?' }) %>
-          </div>
-        </div>
-      </td>
-      <td>
-        <%= resource_context.requirements_template.nil? ? " " : resource_context.requirements_template.name %>
-      </td>
-      <td>
-        <%= resource_context.institution.nil? ? " " :  resource_context.institution.full_name %>
-      </td>
-      <td>
-        <%= resource_context.created_at.nil? ? " " :  resource_context.created_at.strftime("%m/%d/%Y %I:%M%p") %>
-      </td>
-      <td>
-        <%= resource_context.updated_at.nil? ? " " :  resource_context.updated_at.strftime("%m/%d/%Y %I:%M%p") %>
-      </td>
-    </tr>
-  <% end %>
+	<% @resource_contexts.each do |resource_context| %>
+		<tr>
+			<td class="resource_contexts_name">
+				<div class="toggle-links">
+					<%= link_to (content_tag(:strong, resource_context.name)), '#' %>
+					<div class="template-links">
+						<%= link_to 'Overview', edit_resource_context_path(resource_context) %> |
+            <%= link_to 'Details', customization_requirement_path(resource_context.id) %> |
+            <%= link_to 'Delete', resource_context_path(resource_context), :class => "delete",
+                        method: :delete, data: { confirm: 'Are you sure?' } %>
+					</div>
+				</div>
+			</td>
+			<td>
+				<%= resource_context.requirements_template.nil? ? " " : resource_context.requirements_template.name %>
+			</td>
+			<td>
+				<%= resource_context.institution.nil? ? " " :  resource_context.institution.full_name %>
+			</td>
+			<td>
+				<%= resource_context.created_at.nil? ? " " :  resource_context.created_at.strftime("%m/%d/%Y %I:%M%p") %>
+			</td>
+			<td>
+				<%= resource_context.updated_at.nil? ? " " :  resource_context.updated_at.strftime("%m/%d/%Y %I:%M%p") %>
+			</td>
+		</tr>
+	<% end %>
+	<% if @resource_contexts.empty? %>
+		<tr>
+  		<td colspan="5">You have no template customizations</td>
+  	</tr>
+	<% end %>
   </tbody>
 </table>
 
 <div class="buttons pagination">
+	<%= link_to "View All", resource_contexts_path(:scope => "all"), :method => :get, :class => "btn"%>
   <%= paginate @resource_contexts %>
 </div>
-
-<div class="buttons">
-  <%= link_to "View All", resource_contexts_path(:scope => "all"), :method => :get, :class => "btn"%>
-  <%= link_to 'Create New Customization', dmp_for_customization_path, :class => "btn btn-green" %>
-</div>
+<%= link_to 'Create New Customization', dmp_for_customization_path, :class => "btn btn-green" %>
 
 
 

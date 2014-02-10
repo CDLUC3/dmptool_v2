@@ -6,7 +6,7 @@
       <h5>Template Outline</h5>
       <hr/>
       <div class="requirements_tree_view">
-        <%= bested_requirements @requirements.arrange(order: :created_at) %>
+        <%= render partial: 'shared/requirements_tree2', locals: { requirements: @requirements } %>
       </div>
     </div>
   </div>

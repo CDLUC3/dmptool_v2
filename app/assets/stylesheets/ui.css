@@ -43,7 +43,7 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	background: #FFFFFF;
 	overflow: visible; }
 .tab-pane {
-	padding: 20px 15px 10px; }
+	padding: 10px; }
 .tabbable[class*="span"] .tab-pane {
 	padding-bottom: 10px; }
 .tab-pane.table {
@@ -104,25 +104,8 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	padding-left: 35px;
 	position: relative; }
 
-/* Admin Pages */
-h2.dashboard-heading  {
-	clear: both;
-	-moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  box-sizing: border-box;
-	background: #6D6E70;
-	color: #FFFFFF;
-	text-transform: uppercase;
-	line-height: 43px;
-	width: auto;
-	height: 39px;
-	margin: 0;
-	padding: 0 0 0 53px;
-	position: relative; }
-h2.dashboard-heading span.icon {
-	top: 7px;
-	left: 11px; }
+	
+/* Misc. */
 .details[class*="span"] {
 	width: 328px; }
 .border-box {
@@ -131,6 +114,7 @@ h2.dashboard-heading span.icon {
 	padding: 10px 15px; }
 
 /* Modal Windows */
+/*
 .ui-widget-overlay {
 	background: #000000;
 	opacity: 0.75; }
@@ -146,7 +130,7 @@ h2.dashboard-heading span.icon {
 	overflow: visible; }
 .ui-widget-header {
 	color: #516935; }
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+.ui-state-default, .ui-widget-header .ui-state-default {
 	border: none;
 	background: url(dmp_icons.png) no-repeat 0 0 transparent;
 	width: 25px;
@@ -166,3 +150,4 @@ h2.dashboard-heading span.icon {
 	margin: 0; }
 .modal-footer .btn + .btn {
 	margin: 0 5px 0 0; }
+/*

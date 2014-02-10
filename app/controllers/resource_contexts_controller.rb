@@ -35,6 +35,7 @@ class ResourceContextsController < ApplicationController
               'name', 'contact_info', 'contact_email', 'review_type']
     to_save = pare_to.inject({}){|result, key| result[key] = params['resource_context'][key];result}
     @resource_context = ResourceContext.new(to_save)
+    
     respond_to do |format|
       if @resource_context.save
         format.html { redirect_to customization_requirement_path(@resource_context.id), notice: 'Customization was successfully created.' }
@@ -78,7 +79,7 @@ class ResourceContextsController < ApplicationController
  
 
   def resource_customizations
-    @resource_contexts = ResourceContext.template_level.institutional_level.no_resource_no_requirement.page(params[:page])
+    @resource_contexts = ResourceContext.template_level.institutional_level.no_resource_no_requirement.page(params[:page]).order('name ASC')
     case params[:scope]
       when "all"
         @resource_contexts 
@@ -105,7 +106,7 @@ class ResourceContextsController < ApplicationController
     @customization = ResourceContext.find(params[:id])
     @customization_institution = @customization.institution
     @template= @customization.requirements_template
-    @customization_institution_name = "All the Institutions"
+    @customization_institution_name = @customization.institution.full_name
     @template_name = @customization.requirements_template.name
 
     @resource_contexts = ResourceContext.includes(:resource).
@@ -113,8 +114,7 @@ class ResourceContextsController < ApplicationController
                           resource_level
 
     unless safe_has_role?(Role::DMP_ADMIN)
-
-      @customization_institution_name = @customization.institution.full_name
+     
       @resource_contexts = @resource_contexts.
                           per_institution( @customization_institution)
                          

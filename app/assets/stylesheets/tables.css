@@ -2,8 +2,12 @@
 table {
 	border: 1px solid #B6B6B7;
 	border-collapse: separate; }
+.table {
+	margin-bottom: 10px; }
 .tab-pane.table .table {
 	margin: 0; }
+.static-page .table {
+	margin-bottom: 20px; }
 .table th, .table td {
 	border-left: 1px solid #B6B6B7;
 	line-height: 1.167;
@@ -57,3 +61,8 @@ table {
 	margin: 10px 0 0; }
 .pagination span {
 	font-size: 1.167em; }
+.tab-pane .buttons.pagination {
+	border: 1px solid #B6B6B7;
+	border-top: none;
+	margin: -20px 0 10px;
+}

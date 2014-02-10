@@ -101,18 +101,26 @@ div.field_with_errors input {
     padding: 5px 5px 5px 15px; } }
     
 /* Search Area */
-.search-area {
-	float: right;
+.search-area[class*="span"] {
   width: auto;
-  position: relative; }
+  margin: 0; }
+.search-area .control-group {
+	position: relative; }
 .search-area input[type=search] {
-	display: inline;
+	display: inline-block;
   margin: 0 5px 0 0;
   padding-left: 30px; }
-.search-area .search {
+.search-area input[type=submit] {
+	margin-right: 0; }
+.search-area .search.icon {
 	position: absolute;
 	top: 5px;
 	left: 8px; }
+label.search.icon {
+	width: 0;
+	height: 0;
+	margin: 0;
+	padding: 20px 0 0 20px; }
     
 /* Auto Complete */	
 .ui-autocomplete-loading {
@@ -136,3 +144,40 @@ div.field_with_errors input {
 	margin: 5px;
 	position: absolute;
 	z-index: 1; }
+	
+/* Date Picker */
+
+.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next {
+	top: 3px;
+}
+.ui-datepicker .ui-datepicker-prev {
+	left: 3px;
+}
+.ui-datepicker .ui-datepicker-next {
+	right: 3px;
+}
+.ui-datepicker .ui-datepicker-prev-hover, .ui-datepicker .ui-datepicker-next-hover {
+	top: 2px;
+}
+.ui-datepicker .ui-datepicker-prev-hover {
+	left: 2px;
+}
+.ui-datepicker .ui-datepicker-next-hover {
+	right: 2px;
+}
+.ui-datepicker .ui-datepicker-title {
+	line-height: normal;
+}
+.ui-datepicker .ui-datepicker-title select {
+	height: 24px;
+	line-height: 24px;
+	margin: 0;
+}
+
+
+
+
+
+
+
+

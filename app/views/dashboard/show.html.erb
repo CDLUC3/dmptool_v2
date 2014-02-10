@@ -1,6 +1,6 @@
 <div class="row-fluid">
 	<div class="overview span8">
-		<h2 class="dashboard-heading"><span class="icon overview"></span>Overview</h2>
+		<h1 class="row-fluid"><span class="icon overview"></span>Overview</h1>
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -40,7 +40,7 @@
 		</div>
 
 		<% if defined? @pending_review %>
-		<h2 class="dashboard-heading"><span class="icon review"></span>DMPs For My Review</h2>
+		<h1 class="row-fluid"><span class="icon review"></span>DMPs For My Review</h1>
 		<table class="table table-striped">
 			<tbody>
 				<tr>
@@ -55,7 +55,7 @@
 
 
 	<% if defined? @requirements_templates %>
-	<h2 class="dashboard-heading"><span class="icon template-dmp"></span>DMP Templates</h2>
+	<h1 class="row-fluid"><span class="icon dmp-template"></span>DMP Templates</h1>
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -82,7 +82,7 @@
 	</div>
 	<% end %>
 	<% if defined? @resource_templates %>
-	<h2 class="dashboard-heading"><span class="icon template-resource"></span>DMP Template Customizations</h2>
+	<h1 class="row-fluid"><span class="icon resource-template"></span>DMP Template Customizations</h1>
 	<table class="table table-striped">
 		<tbody>
 			<tr>
