@@ -22,17 +22,33 @@ class ResourcesController < ApplicationController
     @current_institution = current_user.institution
   end
 
-  # GET /resources/1/edit
+ 
   #edit institutional resource
   def edit
     @resource = Resource.find(params[:id])
     @current_institution = current_user.institution
   end
 
-  
+  def edit_customization_resource
+    @resource = Resource.find(params[:id])
+     @customization_id = params[:customization_id]
+  end
 
-  # POST /resources
-  # POST /resources.json
+  def update_customization_resource
+    @resource = Resource.find(params[:id])
+    @customization_id = params[:customization_id]
+    respond_to do |format|
+      if @resource.update(resource_params)
+        format.html { redirect_to edit_resource_context_path(@customization_id), notice: 'Resource was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to edit_resource_context_path(@customization_id), notice: "A problem prevented this resource to be created. " }
+        format.json { render json: @resource.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  
   #create new institutional resource
   def create
     @resource = Resource.new(resource_params)
@@ -51,8 +67,7 @@ class ResourcesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /resources/1
-  # PATCH/PUT /resources/1.json
+  #update institutional resource
   def update
     respond_to do |format|
       if @resource.update(resource_params)
