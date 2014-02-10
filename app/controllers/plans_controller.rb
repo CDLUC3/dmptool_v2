@@ -158,6 +158,14 @@ class PlansController < ApplicationController
 
   end
 
+  def change_visiblity
+    id = params[:plan_id][:value] unless params[:plan_id][:value].blank?
+    debugger
+    plan = Plan.find(id)
+    plan.visibility = params[:plan_id][:visibility]
+    plan.save!
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_plan
