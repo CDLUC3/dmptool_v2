@@ -16,7 +16,7 @@
       <label class ="control-label">Customized for</label>
       <div class="controls">
         <p>
-          <%= @resource_context.institution.name %>
+          <%= @resource_context.institution.nil? ? " " :  @resource_context.institution.name %>
         </p>
       </div>
     </div>
