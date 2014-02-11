@@ -129,9 +129,10 @@ class ResourceContextsController < ApplicationController
       @resource_contexts = @resource_contexts.
                           per_institution( @customization_institution)
                          
-    end
-                         
+    end                       
   end
+
+  
 
 
 end

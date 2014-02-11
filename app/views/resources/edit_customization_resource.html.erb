@@ -38,8 +38,13 @@
 
       <div class="actions pull-right">
         <%= f.submit 'Save Changes', :class => "btn" %>
-        <%#= button_tag 'Cancel', type: :reset, :class => "btn" %>
-        <%= link_to 'Cancel', :back, type: :reset, :class => "btn" %>
+        
+        <%= link_to 'Cancel', edit_resource_context_path(@customization_id), :class => "btn" %>
+
+        <%= link_to 'Delete Resource', delete_resource_path(resource_id: @resource.id, 
+                                        customization_overview_id: @customization_id), 
+                                        :method => :delete,
+        data: { confirm: 'Are you sure?' }, :class => "btn" %>
       </div>
     </fieldset>
   <% end %>
