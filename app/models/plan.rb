@@ -22,11 +22,11 @@ class Plan < ActiveRecord::Base
   scope :private_visibility, -> { where(visibility: :private) }
 
   # scopes for plan's states
-  scope :owned, -> { joins(:user_plans).where('user_plans.owner =?', true) }
-  scope :coowned, -> {  joins(:user_plans).where('user_plans.owner =?', false) }
-  scope :submitted, -> { joins(:plan_states).where('plan_states.state =?', :submitted)}
-  scope :approved, -> { joins(:plan_states).where('plan_states.state =?', :approved)}
-  scope :rejected, -> { joins(:plan_states).where('plan_states.state =?', :rejected)}
-  scope :revised, -> { joins(:plan_states).where('plan_states.state =?', :revised)}
-  scope :committed, -> { joins(:plan_states).where('plan_states.state =?', :committed)}
+  scope :owned, -> { joins(:user_plans).where('user_plans.owner =?', true).distinct }
+  scope :coowned, -> {  joins(:user_plans).where('user_plans.owner =?', false).distinct }
+  scope :submitted, -> { joins(:current_state).where('plan_states.state =?', :submitted) }
+  scope :approved, -> { joins(:current_state).where('plan_states.state =?', :approved) }
+  scope :rejected, -> { joins(:current_state).where('plan_states.state =?', :rejected) }
+  scope :revised, -> { joins(:current_state).where('plan_states.state =?', :revised) }
+  scope :committed, -> { joins(:current_state).where('plan_states.state =?', :committed) }
 end

@@ -1,0 +1,1 @@
+load Rails.root.join('lib', 'my_extensions.rb')

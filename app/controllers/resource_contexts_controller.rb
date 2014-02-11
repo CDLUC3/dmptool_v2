@@ -24,24 +24,27 @@ class ResourceContextsController < ApplicationController
   def edit
     @resource_context = ResourceContext.find(params[:id])
     @req_temp = @resource_context.requirements_template
-
     make_institution_dropdown_list
     customization_resources_list
-
   end
 
   def create
     pare_to = ['institution_id', 'requirements_template_id', 'requirement_id', 'resource_id',
               'name', 'contact_info', 'contact_email', 'review_type']
-    to_save = pare_to.inject({}){|result, key| result[key] = params['resource_context'][key];result}
-    @resource_context = ResourceContext.new(to_save)
+    @resource_context = ResourceContext.new(params['resource_context'].selected_items(pare_to))
+    make_institution_dropdown_list
+
+    @req_temp = @resource_context.requirements_template
+    message = @resource_context.changed ? 'Customization was successfully created.' : ''
+
     respond_to do |format|
       if @resource_context.save
-        format.html { redirect_to customization_requirement_path(@resource_context.id), notice: 'Customization was successfully created.' }
+        customization_resources_list
+        go_to = (params[:after_save] == 'next_page' ? customization_requirement_path(@resource_context.id) :
+                  edit_resource_context_path(@resource_context.requirements_template_id))
+        format.html { redirect_to go_to, notice: message}
         #format.json { render action: 'edit', status: :created, location: @resource_context }
       else
-        make_institution_dropdown_list
-        @req_temp = @resource_context.requirements_template
         format.html { render action: 'new' }
         #format.json { render json: @resource_context.errors, status: :unprocessable_entity }
       end
@@ -50,17 +53,23 @@ class ResourceContextsController < ApplicationController
 
 
   def update
+    @resource_context = ResourceContext.find(params[:id])
     pare_to = ['institution_id', 'requirements_template_id', 'requirement_id', 'resource_id',
                'name', 'contact_info', 'contact_email', 'review_type']
-    to_save = pare_to.inject({}){|result, key| result[key] = params['resource_context'][key];result}
-    @resource_context = ResourceContext.find(params[:id])
+    to_save = params['resource_context'].selected_items(pare_to)
+    message = @resource_context.changed ? 'Customization was successfully updated.' : ''
+
+    make_institution_dropdown_list
+    customization_resources_list
+    @req_temp = @resource_context.requirements_template
+
     respond_to do |format|
       if @resource_context.update(to_save)
-        format.html { redirect_to customization_requirement_path(@resource_context.id), notice: 'Customization was successfully updated.' }
+        go_to = (params[:after_save] == 'next_page' ? customization_requirement_path(@resource_context.id) :
+                  edit_resource_context_path(@resource_context.requirements_template_id) )
+        format.html { redirect_to go_to, notice: message }
         format.json { head :no_content }
       else
-        make_institution_dropdown_list
-        @req_temp = @resource_context.requirements_template
         format.html { render action: 'edit' }
         format.json { render json: @resource_context.errors, status: :unprocessable_entity }
       end
@@ -75,10 +84,11 @@ class ResourceContextsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
  
 
   def resource_customizations
-    @resource_contexts = ResourceContext.template_level.institutional_level.no_resource_no_requirement.page(params[:page])
+    @resource_contexts = ResourceContext.template_level.institutional_level.no_resource_no_requirement.page(params[:page]).order('name ASC')
     case params[:scope]
       when "all"
         @resource_contexts 
@@ -103,24 +113,22 @@ class ResourceContextsController < ApplicationController
 
   def customization_resources_list
     @customization = ResourceContext.find(params[:id])
-    @customization_institution = @customization.institution
+    @customization_institution = current_user.institution
     @template= @customization.requirements_template
-    @customization_institution_name = "All the Institutions"
+    @customization_institution_name = current_user.institution.full_name
     @template_name = @customization.requirements_template.name
 
     @resource_contexts = ResourceContext.includes(:resource).
                           per_template(@template).
-                          resource_level
+                          resource_level.where(institution_id: nil)
 
     unless safe_has_role?(Role::DMP_ADMIN)
-
-      @customization_institution_name = @customization.institution.full_name
-      @resource_contexts = @resource_contexts.
-                          per_institution( @customization_institution)
+     
+      @resource_contexts = ResourceContext.includes(:resource).
+                          per_template(@template).
+                          resource_level.where(institution_id: current_user.institution.id)
                          
-    end
-                         
+    end                       
   end
-
 
 end

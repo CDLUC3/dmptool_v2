@@ -79,3 +79,42 @@ $(function() {
 		$("#owner_comments").hide();
 	});
 });
+
+$(function() {
+	$('#visibility_dialog_form').hide();
+	$('#change_visibility_link').click(function(event) {
+		event.preventDefault();
+		$('#visibility_dialog_form').dialog( {
+			width: 400,
+			height: 250,
+			modal: true,
+			closeOnEscape: true,
+			draggable: true,
+			resizable: false,
+			title: "Share my DMP",
+			show: {
+				effect: "blind",
+				duration: 1000
+			},
+			hide: {
+				effect: "toggle",
+				duration: 1000
+			},
+			open: function()
+			{
+				$("#visibility_dialog_form").dialog("open");
+			},
+      close: function() {
+        $('#visibility_dialog-form').dialog("close");
+        $(this).find('form')[0].reset();
+      }
+		}).prev ().find(".ui-dialog-titlebar-close").show();
+		return false
+	});
+});
+
+$(function() {
+	$("#cancel_action").bind("click",function() {
+		$("#visibility_dialog_form").reset();
+	});
+})

@@ -1,0 +1,22 @@
+<div id = 'visibility_dialog_form'>
+  <%= form_tag(change_visiblity_path, method: :post, remote: true, html: { :class => "form-horizontal"}) do %>
+    <%= hidden_field_tag :plan_id, value: plan_id %>
+    <div class="control-group">
+      <div class="controls radio-controls">
+        <%= radio_button_tag :visibility, :institutional, :class => 'radio inline' %>
+        <%= label_tag :institutional, "With others from #{institution_name(plan_id)}", :class => 'radio-label'%><br/>
+        <%= radio_button_tag :visibility, :public, :class => 'radio inline' %>
+        <%= label_tag :public, 'Publicly on the web', :class => 'radio-label'%><br/>
+        <br />
+        <div>
+          <%= submit_tag "Share", :class => 'btn btn-success', method: 'post' %>
+            <p style="color:red;">Note: This cannot be undone </p>
+        <div>
+        <br />
+        <%= radio_button_tag :visibility, :private, :class => 'radio inline', :id => 'private', checked: true  %>
+        <%= label_tag :private, '...Or keep it Private', :class => 'radio-label'%>
+        <%= link_to "Cancel", '#', type: :reset, id: "cancel_action" %>
+      </div>
+    </div>
+  <% end %>
+</div>

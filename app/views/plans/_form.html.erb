@@ -47,7 +47,7 @@
             <%= label_tag :public, 'public', :class => 'radio-label'%><br/>
             <%= f.radio_button :visibility, :institutional, :class => 'radio inline', :id => 'institutional'  %>
             <%= label_tag :institutional, 'institutional', :class => 'radio-label'%><br/>
-            <%= f.radio_button :visibility, :private, :class => 'radio inline', :id => 'private'  %>
+            <%= f.radio_button :visibility, :private, :class => 'radio inline', :id => 'private', checked: true  %>
             <%= label_tag :private, 'private', :class => 'radio-label'%>
           </div>
         </div>
@@ -104,7 +104,7 @@
           <label class ="control-label"> Visibility: </label>
           <div class="controls">
             <p> This DMP is <span style="color:blue;"><%=@plan.visibility.capitalize %></span> </p>
-            <p><%= link_to "Change Settings", '#' %></p>
+            <p><%= link_to "Change Settings", '#', remote: true, id: 'change_visibility_link' %></p>
           </div>
         </div>
 
@@ -125,9 +125,11 @@
 
         <div class="buttons">
           <%= f.submit 'Save Changes', :class => 'btn btn-success pull-left', method: 'post' %>
+          <%= button_tag 'Cancel', type: :reset, :class => 'btn btn-success'%>
         </div>
+        <%= render partial: 'change_visibility', locals: {:plan_id => params[:id]} %>
+        <%= render partial: 'comments/form', locals: {:plan_id => params[:id]} %>
       <% end %>
     </div>
   </div>
 </div>
-<%= render partial: 'comments/form', locals: {:plan_id => params[:id]} %>

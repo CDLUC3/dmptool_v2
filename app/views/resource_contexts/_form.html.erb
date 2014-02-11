@@ -11,7 +11,7 @@
       <label class ="control-label">Customized for</label>
       <div class="controls">
         <p>
-          <%= @resource_context.institution.name %>
+          <%= @resource_context.institution.nil? ? " " :  @resource_context.institution.name %>
         </p>
       </div>
     </div>
@@ -95,6 +95,14 @@
     <div class="controls">
       <p><%= (@resource_context.updated_at.nil? ? 'none' : @resource_context.updated_at) %></p>
     </div>
+  </div>
+
+  <div class="control-group">
+    <label class ="control-label"></label>
+    <div class="controls">
+      <%= f.submit('Save') %>
+    </div>
+    <%= hidden_field_tag :after_save, 'this_page' %>
   </div>
 
 <% end %>
