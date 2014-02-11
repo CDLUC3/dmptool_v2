@@ -107,7 +107,8 @@
   <div class="control-group">
     <%= label_tag :my_roles, 'My Roles', :class => 'control-label' %>
     <div class="controls">
-      <%= text_field_tag(:my_roles, "My Roles", value: @roles, disabled: true, :class => "input-xxlarge") %>
+      <%#= text_field_tag(:my_roles, "My Roles", value: @roles, disabled: true, :class => "input-xxlarge") %>
+      <%= @user.role_names.join(' | ') %>
     </div>
   </div>
 <% end %>
