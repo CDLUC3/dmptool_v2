@@ -24,17 +24,14 @@ class ResourceContextsController < ApplicationController
   def edit
     @resource_context = ResourceContext.find(params[:id])
     @req_temp = @resource_context.requirements_template
-
     make_institution_dropdown_list
     customization_resources_list
-
   end
 
   def create
     pare_to = ['institution_id', 'requirements_template_id', 'requirement_id', 'resource_id',
               'name', 'contact_info', 'contact_email', 'review_type']
-    to_save = pare_to.inject({}){|result, key| result[key] = params['resource_context'][key];result}
-    @resource_context = ResourceContext.new(to_save)
+    @resource_context = ResourceContext.new(params['resource_context'].selected_items(pare_to))
     make_institution_dropdown_list
 
     @req_temp = @resource_context.requirements_template
@@ -59,7 +56,7 @@ class ResourceContextsController < ApplicationController
     @resource_context = ResourceContext.find(params[:id])
     pare_to = ['institution_id', 'requirements_template_id', 'requirement_id', 'resource_id',
                'name', 'contact_info', 'contact_email', 'review_type']
-    to_save = pare_to.inject({}){|result, key| result[key] = params['resource_context'][key];result}
+    to_save = params['resource_context'].selected_items(pare_to)
     message = @resource_context.changed ? 'Customization was successfully updated.' : ''
 
     make_institution_dropdown_list
@@ -87,6 +84,7 @@ class ResourceContextsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
  
 
   def resource_customizations
@@ -131,8 +129,5 @@ class ResourceContextsController < ApplicationController
                          
     end                       
   end
-
-  
-
 
 end
