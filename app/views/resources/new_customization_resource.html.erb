@@ -41,7 +41,7 @@
 
       <div class="actions pull-right">
         <%= f.submit 'Save Changes', :class => "btn" %>
-        <%= button_tag 'Cancel', type: :reset, :class => "btn" %>
+        <%= link_to 'Cancel', edit_resource_context_path(@customization_overview_id), :class => "btn" %>
       </div>
     </fieldset>
   <% end %>
