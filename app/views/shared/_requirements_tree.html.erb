@@ -1,16 +1,24 @@
+<% # this partial should take a local of requirements for it's level in the tree %>
 <ul>
 	<% requirements.each do |requirement| %>
 		<li>
 			<% if requirement.group? %>
-				<i class="icon-folder-open icon-black"></i>
+      <li class="li_folder" id="requirement_<%= requirement.id %>">
+        <i class="icon requirements-group-open larger"></i>
         <%= link_to requirement.text_brief,
-	          resource_template_resources_path(@resource_template, requirement_id: requirement.id, node_type: 'group') %>
-				<%= render partial: 'requirements_tree', locals: { requirements: requirement.children } %>
+	          edit_resource_path(@resource, requirement_id: requirement.id, node_type: 'group') %>
+	      <ul>
+					<%= render partial: 'shared/requirements_tree', locals: { requirements: requirement.children } %>
+				</ul>
 			<% else %>
-				<%= link_to requirement.text_brief,
-	          resource_template_resources_path(@resource_template, requirement_id: requirement.id, node_type: 'group') %>
-				<%= render partial: 'requirements_tree', locals: { requirements: requirement.children } %>
-			<% end %>
+      	<li class="li_requirement<%= (requirement.id.to_s == params[:requirement_id] ? ' current': '') %>" id="requirement_<%= requirement.id %>">
+        <i class="icon requirement"></i>
+	          <%= link_to requirement.text_brief,
+	              edit_resource_path(@resource, requirement_id: requirement.id, node_type: 'requirement') %>
+      	</li>
+    	<% end %>
 		</li>
 	<% end %>
 </ul>
+
+
