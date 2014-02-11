@@ -112,7 +112,8 @@ textarea {
 .ui-datepicker .ui-datepicker-title select {
 	height: 24px;
 	line-height: 24px;
-	margin: 0; }
+	margin: 0;
+	padding: 2px 2px 2px 0; }
   
 /* Custom File Upload Styles */
 .file-upload {
