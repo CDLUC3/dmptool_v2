@@ -1,5 +1,5 @@
 class ResourcesController < ApplicationController
-  before_action :set_resource, only: [:show, :edit, :update, :destroy]
+  before_action :set_resource, only: [:show, :edit, :update]
 
   # GET /resources
   # GET /resources.json
@@ -83,10 +83,19 @@ class ResourcesController < ApplicationController
   # DELETE /resources/1
   # DELETE /resources/1.json
   def destroy
-    @resource.destroy
-    respond_to do |format|
-      format.html { redirect_to resources_url }
-      format.json { head :no_content }
+    @resource_id = params[:resource_id]
+    @resource = Resource.find(@resource_id)
+    @customization_ids = ResourceContext.where(resource_id: @resource_id).pluck(:id)
+    if @resource.destroy
+      if @customization_ids
+        ResourceContext.destroy(@customization_ids)
+      end
+      respond_to do |format|
+        format.html { redirect_to edit_resource_context_path(params[:customization_overview_id]), notice: 'Resource was successfully eliminated.' }
+        format.json { head :no_content }
+      end
+    else
+      format.html { redirect_to edit_resource_context_path(params[:customization_overview_id]), notice: "A problem prevented this resource to be eliminated. " }
     end
   end
 
