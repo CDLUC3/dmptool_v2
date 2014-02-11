@@ -113,19 +113,20 @@ class ResourceContextsController < ApplicationController
 
   def customization_resources_list
     @customization = ResourceContext.find(params[:id])
-    @customization_institution = @customization.institution
+    @customization_institution = current_user.institution
     @template= @customization.requirements_template
-    @customization_institution_name = @customization.institution.full_name
+    @customization_institution_name = current_user.institution.full_name
     @template_name = @customization.requirements_template.name
 
     @resource_contexts = ResourceContext.includes(:resource).
                           per_template(@template).
-                          resource_level
+                          resource_level.where(institution_id: nil)
 
     unless safe_has_role?(Role::DMP_ADMIN)
      
-      @resource_contexts = @resource_contexts.
-                          per_institution( @customization_institution)
+      @resource_contexts = ResourceContext.includes(:resource).
+                          per_template(@template).
+                          resource_level.where(institution_id: current_user.institution.id)
                          
     end                       
   end
