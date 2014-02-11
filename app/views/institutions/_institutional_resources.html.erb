@@ -29,16 +29,10 @@
 	<tbody>
 </table>
 
-<div class="buttons pagination">		
+<div class="buttons pagination">	
+	<%= link_to "View All", institutions_path(anchor: 'tab_tab2', scope: "all"), :method => :get, :class => "btn" %>	
 	<%= paginate @resource_contexts %>
 </div>
-
-
-<div class="buttons">
-	<%= link_to "View All", institutions_path(anchor: 'tab_tab2', scope: "all"), :method => :get, :class => "btn" %>
-</div>
-
 <div class="buttons">
 	<%= button_to 'Create New Resource', new_resource_path, :method => :get, :class => "btn btn-green" %>
 </div>
-		

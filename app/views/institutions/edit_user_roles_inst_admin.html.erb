@@ -6,7 +6,7 @@
 	<div class="tab-content">
 		<div class="tab-pane active" id="tab1">
 				<%= form_tag(update_user_roles_inst_admin_path(user_id: @user.id, anchor: 'tab_tab4'), method: 'post') do %>
-				<h5><%= @user.first_name %> Current Roles:</h5>
+				<p><strong><%= @user.first_name %> Current Roles:</strong></p>
 				<hr/>
 				<div class="control-group">
 					<ul>

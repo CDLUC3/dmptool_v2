@@ -74,11 +74,15 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	margin-left: 0;
 	margin-bottom: 0; }
 .login p {
-	font-size: 1.125em; }
+	font-size: 1.167em; }
 .control-group.select_institution select {
 	width: 330px; }
 .control-group.switch_institution {
-	height: 181px; }
+	height: 178px; }
+	
+/* DMPTool Pages */
+.dmptool-page p {
+	font-size: 1.167; }
 
 /* Tree View */
 .tree-view .actions {

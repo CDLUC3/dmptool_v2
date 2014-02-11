@@ -24,6 +24,18 @@ jQuery(function(){
 	if(window.location.href.indexOf("scope=all_limited") != -1){
 		jQuery(".all_limited").addClass("current");
 	}
+	else if(window.location.href.indexOf("scope=coowned") != -1){
+		jQuery(".coowned").addClass("current");
+	}
+	else if(window.location.href.indexOf("scope=approved") != -1){
+		jQuery(".approved").addClass("current");
+	}
+	else if(window.location.href.indexOf("scope=submitted") != -1){
+		jQuery(".submitted").addClass("current");
+	}
+	else if(window.location.href.indexOf("scope=rejected") != -1){
+		jQuery(".rejected").addClass("current");
+	}
 	else if(window.location.href.indexOf("scope=active") != -1){
 		jQuery(".active").addClass("current");
 	}
@@ -35,6 +47,21 @@ jQuery(function(){
 	}
 	else if(window.location.href.indexOf("scope=public") != -1){
 		jQuery(".public").addClass("current");
+	}
+	else if(window.location.href.indexOf("scope=resources_editor") != -1){
+		jQuery(".resources_editor").addClass("current");
+	}
+	else if(window.location.href.indexOf("scope=template_editor") != -1){
+		jQuery(".template_editor").addClass("current");
+	}
+	else if(window.location.href.indexOf("scope=inst_administrator") != -1){
+		jQuery(".inst_administrator").addClass("current");
+	}
+	else if(window.location.href.indexOf("scope=inst_reviewer") != -1){
+		jQuery(".inst_reviewer").addClass("current");
+	}
+	else if(window.location.href.indexOf("scope=dmp_administrator") != -1){
+		jQuery(".dmp_administrator").addClass("current");
 	}
 	else {
 		jQuery(".all_limited").addClass("current");

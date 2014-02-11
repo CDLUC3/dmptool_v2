@@ -61,8 +61,3 @@ table {
 	margin: 10px 0 0; }
 .pagination span {
 	font-size: 1.167em; }
-.tab-pane .buttons.pagination {
-	border: 1px solid #B6B6B7;
-	border-top: none;
-	margin: -20px 0 10px;
-}

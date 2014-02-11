@@ -7,9 +7,6 @@
 .static-page ol ul > li {
 	list-style: disc; }
 
-/* Homepage */
-.header.home {
-	background-position: 50% -72px; }
 /* Homepage Banner */
 .banner.row-fluid {
 	background: url(header_bg.jpg) no-repeat 0 -117px transparent;
@@ -18,6 +15,23 @@
 	margin: 0 0 35px;
 	padding: 0;
 	position: relative; }
+.banner h1 {
+	color: #FFFFFF;
+	font-size: 4em;
+	font-weight: lighter;
+	margin: 0;
+	position: absolute;
+	top: 60px;
+	left: 35px; }
+.banner p {
+	color: #FFFFFF;
+	font-size: 2em;
+	font-weight: lighter;
+	line-height: 1.25;
+	margin: 0;
+	position: absolute;
+	top: 175px;
+	left: 35px; }
 .banner a.btn {
 	position: absolute;
 	right: 310px;
