@@ -102,6 +102,14 @@
     </div>
   </div>
 
+  <div class="control-group">
+    <label class ="control-label"></label>
+    <div class="controls">
+      <%= f.submit('Save') %>
+    </div>
+    <%= hidden_field_tag :after_save, 'this_page' %>
+  </div>
+
 <% end %>
 
 

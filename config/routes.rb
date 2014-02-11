@@ -3,28 +3,28 @@ Dmptool2::Application.routes.draw do
   get "comments/index"
   get "comments/new"
   get "comments/edit"
- get "dashboard/show"
- root 'static_pages#home'
- get 'about', to: 'static_pages#about'
- get 'community_resources', to: 'static_pages#community_resources'
- match 'contact', to: 'static_pages#contact', :via => [:get, :post], as: 'contact'
- get 'dashboard', to: 'dashboard#show', as: 'dashboard'
- get 'dashboard/test', to: 'dashboard#test'
- get 'dm_guidance', to: 'static_pages#data_management_guidance'
- get 'guidance', to: 'static_pages#guidance'
- get 'help', to: 'static_pages#help'
- get 'logout', to: 'user_sessions#destroy'
- get 'partners', to: 'static_pages#partners'
- get 'partners_list', to: 'institutions#partners_list'
- get 'privacy', to: 'static_pages#privacy'
- get 'promote', to: 'static_pages#promote'
- get 'terms_of_use', to: 'static_pages#terms_of_use'
- get 'video', to: 'static_pages#video'
- get 'resource_contexts/dmp_for_customization', to: 'resource_contexts#dmp_for_customization', as: "dmp_for_customization"
+  get "dashboard/show"
+  root 'static_pages#home'
+  get 'about', to: 'static_pages#about'
+  get 'community_resources', to: 'static_pages#community_resources'
+  match 'contact', to: 'static_pages#contact', :via => [:get, :post], as: 'contact'
+  get 'dashboard', to: 'dashboard#show', as: 'dashboard'
+  get 'dashboard/test', to: 'dashboard#test'
+  get 'dm_guidance', to: 'static_pages#data_management_guidance'
+  get 'guidance', to: 'static_pages#guidance'
+  get 'help', to: 'static_pages#help'
+  get 'logout', to: 'user_sessions#destroy'
+  get 'partners', to: 'static_pages#partners'
+  get 'partners_list', to: 'institutions#partners_list'
+  get 'privacy', to: 'static_pages#privacy'
+  get 'promote', to: 'static_pages#promote'
+  get 'terms_of_use', to: 'static_pages#terms_of_use'
+  get 'video', to: 'static_pages#video'
+  get 'resource_contexts/dmp_for_customization', to: 'resource_contexts#dmp_for_customization', as: "dmp_for_customization"
 
- get 'customizations/:id/requirements/(:requirement_id)', to: 'customizations#show', as: 'customization_requirement'
+  get 'customizations/:id/requirements/(:requirement_id)', to: 'customizations#show', as: 'customization_requirement'
 
- get 'institutions', to: 'institutions#index'
+  get 'institutions', to: 'institutions#index'
 
   resources :requirements_templates do
     resources :requirements
@@ -107,6 +107,11 @@ Dmptool2::Application.routes.draw do
 
   get 'edit_customization_resource', to: 'resources#edit_customization_resource'
   patch 'update_customization_resource', to: 'resources#update_customization_resource'
+
+  post 'new_customization_resource', to: 'resources#new_customization_resource'
+  post 'create_customization_resource', to: 'resources#create_customization_resource'
+
+  delete 'delete_resource', to: 'resources#destroy'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

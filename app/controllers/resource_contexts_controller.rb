@@ -35,14 +35,19 @@ class ResourceContextsController < ApplicationController
               'name', 'contact_info', 'contact_email', 'review_type']
     to_save = pare_to.inject({}){|result, key| result[key] = params['resource_context'][key];result}
     @resource_context = ResourceContext.new(to_save)
-    
+    make_institution_dropdown_list
+
+    @req_temp = @resource_context.requirements_template
+    message = @resource_context.changed ? 'Customization was successfully created.' : ''
+
     respond_to do |format|
       if @resource_context.save
-        format.html { redirect_to customization_requirement_path(@resource_context.id), notice: 'Customization was successfully created.' }
+        customization_resources_list
+        go_to = (params[:after_save] == 'next_page' ? customization_requirement_path(@resource_context.id) :
+                  edit_resource_context_path(@resource_context.requirements_template_id))
+        format.html { redirect_to go_to, notice: message}
         #format.json { render action: 'edit', status: :created, location: @resource_context }
       else
-        make_institution_dropdown_list
-        @req_temp = @resource_context.requirements_template
         format.html { render action: 'new' }
         #format.json { render json: @resource_context.errors, status: :unprocessable_entity }
       end
@@ -51,17 +56,23 @@ class ResourceContextsController < ApplicationController
 
 
   def update
+    @resource_context = ResourceContext.find(params[:id])
     pare_to = ['institution_id', 'requirements_template_id', 'requirement_id', 'resource_id',
                'name', 'contact_info', 'contact_email', 'review_type']
     to_save = pare_to.inject({}){|result, key| result[key] = params['resource_context'][key];result}
-    @resource_context = ResourceContext.find(params[:id])
+    message = @resource_context.changed ? 'Customization was successfully updated.' : ''
+
+    make_institution_dropdown_list
+    customization_resources_list
+    @req_temp = @resource_context.requirements_template
+
     respond_to do |format|
       if @resource_context.update(to_save)
-        format.html { redirect_to customization_requirement_path(@resource_context.id), notice: 'Customization was successfully updated.' }
+        go_to = (params[:after_save] == 'next_page' ? customization_requirement_path(@resource_context.id) :
+                  edit_resource_context_path(@resource_context.requirements_template_id) )
+        format.html { redirect_to go_to, notice: message }
         format.json { head :no_content }
       else
-        make_institution_dropdown_list
-        @req_temp = @resource_context.requirements_template
         format.html { render action: 'edit' }
         format.json { render json: @resource_context.errors, status: :unprocessable_entity }
       end
@@ -118,9 +129,10 @@ class ResourceContextsController < ApplicationController
       @resource_contexts = @resource_contexts.
                           per_institution( @customization_institution)
                          
-    end
-                         
+    end                       
   end
+
+  
 
 
 end
