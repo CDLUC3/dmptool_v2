@@ -6,7 +6,7 @@
       <li class="li_folder" id="requirement_<%= requirement.id %>">
         <i class="icon requirements-group-open larger"></i>
         <%= link_to requirement.text_brief,
-	          edit_resource_path(@resource, requirement_id: requirement.id, node_type: 'group') %>
+	          details_plan_path(@plan, requirement_id: requirement.id, node_type: 'group') %>
 	      <ul>
 					<%= render partial: 'shared/requirements_tree', locals: { requirements: requirement.children } %>
 				</ul>
@@ -14,7 +14,7 @@
       	<li class="li_requirement<%= (requirement.id.to_s == params[:requirement_id] ? ' current': '') %>" id="requirement_<%= requirement.id %>">
         <i class="icon requirement"></i>
 	          <%= link_to requirement.text_brief,
-	              edit_resource_path(@resource, requirement_id: requirement.id, node_type: 'requirement') %>
+	              details_plan_path(@plan, requirement_id: requirement.id, node_type: 'requirement') %>
       	</li>
     	<% end %>
 		</li>
