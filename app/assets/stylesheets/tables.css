@@ -19,6 +19,7 @@ table {
 	border-top: none; }
 .table th:first-child, .table td:first-child {
 	border-left: none; }
+.table-stirped th, .table-striped td {
 	border-top: none; }
 .table-striped tbody > tr:nth-child(2n+1) > td {
 	background-color: #FFFFFF; }

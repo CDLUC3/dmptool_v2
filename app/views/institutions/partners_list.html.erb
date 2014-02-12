@@ -1,22 +1,50 @@
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Shibboleth enabled?</th>
-    <th>DMPTool Customized?</th>
-  </tr>
-  <% @institutions.each do |institution| %>o
+<h1 class="row-fluid"><span class="icon funder-guidance"></span>DMP Requirements</h1>
+<br/>
+<div class="row-fluid">
+	<div class="span8">
+		<p>Use the A-Z links below to narrow down the list by institution or
+			use the search box to search for specific institutions.</p>
+	</div>
+	<div class="search-area span4 pull-right">
+			<%= form_tag('', {:method => :get}) do %>
+				<div class="control-group pull-right">
+					<%= search_field_tag(:q, params[:q], :class => 'input-large') %>
+					<%= label_tag :q, "Search", :class => "icon search" %>
+					<%= submit_tag('Search') %>
+				</div>
+			<% end %>
+	</div>
+</div>
+<div class="buttons-alpha row">
+	<%= link_to('A - F', { :s => 'a', :e => 'f' }, :class => 'btn viewA-F') %> 
+	<%= link_to('G - L', { :s => 'g', :e => 'l' }, :class => 'btn viewG-L') %> 
+	<%= link_to('M - S', { :s => 'm', :e => 's' }, :class => 'btn viewM-S') %> 
+	<%= link_to('T - Z', { :s => 't', :e => 'z' }, :class => 'btn viewT-Z') %> 
+	<%= link_to('All', { :s => 'a', :e => 'z' }, :class => 'btn viewA-Z') %>
+</div>
+<table class="table table-striped">
+	<thead>
+	  <tr>
+	    <th class="span10">Name</th>
+	    <th class="span1">Shibboleth enabled?</th>
+	    <th class="span1">DMPTool Customized?</th>
+	  </tr>
+	</thead>
+	<tbody>
+  <% @institutions.each do |institution| %>
     <tr>
       <td><%= link_to institution.full_name, edit_institution_path(institution) %></td>
-      <td><%- if institution.is_shibboleth? then %>
+      <td class="span1"><% if institution.is_shibboleth? then %>
         Yes
-      <%- else %>
+      <% else %>
         No
-      <%- end %></td>
-      <td><%- if institution.is_customized? then %>
+      <% end %></td>
+      <td class="span1"><% if institution.is_customized? then %>
         Yes
-      <%- else %>
+      <% else %>
         No
-      <%- end %></td>
+      <% end %></td>
     </tr>
   <% end %>
+	</tbody>
 </table>
