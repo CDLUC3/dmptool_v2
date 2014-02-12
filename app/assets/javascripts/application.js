@@ -16,6 +16,8 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require jquery.turbolinks
+//= require bootstrap-wysihtml5
+//= require bootstrap-wysihtml5/locales
 //= require_tree .
 
 
@@ -67,7 +69,7 @@ function tab_jump(){
     var hashPieces = hash.split('?');
     activeTab = $('.nav-tabs a[href=' + hashPieces[0] + ']');
     activeTab && activeTab.tab('show');
-	} 
+	}
 
 	// Change hash for page-reload
 	$('.nav-tabs a').on('shown', function (e) {
@@ -87,7 +89,7 @@ function add_tab_to_pagination(){
   			return href;
   		}else{
   			return href + "#tab_" + my_id;
-  		} 
+  		}
   	});
 	});
 }
