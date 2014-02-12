@@ -41,7 +41,7 @@ class ResourceContextsController < ApplicationController
       if @resource_context.save
         customization_resources_list
         go_to = (params[:after_save] == 'next_page' ? customization_requirement_path(@resource_context.id) :
-                  edit_resource_context_path(@resource_context.requirements_template_id))
+                        edit_resource_context_path(@resource_context.id))
         format.html { redirect_to go_to, notice: message}
         #format.json { render action: 'edit', status: :created, location: @resource_context }
       else
@@ -66,7 +66,7 @@ class ResourceContextsController < ApplicationController
     respond_to do |format|
       if @resource_context.update(to_save)
         go_to = (params[:after_save] == 'next_page' ? customization_requirement_path(@resource_context.id) :
-                  edit_resource_context_path(@resource_context.requirements_template_id) )
+                  edit_resource_context_path(@resource_context.id) )
         format.html { redirect_to go_to, notice: message }
         format.json { head :no_content }
       else
