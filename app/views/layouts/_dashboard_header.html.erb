@@ -5,7 +5,7 @@
 				<%= image_tag current_user.institution.logo, :alt => "#{current_user.institution.nickname}" %>
 			</div>
 			<div class="inst-title span5">
-				<h2><%= current_user.institution.full_name %></h2>
+				<%= current_user.institution.full_name %>
 			</div>
 			<div class="inst-info span4">
 				<%= link_to "http://#{current_user.institution.url}", :id => 'inst-domain' do %>
@@ -16,13 +16,13 @@
 				<% end %>
 			</div>
 		<% else %>
-			<div class="inst-logo">
+			<div class="inst-logo span3">
 				<%= image_tag("", :width => '164', :height => '51', :alt => 'Institution Logo') %>
 			</div>
-			<div class="inst-title">
-				<h3>Institution Name</h3>
+			<div class="inst-title span5">
+				Institution Name
 			</div>
-			<div class="inst-info">
+			<div class="inst-info span4">
 				<%= link_to '#', :id => 'institution-domain' do %>
 					<span class="icon institution-domain"></span>www.domainname.edu
 				<% end %>

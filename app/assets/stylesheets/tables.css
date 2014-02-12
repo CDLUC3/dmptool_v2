@@ -15,13 +15,15 @@ table {
 .table th {
 	background: #DAE4C5;
 	white-space: nowrap; }
+.table tr:first-child td {
+	border-top: none; }
 .table th:first-child, .table td:first-child {
 	border-left: none; }
+.table-stirped th, .table-striped td {
+	border-top: none; }
 .table-striped tbody > tr:nth-child(2n+1) > td {
-	border-top: none;
 	background-color: #FFFFFF; }
 .table-striped tbody > tr:nth-child(2n+2) > td {
-	border-top: 1px solid #F6F6F6;
 	background-color: #F0F0F0; }
 .table th.span1, .table td.span1 {
 	text-align: center; }
@@ -61,8 +63,3 @@ table {
 	margin: 10px 0 0; }
 .pagination span {
 	font-size: 1.167em; }
-.tab-pane .buttons.pagination {
-	border: 1px solid #B6B6B7;
-	border-top: none;
-	margin: -20px 0 10px;
-}

@@ -1,14 +1,14 @@
 <h1 class="row-fluid"><span class="icon dmp-template"></span>Active DMPs </h1>
 <div class="table-scope">
-  <%= link_to(content_tag(:span, "All (#{@all}) ", :class => "current" ), scope: "all_limited") %>
+  <%= link_to "All (#{@all}) ", {scope: "all_limited"}, :class => "all_limited" %>
   |
-  <%= link_to(content_tag(:span, "Coowned (#{@coowned}) ", :class => "current"), scope: "coowned") %>
+  <%= link_to "Coowned (#{@coowned}) ", {scope: "coowned"}, :class => "coowned" %>
   |
-  <%= link_to(content_tag(:span, "Approved (#{@approved}) ", :class => "current"), scope: "approved") %>
+  <%= link_to "Approved (#{@approved}) ", {scope: "approved"}, :class => "approved" %>
   |
-  <%= link_to(content_tag(:span, "Submitted (#{@submitted}) ", :class => "current"), scope: "submitted") %>
+  <%= link_to "Submitted (#{@submitted}) ", {scope: "submitted"}, :class => "submitted" %>
   |
-  <%= link_to(content_tag(:span, "Rejected (#{@rejected}) ", :class => "current"), scope: "rejected") %>
+  <%= link_to "Rejected (#{@rejected}) ", {scope: "rejected"}, :class => "rejected" %>
 </div>
 
 <table class="table table-striped" id="dmp_plans">

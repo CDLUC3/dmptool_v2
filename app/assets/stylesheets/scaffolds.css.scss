@@ -17,19 +17,19 @@ h1 {
 	color: #85A541;
 	font-size: 2em;
 	line-height: normal; }
-h1.row-fluid  {
+h1.row-fluid, h2.row-fluid  {
 	clear: both;
 	background: #6D6E70;
 	color: #FFFFFF;
 	font-size: 1.5em;
 	text-transform: uppercase;
-	line-height: 43px;
+	line-height: 44px;
 	width: auto;
-	height: 39px;
-	margin: 0;
-	padding: 0 0 0 53px;
+	height: 40px;
+	margin: 20px 0 0 0;
+	padding: 0 0 0 50px;
 	position: relative; }
-h1.row-fluid span.icon {
+h1.row-fluid span.icon, h2.row-fluid {
 	top: 7px;
 	left: 11px; }
 h2, h3, h4, h5, h6 {
@@ -37,13 +37,11 @@ h2, h3, h4, h5, h6 {
 h2 {
 	font-size: 1.5em; }
 h3 {
-	font-size: 1.333em; }
+	font-size: 1.3em; }
 h4, h5, h6 {
 	font-size: 1em; }
 h6 {
 	margin: 0; }
-h4 span, h5 span, h6 span {
-	font-weight: normal; }
 p, ul, ol {
 	font-size: 1em;
 	margin: 10px 0; }

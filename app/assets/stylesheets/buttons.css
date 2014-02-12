@@ -1,4 +1,4 @@
-/* Buttons */
+/* Button Container */
 .buttons {
 	box-sizing: content-box;
 	-moz-box-sizing: content-box;
@@ -11,21 +11,27 @@
 	margin: -10px 0 10px;
 	padding: 10px;
 	position: relative; }
+.buttons-alpha.row {
+	clear: both;
+	margin: 0 0 20px; }
 .tab-pane .buttons {
 	border: none;
 	border-top: 1px solid #B6B6B7;
 	margin: 0 -10px 0;
 	padding-bottom: 0; }
+.tab-pane .buttons.pagination {
+	border: 1px solid #B6B6B7;
+	border-top: none;
+	margin: -10px 0 10px;
+	padding-bottom: 10px; }
 .tab-pane.table .buttons {
 	border: none;
 	border-top: 1px solid #B6B6B7;
-	margin: 0; }
-.tab-pane.table .buttons, 
-.tab-pane .buttons.pagination {
+	margin: 0;
 	padding-bottom: 10px; }
-.buttons-alpha.row {
-	clear: both;
-	margin: 0 0 20px; }
+
+	
+/* Buttons */
 a.btn, button, button.btn, input[type=submit], input[type=submit].btn {
 	display: inline-block;
 	border: none;
@@ -104,10 +110,11 @@ a.btn-large {
 	-ms-box-shadow: 0 0 25px 3px #EFEFEF !important;
 	background-position: 0 -186px;
 	color: #FFFFFF !important;
-	font-size: 1.667em;
+	font-size: 2em;
 	font-weight: normal;
 	line-height: 65px !important;
 	height: 60px;
+	margin: 0;
 	padding-left: 35px;
 	padding-right: 35px; }
 a.btn-large:hover, a.btn-large:focus, a.btn-large:active {
@@ -170,7 +177,7 @@ span.icon {
 	background-position: -40px -15px; }
 .arrow-down.icon {
 	background-position: -15px -25px; width: 10px; height: 15px; }
-	.arrow-down.icon:hover, .arrow-down.icon:focus, .arrow-down.icon:active {
+.arrow-down.icon:hover, .arrow-down.icon:focus, .arrow-down.icon:active {
 	background-position: -40px -25px; }
 .arrow-left.icon {
 	background-position: 0px -30px; width: 15px; height: 10px; }
