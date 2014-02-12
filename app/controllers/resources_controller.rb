@@ -110,7 +110,11 @@ class ResourcesController < ApplicationController
   def create_customization_resource
     @template_id = params[:template_id]
     @resource = Resource.new(resource_params)
-    @current_institution_id = params[:current_institution_id]
+    
+    @current_institution_id = nil
+    unless safe_has_role?(Role::DMP_ADMIN)
+      @current_institution_id = params[:current_institution_id]
+    end
     @customization_overview_id = params[:customization_overview_id]
     respond_to do |format|
       if @resource.save 
