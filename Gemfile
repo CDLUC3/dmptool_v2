@@ -14,8 +14,8 @@ end
 
 group :test do
   gem 'selenium-webdriver', '~> 2.39.0'
-  gem "capybara", "~> 2.2.1" 
-  gem 'shoulda-matchers' 
+  gem "capybara", "~> 2.2.1"
+  gem 'shoulda-matchers'
   gem 'launchy'
 end
 
@@ -44,6 +44,7 @@ gem 'paranoia', :github => 'radar/paranoia', :branch => 'rails4'
 gem 'american_date'
 gem 'ifad-rtf', :git => 'https://github.com/clbustos/rtf.git'
 gem "recaptcha", :require => "recaptcha/rails"
-
+gem 'bootstrap-wysihtml5-rails', :require => 'bootstrap-wysihtml5-rails',
+                              :git => 'git://github.com/Nerian/bootstrap-wysihtml5-rails.git'
 gem 'activerecord_any_of'
 

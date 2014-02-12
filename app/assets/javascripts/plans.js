@@ -118,3 +118,9 @@ $(function() {
 		$("#visibility_dialog_form").reset();
 	});
 })
+
+$(function() {
+  $('.wysihtml5').each(function(i, elem) {
+    $(elem).wysihtml5();
+  });
+})
