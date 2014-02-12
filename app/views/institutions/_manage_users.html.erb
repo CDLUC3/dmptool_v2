@@ -1,5 +1,4 @@
 <table class ="table table-striped">
-
 	<div class="table-scope">
 		<%= link_to "All(#{@all})", institutions_path(anchor: 'tab_tab4', scope: "all"), :class => "all_limited" %> 
 		| 
@@ -13,8 +12,6 @@
 		|
 		<%= link_to "DMP Administrators(#{@dmp_administrator})",  institutions_path(anchor: 'tab_tab4', scope: "dmp_administrator"), :class => "dmp_administrator" %>
 	</div>
-
-
 		<thead>
 		  <tr>
 		    <th>User Name</th>
@@ -34,29 +31,10 @@
 		  <% end %>
 		</tbody>
 </table>
-
-
-<table class ="table table-striped">
-
-	<tr class='user_row'>  
-		<td>
-
 <%= form_tag(add_authorization_manage_users_path(anchor: 'tab_tab4'), method: 'post') do %>
-			<div class="control-group">
-					<ul>
-						<% @roles.each do |role| %>
-							<div id=<%="role_#{role.id}"%> >
-						  	<li><%= check_box_tag "role_ids[]", role.id %>
-						    <%= label_tag role.name, role.name, :class => 'checkbox-label' %></li>
-							</div>
-						<% end %>
-					</ul>
-				</div>
-
-		</td>
-
-		<td>
-
+<table class ="table">
+	<tr class="user_row">  
+		<td class="span7">
 			<%= render partial: '/users/user_autocomplete_widget',
 			:locals =>
 				       {  user_role: 'template_editor',
@@ -68,10 +46,18 @@
 				          item_description: 'template editor'
 				       }
 			%>
-<%end%>
+		</td>
+		<td class="span5">
+			<div class="control-group row-fluid">
+						<% @roles.each do |role| %>
+						  <div class="controls span6">
+						  	<%= check_box_tag "role_ids[]", role.id %>
+						    <%= label_tag role.name, role.name, :class => 'checkbox-label' %>
+						  </div>
+						<% end %>
+				</div>
 		</td>
 	 </tr>
-		
 </table>
-
+<%end%>
 	
