@@ -1,10 +1,10 @@
 <p>Overview of how to use the tool, plus resources and guidance on data management.</p>
 <ul>
 	<li><a title="Frequently Asked Questions" href="http://dmptool.askbot.com" target="_blank">Frequently Asked Questions</a></li>
-	<li><%= link_to "Create a DMP", "#" %></li>
-	<li><%= link_to "Administer the DMPTool", users_url if current_user %>
-		<%= link_to "Administer the DMPTool", choose_institution_path if !current_user %></li>
-	<li><%= link_to "Data management guidance", dm_guidance_path %></li>
-	<li><%= link_to "Community resources", community_resources_path %></li>
+	<li><%= link_to "Create a DMP", plan_template_information_path, :title => "Create a DMP" %></li>
+	<li><%= link_to "Administer the DMPTool", users_url, :title => "Administer the DMPTool" if current_user %>
+		<%= link_to "Administer the DMPTool", choose_institution_path, :title => "Administer the DMPTool" if !current_user %></li>
+	<li><%= link_to "Data management guidance", dm_guidance_path, :title => "Data management guidance" %></li>
+	<li><%= link_to "Community resources", community_resources_path, :title => "Community Resources" %></li>
 </ul>
 <%= link_to "View All", help_path, :class => "btn btn-gray" %>
