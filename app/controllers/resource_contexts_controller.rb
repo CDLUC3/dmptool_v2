@@ -18,8 +18,10 @@ class ResourceContextsController < ApplicationController
     #if it is for the template or for a a different institution
     if current_user.has_role?(Role::DMP_ADMIN) && params[:institution_id] == "none"
       @resource_context.name = "#{@req_temp.name}"
+      @required_fields_class = ''
     else
       @resource_context.name = "#{@req_temp.name} for #{current_user.institution.name}"
+      @required_fields_class = ' required'
     end
 
     @resource_context.review_type = "formal_review"

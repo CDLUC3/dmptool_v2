@@ -19,9 +19,9 @@
   <%= f.hidden_field :requirements_template_id %>
 
   <div class="control-group">
-    <%= f.label :name , "Customization Name", :class=> "control-label required" %>
+    <%= f.label :name , "Customization Name", :class=> "control-label#{@required_fields_class}" %>
     <div class="controls">
-      <%= f.text_field :name, :class => "input-xxlarge required" %>
+      <%= f.text_field :name, :class => "input-xxlarge#{@required_fields_class}" %>
     </div>
   </div>
 
@@ -34,7 +34,7 @@
 
   <div class="control-group">
     <%= f.label :review_type, :class => 'control-label' %>
-    <div class="controls checkbox-controls">
+    <div class="controls radio-controls">
       <%= f.radio_button :review_type, :formal_review, :class => 'radio inline', :id => 'formal_review'  %>
       <%= label_tag :formal_review, 'Formal review required', :class => 'radio-label'%>&nbsp;&nbsp;&nbsp;&nbsp;
       <%= f.radio_button :review_type, :informal_review, :class => 'radio inline', :id => 'informal_review'  %>
@@ -45,16 +45,16 @@
   </div>
 
   <div class="control-group">
-    <%= f.label :contact_info, 'Contact Information',:class => "control-label required" %>
+    <%= f.label :contact_info, 'Contact Information',:class => "control-label#{@required_fields_class}" %>
     <div class="controls">
-      <%= f.text_field :contact_info, :class => 'input-xlarge required' %>
+      <%= f.text_field :contact_info, :class => "input-xlarge#{@required_fields_class}" %>
     </div>
   </div>
 
   <div class="control-group">
-    <%= f.label :contact_email, 'Contact Email', :class => "control-label required" %>
+    <%= f.label :contact_email, 'Contact Email', :class => "control-label#{@required_fields_class}" %>
     <div class="controls">
-      <%= f.text_field :contact_email, :class => 'input-xlarge required' %>
+      <%= f.text_field :contact_email, :class => "input-xlarge#{@required_fields_class}" %>
     </div>
   </div>
 
