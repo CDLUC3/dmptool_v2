@@ -39,5 +39,28 @@ class ResourceContext < ActiveRecord::Base
     where("resource_id IS NOT NULL") 
   end
 
+  def resource_level
+    if requirements_template_id == nil && self.requirement_id == nil && self.resource_id != nil && self.institution_id != nil
+      return "Institution"
+    end
+    if requirements_template_id != nil && self.requirement_id == nil && self.resource_id != nil && self.institution_id == nil
+      return "Template"
+    end
+    
+    if self.requirement_id != nil && self.resource_id != nil && self.institution_id == nil
+      return "Requirement"
+    end
+    if self.requirements_template_id != nil && self.requirement_id == nil && self.resource_id != nil && self.institution_id != nil
+      return "Template - Institution"
+    end
+    if self.requirement_id != nil && self.resource_id != nil && self.institution_id != nil
+      return "Requirement - Institution"
+    end
+    if self.requirements_template == nil && self.requirement_id == nil && self.resource_id != nil && self.institution_id == nil
+      return "Global"
+    end
+    return " "
+  end
+
 end
 

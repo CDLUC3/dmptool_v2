@@ -135,11 +135,12 @@ class ResourceContextsController < ApplicationController
     @template_id = params[:template_id]
     @customization_overview_id = params[:customization_overview_id]
 
-    @resource_level = "Template"
+
 
     @resource_contexts = ResourceContext.includes(:resource).where("resource_id IS NOT NULL")
-    @resource_contexts = @resource_contexts.where(institution_id: [current_user.institution.subtree_ids])
+    #@resource_contexts = @resource_contexts.where(institution_id: [current_user.institution.subtree_ids])
 
+    
 
   end
 
