@@ -23,7 +23,7 @@
 	<% @resource_contexts.each do |resource_context| %>
 		<tr>
 			<td class="span1"><%= radio_button_tag :resource_context, resource_context.id, checked: false %></td>
-			<td><%= @resource_level %></td>
+			<td><%= resource_context.resource_level %></td>
 			<td><%= resource_context.resource.nil? ? " " : resource_context.resource.resource_type %></td>
 			<td>
 				<div class="toggle-links">
@@ -41,8 +41,12 @@
 </table>
 
 <div class="buttons pagination">	
-	<%#= link_to "View All", institutions_path(anchor: 'tab_tab2', scope: "all"), :method => :get, :class => "btn" %>	
-	<%#= paginate @resource_contexts %>
+	<%#= link_to "View All", select_resource_path(template_id: @template_id, 
+																							customization_overview_id: @customization_overview_id), 
+													:method => :post, 
+													:class => "btn" %>	
+
+	<%= paginate @resource_contexts %>
 </div>
 
 <div class="buttons">
