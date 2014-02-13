@@ -41,7 +41,7 @@ class ResourceContextsController < ApplicationController
       if @resource_context.save
         customization_resources_list
         go_to = (params[:after_save] == 'next_page' ? customization_requirement_path(@resource_context.id) :
-                  edit_resource_context_path(@resource_context.requirements_template_id))
+                        edit_resource_context_path(@resource_context.id))
         format.html { redirect_to go_to, notice: message}
         #format.json { render action: 'edit', status: :created, location: @resource_context }
       else
@@ -66,7 +66,7 @@ class ResourceContextsController < ApplicationController
     respond_to do |format|
       if @resource_context.update(to_save)
         go_to = (params[:after_save] == 'next_page' ? customization_requirement_path(@resource_context.id) :
-                  edit_resource_context_path(@resource_context.requirements_template_id) )
+                  edit_resource_context_path(@resource_context.id) )
         format.html { redirect_to go_to, notice: message }
         format.json { head :no_content }
       else
@@ -112,23 +112,35 @@ class ResourceContextsController < ApplicationController
   end
 
   def customization_resources_list
-    @customization = ResourceContext.find(params[:id])
+
+    #@customization = ResourceContext.find(params[:id])
+    
+
+    @customization = @resource_context
     @customization_institution = current_user.institution
+
     @template= @customization.requirements_template
     @customization_institution_name = current_user.institution.full_name
     @template_name = @customization.requirements_template.name
-
+    
+     
     @resource_contexts = ResourceContext.includes(:resource).
                           per_template(@template).
-                          resource_level.where(institution_id: nil)
+                          resource_level.where(institution_id: [current_user.institution.subtree_ids])
+                                                 
+  end
 
-    unless safe_has_role?(Role::DMP_ADMIN)
-     
-      @resource_contexts = ResourceContext.includes(:resource).
-                          per_template(@template).
-                          resource_level.where(institution_id: current_user.institution.id)
-                         
-    end                       
+  def select_resource
+    
+    @template_id = params[:template_id]
+    @customization_overview_id = params[:customization_overview_id]
+
+    @resource_level = "Template"
+
+    @resource_contexts = ResourceContext.includes(:resource).where("resource_id IS NOT NULL")
+    @resource_contexts = @resource_contexts.where(institution_id: [current_user.institution.subtree_ids])
+
+
   end
 
 end

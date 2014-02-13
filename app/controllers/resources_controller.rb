@@ -103,14 +103,16 @@ class ResourcesController < ApplicationController
     @template_id = params[:template_id]
     @template_name = RequirementsTemplate.find(@template_id).name
     @resource = Resource.new
-    @current_institution_id = params[:institution_id]
+    @current_institution_id = current_user.institution.id
     @customization_overview_id = params[:customization_overview_id]
   end
 
   def create_customization_resource
     @template_id = params[:template_id]
     @resource = Resource.new(resource_params)
-    @current_institution_id = params[:current_institution_id]
+    
+    @current_institution_id = current_user.institution.id
+    
     @customization_overview_id = params[:customization_overview_id]
     respond_to do |format|
       if @resource.save 
