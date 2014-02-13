@@ -16,8 +16,8 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require jquery.turbolinks
-//= require bootstrap-wysihtml5
-//= require bootstrap-wysihtml5/locales
+//= require ckeditor/override
+//= require ckeditor/init
 //= require_tree .
 
 
