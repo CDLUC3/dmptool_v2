@@ -135,12 +135,21 @@ class ResourceContextsController < ApplicationController
     @template_id = params[:template_id]
     @customization_overview_id = params[:customization_overview_id]
 
+    if safe_has_role?(Role::DMP_ADMIN)
 
+      @resource_contexts = ResourceContext.includes(:resource).
+                              where("resource_id IS NOT NULL").
+                              order(institution_id: :asc).
+                              page(params[:page]).per(20)
+    else
 
-    @resource_contexts = ResourceContext.includes(:resource).where("resource_id IS NOT NULL")
-    #@resource_contexts = @resource_contexts.where(institution_id: [current_user.institution.subtree_ids])
-
+      @resource_contexts = ResourceContext.includes(:resource).
+                              where("resource_id IS NOT NULL").
+                             where(institution_id: [current_user.institution.subtree_ids, nil]).
+                              order(institution_id: :asc).
+                              page(params[:page]).per(20)
     
+    end
 
   end
 
