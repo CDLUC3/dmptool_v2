@@ -116,6 +116,7 @@ Dmptool2::Application.routes.draw do
   delete 'delete_resource', to: 'resources#destroy'
 
   post 'select_resource', to: 'resource_contexts#select_resource'
+  get 'select_resource', to: 'resource_contexts#select_resource'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

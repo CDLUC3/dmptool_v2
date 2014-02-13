@@ -41,8 +41,12 @@
 </table>
 
 <div class="buttons pagination">	
-	<%#= link_to "View All", institutions_path(anchor: 'tab_tab2', scope: "all"), :method => :get, :class => "btn" %>	
-	<%#= paginate @resource_contexts %>
+	<%#= link_to "View All", select_resource_path(template_id: @template_id, 
+																							customization_overview_id: @customization_overview_id), 
+													:method => :post, 
+													:class => "btn" %>	
+
+	<%= paginate @resource_contexts %>
 </div>
 
 <div class="buttons">
