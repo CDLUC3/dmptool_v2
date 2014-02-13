@@ -112,23 +112,45 @@ class ResourceContextsController < ApplicationController
   end
 
   def customization_resources_list
-    @customization = ResourceContext.find(params[:id])
+
+    #@customization = ResourceContext.find(params[:id])
+    
+
+    @customization = @resource_context
     @customization_institution = current_user.institution
+
     @template= @customization.requirements_template
     @customization_institution_name = current_user.institution.full_name
     @template_name = @customization.requirements_template.name
-
+    
+     
     @resource_contexts = ResourceContext.includes(:resource).
                           per_template(@template).
-                          resource_level.where(institution_id: nil)
+                          resource_level.where(institution_id: [current_user.institution.subtree_ids])
+                                                 
+  end
 
-    unless safe_has_role?(Role::DMP_ADMIN)
-     
+  def select_resource
+    
+    @template_id = params[:template_id]
+    @customization_overview_id = params[:customization_overview_id]
+
+    if safe_has_role?(Role::DMP_ADMIN)
+
       @resource_contexts = ResourceContext.includes(:resource).
-                          per_template(@template).
-                          resource_level.where(institution_id: current_user.institution.id)
-                         
-    end                       
+                              where("resource_id IS NOT NULL").
+                              order(institution_id: :asc).
+                              page(params[:page]).per(20)
+    else
+
+      @resource_contexts = ResourceContext.includes(:resource).
+                              where("resource_id IS NOT NULL").
+                             where(institution_id: [current_user.institution.subtree_ids, nil]).
+                              order(institution_id: :asc).
+                              page(params[:page]).per(20)
+    
+    end
+
   end
 
 end

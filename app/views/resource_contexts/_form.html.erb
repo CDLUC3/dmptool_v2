@@ -1,4 +1,4 @@
-<h1 class="row-fluid"><span class="icon template-resource"></span>Customization Overview</h1>
+<h1 class="row-fluid"><span class="icon resource-template"></span>Customization Overview</h1>
 <p><strong>Basic Information</strong></p>
 <hr/>
 
@@ -13,12 +13,13 @@
         <p>
           <%= @resource_context.institution.nil? ? " " :  @resource_context.institution.name %>
         </p>
+        <%= f.hidden_field :institution_id %>
       </div>
     </div>
   <% else %>
     <div class="control-group">
       <%= label_tag :customized_for, 'Customize for', :class => 'control-label' %>
-      <div class="controls radio-controls">
+      <div class="controls checkbox-controls">
         <%= radio_button_tag :customized_for, :general, (@resource_context.institution_id.blank?),
                              :class => 'radio inline', :id => 'general_customization' %>
         <%= label_tag :general, 'General customization, affiliated with all institutions', :class => 'radio-label'%><br/>
@@ -59,7 +60,7 @@
 
   <div class="control-group">
     <%= f.label :review_type, :class => 'control-label' %>
-    <div class="controls radio-controls">
+    <div class="controls checkbox-controls">
       <%= f.radio_button :review_type, :formal_review, :class => 'radio inline', :id => 'formal_review'  %>
       <%= label_tag :formal_review, 'Formal review required', :class => 'radio-label'%>&nbsp;&nbsp;&nbsp;&nbsp;
       <%= f.radio_button :review_type, :informal_review, :class => 'radio inline', :id => 'informal_review'  %>
