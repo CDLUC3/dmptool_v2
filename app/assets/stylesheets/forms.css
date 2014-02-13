@@ -22,7 +22,7 @@ label.control-label, .form-horizontal label.control-label {
 	line-height: 30px;
 	margin-right: 10px; }
 
-.control-group label.checkbox-label, .control-group label.radio-label {
+.control-group label.checkbox-label {
 	display: inline-block; }
 
 label.required:before {
@@ -55,8 +55,8 @@ textarea {
 	margin-bottom: 10px; }
 .form-horizontal .controls {
 	margin-left: 200px; }
-.controls.radio-controls, .controls.checkbox-controls {
-	margin-top: 12px; }
+.controls.checkbox-controls {
+	margin-top: 5px; }
 	
 .form-horizontal .control-group {
 	margin: 10px 0; }
@@ -73,6 +73,9 @@ textarea {
 
 .controls input[type=text], .controls input[type=password], .controls input[type=email], .controls input[type=search], .controls textarea, .controls select {
 		margin: 0 10px 0 0; }
+		
+.controls p {
+	line-height: 30px; }
 	
 
     

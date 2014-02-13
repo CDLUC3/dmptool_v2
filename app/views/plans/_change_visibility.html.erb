@@ -2,7 +2,7 @@
   <%= form_tag(change_visiblity_path, method: :post, remote: true, html: { :class => "form-horizontal"}) do %>
     <%= hidden_field_tag :plan_id, value: plan_id %>
     <div class="control-group">
-      <div class="controls radio-controls">
+      <div class="controls checkbox-controls">
         <%= radio_button_tag :visibility, :institutional, :class => 'radio inline' %>
         <%= label_tag :institutional, "With others from #{institution_name(plan_id)}", :class => 'radio-label'%><br/>
         <%= radio_button_tag :visibility, :public, :class => 'radio inline' %>
