@@ -1,11 +1,4 @@
 GIT
-  remote: git://github.com/Nerian/bootstrap-wysihtml5-rails.git
-  revision: 9a1f0f6953da7ba43716e0347476fead5fefd701
-  specs:
-    bootstrap-wysihtml5-rails (0.3.1.23)
-      railties (>= 3.0)
-
-GIT
   remote: git://github.com/radar/paranoia.git
   revision: a5762de019b243ab5f4b942d6fbcab2c0908c1ca
   branch: rails4
@@ -87,6 +80,9 @@ GEM
       json (>= 1.7)
     childprocess (0.4.0)
       ffi (~> 1.0, >= 1.0.11)
+    ckeditor (4.0.10)
+      mime-types
+      orm_adapter (~> 0.5.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -163,6 +159,7 @@ GEM
       omniauth (~> 1.0)
       pyu-ruby-sasl (~> 0.0.3.1)
       rubyntlm (~> 0.1.1)
+    orm_adapter (0.5.0)
     polyglot (0.3.3)
     pyu-ruby-sasl (0.0.3.3)
     rack (1.5.2)
@@ -253,11 +250,11 @@ DEPENDENCIES
   american_date
   ancestry
   bootstrap-sass (= 2.3.2.0)
-  bootstrap-wysihtml5-rails!
   capistrano
   capistrano-unicorn
   capybara (~> 2.2.1)
   carrierwave
+  ckeditor
   debugger
   deep_cloneable (~> 1.5.5)
   enum_column3

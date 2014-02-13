@@ -17,7 +17,6 @@
  *= require layouts
  *= require ui
  *= require static_pages
- *= require bootstrap-wysihtml5
  *= require_tree .
  *= stub chrome
  *= stub safari
