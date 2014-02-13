@@ -112,8 +112,13 @@ class ResourceContextsController < ApplicationController
   end
 
   def customization_resources_list
-    @customization = ResourceContext.find(params[:id])
+
+    #@customization = ResourceContext.find(params[:id])
     
+
+    @customization = @resource_context
+    @customization_institution = current_user.institution
+
     @template= @customization.requirements_template
     @customization_institution_name = current_user.institution.full_name
     @template_name = @customization.requirements_template.name
