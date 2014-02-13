@@ -1,4 +1,4 @@
-<h1 class="row-fluid"><span class="icon template-resource"></span>Customization Overview</h1>
+<h1 class="row-fluid"><span class="icon resource-template"></span>Customization Overview</h1>
 <p><strong>Basic Information</strong></p>
 <hr/>
 
@@ -13,6 +13,7 @@
         <p>
           <%= @resource_context.institution.nil? ? " " :  @resource_context.institution.name %>
         </p>
+        <%= f.hidden_field :institution_id %>
       </div>
     </div>
   <% else %>
