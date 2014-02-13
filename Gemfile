@@ -47,4 +47,4 @@ gem "recaptcha", :require => "recaptcha/rails"
 gem 'bootstrap-wysihtml5-rails', :require => 'bootstrap-wysihtml5-rails',
                               :git => 'git://github.com/Nerian/bootstrap-wysihtml5-rails.git'
 gem 'activerecord_any_of'
-
+gem 'prawn'
