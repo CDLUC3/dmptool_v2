@@ -16,8 +16,13 @@ class ResourceContextsController < ApplicationController
     @resource_context.requirements_template_id = @req_temp.id
 
     #if it is for the template or for a a different institution
-    if current_user.has_role?(Role::DMP_ADMIN) && params[:institution_id] == "none"
-      @resource_context.name = "#{@req_temp.name}"
+    if current_user.has_role?(Role::DMP_ADMIN)
+      if params[:institution_id] == "none"
+        @resource_context.name = "#{@req_temp.name}"
+      else
+        that_inst = Institution.find(params[:institution_id])
+        @resource_context.name = "#{@req_temp.name} for #{that_inst.name}"
+      end
       @required_fields_class = ''
     else
       @resource_context.name = "#{@req_temp.name} for #{current_user.institution.name}"

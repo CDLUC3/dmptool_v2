@@ -14,7 +14,7 @@
       <%= radio_button_tag :customized_for, :user_institution,
                            (params[:institution_id] == current_user.institution_id),
                            :class => 'radio inline', :id => 'user_institution' %>
-      <%= label_tag :user_institution, "Customizing this template for #{current_user.institution.name}",
+      <%= label_tag :user_institution, "Customizing this template for my institution (#{current_user.institution.name})",
                     :class => 'checkbox-label' %>
       <br/>
 
