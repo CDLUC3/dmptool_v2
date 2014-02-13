@@ -22,9 +22,9 @@
 	<tbody>
 	<% @resource_contexts.each do |resource_context| %>
 		<tr>
-			<td>Radio Button</td>
-			<td>Level</td>
-			<td>Type</td>
+			<td class="span1"><%= radio_button_tag :resource_context, resource_context.id, checked: false %></td>
+			<td><%= @resource_level %></td>
+			<td><%= resource_context.resource.nil? ? " " : resource_context.resource.resource_type %></td>
 			<td>
 				<div class="toggle-links">
 					<%= resource_context.resource.nil? ? " " : resource_context.resource.label %>
@@ -32,8 +32,8 @@
 			</td>
 			
 			<td><%= resource_context.institution.nil? ? " " :  resource_context.institution.nickname %></td>
-			<td><%#= resource_context.resource.created_at.nil? ? " " :  resource_context.resource.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
-			<td><%#= resource_context.resource.updated_at.nil? ? " " :  resource_context.resource.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+			<td><%= resource_context.created_at.nil? ? " " :  resource_context.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+			<td><%= resource_context.updated_at.nil? ? " " :  resource_context.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 
 		</tr>
 	<% end %>
