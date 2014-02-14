@@ -67,4 +67,10 @@ class Institution < ActiveRecord::Base
     #add as a scope where s=start and e=end letter
     where("full_name REGEXP ?", "^[#{s}-#{e}]")
   end
+
+  def self.search_terms(terms)
+    items = terms.split
+    conditions = " ( " + items.map{|item| "full_name LIKE ?" }.join(' AND ') + " ) " 
+    where(conditions, *items.map{|item| "%#{item}%" })
+  end
 end
