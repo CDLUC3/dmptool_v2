@@ -62,4 +62,9 @@ class Institution < ActiveRecord::Base
   def is_customized?
     self.resource_contexts.where("requirements_template_id IS NOT NULL").where("resource_id IS NULL").count > 0
   end
+
+  def self.letter_range(s, e)
+    #add as a scope where s=start and e=end letter
+    where("full_name REGEXP ?", "^[#{s}-#{e}]")
+  end
 end
