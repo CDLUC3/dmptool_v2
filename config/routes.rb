@@ -21,6 +21,8 @@ Dmptool2::Application.routes.draw do
   get 'terms_of_use', to: 'static_pages#terms_of_use'
   get 'video', to: 'static_pages#video'
   get 'resource_contexts/dmp_for_customization', to: 'resource_contexts#dmp_for_customization', as: "dmp_for_customization"
+  get 'resource_contexts/choose_institution', to: 'resource_contexts#choose_institution'
+
 
   get 'customizations/:id/requirements/(:requirement_id)', to: 'customizations#show', as: 'customization_requirement'
 
