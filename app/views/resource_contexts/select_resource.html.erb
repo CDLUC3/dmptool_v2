@@ -6,48 +6,58 @@
 <% end %>
 </h1>
 
-<table class="table table-striped">
+<%= form_tag copy_selected_customization_resource_path, :method => :post  do %>
 
-	<thead>
-		<tr>
-			<th>Select</th>
-			<th>Level</th>
-			<th>Type</th>
-			<th class="span4">Details</th>			
-			<th>Institution</th>
-			<th>Creation Date</th>
-			<th>Last Modification Date</th>
-		</tr>
-	</thead>
-	<tbody>
-	<% @resource_contexts.each do |resource_context| %>
-		<tr>
-			<td class="span1"><%= radio_button_tag :resource_context, resource_context.id, checked: false %></td>
-			<td><%= resource_context.resource_level %></td>
-			<td><%= resource_context.resource.nil? ? " " : resource_context.resource.resource_type %></td>
-			<td>
-				<div class="toggle-links">
-					<%= resource_context.resource.nil? ? " " : resource_context.resource.label %>
-				</div>
-			</td>
-			
-			<td><%= resource_context.institution.nil? ? " " :  resource_context.institution.nickname %></td>
-			<td><%= resource_context.created_at.nil? ? " " :  resource_context.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
-			<td><%= resource_context.updated_at.nil? ? " " :  resource_context.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Select</th>
+				<th>Level</th>
+				<th>Type</th>
+				<th class="span4">Details</th>
+				<th width="span1">Edit</th>			
+				<th>Institution</th>
+				<th>Creation Date</th>
+				<th>Last Modification Date</th>
+			</tr>
+		</thead>
+		<tbody>
 
-		</tr>
-	<% end %>
-	<tbody>
-</table>
+			<% @resource_contexts.each do |resource_context| %>
+				<tr>
+					<td class="span1"><%= radio_button_tag :resource, resource_context.resource_id, checked: false %></td>
+					<td><%= resource_context.resource_level %></td>
+					<td><%= resource_context.resource.nil? ? " " : resource_context.resource.resource_type %></td>
+					<td>
+						<div class="toggle-links">
+							<%= resource_context.resource.nil? ? " " : resource_context.resource.label %>
+						</div>
+					</td>
+					<td class="span1"><%= link_to raw(''), edit_customization_resource_path(id: resource_context.resource_id, customization_id: @customization_overview_id), :class => 'icon edit-user' %></td>
+					<td><%= resource_context.institution.nil? ? " " :  resource_context.institution.nickname %></td>
+					<td><%= resource_context.created_at.nil? ? " " :  resource_context.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+					<td><%= resource_context.updated_at.nil? ? " " :  resource_context.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 
-<div class="buttons pagination">	
-	<%#= link_to "View All", select_resource_path(template_id: @template_id, 
-																							customization_overview_id: @customization_overview_id), 
-													:method => :post, 
-													:class => "btn" %>	
+				</tr>
+			<% end %>
+		<tbody>
+	</table>
 
-	<%= paginate @resource_contexts %>
-</div>
+	<div class="buttons pagination">	
+		<%= paginate @resource_contexts %>
+	</div>
+
+
+	<%= hidden_field_tag :template_id, @template_id  %>
+
+	<%= hidden_field_tag :customization_overview_id, @customization_overview_id %>
+
+	<div class="buttons">
+		<%= submit_tag 'Submit',  :class => "btn btn-green" %>	
+	</div>
+
+
+<%end%>
 
 <div class="buttons">
 	<%= button_to 'Add another Resource', 
