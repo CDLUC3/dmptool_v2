@@ -109,7 +109,9 @@ class ResourcesController < ApplicationController
 
   def create_customization_resource
     @template_id = params[:template_id]
+    
     @resource = Resource.new(resource_params)
+    
     
     @current_institution_id = current_user.institution.id
     
@@ -120,11 +122,30 @@ class ResourcesController < ApplicationController
         @resource_context = ResourceContext.new(resource_id: @resource_id, institution_id: @current_institution_id, 
                                                 requirements_template_id: @template_id)
         if @resource_context.save
-          format.html { redirect_to edit_resource_context_path(@customization_overview_id), notice: "Resource was successfully created." }
+          format.html { redirect_to edit_resource_context_path(@customization_overview_id), notice: "Resource was successfully created. " }
         end
          
       else
         format.html { redirect_to edit_resource_context_path(@customization_overview_id), notice: "A problem prevented this resource to be created. " }
+      end
+    end
+  end
+
+  def create_customization_resource_from_select_resource
+    @template_id = params[:template_id]
+    @resource_id = params[:resource]
+    
+    @current_institution_id = current_user.institution.id
+    
+    @customization_overview_id = params[:customization_overview_id]
+    respond_to do |format|
+      
+      @resource_context = ResourceContext.new(resource_id: @resource_id, institution_id: @current_institution_id, 
+                                              requirements_template_id: @template_id)
+      if @resource_context.save
+        format.html { redirect_to edit_resource_context_path(@customization_overview_id), notice: "Resource was successfully created." }
+      else
+      format.html { redirect_to edit_resource_context_path(@customization_overview_id), notice: "A problem prevented this resource to be created." }
       end
     end
   end
@@ -137,6 +158,6 @@ class ResourcesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def resource_params
-      params.require(:resource).permit(:resource_type, :value, :label, :text)
+      params.require(:resource).permit(:resource_type, :value, :label, :text) 
     end
 end

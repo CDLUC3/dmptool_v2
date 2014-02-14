@@ -118,6 +118,10 @@ Dmptool2::Application.routes.draw do
   post 'select_resource', to: 'resource_contexts#select_resource'
   get 'select_resource', to: 'resource_contexts#select_resource'
 
+  post 'create_customization_resource_from_select_resource', to: 'resources#create_customization_resource_from_select_resource'
+
+  #post 'save_selected_resource', to: 'resource_contexts#save_selected_resource'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
