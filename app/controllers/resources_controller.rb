@@ -138,8 +138,16 @@ class ResourcesController < ApplicationController
     @customization_overview_id = params[:customization_overview_id]
          
     @current_institution_id = current_user.institution.id
-    
-    unless  template_customization_present?(@resource_id, @template_id, @current_institution_id)
+
+    @resource_context = nil
+    if template_customization_present?(@resource_id, @template_id, @current_institution_id)
+      
+      respond_to do |format|
+        format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
+                        notice: "The resource you selected is already in your context. " }
+      end
+      return
+    else
    
       @resource_context = ResourceContext.new(resource_id: @resource_id, 
                                               institution_id: @current_institution_id, 
@@ -147,18 +155,15 @@ class ResourcesController < ApplicationController
       respond_to do |format| 
         if @resource_context.save
           format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
-                        notice: "Resource was successfully created." }         
+                        notice: "Resource was successfully created." }        
         else
           format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
                         notice: "A problem prevented this resource to be created. " }
         end
       end
+      
+    end
 
-    end
-    respond_to do |format|
-      format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
-                        notice: "The resource you selected is already in your context. " }
-    end
   end
 
   def template_customization_present?(resource_id, template_id, current_institution_id)
