@@ -7,7 +7,7 @@ def print_responses(pdf, requirement, heading)
     pdf.font_size(14)
     pdf.font("Helvetica", :style=>:normal)
     pdf.formatted_text([{:text=> heading, :styles=>[:normal]},
-                        {:text=> " #{requirement.text_full.to_s}", :styles=>[:bold]}])
+                        {:text=> " #{requirement.text_brief.to_s}", :styles=>[:bold]}])
     if requirement.children.size > 0 then
       pdf.indent(12) do
         requirement.children.order(:order).each_with_index do |child, i|
