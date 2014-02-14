@@ -173,7 +173,7 @@ class ResourceContextsController < ApplicationController
 
       @resource_contexts = ResourceContext.includes(:resource).
                               where("resource_id IS NOT NULL").
-                             where(institution_id: [current_user.institution.subtree_ids, nil]).
+                              where(institution_id: [current_user.institution.subtree_ids]).
                               order(institution_id: :desc).
                               page(params[:page]).per(20)
     
