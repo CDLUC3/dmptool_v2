@@ -20,16 +20,18 @@ ul.nav-tabs li a {
 	display: block;
 	border-color: #B6B6B7;
 	border-bottom: none;
+	background: #FFFFFF;
 	color: #4C4C4E;
 	font-size: 13px;
 	font-weight: bold;
 	line-height: 31px;
-	height: 30px;
+	height: 29px;
 	padding: 0 14px; }
 .nav-tabs > .active >  a, .nav-tabs > .active > a:hover, .nav-tabs > .active > a:focus {
 	border-color: #B6B6B7;
 	border-bottom: none;
-	color: #516935; }
+	color: #516935;
+	height: 30px; }
 ul.nav-tabs li a:hover, .tabs ul.nav-tabs li a:focus {
 	height: 29px; } 
 ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {

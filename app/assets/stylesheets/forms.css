@@ -13,18 +13,14 @@ label {
 	padding: 0; }
 .control-group label {
 	display: block; }
-	
-label.control-label {
-	margin-right: 10px; }
-		
+.table .control-group label {
+	display: inline-block; }
 label.control-label, .form-horizontal label.control-label {
 	font-weight: bold;
 	line-height: 30px;
 	margin-right: 10px; }
-
 .control-group label.checkbox-label {
 	display: inline-block; }
-
 label.required:before {
 	content: "\002A\0020";
 	color: #DA0049; }
@@ -57,7 +53,9 @@ textarea {
 	margin-left: 200px; }
 .controls.checkbox-controls {
 	margin-top: 5px; }
-	
+.controls.checkbox-controls label {
+	display: inline-block;
+}
 .form-horizontal .control-group {
 	margin: 10px 0; }
 .table .control-group {

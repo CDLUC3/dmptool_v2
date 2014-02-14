@@ -13,6 +13,8 @@
 [class*="span"], .row-fluid [class*="span"] {
 	margin-top: 0;
 	margin-bottom: 0; }
+.row-fluid [class*="span"]:first-child {
+	margin-left: 0; }
 .align-center {
 	text-align: center; }
 .centered {
