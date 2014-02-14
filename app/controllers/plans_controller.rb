@@ -1,5 +1,5 @@
 class PlansController < ApplicationController
-  before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export]
+  before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details]
   before_action :select_requirements_template, only: [:select_dmp_template]
   # GET /plans
   # GET /plans.json
@@ -48,11 +48,18 @@ class PlansController < ApplicationController
   # GET /plans/1/edit
   def edit
     @comment = Comment.new
-    comments = Comment.all
-    if safe_has_role?(Role::INSTITUTIONAL_REVIEWER) || safe_has_role?(Role::DMP_ADMIN)
-      @comments = comments.reviewer
+    if !safe_has_role?(Role::DMP_ADMIN)
+      comments = Comment.where(plan_id: @plan.id, user_id: current_user.id)
+      case comments
+      when comments.where(visibility: :reviewer)
+        @comments = comments.reviewer
+      when comments.where(visibility: :owner)
+        @comments = comments.owner
+      else
+        @comments = comments
+      end
     else
-      @comments = comments.owner
+      @comments = Comment.all
     end
   end
 
@@ -155,7 +162,11 @@ class PlansController < ApplicationController
   end
 
   def details
-
+    template_id = @plan.requirements_template_id
+    @requirements_template = RequirementsTemplate.find(template_id)
+    @requirements = @requirements_template.requirements
+    # @template_resources = Resource.joins( "JOIN resource_contexts ON resources.id = resource_contexts.resource_id AND resource_contexts.requirements_template_id = @requirements_template )
+    # @institution_resources =
   end
 
   def change_visiblity
