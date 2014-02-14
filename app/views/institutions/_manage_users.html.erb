@@ -35,17 +35,19 @@
 <table class ="table">
 	<tr class="user_row">  
 		<td class="span7">
-			<%= render partial: '/users/user_autocomplete_widget',
-			:locals =>
-				       {  user_role: 'template_editor',
-				          #submit_text: 'Add As Template Editor',
-				          submit_text: 'Grant Role',
-				          submit_url: add_authorization_manage_users_path( anchor: 'tab_tab4'),
-				          role_number: Role::TEMPLATE_EDITOR,
-				          
-				          item_description: 'template editor'
-				       }
-			%>
+			<div class="control-group">
+				<%= render partial: '/users/user_autocomplete_widget',
+				:locals =>
+					       {  user_role: 'template_editor',
+					          #submit_text: 'Add As Template Editor',
+					          submit_text: 'Grant Role',
+					          submit_url: add_authorization_manage_users_path( anchor: 'tab_tab4'),
+					          role_number: Role::TEMPLATE_EDITOR,
+					          
+					          item_description: 'template editor'
+					       }
+				%>
+			</div>
 		</td>
 		<td class="span5">
 			<div class="control-group row-fluid">

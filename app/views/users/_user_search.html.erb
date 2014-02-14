@@ -1,8 +1,10 @@
 <div class="search-area">
 	<%= form_tag('', {:method => :get}) do %>
+	<div class="control-group">
 		<%= search_field_tag(:q, params[:q], :class => 'input-large') %>
-		<span class="icon search"></span>
+		<%= label_tag :q, "Search", :class => "icon search" %>
 		<%= submit_tag('Search') %>
+	</div>
 	<% end %>
 </div>
 

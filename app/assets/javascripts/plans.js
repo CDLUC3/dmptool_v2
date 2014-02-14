@@ -7,7 +7,7 @@ $(function() {
 		dateFormat: "mm/dd/yy",
 		changeMonth: true,
 		changeYear: true,
-		numberOfMonths: 2
+		numberOfMonths: 1
 	});
 });
 
