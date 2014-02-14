@@ -83,6 +83,7 @@
               <fieldset id = "reviewer_comments">
                 <legend>Comments<%= link_to raw('<i class="icon-chevron-up pull-right"></i>'), '#', id: 'hide_reviewer_comments' %></legend>
                 <%= render partial: 'comments/index' %>
+                <%= render partial: 'comments/form', locals: {:plan_id => params[:id]} %>
               </fieldset>
             </div>
           </div>
