@@ -175,6 +175,7 @@ class ResourceContextsController < ApplicationController
                               where("resource_id IS NOT NULL").
                               where(institution_id: [current_user.institution.subtree_ids]).
                               order(institution_id: :desc).
+                              group(:resource_id).
                               page(params[:page]).per(20)
     
     end

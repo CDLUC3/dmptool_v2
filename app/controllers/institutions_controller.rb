@@ -193,6 +193,12 @@ class InstitutionsController < ApplicationController
 
   def partners_list
     @institutions = Institution.page(params[:page]).per(10)
+    unless params[:s].blank? || params[:e].blank?
+      @institutions = @institutions.letter_range(params[:s], params[:e])
+    end
+    unless params[:q].blank? then
+      @institutions = @institutions.search_terms(params[:q])
+    end
   end
   
   private
