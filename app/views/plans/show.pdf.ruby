@@ -10,7 +10,7 @@ def print_responses(pdf, requirement)
     if requirement.children.size > 0 then
       pdf.indent(12) do
         requirement.children.each do |child|
-          print_responses(child)
+          print_responses(pdf, child)
         end
       end
     else
