@@ -1,8 +1,14 @@
 <div class= 'requirement_instruction'>
 	<strong>Instruction :</strong>
-	<span><%=  Requirement.find(requirement_id).text_full %></span>
+	<span><%= instruction(requirement_id) %></span>
 </div>
+<br/>
 <div class= 'requirement_guidance'>
 	<strong>Guidance :</strong>
-	<span><%=  guidance(requirement_id) %></span>
+	<% guidance(requirement_id) %>
+	<ol>
+		<% @resources.each do |resource| %>
+			<li><%= resource %></li>
+		<% end %>
+	</ol>
 </div>

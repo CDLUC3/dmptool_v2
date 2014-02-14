@@ -53,4 +53,28 @@ module PlansHelper
 			institution_name = Institution.find(institution_id).full_name
 		end
 	end
+
+	def instruction(requirement_id)
+		unless !Requirement.exists?(requirement_id)
+			Requirement.find(requirement_id).text_full
+		end
+	end
+
+	def guidance(requirement_id)
+		unless !Requirement.exists?(requirement_id)
+			requirement = Requirement.find(requirement_id)
+			@resource_contexts = ResourceContext.where(requirement_id: requirement_id, institution_id: current_user.institution_id, requirements_template_id: @requirements_template.id)
+			@resources = Array.new
+			@resource_contexts.each do |resource_context|
+				display_text(resource_context)
+			end
+		end
+	end
+
+	def display_text(resource_context)
+		id  = resource_context.resource_id
+		resource = Resource.find(id).text
+		@resources << resource
+	end
+
 end

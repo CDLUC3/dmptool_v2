@@ -31,7 +31,8 @@ class ResourcesController < ApplicationController
 
   def edit_customization_resource
     @resource = Resource.find(params[:id])
-     @customization_id = params[:customization_id]
+    @customization_id = params[:customization_id]
+    @resource_templates_id = ResourceContext.where(resource_id: @resource.id).pluck(:requirements_template_id)
   end
 
   def update_customization_resource
@@ -125,6 +126,32 @@ class ResourcesController < ApplicationController
          
       else
         format.html { redirect_to edit_resource_context_path(@customization_overview_id), notice: "A problem prevented this resource to be created. " }
+      end
+    end
+  end
+
+  def select_customization_resource
+    
+    @resource_id = params[:resource]
+
+    @template_id = params[:template_id]
+   
+    
+    @current_institution_id = current_user.institution.id
+    
+    @customization_overview_id = params[:customization_overview_id]
+   
+    @resource_context = ResourceContext.new(resource_id: @resource_id, institution_id: @current_institution_id, 
+                
+                                          requirements_template_id: @template_id)
+    
+    respond_to do |format| 
+      if @resource_context.save
+        format.html { redirect_to edit_resource_context_path(@customization_overview_id), notice: "Resource was successfully created." }
+      
+       
+      else
+        format.html { redirect_to edit_resource_context_path(@customization_overview_id), notice: "resource_id params is: #{@resource_id} A problem prevented this resource to be created. " }
       end
     end
   end

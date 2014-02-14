@@ -7,13 +7,36 @@ class ResourceContextsController < ApplicationController
   # GET /resource_templates/new
   def new
     redirect_to :back and return if params[:requirements_template_id].blank?
+    if current_user.has_role?(Role::DMP_ADMIN) && params[:institution_id].blank?
+      redirect_to({:action => :choose_institution, :requirements_template_id => params[:requirements_template_id]}) and return
+    end
     @req_temp = RequirementsTemplate.find(params[:requirements_template_id])
     redirect_to :back and return if @req_temp.nil?
     @resource_context = ResourceContext.new
     @resource_context.requirements_template_id = @req_temp.id
-    @resource_context.name = "#{@req_temp.name} for #{current_user.institution.name}"
+
+    #if it is for the template or for a a different institution
+    if current_user.has_role?(Role::DMP_ADMIN)
+      if params[:institution_id] == "none"
+        @resource_context.name = "#{@req_temp.name}"
+      else
+        that_inst = Institution.find(params[:institution_id])
+        @resource_context.name = "#{@req_temp.name} for #{that_inst.name}"
+      end
+      @required_fields_class = ''
+    else
+      @resource_context.name = "#{@req_temp.name} for #{current_user.institution.name}"
+      @required_fields_class = ' required'
+    end
+
     @resource_context.review_type = "formal_review"
-    @resource_context.institution_id = current_user.institution.id
+
+    #the institution_id should be nil if it's none, otherwise set it
+    if current_user.has_role?(Role::DMP_ADMIN)
+      @resource_context.institution_id = ( params[:institution_id] == "none" ? nil : params[:institution_id])
+    else
+      @resource_context.institution_id = current_user.institution_id
+    end
     @resource_context.contact_email = @req_temp.institution.contact_email
     @resource_context.contact_info = @req_temp.institution.contact_info
 
@@ -130,6 +153,11 @@ class ResourceContextsController < ApplicationController
                                                  
   end
 
+  def choose_institution
+    make_institution_dropdown_list
+
+  end
+
   def select_resource
     
     @template_id = params[:template_id]
@@ -139,14 +167,14 @@ class ResourceContextsController < ApplicationController
 
       @resource_contexts = ResourceContext.includes(:resource).
                               where("resource_id IS NOT NULL").
-                              order(institution_id: :asc).
+                              order(institution_id: :desc).
                               page(params[:page]).per(20)
     else
 
       @resource_contexts = ResourceContext.includes(:resource).
                               where("resource_id IS NOT NULL").
-                             where(institution_id: [current_user.institution.subtree_ids, nil]).
-                              order(institution_id: :asc).
+                              where(institution_id: [current_user.institution.subtree_ids]).
+                              order(institution_id: :desc).
                               page(params[:page]).per(20)
     
     end

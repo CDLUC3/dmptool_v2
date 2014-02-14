@@ -22,12 +22,8 @@
     <% end %>
   <tbody>
 </table>
-    <div class="buttons pagination">
-      <%= link_to "View All", plans_path(:scope => "all"), :method => :get, :class => "btn", :id => 'view_all_plans'%>
-      <%= paginate @plans %>
-    </div>
-    </tr>
-  </tbody>
-</table>
-  <%= button_to 'Delete Selected DMPs', plan_path(@plan), method: :delete, data: { confirm: 'Are you sure?' } %>
-<br/>
+<div class="buttons pagination">
+	<%= link_to "View All", plans_path(:scope => "all"), :method => :get, :class => "btn", :id => 'view_all_plans'%>
+	<%= paginate @plans %>
+</div>
+<%= button_to 'Delete Selected DMPs', plan_path(@plan), method: :delete, data: { confirm: 'Are you sure?' } %>
