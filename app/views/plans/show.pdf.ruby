@@ -2,15 +2,16 @@
 require 'nokogiri'
 
 
-def print_responses(pdf, requirement)
+def print_responses(pdf, requirement, heading)
   pdf.pad(12) do
-    pdf.font("Helvetica", :style=>:bold)
     pdf.font_size(14)
-    pdf.text(requirement.text_full)
+    pdf.font("Helvetica", :style=>:normal)
+    pdf.formatted_text([{:text=> heading, :styles=>[:normal]},
+                        {:text=> " #{requirement.text_full.to_s}", :styles=>[:bold]}])
     if requirement.children.size > 0 then
       pdf.indent(12) do
-        requirement.children.each do |child|
-          print_responses(pdf, child)
+        requirement.children.order(:order).each_with_index do |child, i|
+          print_responses(pdf, child, "#{heading}.#{i+1}")
         end
       end
     else
@@ -41,8 +42,8 @@ pdf = Prawn::Document.new(:bottom_margin=>72) do |pdf|
   pdf.stroke_horizontal_rule
   pdf.move_down 10
 
-  @plan.requirements_template.requirements.roots.each do |req|
-    print_responses(pdf, req)
+  @plan.requirements_template.requirements.order(:order).roots.each_with_index do |req, i|
+    print_responses(pdf, req, (i + 1).to_s)
   end
 
   # Generate footer
