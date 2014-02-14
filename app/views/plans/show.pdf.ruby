@@ -15,8 +15,13 @@ def print_responses(pdf, requirement)
       end
     else
       resp = Response.where(:requirement=>requirement, :plan=>@plan).first
+      raw_html = if resp.nil? then
+                   "[No response]"
+                 else
+                   resp.value
+                 end
+      html = Nokogiri::HTML(raw_html)
       pdf.font("Helvetica", :style=>:normal)
-      html = Nokogiri::HTML(resp.value)
       pdf.pad(10) do
         pdf.indent(12) do
           html.css('p').each do |p|
