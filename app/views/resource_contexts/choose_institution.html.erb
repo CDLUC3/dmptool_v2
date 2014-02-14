@@ -1,0 +1,75 @@
+<br/>
+<h1 class="row-fluid"><span class="icon select"></span>Select Institution for customization</h1>
+<br/>
+
+<%= form_tag(new_resource_context_path, {:method => :get, :class => 'form-horizontal' } ) do %>
+  <div class="control-group">
+    <%= label_tag :customized_for, 'Customize for', :class => 'control-label' %>
+    <div class="controls radio-controls">
+      <%= radio_button_tag :customized_for, :general, (params[:institution_id].blank?),
+                           :class => 'radio inline', :id => 'general_customization' %>
+      <%= label_tag :general, 'General customization, shown to all institutions using this template', :class => 'checkbox-label' %>
+      <br/>
+
+      <%= radio_button_tag :customized_for, :user_institution,
+                           (params[:institution_id] == current_user.institution_id),
+                           :class => 'radio inline', :id => 'user_institution' %>
+      <%= label_tag :user_institution, "Customizing this template for my institution (#{current_user.institution.name})",
+                    :class => 'checkbox-label' %>
+      <br/>
+
+      <%= radio_button_tag :customized_for, :select_institution,
+                           (params[:institution_id].blank? ? false : params[:institution_id] != current_user.institution_id),
+                           :class => 'radio inline', :id => 'select_institution' %>
+      <%= label_tag :select_institution, 'Customizing this template for the following institution', :class => 'checkbox-label' %>
+      <br/>
+      <%= select_tag(:list_institution_id,
+                     options_for_select(@inst_list, :selected => params[:institution_id]),
+                     :class => "input-xxlarge", :style => 'display: none;') %>
+
+      <%= hidden_field_tag :requirements_template_id, (params[:requirements_template_id] || 'none') %>
+      <%= hidden_field_tag :institution_id, params[:institution_id] %>
+    </div>
+  </div>
+  <div style="clear:both"></div>
+  <%= link_to("Previous page", dmp_for_customization_path, method: :get, :class => "btn pull-left") %>
+  <%= submit_tag("Next page", id: 'next', :class => "btn pull-right") %>
+<% end %>
+
+<script type="text/javascript">
+
+  function updateButtonState(){
+    // this function needs to update the state of the drop-down hiding
+    // and also fill in hidden field for target institution as needed
+    // values are general, user_institution or select institution
+    var type = $('input[name=customized_for]:radio:checked').val();
+    var list_ctrl = $('#list_institution_id');
+    var hidden_ctrl = $('#institution_id');
+    if(type == 'general' || type == 'user_institution'){
+      list_ctrl.hide('fold');
+    }else{
+      list_ctrl.show('fold');
+    }
+    if(type == 'general'){
+      hidden_ctrl.val('none');
+    }else if(type == 'user_institution'){
+      hidden_ctrl.val('<%= current_user.institution_id %>');
+    }else{
+      hidden_ctrl.val($('#list_institution_id').val());
+    }
+  };
+
+  $( document).ready(function(){
+    updateButtonState();
+  });
+
+  $("input[name=customized_for]:radio").change(function () {
+    updateButtonState();
+  });
+
+  $("#list_institution_id").change(function(e){
+    var hidden_ctrl = $('#institution_id');
+    hidden_ctrl.val($('#list_institution_id').val());
+  })
+
+</script>

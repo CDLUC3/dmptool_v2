@@ -1,0 +1,14 @@
+<div class= 'requirement_instruction'>
+	<strong>Instruction :</strong>
+	<span><%= instruction(requirement_id) %></span>
+</div>
+<br/>
+<div class= 'requirement_guidance'>
+	<strong>Guidance :</strong>
+	<% guidance(requirement_id) %>
+	<ol>
+		<% @resources.each do |resource| %>
+			<li><%= resource %></li>
+		<% end %>
+	</ol>
+</div>

@@ -21,7 +21,7 @@
     <div class="tab-content">
 
       <div class="tab-pane active" id="tab1">
-        Guidance here
+        <%= render partial: 'requirement_details', locals: { requirement_id: params[:requirement_id] } %>
       </div>
 
       <div class="tab-pane" id="tab2">
