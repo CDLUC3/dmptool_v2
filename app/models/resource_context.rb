@@ -30,6 +30,9 @@ class ResourceContext < ActiveRecord::Base
      where(requirements_template_id: template.id) 
   end
 
+  def self.requirement_level
+    where("requirement_id IS NOT NULL")
+  end
 
   def self.template_level
   	 where("requirements_template_id IS NOT NULL")
@@ -39,6 +42,7 @@ class ResourceContext < ActiveRecord::Base
     where("resource_id IS NOT NULL") 
   end
 
+  
   def resource_level
     if requirements_template_id == nil && self.requirement_id == nil && self.resource_id != nil && self.institution_id != nil
       return "Institution"

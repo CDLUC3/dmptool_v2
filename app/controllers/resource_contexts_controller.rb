@@ -111,7 +111,7 @@ class ResourceContextsController < ApplicationController
  
 
   def resource_customizations
-    @resource_contexts = ResourceContext.template_level.institutional_level.no_resource_no_requirement.page(params[:page]).order('name ASC')
+    @resource_contexts = ResourceContext.template_level.institutional_level.no_resource_no_requirement.order('name ASC').page(params[:page])
     case params[:scope]
       when "all"
         @resource_contexts 
@@ -122,7 +122,8 @@ class ResourceContextsController < ApplicationController
 
     unless safe_has_role?(Role::DMP_ADMIN)
       @resource_contexts = @resource_contexts.
-                            where(institution_id: [current_user.institution.subtree_ids])
+                            where(institution_id: [current_user.institution.subtree_ids]).
+                            order('name ASC')
     end
   end
 
