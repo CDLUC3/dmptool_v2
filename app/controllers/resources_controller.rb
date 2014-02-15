@@ -31,7 +31,36 @@ class ResourcesController < ApplicationController
 
   def edit_customization_resource
     @resource = Resource.find(params[:id])
-     @customization_id = params[:customization_id]
+    @customization_id = params[:customization_id]
+    @resource_templates_id = ResourceContext.where(resource_id: @resource.id).pluck(:requirements_template_id)
+
+    @resource_contexts_templates = ResourceContext.where(resource_id: @resource.id).
+                                        template_level. #template_id is not nil
+                                        includes(:requirements_template).
+                                        group(:requirements_template_id)
+
+    @templates_count = ResourceContext.where(resource_id: @resource.id).
+                                        template_level. #template_id is not nil
+                                        select(:requirements_template_id).count
+
+    @any_templates = ( @templates_count > 0 )
+
+    @resource_contexts_requirements = ResourceContext.where(resource_id: @resource.id).
+                                        requirement_level. #requirement_id is not nil
+                                        includes(:requirement).
+                                        includes(:requirements_template).
+                                        group(:requirement_id)
+
+    @requirements_count = ResourceContext.where(resource_id: @resource.id).
+                                        requirement_level. #requirement_id is not nil
+                                        select(:requirement_id).count
+
+
+
+    @any_requirements = ( @requirements_count > 0 )
+
+
+
   end
 
   def update_customization_resource
@@ -127,6 +156,49 @@ class ResourcesController < ApplicationController
         format.html { redirect_to edit_resource_context_path(@customization_overview_id), notice: "A problem prevented this resource to be created. " }
       end
     end
+  end
+
+  def copy_selected_customization_resource
+
+    @resource_id = params[:resource]
+    @template_id = params[:template_id]
+    @resource = Resource.find(@resource_id)
+    @customization_overview_id = params[:customization_overview_id]
+         
+    @current_institution_id = current_user.institution.id
+
+    @resource_context = nil
+    if template_customization_present?(@resource_id, @template_id, @current_institution_id)
+      
+      respond_to do |format|
+        format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
+                        notice: "The resource you selected is already in your context. " }
+      end
+      return
+    else
+   
+      @resource_context = ResourceContext.new(resource_id: @resource_id, 
+                                              institution_id: @current_institution_id, 
+                                              requirements_template_id: @template_id) 
+      respond_to do |format| 
+        if @resource_context.save
+          format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
+                        notice: "Resource was successfully created." }        
+        else
+          format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
+                        notice: "A problem prevented this resource to be created. " }
+        end
+      end
+      
+    end
+
+  end
+
+  def template_customization_present?(resource_id, template_id, current_institution_id)
+    ResourceContext.where(resource_id: resource_id, 
+                          requirements_template_id: template_id, 
+                          institution_id: current_institution_id).
+                    pluck(:id).count > 0 
   end
 
   private

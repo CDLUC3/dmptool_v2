@@ -2,10 +2,11 @@
 
 <% requirements.each do |requirement| %>
 
-  <% if requirement.group? %>
+  <% if requirement.is_group? %>
     <li class="li_folder" id="requirement_<%= requirement.id %>">
       <i class="icon requirements-group-open larger"></i>
-      <%= link_to requirement.text_brief,
+      <%= requirement.text_brief %>
+      <%# link_to requirement.text_brief,
                   customization_requirement_path(@customization, requirement_id: requirement.id, node_type: 'group') %>
       <ul>
         <%= render partial: 'shared/requirements_tree2', locals: {requirements: requirement.children} %>
