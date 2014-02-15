@@ -72,7 +72,7 @@
         <div class="control-group">
           <label class ="control-label"> Current Status: </label>
           <div class="controls">
-            <strong><%= @plan.plan_states.last.state.to_s.capitalize %></strong><%= link_to "(Show History)", plan_plan_states_path(@plan) %>
+            <p><strong><%= @plan.plan_states.last.state.to_s.capitalize %></strong><%= link_to "(Show History)", plan_plan_states_path(@plan) %></p>
           </div>
         </div>
         <% if safe_has_role?(Role::INSTITUTIONAL_REVIEWER) || safe_has_role?(Role::DMP_ADMIN) %>
@@ -157,3 +157,6 @@
     </div>
   </div>
 </div>
+<script>
+		jQuery(document).requiredField();
+</script>

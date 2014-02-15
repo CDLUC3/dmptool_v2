@@ -1,24 +1,28 @@
-<br/>
 <h1 class="row-fluid"><span class="icon select"></span>Select DMP Template</h1>
 <br/>
-<%= form_tag('', {:method => :get}) do %>
-<div class="span8">
-  <p>Select one of the funder DMP Templates listed to proceed to the next step. The type of template chosen can affect what information you will need to provide in the following steps.</p>
-  <div class="buttons-alpha row">
-    <%= link_to('A-F', { :s => 'a', :e => 'f' }, :class => 'btn') %>
-    <%= link_to('G-L', { :s => 'g', :e => 'l' }, :class => 'btn') %>
-    <%= link_to('M-S', { :s => 'm', :e => 's' }, :class => 'btn') %>
-    <%= link_to('T-Z', { :s => 't', :e => 'z' }, :class => 'btn') %>
-    <%= link_to('View All', { :s => '', :e => '' }, :class => 'btn') %>
-  </div>
+<div class="row-fluid">
+	<div class="span8">
+	  <p>Select one of the funder DMP Templates listed to proceed to the next step. The type of template chosen can affect what information you will need to provide in the following steps.</p>
+	</div>
+	<div class="search-area span4 pull-right">
+		<%= form_tag('', {:method => :get}) do %>
+					<div class="control-group pull-right">
+						<%= search_field_tag(:q, params[:q], :class => 'input-large') %>
+						<%= label_tag :q, "Search", :class => "icon search" %>
+						<%= submit_tag('Search') %>
+					</div>
+		<% end %>
+	</div>
 </div>
-<div class="search-area span4">
-  <%= search_field_tag(:q, params[:q], :class => 'input-large') %>
-  <span class="icon search"></span>
-  <%= submit_tag('Search') %>
+<br/>
+<div class="buttons-alpha row">
+	<%= link_to('A - F', { :s => 'a', :e => 'f' }, :class => 'btn viewA-F') %> 
+	<%= link_to('G - L', { :s => 'g', :e => 'l' }, :class => 'btn viewG-L') %> 
+	<%= link_to('M - S', { :s => 'm', :e => 's' }, :class => 'btn viewM-S') %> 
+	<%= link_to('T - Z', { :s => 't', :e => 'z' }, :class => 'btn viewT-Z') %> 
+	<%= link_to('All', { :s => 'a', :e => 'z' }, :class => 'btn viewA-Z') %>
 </div>
-<% end %>
-  <br/>
+
 <div class="span8">
   <% unless @rt_tree.empty? %>
     <%= form_tag(@submit_to, method: "get", id: 'requirements_template_form') do %>

@@ -46,7 +46,7 @@ $.rails.showConfirmDialog = function(link) {
   					"</div>\n" +
   					"<div class=\"modal-footer\">\n" +
   						"<a data-dismiss=\"modal\" class=\"btn\">" + noVal + "</a>\n" +
-  						"<a data-dismiss=\"modal\" class=\"btn btn-primary confirm\">" + yesVal + "</a>\n" +
+  						"<a data-dismiss=\"modal\" class=\"btn btn-green\">" + yesVal + "</a>\n" +
   					"</div>\n" +
   				"</div>";
   $(html).modal();

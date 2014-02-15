@@ -75,7 +75,14 @@ textarea {
 .controls p {
 	line-height: 30px; }
 	
-
+input[type=text].blank, input[type=password].blank, input[type=email].blank, select.blank, textarea.blank {
+	border-left: 4px solid #DA0049;
+	padding-left: 3px;
+}
+input[type=text].filled, input[type=password].filled, input[type=email].filled, select.blank, textarea.filled {
+	border-left: 4px solid #A0DF00;
+	padding-left: 3px;
+}
     
 /* Search Area */
 .search-area[class*="span"] {
