@@ -33,6 +33,34 @@ class ResourcesController < ApplicationController
     @resource = Resource.find(params[:id])
     @customization_id = params[:customization_id]
     @resource_templates_id = ResourceContext.where(resource_id: @resource.id).pluck(:requirements_template_id)
+
+    @resource_contexts_templates = ResourceContext.where(resource_id: @resource.id).
+                                        template_level. #template_id is not nil
+                                        includes(:requirements_template).
+                                        group(:requirements_template_id)
+
+    @templates_count = ResourceContext.where(resource_id: @resource.id).
+                                        template_level. #template_id is not nil
+                                        select(:requirements_template_id).count
+
+    @any_templates = ( @templates_count > 0 )
+
+    @resource_contexts_requirements = ResourceContext.where(resource_id: @resource.id).
+                                        requirement_level. #requirement_id is not nil
+                                        includes(:requirement).
+                                        includes(:requirements_template).
+                                        group(:requirement_id)
+
+    @requirements_count = ResourceContext.where(resource_id: @resource.id).
+                                        requirement_level. #requirement_id is not nil
+                                        select(:requirement_id).count
+
+
+
+    @any_requirements = ( @requirements_count > 0 )
+
+
+
   end
 
   def update_customization_resource
