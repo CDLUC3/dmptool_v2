@@ -100,6 +100,18 @@ class ResourceContextsController < ApplicationController
   end
 
 
+  def unlink_resource
+    @resource_context_to_delete = ResourceContext.find(params[:resource_context_to_delete]) 
+    @customization_id = params[:customization_id]
+    @resource_id = @resource_context_to_delete.resource_id
+
+    @resource_context_to_delete.destroy
+    respond_to do |format|
+      format.html { redirect_to edit_customization_resource_path(id: @resource_id, customization_id: @customization_id) }
+      format.json { head :no_content }
+    end
+  end
+
   def destroy
     @resource_context.destroy
     respond_to do |format|

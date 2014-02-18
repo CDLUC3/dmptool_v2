@@ -54,8 +54,7 @@
 
 <table class="table table-striped">
   <tr>
-    <th> This Resource is shown in:</th>
-    <th></th>
+    <th colspan="2"> This Resource is shown in:</th>
   </tr>
 
   
@@ -63,30 +62,30 @@
     <% if @any_templates %>
 
       <tr>
-        <th>The following Templates:</th>
-        <th></th>
+        <th colspan="2">The following Templates:</th>   
       </tr>
 
       <% @resource_contexts_templates.each do |resource_contexts_template| %>
         <tr>
   
           <td><%= resource_contexts_template.requirements_template.name %></td>
-          <td></td>
+          <td> 
+            <%= link_to 'UNLINK', unlink_resource_path(resource_context_to_delete: resource_contexts_template, customization_id: @customization_id),  
+                                    method: :post %>  
+          </td> 
         </tr>
       <% end %>
 
     <% end %>
 
     <tr>
-      <td></td>
-      <td></td>
+      <td colspan="2"></td>
     </tr>
 
     <% if @any_requirements %>
 
       <tr>
-        <th>The following Requirements:</th>
-        <th></th>
+        <th colspan="2" >The following Requirements:</th>
       </tr>
 
       <tr>
