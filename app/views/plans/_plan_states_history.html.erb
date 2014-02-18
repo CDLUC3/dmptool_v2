@@ -1,0 +1,5 @@
+<ul>
+	<% @plan_states.each do |planstate| %>
+  <li><%= planstate.updated_at.strftime("%m/%d/%Y %I:%M%p")%><strong> - <%= planstate.state.capitalize %></strong> by <%= plan_user(planstate) %></li>
+	<% end %>
+</ul>
