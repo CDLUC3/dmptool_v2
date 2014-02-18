@@ -185,6 +185,7 @@ class ResourceContextsController < ApplicationController
   end
 
   def select_resource
+
     
     @template_id = params[:template_id]
     @customization_overview_id = params[:customization_overview_id]
@@ -201,6 +202,10 @@ class ResourceContextsController < ApplicationController
                               where(institution_id: [current_user.institution.subtree_ids]).
                               group(:resource_id)
                                
+    end
+
+    if !params[:q].blank?
+      @resource_contexts = @resource_contexts.search_terms(params[:q])
     end
 
     case params[:scope]
