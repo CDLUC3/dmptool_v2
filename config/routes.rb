@@ -120,6 +120,8 @@ Dmptool2::Application.routes.draw do
 
   post 'copy_selected_customization_resource', to: 'resources#copy_selected_customization_resource'
 
+  post 'unlink_resource', to: 'resource_contexts#unlink_resource'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
