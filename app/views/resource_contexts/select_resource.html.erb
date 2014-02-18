@@ -6,6 +6,7 @@
 <% end %>
 </h1>
 
+
 <%= form_tag copy_selected_customization_resource_path, :method => :post  do %>
 
 	<table class="table table-striped">
@@ -13,12 +14,12 @@
 			<tr>
 				<th>Select</th>
 				<th>Level</th>
-				<th>Type</th>
-				<th class="span4">Details</th>
+				<th><%= link_to "Type", {scope: "Type"} %></th>
+				<th class="span4"><%= link_to "Details", {scope: "Details"}%></th>
 				<th width="span1">Edit</th>			
-				<th>Institution</th>
-				<th>Creation Date</th>
-				<th>Last Modification Date</th>
+				<th><%= link_to "Institution", {scope: "Institution"}%></th>
+				<th><%= link_to "Creation Date", {scope: "Creation_Date"}%></th>
+				<th><%= link_to "Last Modification Date", {scope: "Last_Modification_Date"}%></th>
 			</tr>
 		</thead>
 		<tbody>
