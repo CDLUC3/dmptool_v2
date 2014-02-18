@@ -101,15 +101,21 @@ class ResourceContextsController < ApplicationController
 
 
   def unlink_resource
-    #@resource_context = ResourceContext.find(params[:resource_context_to_delete]) 
     @customization_id = params[:customization_id]
     @resource_id = params[:resource_id]
-    @template_id = params[:template_id]
+    
+    if params[:template_id]
+      @template_id = params[:template_id]
+      @resource_contexts = ResourceContext.where(resource_id: @resource_id, requirements_template_id: @template_id)
+    end
 
-    @resource_contexts = ResourceContext.where(resource_id: @resource_id, requirements_template_id: @template_id)
+    if params[:requirement_id]
+      @requirement_id = params[:requirement_id]
+      @resource_contexts = ResourceContext.where(resource_id: @resource_id, requirement_id: @requirement_id)
+    end
 
     @resource_contexts.each do |resource_context|
-      resource_context.destroy
+        resource_context.destroy
     end
     
     respond_to do |format|
