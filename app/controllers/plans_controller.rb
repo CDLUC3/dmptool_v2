@@ -48,19 +48,9 @@ class PlansController < ApplicationController
   # GET /plans/1/edit
   def edit
     @comment = Comment.new
-    if !safe_has_role?(Role::DMP_ADMIN)
-      comments = Comment.where(plan_id: @plan.id, user_id: current_user.id)
-      case comments
-      when comments.where(visibility: :reviewer)
-        @comments = comments.reviewer
-      when comments.where(visibility: :owner)
-        @comments = comments.owner
-      else
-        @comments = comments
-      end
-    else
-      @comments = Comment.all
-    end
+    comments = Comment.where(plan_id: @plan.id, user_id: current_user.id)
+    @reviewer_comments = comments.where(visibility: :reviewer)
+    @owner_comments = comments.where(visibility: :owner)
   end
 
   # POST /plans
