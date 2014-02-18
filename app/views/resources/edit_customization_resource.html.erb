@@ -54,8 +54,7 @@
 
 <table class="table table-striped">
   <tr>
-    <th> This Resource is shown in:</th>
-    <th></th>
+    <th colspan="3"> This Resource is shown in:</th>
   </tr>
 
   
@@ -63,41 +62,56 @@
     <% if @any_templates %>
 
       <tr>
-        <th>The following Templates:</th>
-        <th></th>
+        <th colspan="3">The following Templates:</th>   
+      </tr>
+
+      <tr>
+        <th colspan="2">Template:</th>
+        <th>Unlink</th>
       </tr>
 
       <% @resource_contexts_templates.each do |resource_contexts_template| %>
         <tr>
   
-          <td><%= resource_contexts_template.requirements_template.name %></td>
-          <td></td>
+          <td colspan="2" ><%= resource_contexts_template.requirements_template.name %></td>
+          <td> 
+            <%= link_to 'Unlink from Template', unlink_resource_path(resource_id: @resource.id, 
+                                                      template_id: resource_contexts_template.requirements_template_id, 
+                                                      customization_id: @customization_id),  
+                                  method: :post %>  
+          </td> 
         </tr>
       <% end %>
 
     <% end %>
 
     <tr>
-      <td></td>
-      <td></td>
+      <td colspan="3"></td>
     </tr>
 
     <% if @any_requirements %>
 
       <tr>
-        <th>The following Requirements:</th>
-        <th></th>
+        <th colspan="3" >The following Requirements:</th>
       </tr>
 
       <tr>
         <th>Requirement:</th>
         <th>Associated Template:</th>
+        <th>Unlink</th>
       </tr>
 
       <% @resource_contexts_requirements.each do |resource_contexts_requirement| %>
         <tr>
          <td><%= resource_contexts_requirement.requirement.text_brief%></td>
           <td><%= resource_contexts_requirement.requirements_template.name%></td> 
+           <td> 
+            <%= link_to 'Unlink from Requirement', unlink_resource_path(resource_id: @resource.id,
+                                                      template_id: resource_contexts_requirement.requirements_template_id, 
+                                                      requirement_id: resource_contexts_requirement.requirement_id,  
+                                                      customization_id: @customization_id),  
+                                  method: :post %>  
+          </td> 
         </tr>
       <% end %>
 
