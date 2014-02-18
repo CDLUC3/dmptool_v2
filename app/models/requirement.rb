@@ -92,18 +92,28 @@ class Requirement < ActiveRecord::Base
         where("resource_contexts.resource_id IS NOT NULL")
   end
 
-  # template resources for this template or template and requirement, Stephen's cases #2, #3
+  # template resources for this template or template and requirement, Stephen's case #2
   def template_resources
     template_id = self.requirements_template.id
     Resource.joins(:resource_contexts).
         where("resource_contexts.institution_id IS NULL").
         where("resource_contexts.requirements_template_id = ?", template_id).
-        where("resource_contexts.requirement_id IS NULL OR resource_contexts.requirement_id = ?", self.id).
+        where("resource_contexts.requirement_id IS NULL").
+        where("resource_contexts.resource_id IS NOT NULL")
+  end
+
+  # requirement resources for this template or template and requirement, Stephen's case #3
+  def requirement_resources
+    template_id = self.requirements_template.id
+    Resource.joins(:resource_contexts).
+        where("resource_contexts.institution_id IS NULL").
+        where("resource_contexts.requirements_template_id = ?", template_id).
+        where("resource_contexts.requirement_id = ?", self.id).
         where("resource_contexts.resource_id IS NOT NULL")
   end
 
   # institution global resources, Stephen's case #4
-  def institution_global_resources(viewing_institution_id)
+  def institution_customization_resources(viewing_institution_id)
     Resource.joins(:resource_contexts).
         where("resource_contexts.institution_id = ?", viewing_institution_id).
         where("resource_contexts.requirements_template_id IS NULL").
@@ -112,7 +122,7 @@ class Requirement < ActiveRecord::Base
   end
 
   # institution resources for this template, Stephen's case #5
-  def institution_template_resources(viewing_institution_id)
+  def template_customization_resources(viewing_institution_id)
     template_id = self.requirements_template.id
     Resource.joins(:resource_contexts).
         where("resource_contexts.institution_id = ?", viewing_institution_id).
@@ -122,7 +132,7 @@ class Requirement < ActiveRecord::Base
   end
 
   # institution resources for this template and requirement, Stephen's case #7
-  def institution_template__requirement_resources(viewing_institution_id)
+  def requirement_customization_resources(viewing_institution_id)
     template_id = self.requirements_template.id
     Resource.joins(:resource_contexts).
         where("resource_contexts.institution_id = ?", viewing_institution_id).
