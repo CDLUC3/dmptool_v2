@@ -70,8 +70,11 @@
   
           <td><%= resource_contexts_template.requirements_template.name %></td>
           <td> 
-            <%= link_to 'UNLINK', unlink_resource_path(resource_context_to_delete: resource_contexts_template, customization_id: @customization_id),  
-                                    method: :post %>  
+            <%= link_to 'UNLINK', unlink_resource_path(resource_id: @resource.id, 
+                                                      template_id: resource_contexts_template.requirements_template_id, 
+                                                      #resource_context_to_delete: resource_contexts_template, 
+                                                      customization_id: @customization_id),  
+                                  method: :post %>  
           </td> 
         </tr>
       <% end %>
