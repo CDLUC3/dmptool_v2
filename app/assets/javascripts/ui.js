@@ -74,3 +74,24 @@ jQuery(function(){
 		function(){jQuery(this).parent().find(".template-links").css("visibility", "hidden");}
 	);
 });
+/* Required Fields */
+jQuery(function requiredFields(){
+	jQuery("input.required, select.required, textarea.required").each(function(){
+			if(jQuery(this).val().length == 0){
+				jQuery(this).removeClass("filled").addClass("blank");
+			}
+			if(jQuery(this).val().length !== 0){
+				jQuery(this).removeClass("blank").addClass("filled");
+			}
+	});
+});
+jQuery(function(){
+	jQuery("input.required, select.required, textarea.required").bind("blur", function(e){
+		if(jQuery(this).val().length == 0){
+			jQuery(this).removeClass("filled").addClass("blank");
+		}
+		else {
+			jQuery(this).removeClass("blank").addClass("filled");
+		}
+	});
+});

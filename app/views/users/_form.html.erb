@@ -36,3 +36,6 @@
 <% if @user.new_record? %>
 <p>By clicking <strong>Create Account</strong>,you agree to our <%= link_to 'Terms of Use', '#', :title => "DMPTool Terms of Use", :target => "_blank" %> and <%= link_to 'Privacy Policy', '#', :title => "DMPTool Privacy Policy", :target => "_blank" %>.</p>
 <% end %>
+<script>
+		jQuery(document).requiredField();
+</script>

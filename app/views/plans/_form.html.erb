@@ -60,74 +60,52 @@
         </div>
 
         <% unless @plan.new_record? %>
-          <% if owner_role(@plan) || (safe_has_role?(Role::INSTITUTIONAL_REVIEWER)) %>
-            <div class="control-group">
-              <label class ="control-label"> Comments: </label>
-              <div class="controls">
-                <p><%= link_to "Add Comments", '#', remote: true, id: 'add_comments_link' %></p>
-              </div>
+
+          <div class="control-group">
+            <label class ="control-label"> Current Status: </label>
+            <div class="controls">
+              <p><strong style="color:blue;"><%= status(@plan) %></strong>
+              <%= link_to "(Show History)", '#', id: 'show_plan_states_history' %></p>
+              <fieldset id="plan_states_history">
+                <legend><%= link_to raw('<i class="icon-chevron-up pull-right"></i>'), '#', id: 'hide_plan_states_history' %></legend>
+                <%= render partial: 'plan_states_history' %>
+              </fieldset>
             </div>
-          <% end %>
-        <hr/>
-        <div class="control-group">
-          <label class ="control-label"> Current Status: </label>
-          <div class="controls">
-            <strong><%= @plan.plan_states.last.state.to_s.capitalize %></strong><%= link_to "(Show History)", plan_plan_states_path(@plan) %>
           </div>
-        </div>
-        <% if safe_has_role?(Role::INSTITUTIONAL_REVIEWER) || safe_has_role?(Role::DMP_ADMIN) %>
+
           <div class="control-group">
             <label class ="control-label"> Reviewer Comments: </label>
             <div class="controls">
               <p><%= link_to "View", '#', id: 'view_reviewer_comments' %></p>
               <fieldset id = "reviewer_comments">
                 <legend>Comments<%= link_to raw('<i class="icon-chevron-up pull-right"></i>'), '#', id: 'hide_reviewer_comments' %></legend>
-                <%= render partial: 'comments/index' %>
-                <!-- Render the Comments form -->
-                  <%= form_for(@comment, remote: true,  html: { :class => 'form-horizontal' }) do |f| %>
-                    <%= render partial: "shared/errors", locals: {model: @comment} %>
-                    <div class="control-group">
-                        <%= f.hidden_field :user_id, value: current_user.id %>
-                        <%= f.hidden_field :plan_id, value: params[:id] %>
-                    </div>
-                    <div class="control-group">
-                        <%= f.text_area :value, placeholder: 'Comment', :class => "input-block-level", rows: "8"%>
-                    </div>
-                    <div class="control-group">
-                      <% if safe_has_role?(Role::INSTITUTIONAL_REVIEWER) %>
-                        <%= f.hidden_field :visibility, value: :reviewer %>
-                      <% else %>
-                        <%= f.hidden_field :visibility, value: :owner %>
-                      <% end %>
-                    </div>
-                    <div>
-                      <%= f.submit "Add Comment", :class => 'btn btn-success pull-right', method: 'post' %>
-                      <%= button_tag "Cancel", type: :reset, :class => 'btn btn-success pull-right', id: "cancel_action" %>
-                    </div>
-                  <% end %>
-                <!-- ends here -->
+                <%= render partial: 'comments/index_reviewer_comments' %>
               </fieldset>
             </div>
           </div>
-        <% end %>
-        <% if safe_has_role?(Role::DMP_ADMIN) || owner_role(@plan) %>
+
           <div class="control-group">
             <label class ="control-label"> Owner Comments: </label>
             <div class="controls">
               <p><%= link_to "View", '#', id: 'view_owner_comments' %></p>
               <fieldset id = "owner_comments">
                 <legend>Comments<%= link_to raw('<i class="icon-chevron-up pull-right"></i>'), '#', id: 'hide_owner_comments' %></legend>
-                <%= render partial: 'comments/index' %>
+                <%= render partial: 'comments/index_owner_comments' %>
+                <div class="control-group">
+                  <label class ="control-label"> Comments: </label>
+                  <div class="controls">
+                    <p><%= link_to "Add Comments", '#', remote: true, id: 'add_comments_link' %></p>
+                  </div>
+                </div>
               </fieldset>
             </div>
           </div>
-        <% end %>
         <hr/>
 
         <div class="control-group">
           <label class ="control-label"> Visibility: </label>
           <div class="controls">
-            <p> This DMP is <span style="color:blue;"><%=@plan.visibility.capitalize %></span> </p>
+            <p>This DMP is <span style="color:blue;"><strong> <%=@plan.visibility.capitalize %></strong></span> </p>
             <p><%= link_to "Change Settings", '#', remote: true, id: 'change_visibility_link' %></p>
           </div>
         </div>
@@ -157,3 +135,6 @@
     </div>
   </div>
 </div>
+<script>
+		jQuery(document).requiredField();
+</script>

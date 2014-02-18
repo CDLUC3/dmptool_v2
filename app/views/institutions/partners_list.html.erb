@@ -49,5 +49,7 @@
 	</tbody>
 </table>
 <div class="buttons pagination">
-	<%= link_to "View All", "#", :method => :get, :class => "btn"%>
+  <%= link_to("View All", {:action=>"partners_list", :all=>"seriously"},
+              {:class => "btn"})%>
+  <%= paginate @institutions %>
 </div>

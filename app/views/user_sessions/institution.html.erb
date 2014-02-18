@@ -1,10 +1,10 @@
 <h1 class="row-fluid"><span class="icon login"></span>Log In</h1>
 <div class="login row-fluid">
 	<div class="span5 user_login">
-		<p><strong>Log in through your institution</strong></p>
-		<p>Select your institution below and you will be directed to your institutional log in page.</p>	
+		<h2>Log in through your institution</h2>
 	  <%= form_tag login_path, method: :post do %>
 			<div class="control-group select_institution">
+				<p><%= label_tag :intitution_id, "Select your institution below and you will be directed to your institutional log in page." %></p>
 	    	<%= select_tag(:institution_id, options_for_select(@inst_list, :selected => session[:institution_id]),
 	    		:prompt => 'Select your institution', :class => "institution") %>
 	    	

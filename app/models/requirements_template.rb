@@ -69,4 +69,27 @@ class RequirementsTemplate < ActiveRecord::Base
     values = items.map{|item| "%#{item}%" }
     joins(:institution).where(conditions, *values )
   end
+
+  # returns the first requirement that isn't a container in the list, depth first recursive search
+  def first_question
+    requirements = self.requirements.roots.order(:order)
+    find_question_node(requirements)
+  end
+
+
+
+  private
+  #helper method for recursion of first_question
+  def find_question_node(reqs)
+    reqs.each do |r|
+      if r.is_group?
+        children = r.children.order(:order)
+        return find_question_node(children) unless children.nil? || children.length < 1
+      else
+        return r
+      end
+    end
+    nil
+  end
+  public
 end

@@ -6,38 +6,47 @@
 <% end %>
 </h1>
 
-<%= form_tag select_customization_resource_path, :method => :post  do %>
+<div> 
+
+<br>
+
+</div>
+
+<div><%= render 'resource_search' %></div>
+
+<%= form_tag copy_selected_customization_resource_path, :method => :post  do %>
 
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th>Select</th>
+				<th>Select</th>		
+				
+				<th class="span4"><%= link_to "Details", {scope: "Details"}%></th>	
+				<th><%= link_to "Type", {scope: "Type"} %></th>			
+				<th><%= link_to "Institution", {scope: "Institution"}%></th>
+				<th><%= link_to "Creation Date", {scope: "Creation_Date"}%></th>
+				<th><%= link_to "Last Modification Date", {scope: "Last_Modification_Date"}%></th>
 				<th>Level</th>
-				<th>Type</th>
-				<th class="span4">Details</th>
-				<th width="span1">Edit</th>			
-				<th>Institution</th>
-				<th>Creation Date</th>
-				<th>Last Modification Date</th>
+				<th width="span1">Edit</th>
 			</tr>
 		</thead>
 		<tbody>
 
 			<% @resource_contexts.each do |resource_context| %>
 				<tr>
-					<td class="span1"><%= radio_button_tag :resource, resource_context.resource_id, checked: false %></td>
-					<td><%= resource_context.resource_level %></td>
-					<td><%= resource_context.resource.nil? ? " " : resource_context.resource.resource_type %></td>
+					<td class="span1"><%= radio_button_tag :resource, resource_context.resource_id, checked: false %></td>	
+					
 					<td>
 						<div class="toggle-links">
 							<%= resource_context.resource.nil? ? " " : resource_context.resource.label %>
 						</div>
 					</td>
-					<td class="span1"><%= link_to raw(''), edit_customization_resource_path(id: resource_context.resource_id, customization_id: @customization_overview_id), :class => 'icon edit-user' %></td>
+					<td><%= resource_context.resource.nil? ? " " : resource_context.resource.resource_type %></td>	
 					<td><%= resource_context.institution.nil? ? " " :  resource_context.institution.nickname %></td>
 					<td><%= resource_context.created_at.nil? ? " " :  resource_context.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 					<td><%= resource_context.updated_at.nil? ? " " :  resource_context.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
-
+					<td><%= resource_context.resource_level %></td>
+					<td class="span1"><%= link_to raw(''), edit_customization_resource_path(id: resource_context.resource_id, customization_id: @customization_overview_id), :class => 'icon edit-user' %></td>
 				</tr>
 			<% end %>
 		<tbody>

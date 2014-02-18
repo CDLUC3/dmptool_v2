@@ -1,6 +1,6 @@
 <h1 class="row-fluid"><span class="icon review"></span>Review DMPS</h1>
 <div class="dmptool-page">
-	<p><strong>DMPs Pending My Review</strong></p>
+	<h2>DMPs Pending My Review</h2>
 	<table class="table table-striped" id="review_dmps">
 	  <thead>
 	    <tr>
@@ -18,7 +18,15 @@
 	        <td><%= owner_name(plan) %></td>
 	        <td><%= plan.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 	        <td><%= state(plan) %></td>
-	        <td class="nowrap"><%=(link_to raw('<i class="icon-ok"> </i>'), '#')+' | '+(link_to raw('<i class="icon-remove"> </i>'),'#')+' | '+(link_to raw('<i class="icon-comment"> </i>'),'#')%></td>
+	        <td class="nowrap">
+	        	<div class="actions">
+		        	<%= link_to "", "#", :class => "icon confirm" %>
+		        	|
+		        	<%= link_to "", "#", :class => "icon cancel" %>
+		        	|
+		        	<%= link_to "", "#", :class => "icon comment" %>
+		        </div>
+	        </td>
 	      </tr>
 	    <% end %>
 	  <tbody>

@@ -140,7 +140,8 @@
 	
 /* Dashboard */
 .dashboard {
-	min-height: 162px; }
+	min-height: 182px;
+	margin-bottom: -20px; }
 /* Dashboard Header */
 .dashboard-header.row-fluid {
 	height: 110px;
@@ -200,7 +201,7 @@
 	float: left;
 	color: #6D6E70; }
 .dashboard-nav ul.nav > li > a {
-	line-height: 50px;
+	line-height: 51px;
 	height: 50px; }
 .dashboard-nav ul.nav > li > a:first-child {
 	padding-left: 0; }
@@ -246,7 +247,7 @@
 	font-weight: bold;
 	letter-spacing: -0.2px;
 	text-align: right;
-	line-height: 30px;
+	line-height: 31px;
 	height: 29px;
 	padding: 0 30px; }
 .dashboard-nav ul.nav ul li:first-child a {

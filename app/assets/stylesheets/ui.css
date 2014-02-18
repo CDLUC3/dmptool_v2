@@ -1,6 +1,6 @@
 /* Tabs */
 .tabbable {
-	margin: 0 0 20px; }
+	margin: 0 0 10px; }
 .tabbable[class*="span"] {
 	float: right;
 	background: #EDF2E2;
@@ -70,11 +70,6 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 /* Log In */
 .login.row-fluid, .contact.row-fluid {
 	margin: 20px 35px; }
-.login.row-fluid .user_login[class*="span"] {
-	border: none;
-	margin-top: 20px;
-	margin-left: 0;
-	margin-bottom: 0; }
 .login p {
 	font-size: 1.167em; }
 .control-group.select_institution select {
@@ -87,19 +82,29 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	font-size: 1.167; }
 
 /* Tree View */
-.tree-view .actions {
-	margin: 10px 0; }
+.tree-view .actions { 
+	}
+.requirements_tree_view .actions {
+	margin: 0;
+	position: absolute;
+	top: 0;
+	right: 0; }
 .requirements_tree_view {
-	margin-top: 10px; }
+	margin-top: 0; }
 .nested_requirements {
 	margin-left: 20px; }
 .requirements_tree_view ul {
+	line-height: 1.5;
 	margin: 0; }
-.requirements_tree_view ul li a:first-child {
+.requirements_tree_view ul > li {
+	position: relative;
+	margin: 15px 0 5px 0;
+	padding-right: 65px;
+}
+.requirements_tree_view ul li > a:first-child {
+	display: inline-block;
 	position: relative;
 	padding-left: 22px; }
-.requirements_tree_view ul li a.icon {
-	bottom: 1px; }
 .institutions {
 	margin: 10px 20px 20px; }
 .institution {
@@ -109,6 +114,23 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 .institution a {
 	padding-left: 35px;
 	position: relative; }
+.icon.requirements-group-open {
+	background-position: -160px 0px; width: 20px; height: 12px;
+	top: 2px; }
+.icon.requirements-group-closed {
+	background-position: -185px 0px; width: 20px; height: 12px;
+	top: 2px;  }
+.icon.new-requirements-group {
+	background-position: -60px 0; width: 20px; height: 15px; }
+span.icon.new-requirement {
+	background-position: -80px 0; width: 15px; height: 15px; }
+.icon.requirement {
+	background-position: -95px 0; width: 15px; height: 15px; left: 2px; }
+a.icon.new-requirement {
+	background: none;
+	padding-left: 17px; }
+.icon.institution {
+	top: -2px; }
 
 	
 /* Misc. */
