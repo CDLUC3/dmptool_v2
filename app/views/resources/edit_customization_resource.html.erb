@@ -106,7 +106,8 @@
          <td><%= resource_contexts_requirement.requirement.text_brief%></td>
           <td><%= resource_contexts_requirement.requirements_template.name%></td> 
            <td> 
-            <%= link_to 'Unlink from Requirement', unlink_resource_path(resource_id: @resource.id, 
+            <%= link_to 'Unlink from Requirement', unlink_resource_path(resource_id: @resource.id,
+                                                      template_id: resource_contexts_requirement.requirements_template_id, 
                                                       requirement_id: resource_contexts_requirement.requirement_id,  
                                                       customization_id: @customization_id),  
                                   method: :post %>  
