@@ -191,19 +191,31 @@ class ResourceContextsController < ApplicationController
 
     if safe_has_role?(Role::DMP_ADMIN)
 
-      @resource_contexts = ResourceContext.includes(:resource).
-                              where("resource_id IS NOT NULL").
-                              order(institution_id: :desc).
-                              page(params[:page]).per(20)
+      @resource_contexts = ResourceContext.joins(:resource).
+                              where("resource_id IS NOT NULL")
+                              
     else
 
-      @resource_contexts = ResourceContext.includes(:resource).
+      @resource_contexts = ResourceContext.joins(:resource).
                               where("resource_id IS NOT NULL").
                               where(institution_id: [current_user.institution.subtree_ids]).
-                              order(institution_id: :desc).
-                              group(:resource_id).
-                              page(params[:page]).per(20)
-    
+                              group(:resource_id)
+                               
+    end
+
+    case params[:scope]
+      when "Details"
+        @resource_contexts = @resource_contexts.order_by_resource_label.page(params[:page]).per(20)
+      when "Type"
+        @resource_contexts = @resource_contexts.order_by_resource_type.page(params[:page]).per(20)
+      when "Institution"
+        @resource_contexts = @resource_contexts.order_by_institution_name.page(params[:page]).per(20)
+      when "Creation_Date"
+        @resource_contexts = @resource_contexts.order_by_resource_created_at.page(params[:page]).per(20)
+      when "Last_Modification_Date"
+        @resource_contexts = @resource_contexts.order_by_resource_updated_at.page(params[:page]).per(20)
+      else
+       @resource_contexts = @resource_contexts.page(params[:page]).per(20)
     end
 
   end
