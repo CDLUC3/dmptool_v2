@@ -10,6 +10,9 @@ class Resource < ActiveRecord::Base
 
 
   scope :guidance, -> { where(resource_type: 'help_text') }
+  scope :actionable_url, -> { where(resource_type: 'actionable_url') }
+  scope :suggested_response, -> { where(resource_type: 'suggested_response') }
+  scope :example_response, -> { where(resource_type: 'example_response') }
 
   def actionable_url
   	resource_type == "actionable_url"
