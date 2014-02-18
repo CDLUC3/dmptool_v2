@@ -51,6 +51,7 @@ class PlansController < ApplicationController
     comments = Comment.where(plan_id: @plan.id, user_id: current_user.id)
     @reviewer_comments = comments.where(visibility: :reviewer)
     @owner_comments = comments.where(visibility: :owner)
+    @plan_states = @plan.plan_states
   end
 
   # POST /plans

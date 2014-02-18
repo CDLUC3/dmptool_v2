@@ -81,6 +81,21 @@ $(function() {
 });
 
 $(function() {
+	$("#plan_states_history").hide();
+	$("#show_plan_states_history").click(function(event){
+		event.preventDefault();
+		$("#plan_states_history").show();
+	});
+});
+
+$(function() {
+	$("#hide_plan_states_history").click(function(event){
+		event.preventDefault();
+		$("#plan_states_history").hide();
+	});
+});
+
+$(function() {
 	$('#visibility_dialog_form').hide();
 	$('#change_visibility_link').click(function(event) {
 		event.preventDefault();

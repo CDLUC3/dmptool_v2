@@ -38,12 +38,9 @@ module PlansHelper
 		end
 	end
 
-	def owner_role(plan)
-		plan = plan
-		user_id = UserPlan.where(plan_id: plan.id, owner: true).first.user_id
-		if user_id == current_user.id
-			return true
-		end
+	def status(plan)
+		plan_state_id = plan.current_plan_state_id
+		@state = PlanState.find(plan_state_id).state.capitalize
 	end
 
 	def institution_name(plan_id)
