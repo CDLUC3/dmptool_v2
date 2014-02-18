@@ -156,8 +156,9 @@ class PlansController < ApplicationController
     template_id = @plan.requirements_template_id
     @requirements_template = RequirementsTemplate.find(template_id)
     @requirements = @requirements_template.requirements
-    # @template_resources = Resource.joins( "JOIN resource_contexts ON resources.id = resource_contexts.resource_id AND resource_contexts.requirements_template_id = @requirements_template )
-    # @institution_resources =
+    if params[:requirement_id].blank?
+      params[:requirement_id] = @requirements_template.first_question.id.to_s
+    end
   end
 
   def change_visiblity
