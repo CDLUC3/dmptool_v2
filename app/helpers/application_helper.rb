@@ -9,4 +9,12 @@ module ApplicationHelper
     link_to(name, '#', :class => "add_fields btn", data: {id: id, fields: fields.gsub("\n", "")})
   end
 
+  def fix_url(u)
+    uu = URI.parse(u)
+    if(!uu.scheme)
+      return "http://" + u
+    end
+    u
+  end
+
 end
