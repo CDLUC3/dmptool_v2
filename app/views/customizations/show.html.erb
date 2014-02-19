@@ -22,19 +22,54 @@
     <div class="tab-content">
 
       <div class="tab-pane active" id="tab1">
-        <%= render partial: 'institution_view' %>
+
+        <%= render :partial => 'section_display',
+            :locals => {  :section_name => 'Global Resources',
+                          :partial_name => '',
+                          :collection   => '',
+                          :editable     => false }
+        %>
+
+        <%= render :partial => 'section_display',
+                   :locals => {  :section_name => 'DMP Resources',
+                                 :partial_name => '',
+                                 :collection   => '',
+                                 :editable     => false }
+        %>
+
+        <%= render :partial => 'section_display',
+                   :locals => {  :section_name => "#{@institution.name} Resources",
+                                 :partial_name => '',
+                                 :collection   => '',
+                                 :editable     => false }
+        %>
+
+        <%= render :partial => 'section_display',
+                   :locals => {  :section_name => "#{@requirements_template.name} for #{@institution.name} Resources",
+                                 :partial_name => '',
+                                 :collection   => '',
+                                 :editable     => false }
+        %>
+
+        <%= render :partial => 'section_display',
+                   :locals => {  :section_name => 'Requirement Resources',
+                                 :partial_name => '',
+                                 :collection   => '',
+                                 :editable     => false }
+        %>
+
       </div>
 
       <div class="tab-pane" id="tab2">
-        Actionable Links here
+        <%= render partial: 'institution_view' %>
       </div>
 
       <div class="tab-pane " id="tab3">
-        Suggested Response here
+        <%= render partial: 'institution_view' %>
       </div>
 
       <div class="tab-pane" id="tab4">
-        Example Response here
+        <%= render partial: 'institution_view' %>
       </div>
 
     </div>
