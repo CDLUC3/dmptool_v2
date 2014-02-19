@@ -1,8 +1,13 @@
 /* Tables */
 table {
-	border: 1px solid #B6B6B7;
-	border-collapse: separate; }
+	width: 100%;
+	max-width: 100%;
+	margin-bottom: 10px; }
+th, td {
+	padding: 5px; }
 .table {
+	border: 1px solid #B6B6B7;
+	border-collapse: separate;
 	margin-bottom: 10px; }
 .tab-pane.table .table {
 	margin: 0; }

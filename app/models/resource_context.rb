@@ -11,8 +11,16 @@ class ResourceContext < ActiveRecord::Base
                                       message: "%{value} address must be valid" }, if: "resource_id.blank? && !institution_id.blank?"
   validates :review_type, presence: true, if: "resource_id.blank? && !institution_id.blank?"
 
+  
+  def self.search_terms(terms)
+    items = terms.split
+    conditions = " ( " + items.map{|item| "resources.label LIKE ?" }.join(' AND ') + " ) " 
+    where(conditions, *items.map{|item| "%#{item}%" })
+  end
+
   def self.order_by_resource_label
-    joins(:resource).order('resources.label ASC')
+    joins(:resource).order("resources.label ASC")
+    #joins(:resource).order(" FIELD(resources.label,'') ASC")
   end
 
   def self.order_by_resource_type

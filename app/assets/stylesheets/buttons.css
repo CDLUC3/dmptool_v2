@@ -29,6 +29,11 @@
 	border-top: 1px solid #B6B6B7;
 	margin: 0;
 	padding-bottom: 10px; }
+.border-box .buttons {
+	margin: 0 -15px 0; }
+.buttons p {
+	line-height: 34px;
+	margin-right: 10px; }
 
 	
 /* Buttons */
@@ -137,7 +142,7 @@ a.icon {
 	text-decoration: none !important;
 	vertical-align: middle;
 	position: relative; }
-span.icon {
+a span.icon, h1 span.icon {
 	position: absolute;
 	left: 0; }
 	

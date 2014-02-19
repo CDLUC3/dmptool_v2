@@ -138,8 +138,10 @@ a.icon.new-requirement {
 	width: 328px; }
 .border-box {
 	border: 1px solid #C9C9CB;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 	padding: 10px 15px; }
+.tab-pane .border-box {
+	margin-bottom: 10px; }
 
 /* Modal Windows */
 /*
