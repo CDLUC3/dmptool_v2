@@ -7,7 +7,7 @@
 %>
 
 <% if collection.length > 0 || editable %>
-  <h2><%= section_name %></h2>
+  <h2 class="cust"><%= section_name %></h2>
 
   <% collection.each do |resource| %>
     <%= render  :partial => partial_name,

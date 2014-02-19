@@ -1,18 +1,5 @@
 <div class="tab-content">
 
-  <!-- .global_resources
-
-r.template_resources
-
-r.requirement_resources
-
-r.institution_customization_resources(0)
-
-r.template_customization_resources(0)
-
-r.requirement_customization_resources(0)
-
--->
   <% CustomizationsController::TABS.each_with_index do |tab, index| %>
     <div class="tab-pane<%= (index==0 ? ' active': '') %>" id="tab<%= (index+1) %>">
       <%= render :partial => 'section_display',
