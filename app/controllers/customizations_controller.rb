@@ -13,6 +13,16 @@ class CustomizationsController < ApplicationController
     rescue Exception => ex
       redirect_to(resource_contexts_path, :notice => "The DMP Template you're attempting to add resources for is incomplete") and return
     end
+
+    @requirement = Requirement.find(params[:requirement_id])
+    @institution = current_user.institution
+    #determine type of customization
+    if @customization.institution_id.nil?
+      #this is a DMP customization
+      @customization_type = 6 # the number from stephen's table for institution customization
+    else
+      @customization_type = 8 # A DMP admin customization directly for a funder's requirement
+    end
   end
 
 end
