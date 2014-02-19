@@ -191,7 +191,8 @@ class ResourceContextsController < ApplicationController
     if safe_has_role?(Role::DMP_ADMIN) 
 
       @resource_contexts = ResourceContext.joins(:resource).
-                              where("resource_id IS NOT NULL")
+                              where("resource_id IS NOT NULL").
+                              group(:resource_id)
                               
     else
 
