@@ -162,11 +162,10 @@ class ResourceContextsController < ApplicationController
 
   def customization_resources_list
 
-    #@customization = ResourceContext.find(params[:id])
-    
-
     @customization = @resource_context
-    @customization_institution = current_user.institution
+   # @customization_institution = current_user.institution
+
+    @customization_institution = @resource_context.institution
 
     @template= @customization.requirements_template
     @customization_institution_name = current_user.institution.full_name
@@ -175,7 +174,7 @@ class ResourceContextsController < ApplicationController
      
     @resource_contexts = ResourceContext.includes(:resource).
                           per_template(@template).
-                          resource_level.where(institution_id: [current_user.institution.subtree_ids])
+                          resource_level.where(institution_id: [@customization_institution.subtree_ids])
                                                  
   end
 
@@ -187,8 +186,9 @@ class ResourceContextsController < ApplicationController
    
     @template_id = params[:template_id]
     @customization_overview_id = params[:customization_overview_id]
+   # @customization_overview = ResourceContext.find(@customization_overview_id)
 
-    if safe_has_role?(Role::DMP_ADMIN)
+    if safe_has_role?(Role::DMP_ADMIN) 
 
       @resource_contexts = ResourceContext.joins(:resource).
                               where("resource_id IS NOT NULL")
