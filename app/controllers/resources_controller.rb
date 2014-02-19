@@ -31,7 +31,10 @@ class ResourcesController < ApplicationController
 
   def edit_customization_resource
     @resource = Resource.find(params[:id])
+
     @customization_id = params[:customization_id]
+    @template_id = params[:template_id]
+
     @resource_templates_id = ResourceContext.where(resource_id: @resource.id).pluck(:requirements_template_id)
 
     @resource_contexts_templates = ResourceContext.where(resource_id: @resource.id).

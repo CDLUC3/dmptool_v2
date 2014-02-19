@@ -21,13 +21,29 @@
 			<tr>
 				<th>Select</th>		
 				
-				<th class="span4"><%= link_to "Details", {scope: "Details", 
-													customization_overview_id: @customization_overview_id,
-													template_id: @template_id}%></th>	
-				<th><%= link_to "Type", {scope: "Type"} %></th>			
-				<th><%= link_to "Institution", {scope: "Institution"}%></th>
-				<th><%= link_to "Creation Date", {scope: "Creation_Date"}%></th>
-				<th><%= link_to "Last Modification Date", {scope: "Last_Modification_Date"}%></th>
+				<th class="span4"><%= link_to "Details", 
+											{scope: "Details", 
+											customization_overview_id: @customization_overview_id,
+											template_id: @template_id}%></th>	
+				<th><%= link_to "Type", 
+							{scope: "Type", 
+							customization_overview_id: @customization_overview_id,
+							template_id: @template_id} %></th>	
+
+				<th><%= link_to "Institution", 
+							{scope: "Institution", 
+							customization_overview_id: @customization_overview_id,
+							template_id: @template_id}%></th>
+
+				<th><%= link_to "Creation Date", 
+							{scope: "Creation_Date", 
+							customization_overview_id: @customization_overview_id,
+							template_id: @template_id}%></th>
+
+				<th><%= link_to "Last Modification Date", 
+							{scope: "Last_Modification_Date", 
+							customization_overview_id: @customization_overview_id,
+							template_id: @template_id}%></th>
 				<th>Level</th>
 				<th width="span1">Edit</th>
 			</tr>
@@ -48,7 +64,7 @@
 					<td><%= resource_context.created_at.nil? ? " " :  resource_context.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 					<td><%= resource_context.updated_at.nil? ? " " :  resource_context.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 					<td><%= resource_context.resource_level %></td>
-					<td class="span1"><%= link_to raw(''), edit_customization_resource_path(id: resource_context.resource_id, customization_id: @customization_overview_id), :class => 'icon edit-user' %></td>
+					<td class="span1"><%= link_to raw(''), edit_customization_resource_path(id: resource_context.resource_id, customization_id: @customization_overview_id, template_id: @template_id), :class => 'icon edit-user' %></td>
 				</tr>
 			<% end %>
 		<tbody>
