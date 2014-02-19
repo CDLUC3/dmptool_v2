@@ -181,12 +181,10 @@ class ResourceContextsController < ApplicationController
 
   def choose_institution
     make_institution_dropdown_list
-
   end
 
   def select_resource
-
-    
+   
     @template_id = params[:template_id]
     @customization_overview_id = params[:customization_overview_id]
 

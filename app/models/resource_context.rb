@@ -19,7 +19,8 @@ class ResourceContext < ActiveRecord::Base
   end
 
   def self.order_by_resource_label
-    joins(:resource).order('resources.label ASC')
+    joins(:resource).order("resources.label ASC")
+    #joins(:resource).order(" FIELD(resources.label,'') ASC")
   end
 
   def self.order_by_resource_type
