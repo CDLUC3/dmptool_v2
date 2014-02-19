@@ -14,64 +14,58 @@
   </div>
   <div class="tabbable span8">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#tab1" data-toggle="tab">Guidance</a></li>
-      <li><a href="#tab2" data-toggle="tab">Actionable Links</a></li>
-      <li><a href="#tab3" data-toggle="tab">Suggested Response</a></li>
-      <li><a href="#tab4" data-toggle="tab">Example Response</a></li>
+      <% CustomizationsController::TABS.each_with_index do |tab, index| %>
+        <li class="<%= (index==0 ? 'active' : '') %>"><a href="#tab<%= (index + 1) %>" data-toggle="tab"><%= tab %></a></li>
+      <% end %>
     </ul>
     <div class="tab-content">
+      <% CustomizationsController::TABS.each_with_index do |tab, index| %>
+      <div class="tab-pane" id="tab<%= (index+1) %>">
+          test
+          <%# render :partial => 'section_display',
+            #  :locals => {  :section_name => 'Global Resources',
+            #                :partial_name => '',
+            #                :collection   => '',
+            #                :editable     => false }
+          %>
 
-      <div class="tab-pane active" id="tab1">
+          <%# render :partial => 'section_display',
+            #         :locals => {  :section_name => 'DMP Resources',
+            #                       :partial_name => '',
+            #                       :collection   => '',
+            #                       :editable     => false }
+          %>
 
-        <%= render :partial => 'section_display',
-            :locals => {  :section_name => 'Global Resources',
-                          :partial_name => '',
-                          :collection   => '',
-                          :editable     => false }
-        %>
+          <%# render :partial => 'section_display',
+            #         :locals => {  :section_name => "#{@institution.name} Resources",
+            #                       :partial_name => '',
+            #                       :collection   => '',
+            #                       :editable     => false }
+          %>
 
-        <%= render :partial => 'section_display',
-                   :locals => {  :section_name => 'DMP Resources',
-                                 :partial_name => '',
-                                 :collection   => '',
-                                 :editable     => false }
-        %>
+          <%# render :partial => 'section_display',
+            #         :locals => {  :section_name => "#{@requirements_template.name} for #{@institution.name} Resources",
+            #                       :partial_name => '',
+            #                       :collection   => '',
+            #                       :editable     => false }
+          %>
 
-        <%= render :partial => 'section_display',
-                   :locals => {  :section_name => "#{@institution.name} Resources",
-                                 :partial_name => '',
-                                 :collection   => '',
-                                 :editable     => false }
-        %>
-
-        <%= render :partial => 'section_display',
-                   :locals => {  :section_name => "#{@requirements_template.name} for #{@institution.name} Resources",
-                                 :partial_name => '',
-                                 :collection   => '',
-                                 :editable     => false }
-        %>
-
-        <%= render :partial => 'section_display',
-                   :locals => {  :section_name => 'Requirement Resources',
-                                 :partial_name => '',
-                                 :collection   => '',
-                                 :editable     => false }
-        %>
-
-      </div>
-
-      <div class="tab-pane" id="tab2">
-        <%= render partial: 'institution_view' %>
-      </div>
-
-      <div class="tab-pane " id="tab3">
-        <%= render partial: 'institution_view' %>
-      </div>
-
-      <div class="tab-pane" id="tab4">
-        <%= render partial: 'institution_view' %>
-      </div>
+          <%# render :partial => 'section_display',
+            #         :locals => {  :section_name => 'Requirement Resources',
+            #                       :partial_name => '',
+            #                       :collection   => '',
+            #                       :editable     => false }
+          %>
+        </div>
+      <% end %>
 
     </div>
   </div>
 </div>
+
+<!--
+<script type="text/javascript">
+  tab_jump();
+  add_tab_to_pagination();
+</script>
+-->
