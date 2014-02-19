@@ -1,1 +1,6 @@
-<p>URL info here</p>
+<%
+   # resource local is passed in from caller
+%>
+<p>
+  <%= link_to resource.label, fix_url(resource.value), target: '_blank' %>
+</p>
