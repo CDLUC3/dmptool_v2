@@ -61,38 +61,36 @@
 
         <% unless @plan.new_record? %>
 
-        <div class="control-group">
-          <label class ="control-label"> Current Status: </label>
-          <div class="controls">
-            <p><strong><%= @plan.plan_states.last.state.to_s.capitalize %></strong><%= link_to "(Show History)", plan_plan_states_path(@plan) %></p>
+          <div class="control-group">
+            <label class ="control-label"> Current Status: </label>
+            <div class="controls">
+              <p><strong style="color:blue;"><%= status(@plan) %></strong>
+              <%= link_to "(Show History)", '#', id: 'show_plan_states_history' %></p>
+              <fieldset id="plan_states_history">
+                <legend><%= link_to raw('<i class="icon-chevron-up pull-right"></i>'), '#', id: 'hide_plan_states_history' %></legend>
+                <%= render partial: 'plan_states_history' %>
+              </fieldset>
+            </div>
           </div>
-        </div>
-        <% if safe_has_role?(Role::INSTITUTIONAL_REVIEWER) || safe_has_role?(Role::DMP_ADMIN) %>
+
           <div class="control-group">
             <label class ="control-label"> Reviewer Comments: </label>
             <div class="controls">
               <p><%= link_to "View", '#', id: 'view_reviewer_comments' %></p>
               <fieldset id = "reviewer_comments">
                 <legend>Comments<%= link_to raw('<i class="icon-chevron-up pull-right"></i>'), '#', id: 'hide_reviewer_comments' %></legend>
-                <%= render partial: 'comments/index' %>
-                <div class="control-group">
-                  <label class ="control-label"> Comments: </label>
-                  <div class="controls">
-                    <p><%= link_to "Add Comments", '#', remote: true, id: 'add_comments_link' %></p>
-                  </div>
-                </div>
+                <%= render partial: 'comments/index_reviewer_comments' %>
               </fieldset>
             </div>
           </div>
-        <% end %>
-        <% if owner_role(@plan) || safe_has_role?(Role::DMP_ADMIN)  %>
+
           <div class="control-group">
             <label class ="control-label"> Owner Comments: </label>
             <div class="controls">
               <p><%= link_to "View", '#', id: 'view_owner_comments' %></p>
               <fieldset id = "owner_comments">
                 <legend>Comments<%= link_to raw('<i class="icon-chevron-up pull-right"></i>'), '#', id: 'hide_owner_comments' %></legend>
-                <%= render partial: 'comments/index' %>
+                <%= render partial: 'comments/index_owner_comments' %>
                 <div class="control-group">
                   <label class ="control-label"> Comments: </label>
                   <div class="controls">
@@ -102,13 +100,12 @@
               </fieldset>
             </div>
           </div>
-        <% end %>
         <hr/>
 
         <div class="control-group">
           <label class ="control-label"> Visibility: </label>
           <div class="controls">
-            <p> This DMP is <span style="color:blue;"><%=@plan.visibility.capitalize %></span> </p>
+            <p>This DMP is <span style="color:blue;"><strong> <%=@plan.visibility.capitalize %></strong></span> </p>
             <p><%= link_to "Change Settings", '#', remote: true, id: 'change_visibility_link' %></p>
           </div>
         </div>

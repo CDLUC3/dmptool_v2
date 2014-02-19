@@ -48,19 +48,10 @@ class PlansController < ApplicationController
   # GET /plans/1/edit
   def edit
     @comment = Comment.new
-    if !safe_has_role?(Role::DMP_ADMIN)
-      comments = Comment.where(plan_id: @plan.id, user_id: current_user.id)
-      case comments
-      when comments.where(visibility: :reviewer)
-        @comments = comments.reviewer
-      when comments.where(visibility: :owner)
-        @comments = comments.owner
-      else
-        @comments = comments
-      end
-    else
-      @comments = Comment.all
-    end
+    comments = Comment.where(plan_id: @plan.id, user_id: current_user.id)
+    @reviewer_comments = comments.where(visibility: :reviewer)
+    @owner_comments = comments.where(visibility: :owner)
+    @plan_states = @plan.plan_states
   end
 
   # POST /plans
@@ -165,8 +156,9 @@ class PlansController < ApplicationController
     template_id = @plan.requirements_template_id
     @requirements_template = RequirementsTemplate.find(template_id)
     @requirements = @requirements_template.requirements
-    # @template_resources = Resource.joins( "JOIN resource_contexts ON resources.id = resource_contexts.resource_id AND resource_contexts.requirements_template_id = @requirements_template )
-    # @institution_resources =
+    if params[:requirement_id].blank?
+      params[:requirement_id] = @requirements_template.first_question.id.to_s
+    end
   end
 
   def change_visiblity

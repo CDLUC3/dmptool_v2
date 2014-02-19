@@ -38,12 +38,9 @@ module PlansHelper
 		end
 	end
 
-	def owner_role(plan)
-		plan = plan
-		user_id = UserPlan.where(plan_id: plan.id, owner: true).first.user_id
-		if user_id == current_user.id
-			return true
-		end
+	def status(plan)
+		plan_state_id = plan.current_plan_state_id
+		@state = PlanState.find(plan_state_id).state.capitalize
 	end
 
 	def institution_name(plan_id)
@@ -64,17 +61,18 @@ module PlansHelper
 		unless !Requirement.exists?(requirement_id)
 			requirement = Requirement.find(requirement_id)
 			@resource_contexts = ResourceContext.where(requirement_id: requirement_id, institution_id: current_user.institution_id, requirements_template_id: @requirements_template.id)
-			@resources = Array.new
-			@resource_contexts.each do |resource_context|
-				display_text(resource_context)
-			end
+			@resource_contexts
 		end
 	end
 
-	def display_text(resource_context)
-		id  = resource_context.resource_id
-		resource = Resource.find(id).text
-		@resources << resource
+	def display_text(resource_contexts)
+		resources = Array.new
+		resource_contexts.each do |resource_context|
+			id  = resource_context.resource_id
+			resource = Resource.find(id).text
+			resources << resource
+		end
+		return resources
 	end
 
 end
