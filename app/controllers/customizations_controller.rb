@@ -1,5 +1,10 @@
 class CustomizationsController < ApplicationController
 
+  TABS = [  'Guidance',
+            'Actionable Links',
+            'Suggested Response',
+            'Example Response' ]
+
   def show
     # :id is customization id and :requirement_id
     @customization = ResourceContext.find(params[:id])
