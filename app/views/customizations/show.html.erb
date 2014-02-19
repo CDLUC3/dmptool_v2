@@ -20,34 +20,33 @@
     </ul>
     <div class="tab-content">
       <% CustomizationsController::TABS.each_with_index do |tab, index| %>
-      <div class="tab-pane" id="tab<%= (index+1) %>">
-          test
-          <%# render :partial => 'section_display',
-            #  :locals => {  :section_name => 'Global Resources',
-            #                :partial_name => '',
-            #                :collection   => '',
-            #                :editable     => false }
+      <div class="tab-pane<%= (index==0 ? ' active': '') %>" id="tab<%= (index+1) %>">
+          <%= render :partial => 'section_display',
+              :locals => {  :section_name => 'Global Resources',
+                            :partial_name => '',
+                            :collection   => '',
+                            :editable     => false }
           %>
 
-          <%# render :partial => 'section_display',
-            #         :locals => {  :section_name => 'DMP Resources',
-            #                       :partial_name => '',
-            #                       :collection   => '',
-            #                       :editable     => false }
+          <%= render :partial => 'section_display',
+                     :locals => {  :section_name => 'DMP Resources',
+                                   :partial_name => '',
+                                   :collection   => '',
+                                   :editable     => false }
           %>
 
-          <%# render :partial => 'section_display',
-            #         :locals => {  :section_name => "#{@institution.name} Resources",
-            #                       :partial_name => '',
-            #                       :collection   => '',
-            #                       :editable     => false }
+          <%= render :partial => 'section_display',
+                     :locals => {  :section_name => "#{@institution.name} Resources",
+                                   :partial_name => '',
+                                   :collection   => '',
+                                   :editable     => false }
           %>
 
-          <%# render :partial => 'section_display',
-            #         :locals => {  :section_name => "#{@requirements_template.name} for #{@institution.name} Resources",
-            #                       :partial_name => '',
-            #                       :collection   => '',
-            #                       :editable     => false }
+          <%= render :partial => 'section_display',
+                     :locals => {  :section_name => "#{@requirements_template.name} for #{@institution.name} Resources",
+                                   :partial_name => '',
+                                   :collection   => '',
+                                   :editable     => false }
           %>
 
           <%# render :partial => 'section_display',
@@ -63,9 +62,7 @@
   </div>
 </div>
 
-<!--
 <script type="text/javascript">
   tab_jump();
   add_tab_to_pagination();
 </script>
--->
