@@ -130,19 +130,36 @@ class ResourcesController < ApplicationController
 
   def new_customization_resource
     @template_id = params[:template_id]
+    @customization_overview_id = params[:customization_overview_id]
     @template_name = RequirementsTemplate.find(@template_id).name
     @resource = Resource.new
-    @current_institution_id = current_user.institution.id
-    @customization_overview_id = params[:customization_overview_id]
+
+    @customization_overview = ResourceContext.find(@customization_overview_id)
+
+    @current_institution_id = nil
+
+    if safe_has_role?(Role::DMP_ADMIN)
+      @current_institution_id = @customization_overview.institution_id
+    else 
+      @current_institution_id = current_user.institution.id
+    end
+   
   end
 
   def create_customization_resource
     @template_id = params[:template_id]
+    @customization_overview_id = params[:customization_overview_id]
+    @customization_overview = ResourceContext.find(@customization_overview_id)
+
+    if safe_has_role?(Role::DMP_ADMIN)
+      @current_institution_id = @customization_overview.institution_id
+    else 
+      @current_institution_id = current_user.institution.id
+    end
+    
     @resource = Resource.new(resource_params)
     
-    @current_institution_id = current_user.institution.id
-    
-    @customization_overview_id = params[:customization_overview_id]
+   
     respond_to do |format|
       if @resource.save 
         @resource_id = @resource.id
@@ -164,11 +181,26 @@ class ResourcesController < ApplicationController
     @template_id = params[:template_id]
     @resource = Resource.find(@resource_id)
     @customization_overview_id = params[:customization_overview_id]
+    @customization_overview = ResourceContext.find(@customization_overview_id)
+    @institution_id = nil
          
-    @current_institution_id = current_user.institution.id
+
+    if safe_has_role?(Role::DMP_ADMIN) && !@customization_overview.institution.nil?
+
+       @institution_id = ResourceContext.find(@customization_overview_id).institution_id
+
+    elsif safe_has_role?(Role::DMP_ADMIN) && @customization_overview.institution.nil?
+
+       @institution_id =  ResourceContext.find(@customization_overview_id).institution_id
+
+    elsif !safe_has_role?(Role::DMP_ADMIN)
+
+      @institution_id = current_user.institution_id
+
+    end
 
     @resource_context = nil
-    if template_customization_present?(@resource_id, @template_id, @current_institution_id)
+    if template_customization_present?(@resource_id, @template_id, @institution_id)
       
       respond_to do |format|
         format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
@@ -178,7 +210,7 @@ class ResourcesController < ApplicationController
     else
    
       @resource_context = ResourceContext.new(resource_id: @resource_id, 
-                                              institution_id: @current_institution_id, 
+                                              institution_id: @institution_id, 
                                               requirements_template_id: @template_id) 
       respond_to do |format| 
         if @resource_context.save
