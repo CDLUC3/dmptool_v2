@@ -21,7 +21,9 @@
 			<tr>
 				<th>Select</th>		
 				
-				<th class="span4"><%= link_to "Details", {scope: "Details"}%></th>	
+				<th class="span4"><%= link_to "Details", {scope: "Details", 
+													customization_overview_id: @customization_overview_id,
+													template_id: @template_id}%></th>	
 				<th><%= link_to "Type", {scope: "Type"} %></th>			
 				<th><%= link_to "Institution", {scope: "Institution"}%></th>
 				<th><%= link_to "Creation Date", {scope: "Creation_Date"}%></th>
