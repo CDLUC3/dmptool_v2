@@ -108,8 +108,8 @@
         <div class="control-group">
           <label class ="control-label"> Visibility: </label>
           <div class="controls">
-            <p> This DMP is <span style="color:blue;"><%=@plan.visibility.capitalize %></span> </p>
-            <p><%= link_to "Change Settings", '#', remote: true, id: 'change_visibility_link' %></p>
+            <p> This DMP is <span style="color:blue;"><%=@plan.visibility.capitalize %></span><br/>
+            <%= link_to "Change Settings", '#', remote: true, id: 'change_visibility_link' %></p>
           </div>
         </div>
 
@@ -118,7 +118,7 @@
         <div class="control-group">
           <label class ="control-label"> Available Actions: </label>
             <div class="controls">
-            <p><%= link_to "Preview DMP", "#" %> |
+            <p><%= link_to "Preview DMP", preview_path %> |
               <%= link_to "Submit DMP", "#" %> |
               <%= link_to "Deactivate DMP", "#" %> |
               <%= link_to "Delete DMP",@plan, method: :delete,  style: 'color:red;', data: { confirm: 'Are you sure?', :id => 'delete_template' }%>
