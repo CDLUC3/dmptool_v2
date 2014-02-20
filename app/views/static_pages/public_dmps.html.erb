@@ -1,0 +1,30 @@
+<h1 class="row-fluid"><span class="icon public-dmps"></span>Public DMPs</h1>
+<br/>
+<div class="row-fluid">
+	<div class="span8">
+		<p>Use the A-Z links below to narrow down the list by institution or
+			use the search box to search for specific DMP Templates.  Sample
+			plans are not necessarily from the funder.</p>
+	</div>
+	<div class="search-area span4 pull-right">
+			<%= form_tag('', {:method => :get}) do %>
+				<div class="control-group pull-right">
+					<%= search_field_tag(:q, params[:q], :class => 'input-large') %>
+					<%= label_tag :q, "Search", :class => "icon search" %>
+					<%= submit_tag('Search') %>
+				</div>
+			<% end %>
+	</div>
+</div>
+<br/>
+<div class="buttons-alpha row">
+	<%= link_to('A - F', { :s => 'a', :e => 'f' }, :class => 'btn viewA-F') %> 
+	<%= link_to('G - L', { :s => 'g', :e => 'l' }, :class => 'btn viewG-L') %> 
+	<%= link_to('M - S', { :s => 'm', :e => 's' }, :class => 'btn viewM-S') %> 
+	<%= link_to('T - Z', { :s => 't', :e => 'z' }, :class => 'btn viewT-Z') %> 
+	<%= link_to('All', { :s => 'a', :e => 'z' }, :class => 'btn viewA-Z') %>
+</div>
+
+<%= render partial: 'public_table', :locals => {templates: @public_templates, public: true} %>
+
+

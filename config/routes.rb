@@ -18,6 +18,7 @@ Dmptool2::Application.routes.draw do
   get 'partners_list', to: 'institutions#partners_list'
   get 'privacy', to: 'static_pages#privacy'
   get 'promote', to: 'static_pages#promote'
+  get 'public_dmps', to: 'static_pages#public_dmps'
   get 'terms_of_use', to: 'static_pages#terms_of_use'
   get 'video', to: 'static_pages#video'
   get 'resource_contexts/dmp_for_customization', to: 'resource_contexts#dmp_for_customization', as: "dmp_for_customization"

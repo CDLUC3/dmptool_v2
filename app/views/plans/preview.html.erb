@@ -28,7 +28,7 @@
 	</table>
 	<hr/>
 	<div class="row-fluid">
-		<%= link_to "", "#", :class => "icon print pull-right" %>
+		<%= link_to(content_tag(:span, "", :class => "icon print") + "Print", "#", :class => "icon print pull-right")  %>
 	</div>
 	<div class="dmp-preview">
 		<h2>Lorem Ipsum</h2>
@@ -89,7 +89,7 @@
 				</table>
 				<hr/>
 				<div class="row-fluid">
-					<%= link_to "", "#", :class => "icon print pull-right" %>
+					<%= link_to(content_tag(:span, "", :class => "icon print") + "Print", "#", :class => "icon print pull-right")  %>
 				</div>
 				<div class="dmp-preview">
 					<h2>Lorem Ipsum</h2>
