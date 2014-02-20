@@ -19,7 +19,8 @@ group :test do
   gem 'launchy'
 end
 
-gem "ckeditor", :git => "https://github.com/galetahub/ckeditor.git"
+#gem "ckeditor", :git => "https://github.com/galetahub/ckeditor.git"
+gem "ckeditor_rails"
 
 gem 'omniauth'
 gem 'omniauth-ldap'

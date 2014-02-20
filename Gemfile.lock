@@ -22,14 +22,6 @@ GIT
       nokogiri (~> 1.1)
       tidy-ext (~> 0.1)
 
-GIT
-  remote: https://github.com/galetahub/ckeditor.git
-  revision: b19f776a43e188e48fd409353366f05bdab3090d
-  specs:
-    ckeditor (4.0.10)
-      mime-types
-      orm_adapter (~> 0.5.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -88,6 +80,8 @@ GEM
       json (>= 1.7)
     childprocess (0.5.1)
       ffi (~> 1.0, >= 1.0.11)
+    ckeditor_rails (4.3.1)
+      railties (>= 3.0)
     columnize (0.3.6)
     debugger (1.6.5)
       columnize (>= 0.3.1)
@@ -154,7 +148,6 @@ GEM
       omniauth (~> 1.0)
       pyu-ruby-sasl (~> 0.0.3.1)
       rubyntlm (~> 0.1.1)
-    orm_adapter (0.5.0)
     polyglot (0.3.4)
     pyu-ruby-sasl (0.0.3.3)
     rack (1.5.2)
@@ -247,7 +240,7 @@ DEPENDENCIES
   capistrano-unicorn
   capybara (~> 2.2.1)
   carrierwave
-  ckeditor!
+  ckeditor_rails
   debugger
   deep_cloneable (~> 1.5.5)
   enum_column3
