@@ -162,7 +162,7 @@ class ResourceContextsController < ApplicationController
 
   def customization_resources_list
 
-    @prev_url = request.referer
+    @prev_url = request.original_url
 
     @customization = @resource_context
    # @customization_institution = current_user.institution
@@ -186,7 +186,7 @@ class ResourceContextsController < ApplicationController
 
   def select_resource
 
-    @prev_url = request.referer
+    @prev_url = request.original_url
    
     @template_id = params[:template_id]
     @customization_overview_id = params[:customization_overview_id]
