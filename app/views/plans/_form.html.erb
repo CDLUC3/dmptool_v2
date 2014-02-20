@@ -64,7 +64,7 @@
           <div class="control-group">
             <label class ="control-label"> Current Status: </label>
             <div class="controls">
-              <p><strong style="color:blue;"><%= status(@plan) %></strong>
+              <p><strong style="color:blue;"><%= state(@plan) %></strong>
               <%= link_to "(Show History)", '#', id: 'show_plan_states_history' %></p>
               <fieldset id="plan_states_history">
                 <legend><%= link_to raw('<i class="icon-chevron-up pull-right"></i>'), '#', id: 'hide_plan_states_history' %></legend>

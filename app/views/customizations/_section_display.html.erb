@@ -6,4 +6,15 @@
 # editable -- true or false value for whether this item should be editable
 %>
 
-<h2><%= section_name %></h2>
+<% if collection.length > 0 || editable %>
+  <h2 class="cust"><%= section_name %></h2>
+
+  <% collection.each do |resource| %>
+    <%= render  :partial => partial_name,
+              :locals => { :resource => resource, :editable => editable } %>
+  <% end %>
+<% end %>
+
+<% if editable %>
+  <p> +  Add another one</p>
+<% end %>
