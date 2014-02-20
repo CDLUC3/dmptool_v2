@@ -212,6 +212,8 @@ class ResourceContextsController < ApplicationController
     end
 
     case params[:scope]
+      when "Resource_id"
+        @resource_contexts = @resource_contexts.order_by_resource_id.page(params[:page]).per(20)
       when "Details"
         @resource_contexts = @resource_contexts.order_by_resource_label.page(params[:page]).per(20)
       when "Type"
