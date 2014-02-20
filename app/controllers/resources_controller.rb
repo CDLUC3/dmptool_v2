@@ -30,6 +30,11 @@ class ResourcesController < ApplicationController
   end
 
   def edit_customization_resource
+
+    @prev_url = params[:prev_url]
+
+    
+
     @resource = Resource.find(params[:id])
 
     @customization_id = params[:customization_id]
@@ -118,12 +123,19 @@ class ResourcesController < ApplicationController
     @resource_id = params[:resource_id]
     @resource = Resource.find(@resource_id)
     @customization_ids = ResourceContext.where(resource_id: @resource_id).pluck(:id)
+    @customization_id = params[:customization_overview_id]
+
+    prev_url = params[:prev_url]
+
+
     if @resource.destroy
       if @customization_ids
         ResourceContext.destroy(@customization_ids)
       end
       respond_to do |format|
-        format.html { redirect_to edit_resource_context_path(params[:customization_overview_id]), notice: 'Resource was successfully eliminated.' }
+        #format.html { redirect_to edit_resource_context_path(params[:customization_overview_id]), notice: 'Resource was successfully eliminated.' }
+        format.html { redirect_to prev_url, notice: 'Resource was successfully eliminated.' }
+        
         format.json { head :no_content }
       end
     else

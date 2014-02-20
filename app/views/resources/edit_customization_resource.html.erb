@@ -46,10 +46,16 @@
                           :method => :post,
                           :class => "btn" %>
 
+      <%#= f.hidden_field :prev_url, :value => @prev_url %>
+
+      
+
       <%= link_to 'Delete Resource', delete_resource_path(resource_id: @resource.id, 
-                                      customization_overview_id: @customization_id), 
+                                      customization_overview_id: @customization_id,
+                                      prev_url: @prev_url), 
                                       :method => :delete,
-      data: { confirm: 'Are you sure? This resource will be deleted from all templates!' }, :class => "btn" %>
+                                    #data: { confirm: 'Are you sure? This resource will be deleted from all templates!' }, 
+                                    :class => "btn" %>
     </div>
   </fieldset>
 <% end %>
