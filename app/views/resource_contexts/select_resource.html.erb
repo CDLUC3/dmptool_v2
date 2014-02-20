@@ -19,7 +19,12 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th>Select</th>		
+				<th>Select</th>
+
+				<th><%= link_to "Resource Id", 
+											{scope: "Resource_id", 
+											customization_overview_id: @customization_overview_id,
+											template_id: @template_id}%></th>		
 				
 				<th class="span4"><%= link_to "Details", 
 											{scope: "Details", 
@@ -53,7 +58,7 @@
 			<% @resource_contexts.each do |resource_context| %>
 				<tr>
 					<td class="span1"><%= radio_button_tag :resource, resource_context.resource_id, checked: false %></td>	
-					
+					<td><%= resource_context.resource_id %></td>
 					<td>
 						<div class="toggle-links">
 							<%= resource_context.resource.nil? ? " " : resource_context.resource.label %>
