@@ -1,12 +1,4 @@
 GIT
-  remote: git://github.com/galetahub/ckeditor.git
-  revision: b19f776a43e188e48fd409353366f05bdab3090d
-  specs:
-    ckeditor (4.0.10)
-      mime-types
-      orm_adapter (~> 0.5.0)
-
-GIT
   remote: git://github.com/radar/paranoia.git
   revision: 96a02dd0baaa674ad1be0f63d033275d4938ac72
   branch: rails4
@@ -29,6 +21,14 @@ GIT
     ifad-rtf (0.4.2)
       nokogiri (~> 1.1)
       tidy-ext (~> 0.1)
+
+GIT
+  remote: https://github.com/galetahub/ckeditor.git
+  revision: b19f776a43e188e48fd409353366f05bdab3090d
+  specs:
+    ckeditor (4.0.10)
+      mime-types
+      orm_adapter (~> 0.5.0)
 
 GEM
   remote: https://rubygems.org/
