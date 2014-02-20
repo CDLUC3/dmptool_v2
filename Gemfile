@@ -19,6 +19,8 @@ group :test do
   gem 'launchy'
 end
 
+gem "ckeditor", :git => "https://github.com/galetahub/ckeditor.git"
+
 gem 'omniauth'
 gem 'omniauth-ldap'
 gem "omniauth-shibboleth", :git => "git@bitbucket.org:cdl/omniauth-shibboleth.git", :branch => 'master'
@@ -45,4 +47,4 @@ gem 'american_date'
 gem 'ifad-rtf', :git => 'https://github.com/clbustos/rtf.git'
 gem "recaptcha", :require => "recaptcha/rails"
 gem 'activerecord_any_of'
-gem "ckeditor", :git => "https://github.com/galetahub/ckeditor.git"
+
