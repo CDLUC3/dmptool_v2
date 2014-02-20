@@ -1,52 +1,139 @@
 <h2> Edit <%= @resource.label %> Resource </h2>
 
 
-  <%= form_for @resource ,url: update_customization_resource_path(customization_id: @customization_id, id: @resource.id),  html: { :class => 'form-horizontal' } do |f| %>
+<%= form_for @resource ,
+        url: update_customization_resource_path(customization_id: @customization_id, id: @resource.id, template_id: @template_id),  
+        html: { :class => 'form-horizontal' } do |f| %>
 
-    <%= render partial: "shared/errors", locals: {model: @resource } %>
+  <%= render partial: "shared/errors", locals: {model: @resource } %>
 
-    <fieldset>
-      <div class="control-group">
-        <%= f.label :resource_type, "Resource Type", :class => "control-label" %>
-        <div class="controls">
-          <%= f.select :resource_type,
-          		options_for_select([:actionable_url, :help_text, :example_response, :suggested_response], @resource.resource_type) %>
-        </div>
+  <fieldset>
+    <div class="control-group">
+      <%= f.label :resource_type, "Resource Type", :class => "control-label" %>
+      <div class="controls">
+        <%= f.select :resource_type,
+        		options_for_select([:actionable_url, :help_text, :example_response, :suggested_response], @resource.resource_type) %>
       </div>
+    </div>
 
-      <div class="control-group">
-        <%= f.label :label_label, "Label", :class => "control-label", id: "label_label" %>
-        <div class="controls">
-          <%= f.text_field :label, placeholder: "Enter a name for this Resource", :class => "input-xlarge" %>
-        </div>
+    <div class="control-group">
+      <%= f.label :label_label, "Label", :class => "control-label", id: "label_label" %>
+      <div class="controls">
+        <%= f.text_field :label, placeholder: "Enter a name for this Resource", :class => "input-xlarge" %>
       </div>
+    </div>
 
-      <div class="control-group">
-        <%= f.label :text, "Text", :class => "control-label", id: "text" %>
-        <div class="controls">
-          <%= f.text_area :text, size: "20x10",placeholder: "Enter the text", :class => "input-xlarge" %>
-        </div>
+    <div class="control-group">
+      <%= f.label :text, "Text", :class => "control-label", id: "text" %>
+      <div class="controls">
+        <%= f.text_area :text, size: "20x10",placeholder: "Enter the text", :class => "input-xlarge" %>
       </div>
+    </div>
+    
+
+    <div class="control-group">
+       <%= f.label :value_label, "Value", :class => "control-label", id: "value_label" %>
+      <div class="controls">
+        <%= f.text_field :value, placeholder: "URL", :class => "input-xlarge" %>
+      </div>
+    </div>
+
+    <div class="actions pull-right">
+      <%= f.submit 'Save Changes', :class => "btn" %>
+      
+      <%= link_to 'Cancel', select_resource_path(template_id: @template_id, 
+                          customization_overview_id: @customization_id), 
+                          :method => :post,
+                          :class => "btn" %>
+
+      <%#= f.hidden_field :prev_url, :value => @prev_url %>
+
       
 
-      <div class="control-group">
-         <%= f.label :value_label, "Value", :class => "control-label", id: "value_label" %>
-        <div class="controls">
-          <%= f.text_field :value, placeholder: "URL", :class => "input-xlarge" %>
-        </div>
-      </div>
+      <%= link_to 'Delete Resource', delete_resource_path(resource_id: @resource.id, 
+                                      customization_overview_id: @customization_id,
+                                      prev_url: @prev_url), 
+                                      :method => :delete,
+                                    #data: { confirm: 'Are you sure? This resource will be deleted from all templates!' }, 
+                                    :class => "btn" %>
+    </div>
+  </fieldset>
+<% end %>
 
-      <div class="actions pull-right">
-        <%= f.submit 'Save Changes', :class => "btn" %>
-        
-        <%= link_to 'Cancel', edit_resource_context_path(@customization_id), :class => "btn" %>
 
-        <%= link_to 'Delete Resource', delete_resource_path(resource_id: @resource.id, 
-                                        customization_overview_id: @customization_id), 
-                                        :method => :delete,
-        data: { confirm: 'Are you sure?' }, :class => "btn" %>
-      </div>
-    </fieldset>
-  <% end %>
+
+
+<table class="table table-striped">
+  <tr>
+    <th colspan="3"> This Resource is shown in:</th>
+  </tr>
+
+  
+
+    <% if @any_templates %>
+
+      <tr>
+        <th colspan="3">The following Templates:</th>   
+      </tr>
+
+      <tr>
+        <th colspan="2">Template:</th>
+        <th>Unlink</th>
+      </tr>
+
+      <% @resource_contexts_templates.each do |resource_contexts_template| %>
+        <tr>
+  
+          <td colspan="2" ><%= resource_contexts_template.requirements_template.name %></td>
+          <td> 
+            <%= link_to 'Unlink from Template', unlink_resource_path(resource_id: @resource.id, 
+                                                      template_id: resource_contexts_template.requirements_template_id, 
+                                                      customization_id: @customization_id),  
+                                  method: :post %>  
+          </td> 
+        </tr>
+      <% end %>
+
+    <% end %>
+
+    <tr>
+      <td colspan="3"></td>
+    </tr>
+
+    <% if @any_requirements %>
+
+      <tr>
+        <th colspan="3" >The following Requirements:</th>
+      </tr>
+
+      <tr>
+        <th>Requirement:</th>
+        <th>Associated Template:</th>
+        <th>Unlink</th>
+      </tr>
+
+      <% @resource_contexts_requirements.each do |resource_contexts_requirement| %>
+        <tr>
+         <td><%= resource_contexts_requirement.requirement.text_brief%></td>
+          <td><%= resource_contexts_requirement.requirements_template.name%></td> 
+           <td> 
+            <%= link_to 'Unlink from Requirement', unlink_resource_path(resource_id: @resource.id,
+                                                      template_id: resource_contexts_requirement.requirements_template_id, 
+                                                      requirement_id: resource_contexts_requirement.requirement_id,  
+                                                      customization_id: @customization_id),  
+                                  method: :post %>  
+          </td> 
+        </tr>
+      <% end %>
+
+    <% end %>
+    
+</table>
+
+  
+
+
+
+
 
 

@@ -4,9 +4,10 @@
 		<%= search_field_tag(:q, params[:q], :class => 'input-large') %>
 		<%= label_tag :q, "Search", :class => "icon search" %>
 		<%= submit_tag('Search') %>
+
+    <% (params.keys - ['q', 'search', 'controller', 'action']).each do |i| %>
+      <%= hidden_field_tag(i, params[i]) %>
+    <% end %>
 	</div>
 	<% end %>
 </div>
-
-
-

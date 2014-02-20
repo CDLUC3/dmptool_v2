@@ -2,7 +2,7 @@ class InstitutionsController < ApplicationController
   before_action :set_institution, only: [:show, :destroy]
   before_action :check_for_cancel, :update => [:create, :update, :destroy]
   before_filter :populate_institution_select_list
-  before_action :check_institution_admin_access
+  before_action :check_institution_admin_access, :except=>[:partners_list]
 
   # GET /institutions
   # GET /institutions.json
@@ -192,7 +192,18 @@ class InstitutionsController < ApplicationController
   end
 
   def partners_list
-    @institutions = Institution.page(params[:page]).per(10)
+    @institutions = Institution.all
+    if params[:all].blank? then
+      unless params[:s].blank? || params[:e].blank?
+        @institutions = @institutions.letter_range(params[:s], params[:e])
+      end
+      unless params[:q].blank? then
+        @institutions = @institutions.search_terms(params[:q])
+      end
+      @institutions = @institutions.page(params[:page]).per(10)
+    else
+      @institutions = @institutions.page(0).per(9999)
+    end
   end
   
   private

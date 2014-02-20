@@ -2,16 +2,16 @@
 <html lang="en">
   <head>
     <title>Dmptool2</title>
-    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= stylesheet_link_tag    "application", media: "all" %>
+    <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <%= render 'layouts/shim' %>
     <script>
     	if (navigator.userAgent.match(/AppleWebKit/) && ! navigator.userAgent.match(/Chrome/)) {
-   			document.write('<link rel="stylesheet" media="all" href="/assets/safari.css?body=1" data-turbolinks-track="true" />')
+   			document.write('<link rel="stylesheet" media="all" href="/assets/safari.css?body=1" />')
 			}
 			if (navigator.userAgent.match(/Chrome/)) {
-   			document.write('<link rel="stylesheet" media="all" href="/assets/chrome.css?body=1" data-turbolinks-track="true" />')
+   			document.write('<link rel="stylesheet" media="all" href="/assets/chrome.css?body=1" />')
 			}
     </script>
   </head>
@@ -20,7 +20,7 @@
 
   <div class="container">
   	<% if current_user %>
-  		<%= render 'layouts/dashboard_header' unless ['static_pages', 'user_sessions'].include?(controller_name) && !['guidance'].include?(action_name) %>
+  		<%= render 'layouts/dashboard_header' unless ['static_pages', 'user_sessions'].include?(controller_name) && !['guidance', 'public_dmps'].include?(action_name) %>
   	<% end %>
     <% flash.each do |key, value| %>
       <div class="alert alert-<%= key %>">

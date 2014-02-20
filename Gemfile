@@ -19,6 +19,8 @@ group :test do
   gem 'launchy'
 end
 
+gem "ckeditor", :git => "https://github.com/galetahub/ckeditor.git"
+
 gem 'omniauth'
 gem 'omniauth-ldap'
 gem "omniauth-shibboleth", :git => "git@bitbucket.org:cdl/omniauth-shibboleth.git", :branch => 'master'
@@ -34,8 +36,8 @@ gem 'deep_cloneable', '~> 1.5.5'
 gem 'ancestry'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'turbolinks', '1.0.0'
-gem 'jquery-turbolinks'
+#gem 'turbolinks', '1.0.0'
+#gem 'jquery-turbolinks'
 gem 'jbuilder', '1.0.1'
 gem 'kaminari'
 gem 'carrierwave'
@@ -45,4 +47,4 @@ gem 'american_date'
 gem 'ifad-rtf', :git => 'https://github.com/clbustos/rtf.git'
 gem "recaptcha", :require => "recaptcha/rails"
 gem 'activerecord_any_of'
-gem 'ckeditor'
+

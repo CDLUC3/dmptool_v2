@@ -18,6 +18,7 @@ Dmptool2::Application.routes.draw do
   get 'partners_list', to: 'institutions#partners_list'
   get 'privacy', to: 'static_pages#privacy'
   get 'promote', to: 'static_pages#promote'
+  get 'public_dmps', to: 'static_pages#public_dmps'
   get 'terms_of_use', to: 'static_pages#terms_of_use'
   get 'video', to: 'static_pages#video'
   get 'resource_contexts/dmp_for_customization', to: 'resource_contexts#dmp_for_customization', as: "dmp_for_customization"
@@ -87,6 +88,7 @@ Dmptool2::Application.routes.draw do
   get 'copy_existing_plans_template', to: 'plans#copy_existing_template'
   get 'select_dmp_template', to: 'plans#select_dmp_template'
   get 'review_dmps', to: 'plans#review_dmps'
+  get 'preview', to: 'plans#preview'
   post 'change_visiblity', to: 'plans#change_visiblity'
 
   get  'remove_resource_editor_role', to: 'resource_templates#remove_resource_editor_role'
@@ -120,7 +122,10 @@ Dmptool2::Application.routes.draw do
 
   post 'create_customization_resource_from_select_resource', to: 'resources#create_customization_resource_from_select_resource'
 
-  #post 'save_selected_resource', to: 'resource_contexts#save_selected_resource'
+  post 'copy_selected_customization_resource', to: 'resources#copy_selected_customization_resource'
+
+  post 'unlink_resource', to: 'resource_contexts#unlink_resource'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

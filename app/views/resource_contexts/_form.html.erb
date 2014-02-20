@@ -36,11 +36,11 @@
     <%= f.label :review_type, :class => 'control-label' %>
     <div class="controls radio-controls">
       <%= f.radio_button :review_type, :formal_review, :class => 'radio inline', :id => 'formal_review'  %>
-      <%= label_tag :formal_review, 'Formal review required', :class => 'radio-label'%>&nbsp;&nbsp;&nbsp;&nbsp;
+      <%= label_tag :formal_review, 'Formal review required', :class => 'checkbox-label'%>&nbsp;&nbsp;&nbsp;&nbsp;
       <%= f.radio_button :review_type, :informal_review, :class => 'radio inline', :id => 'informal_review'  %>
-      <%= label_tag :informal_review, 'Informal review required', :class => 'radio-label'%>&nbsp;&nbsp;&nbsp;&nbsp;
+      <%= label_tag :informal_review, 'Informal review', :class => 'checkbox-label'%>&nbsp;&nbsp;&nbsp;&nbsp;
       <%= f.radio_button :review_type, :no_review, :class => 'radio inline', :id => 'no_review'  %>
-      <%= label_tag :no_review, 'No review required', :class => 'radio-label'%>
+      <%= label_tag :no_review, 'No review required', :class => 'checkbox-label'%>
     </div>
   </div>
 
@@ -81,3 +81,6 @@
   </div>
 
 <% end %>
+<script>
+		jQuery(document).requiredField();
+</script>

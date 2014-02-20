@@ -1,6 +1,6 @@
 /* Tabs */
 .tabbable {
-	margin: 0 0 20px; }
+	margin: 0 0 10px; }
 .tabbable[class*="span"] {
 	float: right;
 	background: #EDF2E2;
@@ -20,16 +20,18 @@ ul.nav-tabs li a {
 	display: block;
 	border-color: #B6B6B7;
 	border-bottom: none;
+	background: #FFFFFF;
 	color: #4C4C4E;
 	font-size: 13px;
 	font-weight: bold;
 	line-height: 31px;
-	height: 30px;
+	height: 29px;
 	padding: 0 14px; }
 .nav-tabs > .active >  a, .nav-tabs > .active > a:hover, .nav-tabs > .active > a:focus {
 	border-color: #B6B6B7;
 	border-bottom: none;
-	color: #516935; }
+	color: #516935;
+	height: 30px; }
 ul.nav-tabs li a:hover, .tabs ul.nav-tabs li a:focus {
 	height: 29px; } 
 ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
@@ -68,36 +70,41 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 /* Log In */
 .login.row-fluid, .contact.row-fluid {
 	margin: 20px 35px; }
-.login.row-fluid .user_login[class*="span"] {
-	border: none;
-	margin-top: 20px;
-	margin-left: 0;
-	margin-bottom: 0; }
 .login p {
 	font-size: 1.167em; }
 .control-group.select_institution select {
 	width: 330px; }
 .control-group.switch_institution {
-	height: 178px; }
+	height: 179px; }
 	
 /* DMPTool Pages */
 .dmptool-page p {
 	font-size: 1.167; }
 
 /* Tree View */
-.tree-view .actions {
-	margin: 10px 0; }
+.tree-view .actions { 
+	}
+.requirements_tree_view .actions {
+	margin: 0;
+	position: absolute;
+	top: 0;
+	right: 0; }
 .requirements_tree_view {
-	margin-top: 10px; }
+	margin-top: 0; }
 .nested_requirements {
 	margin-left: 20px; }
 .requirements_tree_view ul {
+	line-height: 1.5;
 	margin: 0; }
-.requirements_tree_view ul li a:first-child {
+.requirements_tree_view ul > li {
+	position: relative;
+	margin: 15px 0 5px 0;
+	padding-right: 65px;
+}
+.requirements_tree_view ul li > a:first-child {
+	display: inline-block;
 	position: relative;
 	padding-left: 22px; }
-.requirements_tree_view ul li a.icon {
-	bottom: 1px; }
 .institutions {
 	margin: 10px 20px 20px; }
 .institution {
@@ -105,8 +112,9 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 .nested_institutions {
 	margin-left: 35px; }
 .institution a {
-	padding-left: 35px;
+	padding-left: 22px;
 	position: relative; }
+
 
 	
 /* Misc. */
@@ -114,8 +122,10 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	width: 328px; }
 .border-box {
 	border: 1px solid #C9C9CB;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 	padding: 10px 15px; }
+.tab-pane .border-box {
+	margin-bottom: 10px; }
 
 /* Modal Windows */
 /*

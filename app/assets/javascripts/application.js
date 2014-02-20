@@ -14,8 +14,6 @@
 //= require bootstrap
 //= require jquery.ui.all
 //= require jquery_ujs
-//= require turbolinks
-//= require jquery.turbolinks
 //= require ckeditor/override
 //= require ckeditor/init
 //= require_tree .
@@ -46,7 +44,7 @@ $.rails.showConfirmDialog = function(link) {
   					"</div>\n" +
   					"<div class=\"modal-footer\">\n" +
   						"<a data-dismiss=\"modal\" class=\"btn\">" + noVal + "</a>\n" +
-  						"<a data-dismiss=\"modal\" class=\"btn btn-primary confirm\">" + yesVal + "</a>\n" +
+  						"<a data-dismiss=\"modal\" class=\"btn btn-green\">" + yesVal + "</a>\n" +
   					"</div>\n" +
   				"</div>";
   $(html).modal();

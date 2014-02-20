@@ -7,7 +7,7 @@ $(function() {
 		dateFormat: "mm/dd/yy",
 		changeMonth: true,
 		changeYear: true,
-		numberOfMonths: 2
+		numberOfMonths: 1
 	});
 });
 
@@ -77,6 +77,21 @@ $(function() {
 	$("#hide_owner_comments").click(function(event){
 		event.preventDefault();
 		$("#owner_comments").hide();
+	});
+});
+
+$(function() {
+	$("#plan_states_history").hide();
+	$("#show_plan_states_history").click(function(event){
+		event.preventDefault();
+		$("#plan_states_history").show();
+	});
+});
+
+$(function() {
+	$("#hide_plan_states_history").click(function(event){
+		event.preventDefault();
+		$("#plan_states_history").hide();
 	});
 });
 

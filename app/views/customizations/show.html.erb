@@ -1,6 +1,6 @@
 <h1 class="row-fluid" id="jump"><span class="icon template-details"></span>Customization Details</h1>
+<h2><%= @requirements_template.name %></h2>
 <div class="dmptool-page row-fluid">
-	<h4><%= @requirements_template.name %></h4>
   <div class="details span4">
     <div class="tree-view border-box">
       <p><strong>Template Outline</strong></p>
@@ -14,29 +14,15 @@
   </div>
   <div class="tabbable span8">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#tab1" data-toggle="tab">Guidance</a></li>
-      <li><a href="#tab2" data-toggle="tab">Actionable Links</a></li>
-      <li><a href="#tab3" data-toggle="tab">Suggested Response</a></li>
-      <li><a href="#tab4" data-toggle="tab">Example Response</a></li>
+      <% CustomizationsController::TABS.each_with_index do |tab, index| %>
+        <li class="<%= (index==0 ? 'active' : '') %>"><a href="#tab<%= (index + 1) %>" data-toggle="tab"><%= tab[:name] %></a></li>
+      <% end %>
     </ul>
-    <div class="tab-content">
-
-      <div class="tab-pane active" id="tab1">
-        Guidance here
-      </div>
-
-      <div class="tab-pane" id="tab2">
-        Actionable Links here
-      </div>
-
-      <div class="tab-pane " id="tab3">
-        Suggested Response here
-      </div>
-
-      <div class="tab-pane" id="tab4">
-        Example Response here
-      </div>
-
-    </div>
+    <%= render :partial => 'institution_view' %>
   </div>
 </div>
+
+<script type="text/javascript">
+  tab_jump();
+  add_tab_to_pagination();
+</script>

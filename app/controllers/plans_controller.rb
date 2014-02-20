@@ -1,5 +1,5 @@
 class PlansController < ApplicationController
-  before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export]
+  before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details]
   before_action :select_requirements_template, only: [:select_dmp_template]
   # GET /plans
   # GET /plans.json
@@ -48,12 +48,10 @@ class PlansController < ApplicationController
   # GET /plans/1/edit
   def edit
     @comment = Comment.new
-    comments = Comment.all
-    if safe_has_role?(Role::INSTITUTIONAL_REVIEWER) || safe_has_role?(Role::DMP_ADMIN)
-      @comments = comments.reviewer
-    else
-      @comments = comments.owner
-    end
+    comments = Comment.where(plan_id: @plan.id, user_id: current_user.id)
+    @reviewer_comments = comments.where(visibility: :reviewer)
+    @owner_comments = comments.where(visibility: :owner)
+    @plan_states = @plan.plan_states
   end
 
   # POST /plans
@@ -149,13 +147,18 @@ class PlansController < ApplicationController
 
   def select_dmp_template
     @back_to = plan_template_information_path
-    @back_text = "<< Create New DMP <<"
+    @back_text = "<< Create New DMP"
     @submit_to = new_plan_path
-    @submit_text = ">> DMP Overview Page"
+    @submit_text = "DMP Overview Page >>"
   end
 
   def details
-
+    template_id = @plan.requirements_template_id
+    @requirements_template = RequirementsTemplate.find(template_id)
+    @requirements = @requirements_template.requirements
+    if params[:requirement_id].blank?
+      params[:requirement_id] = @requirements_template.first_question.id.to_s
+    end
   end
 
   def change_visiblity

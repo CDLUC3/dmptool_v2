@@ -9,8 +9,8 @@
 <div class="control-group <%= validation_class %>">
   <%= f.label :login_id, 'Username', :class => 'control-label' %>
   <div class="controls">
-    <%= f.text_field :login_id, readonly: !@user.new_record?, :class => "input-xxlarge" %>
-    <span class="help-inline">
+    <%= f.text_field :login_id, readonly: !@user.new_record?, :class => "input-xxlarge required" %>
+    <span class="help-inline" style="display:block;height:0;">
       <%= errors.join (', ') %>
     </span>
   </div>
@@ -22,7 +22,7 @@
   <div class="control-group <%= validation_class %>">
     <%= f.label :first_name, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :first_name, :class => "input-xxlarge" %>
+      <%= f.text_field :first_name, :class => "input-xxlarge required" %>
       <span class="help-inline">
         <%= errors.join (', ') %>
       </span>
@@ -34,7 +34,7 @@
   <div class="control-group <%= validation_class %>">
     <%= f.label :last_name, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :last_name, :class => "input-xxlarge" %>
+      <%= f.text_field :last_name, :class => "input-xxlarge required" %>
         <span class="help-in-line">
           <%=errors.join (', ')%>
       </span>
@@ -47,7 +47,7 @@
 <div class="control-group <%= validation_class %>">
   <%= f.label :password, password_label(@user), :class => 'control-label' %>
   <div class="controls">
-    <%= f.password_field :password, :class => "input-xxlarge", disabled: session[:login_method] == 'shibboleth' %>
+    <%= f.password_field :password, :class => "input-xxlarge required", disabled: session[:login_method] == 'shibboleth' %>
       <span class="help-in-line">
         <%=errors.join (', ')%>
     </span>
@@ -59,7 +59,7 @@
 <div class="control-group  <%= validation_class %>">
   <%= f.label :password_confirmation, :class => 'control-label' %>
   <div class="controls">
-    <%= f.password_field :password_confirmation, :class => "input-xxlarge", disabled: session[:login_method] == 'shibboleth' %>
+    <%= f.password_field :password_confirmation, :class => "input-xxlarge required", disabled: session[:login_method] == 'shibboleth' %>
       <span class="help-in-line">
         <%=errors.join (', ')%>
     </span>
@@ -76,7 +76,7 @@
 <div class="control-group <%= validation_class%>">
   <%= f.label :email, :class => 'control-label' %>
   <div class="controls">
-    <%= f.text_field :email, :class => 'input-xxlarge' %>
+    <%= f.text_field :email, :class => 'input-xxlarge required' %>
       <span class="help-in-line">
         <%=errors.join (', ')%>
       </span>
@@ -108,7 +108,7 @@
     <%= label_tag :my_roles, 'My Roles', :class => 'control-label' %>
     <div class="controls">
       <%#= text_field_tag(:my_roles, "My Roles", value: @roles, disabled: true, :class => "input-xxlarge") %>
-      <%= @user.role_names.join(' | ') %>
+      <p><%= @user.role_names.join(' | ') %></p>
     </div>
   </div>
 <% end %>

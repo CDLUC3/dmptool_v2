@@ -35,19 +35,21 @@
     <tr>
       <td><%= link_to institution.full_name, edit_institution_path(institution) %></td>
       <td class="span1"><% if institution.is_shibboleth? then %>
-        Yes
+        <span class="icon confirm"></span>
       <% else %>
-        No
+        
       <% end %></td>
       <td class="span1"><% if institution.is_customized? then %>
-        Yes
+        <span class="icon confirm"></span>
       <% else %>
-        No
+        
       <% end %></td>
     </tr>
   <% end %>
 	</tbody>
 </table>
 <div class="buttons pagination">
-	<%= link_to "View All", "#", :method => :get, :class => "btn"%>
+  <%= link_to("View All", {:action=>"partners_list", :all=>"seriously"},
+              {:class => "btn"})%>
+  <%= paginate @institutions %>
 </div>

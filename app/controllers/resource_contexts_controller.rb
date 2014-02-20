@@ -100,6 +100,31 @@ class ResourceContextsController < ApplicationController
   end
 
 
+  def unlink_resource
+    @customization_id = params[:customization_id]
+    @resource_id = params[:resource_id]
+    @template_id = params[:template_id]
+    
+    if params[:requirement_id]
+      @requirement_id = params[:requirement_id]
+      @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
+                                                requirement_id: @requirement_id, 
+                                                requirements_template_id: @template_id)
+    else
+      @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
+                                                requirements_template_id: @template_id)
+    end
+
+    @resource_contexts.each do |resource_context|
+        resource_context.destroy
+    end
+    
+    respond_to do |format|
+      format.html { redirect_to edit_customization_resource_path(id: @resource_id, customization_id: @customization_id) }
+      format.json { head :no_content }
+    end
+  end
+
   def destroy
     @resource_context.destroy
     respond_to do |format|
@@ -111,7 +136,7 @@ class ResourceContextsController < ApplicationController
  
 
   def resource_customizations
-    @resource_contexts = ResourceContext.template_level.institutional_level.no_resource_no_requirement.page(params[:page]).order('name ASC')
+    @resource_contexts = ResourceContext.template_level.institutional_level.no_resource_no_requirement.order('name ASC').page(params[:page])
     case params[:scope]
       when "all"
         @resource_contexts 
@@ -122,7 +147,8 @@ class ResourceContextsController < ApplicationController
 
     unless safe_has_role?(Role::DMP_ADMIN)
       @resource_contexts = @resource_contexts.
-                            where(institution_id: [current_user.institution.subtree_ids])
+                            where(institution_id: [current_user.institution.subtree_ids]).
+                            order('name ASC')
     end
   end
 
@@ -136,11 +162,12 @@ class ResourceContextsController < ApplicationController
 
   def customization_resources_list
 
-    #@customization = ResourceContext.find(params[:id])
-    
+    @prev_url = request.original_url
 
     @customization = @resource_context
-    @customization_institution = current_user.institution
+   # @customization_institution = current_user.institution
+
+    @customization_institution = @resource_context.institution
 
     @template= @customization.requirements_template
     @customization_institution_name = current_user.institution.full_name
@@ -149,34 +176,54 @@ class ResourceContextsController < ApplicationController
      
     @resource_contexts = ResourceContext.includes(:resource).
                           per_template(@template).
-                          resource_level.where(institution_id: [current_user.institution.subtree_ids])
+                          resource_level.where(institution_id: [@customization_institution.subtree_ids])
                                                  
   end
 
   def choose_institution
     make_institution_dropdown_list
-
   end
 
   def select_resource
-    
+
+    @prev_url = request.original_url
+   
     @template_id = params[:template_id]
     @customization_overview_id = params[:customization_overview_id]
+   # @customization_overview = ResourceContext.find(@customization_overview_id)
 
-    if safe_has_role?(Role::DMP_ADMIN)
+    if safe_has_role?(Role::DMP_ADMIN) 
 
-      @resource_contexts = ResourceContext.includes(:resource).
+      @resource_contexts = ResourceContext.joins(:resource).
                               where("resource_id IS NOT NULL").
-                              order(institution_id: :asc).
-                              page(params[:page]).per(20)
+                              group(:resource_id)
+                              
     else
 
-      @resource_contexts = ResourceContext.includes(:resource).
+      @resource_contexts = ResourceContext.joins(:resource).
                               where("resource_id IS NOT NULL").
-                             where(institution_id: [current_user.institution.subtree_ids, nil]).
-                              order(institution_id: :asc).
-                              page(params[:page]).per(20)
-    
+                              where(institution_id: [current_user.institution.subtree_ids]).
+                              group(:resource_id)
+                               
+    end
+
+    if !params[:q].blank?
+      @resource_contexts = @resource_contexts.search_terms(params[:q])
+    end
+
+    case params[:scope]
+      when "Details"
+        @resource_contexts = @resource_contexts.order_by_resource_label.page(params[:page]).per(20)
+      when "Type"
+        @resource_contexts = @resource_contexts.order_by_resource_type.page(params[:page]).per(20)
+      when "Institution"
+        @resource_contexts = @resource_contexts.order_by_institution_name.page(params[:page]).per(20)
+      when "Creation_Date"
+        @resource_contexts = @resource_contexts.order_by_resource_created_at.page(params[:page]).per(20)
+      when "Last_Modification_Date"
+        @resource_contexts = @resource_contexts.order_by_resource_updated_at.page(params[:page]).per(20)
+      else
+       @resource_contexts = @resource_contexts.page(params[:page]).per(20)
     end
 
   end

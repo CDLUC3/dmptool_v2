@@ -1,8 +1,13 @@
 /* Tables */
 table {
-	border: 1px solid #B6B6B7;
-	border-collapse: separate; }
+	width: 100%;
+	max-width: 100%;
+	margin-bottom: 10px; }
+th, td {
+	padding: 5px; }
 .table {
+	border: 1px solid #B6B6B7;
+	border-collapse: separate;
 	margin-bottom: 10px; }
 .tab-pane.table .table {
 	margin: 0; }
@@ -30,7 +35,8 @@ table {
 .table th.valign-bottom, .table td.valign-bottom {
 	vertical-align: bottom; }
 .table td.nowrap {
-	white-space: nowrap; }
+	white-space: nowrap;
+	vertical-align: middle; }
 .template-links {
 	margin-top: 5px;
 	visibility: hidden; }
@@ -38,6 +44,9 @@ table {
 	color: #4C4C4E; }
 .template-links a.delete {
 	color: #DA0049; }
+.table .actions a.icon {
+	vertical-align: middle;
+	margin: 0 5px; }
 .samples {
   margin-bottom: 5px; }
 

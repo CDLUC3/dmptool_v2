@@ -72,4 +72,73 @@ class Requirement < ActiveRecord::Base
             rt.id, rt.id, self.id)
   end
 
+  # gets all the resources, of any kind of attachment that are attached to this requirement
+  # as viewed by the institution in the parameter
+  def resources(viewing_institution_id)
+    template_id = self.requirements_template.id
+    Resource.joins(:resource_contexts).
+        where("resource_contexts.resource_id IS NOT NULL").
+        where("resource_contexts.institution_id IS NULL OR resource_contexts.institution_id = ?", viewing_institution_id).
+        where("resource_contexts.requirements_template_id IS NULL OR resource_contexts.requirements_template_id = ?", template_id ).
+        where("resource_contexts.requirement_id IS NULL OR requirement_id = ?", self.id)
+  end
+
+  # global resources for this requirement, Stephen's case #1
+  def global_resources
+    Resource.joins(:resource_contexts).
+        where("resource_contexts.institution_id IS NULL").
+        where("resource_contexts.requirements_template_id IS NULL").
+        where("resource_contexts.requirement_id IS NULL").
+        where("resource_contexts.resource_id IS NOT NULL")
+  end
+
+  # template resources for this template or template and requirement, Stephen's case #2
+  def template_resources
+    template_id = self.requirements_template.id
+    Resource.joins(:resource_contexts).
+        where("resource_contexts.institution_id IS NULL").
+        where("resource_contexts.requirements_template_id = ?", template_id).
+        where("resource_contexts.requirement_id IS NULL").
+        where("resource_contexts.resource_id IS NOT NULL")
+  end
+
+  # requirement resources for this template or template and requirement, Stephen's case #3
+  def requirement_resources
+    template_id = self.requirements_template.id
+    Resource.joins(:resource_contexts).
+        where("resource_contexts.institution_id IS NULL").
+        where("resource_contexts.requirements_template_id = ?", template_id).
+        where("resource_contexts.requirement_id = ?", self.id).
+        where("resource_contexts.resource_id IS NOT NULL")
+  end
+
+  # institution global resources, Stephen's case #4
+  def institution_customization_resources(viewing_institution_id)
+    Resource.joins(:resource_contexts).
+        where("resource_contexts.institution_id = ?", viewing_institution_id).
+        where("resource_contexts.requirements_template_id IS NULL").
+        where("resource_contexts.requirement_id IS NULL").
+        where("resource_contexts.resource_id IS NOT NULL")
+  end
+
+  # institution resources for this template, Stephen's case #5
+  def template_customization_resources(viewing_institution_id)
+    template_id = self.requirements_template.id
+    Resource.joins(:resource_contexts).
+        where("resource_contexts.institution_id = ?", viewing_institution_id).
+        where("resource_contexts.requirements_template_id = ?", template_id).
+        where("resource_contexts.requirement_id IS NULL").
+        where("resource_contexts.resource_id IS NOT NULL")
+  end
+
+  # institution resources for this template and requirement, Stephen's case #7
+  def requirement_customization_resources(viewing_institution_id)
+    template_id = self.requirements_template.id
+    Resource.joins(:resource_contexts).
+        where("resource_contexts.institution_id = ?", viewing_institution_id).
+        where("resource_contexts.requirements_template_id = ?", template_id).
+        where("resource_contexts.requirement_id = ?", self.id).
+        where("resource_contexts.resource_id IS NOT NULL")
+  end
+
 end

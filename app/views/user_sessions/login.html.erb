@@ -1,8 +1,8 @@
 <h1 class="row-fluid"><span class="icon login"></span>Log In</h1>
 <div class="login row-fluid">
-	<div class="user_login span7">
-		<p>Log in to DMPTool through:<br/>
-			<strong><%= @institution.full_name %></strong></p>
+	<div class="span7">
+		<p><strong>Log in to DMPTool through:</strong><br/>
+			<%= @institution.full_name %></p>
 	  <%= form_tag '/auth/ldap/callback', method: :post do %>
 	    <%= hidden_field_tag :institution_id, session[:institution_id]%>
 	    <div class='control-group'>
@@ -24,10 +24,10 @@
 				<%= link_to 'Forgot your password?', action: 'password_reset' %></p>
 		</div>
 	</div>
-	<div class="user_login span5">
+	<div class="span5">
 		<div class="control-group switch_institution">
-			<p>Is the institution shown incorrect?<br/>
-			<strong><%= link_to 'Select a different institution', choose_institution_path %></strong></p>
+			<p><strong>Is the institution shown incorrect?</strong><br/>
+				<%= link_to 'Select a different institution', choose_institution_path %></p>
 		</div>
 		<div class="control-group create_account">
 			<p><strong>Don't have a DMPTool account yet?</strong></p>

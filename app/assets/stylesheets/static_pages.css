@@ -64,7 +64,7 @@
 .buckets-header h2 {
 	border-left: 1px solid #B6B6B7;
 	text-transform: uppercase;
-	line-height: 40px;
+	line-height: 44px;
 	height: 40px;
 	margin: 0;
 	padding: 0 0 0 73px;
@@ -73,7 +73,8 @@
 .buckets-header .span4:first-child h2 {
 	background-position: 20px 0;
 	border-left: none; }
-.buckets-header span.icon {
+.buckets-header h2 .icon {
+	top: 2px;
 	left: 20px; }
 .buckets p {
 	font-size: 1.167em;
