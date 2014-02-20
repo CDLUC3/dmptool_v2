@@ -1,9 +1,11 @@
 class CustomizationsController < ApplicationController
 
-  TABS = [  'Guidance',
-            'Actionable Links',
-            'Suggested Response',
-            'Example Response' ]
+  # information to display the repetitive tabs
+  TABS = [  {name: 'Guidance', partial: 'guidance_item', scope: :guidance},
+            {name: 'Actionable Links', partial: 'actionable_url_item', scope: :actionable_url},
+            {name: 'Suggested Response', partial: 'suggested_response_item', scope: :suggested_response},
+            {name: 'Example Response', partial: 'example_response_item', scope: :example_response }
+          ]
 
   def show
     # :id is customization id and :requirement_id

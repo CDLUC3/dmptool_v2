@@ -1,9 +1,43 @@
-<h2>Global Resources</h2>
+<div class="tab-content">
 
-<h2>DMP Resources</h2>
+  <% CustomizationsController::TABS.each_with_index do |tab, index| %>
+    <div class="tab-pane<%= (index==0 ? ' active': '') %>" id="tab<%= (index+1) %>">
+      <%= render :partial => 'section_display',
+                 :locals => {  :section_name => 'Global Resources',
+                               :partial_name => tab[:partial],
+                               :collection   => @requirement.global_resources.send(tab[:scope]),
+                               :editable     => false }
+      %>
 
-<h2><%= @institution.name %> Resources</h2>
+      <%= render :partial => 'section_display',
+                 :locals => {  :section_name => 'DMP Resources',
+                               :partial_name => tab[:partial],
+                               :collection   => @requirement.template_resources.send(tab[:scope]) +
+                                                @requirement.requirement_resources.send(tab[:scope]),
+                               :editable     => false }
+      %>
 
-<h2><%= @requirements_template.name %> for <%= @institution.name %> Resources</h2>
+      <%= render :partial => 'section_display',
+                 :locals => {  :section_name => "#{@institution.name} Resources",
+                               :partial_name => tab[:partial],
+                               :collection   => @requirement.institution_customization_resources(@institution).send(tab[:scope]),
+                               :editable     => false }
+      %>
 
-<h2>Requirement Resources</h2>
+      <%= render :partial => 'section_display',
+                 :locals => {  :section_name => "#{@requirements_template.name} for #{@institution.name} Resources",
+                               :partial_name => tab[:partial],
+                               :collection   => @requirement.template_customization_resources(@institution).send(tab[:scope]),
+                               :editable     => false }
+      %>
+
+      <%= render :partial => 'section_display',
+                 :locals => {  :section_name => 'Requirement Resources',
+                               :partial_name => tab[:partial],
+                               :collection   => @requirement.requirement_customization_resources(@institution).send(tab[:scope]),
+                               :editable     => true }
+      %>
+    </div>
+  <% end %>
+
+</div>

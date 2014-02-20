@@ -11,7 +11,7 @@ module PlansHelper
 	def state(plan)
 		plan_state_id = plan.current_plan_state_id
 		unless plan_state_id.nil?
-			state = PlanState.find(plan_state_id).state.to_s
+			state = PlanState.find(plan_state_id).state.capitalize
 			return state
 		end
 	end
@@ -38,10 +38,6 @@ module PlansHelper
 		end
 	end
 
-	def status(plan)
-		plan_state_id = plan.current_plan_state_id
-		@state = PlanState.find(plan_state_id).state.capitalize
-	end
 
 	def institution_name(plan_id)
 		unless !Plan.exists?(plan_id)
