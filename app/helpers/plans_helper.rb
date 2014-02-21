@@ -65,10 +65,47 @@ module PlansHelper
 		resources = Array.new
 		resource_contexts.each do |resource_context|
 			id  = resource_context.resource_id
-			resource = Resource.find(id).text
-			resources << resource
+			resource = Resource.find(id)
+			if resource.resource_type == :help_text
+				resources << resource
+			end
 		end
 		return resources
 	end
 
+	def display_value(resource_contexts)
+		resources = Array.new
+		resource_contexts.each do |resource_context|
+			id  = resource_context.resource_id
+			resource = Resource.find(id)
+			if resource.resource_type == :actionable_url
+				resources << resource
+			end
+		end
+		return resources
+	end
+
+	def display_suggested(resource_contexts)
+		resources = Array.new
+		resource_contexts.each do |resource_context|
+			id  = resource_context.resource_id
+			resource = Resource.find(id)
+			if resource.resource_type == :suggested_response
+				resources << resource
+			end
+		end
+		return resources
+	end
+
+		def display_example(resource_contexts)
+		resources = Array.new
+		resource_contexts.each do |resource_context|
+			id  = resource_context.resource_id
+			resource = Resource.find(id)
+			if resource.resource_type == :example_response
+				resources << resource
+			end
+		end
+		return resources
+	end
 end

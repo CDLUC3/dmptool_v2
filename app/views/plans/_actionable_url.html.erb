@@ -1,0 +1,10 @@
+<div class= 'requirement_actionable_url'>
+
+	<% guidance(requirement_id) %>
+	<% resources = display_value(@resource_contexts) %>
+	<ul>
+		<% resources.each do |resource| %>
+			<li><%= resource.value %></li>
+		<% end %>
+	</ul>
+</div>

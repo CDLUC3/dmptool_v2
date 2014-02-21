@@ -21,19 +21,19 @@
     <div class="tab-content">
 
       <div class="tab-pane active" id="tab1">
-        <%= render partial: 'requirement_details', locals: { requirement_id: params[:requirement_id] } %>
+        <%= render partial: 'guidance', locals: { requirement_id: params[:requirement_id] } %>
       </div>
 
       <div class="tab-pane" id="tab2">
-        Actionable Links here
+        <%= render partial: 'actionable_url', locals: { requirement_id: params[:requirement_id] } %>
       </div>
 
       <div class="tab-pane " id="tab3">
-        Suggested Response here
+        <%= render partial: 'example_response', locals: { requirement_id: params[:requirement_id] } %>
       </div>
 
       <div class="tab-pane" id="tab4">
-        Example Response here
+        <%= render partial: 'suggested_response', locals: { requirement_id: params[:requirement_id] } %>
       </div>
 
     </div>

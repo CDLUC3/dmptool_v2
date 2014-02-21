@@ -1,0 +1,10 @@
+<div class= 'requirement_example_response'>
+
+	<% guidance(requirement_id) %>
+	<% resources = display_example(@resource_contexts) %>
+	<ol>
+		<% resources.each do |resource| %>
+			<li><%= resource.text %></li>
+		<% end %>
+	</ol>
+</div>
