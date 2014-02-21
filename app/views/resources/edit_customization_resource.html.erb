@@ -41,18 +41,14 @@
     <div class="actions pull-right">
       <%= f.submit 'Save Changes', :class => "btn" %>
       
-      <%= link_to 'Cancel', select_resource_path(template_id: @template_id, 
-                          customization_overview_id: @customization_id), 
-                          :method => :post,
-                          :class => "btn" %>
 
-      <%#= f.hidden_field :prev_url, :value => @prev_url %>
+      <%= link_to 'Cancel', :back, template_id: @template_id, 
+                          customization_overview_id: @customization_id, :class => "btn" %>
 
       
 
       <%= link_to 'Delete Resource', delete_resource_path(resource_id: @resource.id, 
-                                      customization_overview_id: @customization_id,
-                                      prev_url: @prev_url), 
+                                      customization_overview_id: @customization_id), 
                                       :method => :delete,
                                     #data: { confirm: 'Are you sure? This resource will be deleted from all templates!' }, 
                                     :class => "btn" %>
