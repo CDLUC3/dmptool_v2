@@ -119,7 +119,7 @@ class ResourceContextsController < ApplicationController
       @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
                                                 requirement_id: @requirement_id, 
                                                 requirements_template_id: @template_id)
-      
+
     elsif params[:template_id]  && params[:unlink_from_customization].nil?
       @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
                                                 requirements_template_id: @template_id)
@@ -165,19 +165,32 @@ class ResourceContextsController < ApplicationController
 
   def resource_customizations
     @resource_contexts = ResourceContext.template_level.institutional_level.no_resource_no_requirement.order('name ASC').page(params[:page])
-    case params[:scope]
-      when "all"
-        @resource_contexts 
-    
-      else
-        @resource_contexts = @resource_contexts.per(5)
-    end
 
     unless safe_has_role?(Role::DMP_ADMIN)
       @resource_contexts = @resource_contexts.
-                            where(institution_id: [current_user.institution.subtree_ids]).
+                            #where(institution_id: [current_user.institution.subtree_ids]).
+                            where("resource_contexts.institution_id IN ?", [current_user.institution.subtree_ids]).
                             order('name ASC')
     end
+
+    case params[:scope]
+      when "all"
+        @resource_contexts 
+      when "Name"
+        @resource_contexts = @resource_contexts.order_by_name.per(10)
+      when "Template"
+        @resource_contexts = @resource_contexts.order_by_template_name.per(10)
+      when "Institution"
+        @resource_contexts = @resource_contexts.order_by_institution_name.per(10)
+      when "Creation_Date"
+        @resource_contexts = @resource_contexts.order_by_created_at.per(10)
+      when "Last_Modification_Date"
+        @resource_contexts = @resource_contexts.order_by_updated_at.per(10) 
+      else
+        @resource_contexts = @resource_contexts.per(10)
+    end
+
+    
   end
 
   def dmp_for_customization

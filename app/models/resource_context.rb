@@ -18,9 +18,24 @@ class ResourceContext < ActiveRecord::Base
     where(conditions, *items.map{|item| "%#{item}%" })
   end
 
+  def self.order_by_template_name
+    joins(:requirements_template).order('requirements_templates.name ASC')
+  end
+
+  def self.order_by_name
+    order('name ASC')
+  end
+
+  def self.order_by_created_at
+    order('created_at DESC' )
+  end
+
+  def self.order_by_updated_at
+    order('updated_at DESC' )
+  end
+
   def self.order_by_resource_label
     joins(:resource).order("resources.label ASC")
-    #joins(:resource).order(" FIELD(resources.label,'') ASC")
   end
 
   def self.order_by_resource_id
@@ -48,7 +63,7 @@ class ResourceContext < ActiveRecord::Base
   end
 
   def self.institutional_level
-  	 where("institution_id IS NOT NULL") 
+  	 where("resource_contexts.institution_id IS NOT NULL") 
   end
 
   def self.resource_level
