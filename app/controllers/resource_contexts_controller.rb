@@ -170,7 +170,7 @@ class ResourceContextsController < ApplicationController
 
   def customization_resources_list
 
-    @prev_url = request.original_url
+   
 
     @customization = @resource_context
    # @customization_institution = current_user.institution
@@ -185,8 +185,7 @@ class ResourceContextsController < ApplicationController
     @resource_contexts = ResourceContext.includes(:resource).
                           per_template(@template).
                           resource_level.where(institution_id:
-                                  (@customization_institution.nil? ? nil : [@customization_institution.subtree_ids]))
-                                                 
+                                  (@customization_institution.nil? ? nil : [@customization_institution.subtree_ids]))                                                
   end
 
   def choose_institution
@@ -194,8 +193,6 @@ class ResourceContextsController < ApplicationController
   end
 
   def select_resource
-
-    @prev_url = request.original_url
    
     @template_id = params[:template_id]
     @customization_overview_id = params[:customization_overview_id]
@@ -217,7 +214,7 @@ class ResourceContextsController < ApplicationController
     end
 
     if !params[:q].blank?
-      @resource_contexts = @resource_contexts.search_terms(params[:q])
+       @resource_contexts = @resource_contexts.search_terms(params[:q])
     end
 
     case params[:scope]

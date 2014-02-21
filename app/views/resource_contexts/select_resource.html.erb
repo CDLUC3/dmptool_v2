@@ -69,7 +69,7 @@
 					<td><%= resource_context.resource.created_at.nil? ? " " :  resource_context.resource.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 					<td><%= resource_context.resource.updated_at.nil? ? " " :  resource_context.resource.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 					<td><%= resource_context.resource_level %></td>
-					<td class="span1"><%= link_to raw(''), edit_customization_resource_path(id: resource_context.resource_id, customization_id: @customization_overview_id, template_id: @template_id, prev_url: @prev_url), :class => 'icon edit-user' %></td>
+					<td class="span1"><%= link_to raw(''), edit_customization_resource_path(id: resource_context.resource_id, customization_id: @customization_overview_id, template_id: @template_id), :class => 'icon edit-user' %></td>
 				</tr>
 			<% end %>
 		<tbody>
@@ -84,7 +84,6 @@
 
 	<%= hidden_field_tag :customization_overview_id, @customization_overview_id %>
 
-	<%= hidden_field_tag :prev_url, @prev_url %>
 
 	<div class="buttons">
 		<%= submit_tag 'Submit',  :class => "btn btn-green" %>	
@@ -96,8 +95,7 @@
 <div class="buttons">
 	<%= button_to 'Add another Resource', 
 						new_customization_resource_path(template_id: @template_id, 
-						customization_overview_id: @customization_overview_id,
-						prev_url: @prev_url), 
+						customization_overview_id: @customization_overview_id), 
 						:method => :post, 
 						:class => "btn btn-green" %>	
 </div>
