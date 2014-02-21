@@ -113,14 +113,33 @@ class ResourceContextsController < ApplicationController
     @resource_id = params[:resource_id]
     @template_id = params[:template_id]
     
-    if params[:requirement_id]
+    if params[:requirement_id] && !params[:template_id].nil? && params[:unlink_from_customization].nil?
+
       @requirement_id = params[:requirement_id]
       @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
                                                 requirement_id: @requirement_id, 
                                                 requirements_template_id: @template_id)
-    else
+      
+    elsif params[:template_id]  && params[:unlink_from_customization].nil?
       @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
                                                 requirements_template_id: @template_id)
+    
+    elsif params[:unlink_from_customization] && !params[:template_id].nil? && !params[:resource_id].nil?
+
+
+      @resource_context = ResourceContext.find(params[:customization_id])
+      @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
+                                              requirements_template_id: @template_id,
+                                              institution_id: @resource_context.institution_id)
+    else
+
+      respond_to do |format|
+        #format.html { redirect_to edit_customization_resource_path(id: @resource_id, customization_id: @customization_id) }
+        format.html { redirect_to edit_resource_context_path(@customization_id), notice: "A problem prevented this resource to be unlinked." }
+        format.json { head :no_content }
+        return
+      end
+
     end
 
     @resource_contexts.each do |resource_context|
@@ -171,14 +190,15 @@ class ResourceContextsController < ApplicationController
 
   def customization_resources_list
 
-   
-
     @customization = @resource_context
    
     @customization_institution = @resource_context.institution
 
     @template= @customization.requirements_template
-    @customization_institution_name = current_user.institution.full_name
+
+    @customization_institution_name = (@customization_institution.nil? ? nil : @customization_institution.full_name)
+
+    
     @template_name = @customization.requirements_template.name
     
      
