@@ -106,6 +106,8 @@ GEM
     factory_girl_rails (4.4.0)
       factory_girl (~> 4.4.0)
       railties (>= 3.0.0)
+    faker (1.2.0)
+      i18n (~> 0.5)
     ffi (1.9.3)
     hashie (2.0.5)
     highline (1.6.20)
@@ -252,6 +254,7 @@ DEPENDENCIES
   deep_cloneable (~> 1.5.5)
   enum_column3
   factory_girl_rails
+  faker
   ifad-rtf!
   jbuilder (= 1.0.1)
   jquery-rails
