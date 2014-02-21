@@ -18,7 +18,7 @@ class Resource < ActiveRecord::Base
   	resource_type == "actionable_url"
   end
 
-  
+ 
 
 end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140210194003) do
+ActiveRecord::Schema.define(version: 20140221005131) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -177,6 +177,7 @@ ActiveRecord::Schema.define(version: 20140210194003) do
     t.enum     "review_type",              limit: [:formal_review, :informal_review, :no_review]
   end
 
+  add_index "resource_contexts", ["institution_id", "requirements_template_id", "requirement_id", "resource_id"], name: "unique_context_index", unique: true, using: :btree
   add_index "resource_contexts", ["institution_id"], name: "index_resource_contexts_on_institution_id", using: :btree
   add_index "resource_contexts", ["requirement_id"], name: "index_resource_contexts_on_requirement_id", using: :btree
   add_index "resource_contexts", ["requirements_template_id"], name: "index_resource_contexts_on_requirements_template_id", using: :btree

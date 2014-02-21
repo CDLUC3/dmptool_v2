@@ -12,7 +12,7 @@ class ResourceContext < ActiveRecord::Base
   validates :review_type, presence: true, if: "resource_id.blank? && !institution_id.blank?"
 
   
-  def self.search_terms(terms)
+   def self.search_terms(terms)
     items = terms.split
     conditions = " ( " + items.map{|item| "resources.label LIKE ?" }.join(' AND ') + " ) " 
     where(conditions, *items.map{|item| "%#{item}%" })
@@ -21,6 +21,10 @@ class ResourceContext < ActiveRecord::Base
   def self.order_by_resource_label
     joins(:resource).order("resources.label ASC")
     #joins(:resource).order(" FIELD(resources.label,'') ASC")
+  end
+
+  def self.order_by_resource_id
+    order('resource_id ASC' )
   end
 
   def self.order_by_resource_type

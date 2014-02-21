@@ -18,6 +18,7 @@ Dmptool2::Application.routes.draw do
   get 'partners_list', to: 'institutions#partners_list'
   get 'privacy', to: 'static_pages#privacy'
   get 'promote', to: 'static_pages#promote'
+  get 'public_dmps', to: 'static_pages#public_dmps'
   get 'terms_of_use', to: 'static_pages#terms_of_use'
   get 'video', to: 'static_pages#video'
   get 'resource_contexts/dmp_for_customization', to: 'resource_contexts#dmp_for_customization', as: "dmp_for_customization"
@@ -119,9 +120,12 @@ Dmptool2::Application.routes.draw do
   post 'select_resource', to: 'resource_contexts#select_resource'
   get 'select_resource', to: 'resource_contexts#select_resource'
 
+  post 'create_customization_resource_from_select_resource', to: 'resources#create_customization_resource_from_select_resource'
+
   post 'copy_selected_customization_resource', to: 'resources#copy_selected_customization_resource'
 
   post 'unlink_resource', to: 'resource_contexts#unlink_resource'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

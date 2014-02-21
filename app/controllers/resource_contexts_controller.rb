@@ -40,6 +40,14 @@ class ResourceContextsController < ApplicationController
     @resource_context.contact_email = @req_temp.institution.contact_email
     @resource_context.contact_info = @req_temp.institution.contact_info
 
+    existing = ResourceContext.where(institution_id:        @resource_context.institution_id).
+                        where(requirements_template_id:     @resource_context.requirements_template_id).
+                        where(requirement_id:               nil).
+                        where(resource_id:                  nil)
+    if existing.length > 0
+      redirect_to(edit_resource_context_path(existing.first.id) ) and return
+    end
+
     make_institution_dropdown_list
   end
 
@@ -105,14 +113,33 @@ class ResourceContextsController < ApplicationController
     @resource_id = params[:resource_id]
     @template_id = params[:template_id]
     
-    if params[:requirement_id]
+    if params[:requirement_id] && !params[:template_id].nil? && params[:unlink_from_customization].nil?
+
       @requirement_id = params[:requirement_id]
       @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
                                                 requirement_id: @requirement_id, 
                                                 requirements_template_id: @template_id)
-    else
+      
+    elsif params[:template_id]  && params[:unlink_from_customization].nil?
       @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
                                                 requirements_template_id: @template_id)
+    
+    elsif params[:unlink_from_customization] && !params[:template_id].nil? && !params[:resource_id].nil?
+
+
+      @resource_context = ResourceContext.find(params[:customization_id])
+      @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
+                                              requirements_template_id: @template_id,
+                                              institution_id: @resource_context.institution_id)
+    else
+
+      respond_to do |format|
+        #format.html { redirect_to edit_customization_resource_path(id: @resource_id, customization_id: @customization_id) }
+        format.html { redirect_to edit_resource_context_path(@customization_id), notice: "A problem prevented this resource to be unlinked." }
+        format.json { head :no_content }
+        return
+      end
+
     end
 
     @resource_contexts.each do |resource_context|
@@ -120,7 +147,8 @@ class ResourceContextsController < ApplicationController
     end
     
     respond_to do |format|
-      format.html { redirect_to edit_customization_resource_path(id: @resource_id, customization_id: @customization_id) }
+      #format.html { redirect_to edit_customization_resource_path(id: @resource_id, customization_id: @customization_id) }
+      format.html { redirect_to edit_resource_context_path(@customization_id) }
       format.json { head :no_content }
     end
   end
@@ -162,21 +190,22 @@ class ResourceContextsController < ApplicationController
 
   def customization_resources_list
 
-    #@customization = ResourceContext.find(params[:id])
-    
-
     @customization = @resource_context
-    @customization_institution = current_user.institution
+   
+    @customization_institution = @resource_context.institution
 
     @template= @customization.requirements_template
-    @customization_institution_name = current_user.institution.full_name
+
+    @customization_institution_name = (@customization_institution.nil? ? nil : @customization_institution.full_name)
+
+    
     @template_name = @customization.requirements_template.name
     
      
     @resource_contexts = ResourceContext.includes(:resource).
                           per_template(@template).
-                          resource_level.where(institution_id: [current_user.institution.subtree_ids])
-                                                 
+                          resource_level.where(institution_id:
+                                  (@customization_institution.nil? ? nil : [@customization_institution.subtree_ids]))                                                
   end
 
   def choose_institution
@@ -187,11 +216,13 @@ class ResourceContextsController < ApplicationController
    
     @template_id = params[:template_id]
     @customization_overview_id = params[:customization_overview_id]
+   # @customization_overview = ResourceContext.find(@customization_overview_id)
 
-    if safe_has_role?(Role::DMP_ADMIN)
+    if safe_has_role?(Role::DMP_ADMIN) 
 
       @resource_contexts = ResourceContext.joins(:resource).
-                              where("resource_id IS NOT NULL")
+                              where("resource_id IS NOT NULL").
+                              group(:resource_id)
                               
     else
 
@@ -203,10 +234,12 @@ class ResourceContextsController < ApplicationController
     end
 
     if !params[:q].blank?
-      @resource_contexts = @resource_contexts.search_terms(params[:q])
+       @resource_contexts = @resource_contexts.search_terms(params[:q])
     end
 
     case params[:scope]
+      when "Resource_id"
+        @resource_contexts = @resource_contexts.order_by_resource_id.page(params[:page]).per(20)
       when "Details"
         @resource_contexts = @resource_contexts.order_by_resource_label.page(params[:page]).per(20)
       when "Type"

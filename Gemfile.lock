@@ -15,20 +15,20 @@ GIT
       omniauth (>= 1.0.0)
 
 GIT
-  remote: git@github.com:galetahub/ckeditor.git
-  revision: b19f776a43e188e48fd409353366f05bdab3090d
-  specs:
-    ckeditor (4.0.10)
-      mime-types
-      orm_adapter (~> 0.5.0)
-
-GIT
   remote: https://github.com/clbustos/rtf.git
   revision: 723b5184559448bc95a0c3464436391c4b992b6e
   specs:
     ifad-rtf (0.4.2)
       nokogiri (~> 1.1)
       tidy-ext (~> 0.1)
+
+GIT
+  remote: https://github.com/galetahub/ckeditor.git
+  revision: b19f776a43e188e48fd409353366f05bdab3090d
+  specs:
+    ckeditor (4.0.10)
+      mime-types
+      orm_adapter (~> 0.5.0)
 
 GEM
   remote: https://rubygems.org/
@@ -88,13 +88,6 @@ GEM
       json (>= 1.7)
     childprocess (0.5.1)
       ffi (~> 1.0, >= 1.0.11)
-    coffee-rails (4.0.1)
-      coffee-script (>= 2.2.0)
-      railties (>= 4.0.0, < 5.0)
-    coffee-script (2.2.0)
-      coffee-script-source
-      execjs
-    coffee-script-source (1.7.0)
     columnize (0.3.6)
     debugger (1.6.5)
       columnize (>= 0.3.1)
@@ -123,9 +116,6 @@ GEM
     jquery-rails (3.1.0)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
-    jquery-turbolinks (2.0.2)
-      railties (>= 3.1.0)
-      turbolinks
     jquery-ui-rails (4.2.0)
       railties (>= 3.2.16)
     json (1.8.1)
@@ -212,7 +202,7 @@ GEM
       websocket (~> 1.0.4)
     shoulda-matchers (2.5.0)
       activesupport (>= 3.0.0)
-    sprockets (2.10.1)
+    sprockets (2.11.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
@@ -233,8 +223,6 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    turbolinks (1.0.0)
-      coffee-rails
     tzinfo (0.3.38)
     uglifier (1.0.3)
       execjs (>= 0.3.0)
@@ -267,7 +255,6 @@ DEPENDENCIES
   ifad-rtf!
   jbuilder (= 1.0.1)
   jquery-rails
-  jquery-turbolinks
   jquery-ui-rails
   kaminari
   launchy
@@ -284,6 +271,5 @@ DEPENDENCIES
   selenium-webdriver (~> 2.39.0)
   shoulda-matchers
   therubyracer
-  turbolinks (= 1.0.0)
   uglifier (= 1.0.3)
   unicorn
