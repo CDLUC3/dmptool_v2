@@ -10,6 +10,7 @@ group :development, :test do
   gem 'capistrano-unicorn'
   gem 'debugger'
   gem 'factory_girl_rails'
+  gem 'faker'  #to create fake data http://faker.rubyforge.org/
 end
 
 group :test do
