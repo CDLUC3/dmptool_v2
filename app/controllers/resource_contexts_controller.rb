@@ -128,7 +128,8 @@ class ResourceContextsController < ApplicationController
     end
     
     respond_to do |format|
-      format.html { redirect_to edit_customization_resource_path(id: @resource_id, customization_id: @customization_id) }
+      #format.html { redirect_to edit_customization_resource_path(id: @resource_id, customization_id: @customization_id) }
+      format.html { redirect_to edit_resource_context_path(@customization_id) }
       format.json { head :no_content }
     end
   end
@@ -173,8 +174,7 @@ class ResourceContextsController < ApplicationController
    
 
     @customization = @resource_context
-   # @customization_institution = current_user.institution
-
+   
     @customization_institution = @resource_context.institution
 
     @template= @customization.requirements_template
