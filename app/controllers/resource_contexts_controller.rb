@@ -40,6 +40,14 @@ class ResourceContextsController < ApplicationController
     @resource_context.contact_email = @req_temp.institution.contact_email
     @resource_context.contact_info = @req_temp.institution.contact_info
 
+    existing = ResourceContext.where(institution_id:        @resource_context.institution_id).
+                        where(requirements_template_id:     @resource_context.requirements_template_id).
+                        where(requirement_id:               nil).
+                        where(resource_id:                  nil)
+    if existing.length > 0
+      redirect_to(edit_resource_context_path(existing.first.id) ) and return
+    end
+
     make_institution_dropdown_list
   end
 
