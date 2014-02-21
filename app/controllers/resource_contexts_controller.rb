@@ -176,7 +176,8 @@ class ResourceContextsController < ApplicationController
      
     @resource_contexts = ResourceContext.includes(:resource).
                           per_template(@template).
-                          resource_level.where(institution_id: [@customization_institution.subtree_ids])
+                          resource_level.where(institution_id:
+                                  (@customization_institution.nil? ? nil : [@customization_institution.subtree_ids]))
                                                  
   end
 
