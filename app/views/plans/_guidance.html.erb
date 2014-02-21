@@ -7,9 +7,9 @@
 	<strong>Guidance :</strong>
 	<% guidance(requirement_id) %>
 	<% resources = display_text(@resource_contexts) %>
-	<ol>
+	<ul>
 		<% resources.each do |resource| %>
-			<li><%= resource %></li>
+			<li><%= resource.text %></li>
 		<% end %>
-	</ol>
+	</ul>
 </div>
