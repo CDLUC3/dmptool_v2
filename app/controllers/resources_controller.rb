@@ -31,10 +31,6 @@ class ResourcesController < ApplicationController
 
   def edit_customization_resource
 
-    @prev_url = params[:prev_url]
-
-    
-
     @resource = Resource.find(params[:id])
 
     @customization_id = params[:customization_id]
@@ -64,10 +60,7 @@ class ResourcesController < ApplicationController
                                         select(:requirement_id).count
 
 
-
     @any_requirements = ( @requirements_count > 0 )
-
-
 
   end
 
@@ -125,16 +118,13 @@ class ResourcesController < ApplicationController
     @customization_ids = ResourceContext.where(resource_id: @resource_id).pluck(:id)
     @customization_id = params[:customization_overview_id]
 
-    prev_url = params[:prev_url]
-
-
     if @resource.destroy
       if @customization_ids
         ResourceContext.destroy(@customization_ids)
       end
       respond_to do |format|
         #format.html { redirect_to edit_resource_context_path(params[:customization_overview_id]), notice: 'Resource was successfully eliminated.' }
-        format.html { redirect_to prev_url, notice: 'Resource was successfully eliminated.' }
+        format.html { redirect_to edit_resource_context_path(params[:customization_overview_id]), notice: 'Resource was successfully eliminated.' }
         
         format.json { head :no_content }
       end
@@ -173,8 +163,7 @@ class ResourcesController < ApplicationController
     end
     
     @resource = Resource.new(resource_params)
-    
-   
+      
     respond_to do |format|
       if @resource.save 
         @resource_id = @resource.id
@@ -200,15 +189,11 @@ class ResourcesController < ApplicationController
     @institution_id = nil
          
 
-    if safe_has_role?(Role::DMP_ADMIN) && !@customization_overview.institution.nil?
-
-       @institution_id = ResourceContext.find(@customization_overview_id).institution_id
-
-    elsif safe_has_role?(Role::DMP_ADMIN) && @customization_overview.institution.nil?
+    if safe_has_role?(Role::DMP_ADMIN)
 
        @institution_id =  ResourceContext.find(@customization_overview_id).institution_id
 
-    elsif !safe_has_role?(Role::DMP_ADMIN)
+    else
 
       @institution_id = current_user.institution_id
 
