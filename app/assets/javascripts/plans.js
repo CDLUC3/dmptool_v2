@@ -132,4 +132,16 @@ $(function() {
 	$("#cancel_action").bind("click",function() {
 		$("#visibility_dialog_form").reset();
 	});
-})
+});
+
+<script type="text/javascript">
+  function fixed_size(id, pixels){
+    document.getElementById(id).style.height = pixels + 'px';
+    //$j('#'+id).css('height', pixels + 'px');
+  }
+
+  function full_size(id){
+    document.getElementById(id).style.height = 'auto';
+    //$j('#'+id).css('height', 'auto');
+  }
+</script>
