@@ -1,35 +1,125 @@
 <div class= 'requirement_instruction'>
 	<strong>Instruction :</strong>
-	<span><%= instruction(requirement_id) %></span>
+	<span><%= @requirement.text_full %></span>
 </div>
 <br/>
-<div class= 'requirement_guidance'>
-	<strong>Guidance :</strong>
-	<% guidance(requirement_id) %>
-	<% resources = display_text(@resource_contexts) %>
-	<ul>
-		<% resources.each do |resource| %>
-			<li><%= resource.text %></li>
-		<% end %>
-	</ul>
+<div class="help_box_head">
+  <div style="float:right"><strong>box size:</strong>
+    <a href="#" onclick="fixed_size('guidance_box', '60');return false;">small</a>
+    | <a href="#" onclick="fixed_size('guidance_box','140');return false;">medium</a>
+    | <a href="#" onclick="full_size('guidance_box');return false;">full</a></div>
+  <strong>Guidance</strong>
 </div>
+<div class="help_box" id="guidance_box">
+  <div class= 'global_resources'>
+    <% unless @requirement.global_resources.guidance.empty? %>
+    <h3> Global Resources </h3>
+    <ul>
+      <%# global resources for this requirement, Stephen's case #1 %>
+      <% (@requirement.global_resources.guidance).each do |resource| %>
+      <li>
+        <p class="cust_label">
+          <%= resource.label %>
+        </p>
+        <p class="cust_text">
+          <%= sanitize(resource.text) %>
+        </p>
+      </li>
+      <% end %>
+    </ul>
+    <% end %>
+  </div>
 
-<div>
-  <% @requirement = Requirement.find(params[:requirement_id]) %>
-  <p>THIS IS FOR ALL CASES 1-5 &amp; 7</p>
-  <% @requirement.resources(current_user.institution_id).guidance.each do |resource| %>
-    <p><%= resource.text %></p>
-  <% end %>
-</div>
+  <div class= 'template_resources'>
+    <% unless @requirement.template_resources.guidance.empty? %>
+    <h3> DMP Resources </h3>
+    <ul>
+      <%# global resources for this requirement, Stephen's case #1 %>
+      <% ( @requirement.template_resources.guidance).each do |resource| %>
+        <li>
+          <p class="cust_label">
+            <%= resource.label %>
+          </p>
+          <p class="cust_text">
+            <%= sanitize(resource.text) %>
+          </p>
+        </li>
+      <% end %>
+    </ul>
+    <% end %>
+  </div>
 
-<div>
-  <% @requirement = Requirement.find(params[:requirement_id]) %>
-  <p>THIS IS FOR CASES 1-3</p>
-  <% (
-        @requirement.global_resources.guidance + # case #1
-        @requirement.template_resources.guidance + #case #2
-        @requirement.requirement_resources.guidance # case #3
-     ).each do |resource| %>
-          <p><%= resource.text %></p>
-  <% end %>
+  <div class= 'requirement_resources'>
+    <% unless @requirement.requirement_resources.guidance.empty? %>
+    <h3> Requirement Resources </h3>
+    <ul>
+      <%# global resources for this requirement, Stephen's case #1 %>
+      <% ( @requirement.requirement_resources.guidance).each do |resource| %>
+        <li>
+          <p class="cust_label">
+            <%= resource.label %>
+          </p>
+          <p class="cust_text">
+            <%= sanitize(resource.text) %>
+          </p>
+        </li>
+      <% end %>
+    </ul>
+    <% end %>
+  </div>
+
+  <div class= 'institution_customization_resources'>
+    <% unless @requirement.institution_customization_resources(current_user.institution_id).guidance.empty? %>
+    <h3> <%= current_user.institution.name %> Resources </h3>
+    <ul>
+      <%# institution customization resources for this requirement, Stephen's case #4 %>
+      <% (@requirement.institution_customization_resources(current_user.institution_id).guidance).each do |resource| %>
+        <li>
+          <p class="cust_label">
+            <%= resource.label %>
+          </p>
+          <p class="cust_text">
+            <%= sanitize(resource.text) %>
+          </p>
+        </li>
+      <% end %>
+    </ul>
+    <% end %>
+  </div>
+
+  <div class= 'template_customization_resources'>
+    <% unless @requirement.template_customization_resources(current_user.institution_id).guidance.empty? %>
+    <h3> <%= @requirements_template.name %> for <%= current_user.institution.name %> Resources"</h3>
+    <ul>
+      <%# template customization resources for this requirement, Stephen's case #5 %>
+      <% (@requirement.template_customization_resources(current_user.institution_id).guidance).each do |resource| %>
+        <li>
+          <p class="cust_label">
+            <%= resource.label %>
+          </p>
+          <p class="cust_text">
+            <%= sanitize(resource.text) %>
+          </p>
+        </li>
+      <% end %>
+    </ul>
+    <% end %>
+  </div>
+
+  <div class= 'requirement_customization_resources'>
+    <h3> Requirement Customization Resources </h3>
+    <%# requirement customization resources for this requirement, Stephen's case #7 %>
+    <ul>
+      <% @guidance_resources.each do |resource| %>
+        <li>
+          <p class="cust_label">
+            <%= resource.label %>
+          </p>
+          <p class="cust_text">
+            <%= sanitize(resource.text) %>
+          </p>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 </div>
