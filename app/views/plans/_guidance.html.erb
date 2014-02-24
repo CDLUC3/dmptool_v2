@@ -22,7 +22,7 @@
           <%= resource.label %>
         </p>
         <p class="cust_text">
-          <%= resource.text %>
+          <%= sanitize(resource.text) %>
         </p>
       </li>
       <% end %>
@@ -41,7 +41,7 @@
             <%= resource.label %>
           </p>
           <p class="cust_text">
-            <%= resource.text %>
+            <%= sanitize(resource.text) %>
           </p>
         </li>
       <% end %>
@@ -60,7 +60,7 @@
             <%= resource.label %>
           </p>
           <p class="cust_text">
-            <%= resource.text %>
+            <%= sanitize(resource.text) %>
           </p>
         </li>
       <% end %>
@@ -79,7 +79,7 @@
             <%= resource.label %>
           </p>
           <p class="cust_text">
-            <%= resource.text %>
+            <%= sanitize(resource.text) %>
           </p>
         </li>
       <% end %>
@@ -98,7 +98,7 @@
             <%= resource.label %>
           </p>
           <p class="cust_text">
-            <%= resource.text %>
+            <%= sanitize(resource.text) %>
           </p>
         </li>
       <% end %>
@@ -116,7 +116,7 @@
             <%= resource.label %>
           </p>
           <p class="cust_text">
-            <%= resource.text %>
+            <%= sanitize(resource.text) %>
           </p>
         </li>
       <% end %>

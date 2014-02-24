@@ -39,14 +39,14 @@
       <div class="tab-pane" id="tab4">
         <%= render partial: 'example_response', locals: { requirement_id: params[:requirement_id] } %>
       </div>
-      <hr/>
-      <div>
+
+      <fieldset>
         <strong> Your Response </strong>
         <% if @requirement.obligation == :mandatory %>
           <strong>(Mandatory)</strong>
         <% end %>
         <%= render partial: 'responses/form', locals: { requirement_id: params[:requirement_id], plan_id: @plan.id } %>
-      </div>
+      </fieldset>
     </div>
   </div>
 </div>
@@ -54,4 +54,15 @@
 <script type="text/javascript">
   tab_jump();
   add_tab_to_pagination();
+</script>
+<script type="text/javascript">
+  function fixed_size(id, pixels){
+    document.getElementById(id).style.height = pixels + 'px';
+    //$j('#'+id).css('height', pixels + 'px');
+  }
+
+  function full_size(id){
+    document.getElementById(id).style.height = 'auto';
+    //$j('#'+id).css('height', 'auto');
+  }
 </script>
