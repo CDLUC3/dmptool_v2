@@ -165,10 +165,8 @@ class PlansController < ApplicationController
     @url_resources = display_value(@resource_contexts)
     @suggested_resources = display_suggested(@resource_contexts)
     @example_resources = display_example(@resource_contexts)
-    @response = Response.new
-    @responses = Response.where(plan_id: @plan.id, requirement_id: @requirement.id)
+    @response = Response.where(plan_id: @plan.id, requirement_id: @requirement.id).first
   end
-
 
   def change_visiblity
     id = params[:plan_id][:value] unless params[:plan_id][:value].blank?
