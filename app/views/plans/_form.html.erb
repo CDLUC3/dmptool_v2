@@ -116,7 +116,9 @@
           <label class ="control-label"> Available Actions: </label>
             <div class="controls">
             <p><%= link_to "Preview DMP", preview_path %> |
-              <%= link_to "Submit DMP", "#" %> |
+              <% if (@requirements_template.review_type == :formal_review) || (@requirements_template.review_type == :informal_review) %>
+                <%= link_to "Submit DMP", preview_path %> |
+              <% end %>
               <%= link_to "Deactivate DMP", "#" %> |
               <%= link_to "Delete DMP",@plan, method: :delete,  style: 'color:red;', data: { confirm: 'Are you sure?', :id => 'delete_template' }%>
             </p>

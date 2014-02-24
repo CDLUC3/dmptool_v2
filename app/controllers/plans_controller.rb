@@ -47,6 +47,8 @@ class PlansController < ApplicationController
 
   # GET /plans/1/edit
   def edit
+    template_id = @plan.requirements_template_id
+    @requirements_template = RequirementsTemplate.find(template_id)
     @comment = Comment.new
     comments = Comment.where(plan_id: @plan.id, user_id: current_user.id)
     @reviewer_comments = comments.where(visibility: :reviewer)
