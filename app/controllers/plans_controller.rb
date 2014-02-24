@@ -168,6 +168,9 @@ class PlansController < ApplicationController
     @suggested_resources = display_suggested(@resource_contexts)
     @example_resources = display_example(@resource_contexts)
     @response = Response.where(plan_id: @plan.id, requirement_id: @requirement.id).first
+    if @response.nil?
+      @response = Response.new
+    end
   end
 
   def change_visibility
