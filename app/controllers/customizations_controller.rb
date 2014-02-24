@@ -23,6 +23,8 @@ class CustomizationsController < ApplicationController
 
     @requirement = Requirement.find(params[:requirement_id])
     @institution = current_user.institution
+
+
     #determine type of customization
     if @customization.institution_id.nil?
       #this is a DMP customization
@@ -30,6 +32,17 @@ class CustomizationsController < ApplicationController
     else
       @customization_type = 8 # A DMP admin customization directly for a funder's requirement
     end
+
+
+    ###############################################
+    #params for adding another resource
+    @requirement_id = @requirement.id
+    @template_id = @requirements_template.id
+    @customization_id = @customization.id
+    @resource_level = "requirement"
+##############################################
+    
+
   end
 
 end

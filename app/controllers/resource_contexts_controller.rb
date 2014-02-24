@@ -227,9 +227,10 @@ class ResourceContextsController < ApplicationController
 
   def select_resource
    
+    @resource_level = params[:resource_level]
     @template_id = params[:template_id]
     @customization_overview_id = params[:customization_overview_id]
-   # @customization_overview = ResourceContext.find(@customization_overview_id)
+    @requirement_id = params[:requirement_id]
 
     if safe_has_role?(Role::DMP_ADMIN) 
 

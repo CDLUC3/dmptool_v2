@@ -24,31 +24,43 @@
 				<th><%= link_to "Resource Id", 
 											{scope: "Resource_id", 
 											customization_overview_id: @customization_overview_id,
-											template_id: @template_id}%></th>		
+											template_id: @template_id,
+											resource_level: @resource_level,
+											requirement_id: @requirement_id}%></th>		
 				
 				<th class="span4"><%= link_to "Details", 
 											{scope: "Details", 
 											customization_overview_id: @customization_overview_id,
-											template_id: @template_id}%></th>	
+											template_id: @template_id,
+											resource_level: @resource_level,
+											requirement_id: @requirement_id}%></th>	
 				<th><%= link_to "Type", 
 							{scope: "Type", 
 							customization_overview_id: @customization_overview_id,
-							template_id: @template_id} %></th>	
+							template_id: @template_id,
+							resource_level: @resource_level,
+							requirement_id: @requirement_id} %></th>	
 
 				<th><%= link_to "Institution", 
 							{scope: "Institution", 
 							customization_overview_id: @customization_overview_id,
-							template_id: @template_id}%></th>
+							template_id: @template_id,
+							resource_level: @resource_level,
+							requirement_id: @requirement_id} %></th>	
 
 				<th><%= link_to "Creation Date", 
 							{scope: "Creation_Date", 
 							customization_overview_id: @customization_overview_id,
-							template_id: @template_id}%></th>
+							template_id: @template_id,
+							resource_level: @resource_level,
+							requirement_id: @requirement_id} %></th>	
 
 				<th><%= link_to "Last Modification Date", 
 							{scope: "Last_Modification_Date", 
 							customization_overview_id: @customization_overview_id,
-							template_id: @template_id}%></th>
+							template_id: @template_id,
+							resource_level: @resource_level,
+							requirement_id: @requirement_id} %></th>	
 				<th>Level</th>
 				<th width="span1">Edit</th>
 			</tr>
@@ -81,7 +93,8 @@
 
 
 	<%= hidden_field_tag :template_id, @template_id  %>
-
+	<%= hidden_field_tag :resource_level, @resource_level  %>
+	<%= hidden_field_tag :requirement_id, @requirement_id  %>
 	<%= hidden_field_tag :customization_overview_id, @customization_overview_id %>
 
 
