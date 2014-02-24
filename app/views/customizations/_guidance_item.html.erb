@@ -2,10 +2,18 @@
    # resource local is passed in from caller
 %>
 
-<p class="cust_label">
-  <%= resource.label %>
+<p class="cust_label" id="resource_label_<%= resource.id %>">
+  <%= strip_tags(resource.label) %>
 </p>
 
-<p class="cust_text">
-  <%= resource.text %>
+<p class="cust_text" id="resource_text_trunc_<%= resource.id %>">
+  <% trunc_text = truncate(strip_tags(resource.text), length: 150, separator: ' ') %>
+  <%= trunc_text %>
+  <% if trunc_text != resource.text %>
+    &nbsp;&nbsp;&nbsp;<a href="#" class="show_full">More</a>
+  <% end %>
 </p>
+
+<div class="cust_text_full" id="resource_text_full_<%= resource.id %>">
+  <%= raw(resource.text) %>
+</div>
