@@ -108,7 +108,9 @@
 <div class="buttons">
 	<%= button_to 'Add another Resource', 
 						new_customization_resource_path(template_id: @template_id, 
-						customization_overview_id: @customization_overview_id), 
+						customization_overview_id: @customization_overview_id,
+						resource_level: @resource_level,
+						requirement_id: @requirement_id), 
 						:method => :post, 
 						:class => "btn btn-green" %>	
 </div>

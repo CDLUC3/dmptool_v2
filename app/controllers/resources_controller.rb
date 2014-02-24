@@ -134,6 +134,9 @@ class ResourcesController < ApplicationController
   end
 
   def new_customization_resource
+
+    @requirement_id = params[:requirement_id]
+    @resource_level = params[:resource_level]
     @template_id = params[:template_id]
     @customization_overview_id = params[:customization_overview_id]
     @template_name = RequirementsTemplate.find(@template_id).name
@@ -152,32 +155,68 @@ class ResourcesController < ApplicationController
   end
 
   def create_customization_resource
+    @requirement_id = params[:requirement_id]
+    @resource_level = params[:resource_level]
     @template_id = params[:template_id]
     @customization_overview_id = params[:customization_overview_id]
     @customization_overview = ResourceContext.find(@customization_overview_id)
 
-    if safe_has_role?(Role::DMP_ADMIN)
-      @current_institution_id = @customization_overview.institution_id
-    else 
-      @current_institution_id = current_user.institution.id
-    end
-    
-    @resource = Resource.new(resource_params)
+    case params[:resource_level]
       
-    respond_to do |format|
-      if @resource.save 
-        @resource_id = @resource.id
-        @resource_context = ResourceContext.new(resource_id: @resource_id, institution_id: @current_institution_id, 
-                                                requirements_template_id: @template_id)
-        if @resource_context.save
-          format.html { redirect_to edit_resource_context_path(@customization_overview_id), notice: "Resource was successfully created." }
-        end
-         
-      else
-        format.html { redirect_to edit_resource_context_path(@customization_overview_id), notice: "A problem prevented this resource to be created. " }
-      end
-    end
+      when "requirement"
+
+          
+          @current_institution_id = current_user.institution.id     
+          @resource = Resource.new(resource_params)
+            
+          respond_to do |format|
+            if @resource.save 
+              @resource_id = @resource.id
+              @resource_context = ResourceContext.new(resource_id: @resource_id, 
+                                        institution_id: @current_institution_id, 
+                                        requirements_template_id: @template_id,
+                                        requirement_id:  @requirement_id)
+              if @resource_context.save
+                format.html { 
+                  redirect_to customization_requirement_path(id: @customization_overview_id, 
+                        requirement_id:  @requirement_id), 
+                        notice: "Resource was successfully created." }
+              end
+               
+            else
+              format.html { 
+                redirect_to customization_requirement_path(id: @customization_overview_id, 
+                        requirement_id:  @requirement_id), 
+                        notice: "A problem prevented this resource to be created. " }
+            end
+          end
+
+      else #customization resource
+
+          if safe_has_role?(Role::DMP_ADMIN)
+            @current_institution_id = @customization_overview.institution_id
+          else 
+            @current_institution_id = current_user.institution.id
+          end
+          
+          @resource = Resource.new(resource_params)
+            
+          respond_to do |format|
+            if @resource.save 
+              @resource_id = @resource.id
+              @resource_context = ResourceContext.new(resource_id: @resource_id, institution_id: @current_institution_id, 
+                                                      requirements_template_id: @template_id)
+              if @resource_context.save
+                format.html { redirect_to edit_resource_context_path(@customization_overview_id), notice: "Resource was successfully created." }
+              end
+               
+            else
+              format.html { redirect_to edit_resource_context_path(@customization_overview_id), notice: "A problem prevented this resource to be created. " }
+            end
+          end
+
   end
+
 
   def copy_selected_customization_resource
 
@@ -199,8 +238,9 @@ class ResourcesController < ApplicationController
 
         if requirement_customization_present?(@resource_id, @template_id, @institution_id, @requirement_id)     
           respond_to do |format|
-            format.html { redirect_to customization_requirement_path(@customization_overview_id), 
-                            notice: "The resource you selected is already in your context. resource_level: #{params[:resource_level]}" }
+            format.html { redirect_to customization_requirement_path(id: @customization_overview_id, requirement_id:  @requirement_id), 
+                anchor: 'tab_tab1', 
+                notice: "The resource you selected is already in your context. resource_level: #{params[:resource_level]}" }
           end
           return
         else
@@ -211,11 +251,13 @@ class ResourcesController < ApplicationController
                                                   requirement_id: @requirement_id) 
           respond_to do |format| 
             if @resource_context.save
-              format.html { redirect_to customization_requirement_path(id: @customization_overview_id, requirement_id:  @requirement_id), 
-                            notice: "Resource was successfully added." }        
+              format.html { redirect_to customization_requirement_path(id: @customization_overview_id, requirement_id:  @requirement_id),
+                  anchor: 'tab_tab1',  
+                  notice: "Resource was successfully added." }        
             else
               format.html { redirect_to customization_requirement_path(id: @customization_overview_id, requirement_id:  @requirement_id), 
-                            notice: "A problem prevented this resource to be added. " }
+                  anchor: 'tab_tab1', 
+                  notice: "A problem prevented this resource to be added. " }
             end
           end    
         end
@@ -256,7 +298,7 @@ class ResourcesController < ApplicationController
           end    
         end
 
-
+      end
       
     end
     
