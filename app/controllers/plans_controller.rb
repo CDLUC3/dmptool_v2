@@ -168,9 +168,9 @@ class PlansController < ApplicationController
     @response = Response.where(plan_id: @plan.id, requirement_id: @requirement.id).first
   end
 
-  def change_visiblity
+  def change_visibility
+        debugger
     id = params[:plan_id][:value] unless params[:plan_id][:value].blank?
-    debugger
     plan = Plan.find(id)
     plan.visibility = params[:plan_id][:visibility]
     plan.save!

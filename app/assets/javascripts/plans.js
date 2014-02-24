@@ -120,7 +120,7 @@ $(function() {
 				$("#visibility_dialog_form").dialog("open");
 			},
       close: function() {
-        $('#visibility_dialog-form').dialog("close");
+        $('#visibility_dialog_form').dialog("close");
         $(this).find('form')[0].reset();
       }
 		}).prev ().find(".ui-dialog-titlebar-close").show();
