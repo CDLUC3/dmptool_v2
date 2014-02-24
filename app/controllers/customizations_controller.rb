@@ -3,9 +3,9 @@ class CustomizationsController < ApplicationController
   # information to display the repetitive tabs
   TABS = [  {name: 'Guidance', partial: 'guidance_item', scope: :guidance},
             {name: 'Actionable Links', partial: 'actionable_url_item', scope: :actionable_url},
-            {name: 'Suggested Response', partial: 'suggested_response_item', scope: :suggested_response},
-            {name: 'Example Response', partial: 'example_response_item', scope: :example_response }
-          ]
+            {name: 'Suggested Response', partial: 'guidance_item', scope: :suggested_response},
+            {name: 'Example Response', partial: 'guidance_item', scope: :example_response }
+          ]  #right now all but links are displayed wiht the guidance partial since they're the same
 
   def show
     # :id is customization id and :requirement_id
