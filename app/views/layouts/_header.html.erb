@@ -6,16 +6,22 @@
   </div>
   <nav class="navbar">
     <ul class="nav">
-      <li><%= link_to "Home", root_path, :title => "Home" %></li>
+      <li class="nav-home"><%= link_to "Home", root_path, :title => "Home" %></li>
       <% if current_user %>
-        <li><%= link_to "My Dashboard", dashboard_show_path, :title => "My Dashboard" %></li>
+        <li class="nav-dashboard"><%= link_to "My Dashboard", dashboard_path, :title => "My Dashboard" %></li>
       <% end %>
-      <li><%= link_to "DMP Requirements", guidance_path, :title => "DMP Requirements" %></li>
-      <li><%= link_to "Public DMPs", public_dmps_path, :title => "Sample DMPs" %></li>
-      <li><%= link_to "News", APP_CONFIG['blog'], :title => "News", :target => "_blank" %></li>
-      <li><%= link_to "Help", help_path, :title => "Help" %></li>
-      <li><%= link_to "Contact Us", contact_path, :title => "Contact Us" %></li>
-      <li><%= link_to "About", about_path, :title => "About" %></li>
+      <li class="nav-guidance"><%= link_to "DMP Requirements", guidance_path, :title => "DMP Requirements" %></li>
+      <li class="nav-public"><%= link_to "Public DMPs", public_dmps_path, :title => "Sample DMPs" %></li>
+      <li class="nav-new"><%= link_to "News", APP_CONFIG['blog'], :title => "News", :target => "_blank" %></li>
+      <li class="nav-help"><%= link_to "Help", help_path, :title => "Help" %></li>
+      <li class="nav-contact"><%= link_to "Contact Us", contact_path, :title => "Contact Us" %></li>
+      <li class="nav-about parent"><%= link_to "About", about_path, :title => "About" %>
+      	<ul class="children right">
+      		<li><%= link_to "FAQ", "#", :title => "FAQ" %></li>
+      		<li><%= link_to "Video", video_path, :title => "Video" %></li>
+      		<li><%= link_to "Partner Institutions", partners_path, :title => "Partner Institutions" %></li>
+      	</ul>
+      </li>
       <li class="login">
         <%= link_to(content_tag(:span, "", :class => "icon user-login") + "Log In", choose_institution_path) if !current_user %>
         <%= link_to(content_tag(:span, "", :class => "icon user-login") + "Log Out", logout_path) if current_user %></li>
