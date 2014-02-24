@@ -215,10 +215,10 @@ class ResourcesController < ApplicationController
       respond_to do |format| 
         if @resource_context.save
           format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
-                        notice: "Resource was successfully created." }        
+                        notice: "Resource was successfully added." }        
         else
           format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
-                        notice: "A problem prevented this resource to be created. " }
+                        notice: "A problem prevented this resource to be added. " }
         end
       end
       
