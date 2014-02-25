@@ -8,13 +8,12 @@
 <div class="help_box" id="suggested_response_box">
   <div class= 'global_resources'>
     <% unless @requirement.global_resources.suggested_response.empty? %>
-    <h3> Global Resources </h3>
     <ul>
       <%# global resources for this requirement, Stephen's case #1 %>
       <% (@requirement.global_resources.suggested_response).each do |resource| %>
         <li>
           <p class="cust_label">
-            <%= resource.label %>
+            <%= strip_tags(resource.label) %>
           </p>
           <p class="cust_text">
             <%= sanitize(resource.text) %>
@@ -27,13 +26,12 @@
 
   <div class= 'template_resources'>
     <% unless @requirement.template_resources.suggested_response.empty? %>
-    <h3> DMP Resources </h3>
     <ul>
       <%# template resources for this requirement, Stephen's case #2 %>
       <% (@requirement.template_resources.suggested_response).each do |resource| %>
         <li>
           <p class="cust_label">
-            <%= resource.label %>
+            <%= strip_tags(resource.label) %>
           </p>
           <p class="cust_text">
             <%= sanitize(resource.text) %>
@@ -46,13 +44,12 @@
 
   <div class= 'requirement_resources'>
     <% unless @requirement.requirement_resources.suggested_response.empty? %>
-    <h3> Requirement Resources </h3>
     <ul>
       <%# requirement resources for this requirement, Stephen's case #3 %>
       <% (@requirement.requirement_resources.suggested_response).each do |resource| %>
         <li>
           <p class="cust_label">
-            <%= resource.label %>
+            <%= strip_tags(resource.label) %>
           </p>
           <p class="cust_text">
             <%= sanitize(resource.text) %>
@@ -71,7 +68,7 @@
       <% (@requirement.institution_customization_resources(current_user.institution_id).suggested_response).each do |resource| %>
         <li>
           <p class="cust_label">
-            <%= resource.label %>
+            <%= strip_tags(resource.label) %>
           </p>
           <p class="cust_text">
             <%= sanitize(resource.text) %>
@@ -90,7 +87,7 @@
       <% (@requirement.template_customization_resources(current_user.institution_id).suggested_response).each do |resource| %>
         <li>
           <p class="cust_label">
-            <%= resource.label %>
+            <%= strip_tags(resource.label) %>
           </p>
           <p class="cust_text">
             <%= sanitize(resource.text) %>
@@ -102,13 +99,12 @@
   </div>
 
   <div class= 'requirement_customization_resources'>
-    <h3> Requirement Customization Resources </h3>
     <%# requirement customization resources for this requirement, Stephen's case #7 %>
   	<ul>
   		<% @suggested_resources.each do |resource| %>
         <li>
           <p class="cust_label">
-            <%= resource.label %>
+            <%= strip_tags(resource.label) %>
           </p>
           <p class="cust_text">
             <%= sanitize(resource.text) %>
