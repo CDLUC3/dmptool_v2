@@ -55,6 +55,7 @@ $(function() {
 	$("#view_reviewer_comments").click(function(event){
 		event.preventDefault();
 		$("#reviewer_comments").show();
+		$("#view_reviewer_comments").hide();
 	});
 });
 
@@ -62,6 +63,7 @@ $(function() {
 	$("#hide_reviewer_comments").click(function(event){
 		event.preventDefault();
 		$("#reviewer_comments").hide();
+		$("#view_reviewer_comments").show();
 	});
 });
 
@@ -70,6 +72,7 @@ $(function() {
 	$("#view_owner_comments").click(function(event){
 		event.preventDefault();
 		$("#owner_comments").show();
+		$("#view_owner_comments").hide();
 	});
 });
 
@@ -77,6 +80,7 @@ $(function() {
 	$("#hide_owner_comments").click(function(event){
 		event.preventDefault();
 		$("#owner_comments").hide();
+		$("#view_owner_comments").show();
 	});
 });
 
@@ -85,6 +89,7 @@ $(function() {
 	$("#show_plan_states_history").click(function(event){
 		event.preventDefault();
 		$("#plan_states_history").show();
+		$("#show_plan_states_history").hide();
 	});
 });
 
@@ -92,12 +97,13 @@ $(function() {
 	$("#hide_plan_states_history").click(function(event){
 		event.preventDefault();
 		$("#plan_states_history").hide();
+		$("#show_plan_states_history").show();
 	});
 });
 
 $(function() {
 	$('#visibility_dialog_form').hide();
-	$('#change_visibility_link').click(function(event) {
+	$('.change_visibility_link').click(function(event) {
 		event.preventDefault();
 		$('#visibility_dialog_form').dialog( {
 			width: 400,
