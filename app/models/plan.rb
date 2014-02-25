@@ -11,7 +11,7 @@ class Plan < ActiveRecord::Base
            :primary_key => 'current_plan_state_id',
            :foreign_key => 'id'
   belongs_to :requirements_template
-
+  has_one :institution, :through => :requirements_template
   validates_columns :visibility
   validates :name, presence: true
   validates :visibility, presence: true
