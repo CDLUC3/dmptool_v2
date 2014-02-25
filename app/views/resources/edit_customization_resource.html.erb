@@ -60,10 +60,16 @@
 
 
 <table class="table table-striped">
-  <tr>
-    <th colspan="3"> This Resource is shown in:</th>
-  </tr>
+  <% if @any_templates || @any_requirements%>
+    <tr>
+      <th colspan="3"> This Resource is shown in:</th>
+    </tr>
 
+  <% else%>
+    <tr>
+      <th colspan="3"> This Resource is not currently in use.</th>
+    </tr>
+  <%end%>
   
 
     <% if @any_templates %>
