@@ -134,8 +134,8 @@ class ResourceContextsController < ApplicationController
     else
 
       respond_to do |format|
-        #format.html { redirect_to edit_customization_resource_path(id: @resource_id, customization_id: @customization_id) }
-        format.html { redirect_to edit_resource_context_path(@customization_id), notice: "A problem prevented this resource to be unlinked." }
+        format.html { redirect_to edit_resource_context_path(@customization_id), 
+                        notice: "A problem prevented this resource to be unlinked." }
         format.json { head :no_content }
         return
       end
@@ -164,11 +164,10 @@ class ResourceContextsController < ApplicationController
  
 
   def resource_customizations
-    @resource_contexts = ResourceContext.template_level.institutional_level.no_resource_no_requirement.order('name ASC').page(params[:page])
+    @resource_contexts = ResourceContext.template_level.no_resource_no_requirement.order('name ASC').page(params[:page])
 
     unless safe_has_role?(Role::DMP_ADMIN)
       @resource_contexts = @resource_contexts.
-                            #where(institution_id: [current_user.institution.subtree_ids]).
                             where(institution_id: [current_user.institution.subtree_ids]).
                             order('name ASC')
     end
@@ -189,7 +188,6 @@ class ResourceContextsController < ApplicationController
       else
         @resource_contexts = @resource_contexts.per(10)
     end
-
     
   end
 
@@ -243,6 +241,15 @@ class ResourceContextsController < ApplicationController
       @resource_ids = ResourceContext.distinct.pluck(:resource_id)
       @dangling_resource_ids = @res_ids - @resource_ids
       @dangling_resources = Resource.where(id: [@dangling_resource_ids])
+
+      #resources = Resource.connection.select_all("SELECT r.*,
+# rc.id as resource_context_id, rc.institution_id, rc.requirements_template_id,
+# rc.requirement_id
+# FROM resources r
+# LEFT JOIN resource_contexts rc
+# ON r.id = rc.resource_id
+# WHERE r.label like 'a%’;”)
+
      
                               
     else
