@@ -47,7 +47,7 @@ class ResourceContext < ActiveRecord::Base
   end
 
   def self.order_by_institution_name
-    joins(:institution).order('institutions.full_name ASC')
+    includes(:institution).order('institutions.full_name ASC')
   end
 
   def self.order_by_resource_created_at
