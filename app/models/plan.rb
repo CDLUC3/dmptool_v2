@@ -11,7 +11,7 @@ class Plan < ActiveRecord::Base
            :primary_key => 'current_plan_state_id',
            :foreign_key => 'id'
   belongs_to :requirements_template
-
+  has_one :institution, :through => :requirements_template
   validates_columns :visibility
   validates :name, presence: true
   validates :visibility, presence: true
@@ -29,4 +29,11 @@ class Plan < ActiveRecord::Base
   scope :rejected, -> { joins(:current_state).where('plan_states.state =?', :rejected) }
   scope :revised, -> { joins(:current_state).where('plan_states.state =?', :revised) }
   scope :committed, -> { joins(:current_state).where('plan_states.state =?', :committed) }
+
+  scope :owners, -> { joins(:users).where(owner: true) }
+
+  def self.letter_range(s, e)
+    #add as a scope where s=start and e=end letter
+    where("name REGEXP ?", "^[#{s}-#{e}]")
+  end
 end

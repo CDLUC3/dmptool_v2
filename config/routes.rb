@@ -1,8 +1,5 @@
 Dmptool2::Application.routes.draw do
 
-  get "comments/index"
-  get "comments/new"
-  get "comments/edit"
   get "dashboard/show"
   root 'static_pages#home'
   get 'about', to: 'static_pages#about'
@@ -69,6 +66,8 @@ Dmptool2::Application.routes.draw do
     end
   end
   resources :comments
+  resources :responses
+
   resources :institutions
   resources :authorizations
 
@@ -87,7 +86,9 @@ Dmptool2::Application.routes.draw do
   get 'copy_existing_plans_template', to: 'plans#copy_existing_template'
   get 'select_dmp_template', to: 'plans#select_dmp_template'
   get 'review_dmps', to: 'plans#review_dmps'
-  post 'change_visiblity', to: 'plans#change_visiblity'
+  get 'preview', to: 'plans#preview'
+  post 'change_visibility', to: 'plans#change_visibility'
+  get 'public_dmps', to: 'plans#public'
 
   get  'remove_resource_editor_role', to: 'resource_templates#remove_resource_editor_role'
   get  'remove_requirements_editor_role', to: 'requirements_templates#remove_requirements_editor_role'
@@ -118,9 +119,12 @@ Dmptool2::Application.routes.draw do
   post 'select_resource', to: 'resource_contexts#select_resource'
   get 'select_resource', to: 'resource_contexts#select_resource'
 
+  post 'create_customization_resource_from_select_resource', to: 'resources#create_customization_resource_from_select_resource'
+
   post 'copy_selected_customization_resource', to: 'resources#copy_selected_customization_resource'
 
   post 'unlink_resource', to: 'resource_contexts#unlink_resource'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

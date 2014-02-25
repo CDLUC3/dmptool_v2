@@ -26,7 +26,7 @@
         <div class="control-group">
           <%= f.label :name , 'DMP Plan', :class => 'control-label' %>
           <div class="controls">
-            <%= f.text_area :name , :class => 'input-block-level' %>
+            <%= f.text_area :name , :class => 'input-xxlarge' %>
           </div>
         </div>
         <div class="control-group">
@@ -64,7 +64,7 @@
           <div class="control-group">
             <label class ="control-label"> Current Status: </label>
             <div class="controls">
-              <p><strong style="color:blue;"><%= status(@plan) %></strong>
+              <p><strong style="color:blue;"><%= state(@plan) %></strong>
               <%= link_to "(Show History)", '#', id: 'show_plan_states_history' %></p>
               <fieldset id="plan_states_history">
                 <legend><%= link_to raw('<i class="icon-chevron-up pull-right"></i>'), '#', id: 'hide_plan_states_history' %></legend>
@@ -105,8 +105,8 @@
         <div class="control-group">
           <label class ="control-label"> Visibility: </label>
           <div class="controls">
-            <p>This DMP is <span style="color:blue;"><strong> <%=@plan.visibility.capitalize %></strong></span> </p>
-            <p><%= link_to "Change Settings", '#', remote: true, id: 'change_visibility_link' %></p>
+            <p> This DMP is <span style="color:blue;"><strong><%=@plan.visibility.capitalize %></strong></span><br/>
+            <%= link_to "Change Settings", '#', remote: true, :class => 'change_visibility_link' %></p>
           </div>
         </div>
 
@@ -115,8 +115,10 @@
         <div class="control-group">
           <label class ="control-label"> Available Actions: </label>
             <div class="controls">
-            <p><%= link_to "Preview DMP", "#" %> |
-              <%= link_to "Submit DMP", "#" %> |
+            <p><%= link_to "Preview DMP", preview_path %> |
+              <% if (@requirements_template.review_type == :formal_review) || (@requirements_template.review_type == :informal_review) %>
+                <%= link_to "Submit DMP", preview_path %> |
+              <% end %>
               <%= link_to "Deactivate DMP", "#" %> |
               <%= link_to "Delete DMP",@plan, method: :delete,  style: 'color:red;', data: { confirm: 'Are you sure?', :id => 'delete_template' }%>
             </p>
@@ -128,6 +130,7 @@
         <div class="buttons">
           <%= f.submit 'Save Changes', :class => 'btn btn-success pull-left', method: 'post' %>
           <%= button_tag 'Cancel', type: :reset, :class => 'btn btn-success'%>
+          <%= link_to 'Plan Details >>', details_plan_path(@plan), method: 'get', :class => 'btn btn-green pull-right' %>
         </div>
         <%= render partial: 'change_visibility', locals: {:plan_id => params[:id]} %>
         <%= render partial: 'comments/form', locals: {:plan_id => params[:id]} %>

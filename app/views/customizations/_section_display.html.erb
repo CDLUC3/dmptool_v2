@@ -1,0 +1,34 @@
+<%
+# This partial takes the following local variables:
+# section_name -- A string that displays a section name
+# partial_name -- the name of the partial to call to display each line item
+# collection -- the collection of items to display
+# editable -- true or false value for whether this item should be editable
+%>
+
+<% if collection.length > 0 || editable %>
+  <h2 class="cust"><%= section_name %></h2>
+
+  <% collection.each do |resource| %>
+    <%= render  :partial => partial_name,
+              :locals => { :resource => resource, :editable => editable } %>
+    <% if editable %>
+      <%= link_to raw(''),
+            edit_customization_resource_path(id: resource.id, customization_id: @customization.id),
+            :class => 'icon edit-user', :title => 'Edit Customization' %>
+      Some kind of unlink or delete here, ?????
+    <% end %>
+
+  <% end %>
+<% end %>
+
+<% if editable %>
+  <br/><br/>
+  <p><%= link_to 'Add another Resource', 
+				select_resource_path(template_id: @template_id, 
+				requirement_id: @requirement_id,
+				resource_level: @resource_level,
+				customization_overview_id: @customization_id), 
+				:method => :post%>
+  </p>
+<% end %>

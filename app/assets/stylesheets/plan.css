@@ -1,0 +1,26 @@
+div.help_box_head {
+    background-color: #516935;
+    color: white;
+    width: 97%;
+    margin: 1em 0px 0px 0px;
+    border-color:#516935;
+    border-style: solid;
+    border-width:1px;
+    padding: 0.3em 0.5em 0.3em 0.5em;
+}
+
+.help_box_head a:link {color: #dddddd; text-decoration: underline; }
+.help_box_head a:active {color: #dddddd; text-decoration: underline; }
+.help_box_head a:visited {color: #dddddd; text-decoration: underline; }
+.help_box_head a:hover {color: #ffffff; text-decoration: none; }
+
+div.help_box {
+    border-color:#516935;
+    border-style: solid;
+    border-width:1px;
+    width: 97%;
+    margin: 0px 0px 1em 0px;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    height: 60px;
+    overflow: auto;
+}

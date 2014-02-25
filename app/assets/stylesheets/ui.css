@@ -75,7 +75,7 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 .control-group.select_institution select {
 	width: 330px; }
 .control-group.switch_institution {
-	height: 178px; }
+	height: 179px; }
 	
 /* DMPTool Pages */
 .dmptool-page p {
@@ -112,25 +112,9 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 .nested_institutions {
 	margin-left: 35px; }
 .institution a {
-	padding-left: 35px;
+	padding-left: 22px;
 	position: relative; }
-.icon.requirements-group-open {
-	background-position: -160px 0px; width: 20px; height: 12px;
-	top: 2px; }
-.icon.requirements-group-closed {
-	background-position: -185px 0px; width: 20px; height: 12px;
-	top: 2px;  }
-.icon.new-requirements-group {
-	background-position: -60px 0; width: 20px; height: 15px; }
-span.icon.new-requirement {
-	background-position: -80px 0; width: 15px; height: 15px; }
-.icon.requirement {
-	background-position: -95px 0; width: 15px; height: 15px; left: 2px; }
-a.icon.new-requirement {
-	background: none;
-	padding-left: 17px; }
-.icon.institution {
-	top: -2px; }
+
 
 	
 /* Misc. */
@@ -138,8 +122,10 @@ a.icon.new-requirement {
 	width: 328px; }
 .border-box {
 	border: 1px solid #C9C9CB;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 	padding: 10px 15px; }
+.tab-pane .border-box {
+	margin-bottom: 10px; }
 
 /* Modal Windows */
 /*

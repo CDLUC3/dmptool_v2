@@ -10,6 +10,7 @@ group :development, :test do
   gem 'capistrano-unicorn'
   gem 'debugger'
   gem 'factory_girl_rails'
+  gem 'faker'  #to create fake data http://faker.rubyforge.org/
 end
 
 group :test do
@@ -18,6 +19,8 @@ group :test do
   gem 'shoulda-matchers'
   gem 'launchy'
 end
+
+gem "ckeditor", :git => "https://github.com/galetahub/ckeditor.git"
 
 gem 'omniauth'
 gem 'omniauth-ldap'
@@ -34,8 +37,8 @@ gem 'deep_cloneable', '~> 1.5.5'
 gem 'ancestry'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'turbolinks', '1.0.0'
-gem 'jquery-turbolinks'
+#gem 'turbolinks', '1.0.0'
+#gem 'jquery-turbolinks'
 gem 'jbuilder', '1.0.1'
 gem 'kaminari'
 gem 'carrierwave'
