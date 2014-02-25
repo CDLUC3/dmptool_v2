@@ -1,10 +1,10 @@
 class CustomizationsController < ApplicationController
 
   # information to display the repetitive tabs
-  TABS = [  {name: 'Guidance', partial: 'guidance_item', scope: :guidance},
-            {name: 'Actionable Links', partial: 'actionable_url_item', scope: :actionable_url},
-            {name: 'Suggested Response', partial: 'guidance_item', scope: :suggested_response},
-            {name: 'Example Response', partial: 'guidance_item', scope: :example_response }
+  TABS = [  {name: 'Guidance', partial: 'guidance_item', scope: :guidance, requirement_only: false},
+            {name: 'Actionable Links', partial: 'actionable_url_item', scope: :actionable_url, requirement_only: false},
+            {name: 'Suggested Response', partial: 'guidance_item', scope: :suggested_response, requirement_only: true},
+            {name: 'Example Response', partial: 'guidance_item', scope: :example_response, requirement_only: true }
           ]  #right now all but links are displayed wiht the guidance partial since they're the same
 
   def show

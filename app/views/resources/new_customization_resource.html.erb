@@ -3,7 +3,9 @@
 
   <%= form_for @resource, url: create_customization_resource_path(template_id: @template_id, 
                           current_institution_id: @current_institution_id,
-                          customization_overview_id: @customization_overview_id), 
+                          customization_overview_id: @customization_overview_id,
+                          resource_level: @resource_level,
+                          requirement_id: @requirement_id), 
                           html: { :class => 'form-horizontal' } do |f| %>
 
     <%= render partial: "shared/errors", locals: {model: @resource } %>
