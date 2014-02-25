@@ -1,15 +1,18 @@
 <div class="tab-content">
 
+  <% template_cust = (@customization.resource_level == "Container - Template") %>
+
   <% CustomizationsController::TABS.each_with_index do |tab, index| %>
     <div class="tab-pane<%= (index==0 ? ' active': '') %>" id="tab<%= (index+1) %>">
 
       <% if tab[:requirement_only] %>
-
+      <% # this shows only this section if for example_response and suggested_response
+         # those show only items attached to a specific requirement only (no global or template ones) %>
         <%= render :partial => 'section_display', #level 3
                    :locals => {  :section_name => 'DMP Resources',
                                  :partial_name => tab[:partial],
                                  :collection   => @requirement.requirement_resources.send(tab[:scope]),
-                                 :editable     => false }
+                                 :editable     => template_cust } #editable if this is a template customization
         %>
 
       <% else %>
@@ -26,34 +29,36 @@
                                  :partial_name => tab[:partial],
                                  :collection   => @requirement.template_resources.send(tab[:scope]) +
                                      @requirement.requirement_resources.send(tab[:scope]),
-                                 :editable     => false }
+                                 :editable     => template_cust } #editable if this is a template customization
         %>
       <% end %>
 
-      <% unless tab[:requirement_only] %>
+      <% unless template_cust #don't display these for template-only customization %>
+        <% unless tab[:requirement_only] %>
+          <%= render :partial => 'section_display', #level 4
+                     :locals => {  :section_name => "#{@institution.name} Resources",
+                                   :partial_name => tab[:partial],
+                                   :collection   => @requirement.institution_customization_resources(@institution).send(tab[:scope]),
+                                   :editable     => false }
+          %>
 
-        <%= render :partial => 'section_display', #level 4
-                   :locals => {  :section_name => "#{@institution.name} Resources",
-                                 :partial_name => tab[:partial],
-                                 :collection   => @requirement.institution_customization_resources(@institution).send(tab[:scope]),
-                                 :editable     => false }
-        %>
+          <%= render :partial => 'section_display', #level 5
+                     :locals => {  :section_name => "#{@requirements_template.name} for #{@institution.name} Resources",
+                                   :partial_name => tab[:partial],
+                                   :collection   => @requirement.template_customization_resources(@institution).send(tab[:scope]),
+                                   :editable     => false }
+          %>
 
-        <%= render :partial => 'section_display', #level 5
-                   :locals => {  :section_name => "#{@requirements_template.name} for #{@institution.name} Resources",
+        <% end %>
+
+        <%= render :partial => 'section_display', #level 7
+                   :locals => {  :section_name => 'Requirement Resources',
                                  :partial_name => tab[:partial],
-                                 :collection   => @requirement.template_customization_resources(@institution).send(tab[:scope]),
-                                 :editable     => false }
+                                 :collection   => @requirement.requirement_customization_resources(@institution).send(tab[:scope]),
+                                 :editable     => !template_cust } #this is editable if this is not a template customization
         %>
 
       <% end %>
-
-      <%= render :partial => 'section_display', #level 7
-                 :locals => {  :section_name => 'Requirement Resources',
-                               :partial_name => tab[:partial],
-                               :collection   => @requirement.requirement_customization_resources(@institution).send(tab[:scope]),
-                               :editable     => true }
-      %>
     </div>
   <% end %>
 
