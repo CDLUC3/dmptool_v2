@@ -29,4 +29,6 @@ class Plan < ActiveRecord::Base
   scope :rejected, -> { joins(:current_state).where('plan_states.state =?', :rejected) }
   scope :revised, -> { joins(:current_state).where('plan_states.state =?', :revised) }
   scope :committed, -> { joins(:current_state).where('plan_states.state =?', :committed) }
+
+  scope :owners, -> { joins(:users).where(owner: true) }
 end
