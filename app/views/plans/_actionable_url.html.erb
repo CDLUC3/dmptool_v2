@@ -1,6 +1,5 @@
 <div class= 'global_resources'>
 	<% unless @requirement.global_resources.actionable_url.empty? %>
-  <h3> Global Resources </h3>
   <ul>
     <%# global resources for this requirement, Stephen's case #1 %>
     <% (@requirement.global_resources.actionable_url).each do |resource| %>
@@ -12,7 +11,6 @@
 
 <div class= 'template_resources'>
 	<% unless @requirement.template_resources.actionable_url.empty? %>
-  <h3> DMP Resources </h3>
   <ul>
     <%# template resources for this requirement, Stephen's case #2 %>
     <% (@requirement.template_resources.actionable_url).each do |resource| %>
@@ -24,7 +22,6 @@
 
 <div class= 'requirement_resources'>
 	<% unless @requirement.requirement_resources.actionable_url.empty? %>
-  <h3> Requirement Resources </h3>
   <ul>
     <%# requirement resources for this requirement, Stephen's case #3 %>
     <% (@requirement.requirement_resources.actionable_url).each do |resource| %>
@@ -59,7 +56,6 @@
 </div>
 
 <div class= 'requirement_customization_resources'>
-	<h3> Requirement Customization Resources </h3>
   <%# requirement customization resources for this requirement, Stephen's case #7 %>
 	<ul>
 		<% @url_resources.each do |resource| %>
