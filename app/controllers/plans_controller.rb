@@ -180,6 +180,25 @@ class PlansController < ApplicationController
     plan.save!
   end
 
+  def public
+    @plans = Plan.public_visibility
+    if params[:all].blank? then
+      unless params[:s].blank? || params[:e].blank?
+        @plans = @plans.letter_range(params[:s], params[:e])
+      end
+      unless params[:q].blank? then
+        terms = params[:q].split.map {|t| "%#{t}%"}
+        @plans = @plans.joins(:institution).joins(:users).where.
+          any_of(["plans.name LIKE ?", terms], 
+                 ["institutions.full_name LIKE ?", terms],
+                 ["users.last_name LIKE ? OR users.first_name LIKE ?", terms, terms])
+      end
+      @plans = @plans.page(params[:page]).per(10)
+    else
+      @plans = @plans.page(0).per(9999)
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_plan
