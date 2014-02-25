@@ -81,9 +81,43 @@
 					<td><%= resource_context.resource.created_at.nil? ? " " :  resource_context.resource.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 					<td><%= resource_context.resource.updated_at.nil? ? " " :  resource_context.resource.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 					<td><%= resource_context.resource_level %></td>
-					<td class="span1"><%= link_to raw(''), edit_customization_resource_path(id: resource_context.resource_id, customization_id: @customization_overview_id, template_id: @template_id), :class => 'icon edit-user' %></td>
+					<td class="span1"><%= link_to raw(''), 
+						edit_customization_resource_path(id: resource_context.resource_id, 
+														customization_id: @customization_overview_id, 
+														template_id: @template_id,
+														resource_level: @resource_level,
+														requirement_id: @requirement_id),
+						 :class => 'icon edit-user' %>
+					</td>
 				</tr>
 			<% end %>
+
+			<% @dangling_resources.each do |dangling_resource| %>
+				<tr>
+					<td class="span1"><%= radio_button_tag :resource, dangling_resource.id, checked: false %></td>	
+					<td><%= dangling_resource.id %></td>
+					<td>
+						<div class="toggle-links">
+							<%= dangling_resource.label %>
+						</div>
+					</td>
+					<td><%= dangling_resource.resource_type %></td>	
+					<td><%= "" %></td>
+					<td><%= dangling_resource.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+					<td><%= dangling_resource.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+					<td><%= "RESOURCE NOT IN USE " %></td>
+					<td class="span1"><%= link_to raw(''), 
+						edit_customization_resource_path(id: dangling_resource.id, 
+														customization_id: @customization_overview_id, 
+														template_id: @template_id,
+														resource_level: @resource_level,
+														requirement_id: @requirement_id),
+						 :class => 'icon edit-user' %>
+					</td>
+				</tr>
+			<% end %>
+
+
 		<tbody>
 	</table>
 

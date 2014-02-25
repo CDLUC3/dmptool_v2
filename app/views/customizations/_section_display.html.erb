@@ -12,6 +12,13 @@
   <% collection.each do |resource| %>
     <%= render  :partial => partial_name,
               :locals => { :resource => resource, :editable => editable } %>
+    <% if editable %>
+      <%= link_to raw(''),
+            edit_customization_resource_path(id: resource.id, customization_id: @customization.id),
+            :class => 'icon edit-user', :title => 'Edit Customization' %>
+      Some kind of unlink or delete here, ?????
+    <% end %>
+
   <% end %>
 <% end %>
 
