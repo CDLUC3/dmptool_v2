@@ -1,6 +1,12 @@
 class CustomizationsController < ApplicationController
 
   # information to display the repetitive tabs
+  # name is tab name
+  # partial is the partial to display
+  # scope is the scope to use from the requirements table
+  # requirement_only means that this item can only be displayed when attached to a
+  # specific requirement -- it shouldn't be displayed if erroneously attached as global or template-level resource
+  # the suggested responses and example responses can only be displayed for a specific requirement
   TABS = [  {name: 'Guidance', partial: 'guidance_item', scope: :guidance, requirement_only: false},
             {name: 'Actionable Links', partial: 'actionable_url_item', scope: :actionable_url, requirement_only: false},
             {name: 'Suggested Response', partial: 'guidance_item', scope: :suggested_response, requirement_only: true},
