@@ -133,6 +133,7 @@ class ResourcesController < ApplicationController
     end
   end
 
+
   def new_customization_resource
 
     @requirement_id = params[:requirement_id]
@@ -153,6 +154,7 @@ class ResourcesController < ApplicationController
     end
    
   end
+
 
   def create_customization_resource
     @requirement_id = params[:requirement_id]
@@ -235,72 +237,73 @@ class ResourcesController < ApplicationController
 
       
 
-                @institution_id = current_user.institution_id
+      @institution_id = current_user.institution_id
 
-                if requirement_customization_present?(@resource_id, @template_id, @institution_id, @requirement_id)     
-                  respond_to do |format|
-                    format.html { redirect_to customization_requirement_path(id: @customization_overview_id, requirement_id:  @requirement_id), 
-                        anchor: 'tab_tab1', 
-                        notice: "The resource you selected is already in your context. resource_level: #{params[:resource_level]}" }
-                  end
-                  return
-                else
-               
-                  @resource_context = ResourceContext.new(resource_id: @resource_id, 
-                                                          institution_id: @institution_id, 
-                                                          requirements_template_id: @template_id,
-                                                          requirement_id: @requirement_id) 
-                  respond_to do |format| 
-                    if @resource_context.save
-                      format.html { redirect_to customization_requirement_path(id: @customization_overview_id, requirement_id:  @requirement_id),
-                          anchor: 'tab_tab1',  
-                          notice: "Resource was successfully added." }        
-                    else
-                      format.html { redirect_to customization_requirement_path(id: @customization_overview_id, requirement_id:  @requirement_id), 
-                          anchor: 'tab_tab1', 
-                          notice: "A problem prevented this resource to be added. " }
-                    end
-                  end    
-           
-                end #if
+      if requirement_customization_present?(@resource_id, @template_id, @institution_id, @requirement_id)     
+        respond_to do |format|
+          format.html { redirect_to customization_requirement_path(id: @customization_overview_id, requirement_id:  @requirement_id), 
+              anchor: 'tab_tab1', 
+              notice: "The resource you selected is already in your context. resource_level: #{params[:resource_level]}" }
+        end
+        return
+      else
+     
+        @resource_context = ResourceContext.new(resource_id: @resource_id, 
+                                                institution_id: @institution_id, 
+                                                requirements_template_id: @template_id,
+                                                requirement_id: @requirement_id) 
+        respond_to do |format| 
+          if @resource_context.save
+            format.html { redirect_to customization_requirement_path(id: @customization_overview_id, requirement_id:  @requirement_id),
+                anchor: 'tab_tab1',  
+                notice: "Resource was successfully added." }        
+          else
+            format.html { redirect_to customization_requirement_path(id: @customization_overview_id, requirement_id:  @requirement_id), 
+                anchor: 'tab_tab1', 
+                notice: "A problem prevented this resource to be added. " }
+          end
+        end    
+ 
+      end #if
 
     else #template resource
  
 
 
-                if safe_has_role?(Role::DMP_ADMIN)
-                  @institution_id =  ResourceContext.find(@customization_overview_id).institution_id
-                else
-                  @institution_id = current_user.institution_id
-                end
+      if safe_has_role?(Role::DMP_ADMIN)
+        @institution_id =  ResourceContext.find(@customization_overview_id).institution_id
+      else
+        @institution_id = current_user.institution_id
+      end
 
-                @resource_context = nil
-                if template_customization_present?(@resource_id, @template_id, @institution_id)
-                  
-                        respond_to do |format|
-                                format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
-                                          notice: "The resource you selected is already in your context. " }
-                        end
-                        #return
-                else
-               
-                        @resource_context = ResourceContext.new(resource_id: @resource_id, 
-                                                                institution_id: @institution_id, 
-                                                                requirements_template_id: @template_id) 
-                        respond_to do |format| 
-                              if @resource_context.save
-                                format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
-                                              notice: "Resource was successfully added." }        
-                              else
-                                format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
-                                              notice: "A problem prevented this resource to be added. " }
-                              end
-                        end    
-                end 
+      @resource_context = nil
+      if template_customization_present?(@resource_id, @template_id, @institution_id)
+        
+              respond_to do |format|
+                      format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
+                                notice: "The resource you selected is already in your context. " }
+              end
+              #return
+      else
+     
+              @resource_context = ResourceContext.new(resource_id: @resource_id, 
+                                                      institution_id: @institution_id, 
+                                                      requirements_template_id: @template_id) 
+              respond_to do |format| 
+                    if @resource_context.save
+                      format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
+                                    notice: "Resource was successfully added." }        
+                    else
+                      format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
+                                    notice: "A problem prevented this resource to be added. " }
+                    end
+              end    
+      end 
 
     end
          
   end
+
 
   def template_customization_present?(resource_id, template_id, current_institution_id)
     ResourceContext.where(resource_id: resource_id, 

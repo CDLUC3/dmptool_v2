@@ -237,6 +237,13 @@ class ResourceContextsController < ApplicationController
       @resource_contexts = ResourceContext.joins(:resource).
                               where("resource_id IS NOT NULL").
                               group(:resource_id)
+
+      
+      @res_ids =  Resource.distinct.pluck(:id)
+      @resource_ids = ResourceContext.distinct.pluck(:resource_id)
+      @dangling_resource_ids = @res_ids - @resource_ids
+      @dangling_resources = Resource.where(id: [@dangling_resource_ids])
+     
                               
     else
 
