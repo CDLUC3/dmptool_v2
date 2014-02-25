@@ -174,7 +174,6 @@ class PlansController < ApplicationController
   end
 
   def change_visibility
-        debugger
     id = params[:plan_id][:value] unless params[:plan_id][:value].blank?
     plan = Plan.find(id)
     plan.visibility = params[:plan_id][:visibility]
