@@ -14,6 +14,7 @@
         <%= render partial: 'shared/requirements_tree', locals: { requirements: @requirements } %>
       </div>
     </div>
+    <%= button_to '<< Plan Overview', edit_plan_path(@plan),  method: 'get', :class => 'btn btn-green pull-right'  %>
   </div>
   <div class="tabbable span8">
     <ul class="nav nav-tabs">
