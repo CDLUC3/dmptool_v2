@@ -39,6 +39,16 @@ class CustomizationsController < ApplicationController
       @customization_type = 8 # A DMP admin customization directly for a funder's requirement
     end
 
+    suggested_responses = @requirement.resources(@customization.institution_id).count
+    example_responses = @requirement.resources(@customization.institution_id).count
+
+    #can only show suggested responses or example responses when one has an item and the other doesn't
+    if suggested_responses > 0
+      TABS.delete_at(3)
+    elsif example_responses > 0
+      TABS.delete_at(2)
+    end
+
 
     ###############################################
     #params for adding another resource
