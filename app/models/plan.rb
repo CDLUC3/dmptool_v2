@@ -31,4 +31,9 @@ class Plan < ActiveRecord::Base
   scope :committed, -> { joins(:current_state).where('plan_states.state =?', :committed) }
 
   scope :owners, -> { joins(:users).where(owner: true) }
+
+  def self.letter_range(s, e)
+    #add as a scope where s=start and e=end letter
+    where("name REGEXP ?", "^[#{s}-#{e}]")
+  end
 end
