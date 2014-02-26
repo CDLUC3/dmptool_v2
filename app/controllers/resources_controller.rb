@@ -157,20 +157,26 @@ class ResourcesController < ApplicationController
 
 
   def create_customization_resource
+    
     @requirement_id = params[:requirement_id]
     @resource_level = params[:resource_level]
     @template_id = params[:template_id]
     @customization_overview_id = params[:customization_overview_id]
     @customization_overview = ResourceContext.find(@customization_overview_id)
 
+    if safe_has_role?(Role::DMP_ADMIN)
+      @current_institution_id = @customization_overview.institution_id
+    else 
+      @current_institution_id = current_user.institution.id
+    end
+
     case params[:resource_level]
       
       when "requirement"
 
-          
-          @current_institution_id = current_user.institution.id     
+     
           @resource = Resource.new(resource_params)
-            
+ 
           respond_to do |format|
             if @resource.save 
               @resource_id = @resource.id
@@ -194,12 +200,6 @@ class ResourcesController < ApplicationController
           end
 
       else #customization resource
-
-          if safe_has_role?(Role::DMP_ADMIN)
-            @current_institution_id = @customization_overview.institution_id
-          else 
-            @current_institution_id = current_user.institution.id
-          end
           
           @resource = Resource.new(resource_params)
             
@@ -232,10 +232,7 @@ class ResourcesController < ApplicationController
     @customization_overview = ResourceContext.find(@customization_overview_id)
     @institution_id = nil
          
-    if params[:resource_level] == "requirement"
-      
-
-      
+    if params[:resource_level] == "requirement"  
 
       @institution_id = current_user.institution_id
 
