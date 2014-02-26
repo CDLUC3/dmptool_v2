@@ -80,6 +80,12 @@
               <fieldset id = "reviewer_comments">
                 <legend>Comments<%= link_to raw('<i class="icon-chevron-up pull-right"></i>'), '#', id: 'hide_reviewer_comments' %></legend>
                 <%= render partial: 'comments/index_reviewer_comments' %>
+                <div class="control-group">
+                  <label class ="control-label"> Comments: </label>
+                  <div class="controls">
+                    <p><%= link_to "Add Comments", '#', remote: true, id: 'add_comments_link' %></p>
+                  </div>
+                </div>
               </fieldset>
             </div>
           </div>
