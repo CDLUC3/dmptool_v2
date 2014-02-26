@@ -247,7 +247,7 @@ class ResourcesController < ApplicationController
           format.html { 
               redirect_to customization_requirement_path(id: @customization_overview_id, requirement_id:  @requirement_id), 
               anchor: 'tab_tab1', 
-              notice: "The resource you selected is already in your context. resource_level: #{params[:resource_level]}" }
+              notice: "The resource you selected is already in your context." }
         end
         return
       else
@@ -270,10 +270,9 @@ class ResourcesController < ApplicationController
  
       end #if
 
+
     else #template resource
  
-
-      @resource_context = nil
       if template_customization_present?(@resource_id, @template_id, @current_institution_id)
         
               respond_to do |format|
