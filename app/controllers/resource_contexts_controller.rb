@@ -1,5 +1,7 @@
 class ResourceContextsController < ApplicationController
 
+  before_action :require_login
+
   def index
     resource_customizations
   end
@@ -147,7 +149,6 @@ class ResourceContextsController < ApplicationController
     end
     
     respond_to do |format|
-      #format.html { redirect_to edit_customization_resource_path(id: @resource_id, customization_id: @customization_id) }
       format.html { redirect_to edit_resource_context_path(@customization_id) }
       format.json { head :no_content }
     end
@@ -164,7 +165,7 @@ class ResourceContextsController < ApplicationController
  
 
   def resource_customizations
-    @resource_contexts = ResourceContext.template_level.no_resource_no_requirement.order('name ASC').page(params[:page])
+    @resource_contexts = ResourceContext.template_level.no_resource_no_requirement.page(params[:page])
 
     unless safe_has_role?(Role::DMP_ADMIN)
       @resource_contexts = @resource_contexts.
@@ -215,6 +216,7 @@ class ResourceContextsController < ApplicationController
      
     @resource_contexts = ResourceContext.includes(:resource).
                           per_template(@template).
+                          no_requirement.
                           resource_level.where(institution_id:
                                   (@customization_institution.nil? ? nil : [@customization_institution.subtree_ids]))                                                
   end
@@ -229,28 +231,17 @@ class ResourceContextsController < ApplicationController
     @template_id = params[:template_id]
     @customization_overview_id = params[:customization_overview_id]
     @requirement_id = params[:requirement_id]
+    @customization = ResourceContext.find(@customization_overview_id)
 
     if safe_has_role?(Role::DMP_ADMIN) 
 
       @resource_contexts = ResourceContext.joins(:resource).
                               where("resource_id IS NOT NULL").
+                              where(institution_id:
+                                  (@customization.institution.nil? ? nil : [@customization.institution.subtree_ids])).
                               group(:resource_id)
 
       
-      @res_ids =  Resource.distinct.pluck(:id)
-      @resource_ids = ResourceContext.distinct.pluck(:resource_id)
-      @dangling_resource_ids = @res_ids - @resource_ids
-      @dangling_resources = Resource.where(id: [@dangling_resource_ids])
-
-      #resources = Resource.connection.select_all("SELECT r.*,
-# rc.id as resource_context_id, rc.institution_id, rc.requirements_template_id,
-# rc.requirement_id
-# FROM resources r
-# LEFT JOIN resource_contexts rc
-# ON r.id = rc.resource_id
-# WHERE r.label like 'a%’;”)
-
-     
                               
     else
 

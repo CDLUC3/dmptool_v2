@@ -8,7 +8,10 @@
 	<thead>
 		<tr>
 			<th class="span5">Plan Title</th>
+			<th>Funder Template</th>
 			<th>Institution</th>
+			<th>Owner</th>
+			<th>Download</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -20,11 +23,16 @@
                 </div>
               </td>
               <td class="nowrap">
-                <%- if plan.institution.nil? %>
-                  [Unknown]
-                <%- else %>
-                  <%= plan.institution.full_name %>
-                <%- end %>
+                <%= (plan.requirements_template && plan.requirements_template.name) || 'seriously, more junk data?' %>
+              </td>
+              <td class="nowrap">
+                <%= plan.owners.first.institution.name %>
+              </td>
+              <td class="nowrap">
+                <%= plan.owners.first.full_name %>
+              </td>
+              <td class="nowrap">
+                <%= link_to("PDF icon here", plan_path(plan, format: "pdf")) %>
               </td>
             </tr>
           <% end %>

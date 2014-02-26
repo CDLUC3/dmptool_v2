@@ -62,6 +62,10 @@ class ResourceContext < ActiveRecord::Base
   	 where(:requirement_id => nil, :resource_id => nil)
   end
 
+  def self.no_requirement
+    where(requirement_id: nil) 
+  end
+
   def self.institutional_level
   	 where("resource_contexts.institution_id IS NOT NULL") 
   end

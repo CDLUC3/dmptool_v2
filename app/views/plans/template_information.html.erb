@@ -15,8 +15,8 @@
 				<tbody>
 				<% @plans.each do |plan| %>
 					<tr>
-						<td class="span1"><%= radio_button_tag :plan, plan.id, checked: false %></td>
-						<td><%= plan.name %></td>
+						<td class="span1"><%= radio_button_tag :plan,  plan.id, checked: false %></td>
+						<td><%= label_tag "plan_#{plan.id}", plan.name %></td>
 						<td><%= owner_name(plan)%></td>
 					</tr>
 				<% end %>

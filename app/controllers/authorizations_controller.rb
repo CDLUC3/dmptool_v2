@@ -1,4 +1,6 @@
 class AuthorizationsController < ApplicationController
+
+  before_action :require_login, except: [:pluralize_has]
 	
 	def add_authorization
 
