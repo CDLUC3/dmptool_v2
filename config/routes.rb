@@ -1,8 +1,5 @@
 Dmptool2::Application.routes.draw do
 
-  get "comments/index"
-  get "comments/new"
-  get "comments/edit"
   get "dashboard/show"
   root 'static_pages#home'
   get 'about', to: 'static_pages#about'
@@ -18,7 +15,6 @@ Dmptool2::Application.routes.draw do
   get 'partners_list', to: 'institutions#partners_list'
   get 'privacy', to: 'static_pages#privacy'
   get 'promote', to: 'static_pages#promote'
-  get 'public_dmps', to: 'static_pages#public_dmps'
   get 'terms_of_use', to: 'static_pages#terms_of_use'
   get 'video', to: 'static_pages#video'
   get 'resource_contexts/dmp_for_customization', to: 'resource_contexts#dmp_for_customization', as: "dmp_for_customization"
@@ -70,6 +66,8 @@ Dmptool2::Application.routes.draw do
     end
   end
   resources :comments
+  resources :responses
+
   resources :institutions
   resources :authorizations
 
@@ -89,7 +87,8 @@ Dmptool2::Application.routes.draw do
   get 'select_dmp_template', to: 'plans#select_dmp_template'
   get 'review_dmps', to: 'plans#review_dmps'
   get 'preview', to: 'plans#preview'
-  post 'change_visiblity', to: 'plans#change_visiblity'
+  post 'change_visibility', to: 'plans#change_visibility'
+  get 'public_dmps', to: 'plans#public'
 
   get  'remove_resource_editor_role', to: 'resource_templates#remove_resource_editor_role'
   get  'remove_requirements_editor_role', to: 'requirements_templates#remove_requirements_editor_role'

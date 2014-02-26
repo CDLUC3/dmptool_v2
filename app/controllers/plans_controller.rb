@@ -1,6 +1,7 @@
 class PlansController < ApplicationController
   before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details]
   before_action :select_requirements_template, only: [:select_dmp_template]
+
   # GET /plans
   # GET /plans.json
   def index
@@ -36,7 +37,6 @@ class PlansController < ApplicationController
   # GET /plans/1
   # GET /plans/1.json
   def show
-    render 'edit'
   end
 
   # GET /plans/new
@@ -47,6 +47,8 @@ class PlansController < ApplicationController
 
   # GET /plans/1/edit
   def edit
+    template_id = @plan.requirements_template_id
+    @requirements_template = RequirementsTemplate.find(template_id)
     @comment = Comment.new
     comments = Comment.where(plan_id: @plan.id, user_id: current_user.id)
     @reviewer_comments = comments.where(visibility: :reviewer)
@@ -159,14 +161,42 @@ class PlansController < ApplicationController
     if params[:requirement_id].blank?
       params[:requirement_id] = @requirements_template.first_question.id.to_s
     end
+    @requirement = Requirement.find(params[:requirement_id]) unless params[:requirement_id].blank?
+    @resource_contexts = ResourceContext.where(requirement_id: @requirement.id, institution_id: current_user.institution_id, requirements_template_id: @requirements_template.id)
+    @guidance_resources = display_text(@resource_contexts)
+    @url_resources = display_value(@resource_contexts)
+    @suggested_resources = display_suggested(@resource_contexts)
+    @example_resources = display_example(@resource_contexts)
+    @response = Response.where(plan_id: @plan.id, requirement_id: @requirement.id).first
+    if @response.nil?
+      @response = Response.new
+    end
   end
 
-  def change_visiblity
+  def change_visibility
     id = params[:plan_id][:value] unless params[:plan_id][:value].blank?
-    debugger
     plan = Plan.find(id)
     plan.visibility = params[:plan_id][:visibility]
     plan.save!
+  end
+
+  def public
+    @plans = Plan.public_visibility
+    if params[:all].blank? then
+      unless params[:s].blank? || params[:e].blank?
+        @plans = @plans.letter_range(params[:s], params[:e])
+      end
+      unless params[:q].blank? then
+        terms = params[:q].split.map {|t| "%#{t}%"}
+        @plans = @plans.joins(:institution).joins(:users).where.
+          any_of(["plans.name LIKE ?", terms], 
+                 ["institutions.full_name LIKE ?", terms],
+                 ["users.last_name LIKE ? OR users.first_name LIKE ?", terms, terms])
+      end
+      @plans = @plans.page(params[:page]).per(10)
+    else
+      @plans = @plans.page(0).per(9999)
+    end
   end
 
   private
@@ -187,5 +217,53 @@ class PlansController < ApplicationController
       @approved = @plans.approved.count
       @submitted = @plans.submitted.count
       @rejected = @plans.rejected.count
+    end
+
+    def display_text(resource_contexts)
+      resources = Array.new
+      @resource_contexts.each do |resource_context|
+        id  = resource_context.resource_id
+        resource = Resource.find(id)
+        if resource.resource_type == :help_text
+          resources << resource
+        end
+      end
+      return resources
+    end
+
+    def display_value(resource_contexts)
+      resources = Array.new
+      @resource_contexts.each do |resource_context|
+        id  = resource_context.resource_id
+        resource = Resource.find(id)
+        if resource.resource_type == :actionable_url
+          resources << resource
+        end
+      end
+      return resources
+    end
+
+    def display_suggested(resource_contexts)
+      resources = Array.new
+      @resource_contexts.each do |resource_context|
+        id  = resource_context.resource_id
+        resource = Resource.find(id)
+        if resource.resource_type == :suggested_response
+          resources << resource
+        end
+      end
+      return resources
+    end
+
+    def display_example(resource_contexts)
+      resources = Array.new
+      @resource_contexts.each do |resource_context|
+        id  = resource_context.resource_id
+        resource = Resource.find(id)
+        if resource.resource_type == :example_response
+          resources << resource
+        end
+      end
+      return resources
     end
 end

@@ -47,7 +47,7 @@ class ResourceContext < ActiveRecord::Base
   end
 
   def self.order_by_institution_name
-    joins(:institution).order('institutions.full_name ASC')
+    includes(:institution).order('institutions.full_name ASC')
   end
 
   def self.order_by_resource_created_at
@@ -60,6 +60,10 @@ class ResourceContext < ActiveRecord::Base
 
   def self.no_resource_no_requirement
   	 where(:requirement_id => nil, :resource_id => nil)
+  end
+
+  def self.no_requirement
+    where(requirement_id: nil) 
   end
 
   def self.institutional_level
@@ -93,23 +97,29 @@ class ResourceContext < ActiveRecord::Base
   
   def resource_level
     if requirements_template_id == nil && self.requirement_id == nil && self.resource_id != nil && self.institution_id != nil
-      return "Institution"
+      return "Institution" # Stephen's #4, set for all of a viewing institution, every requirement and template
     end
     if requirements_template_id != nil && self.requirement_id == nil && self.resource_id != nil && self.institution_id == nil
-      return "Template"
+      return "Template" # Stephen's #2, set for all views of that template, no matter what viewing institution
     end
     
     if self.requirement_id != nil && self.resource_id != nil && self.institution_id == nil
-      return "Requirement"
+      return "Requirement" # Stephen's #3, set for all views of that requirement, no matter what viewing institution
     end
     if self.requirements_template_id != nil && self.requirement_id == nil && self.resource_id != nil && self.institution_id != nil
-      return "Template - Institution"
+      return "Template - Institution" # Stephen's #5, set for views of an entire template (all requirements) only by a viewing institution
     end
     if self.requirement_id != nil && self.resource_id != nil && self.institution_id != nil
-      return "Requirement - Institution"
+      return "Requirement - Institution" # Stephen's #7, set for views of a requirement by a viewing institution
     end
     if self.requirements_template == nil && self.requirement_id == nil && self.resource_id != nil && self.institution_id == nil
-      return "Global"
+      return "Global" # Stephen's #1 shown for every requirement for all templates, no matter what viewing institution
+    end
+    if self.resource_id.nil? && self.institution_id != nil && self.requirements_template_id != nil && self.requirement_id.nil?
+      return "Container - Institution" # Stephen's case #6, a container for customizing for a template for a viewing institution
+    end
+    if self.resource_id.nil? && self.institution_id.nil? && self.requirements_template_id != nil && self.requirement_id.nil?
+      return "Container - Template" # Marisa's case #8, a container for customizing for a template for all viewing institutions
     end
     return " "
   end

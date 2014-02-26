@@ -1,0 +1,19 @@
+<%# this partial requires plan_id, requirement_id to be passed in as a local variable %>
+<%= form_for(@response,  html: { :class => 'form-horizontal' }) do |f| %>
+  <%= render partial: "shared/errors", locals: {model: @response} %>
+  <div class="control-group">
+      <%= f.hidden_field :requirement_id, value: requirement_id %>
+      <%= f.hidden_field :plan_id, value: plan_id %>
+      <%= f.hidden_field :label_id %>
+  </div>
+  <div class="control-group">
+  		<%= f.cktext_area :value, placeholder: 'response', :class => "input-block-level" %>
+  </div>
+    <%= f.submit "Save Response", :class => 'btn btn-success pull-right', method: 'post' %>
+    <%= link_to "Cancel Changes", type: :reset, :class => 'btn pull-left', id: "cancel_action" %>
+  </div>
+<% end %>
+
+<script>
+		jQuery(document).requiredField();
+</script>

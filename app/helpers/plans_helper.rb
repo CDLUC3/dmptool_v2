@@ -38,74 +38,11 @@ module PlansHelper
 		end
 	end
 
-
 	def institution_name(plan_id)
 		unless !Plan.exists?(plan_id)
 			requirements_template_id = Plan.where(id: plan_id).pluck(:requirements_template_id)
 			institution_id = RequirementsTemplate.includes(:institution).where(id: requirements_template_id)
 			institution_name = Institution.find(institution_id).full_name
 		end
-	end
-
-	def instruction(requirement_id)
-		unless !Requirement.exists?(requirement_id)
-			Requirement.find(requirement_id).text_full
-		end
-	end
-
-	def guidance(requirement_id)
-		unless !Requirement.exists?(requirement_id)
-			requirement = Requirement.find(requirement_id)
-			@resource_contexts = ResourceContext.where(requirement_id: requirement_id, institution_id: current_user.institution_id, requirements_template_id: @requirements_template.id)
-			@resource_contexts
-		end
-	end
-
-	def display_text(resource_contexts)
-		resources = Array.new
-		resource_contexts.each do |resource_context|
-			id  = resource_context.resource_id
-			resource = Resource.find(id)
-			if resource.resource_type == :help_text
-				resources << resource
-			end
-		end
-		return resources
-	end
-
-	def display_value(resource_contexts)
-		resources = Array.new
-		resource_contexts.each do |resource_context|
-			id  = resource_context.resource_id
-			resource = Resource.find(id)
-			if resource.resource_type == :actionable_url
-				resources << resource
-			end
-		end
-		return resources
-	end
-
-	def display_suggested(resource_contexts)
-		resources = Array.new
-		resource_contexts.each do |resource_context|
-			id  = resource_context.resource_id
-			resource = Resource.find(id)
-			if resource.resource_type == :suggested_response
-				resources << resource
-			end
-		end
-		return resources
-	end
-
-		def display_example(resource_contexts)
-		resources = Array.new
-		resource_contexts.each do |resource_context|
-			id  = resource_context.resource_id
-			resource = Resource.find(id)
-			if resource.resource_type == :example_response
-				resources << resource
-			end
-		end
-		return resources
 	end
 end

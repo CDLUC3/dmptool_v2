@@ -6,15 +6,23 @@
 # editable -- true or false value for whether this item should be editable
 %>
 
-<% if collection.length > 0 || editable %>
+<% if collection.length > 0 %>
   <h2 class="cust"><%= section_name %></h2>
 
   <% collection.each do |resource| %>
-    <%= render  :partial => partial_name,
-              :locals => { :resource => resource, :editable => editable } %>
-  <% end %>
-<% end %>
+    <div style="clear:both">
+      <div class="<%= editable ? 'editable_resource': '' %>">
+        <%= render  :partial => partial_name,
+                :locals => { :resource => resource, :editable => editable } %>
+      </div>
 
-<% if editable %>
-  <p> +  Add another one</p>
+      <% if editable %>
+        <div class="edit_icon_right">
+          <%= link_to raw(''),
+              edit_customization_resource_path(id: resource.id, customization_id: @customization.id),
+              :class => 'icon edit-user', :title => 'Edit Customization' %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 <% end %>

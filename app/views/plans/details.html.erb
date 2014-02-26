@@ -3,6 +3,10 @@
 <h4><%= @requirements_template.name %></h4>
 <div class="row-fluid">
   <div class="details span4">
+    <p> Click on a section below to edit it at any time. </p>
+    <p>
+      <%= image_tag("checked.png", :alt => 'check box') %> = complete
+    </p>
     <div class="tree-view border-box">
       <h5>Template Outline</h5>
       <hr/>
@@ -10,10 +14,11 @@
         <%= render partial: 'shared/requirements_tree', locals: { requirements: @requirements } %>
       </div>
     </div>
+    <%= button_to '<< Plan Overview', edit_plan_path(@plan),  method: 'get', :class => 'btn btn-green pull-right'  %>
   </div>
   <div class="tabbable span8">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#tab1" data-toggle="tab">Guidance</a></li>
+      <li class="active"><a href="#tab1" data-toggle="tab">Instruction</a></li>
       <li><a href="#tab2" data-toggle="tab">Actionable Links</a></li>
       <li><a href="#tab3" data-toggle="tab">Suggested Response</a></li>
       <li><a href="#tab4" data-toggle="tab">Example Response</a></li>
@@ -29,13 +34,36 @@
       </div>
 
       <div class="tab-pane " id="tab3">
-        <%= render partial: 'example_response', locals: { requirement_id: params[:requirement_id] } %>
-      </div>
-
-      <div class="tab-pane" id="tab4">
         <%= render partial: 'suggested_response', locals: { requirement_id: params[:requirement_id] } %>
       </div>
 
+      <div class="tab-pane" id="tab4">
+        <%= render partial: 'example_response', locals: { requirement_id: params[:requirement_id] } %>
+      </div>
+      <hr style="height:1px; border:none; background-color:#000;"/>
+      <fieldset>
+        <strong> Your Response </strong>
+        <% if @requirement.obligation == :mandatory %>
+          <strong>(Mandatory)</strong>
+        <% end %>
+        <%= render partial: 'responses/form', locals: { requirement_id: params[:requirement_id], plan_id: @plan.id } %>
+      </fieldset>
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  tab_jump();
+  add_tab_to_pagination();
+</script>
+<script type="text/javascript">
+  function fixed_size(id, pixels){
+    document.getElementById(id).style.height = pixels + 'px';
+    //$j('#'+id).css('height', pixels + 'px');
+  }
+
+  function full_size(id){
+    document.getElementById(id).style.height = 'auto';
+    //$j('#'+id).css('height', 'auto');
+  }
+</script>
