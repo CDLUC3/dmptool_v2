@@ -38,7 +38,7 @@
         <div class="control-group">
           <%= f.label :submission_deadline, 'Submission Deadline',:class => "control-label" %>
           <div class="controls">
-            <%= f.text_field :submission_deadline, value: @plan.submission_deadline.blank? ? " " : @plan.submission_deadline.strftime('%m/%d/%Y'), id: 'submission_deadline', :class => 'datepicker' %>
+            <%= f.text_field :submission_deadline, value: @plan.submission_deadline.blank? ? " " : @plan.submission_deadline.strftime('%m/%d/%Y'), :class => 'datepicker' %>
           </div>
         </div>
         <div class="control-group">

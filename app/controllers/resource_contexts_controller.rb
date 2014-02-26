@@ -169,7 +169,7 @@ class ResourceContextsController < ApplicationController
     unless safe_has_role?(Role::DMP_ADMIN)
       @resource_contexts = @resource_contexts.
                             #where(institution_id: [current_user.institution.subtree_ids]).
-                            where("resource_contexts.institution_id IN ?", [current_user.institution.subtree_ids]).
+                            where(institution_id: [current_user.institution.subtree_ids]).
                             order('name ASC')
     end
 

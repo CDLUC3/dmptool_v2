@@ -11,9 +11,6 @@
 	margin: -10px 0 10px;
 	padding: 10px;
 	position: relative; }
-.buttons-alpha.row {
-	clear: both;
-	margin: 0 0 20px; }
 .tab-pane .buttons {
 	border: none;
 	border-top: 1px solid #B6B6B7;

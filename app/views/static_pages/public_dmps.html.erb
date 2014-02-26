@@ -17,14 +17,14 @@
 	</div>
 </div>
 <br/>
-<div class="buttons-alpha row">
+<div class="row-fluid">
 	<%= link_to('A - F', { :s => 'a', :e => 'f' }, :class => 'btn viewA-F') %> 
 	<%= link_to('G - L', { :s => 'g', :e => 'l' }, :class => 'btn viewG-L') %> 
 	<%= link_to('M - S', { :s => 'm', :e => 's' }, :class => 'btn viewM-S') %> 
 	<%= link_to('T - Z', { :s => 't', :e => 'z' }, :class => 'btn viewT-Z') %> 
 	<%= link_to('All', { :s => 'a', :e => 'z' }, :class => 'btn viewA-Z') %>
 </div>
-
+<br/>
 <%= render partial: 'public_table', :locals => {templates: @public_templates, public: true} %>
 
 

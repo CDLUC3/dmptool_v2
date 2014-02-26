@@ -4,9 +4,3 @@ a.btn, button, button.btn, input[type=submit], input[type=submit].btn {
 .btn.current {
 	line-height: 28px;
 }
-	
-.dashboard-nav ul.nav {
-	font-size: 1.12em; }
-	
-.dashboard-nav ul.nav > li > a > span {
-	padding: 0 10px; }

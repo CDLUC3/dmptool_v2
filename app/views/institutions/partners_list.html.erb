@@ -1,9 +1,18 @@
 <h1 class="row-fluid"><span class="icon institution-profile"></span>Partner Institutions</h1>
 <br/>
 <div class="row-fluid">
+	<p>Use the A-Z links below to narrow down the list by institution or
+		use the search box to search for specific institutions.</p>
+	<p>Partner institutions can configure the tool to point to their resources and services, provide customized help, and provide suggested answers to the questions asked by funding agencies. DMPTool users affiliated with partner institutions can login with their own institutional accounts. For more information see <%= link_to "About Partners", partners_path, :title => "About Partners" %>.</p>
+</div>
+<br/>
+<div class="row-fluid">
 	<div class="span8">
-		<p>Use the A-Z links below to narrow down the list by institution or
-			use the search box to search for specific institutions.</p>
+		<%= link_to('A - F', { :s => 'a', :e => 'f' }, :class => 'btn viewA-F') %> 
+		<%= link_to('G - L', { :s => 'g', :e => 'l' }, :class => 'btn viewG-L') %> 
+		<%= link_to('M - S', { :s => 'm', :e => 's' }, :class => 'btn viewM-S') %> 
+		<%= link_to('T - Z', { :s => 't', :e => 'z' }, :class => 'btn viewT-Z') %> 
+		<%= link_to('All', { :s => 'a', :e => 'z' }, :class => 'btn viewA-Z') %>
 	</div>
 	<div class="search-area span4 pull-right">
 			<%= form_tag('', {:method => :get}) do %>
@@ -14,13 +23,6 @@
 				</div>
 			<% end %>
 	</div>
-</div>
-<div class="buttons-alpha row">
-	<%= link_to('A - F', { :s => 'a', :e => 'f' }, :class => 'btn viewA-F') %> 
-	<%= link_to('G - L', { :s => 'g', :e => 'l' }, :class => 'btn viewG-L') %> 
-	<%= link_to('M - S', { :s => 'm', :e => 's' }, :class => 'btn viewM-S') %> 
-	<%= link_to('T - Z', { :s => 't', :e => 'z' }, :class => 'btn viewT-Z') %> 
-	<%= link_to('All', { :s => 'a', :e => 'z' }, :class => 'btn viewA-Z') %>
 </div>
 <table class="table table-striped">
 	<thead>
