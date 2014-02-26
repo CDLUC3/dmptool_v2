@@ -28,8 +28,8 @@
           <div class="toggle-links">
             <%=link_to (content_tag(:strong, plan.name)), '#', :id => "#{plan.name}" %>
             <div class="template-links">
-              <%= (link_to 'Overview', edit_plan_path(plan))+' | '+(link_to 'Details', details_plan_path(plan))+' | '+(link_to 'Export', export_plan_path(plan))+' | '+(link_to 'Share', '#') +' | '%>
-              <%= (link_to 'Submit','#') if (plan.requirements_template.review_type == :formal_review || plan.requirements_template.review_type == :informal_review) %> |
+              <%= (link_to 'Overview', edit_plan_path(plan))+' | '+(link_to 'Details', details_plan_path(plan))+' | '+(link_to 'Export', export_plan_path(plan))+' | '+(link_to 'Share', '#', remote: true, :class => 'change_visibility_link') +' | '%>
+              <%= (link_to 'Submit', preview_path(plan)) if (plan.requirements_template.review_type == :formal_review || plan.requirements_template.review_type == :informal_review) %> |
               <%= (link_to 'Copy', copy_existing_plans_template_path(:plan => plan))+' | '+(link_to 'Delete', plan_path(plan), :class => "delete", :id => "delete_#{plan.name}", method: :delete, data: { confirm: 'Are you sure?' }) %>
             </div>
           </div>
@@ -52,3 +52,4 @@
 <%= button_to 'Create New DMP', plan_template_information_path, :method => :get, :class => 'btn' %>
 
 <%= render 'plan_states_table' %>
+<%= render partial: 'change_visibility', locals: {:plan_id => params[:id]} %>

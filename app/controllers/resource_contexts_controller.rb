@@ -229,28 +229,16 @@ class ResourceContextsController < ApplicationController
     @template_id = params[:template_id]
     @customization_overview_id = params[:customization_overview_id]
     @requirement_id = params[:requirement_id]
+    @customization = ResourceContext.find(@customization_overview_id)
 
     if safe_has_role?(Role::DMP_ADMIN) 
 
       @resource_contexts = ResourceContext.joins(:resource).
                               where("resource_id IS NOT NULL").
+                              where(institution_id: @customization.institution).
                               group(:resource_id)
 
       
-      @res_ids =  Resource.distinct.pluck(:id)
-      @resource_ids = ResourceContext.distinct.pluck(:resource_id)
-      @dangling_resource_ids = @res_ids - @resource_ids
-      @dangling_resources = Resource.where(id: [@dangling_resource_ids])
-
-      #resources = Resource.connection.select_all("SELECT r.*,
-# rc.id as resource_context_id, rc.institution_id, rc.requirements_template_id,
-# rc.requirement_id
-# FROM resources r
-# LEFT JOIN resource_contexts rc
-# ON r.id = rc.resource_id
-# WHERE r.label like 'a%’;”)
-
-     
                               
     else
 
