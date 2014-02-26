@@ -11,9 +11,6 @@ group :development, :test do
   gem 'debugger'
   gem 'factory_girl_rails'
   gem 'faker'  #to create fake data http://faker.rubyforge.org/
-  gem 'better_errors'
-  gem 'binding_of_caller'
-  gem 'meta_request'
 end
 
 group :test do
