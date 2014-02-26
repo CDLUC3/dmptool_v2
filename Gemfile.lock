@@ -67,9 +67,15 @@ GEM
       activerecord (>= 3.0.0)
     arel (4.0.2)
     atomic (1.1.14)
+    better_errors (1.1.0)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
     bootstrap-sass (2.3.2.0)
       sass (~> 3.2)
     builder (3.1.4)
+    callsite (0.0.11)
     capistrano (2.15.5)
       highline
       net-scp (>= 1.0.0)
@@ -90,7 +96,9 @@ GEM
       json (>= 1.7)
     childprocess (0.5.1)
       ffi (~> 1.0, >= 1.0.11)
+    coderay (1.1.0)
     columnize (0.3.6)
+    debug_inspector (0.0.2)
     debugger (1.6.5)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.2.0)
@@ -134,6 +142,10 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    meta_request (0.2.8)
+      callsite
+      rack-contrib
+      railties
     mime-types (1.25.1)
     mini_magick (3.7.0)
       subexec (~> 0.2.1)
@@ -173,6 +185,8 @@ GEM
       ttfunk (~> 1.0.3)
     pyu-ruby-sasl (0.0.3.3)
     rack (1.5.2)
+    rack-contrib (1.1.0)
+      rack (>= 0.9.1)
     rack-test (0.6.2)
       rack (>= 1.0)
     rails (4.0.0)
@@ -259,6 +273,8 @@ DEPENDENCIES
   activerecord_any_of
   american_date
   ancestry
+  better_errors
+  binding_of_caller
   bootstrap-sass (= 2.3.2.0)
   capistrano
   capistrano-unicorn
@@ -276,6 +292,7 @@ DEPENDENCIES
   jquery-ui-rails
   kaminari
   launchy
+  meta_request
   mini_magick
   mysql2
   omniauth
