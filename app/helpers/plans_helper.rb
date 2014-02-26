@@ -3,8 +3,10 @@ module PlansHelper
 		plan_id= plan.id
 		unless !Plan.exists?(plan_id)
 			user_id = UserPlan.where(plan_id: plan_id, owner: true).first.user_id
-			owner = User.find(user_id).full_name
-			return owner
+			unless !User.exists?(user_id)
+				owner = User.find(user_id).full_name
+				return owner
+			end
 		end
 	end
 
