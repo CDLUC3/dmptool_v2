@@ -17,14 +17,15 @@ class CustomizationsController < ApplicationController
     # :id is customization id and :requirement_id
     @customization = ResourceContext.find(params[:id])
     redirect_to(resource_contexts_path, :notice => "This isn't a valid customization") and return unless @customization.resource_id.blank?
-    begin
-      @requirements_template = @customization.requirements_template
-      @requirements = @requirements_template.requirements
-      if params[:requirement_id].blank?
-        params[:requirement_id] = @requirements_template.first_question.id.to_s
+    @requirements_template = @customization.requirements_template
+    @requirements = @requirements_template.requirements
+    if params[:requirement_id].blank?
+      requirement = @requirements_template.first_question
+      if requirement.nil?
+        redirect_to(resource_contexts_path, :notice =>
+            "The DMP template you are attempting to customize has no requirements. A template must contain at least one requirement. \"#{@requirements_template.name}\" needs to be fixed before you may continue customizing it.") and return
       end
-    rescue Exception => ex
-      redirect_to(resource_contexts_path, :notice => "The DMP Template you're attempting to add resources for is incomplete") and return
+      params[:requirement_id] = requirement.id.to_s
     end
 
     @requirement = Requirement.find(params[:requirement_id])
