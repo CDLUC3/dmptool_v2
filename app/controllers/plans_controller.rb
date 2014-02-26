@@ -1,6 +1,7 @@
 class PlansController < ApplicationController
   before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details]
   before_action :select_requirements_template, only: [:select_dmp_template]
+
   # GET /plans
   # GET /plans.json
   def index
@@ -36,7 +37,6 @@ class PlansController < ApplicationController
   # GET /plans/1
   # GET /plans/1.json
   def show
-    render 'edit'
   end
 
   # GET /plans/new
