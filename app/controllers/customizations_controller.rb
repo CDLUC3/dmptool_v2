@@ -28,11 +28,11 @@ class CustomizationsController < ApplicationController
     end
 
     @requirement = Requirement.find(params[:requirement_id])
-    @institution = current_user.institution
+    @institution = @customization.institution unless @customization.institution_id.nil?
 
 
-    suggested_responses = @requirement.resources(@customization.institution_id).count
-    example_responses = @requirement.resources(@customization.institution_id).count
+    suggested_responses = @requirement.resources(@customization.institution_id).suggested_response.count
+    example_responses = @requirement.resources(@customization.institution_id).example_response.count
 
     #can only show suggested responses or example responses when one has an item and the other doesn't
     if suggested_responses > 0
