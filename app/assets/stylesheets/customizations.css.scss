@@ -7,15 +7,32 @@ p.cust_label {
 }
 
 p.cust_text {
-  margin: 0 0 15px 20px;
+  margin: 0 0 20px 20px;
+}
+
+p.cust_link {
+  margin: 0 0 15px 0;
 }
 
 h2.cust {
   margin-top: 1.5em;
   font-weight: bold;
+  clear:both;
 }
 
 div.cust_text_full {
   margin: 0 0 15px 20px;
   display: none;
+}
+
+div.editable_resource {
+  clear: left;
+  float: left;
+  width: 560px;
+}
+
+div.edit_icon_right {
+  clear: right;
+  float: left;
+  width: 32px;
 }
