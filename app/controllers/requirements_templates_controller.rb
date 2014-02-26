@@ -1,6 +1,8 @@
 require 'rtf'
 
 class RequirementsTemplatesController < ApplicationController
+
+  before_action :require_login, except: [:basic]
   before_action :set_requirements_template, only: [:show, :edit, :update, :destroy, :toggle_active]
   before_action :check_DMPTemplate_editor_access, only: [:show, :edit, :update, :destroy, :index]
 

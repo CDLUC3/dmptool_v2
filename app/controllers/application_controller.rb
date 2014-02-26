@@ -11,7 +11,15 @@ class ApplicationController < ActionController::Base
 
   	def current_user
     	@current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
-  	end
+    end
+
+    def require_login
+      if session[:user_id].blank?
+        flash[:error] = "You must be logged in to access this page."
+        session[:return_to] = request.original_url
+        redirect_to choose_institution_path and return
+      end
+    end
 
     def safe_has_role?(role)
       #this returns whether a user has a role, but does it safely.  If no user is logged in

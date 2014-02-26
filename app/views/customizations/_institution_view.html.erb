@@ -64,7 +64,7 @@
       <%= link_to 'Add a Resource for the Current Requirement',
                select_resource_path(template_id: @requirements_template.id,
                                     requirement_id: @requirement.id,
-                                    resource_level: (template_cust ? 'Requirement' : 'Requirement - Institution' ),
+                                    resource_level: 'requirement',
                                     customization_overview_id: @customization.id),
                      :method => :post, :class => 'btn btn-green' %>
       </p>

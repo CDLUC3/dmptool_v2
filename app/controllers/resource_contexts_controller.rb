@@ -1,5 +1,7 @@
 class ResourceContextsController < ApplicationController
 
+  before_action :require_login
+
   def index
     resource_customizations
   end
@@ -147,7 +149,6 @@ class ResourceContextsController < ApplicationController
     end
     
     respond_to do |format|
-      #format.html { redirect_to edit_customization_resource_path(id: @resource_id, customization_id: @customization_id) }
       format.html { redirect_to edit_resource_context_path(@customization_id) }
       format.json { head :no_content }
     end
@@ -164,7 +165,7 @@ class ResourceContextsController < ApplicationController
  
 
   def resource_customizations
-    @resource_contexts = ResourceContext.template_level.no_resource_no_requirement.order('name ASC').page(params[:page])
+    @resource_contexts = ResourceContext.template_level.no_resource_no_requirement.page(params[:page])
 
     unless safe_has_role?(Role::DMP_ADMIN)
       @resource_contexts = @resource_contexts.

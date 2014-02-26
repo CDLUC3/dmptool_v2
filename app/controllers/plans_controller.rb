@@ -1,4 +1,6 @@
 class PlansController < ApplicationController
+
+  before_action :require_login, except: [:public]
   before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details]
   before_action :select_requirements_template, only: [:select_dmp_template]
 

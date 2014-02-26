@@ -1,4 +1,6 @@
 class ResourcesController < ApplicationController
+
+  before_action :require_login, only: [:show]
   before_action :set_resource, only: [:show, :edit, :update]
 
   # GET /resources
@@ -230,23 +232,30 @@ class ResourcesController < ApplicationController
     @resource = Resource.find(@resource_id)
     @customization_overview_id = params[:customization_overview_id]
     @customization_overview = ResourceContext.find(@customization_overview_id)
-    @institution_id = nil
+    
+
+    if safe_has_role?(Role::DMP_ADMIN)
+      @current_institution_id = @customization_overview.institution_id
+    else 
+      @current_institution_id = current_user.institution.id
+    end
+
          
     if params[:resource_level] == "requirement"  
 
-      @institution_id = current_user.institution_id
 
-      if requirement_customization_present?(@resource_id, @template_id, @institution_id, @requirement_id)     
+      if requirement_customization_present?(@resource_id, @template_id, @current_institution_id, @requirement_id)     
         respond_to do |format|
-          format.html { redirect_to customization_requirement_path(id: @customization_overview_id, requirement_id:  @requirement_id), 
+          format.html { 
+              redirect_to customization_requirement_path(id: @customization_overview_id, requirement_id:  @requirement_id), 
               anchor: 'tab_tab1', 
-              notice: "The resource you selected is already in your context. resource_level: #{params[:resource_level]}" }
+              notice: "The resource you selected is already in your context." }
         end
         return
       else
      
         @resource_context = ResourceContext.new(resource_id: @resource_id, 
-                                                institution_id: @institution_id, 
+                                                institution_id: @current_institution_id, 
                                                 requirements_template_id: @template_id,
                                                 requirement_id: @requirement_id) 
         respond_to do |format| 
@@ -263,28 +272,20 @@ class ResourcesController < ApplicationController
  
       end #if
 
+
     else #template resource
  
-
-
-      if safe_has_role?(Role::DMP_ADMIN)
-        @institution_id =  ResourceContext.find(@customization_overview_id).institution_id
-      else
-        @institution_id = current_user.institution_id
-      end
-
-      @resource_context = nil
-      if template_customization_present?(@resource_id, @template_id, @institution_id)
+      if template_customization_present?(@resource_id, @template_id, @current_institution_id)
         
               respond_to do |format|
                       format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
                                 notice: "The resource you selected is already in your context. " }
               end
-              #return
+              
       else
      
               @resource_context = ResourceContext.new(resource_id: @resource_id, 
-                                                      institution_id: @institution_id, 
+                                                      institution_id: @current_institution_id, 
                                                       requirements_template_id: @template_id) 
               respond_to do |format| 
                     if @resource_context.save
