@@ -32,7 +32,7 @@
                 <%= plan.owners.first.full_name %>
               </td>
               <td class="nowrap">
-                <%= link_to("PDF icon here", resource_path(plan, format: "pdf")) %>
+                <%= link_to("PDF icon here", plan_path(plan, format: "pdf")) %>
               </td>
             </tr>
           <% end %>
