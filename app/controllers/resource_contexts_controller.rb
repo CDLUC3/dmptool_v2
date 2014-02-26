@@ -215,6 +215,7 @@ class ResourceContextsController < ApplicationController
      
     @resource_contexts = ResourceContext.includes(:resource).
                           per_template(@template).
+                          no_requirement.
                           resource_level.where(institution_id:
                                   (@customization_institution.nil? ? nil : [@customization_institution.subtree_ids]))                                                
   end
@@ -235,7 +236,8 @@ class ResourceContextsController < ApplicationController
 
       @resource_contexts = ResourceContext.joins(:resource).
                               where("resource_id IS NOT NULL").
-                              where(institution_id: @customization.institution).
+                              where(institution_id:
+                                  (@customization.institution.nil? ? nil : [@customization.institution.subtree_ids])).
                               group(:resource_id)
 
       
