@@ -6,6 +6,7 @@ class StaticPagesController < ApplicationController
   
   def home
     @rss = Rails.cache.read('rss')
+    @public_dmps = Plan.public_visibility.order("RAND()")[0..4]
     if @rss.nil?
       begin
         rss_xml = open(APP_CONFIG['rss']).read
