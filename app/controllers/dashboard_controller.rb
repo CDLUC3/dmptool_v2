@@ -1,5 +1,7 @@
 class DashboardController < ApplicationController
-  
+
+  before_action :require_login, only: [:show]
+
   #show the default dashboard with get request
   def show
     if safe_has_role?(Role::INSTITUTIONAL_REVIEWER) || safe_has_role?(Role::DMP_ADMIN) 

@@ -1,5 +1,7 @@
 class CustomizationsController < ApplicationController
 
+  before_action :require_login
+
   # information to display the repetitive tabs
   # name is tab name
   # partial is the partial to display
@@ -11,7 +13,7 @@ class CustomizationsController < ApplicationController
             {name: 'Actionable Links', partial: 'actionable_url_item', scope: :actionable_url, requirement_only: false},
             {name: 'Suggested Response', partial: 'guidance_item', scope: :suggested_response, requirement_only: true},
             {name: 'Example Response', partial: 'guidance_item', scope: :example_response, requirement_only: true }
-          ]  #right now all but links are displayed wiht the guidance partial since they're the same
+          ]  #right now all but links are displayed with the guidance partial since they're the same
 
   def show
     # :id is customization id and :requirement_id

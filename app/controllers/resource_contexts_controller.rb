@@ -1,5 +1,7 @@
 class ResourceContextsController < ApplicationController
 
+  before_action :require_login
+
   def index
     resource_customizations
   end

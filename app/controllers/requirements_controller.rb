@@ -1,4 +1,6 @@
 class RequirementsController < ApplicationController
+
+  before_action :require_login
   before_filter :get_requirements_template
   before_action :set_requirement, only: [:show, :edit, :update, :destroy]
 
