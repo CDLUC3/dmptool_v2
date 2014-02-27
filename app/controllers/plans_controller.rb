@@ -173,6 +173,14 @@ class PlansController < ApplicationController
     if @response.nil?
       @response = Response.new
     end
+
+    ## to be compeleted
+    @next_requirement = @requirements[@requirements.index(@requirement) + 1]
+    if @next_requirement.nil? then
+      @next_requirement_id = 'end'
+    else
+      @next_requirement_id = @next_requirement.id
+    end
   end
 
   def change_visibility
