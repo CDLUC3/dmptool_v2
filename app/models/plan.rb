@@ -2,7 +2,6 @@ class Plan < ActiveRecord::Base
 
   has_many :user_plans
   has_many :users, through: :user_plans
-  has_many :owners, -> { where 'user_plans.owner' => true }, through: :user_plans, source: :user
   has_many :plan_states
   has_many :published_plans
   has_many :comments
@@ -33,5 +32,9 @@ class Plan < ActiveRecord::Base
   def self.letter_range(s, e)
     #add as a scope where s=start and e=end letter
     where("name REGEXP ?", "^[#{s}-#{e}]")
+  end
+  
+  def owner
+    @owner ||= users.where('user_plans.owner' => true).first
   end
 end
