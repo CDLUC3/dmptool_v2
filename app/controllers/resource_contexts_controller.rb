@@ -1,6 +1,8 @@
 class ResourceContextsController < ApplicationController
 
   before_action :require_login
+  before_action :check_customization_editor
+  before_action :check_editor_for_this_customization, only: [:edit, :update]
 
   def index
     resource_customizations
