@@ -2,9 +2,11 @@ class ResourceContextsController < ApplicationController
 
   before_action :require_login
 
+
   def index
     resource_customizations
   end
+
 
   # GET /resource_templates/new
   def new
@@ -53,6 +55,7 @@ class ResourceContextsController < ApplicationController
     make_institution_dropdown_list
   end
 
+
   # GET /resource_templates/edit
   def edit
     @resource_context = ResourceContext.find(params[:id])
@@ -60,6 +63,7 @@ class ResourceContextsController < ApplicationController
     make_institution_dropdown_list
     customization_resources_list
   end
+
 
   def create
     pare_to = ['institution_id', 'requirements_template_id', 'requirement_id', 'resource_id',
@@ -128,7 +132,6 @@ class ResourceContextsController < ApplicationController
     
     elsif params[:unlink_from_customization] && !params[:template_id].nil? && !params[:resource_id].nil?
 
-
       @resource_context = ResourceContext.find(params[:customization_id])
       @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
                                               requirements_template_id: @template_id,
@@ -162,7 +165,6 @@ class ResourceContextsController < ApplicationController
     end
   end
 
- 
 
   def resource_customizations
     @resource_contexts = ResourceContext.template_level.no_resource_no_requirement.page(params[:page])
