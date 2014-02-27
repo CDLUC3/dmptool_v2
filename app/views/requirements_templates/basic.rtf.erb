@@ -95,8 +95,8 @@ def style(par, s)
 	end
 end
 
-style(@doc, 'h1'){|s| s << @rt.name }
-style(@doc, 'h1'){|s| s << @rt.institution.full_name }
+style(@doc, 'h1'){|s| s << strip_tags(@rt.name) }
+style(@doc, 'h1'){|s| s << strip_tags(@rt.institution.full_name) }
 
 #recursive function to output outline levels and questions/detailed
 #create a level in the tree, r is the requirement nodes for this level
@@ -104,12 +104,12 @@ style(@doc, 'h1'){|s| s << @rt.institution.full_name }
 def create_level(nodes, par)
 	nodes.each do |node|
 		if node.group #this is a heading for the group level
-			style(par, "h#{node.depth+2}"){|s| s << node.text_brief }
+			style(par, "h#{node.depth+2}"){|s| s << strip_tags(node.text_brief) }
 		else
-			style(par, "question_brief"){|s| s << node.text_brief }
-			style(par, "question_full"){|s| s << node.text_full }
+			style(par, "question_brief"){|s| s << strip_tags(node.text_brief) }
+			style(par, "question_full"){|s| s << strip_tags(node.text_full) }
 			node.non_customized_resources.guidance.each do |g|
-				style(par, "help"){|s| s << g.value }
+				style(par, "help"){|s| s << strip_tags(g.text) }
 			end
 			style(par, "help"){|s| s << '' } # adds a blank line
 		end
