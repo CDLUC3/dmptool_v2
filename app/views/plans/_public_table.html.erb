@@ -13,7 +13,7 @@
       <tr>
         <td class="plan_name">
           <div class="toggle-links">
-            <%=link_to (content_tag(:strong, plan.name)), :action => 'show', :id => "#{plan.id}" %>
+            <strong><%= plan.name %></strong>
           </div>
         </td>
         <td class="nowrap">
@@ -34,5 +34,6 @@
 </table>
 
 <div class="buttons pagination">
-  <%= link_to "View All", "#", :method => :get, :class => "btn"%>
+  <%= link_to "View All", { :action => "public", :page => "all" }, { :class => "btn", :id => 'view_all_plans' } %>
+  <%= paginate @plans %>
 </div>
