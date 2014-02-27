@@ -185,7 +185,7 @@ class PlansController < ApplicationController
 
   def public
     @plans = Plan.public_visibility
-    if params[:page] == 'all' then
+    if params[:page] != 'all' then
       unless params[:s].blank? || params[:e].blank?
         @plans = @plans.letter_range(params[:s], params[:e])
       end
