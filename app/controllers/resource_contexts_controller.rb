@@ -208,20 +208,22 @@ class ResourceContextsController < ApplicationController
 
     @customization_institution_name = (@customization_institution.nil? ? nil : @customization_institution.full_name)
 
-    
     @template_name = @customization.requirements_template.name
-    
-     
+      
     @resource_contexts = ResourceContext.includes(:resource).
                           per_template(@template).
                           no_requirement.
-                          resource_level.where(institution_id:
+                          help_text_and_url_resources.
+                          resource_level.
+                          where(institution_id:
                                   (@customization_institution.nil? ? nil : [@customization_institution.subtree_ids]))                                                
   end
+
 
   def choose_institution
     make_institution_dropdown_list
   end
+
 
   def select_resource
    
@@ -237,9 +239,7 @@ class ResourceContextsController < ApplicationController
                               where("resource_id IS NOT NULL").
                               where(institution_id:
                                   (@customization.institution.nil? ? nil : [@customization.institution.subtree_ids])).
-                              group(:resource_id)
-
-      
+                              group(:resource_id) 
                               
     else
 
@@ -248,6 +248,10 @@ class ResourceContextsController < ApplicationController
                               where(institution_id: [current_user.institution.subtree_ids]).
                               group(:resource_id)
                                
+    end
+
+    if @resource_level != "requirement"
+      @resource_contexts = @resource_contexts.help_text_and_url_resources
     end
 
     if !params[:q].blank?

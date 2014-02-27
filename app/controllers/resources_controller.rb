@@ -124,7 +124,9 @@ class ResourcesController < ApplicationController
       end
       respond_to do |format|
         #format.html { redirect_to edit_resource_context_path(params[:customization_overview_id]), notice: 'Resource was successfully eliminated.' }
-        format.html { redirect_to edit_resource_context_path(params[:customization_overview_id]), notice: 'Resource was successfully eliminated.' }
+        format.html { 
+          redirect_to edit_resource_context_path(params[:customization_overview_id]), 
+            notice: 'Resource was successfully eliminated.' }
         
         format.json { head :no_content }
       end
