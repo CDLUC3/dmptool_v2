@@ -39,4 +39,23 @@ Dmptool2::Application.configure do
       # ...
     end
   end
+
+  #for email notifications when an exception occurs
+  Dmptool2::Application.config.middleware.use ExceptionNotification::Rack,
+    :email => {
+      :email_prefix => "[Dmptool2 Exception] ",
+      :sender_address => %{"notifier"},
+      :exception_recipients => %w{shirin.faenza@ucop.edu },
+      :sections => %w{request}
+    }
+
+  config.action_mailer.delivery_method = :sendmail
+  # Defaults to:
+  # config.action_mailer.sendmail_settings = {
+  #   :location => '/usr/sbin/sendmail',
+  #   :arguments => '-i -t'
+  # }
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  
 end
