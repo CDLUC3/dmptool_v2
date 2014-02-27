@@ -1,6 +1,7 @@
 class PlansController < ApplicationController
 
-  before_action :require_login, except: [:public]
+  before_action :require_login, except: [:public, :show]
+  #note show will need to be protected from logins in some cases, but only from non-public plan viewing
   before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details]
   before_action :select_requirements_template, only: [:select_dmp_template]
 
@@ -193,7 +194,7 @@ class PlansController < ApplicationController
 
   def public
     @plans = Plan.public_visibility
-    if params[:all].blank? then
+    if params[:page] != 'all' then
       unless params[:s].blank? || params[:e].blank?
         @plans = @plans.letter_range(params[:s], params[:e])
       end

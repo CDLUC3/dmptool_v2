@@ -11,8 +11,15 @@
     <div class="control-group">
       <%= f.label :resource_type, "Resource Type", :class => "control-label" %>
       <div class="controls">
-        <%= f.select :resource_type,
-        		options_for_select([:actionable_url, :help_text, :example_response, :suggested_response], @resource.resource_type) %>
+        
+        <% if  @resource_level=="requirement" %>
+          <%= f.select :resource_type,
+              options_for_select([:actionable_url, :help_text, :example_response, :suggested_response], @resource.resource_type) %>
+        <% else %>
+          <%= f.select :resource_type,
+              options_for_select([:actionable_url, :help_text], @resource.resource_type) %>
+        <% end %>    
+        
       </div>
     </div>
 
