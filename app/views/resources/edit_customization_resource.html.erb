@@ -2,7 +2,11 @@
 
 
 <%= form_for @resource ,
-        url: update_customization_resource_path(customization_id: @customization_id, id: @resource.id, template_id: @template_id),  
+        url: update_customization_resource_path(customization_id: @customization_id, 
+                  id: @resource.id, 
+                  template_id: @template_id, 
+                  resource_level: @resource_level,
+                  requirement_id: @requirement_id),  
         html: { :class => 'form-horizontal' } do |f| %>
 
   <%= render partial: "shared/errors", locals: {model: @resource } %>
