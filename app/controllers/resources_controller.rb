@@ -34,7 +34,7 @@ class ResourcesController < ApplicationController
   def edit_customization_resource
 
     @resource = Resource.find(params[:id])
-
+    @resource_level = params[:resource_level]
     @customization_id = params[:customization_id]
     @template_id = params[:template_id]
 
@@ -69,6 +69,7 @@ class ResourcesController < ApplicationController
   def update_customization_resource
     @resource = Resource.find(params[:id])
     @customization_id = params[:customization_id]
+    @resource_level = params[:resource_level]
     respond_to do |format|
       if @resource.update(resource_params)
         format.html { redirect_to edit_resource_context_path(@customization_id), notice: 'Resource was successfully updated.' }
