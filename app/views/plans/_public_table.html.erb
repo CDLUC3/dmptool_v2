@@ -34,6 +34,6 @@
 </table>
 
 <div class="buttons pagination">
-  <%= link_to "View All", plans_path(:page => "all"), :method => :get, :class => "btn", :id => 'view_all_plans'%>
+  <%= link_to "View All", { :action => "public", :page => "all" }, { :class => "btn", :id => 'view_all_plans' } %>
   <%= paginate @plans %>
 </div>
