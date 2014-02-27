@@ -3,8 +3,10 @@ module PlansHelper
 		plan_id= plan.id
 		unless !Plan.exists?(plan_id)
 			user_id = UserPlan.where(plan_id: plan_id, owner: true).first.user_id
-			owner = User.find(user_id).full_name
-			return owner
+			unless !User.exists?(user_id)
+				owner = User.find(user_id).full_name
+				return owner
+			end
 		end
 	end
 
@@ -40,9 +42,9 @@ module PlansHelper
 
 	def institution_name(plan_id)
 		unless !Plan.exists?(plan_id)
-			requirements_template_id = Plan.where(id: plan_id).pluck(:requirements_template_id)
-			institution_id = RequirementsTemplate.includes(:institution).where(id: requirements_template_id)
-			institution_name = Institution.find(institution_id).full_name
+			requirements_template_id = Plan.find(plan_id).requirements_template_id
+			institution_id = RequirementsTemplate.includes(:institution).where(id: requirements_template_id).pluck(:institution_id)
+			institution_name = Institution.where(id: institution_id).select(:full_name)
 		end
 	end
 end

@@ -18,6 +18,10 @@ class ResourceContext < ActiveRecord::Base
     where(conditions, *items.map{|item| "%#{item}%" })
   end
 
+  def self.help_text_and_url_resources
+    joins(:resource).where("resources.resource_type IN (?)", ["actionable_url","help_text"])
+  end
+
   def self.order_by_template_name
     joins(:requirements_template).order('requirements_templates.name ASC')
   end

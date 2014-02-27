@@ -80,6 +80,12 @@
               <fieldset id = "reviewer_comments">
                 <legend>Comments<%= link_to raw('<i class="icon-chevron-up pull-right"></i>'), '#', id: 'hide_reviewer_comments' %></legend>
                 <%= render partial: 'comments/index_reviewer_comments' %>
+                <div class="control-group">
+                  <label class ="control-label"> Comments: </label>
+                  <div class="controls">
+                    <p><%= link_to "Add Comments", '#', remote: true, id: 'add_comments_link' %></p>
+                  </div>
+                </div>
               </fieldset>
             </div>
           </div>
@@ -130,7 +136,9 @@
         <div class="buttons">
           <%= f.submit 'Save Changes', :class => 'btn btn-success pull-left', method: 'post' %>
           <%= button_tag 'Cancel', type: :reset, :class => 'btn btn-success'%>
-          <%= link_to 'Plan Details >>', details_plan_path(@plan), method: 'get', :class => 'btn btn-green pull-right' %>
+          <% unless @plan.new_record? %>
+            <%= link_to 'Plan Details >>', details_plan_path(@plan), method: 'get', :class => 'btn btn-green pull-right' %>
+          <% end %>
         </div>
         <%= render partial: 'change_visibility', locals: {:plan_id => params[:id]} %>
         <%= render partial: 'comments/form', locals: {:plan_id => params[:id]} %>

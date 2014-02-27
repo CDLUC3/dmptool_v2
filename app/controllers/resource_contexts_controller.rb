@@ -4,9 +4,11 @@ class ResourceContextsController < ApplicationController
   before_action :check_customization_editor
   before_action :check_editor_for_this_customization, only: [:edit, :update]
 
+
   def index
     resource_customizations
   end
+
 
   # GET /resource_templates/new
   def new
@@ -55,6 +57,7 @@ class ResourceContextsController < ApplicationController
     make_institution_dropdown_list
   end
 
+
   # GET /resource_templates/edit
   def edit
     @resource_context = ResourceContext.find(params[:id])
@@ -62,6 +65,7 @@ class ResourceContextsController < ApplicationController
     make_institution_dropdown_list
     customization_resources_list
   end
+
 
   def create
     pare_to = ['institution_id', 'requirements_template_id', 'requirement_id', 'resource_id',
@@ -130,7 +134,6 @@ class ResourceContextsController < ApplicationController
     
     elsif params[:unlink_from_customization] && !params[:template_id].nil? && !params[:resource_id].nil?
 
-
       @resource_context = ResourceContext.find(params[:customization_id])
       @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
                                               requirements_template_id: @template_id,
@@ -164,7 +167,6 @@ class ResourceContextsController < ApplicationController
     end
   end
 
- 
 
   def resource_customizations
     @resource_contexts = ResourceContext.template_level.no_resource_no_requirement.page(params[:page])
@@ -212,20 +214,22 @@ class ResourceContextsController < ApplicationController
 
     @customization_institution_name = (@customization_institution.nil? ? nil : @customization_institution.full_name)
 
-    
     @template_name = @customization.requirements_template.name
-    
-     
+      
     @resource_contexts = ResourceContext.includes(:resource).
                           per_template(@template).
                           no_requirement.
-                          resource_level.where(institution_id:
+                          help_text_and_url_resources.
+                          resource_level.
+                          where(institution_id:
                                   (@customization_institution.nil? ? nil : [@customization_institution.subtree_ids]))                                                
   end
+
 
   def choose_institution
     make_institution_dropdown_list
   end
+
 
   def select_resource
    
@@ -241,9 +245,7 @@ class ResourceContextsController < ApplicationController
                               where("resource_id IS NOT NULL").
                               where(institution_id:
                                   (@customization.institution.nil? ? nil : [@customization.institution.subtree_ids])).
-                              group(:resource_id)
-
-      
+                              group(:resource_id) 
                               
     else
 
@@ -252,6 +254,10 @@ class ResourceContextsController < ApplicationController
                               where(institution_id: [current_user.institution.subtree_ids]).
                               group(:resource_id)
                                
+    end
+
+    if @resource_level != "requirement"
+      @resource_contexts = @resource_contexts.help_text_and_url_resources
     end
 
     if !params[:q].blank?
