@@ -176,10 +176,11 @@ class PlansController < ApplicationController
   end
 
   def change_visibility
-    id = params[:plan_id][:value] unless params[:plan_id][:value].blank?
+    id = params[:plan_id].to_i unless params[:plan_id].blank?
     plan = Plan.find(id)
-    plan.visibility = params[:plan_id][:visibility]
+    plan.visibility = params[:visibility]
     plan.save!
+    redirect_to edit_plan_path(plan)
   end
 
   def public
@@ -191,7 +192,7 @@ class PlansController < ApplicationController
       unless params[:q].blank? then
         terms = params[:q].split.map {|t| "%#{t}%"}
         @plans = @plans.joins(:institution).joins(:users).where.
-          any_of(["plans.name LIKE ?", terms], 
+          any_of(["plans.name LIKE ?", terms],
                  ["institutions.full_name LIKE ?", terms],
                  ["users.last_name LIKE ? OR users.first_name LIKE ?", terms, terms])
       end

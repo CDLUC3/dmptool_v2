@@ -43,8 +43,9 @@ module PlansHelper
 	def institution_name(plan_id)
 		unless !Plan.exists?(plan_id)
 			requirements_template_id = Plan.find(plan_id).requirements_template_id
-			institution_id = RequirementsTemplate.includes(:institution).where(id: requirements_template_id).pluck(:institution_id)
-			institution_name = Institution.where(id: institution_id).select(:full_name)
+			institution_id = RequirementsTemplate.includes(:institution).find(requirements_template_id).institution_id
+			institution_name = Institution.find(institution_id).full_name
+			return institution_name
 		end
 	end
 end

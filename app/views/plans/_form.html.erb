@@ -106,30 +106,30 @@
               </fieldset>
             </div>
           </div>
-        <hr/>
+          <hr/>
 
-        <div class="control-group">
-          <label class ="control-label"> Visibility: </label>
-          <div class="controls">
-            <p> This DMP is <span style="color:blue;"><strong><%=@plan.visibility.capitalize %></strong></span><br/>
-            <%= link_to "Change Settings", '#', remote: true, :class => 'change_visibility_link' %></p>
-          </div>
-        </div>
-
-        <hr/>
-
-        <div class="control-group">
-          <label class ="control-label"> Available Actions: </label>
+          <div class="control-group">
+            <label class ="control-label"> Visibility: </label>
             <div class="controls">
-            <p><%= link_to "Preview DMP", preview_path %> |
-              <% if (@requirements_template.review_type == :formal_review) || (@requirements_template.review_type == :informal_review) %>
-                <%= link_to "Submit DMP", preview_path %> |
-              <% end %>
-              <%= link_to "Deactivate DMP", "#" %> |
-              <%= link_to "Delete DMP",@plan, method: :delete,  style: 'color:red;', data: { confirm: 'Are you sure?', :id => 'delete_template' }%>
-            </p>
+              <p> This DMP is <span style="color:blue;"><strong><%=@plan.visibility.capitalize %></strong></span><br/>
+              <%= link_to "Change Settings", '#', remote: true, :class => 'change_visibility_link' %></p>
+            </div>
           </div>
-        </div>
+
+          <hr/>
+
+          <div class="control-group">
+            <label class ="control-label"> Available Actions: </label>
+              <div class="controls">
+              <p><%= link_to "Preview DMP", preview_path %> |
+                <% if (@requirements_template.review_type == :formal_review) || (@requirements_template.review_type == :informal_review) %>
+                  <%= link_to "Submit DMP", preview_path %> |
+                <% end %>
+                <%= link_to "Deactivate DMP", "#" %> |
+                <%= link_to "Delete DMP",@plan, method: :delete,  style: 'color:red;', data: { confirm: 'Are you sure?', :id => 'delete_template' }%>
+              </p>
+            </div>
+          </div>
 
         <% end %>
 
@@ -140,12 +140,12 @@
             <%= link_to 'Plan Details >>', details_plan_path(@plan), method: 'get', :class => 'btn btn-green pull-right' %>
           <% end %>
         </div>
-        <%= render partial: 'change_visibility', locals: {:plan_id => params[:id]} %>
-        <%= render partial: 'comments/form', locals: {:plan_id => params[:id]} %>
       <% end %>
     </div>
   </div>
 </div>
+        <%= render partial: 'change_visibility', locals: {:plan_id => params[:id]} %>
+        <%= render partial: 'comments/form', locals: {:plan_id => params[:id]} %>
 <script>
 		jQuery(document).requiredField();
 </script>
