@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+
+  before_action :require_login, except: [:create, :finish_signup, :finish_signup_update]
+
   include InstitutionsHelper
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
