@@ -38,7 +38,8 @@ class ApplicationController < ActionController::Base
       if cust.nil? || !level['Container'] #this isn't a container customization
         redirect_to resource_contexts_path, :notice => "You've selected an incorrect customization" and return
       end
-      if current_user.institution_id != cust.institution_id && !current_user.has_role?(Role::DMP_ADMIN)
+      # the user doesn't have permissions on this institution and isn't a DMP admin
+      if !current_user.institution.subtree_ids.include?(cust.institution_id) && !current_user.has_role?(Role::DMP_ADMIN)
         redirect_to dashboard_path, :notice => 'You do not have permission to view this page.' and return
       end
     end
