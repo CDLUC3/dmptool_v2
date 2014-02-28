@@ -49,3 +49,4 @@ gem 'ifad-rtf', :git => 'https://github.com/clbustos/rtf.git'
 gem "recaptcha", :require => "recaptcha/rails"
 gem 'activerecord_any_of'
 gem 'prawn'
+gem 'exception_notification'

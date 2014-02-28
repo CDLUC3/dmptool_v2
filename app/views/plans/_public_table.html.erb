@@ -1,45 +1,39 @@
-<%
- # This partial takes locals variables for guidance collection called "templates"
-  # it also takes a variable called public with values true or false since
-  # the layout differs for public items from the institution-only guidance
-%>
-
 <table class="table table-striped">
-	<thead>
-		<tr>
-			<th class="span5">Plan Title</th>
-			<th>Funder Template</th>
-			<th>Institution</th>
-			<th>Owner</th>
-			<th>Download</th>
-		</tr>
-	</thead>
-	<tbody>
-          <% @plans.each do |plan| %>
-            <tr>
-              <td class="plan_name">
-                <div class="toggle-links">
-                  <%=link_to (content_tag(:strong, plan.name)), :action => 'show', :id => "#{plan.id}" %>
-                </div>
-              </td>
-              <td class="nowrap">
-                <%= (plan.requirements_template && plan.requirements_template.name) || 'seriously, more junk data?' %>
-              </td>
-              <td class="nowrap">
-                <%= plan.owners.first.institution.name %>
-              </td>
-              <td class="nowrap">
-                <%= plan.owners.first.full_name %>
-              </td>
-              <td class="nowrap">
-                <%= link_to("PDF icon here", plan_path(plan, format: "pdf")) %>
-              </td>
-            </tr>
-          <% end %>
-	</tbody>
+  <thead>
+    <tr>
+      <th class="span5">Plan Title</th>
+      <th>Funder Template</th>
+      <th>Institution</th>
+      <th>Owner</th>
+      <th>Download</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @plans.each do |plan| %>
+      <tr>
+        <td class="plan_name">
+          <div class="toggle-links">
+            <strong><%= plan.name %></strong>
+          </div>
+        </td>
+        <td class="nowrap">
+          <%= (plan.requirements_template && plan.requirements_template.name) || 'seriously, more junk data?' %>
+        </td>
+        <td class="nowrap">
+          <%= plan.owner.institution.name %>
+        </td>
+        <td class="nowrap">
+          <%= plan.owner.full_name %>
+        </td>
+        <td class="nowrap">
+          <%= link_to("PDF icon here", plan_path(plan, format: "pdf")) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
+
 <div class="buttons pagination">
-	<%= link_to "View All", "#", :method => :get, :class => "btn"%>
+  <%= link_to "View All", { :action => "public", :page => "all" }, { :class => "btn", :id => 'view_all_plans' } %>
+  <%= paginate @plans %>
 </div>
-
-

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140221005131) do
+ActiveRecord::Schema.define(version: 20140228221118) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -137,7 +137,7 @@ ActiveRecord::Schema.define(version: 20140221005131) do
   end
 
   create_table "requirements", force: true do |t|
-    t.integer  "order"
+    t.integer  "position"
     t.string   "text_brief"
     t.text     "text_full"
     t.enum     "requirement_type",         limit: [:text, :numeric, :date, :enum]

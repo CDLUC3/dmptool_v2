@@ -34,9 +34,10 @@ class ResourcesController < ApplicationController
   def edit_customization_resource
 
     @resource = Resource.find(params[:id])
-
+    @resource_level = params[:resource_level]
     @customization_id = params[:customization_id]
     @template_id = params[:template_id]
+    @requirement_id = params[:requirement_id]
 
     @resource_templates_id = ResourceContext.where(resource_id: @resource.id).pluck(:requirements_template_id)
 
@@ -67,17 +68,42 @@ class ResourcesController < ApplicationController
   end
 
   def update_customization_resource
+    
     @resource = Resource.find(params[:id])
     @customization_id = params[:customization_id]
-    respond_to do |format|
-      if @resource.update(resource_params)
-        format.html { redirect_to edit_resource_context_path(@customization_id), notice: 'Resource was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { redirect_to edit_resource_context_path(@customization_id), notice: "A problem prevented this resource to be created. " }
-        format.json { render json: @resource.errors, status: :unprocessable_entity }
+    @resource_level = params[:resource_level]
+    @requirement_id = params[:requirement_id]
+
+    if @resource_level == 'requirement' #customization details
+
+      respond_to do |format|
+        if @resource.update(resource_params)
+          
+          format.html { redirect_to customization_requirement_path(id: @customization_id, 
+                        requirement_id:  @requirement_id),
+                        notice: 'Resource was successfully updated.' }
+        else
+          format.html { redirect_to customization_requirement_path(id: @customization_id, 
+                        requirement_id:  @requirement_id), 
+                        notice: "A problem prevented this resource to be created. " }
+          format.json { render json: @resource.errors, status: :unprocessable_entity }
+        end
+      end
+
+    else #customization overview
+
+      respond_to do |format|
+        if @resource.update(resource_params)        
+          format.html { redirect_to edit_resource_context_path(@customization_id),
+                        notice: 'Resource was successfully updated.' }
+        else
+          format.html { redirect_to edit_resource_context_path(@customization_id), 
+                          notice: "A problem prevented this resource to be created. " }
+          format.json { render json: @resource.errors, status: :unprocessable_entity }
+        end
       end
     end
+
   end
 
   
@@ -126,7 +152,9 @@ class ResourcesController < ApplicationController
       end
       respond_to do |format|
         #format.html { redirect_to edit_resource_context_path(params[:customization_overview_id]), notice: 'Resource was successfully eliminated.' }
-        format.html { redirect_to edit_resource_context_path(params[:customization_overview_id]), notice: 'Resource was successfully eliminated.' }
+        format.html { 
+          redirect_to edit_resource_context_path(params[:customization_overview_id]), 
+            notice: 'Resource was successfully eliminated.' }
         
         format.json { head :no_content }
       end
@@ -175,31 +203,30 @@ class ResourcesController < ApplicationController
     case params[:resource_level]
       
       when "requirement"
+    
+        @resource = Resource.new(resource_params)
 
-     
-          @resource = Resource.new(resource_params)
- 
-          respond_to do |format|
-            if @resource.save 
-              @resource_id = @resource.id
-              @resource_context = ResourceContext.new(resource_id: @resource_id, 
-                                        institution_id: @current_institution_id, 
-                                        requirements_template_id: @template_id,
-                                        requirement_id:  @requirement_id)
-              if @resource_context.save
-                format.html { 
-                  redirect_to customization_requirement_path(id: @customization_overview_id, 
-                        requirement_id:  @requirement_id), 
-                        notice: "Resource was successfully created." }
-              end
-               
-            else
+        respond_to do |format|
+          if @resource.save 
+            @resource_id = @resource.id
+            @resource_context = ResourceContext.new(resource_id: @resource_id, 
+                                      institution_id: @current_institution_id, 
+                                      requirements_template_id: @template_id,
+                                      requirement_id:  @requirement_id)
+            if @resource_context.save
               format.html { 
                 redirect_to customization_requirement_path(id: @customization_overview_id, 
-                        requirement_id:  @requirement_id), 
-                        notice: "A problem prevented this resource to be created. " }
+                      requirement_id:  @requirement_id), 
+                      notice: "Resource was successfully created." }
             end
+             
+          else
+            format.html { 
+              redirect_to customization_requirement_path(id: @customization_overview_id, 
+                      requirement_id:  @requirement_id), 
+                      notice: "A problem prevented this resource to be created. " }
           end
+        end
 
       else #customization resource
           
@@ -224,25 +251,21 @@ class ResourcesController < ApplicationController
 
   def copy_selected_customization_resource
 
-
     @requirement_id = params[:requirement_id]
     @resource_level = params[:resource_level]
     @resource_id = params[:resource]
     @template_id = params[:template_id]
     @resource = Resource.find(@resource_id)
     @customization_overview_id = params[:customization_overview_id]
-    @customization_overview = ResourceContext.find(@customization_overview_id)
-    
+    @customization_overview = ResourceContext.find(@customization_overview_id)  
 
     if safe_has_role?(Role::DMP_ADMIN)
       @current_institution_id = @customization_overview.institution_id
     else 
       @current_institution_id = current_user.institution.id
     end
-
          
     if params[:resource_level] == "requirement"  
-
 
       if requirement_customization_present?(@resource_id, @template_id, @current_institution_id, @requirement_id)     
         respond_to do |format|

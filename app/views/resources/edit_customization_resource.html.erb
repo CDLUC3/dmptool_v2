@@ -2,7 +2,11 @@
 
 
 <%= form_for @resource ,
-        url: update_customization_resource_path(customization_id: @customization_id, id: @resource.id, template_id: @template_id),  
+        url: update_customization_resource_path(customization_id: @customization_id, 
+                  id: @resource.id, 
+                  template_id: @template_id, 
+                  resource_level: @resource_level,
+                  requirement_id: @requirement_id),  
         html: { :class => 'form-horizontal' } do |f| %>
 
   <%= render partial: "shared/errors", locals: {model: @resource } %>
@@ -11,8 +15,15 @@
     <div class="control-group">
       <%= f.label :resource_type, "Resource Type", :class => "control-label" %>
       <div class="controls">
-        <%= f.select :resource_type,
-        		options_for_select([:actionable_url, :help_text, :example_response, :suggested_response], @resource.resource_type) %>
+        
+        <% if  @resource_level=="requirement" %>
+          <%= f.select :resource_type,
+              options_for_select([:actionable_url, :help_text, :example_response, :suggested_response], @resource.resource_type) %>
+        <% else %>
+          <%= f.select :resource_type,
+              options_for_select([:actionable_url, :help_text], @resource.resource_type) %>
+        <% end %>    
+        
       </div>
     </div>
 

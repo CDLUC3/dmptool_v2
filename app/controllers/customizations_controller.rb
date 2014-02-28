@@ -1,6 +1,8 @@
 class CustomizationsController < ApplicationController
 
   before_action :require_login
+  before_action :check_customization_editor, only: [:show]
+  before_action :check_editor_for_this_customization, only: [:show]
 
   # information to display the repetitive tabs
   # name is tab name

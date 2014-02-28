@@ -1,6 +1,7 @@
 class PlansController < ApplicationController
 
-  before_action :require_login, except: [:public]
+  before_action :require_login, except: [:public, :show]
+  #note show will need to be protected from logins in some cases, but only from non-public plan viewing
   before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details]
   before_action :select_requirements_template, only: [:select_dmp_template]
 
@@ -173,25 +174,34 @@ class PlansController < ApplicationController
     if @response.nil?
       @response = Response.new
     end
+
+    ## to be compeleted
+    @next_requirement = @requirements[@requirements.index(@requirement) + 1]
+    if @next_requirement.nil? then
+      @next_requirement_id = 'end'
+    else
+      @next_requirement_id = @next_requirement.id
+    end
   end
 
   def change_visibility
-    id = params[:plan_id][:value] unless params[:plan_id][:value].blank?
+    id = params[:plan_id].to_i unless params[:plan_id].blank?
     plan = Plan.find(id)
-    plan.visibility = params[:plan_id][:visibility]
+    plan.visibility = params[:visibility]
     plan.save!
+    redirect_to edit_plan_path(plan)
   end
 
   def public
     @plans = Plan.public_visibility
-    if params[:all].blank? then
+    if params[:page] != 'all' then
       unless params[:s].blank? || params[:e].blank?
         @plans = @plans.letter_range(params[:s], params[:e])
       end
       unless params[:q].blank? then
         terms = params[:q].split.map {|t| "%#{t}%"}
         @plans = @plans.joins(:institution).joins(:users).where.
-          any_of(["plans.name LIKE ?", terms], 
+          any_of(["plans.name LIKE ?", terms],
                  ["institutions.full_name LIKE ?", terms],
                  ["users.last_name LIKE ? OR users.first_name LIKE ?", terms, terms])
       end

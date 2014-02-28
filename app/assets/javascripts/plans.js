@@ -13,7 +13,7 @@ $(function() {
 
 $(function() {
 	$('#comment_dialog_form').hide();
-	$('#add_comments_link').click(function(event) {
+	$('.add_comments_link').click(function(event) {
 		event.preventDefault();
 		$('#comment_dialog_form').dialog( {
 			width: 600,
