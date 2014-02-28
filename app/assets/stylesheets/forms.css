@@ -154,7 +154,6 @@ input[type=text].filled, input[type=password].filled, input[type=email].filled, 
 	border-radius: 0;
 	-moz-border-radius: 0;
 	-webkit-border-radius: 0;
-	-ms-border-radius: 0;
 	margin: 0;
 	padding: 8px 10px 5px; }
 .alert p {

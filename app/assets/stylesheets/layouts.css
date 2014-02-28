@@ -6,7 +6,6 @@
 .row-fluid {
 	-moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
   box-sizing: border-box;
   width: auto;
 	padding: 0; }
@@ -27,7 +26,7 @@
 	
 /* Header */
 .header {
-	background: url(header_bg.jpg) no-repeat 0 0 #85A541;
+	background: url(header_bg.jpg) no-repeat 0 0 #86A641;
 	color: #FFFFFF;
 	height: 117px;
 	z-index: 100; }
@@ -56,7 +55,7 @@
 	
 /* Header Navigation */
 .header .navbar {
-	background: url(header_nav_bg.jpg) repeat-x 0 0 #85A541;
+	background: url(header_nav_bg.jpg) repeat-x 0 0 transparent;
 	width: 100%;
 	height: 45px;
 	margin: 0;
@@ -65,7 +64,6 @@
 .header ul.nav {
 	-moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
   box-sizing: border-box;
   font-size: 1.167em;
 	width: 100%;
@@ -116,7 +114,6 @@
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.176);
 	-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.176);
 	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.176);
-	-ms-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.176);
 	border: 1px solid #B6B6B7;
 	border-top: none;
 	background: #FFFFFF;
@@ -243,8 +240,10 @@
 	 padding: 17px 0; }
 .dashboard-nav ul.nav > li > a:first-child {
 	padding-left: 0; }
-.dashboard-nav ul.nav > li.current > a, .dashboard-nav ul.nav > li.current-parent > a, 
 .dashboard-nav ul.nav > li > a:hover, .dashboard-nav ul.nav > li > a:focus, .dashboard-nav ul.nav > li > a:active {
+	background: none;
+	color: #6D6E71; }
+.dashboard-nav ul.nav > li.current > a, .dashboard-nav ul.nav > li.current-parent > a {
 	background: #E9E9EA;
 	color: #516935;
 	text-decoration: none; }

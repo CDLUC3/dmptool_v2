@@ -55,7 +55,6 @@ th, td {
 	clear: both;
 	-moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
   box-sizing: border-box;
 	border: 1px solid #B6B6B7;
 	border-bottom: none;
