@@ -40,6 +40,5 @@ Dmptool2::Application.configure do
     end
   end
 
-  
 
 end
