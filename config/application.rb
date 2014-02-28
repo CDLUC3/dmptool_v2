@@ -31,5 +31,9 @@ module Dmptool2
     config.autoload_paths += %W(#{config.root}/lib)
     config.assets.compile = true
     config.assets.debug = false
+
+    config.exceptions_app = self.routes
+
+    
   end
 end

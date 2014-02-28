@@ -1,5 +1,10 @@
 Dmptool2::Application.routes.draw do
 
+  match '/500', :to => 'errors#internal_error', :via => :all 
+  match '/404', :to => 'errors#not_found', :via => :all 
+  match '/403', :to => 'errors#forbidden', :via => :all 
+
+
   get "dashboard/show"
   root 'static_pages#home'
   get 'about', to: 'static_pages#about'
