@@ -10,12 +10,16 @@
   <div class="control-group">
   		<%= f.cktext_area :value, placeholder: 'response', :class => "input-block-level" %>
   </div>
-    <%= f.submit "Save and Next", name: 'save_and_next', :class => 'btn btn-success pull-right', method: 'post' %>
-    <%= f.submit "Save Response", name: 'save_only', :class => 'btn btn-success pull-right', method: 'post' %>
+    <%= f.submit "Save and Next", name: 'save_and_next', :class => 'btn btn-success pull-right', method: 'post', id: 'save_and_next' %>
+    <%= f.submit "Save Response", name: 'save_only', :class => 'btn btn-success pull-right', method: 'post', id: 'save_only', remote: true %>
     <%= link_to "Cancel Changes", type: :reset, :class => 'btn pull-left', id: "cancel_action" %>
   </div>
 <% end %>
 
+<div id="alert_message" title="Please Enter a Valid Response.">
+  You must enter a valid Response before saving.
+</div>
+
 <script>
-		jQuery(document).requiredField();
+	jQuery(document).requiredField();
 </script>

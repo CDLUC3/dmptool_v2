@@ -71,7 +71,7 @@ class RequirementsTemplate < ActiveRecord::Base
 
   # returns the first requirement that isn't a container in the list, depth first recursive search
   def first_question
-    requirements = self.requirements.roots.order(:order)
+    requirements = self.requirements.roots.order(:position)
     find_question_node(requirements)
   end
 
@@ -82,7 +82,7 @@ class RequirementsTemplate < ActiveRecord::Base
   def find_question_node(reqs)
     reqs.each do |r|
       if r.is_group?
-        children = r.children.order(:order)
+        children = r.children.order(:position)
         return find_question_node(children) unless children.nil? || children.length < 1
       else
         return r

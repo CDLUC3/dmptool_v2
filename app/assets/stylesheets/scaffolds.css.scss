@@ -14,7 +14,7 @@ body {
 h1, h2, h3 {
 	font-weight: normal; }
 h1 {
-	color: #85A541;
+	color: #86A641;
 	font-size: 2em;
 	line-height: normal; }
 h1.row-fluid  {
@@ -83,14 +83,17 @@ hr {
 small {
 	font-size: 0.929em; }
 a {
-  color: #72942E;
+  color: #516935;
   outline: none !important;
   &:visited {
-    color: #72942E; }
+    color: #516935; }
   &:hover {
     color: #516935; }
   &:active {
-  	color: #72942E; } }
+  	color: #516935; } }
 
 .red {
 	color: #DA0049; }
+.green {
+	
+}

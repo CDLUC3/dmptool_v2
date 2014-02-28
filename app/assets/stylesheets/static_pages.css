@@ -16,7 +16,7 @@
 	padding: 0;
 	position: relative; }
 .banner h1 {
-	color: #FFFFFF;
+	color: #FFF;
 	font-size: 4em;
 	font-weight: lighter;
 	margin: 0;
@@ -24,7 +24,7 @@
 	top: 60px;
 	left: 35px; }
 .banner p {
-	color: #FFFFFF;
+	color: #FFF;
 	font-size: 2em;
 	font-weight: lighter;
 	line-height: 1.25;
@@ -82,13 +82,12 @@
 .buckets ul {
 	margin: 0; }
 .buckets li {
-	color: #72942E; }
+	color: #516935; }
 .buckets .dmp_tool_news .scrollbox {
 	border: 1px solid #B6B6B7;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
-	-ms-border-radius: 4px;
 	overflow: hidden; }
 .buckets ul li:before {
 	content: "\00BB\0020"; }
