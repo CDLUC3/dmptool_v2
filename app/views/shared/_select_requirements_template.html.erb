@@ -32,7 +32,7 @@
             <li>
               <div class="option_area">
                 <%= radio_button_tag(:requirements_template_id, k.id, false, :class => 'req_chooser') %>
-                <i class="icon-file"></i>
+                <span class="icon-file"></i>
               </div>
               <div class="label_area">
                 <%= label_tag("requirements_template_id_#{k.id}", k.name) %>
@@ -41,10 +41,8 @@
           <% else %>
             <li>
               <div class="option_area">
-                <a href="#" class="accordioner" id="inst_opener1_<%= k.id %>">
-                  <i class="icon-chevron-right" id="inst_chevron_<%= k.id %>"></i>
-                </a>
-                <i class="icon-folder-close" id="<%= "inst_folder_#{k.id}" %>"></i>
+                <%= link_to(content_tag(:span, "", :class => "icon-chevron-right", :id => "inst_chevron_#{k.id}"), "#", :class => "accordioner", :id => "inst_opener1_#{k.id}") %>
+                <span class="icon-folder-close" id="<%= "inst_folder_#{k.id}" %>"></i>
               </div>
               <div class="label_area folder_label">
                 <%= link_to(k.name, '#', :id => "inst_opener2_#{k.id}", :class => 'accordioner') %>
@@ -55,7 +53,7 @@
                   <li>
                     <div class="option_area">
                       <%= radio_button_tag(:requirements_template_id, i.id, false, :class => 'req_chooser') %>
-                      <i class="icon-file"></i>
+                      <span class="icon-file"></span>
                     </div>
                     <div class="label_area">
                       <%= label_tag("requirements_template_id_#{i.id}", i.name) %>

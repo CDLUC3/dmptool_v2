@@ -10,7 +10,7 @@ def print_responses(pdf, requirement, heading)
                         {:text=> " #{requirement.text_brief.to_s}", :styles=>[:bold]}])
     if requirement.children.size > 0 then
       pdf.indent(12) do
-        requirement.children.order(:order).each_with_index do |child, i|
+        requirement.children.order(:position).each_with_index do |child, i|
           print_responses(pdf, child, "#{heading}.#{i+1}")
         end
       end
@@ -42,7 +42,7 @@ pdf = Prawn::Document.new(:bottom_margin=>72) do |pdf|
   pdf.stroke_horizontal_rule
   pdf.move_down 10
 
-  @plan.requirements_template.requirements.order(:order).roots.each_with_index do |req, i|
+  @plan.requirements_template.requirements.order(:position).roots.each_with_index do |req, i|
     print_responses(pdf, req, (i + 1).to_s)
   end
 
