@@ -1,31 +1,26 @@
 <% # this partial should take a local of requirements for it's level in the tree  %>
-<table class="completed">
-  <% requirements.each do |requirement| %>
-  <tr>
-    <td style="padding-top: 8px;">
-        <%= image_tag("checked.png") %>
-    </td>
-    <td>
-      <% if requirement.is_group? %>
-        <li class="li_folder" id="requirement_<%= requirement.id %>">
-          <i class="icon requirements-group-open larger"></i>
-          <%= requirement.text_brief %>
-          <ul>
-            <%= render partial: 'shared/requirements_tree', locals: {requirements: requirement.children} %>
-          </ul>
-        </li>
-      <% else %>
-        <li class="li_requirement<%= (requirement.id.to_s == params[:requirement_id] ? ' current' : '') %>" id="requirement_<%= requirement.id %>">
-          <i class="icon requirement"></i>
-          <% if requirement.id.to_s == params[:requirement_id] %>
-            <%= requirement.text_brief %>
-          <% else %>
-            <%= link_to requirement.text_brief,
-                        details_plan_path(@plan, requirement_id: requirement.id, node_type: 'requirement') %>
-          <% end %>
-        </li>
+<% requirements.each do |requirement| %>
+  <% if requirement.is_group? %>
+    <li class="li_folder" id="requirement_<%= requirement.id %>">
+      <i class="icon requirements-group-open larger"></i>
+      <%= requirement.text_brief %>
+      <ul>
+        <%= render partial: 'shared/requirements_tree', locals: {requirements: requirement.children} %>
+      </ul>
+    </li>
+  <% else %>
+    <li class="li_requirement<%= (requirement.id.to_s == params[:requirement_id] ? ' current' : '') %>" id="requirement_<%= requirement.id %>">
+      <% unless requirement.response.nil? %>
+        <%= image_tag("checked.png", id: 'complete_icon') %>
       <% end %>
-    </td>
-  </tr>
+      <i class="icon requirement"></i>
+      <% if requirement.id.to_s == params[:requirement_id] %>
+        <%= requirement.text_brief %>
+      <% else %>
+        <%= link_to requirement.text_brief,
+                    details_plan_path(@plan, requirement_id: requirement.id, node_type: 'requirement'),
+                    {class: 'requirement_direct_link'} %>
+      <% end %>
+    </li>
   <% end %>
-</table>
+<% end %>

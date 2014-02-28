@@ -21,18 +21,18 @@ class ResponsesController < ApplicationController
   	@response = Response.new(response_params)
     @requirement_id = response_params[:requirement_id]
     @next_requirement_id = params[:next_requirement_id]
-    if params[:save_and_next] || !params[:save_only]
-      if @response.save
-        plan_id = @response.plan_id
-        @plan = Plan.find(plan_id)
-        format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id), notice: 'Response was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @response }
+    respond_to do |format|
+      if params[:save_and_next] || !params[:save_only]
+        if @response.save
+          plan_id = @response.plan_id
+          @plan = Plan.find(plan_id)
+          format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id), notice: 'Response was successfully created.' }
+          format.json { render action: 'show', status: :created, location: @response }
+        else
+          format.html { render 'new', notice: 'Problem in creating the Response.' }
+          format.json { render json: @response.errors, status: :unprocessable_entity }
+        end
       else
-        format.html { render 'new', notice: 'Problem in creating the Response.' }
-        format.json { render json: @response.errors, status: :unprocessable_entity }
-      end
-    else
-      respond_to do |format|
         if @response.save
           plan_id = @response.plan_id
           @plan = Plan.find(plan_id)
