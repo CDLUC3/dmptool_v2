@@ -50,4 +50,3 @@ gem "recaptcha", :require => "recaptcha/rails"
 gem 'activerecord_any_of'
 gem 'prawn'
 gem 'exception_notification'
-gem 'acts_as_list'

@@ -20,10 +20,10 @@
           <%= (plan.requirements_template && plan.requirements_template.name) || 'seriously, more junk data?' %>
         </td>
         <td class="nowrap">
-          <%= plan.owners.first.institution.name %>
+          <%= plan.owner.institution.name %>
         </td>
         <td class="nowrap">
-          <%= plan.owners.first.full_name %>
+          <%= plan.owner.full_name %>
         </td>
         <td class="nowrap">
           <%= link_to("PDF icon here", plan_path(plan, format: "pdf")) %>
