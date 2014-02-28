@@ -2,7 +2,7 @@ class Requirement < ActiveRecord::Base
 
   has_ancestry
   #has_many :resources
-  has_one :response
+  has_many :response
   has_many :enumerations, inverse_of: :requirement
   has_many :resource_contexts
   belongs_to :requirements_template
