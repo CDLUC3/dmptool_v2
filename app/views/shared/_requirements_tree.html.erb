@@ -10,7 +10,7 @@
     </li>
   <% else %>
     <li class="li_requirement<%= (requirement.id.to_s == params[:requirement_id] ? ' current' : '') %>" id="requirement_<%= requirement.id %>">
-      <% unless requirement.response.nil? %>
+      <% unless Response.where(requirement_id: requirement.id, plan_id: @plan.id).count < 1 %>
         <%= image_tag("checked.png", id: 'complete_icon') %>
       <% end %>
       <i class="icon requirement"></i>
