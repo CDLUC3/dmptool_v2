@@ -32,7 +32,7 @@
               | <%= link_to('Details', details_plan_path(plan)) %>
               | <%= link_to('Share', '#', remote: true, :class => 'change_visibility_link') %>
               <%- if (plan.requirements_template.review_type != :no_review && !plan.requirements_template.review_type.blank?) -%>
-                | <%= link_to('Submit', preview_path(plan)) %>
+                | <%= link_to('Submit', preview_plan_path(plan)) %>
               <%- end -%>
               | <%= link_to('Copy', copy_existing_plans_template_path(:plan => plan)) %>
               | <%= link_to('Delete', plan, :class => "delete", :id => "delete_#{plan.name}", method: :delete, data: { confirm: 'Are you sure?' }) %>
