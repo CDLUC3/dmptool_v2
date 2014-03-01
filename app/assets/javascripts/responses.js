@@ -2,9 +2,8 @@
 // All this logic will automatically be available in application.js.
 
 $(function() {
-	$('#save_only').bind("click",function(e) {
-    var selected = $("#response_value").val();
-    alert(selected);
+	$('#save_only, #save_and_next').bind("click",function(e) {
+    var selected = CKEDITOR.instances['response_value'].getData();
     if(selected == ""){
       $('#alert_message').dialog('open');
       e.preventDefault();

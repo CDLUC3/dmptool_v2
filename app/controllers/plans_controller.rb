@@ -2,7 +2,7 @@ class PlansController < ApplicationController
 
   before_action :require_login, except: [:public, :show]
   #note show will need to be protected from logins in some cases, but only from non-public plan viewing
-  before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details]
+  before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details, :preview]
   before_action :select_requirements_template, only: [:select_dmp_template]
 
   # GET /plans
@@ -40,6 +40,7 @@ class PlansController < ApplicationController
   # GET /plans/1
   # GET /plans/1.json
   def show
+    render(layout: "clean")
   end
 
   # GET /plans/new
@@ -162,7 +163,12 @@ class PlansController < ApplicationController
     @requirements_template = RequirementsTemplate.find(template_id)
     @requirements = @requirements_template.requirements
     if params[:requirement_id].blank?
-      params[:requirement_id] = @requirements_template.first_question.id.to_s
+      requirement = @requirements_template.first_question
+      if requirement.nil?
+        redirect_to(resource_contexts_path, :notice =>
+            "The DMP template you are attempting to customize has no requirements. A template must contain at least one requirement. \"#{@requirements_template.name}\" needs to be fixed before you may continue customizing it.") and return
+      end
+      params[:requirement_id] = requirement.id.to_s
     end
     @requirement = Requirement.find(params[:requirement_id]) unless params[:requirement_id].blank?
     @resource_contexts = ResourceContext.where(requirement_id: @requirement.id, institution_id: current_user.institution_id, requirements_template_id: @requirements_template.id)
@@ -175,11 +181,12 @@ class PlansController < ApplicationController
       @response = Response.new
     end
 
-    ## to be compeleted
     @next_requirement = @requirements[@requirements.index(@requirement) + 1]
-    if @next_requirement.nil? then
-      @next_requirement_id = 'end'
+    if @next_requirement.nil?
+      ## would go back to the 1st Requirement in the list
+      @next_requirement_id = @requirements_template.first_question.id
     else
+      ## traverse through the next requirement in the list
       @next_requirement_id = @next_requirement.id
     end
   end
