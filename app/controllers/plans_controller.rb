@@ -40,6 +40,7 @@ class PlansController < ApplicationController
   # GET /plans/1
   # GET /plans/1.json
   def show
+    render(layout: "clean")
   end
 
   # GET /plans/new
