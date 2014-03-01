@@ -75,7 +75,14 @@ class RequirementsTemplate < ActiveRecord::Base
     find_question_node(requirements)
   end
 
-
+  #this adds the requirements position if they are not set correctly, but if set, leaves them alone
+  def ensure_requirements_position
+    reqs = self.requirements.where(position: nil).count
+    return if reqs == 0
+    self.requirements.order(:id).each_with_index do |req, i|
+      req.update_column(:position, i+1)
+    end
+  end
 
   private
   #helper method for recursion of first_question
