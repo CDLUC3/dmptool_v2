@@ -258,23 +258,20 @@
 .dashboard-nav ul.nav ul.children {
 	float: left;
 	display: none;
-	background: #E9E9EA;
+	min-width: 500px;
 	margin: 0;
 	position: absolute;
 	bottom: 0; }
-.dashboard-nav ul.nav ul.children.dmp-templates {
-	min-width: 353px; }
 .dashboard-nav ul.nav > li.current-parent ul {
 	display: block; }
-.dashboard-nav ul.nav ul li:before {
-	content: ''; }
 .dashboard-nav ul.nav ul li {
 	float: left;
+	background: #E9E9EA;
 	list-style: none;
 	height: 29px;
-	margin: 10px 0 10px -15px; }
+	padding: 10px 0; }
 .dashboard-nav ul.nav ul li:first-child {
-	margin-left: 15px; }
+	padding-left: 15px; }
 .dashboard-nav ul.nav ul li.last {
 	background: url(tab_arrow.png) no-repeat 0 -87px transparent;
 	width: 15px;
@@ -289,12 +286,14 @@
 	text-align: right;
 	line-height: 31px;
 	height: 29px;
-	padding: 0 30px; }
+	padding: 0 30px;
+	position: relative;
+	left: -15px; }
 .dashboard-nav ul.nav ul li:first-child a {
 	border-left: 2px solid #FFFFFF;
 	background-position: -15px 0;
-	margin-left: 0;
-	padding-left: 15px; }
+	padding-left: 15px;
+	left: 0; }
 .dashboard-nav ul.nav ul li a:hover, .dashboard-nav ul.nav ul li a:focus, .dashboard-nav ul.nav ul li a:active {
 	background-position: 0 -29px;
 	text-decoration: none; }

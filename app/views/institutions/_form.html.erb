@@ -2,23 +2,23 @@
 <%= form_for @current_institution, html:{ :class => 'form-horizontal', multipart: true}  do |f| %>
   <%= render partial: "shared/errors", locals: {model: @current_institution } %>
   <div class="control-group">
-    <%= f.label :full_name , "Institution Full Name", :class=> "control-label" %>
+    <%= f.label :full_name , "Institution Full Name", :class=> "control-label required" %>
     <div class="controls">
-	    <%= f.text_field :full_name, :class => "input-xxlarge required" %>
+	    <%= f.text_field :full_name, :class => "input-xxlarge" %>
 	  </div>
   </div>
 
   <div class="control-group">
-    <%= f.label :shib_entity_id, "Entity_id", :class => "control-label" %>
+    <%= f.label :shib_entity_id, "Entity_id", :class => "control-label required" %>
     <div class="controls">
-      <%= f.text_field :shib_entity_id, readonly: @current_institution.is_shibboleth?, :class => "required" %>
+      <%= f.text_field :shib_entity_id, readonly: @current_institution.is_shibboleth? %>
     </div>
   </div>
 
   <div class="control-group">
-    <%= f.label :shib_domain , "Shibboleth Domain", :class => "control-label"%>
+    <%= f.label :shib_domain , "Shibboleth Domain", :class => "control-label required"%>
     <div class="controls">
-      <%= f.text_field :shib_domain, readonly: @current_institution.is_shibboleth?, :class => "required" %>
+      <%= f.text_field :shib_domain, readonly: @current_institution.is_shibboleth? %>
     </div>
   </div>
 
@@ -80,6 +80,3 @@
     <%= button_tag "Cancel", type: :reset, :class => "btn" %>
   </div>
 <% end %>
-<script>
-		jQuery(document).requiredField();
-</script>
