@@ -5,19 +5,25 @@
       <%= f.hidden_field :requirement_id, value: requirement_id %>
       <%= f.hidden_field :plan_id, value: plan_id %>
       <%= f.hidden_field :label_id %>
-      <%= hidden_field_tag :next_requirement_id, @next_requirement_id %>
+      <%= text_field_tag :next_requirement_id, @next_requirement_id %>
   </div>
   <div class="control-group">
   		<%= f.cktext_area :value, placeholder: 'response', :class => "input-block-level" %>
   </div>
-    <%= f.submit "Save and Next", name: 'save_and_next', :class => 'btn btn-success pull-right', method: 'post', id: 'save_and_next' %>
-    <%= f.submit "Save Response", name: 'save_only', :class => 'btn btn-success pull-right', method: 'post', id: 'save_only', remote: true %>
-    <%= link_to "Cancel Changes", type: :reset, :class => 'btn pull-left', id: "cancel_action" %>
+    <% if Requirement.find(requirement_id).obligation == :mandatory %>
+      <%= f.submit "Save and Next", name: 'save_and_next', :class => 'btn btn-success pull-right', method: 'post', id: 'save_and_next', remote: true %>
+      <%= f.submit "Save Response", name: 'save_only', :class => 'btn btn-success pull-right', method: 'post', id: 'save_only', remote: true %>
+      <%= link_to "Cancel Changes", type: :reset, :class => 'btn pull-left', id: "cancel_action" %>
+    <% else %>
+      <%= button_tag "Save and Next", name: 'save_and_next', :class => 'btn btn-success pull-right', method: 'post' %>
+      <%= button_tag "Save Response", name: 'save_only', :class => 'btn btn-success pull-right', method: 'post'%>
+      <%= link_to "Cancel Changes", type: :reset, :class => 'btn pull-left', id: "cancel_action" %>
+    <% end %>
   </div>
 <% end %>
 
 <div id="alert_message" title="Please Enter a Valid Response.">
-  You must enter a valid Response before saving.
+  Cannot save an empty Response. Please enter a valid Response before continuing.
 </div>
 
 <script>

@@ -21,25 +21,22 @@ class ResponsesController < ApplicationController
   	@response = Response.new(response_params)
     @requirement_id = response_params[:requirement_id]
     @next_requirement_id = params[:next_requirement_id]
+    @plan = Plan.find(response_params[:plan_id])
     respond_to do |format|
       if params[:save_and_next] || !params[:save_only]
         if @response.save
-          plan_id = @response.plan_id
-          @plan = Plan.find(plan_id)
           format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id), notice: 'Response was successfully created.' }
           format.json { render action: 'show', status: :created, location: @response }
         else
-          format.html { render 'new', notice: 'Problem in creating the Response.' }
+          format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id) }
           format.json { render json: @response.errors, status: :unprocessable_entity }
         end
       else
         if @response.save
-          plan_id = @response.plan_id
-          @plan = Plan.find(plan_id)
           format.html { redirect_to details_plan_path(@plan, requirement_id: @requirement_id), notice: 'Response was successfully created.' }
           format.json { render action: 'show', status: :created, location: @response }
         else
-          format.html { render 'new', notice: 'Problem in creating the Response.' }
+          format.html { redirect_to details_plan_path(@plan, requirement_id: @requirement_id) }
           format.json { render json: @response.errors, status: :unprocessable_entity }
         end
       end
@@ -52,22 +49,21 @@ class ResponsesController < ApplicationController
     respond_to do |format|
       @requirement_id = response_params[:requirement_id]
       @next_requirement_id = params[:next_requirement_id]
+      @plan = Plan.find(response_params[:plan_id])
       if params[:save_and_next] || !params[:save_only]
-        if @response.update(response_params)
-        	@plan = @response.plan_id
+        if @response.update!(response_params)
           format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id), notice: 'response was successfully updated.' }
           format.json { head :no_content }
         else
-          format.html { redirect_to details_plan_path(@plan), notice: 'There is an error in updating your response.' }
+          format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id) }
           format.json { render json: @response.errors, status: :unprocessable_entity }
         end
       else
-        if @response.update(response_params)
-          @plan = @response.plan_id
+        if @response.update!(response_params)
           format.html { redirect_to details_plan_path(@plan, requirement_id: @requirement_id), notice: 'response was successfully updated.' }
           format.json { head :no_content }
         else
-          format.html { redirect_to details_plan_path(@plan), notice: 'There is an error in updating your response.' }
+          format.html { redirect_to details_plan_path(@plan, requirement_id: @requirement_id) }
           format.json { render json: @response.errors, status: :unprocessable_entity }
         end
       end
@@ -94,6 +90,13 @@ class ResponsesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def response_params
       params.require(:response).permit(:value, :plan_id, :requirement_id, :label_id)
+    end
+
+    def set_values
+      template_id = @plan.requirements_template_id
+      @requirements_template = RequirementsTemplate.find(template_id)
+      @requirements = @requirements_template.requirements
+      @resource_contexts = ResourceContext.where(requirement_id: @requirement_id, institution_id: current_user.institution_id, requirements_template_id: @requirements_template.id)
     end
 end
 
