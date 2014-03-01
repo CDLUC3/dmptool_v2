@@ -11,6 +11,6 @@
     <%- if resp.blank? -%>
       [No response]
     <%- else -%>
-      <%= resp.value %>
+      <%= resp.value.html_safe %>
     <% end %>
   </div>
