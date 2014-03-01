@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action :require_login, except: [:create, :finish_signup, :finish_signup_update]
+  before_action :require_login, except: [:create, :finish_signup, :finish_signup_update, :new]
 
   include InstitutionsHelper
 

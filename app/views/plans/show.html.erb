@@ -1,0 +1,3 @@
+<%= render(partial: "requirement",
+           collection: (@plan.requirements_template.requirements.order(:position).roots),
+           locals: { heading: "" }) %>
