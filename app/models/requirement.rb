@@ -2,7 +2,7 @@ class Requirement < ActiveRecord::Base
 
   has_ancestry
   #has_many :resources
-  has_one :response
+  has_many :response
   has_many :enumerations, inverse_of: :requirement
   has_many :resource_contexts
   belongs_to :requirements_template
@@ -132,6 +132,40 @@ class Requirement < ActiveRecord::Base
         where("resource_contexts.requirements_template_id = ?", template_id).
         where("resource_contexts.requirement_id = ?", self.id).
         where("resource_contexts.resource_id IS NOT NULL")
+  end
+
+  #removes this requirement from the position and set its position to nil
+  def remove_from_position
+    return if self.position.nil?
+    renumber_from = self.position
+    self.position = nil
+    self.update_column(:position, nil)
+    Requirement.update_all("position = position - 1",
+                           ['requirements_template_id = ? AND position > ?', self.requirements_template_id, renumber_from] )
+  end
+
+  #positions this requirement before the ID of the other requirement in the order
+  def position_before(requirement_id)
+    items = Requirement.where(requirements_template_id: self.requirements_template_id).where(id: requirement_id).count
+    return if items < 1
+    remove_from_position
+    before_req = Requirement.find(requirement_id)
+    from_position = before_req.position
+    Requirement.update_all("position = position + 1",
+                           ['requirements_template_id = ? AND position >= ?', before_req.requirements_template_id, from_position] )
+    self.update_column(:position, from_position)
+  end
+
+  #positions this requirement after the ID of the other requirement in the order
+  def position_after(requirement_id)
+    items = Requirement.where(requirements_template_id: self.requirements_template_id).where(id: requirement_id).count
+    return if items < 1
+    remove_from_position
+    after_req = Requirement.find(requirement_id)
+    from_position = after_req.position
+    Requirement.update_all("position = position + 1",
+                           ['requirements_template_id = ? AND position > ?', after_req.requirements_template_id, from_position] )
+    self.update_column(:position, from_position + 1)
   end
 
 end
