@@ -31,15 +31,9 @@
 		<%= link_to(content_tag(:span, "", :class => "icon print") + "Print", "#", :class => "icon print pull-right")  %>
 	</div>
 	<div class="dmp-preview">
-		<h2>Lorem Ipsum</h2>
-		<p>Lorem ipsum dolor sit amet, ad duo alii omnium invidunt, at atomorum mediocrem eam, velit assentior an sed. Ne mea porro iracundia scriptorem, usu ne quot vocibus cotidieque. Posse omnesque vulputate eos an. Id novum soluta indoctum sit. Et pro alia equidem salutandi, vivendo invidunt sententiae qui ex, duo at porro epicurei.</p>
-		<h2>Nostro Audiam</h2>
-		<p>Nostro audiam eu sed, et doming euripidis quo. In nec veniam accusam. Id veniam blandit democritum vis, persius aliquid nam at, ea delicata periculis consulatu eam. Nonumy singulis vituperatoribus has et. Et sed modus facete, sumo facilisis ne qui. Has et pertinacia mnesarchum, eu sit commodo fabellas posidonium.</p>
-		<h2>Aperiam Omittam Intellegat</h2>
-		<p>Aperiam omittam intellegat an vis. Nullam audire omnesque ex mei. His no error labores. Ex vim lorem ludus numquam. Ea eos debitis accusata.</p>	
-		<p>Ubique menandri corrumpit mea in, duo ullum patrioque no. Ad vide populo nominati pro, mucius essent possim ei usu. Tale agam praesent vis ea, duo modus sanctus complectitur ea. His et minim nominavi conclusionemque, esse illud eu qui, tamquam sensibus te has. No vis iudicabit delicatissimi, ad mel aliquip laoreet. Essent probatus vim ne. In dolore verear sit.</p>
-		<h2>Ne Ignota Aliquando</h2>
-		<p>Ne ignota aliquando nam, adhuc tractatos adversarium et nec. Te has veritus assueverit. An mel eirmod noluisse eloquentiam, in nec possit convenire. Ius virtute euismod ex, cu graecis honestatis vim, mentitum expetendis ut his.</p>
+          <%= render(partial: "requirement",
+                     collection: (@plan.requirements_template.requirements.order(:position).roots),
+                     locals: { heading: "" }) %>
 	</div>
 </div>
 <div class="buttons">

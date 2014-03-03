@@ -144,8 +144,5 @@
     </div>
   </div>
 </div>
-        <%= render partial: 'change_visibility', locals: {:plan_id => params[:id]} %>
-        <%= render partial: 'comments/form', locals: {:plan_id => params[:id]} %>
-<script>
-		jQuery(document).requiredField();
-</script>
+<%= render partial: 'change_visibility', locals: {:plan_id => params[:id]} %>
+<%= render partial: 'comments/form', locals: {:plan_id => params[:id]} %>

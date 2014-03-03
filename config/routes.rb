@@ -68,6 +68,7 @@ Dmptool2::Application.routes.draw do
       get :publish
       get :export
       get :details
+      get :preview
     end
   end
   resources :comments
@@ -91,7 +92,6 @@ Dmptool2::Application.routes.draw do
   get 'copy_existing_plans_template', to: 'plans#copy_existing_template'
   get 'select_dmp_template', to: 'plans#select_dmp_template'
   get 'review_dmps', to: 'plans#review_dmps'
-  get 'preview', to: 'plans#preview'
   post 'change_visibility', to: 'plans#change_visibility'
   get 'public_dmps', to: 'plans#public'
 
