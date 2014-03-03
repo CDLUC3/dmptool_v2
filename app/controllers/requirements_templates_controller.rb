@@ -155,6 +155,7 @@ class RequirementsTemplatesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_requirements_template
       @requirements_template = RequirementsTemplate.find(params[:id])
+      @requirements_template.ensure_requirements_position unless @requirements_template.nil? #sets the positioning (order) of requirements if not set correctly
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
