@@ -9,6 +9,8 @@ class Requirement < ActiveRecord::Base
 
   accepts_nested_attributes_for :enumerations, allow_destroy: true, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
 
+  default_scope order('position ASC')  # requirements should be ordered by position by default, rather than by the id or date
+
   validates_columns :requirement_type, :obligation
   validates :text_brief, presence: true
   validates :requirements_template_id, presence: true
@@ -17,6 +19,9 @@ class Requirement < ActiveRecord::Base
   validates :text_full, presence: true, unless: Proc.new { |x| x.is_group? }
   validates :obligation, presence: true, unless: Proc.new { |x| x.is_group? }
   validates :requirement_type, presence: true, unless: Proc.new { |x| x.is_group? }
+
+  before_save :add_high_position
+  after_destroy :close_gap_in_position
 
   def is_group?
     self.group == true
@@ -166,6 +171,25 @@ class Requirement < ActiveRecord::Base
     Requirement.update_all("position = position + 1",
                            ['requirements_template_id = ? AND position > ?', after_req.requirements_template_id, from_position] )
     self.update_column(:position, from_position + 1)
+  end
+
+  #this is used to add a position to a requirement if it is not set, if position is set then it's ignored
+  def add_high_position
+    return unless self.position.nil?
+    return if self.requirements_template_id.nil?
+    rt = self.requirements_template
+    m = rt.requirements.maximum(:position)
+    if m.nil?
+      self.position = 1
+    else
+      self.position = m + 1
+    end
+  end
+
+  def close_gap_in_position
+    renumber_from = self.position
+    Requirement.update_all("position = position - 1",
+                           ['requirements_template_id = ? AND position > ?', self.requirements_template_id, renumber_from] )
   end
 
 end
