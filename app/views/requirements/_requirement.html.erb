@@ -1,10 +1,22 @@
-<div class="requirements_group" id=<%="req_#{requirement.text_brief}"%>>
+<div class="requirements_group" id="req_div_<%= requirement.id %>">
 	<ul>
 		<li>
 			<% if requirement.group? %>
-				<%= link_to(content_tag(:span, '', :class => 'icon folder-open') + requirement.text_brief, edit_requirements_template_requirement_path(requirement.requirements_template, requirement, node_type: 'group') + '#jump') %>
+				<%= link_to(
+                content_tag(:span, '', :class => 'icon folder-open') +
+                requirement.text_brief,
+                edit_requirements_template_requirement_path(requirement.requirements_template, requirement, node_type: 'group') + '#jump',
+                class: 'requirements_text',
+                id: "req_text_#{requirement.id}")
+        %>
 			<% else %>
-				<%= link_to(content_tag(:span, '', :class => 'icon requirement') + requirement.text_brief, edit_requirements_template_requirement_path(requirement.requirements_template, requirement) + '#jump') %>
+				<%= link_to(
+                content_tag(:span, '', :class => 'icon requirement') +
+                requirement.text_brief,
+                edit_requirements_template_requirement_path(requirement.requirements_template, requirement) + '#jump',
+                class: 'requirements_text',
+                id: "req_text_#{requirement.id}")
+        %>
 			<% end %>
 			<div class="actions pull-right">
 				<% if requirement.group == false %>

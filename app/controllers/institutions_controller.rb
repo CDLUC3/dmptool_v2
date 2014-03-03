@@ -1,6 +1,6 @@
 class InstitutionsController < ApplicationController
 
-  before_action :require_login
+  before_action :require_login, :except=>[:partners_list]
   before_action :set_institution, only: [:show, :destroy]
   before_action :check_for_cancel, :update => [:create, :update, :destroy]
   before_filter :populate_institution_select_list
