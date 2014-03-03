@@ -19,10 +19,6 @@
 .centered {
 	text-align: center;
 	margin: 0 auto; }
-.pull-left {
-	margin-left: 0 !important; }
-.pull-right {
-	margin-right: 0 !important; }
 	
 /* Header */
 .header {
@@ -80,8 +76,9 @@
   line-height: 1.07;
   padding: 17px 17px 13px; }
 .header ul.nav > li.current > a, .header ul.nav > li > a:hover, .header ul.nav > li > a:focus, .header ul.nav > li > a:active {
-	background: rgba(0,0,0,0.05);
   color: #A1E000; }
+.header ul.nav > li.current > a {
+ 	background: rgba(0,0,0,0.05); }
 .header ul.nav > li.login {
 	float: right;
 	margin-right: 0; }
