@@ -11,7 +11,7 @@
 		  </div>
 	    <hr/>
 	    <div class="requirements_tree_view">
-	      <%= nested_requirements @requirements.arrange(order: :created_at) %>
+	      <%= nested_requirements @requirements.arrange(order: :position) %>
 	    </div>
 	  </div>
 	  <div class="template-status border-box">
@@ -36,4 +36,37 @@
 	  	</div>
 		</div>
 	</div>
+
+  <style>
+    a.ui-draggable-dragging {
+      display: block;
+      padding: 0 0 0 0;
+      background-color: yellow;
+      border-style: solid;
+      border-width: 1px 1px 1px 1px;
+      border-color: black;
+    }
+  </style>
+
+  <script type="text/javascript">
+    $( document).ready(function() {
+      $('a.requirements_text').draggable({
+        containment: 'div.requirements_tree_view',
+        cursor: 'move',
+        // snap: 'div.requirements_group',
+        stack: 'div.requirements_group',
+        revert: true
+      });
+    });
+
+    $('div.requirements_group').droppable( {
+      drop: handleDropEvent
+    } );
+
+    function handleDropEvent( event, ui ) {
+      var draggable = ui.draggable;
+      alert( 'The square with ID "' + draggable.attr('id') + '" was dropped onto me(' + event.target.id + ') !' );
+    }
+
+  </script>
 </div>
