@@ -5,7 +5,7 @@
       <%= f.hidden_field :requirement_id, value: requirement_id %>
       <%= f.hidden_field :plan_id, value: plan_id %>
       <%= f.hidden_field :label_id %>
-      <%= text_field_tag :next_requirement_id, @next_requirement_id %>
+      <%= hidden_field_tag :next_requirement_id, @next_requirement_id %>
   </div>
   <div class="control-group">
   		<%= f.cktext_area :value, placeholder: 'response', :class => "input-block-level" %>
