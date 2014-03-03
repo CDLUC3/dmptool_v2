@@ -107,3 +107,6 @@
 .embedded-video {
 	width: 800px;
 	margin: 50px 77px; }
+/*Contact */
+.contact .pull-right {
+	margin-right: 85px; }
