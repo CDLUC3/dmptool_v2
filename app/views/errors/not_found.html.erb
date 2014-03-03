@@ -14,13 +14,15 @@
     width: 25em;
     margin: 4em auto 0 auto;
     border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #BBB;
     border-top: #B00100 solid 4px;
+    border-bottom: #B00100 solid 4px;
+    border-left: #B00100 solid 4px;
+    border-right: #B00100 solid 4px;
     border-top-left-radius: 9px;
     border-top-right-radius: 9px;
-    background-color: white;
+    border-bottom-left-radius: 9px;
+    border-bottom-right-radius: 9px;
+    background-color: papayawhip;
     padding: 7px 4em 0 4em;
   }
 
@@ -52,7 +54,7 @@
   <div class="dialog">
     <h1>The page you were looking for doesn't exist.</h1>
     <p>You may have mistyped the address or the page may have moved.</p>
-    <p><%= link_to 'Go back.', :back %></p>
+    <p><%= link_to 'Go back.', :back, :class => "btn btn-green" %></p>
   </div>
   
 </body>

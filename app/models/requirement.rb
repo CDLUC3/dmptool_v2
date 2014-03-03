@@ -20,7 +20,7 @@ class Requirement < ActiveRecord::Base
   validates :obligation, presence: true, unless: Proc.new { |x| x.is_group? }
   validates :requirement_type, presence: true, unless: Proc.new { |x| x.is_group? }
 
-  before_save :add_high_position
+  after_save :add_high_position
   after_destroy :close_gap_in_position
 
   def is_group?
@@ -180,10 +180,11 @@ class Requirement < ActiveRecord::Base
     rt = self.requirements_template
     m = rt.requirements.maximum(:position)
     if m.nil?
-      self.position = 1
+      m = 1
     else
-      self.position = m + 1
+      m += 1
     end
+    self.update_column(:position, m)
   end
 
   def close_gap_in_position

@@ -10,8 +10,8 @@
 		    <%= link_to(content_tag(:span, '', :class => 'icon add-requirement') + 'Add Requirement', new_requirements_template_requirement_path(@requirements_template) + '#jump', :class => 'icon new add-requirement') %>
 		  </div>
 	    <hr/>
-	    <div class="requirements_tree_view">
-	      <%= nested_requirements @requirements.arrange(order: :created_at) %>
+	    <div class="requirements_tree_view" id="main_requirements_tree">
+	      <%= nested_requirements @requirements.arrange(order: :position) %>
 	    </div>
 	  </div>
 	  <div class="template-status border-box">
@@ -36,4 +36,41 @@
 	  	</div>
 		</div>
 	</div>
+
+  <style>
+    a.ui-draggable-dragging {
+      display: block;
+      padding: 0 0 0 0;
+      background-color: yellow;
+      border-style: solid;
+      border-width: 1px 1px 1px 1px;
+      border-color: black;
+    }
+  </style>
+
+  <script type="text/javascript">
+    $( document).ready(function() {
+      $('a.requirements_text').draggable({
+        containment: 'div.requirements_tree_view',
+        cursor: 'move',
+        // snap: 'div.requirements_group',
+        stack: 'div.requirements_group',
+        revert: true
+      });
+    });
+
+    $('div.requirements_group').droppable( {
+      drop: handleDropEvent
+    } );
+
+    function handleDropEvent( event, ui ) {
+      var draggable = ui.draggable;
+      //alert( 'The square with ID "' + draggable.attr('id') + '" was dropped onto me(' + event.target.id + ') !' );
+      var drag_id = draggable.attr('id').match(/\d+$/g);
+      var drop_id = event.target.id.match(/\d+$/g);
+
+      $.post("<%= reorder_requirements_path() %>", { drag_id: drag_id, drop_id: drop_id } );
+    }
+
+  </script>
 </div>

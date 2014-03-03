@@ -1,7 +1,7 @@
 class RequirementsController < ApplicationController
 
   before_action :require_login
-  before_filter :get_requirements_template
+  before_filter :get_requirements_template, except: [:reorder]
   before_action :set_requirement, only: [:show, :edit, :update, :destroy]
 
   # GET /requirements
@@ -70,6 +70,28 @@ class RequirementsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to requirements_template_requirements_path }
       format.json { head :no_content }
+    end
+  end
+
+  # reorder reorders the requirements in a template from drag and drop
+  def reorder
+    respond_to do |format|
+      format.js do
+        render nothing: true && return if params[:drag_id].blank? || params[:drop_id].blank?
+        @drag_req = Requirement.find(params[:drag_id].first)
+        @drop_req = Requirement.find(params[:drop_id].first)
+        render nothing: true && return if @drag_req.requirements_template_id != @drag_req.requirements_template_id
+        # add other validation that you can reorder here
+
+        if @drag_req.group == false && @drop_req.group == false
+          @drag_req.position_before(@drop_req.id)
+        end
+
+
+        #these need setting for re-rendering the view area
+        @requirements_template = @drag_req.requirements_template
+        @requirements = @requirements_template.requirements
+      end
     end
   end
 
