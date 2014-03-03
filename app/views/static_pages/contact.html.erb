@@ -2,6 +2,7 @@
 <div class="contact row-fluid">
 	<div class="span8">
 		<%= form_tag do %>
+			<p class="pull-right">( <strong class="red">&#42;</strong> = Required Field )</p>
 			<h2>Your message is about:</h2>
 		  <div class="control-group">
 		    <%= radio_button_tag :question_about, "using the dmptool", params[:question_about] == 'Using the dmptool' %>
