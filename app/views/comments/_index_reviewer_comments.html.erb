@@ -1,10 +1,10 @@
 <% @reviewer_comments.each do |comment| %>
-  <fieldset>
-    <div>
-      <%= user_name(comment) %>:
-      <%= comment.value %><br/>
-      <%= comment.created_at.strftime("%m/%d/%Y %I:%M %p") %>
-      <%= link_to raw('<i class="icon-trash"></i>'), comment, :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+  <div class="comment">
+    	<span class="date-created"><%= comment.created_at.strftime("%m/%d/%Y %I:%M %p") %></span>
+    	<p><stonrg><%= user_name(comment) %>:</strong></p>
+    	<br/>
+      <p><%= comment.value %></p>
+      <%= link_to "", comment, :method => :delete, :data => { :confirm => "Are you sure?"}, :class => "icon trash pull-right", :title => "Delete" %>
     </div>
   </fieldset>
 <% end %>
