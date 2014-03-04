@@ -1,10 +1,8 @@
 <% @owner_comments.each do |comment| %>
-  <fieldset>
-    <div>
-      <%= user_name(comment) %>:
-      <%= comment.value %><br/>
-      <%= comment.created_at.strftime("%m/%d/%Y %I:%M %p") %>
-      <%= link_to raw('<i class="icon-trash"></i>'), comment, :method => :delete, :data => { :confirm => 'Are you sure?' } %>
-    </div>
-  </fieldset>
+	<div class="comment">
+		<%= user_name(comment) %>:<br/>
+		<%= comment.value %><br/>
+		<%= comment.created_at.strftime("%m/%d/%Y %I:%M %p") %>
+		<%= link_to "", comment, :method => :delete, :data => { :confirm => "Are you sure?"}, :class => "icon trash pull-right" %>
+	</div>
 <% end %>
