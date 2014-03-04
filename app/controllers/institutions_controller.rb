@@ -32,7 +32,9 @@ class InstitutionsController < ApplicationController
 
 
   def institutional_resources
-    @resource_contexts = ResourceContext.includes(:resource).where(requirements_template_id: nil, requirement_id: nil, institution_id: [current_user.institution.subtree_ids])
+    @resource_contexts = ResourceContext.includes(:resource).
+                          where(requirements_template_id: nil, requirement_id: nil, institution_id: [current_user.institution.subtree_ids]).
+                          where("resource_id IS NOT NULL")
     case params[:scope]
       when "all"
         @resource_contexts = @resource_contexts.page(params[:page]).per(100)

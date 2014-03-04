@@ -46,26 +46,33 @@
       border-width: 1px 1px 1px 1px;
       border-color: black;
     }
+
+    div.highlight {
+      background-color: yellow;
+    }
   </style>
 
   <script type="text/javascript">
     $( document).ready(function() {
-      $('a.requirements_text').draggable({
-        containment: 'div.requirements_tree_view',
-        cursor: 'move',
-        // snap: 'div.requirements_group',
-        stack: 'div.requirements_group',
-        revert: true
-      });
+      addEventsToTree();
     });
 
-    $('div.requirements_group').droppable( {
-      drop: handleDropEvent
-    } );
+    function addEventsToTree(){
+      $('a.requirements_text').draggable({
+        containment: '#main_requirements_tree',
+        cursor: 'move',
+        // snap: 'div.requirements_group',
+        stack: 'div.requirements_group'
+        // revert: true
+      });
+
+      $('div.requirements_group').droppable( {
+        drop: handleDropEvent
+      });
+    }
 
     function handleDropEvent( event, ui ) {
       var draggable = ui.draggable;
-      //alert( 'The square with ID "' + draggable.attr('id') + '" was dropped onto me(' + event.target.id + ') !' );
       var drag_id = draggable.attr('id').match(/\d+$/g);
       var drop_id = event.target.id.match(/\d+$/g);
 

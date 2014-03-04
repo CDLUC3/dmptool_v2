@@ -11,6 +11,7 @@ group :development, :test do
   gem 'debugger'
   gem 'factory_girl_rails'
   gem 'faker'  #to create fake data http://faker.rubyforge.org/
+  gem "rack-test" #to test api 
 end
 
 group :test do
