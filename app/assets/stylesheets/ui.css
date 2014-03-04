@@ -189,3 +189,12 @@ div.customization_tree li .icon.larger{
   left: -23px;
 }
 
+/* Error Page */
+.error-message {
+	text-align: center;
+	margin: 50px 0;
+}
+.error-message p {
+	font-size: 1.167em;
+}
+
