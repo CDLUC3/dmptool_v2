@@ -284,11 +284,14 @@ a.icon.delete:hover, a.icon.delete:focus, a.icon.delete:active {
 a.add-requirement.icon { 
 	background: none; width: auto; height: auto; padding-left: 17px; }
 	
-	
-.icon-chevron-right {
-	background: url(dmp_icons.png) no-repeat -158px -130px transparent; width: 11px; height: 11px; top: 2px; }
+.icon-chevron-up {
+	background: url(dmp_icons.png) no-repeat -159px -130px transparent; width: 11px; height: 11px; top: 2px; }
 .icon-chevron-down {
 	background: url(dmp_icons.png) no-repeat -170px -130px transparent; width: 11px; height: 11px; top: 2px; }
+.icon-chevron-left {
+	background: url(dmp_icons.png) no-repeat -182px -130px transparent; width: 11px; height: 11px; top: 2px; }
+.icon-chevron-right {
+	background: url(dmp_icons.png) no-repeat -191px -130px transparent; width: 11px; height: 11px; top: 2px; }
 	
 .icon-folder-close {
 	background: url(dmp_icons.png) no-repeat -140px -130px transparent; width: 20px; height: 12px; top: 2px; }

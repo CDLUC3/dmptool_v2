@@ -48,14 +48,15 @@ $(function() {
 	$("#cancel_action").bind("click",function() {
 		$("#comment_dialog_form").reset();
 	});
-})
+});
 
 $(function() {
-	$("#reviewer_comments").hide();
+	$("#reviewer_comments, #hide_reviewer_comments").hide();
 	$("#view_reviewer_comments").click(function(event){
 		event.preventDefault();
 		$("#reviewer_comments").show();
 		$("#view_reviewer_comments").hide();
+		$("#hide_reviewer_comments").show();
 	});
 });
 
@@ -63,16 +64,18 @@ $(function() {
 	$("#hide_reviewer_comments").click(function(event){
 		event.preventDefault();
 		$("#reviewer_comments").hide();
+		$("#hide_reviewer_comments").hide();
 		$("#view_reviewer_comments").show();
 	});
 });
 
 $(function() {
-	$("#owner_comments").hide();
+	$("#owner_comments, #hide_owner_comments").hide();
 	$("#view_owner_comments").click(function(event){
 		event.preventDefault();
 		$("#owner_comments").show();
 		$("#view_owner_comments").hide();
+		$("#hide_owner_comments").show();
 	});
 });
 
@@ -80,6 +83,7 @@ $(function() {
 	$("#hide_owner_comments").click(function(event){
 		event.preventDefault();
 		$("#owner_comments").hide();
+		$("#hide_owner_comments").hide();
 		$("#view_owner_comments").show();
 	});
 });

@@ -53,19 +53,19 @@
           </div>
         </div>
         <div class="control-group">
-          <label class ="control-label"> Coowners: </label>
+          <label class="control-label">Co-owners:</label>
           <div class="controls">
-            <p><%= link_to "Add Coowners", add_coowner_plan_path(@plan), method: :post, id: 'add_coonwers_view' %></p>
+            <p><%= link_to "Add Co-owners", add_coowner_plan_path(@plan), method: :post, :id => 'add_coonwers_view', :class => "btn" %></p>
           </div>
         </div>
 
         <% unless @plan.new_record? %>
 
           <div class="control-group">
-            <label class ="control-label"> Current Status: </label>
+            <label class="control-label">Current Status:</label>
             <div class="controls">
-              <p><strong style="color:blue;"><%= state(@plan) %></strong>
-              <%= link_to "(Show History)", '#', id: 'show_plan_states_history' %></p>
+              <p><strong style="color:blue;"><%= state(@plan) %></strong><br/>
+              <%= link_to "Show History", '#', :id => 'show_plan_states_history', :class => "btn" %></p>
               <fieldset id="plan_states_history">
                 <legend><%= link_to raw('<i class="icon-chevron-up pull-right"></i>'), '#', id: 'hide_plan_states_history' %></legend>
                 <%= render partial: 'plan_states_history' %>
@@ -74,16 +74,16 @@
           </div>
 
           <div class="control-group">
-            <label class ="control-label"> Reviewer Comments: </label>
+            <label class ="control-label">Reviewer Comments:</label>
             <div class="controls">
-              <p><%= link_to "View", '#', id: 'view_reviewer_comments' %></p>
+              <p><%= link_to "View", '#', :id => 'view_reviewer_comments', :class => "btn" %><%= link_to "Hide", "#", :id => "hide_reviewer_comments", :class => "btn" %></p>
               <fieldset id = "reviewer_comments">
                 <legend>Comments<%= link_to raw('<i class="icon-chevron-up pull-right"></i>'), '#', id: 'hide_reviewer_comments' %></legend>
                 <%= render partial: 'comments/index_reviewer_comments' %>
                 <div class="control-group">
-                  <label class ="control-label"> Comments: </label>
+                  <label class ="control-label">Comments:</label>
                   <div class="controls">
-                    <p><%= link_to "Add Comments", '#', remote: true, :class => 'add_comments_link' %></p>
+                    <p><%= link_to "Add Comments", '#', remote: true, :class => 'add_comments_link btn' %></p>
                   </div>
                 </div>
               </fieldset>
@@ -91,28 +91,23 @@
           </div>
 
           <div class="control-group">
-            <label class ="control-label"> Owner Comments: </label>
+            <label class ="control-label">Owner Comments:</label>
             <div class="controls">
-              <p><%= link_to "View", '#', id: 'view_owner_comments' %></p>
-              <fieldset id = "owner_comments">
-                <legend>Comments<%= link_to raw('<i class="icon-chevron-up pull-right"></i>'), '#', id: 'hide_owner_comments' %></legend>
-                <%= render partial: 'comments/index_owner_comments' %>
-                <div class="control-group">
-                  <label class ="control-label"> Comments: </label>
-                  <div class="controls">
-                    <p><%= link_to "Add Comments", '#', remote: true, :class => 'add_comments_link' %></p>
-                  </div>
-                </div>
-              </fieldset>
+              <p><%= link_to "View", "#", :id => "view_owner_comments", :class => "btn" %><%= link_to "Hide", "#", :id => "hide_owner_comments", :class => "btn" %></p>
+              <div id="owner_comments">
+                Comments<%= link_to(content_tag(:span, "", :class => "icon-chevron-up pull-right"), "#", :id => "hide_owner_comments") %>
+                <%= render partial: "comments/index_owner_comments" %>
+                <%= link_to "Add Comments", '#', remote: true, :class => 'add_comments_link btn' %>
+              </div>
             </div>
           </div>
           <hr/>
 
           <div class="control-group">
-            <label class ="control-label"> Visibility: </label>
+            <label class ="control-label">Visibility:</label>
             <div class="controls">
               <p> This DMP is <span style="color:blue;"><strong><%=@plan.visibility.capitalize %></strong></span><br/>
-              <%= link_to "Change Settings", '#', remote: true, :class => 'change_visibility_link' %></p>
+              <%= link_to "Change Settings", '#', remote: true, :class => 'change_visibility_link btn' %></p>
             </div>
           </div>
 
