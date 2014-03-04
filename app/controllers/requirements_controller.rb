@@ -96,8 +96,7 @@ class RequirementsController < ApplicationController
           elsif @drop_req.group #dropping on a folder, it gets the folder as a parent
             unless @drop_req.ancestor_ids.include?(@drag_req.id) #do not change anything for dragging yourself into your own area
               @drag_req.position_after(@drop_req.id)
-              @drag_req.parent_id = @drop_req.id
-              @drag_req.save
+              @drag_req.update_attributes({:parent_id => @drop_req.id})
             end
           end
         end
