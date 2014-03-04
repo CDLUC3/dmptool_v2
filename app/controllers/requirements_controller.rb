@@ -73,25 +73,33 @@ class RequirementsController < ApplicationController
     end
   end
 
-  # reorder reorders the requirements in a template from drag and drop
+  # reorders the requirements in a template from drag and drop
   def reorder
     respond_to do |format|
       format.js do
         render nothing: true && return if params[:drag_id].blank? || params[:drop_id].blank?
         @drag_req = Requirement.find(params[:drag_id].first)
-        @drop_req = Requirement.find(params[:drop_id].first)
-        render nothing: true && return if @drag_req.requirements_template_id != @drag_req.requirements_template_id
-        # add other validation that you can reorder here
+        if params[:drop_id] == 'drop_before_first' #a special case of dropping before -- the rest are dropping after
+          @drop_req = @drag_req.requirements_template.requirements.roots.order(:position).first
+          @drag_req.position_before(@drop_req.id)
+          @drag_req.update_column(:ancestry, nil)
+        else
+          @drop_req = Requirement.find(params[:drop_id].first)
+          render nothing: true && return if @drag_req.requirements_template_id != @drag_req.requirements_template_id
+          # add other validation that you can reorder here
 
-        if @drag_req.group == false && @drop_req.group == false #both are requirements neither is a folder, both have same parent
-          @drag_req.position_after(@drop_req.id)
-          @drag_req.update_column(:ancestry, @drop_req.ancestry)
-        elsif @drag_req.group == false && @drop_req.group == true #dropping a requirement on a folder, it gets the folder as a parent
-          @drag_req.position_after(@drop_req.id)
-          @drag_req.update_attributes({:parent_id => @drop_req.id})
-          #@drag_req.parent_id = @drop_req.id #sets the parent as the dropped on folder
+          if @drop_req.group.blank? # dropped on a requirement
+            unless @drop_req.ancestor_ids.include?(@drag_req.id) #do not change anything for dragging yourself into your own area
+              @drag_req.position_after(@drop_req.id)
+              @drag_req.update_column(:ancestry, @drop_req.ancestry)
+            end
+          elsif @drop_req.group #dropping on a folder, it gets the folder as a parent
+            unless @drop_req.ancestor_ids.include?(@drag_req.id) #do not change anything for dragging yourself into your own area
+              @drag_req.position_after(@drop_req.id)
+              @drag_req.update_attributes({:parent_id => @drop_req.id})
+            end
+          end
         end
-
 
         #these need setting for re-rendering the view area
         @requirements_template = @drag_req.requirements_template
