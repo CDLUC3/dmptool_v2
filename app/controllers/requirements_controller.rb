@@ -83,10 +83,10 @@ class RequirementsController < ApplicationController
         render nothing: true && return if @drag_req.requirements_template_id != @drag_req.requirements_template_id
         # add other validation that you can reorder here
 
-        if @drag_req.group == false && @drop_req.group == false #both are requirements neither is a folder, both have same parent
+        if @drag_req.group.blank? && @drop_req.group.blank? #both are requirements neither is a folder, both have same parent
           @drag_req.position_after(@drop_req.id)
           @drag_req.update_column(:ancestry, @drop_req.ancestry)
-        elsif @drag_req.group == false && @drop_req.group == true #dropping a requirement on a folder, it gets the folder as a parent
+        elsif @drag_req.group.blank? && @drop_req.group #dropping a requirement on a folder, it gets the folder as a parent
           @drag_req.position_after(@drop_req.id)
           @drag_req.update_attributes({:parent_id => @drop_req.id})
           #@drag_req.parent_id = @drop_req.id #sets the parent as the dropped on folder
