@@ -10,9 +10,11 @@
     font-family: Helvetica, sans-serif;
   }
 
-  div.dialog {
+  div.error-dialog { 
     width: 25em;
-    margin: 4em auto 0 auto;
+    margin:1px auto;
+    margin-top:100px;
+    margin-bottom:100px;
     border: 1px solid #CCC;
     border-color: red;
     border-top: #B00100 solid 4px;
@@ -52,12 +54,13 @@
 
 <body>
   <!-- This file lives in public/500.html -->
-  <div class="dialog">
-    <h1> Oops... Something went wrong!</h1>
-    <br />
-    <p>We've been notified about this issue and we'll take a look at it shortly. </p>
-    <p>In the meantime, you can refresh the page or go <%= link_to ' back.', :back, :class => "btn btn-green" %></p>
-  </div>
+  
+    <div class="error-dialog">
+      <h1> Oops... Something went wrong!</h1>
+      <br />
+      <p>We've been notified about this issue and we'll take a look at it shortly. </p>
+      <p>In the meantime, you can go <%= link_to ' back', :back, :class => "btn btn-green" %></p>
+    </div> 
  
 </body>
 </html>

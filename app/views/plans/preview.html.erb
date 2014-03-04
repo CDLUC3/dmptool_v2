@@ -1,7 +1,8 @@
 <h1 class="row-fluid"><span class="icon template-preview"></span>DMP Preview</h1>
 <br/>
 <div class="row-fluid">
-	<%= link_to "Export", "#", :class => "btn pull-left" %>
+	<%= link_to "Export as PDF", plan_path(@plan, :format=>"pdf"), :class => "btn pull-left" %>
+	<%= link_to "Export as RTF", plan_path(@plan, :format=>"rtf"), :class => "btn pull-left" %>
 	<%= link_to "Submit", "#", :class => "btn btn-green pull-right" %>
 </div>
 <br/>

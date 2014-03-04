@@ -38,7 +38,6 @@
               | <%= link_to('Delete', plan, :class => "delete", :id => "delete_#{plan.name}", method: :delete, data: { confirm: 'Are you sure?' }) %>
               | Export as <%= link_to('PDF', plan_path(plan, :format => "pdf")) %>
               | <%= link_to('RTF', plan_path(plan, :format => "rtf")) %> 
-              | <%= link_to('HTML', plan_path(plan, :format => "html")) %> 
             </div>
           </div>
         </td>
