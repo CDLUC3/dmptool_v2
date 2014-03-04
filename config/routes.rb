@@ -1,9 +1,14 @@
 Dmptool2::Application.routes.draw do
 
+  namespace :api do
+    namespace :v1 do
+      resources :users
+    end
+  end
+
   match '/500', :to => 'errors#internal_error', :via => :all 
   match '/404', :to => 'errors#not_found', :via => :all 
   match '/403', :to => 'errors#forbidden', :via => :all 
-
 
   get "dashboard/show"
   root 'static_pages#home'
@@ -25,10 +30,7 @@ Dmptool2::Application.routes.draw do
   get 'resource_contexts/dmp_for_customization', to: 'resource_contexts#dmp_for_customization', as: "dmp_for_customization"
   get 'resource_contexts/choose_institution', to: 'resource_contexts#choose_institution'
   post 'requirements/reorder', to: 'requirements#reorder', as: "reorder_requirements"
-
-
   get 'customizations/:id/requirements/(:requirement_id)', to: 'customizations#show', as: 'customization_requirement'
-
   get 'institutions', to: 'institutions#index'
 
   resources :requirements_templates do
@@ -43,7 +45,6 @@ Dmptool2::Application.routes.draw do
   end
 
   resources :resources
-
   resources :resource_contexts
 
   #this routes needs to stay above the other user ones to take priority
@@ -85,30 +86,23 @@ Dmptool2::Application.routes.draw do
   match 'user_sessions/username_reminder', to: 'user_sessions#username_reminder', :via => [:get, :post]
   match 'user_sessions/password_reset', to: 'user_sessions#password_reset', :via => [:get, :post]
   match 'user_sessions/complete_password_reset', to: 'user_sessions#complete_password_reset', as: 'complete_password_reset', :via => [:get, :post]
-
   get 'requirements_template_information', to: 'requirements_templates#template_information'
   get 'copy_existing_requirements_template', to: 'requirements_templates#copy_existing_template'
-
   get 'plan_template_information', to: 'plans#template_information'
   get 'copy_existing_plans_template', to: 'plans#copy_existing_template'
   get 'select_dmp_template', to: 'plans#select_dmp_template'
   get 'review_dmps', to: 'plans#review_dmps'
   post 'change_visibility', to: 'plans#change_visibility'
   get 'public_dmps', to: 'plans#public'
-
   get  'remove_resource_editor_role', to: 'resource_templates#remove_resource_editor_role'
   get  'remove_requirements_editor_role', to: 'requirements_templates#remove_requirements_editor_role'
-
   post 'add_role', to: 'resource_templates#add_role'
   post 'add_requirements_editor_role', to: 'requirements_templates#add_requirements_editor_role'
-
   post 'add_authorization', to: 'authorizations#add_authorization'
   get 'remove_authorization', to: 'authorizations#remove_authorization'
   post 'add_role_autocomplete', to: 'authorizations#add_role_autocomplete'
-
   get  'edit_user_roles', to: 'users#edit_user_roles'
   post  'update_user_roles', to: 'users#update_user_roles'
-
   get  'edit_user_roles_inst_admin', to: 'institutions#edit_user_roles_inst_admin'
   post  'update_user_roles_inst_admin', to: 'institutions#update_user_roles_inst_admin'
 
