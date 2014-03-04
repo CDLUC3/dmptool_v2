@@ -74,8 +74,8 @@ $(function() {
 	$(".view-owner-comments").click(function(event){
 		event.preventDefault();
 		$("#owner_comments").show();
-		$("#view-owner-comments").hide();
-		$("#hide-owner-comments").show();
+		$(".view-owner-comments").hide();
+		$(".hide-owner-comments").show();
 	});
 });
 
