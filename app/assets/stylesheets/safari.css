@@ -1,3 +1,7 @@
+.dashboard-nav {
+	padding-left: 15px;
+}
+
 a.btn, button, button.btn, input[type=submit], input[type=submit].btn {
 	line-height: 32px; }
 

@@ -62,7 +62,7 @@
         <% unless @plan.new_record? %>
 
           <div class="control-group">
-            <label class="control-label">Current Status:</label>
+            <label class="control-label">Current Status</label>
             <div class="controls">
               <p><strong style="color:blue;"><%= state(@plan) %></strong><br/>
               <%= link_to "Show History", '#', :id => 'show_plan_states_history', :class => "btn" %></p>
@@ -74,47 +74,42 @@
           </div>
 
           <div class="control-group">
-            <label class ="control-label">Reviewer Comments:</label>
+            <label class ="control-label">Reviewer Comments</label>
             <div class="controls">
-              <p><%= link_to "View", '#', :id => 'view_reviewer_comments', :class => "btn" %><%= link_to "Hide", "#", :id => "hide_reviewer_comments", :class => "btn" %></p>
-              <fieldset id = "reviewer_comments">
-                <legend>Comments<%= link_to raw('<i class="icon-chevron-up pull-right"></i>'), '#', id: 'hide_reviewer_comments' %></legend>
+              <p><strong><%= link_to "View", "#", :class => "view-reviewer-comments" %><%= link_to "Hide", "#", :class => "hide-reviewer-comments" %></strong></p>
+              <div id="reviewer_comments">
+                <%= link_to(content_tag(:span, "", :class => "icon-chevron-up pull-right"), "#", :class => "hide-reviewer-comments") %>
                 <%= render partial: 'comments/index_reviewer_comments' %>
-                <div class="control-group">
-                  <label class ="control-label">Comments:</label>
-                  <div class="controls">
-                    <p><%= link_to "Add Comments", '#', remote: true, :class => 'add_comments_link btn' %></p>
-                  </div>
-                </div>
-              </fieldset>
+                <%= link_to "Add Comments", "#", remote: true, :class => "btn add_comments_link" %>
+              </div>
             </div>
           </div>
 
           <div class="control-group">
-            <label class ="control-label">Owner Comments:</label>
+            <label class ="control-label">Owner Comments</label>
             <div class="controls">
-              <p><%= link_to "View", "#", :id => "view_owner_comments", :class => "btn" %><%= link_to "Hide", "#", :id => "hide_owner_comments", :class => "btn" %></p>
+              <p><strong><%= link_to "View", "#", :class => "view-owner-comments" %><%= link_to "Hide", "#", :class => "hide-owner-comments" %></strong></p>
               <div id="owner_comments">
-                Comments<%= link_to(content_tag(:span, "", :class => "icon-chevron-up pull-right"), "#", :id => "hide_owner_comments") %>
+                <%= link_to(content_tag(:span, "", :class => "icon-chevron-up pull-right"), "#", :class => "hide-owner-comments") %>
                 <%= render partial: "comments/index_owner_comments" %>
-                <%= link_to "Add Comments", '#', remote: true, :class => 'add_comments_link btn' %>
+                <%= link_to "Add Comments", "#", remote: true, :class => "btn add_comments_link" %>
               </div>
             </div>
           </div>
           <hr/>
 
           <div class="control-group">
-            <label class ="control-label">Visibility:</label>
+            <label class ="control-label">Visibility</label>
             <div class="controls">
-              <p> This DMP is <span style="color:blue;"><strong><%=@plan.visibility.capitalize %></strong></span><br/>
-              <%= link_to "Change Settings", '#', remote: true, :class => 'change_visibility_link btn' %></p>
+              <p> This DMP is <strong class="blue"><%=@plan.visibility.capitalize %></strong><br/>
+              <%= link_to "Change Settings", "#", remote: true, :class => "btn change_visibility_link" %></p>
             </div>
           </div>
 
           <hr/>
 
           <div class="control-group">
-            <label class ="control-label"> Available Actions: </label>
+            <label class ="control-label">Available Actions</label>
               <div class="controls">
               <p><%= link_to "Preview DMP", preview_plan_path(@plan) %> |
                 <% if (@requirements_template.review_type == :formal_review) || (@requirements_template.review_type == :informal_review) %>
