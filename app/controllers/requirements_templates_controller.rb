@@ -9,7 +9,6 @@ class RequirementsTemplatesController < ApplicationController
   # GET /requirements_templates
   # GET /requirements_templates.json
   def index
-
     if !safe_has_role?(Role::DMP_ADMIN)
       #@requirements_templates = @requirements_templates.where.
                                 #any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public)
