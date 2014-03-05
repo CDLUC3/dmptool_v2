@@ -51,3 +51,4 @@ gem "recaptcha", :require => "recaptcha/rails"
 gem 'activerecord_any_of'
 gem 'prawn'
 gem 'exception_notification'
+gem 'rabl' # for rendering views in the api
