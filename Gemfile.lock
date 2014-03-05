@@ -175,6 +175,8 @@ GEM
       ruby-rc4
       ttfunk (~> 1.0.3)
     pyu-ruby-sasl (0.0.3.3)
+    rabl (0.9.3)
+      activesupport (>= 2.3.14)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -287,6 +289,7 @@ DEPENDENCIES
   omniauth-shibboleth!
   paranoia!
   prawn
+  rabl
   rack-test
   rails (= 4.0.0)
   recaptcha

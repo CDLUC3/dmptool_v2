@@ -8,6 +8,7 @@ class RequirementsController < ApplicationController
   # GET /requirements.json
   def index
     @requirement = @requirements_template.requirements.build
+    @requirement.requirements_template.ensure_requirements_position # be sure that position is set for these items, if not, set defaults
     @requirements = @requirements_template.requirements
   end
 
@@ -73,25 +74,60 @@ class RequirementsController < ApplicationController
     end
   end
 
-  # reorder reorders the requirements in a template from drag and drop
+  # reorders the requirements in a template from drag and drop
   def reorder
     respond_to do |format|
       format.js do
         render nothing: true && return if params[:drag_id].blank? || params[:drop_id].blank?
         @drag_req = Requirement.find(params[:drag_id].first)
-        @drop_req = Requirement.find(params[:drop_id].first)
-        render nothing: true && return if @drag_req.requirements_template_id != @drag_req.requirements_template_id
-        # add other validation that you can reorder here
+        if params[:drop_id] == 'drop_before_first' #a special case of dropping before -- the rest are dropping after
+          desc_ids = @drag_req.descendant_ids
+          old_path = (@drag_req.ancestry.nil? ? [] : @drag_req.ancestry.split("/")) + [@drag_req.id]
+          @drop_req = @drag_req.requirements_template.requirements.roots.order(:position).first
+          @drag_req.position_before(@drop_req.id)
+          @drag_req.update_column(:ancestry, nil)
+          if @drag_req.group
+            fix_descendant_ancestry(desc_ids, old_path, [@drag_req.id])
+          end
+        else
+          render nothing: true && return if params[:drag_id] == params[:drop_id] #ignore drop on self
+          @drop_req = Requirement.find(params[:drop_id].first)
+          render nothing: true && return if @drag_req.requirements_template_id != @drag_req.requirements_template_id
+          # add other validation that you can reorder here
 
-        if @drag_req.group == false && @drop_req.group == false #both are requirements neither is a folder, both have same parent
-          @drag_req.position_after(@drop_req.id)
-          @drag_req.update_column(:ancestry, @drop_req.ancestry)
-        elsif @drag_req.group == false && @drop_req.group == true #dropping a requirement on a folder, it gets the folder as a parent
-          @drag_req.position_after(@drop_req.id)
-          @drag_req.update_attributes({:parent_id => @drop_req.id})
-          #@drag_req.parent_id = @drop_req.id #sets the parent as the dropped on folder
+          if @drag_req.group.blank? && @drop_req.group.blank? # one requirement dropped on another requirement
+            #unless @drop_req.ancestor_ids.include?(@drag_req.id) #do not change anything for dragging yourself into your own area
+            @drag_req.position_after(@drop_req.id)
+            @drag_req.update_column(:ancestry, @drop_req.ancestry)
+            #end
+          elsif @drag_req.group.blank? && @drop_req.group #one requirement dropped on a folder
+            @drag_req.position_after(@drop_req.id)
+            a = (@drop_req.ancestry.nil? ? [] : @drop_req.ancestry.split("/"))
+            a = (a + [@drop_req.id]).join("/")
+            @drag_req.update_column(:ancestry, a)
+
+          elsif @drag_req.group && @drop_req.group #dropping on a folder on a folder
+            unless @drop_req.ancestor_ids.include?(@drag_req.id) #do not change anything for dragging yourself into your own area
+              desc_ids = @drag_req.descendant_ids
+              old_path = (@drag_req.ancestry.nil? ? [] : @drag_req.ancestry.split("/")) + [@drag_req.id]
+              new_path = (@drop_req.ancestry.nil? ? [] : @drop_req.ancestry.split("/")) + [@drop_req.id]
+              @drag_req.position_after(@drop_req.id)
+              @drag_req.update_column(:ancestry, new_path.join("/")) #put it under the dropped folder
+              new_path = new_path + [@drag_req.id]
+              fix_descendant_ancestry(desc_ids, old_path, new_path)
+            end
+          elsif @drag_req.group && @drop_req.group.blank? #dropping on a folder on a file
+            unless @drop_req.ancestor_ids.include?(@drag_req.id) #do not change anything for dragging yourself into your own area
+              desc_ids = @drag_req.descendant_ids
+              old_path = (@drag_req.ancestry.nil? ? [] : @drag_req.ancestry.split("/")) + [@drag_req.id]
+              new_path = (@drop_req.ancestry.nil? ? [] : @drop_req.ancestry.split("/"))
+              @drag_req.position_after(@drop_req.id)
+              @drag_req.update_column(:ancestry, @drop_req.ancestry) #put it under same parent
+              new_path = new_path + [@drag_req.id]
+              fix_descendant_ancestry(desc_ids, old_path, new_path)
+            end
+          end
         end
-
 
         #these need setting for re-rendering the view area
         @requirements_template = @drag_req.requirements_template
@@ -114,5 +150,17 @@ class RequirementsController < ApplicationController
     # Fetch the corresponding Requirements Template
     def get_requirements_template
       @requirements_template =  RequirementsTemplate.find(params[:requirements_template_id])
+    end
+
+    #this is needed because the ancestry gem refuses to work, perhaps because of validations or other
+    #problems and we really shouldn't need to update the timestamps for reordering, either
+    def fix_descendant_ancestry(desc_ids, old_path, new_path)
+      cut = old_path.length
+      desc_ids.each do |i|
+        r = Requirement.find(i)
+        path = r.ancestry.split("/")
+        a = (new_path + path[cut..-1]).join("/")
+        r.update_column(:ancestry, a)
+      end
     end
 end

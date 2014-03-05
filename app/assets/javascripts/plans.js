@@ -51,57 +51,59 @@ $(function() {
 });
 
 $(function() {
-	$("#reviewer_comments, #hide_reviewer_comments").hide();
-	$("#view_reviewer_comments").click(function(event){
+	$("#reviewer_comments, .hide-reviewer-comments").hide();
+	$(".view-reviewer-comments").click(function(event){
 		event.preventDefault();
 		$("#reviewer_comments").show();
-		$("#view_reviewer_comments").hide();
-		$("#hide_reviewer_comments").show();
+		$(".view-reviewer-comments").hide();
+		$(".hide-reviewer-comments").show();
 	});
 });
 
 $(function() {
-	$("#hide_reviewer_comments").click(function(event){
+	$(".hide-reviewer-comments").click(function(event){
 		event.preventDefault();
 		$("#reviewer_comments").hide();
-		$("#hide_reviewer_comments").hide();
-		$("#view_reviewer_comments").show();
+		$(".hide-reviewer-comments").hide();
+		$(".view-reviewer-comments").show();
 	});
 });
 
 $(function() {
-	$("#owner_comments, #hide_owner_comments").hide();
-	$("#view_owner_comments").click(function(event){
+	$("#owner_comments, .hide-owner-comments").hide();
+	$(".view-owner-comments").click(function(event){
 		event.preventDefault();
 		$("#owner_comments").show();
-		$("#view_owner_comments").hide();
-		$("#hide_owner_comments").show();
+		$(".view-owner-comments").hide();
+		$(".hide-owner-comments").show();
 	});
 });
 
 $(function() {
-	$("#hide_owner_comments").click(function(event){
+	$(".hide-owner-comments").click(function(event){
 		event.preventDefault();
 		$("#owner_comments").hide();
-		$("#hide_owner_comments").hide();
-		$("#view_owner_comments").show();
+		$(".hide-owner-comments").hide();
+		$(".view-owner-comments").show();
 	});
 });
 
 $(function() {
-	$("#plan_states_history").hide();
-	$("#show_plan_states_history").click(function(event){
+	$("#plan_history, .hide-plan-history").hide();
+	$(".view-plan-history").click(function(event){
 		event.preventDefault();
-		$("#plan_states_history").show();
-		$("#show_plan_states_history").hide();
+		$("#plan_history").show();
+		$(".view-plan-history").hide();
+		$(".hide-plan-history").show();
 	});
 });
 
 $(function() {
-	$("#hide_plan_states_history").click(function(event){
+	$(".hide-plan-history").click(function(event){
 		event.preventDefault();
-		$("#plan_states_history").hide();
-		$("#show_plan_states_history").show();
+		$("#plan_history").hide();
+		$(".hide-plan-history").hide();
+		$(".view-plan-history").show();
 	});
 });
 

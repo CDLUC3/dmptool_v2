@@ -1,7 +1,14 @@
-class Api::V1::ProjectsController < Api::V1::BaseController
+class Api::V1::UsersController < Api::V1::BaseController
 
-  def index
-    respond_with(User.all)
-  end
+	respond_to :json
+
+  	def index         
+    	@users = User.all     
+  	end 
+
+	def show
+    	@user = User.find(params[:id])
+  	end
+
 
 end

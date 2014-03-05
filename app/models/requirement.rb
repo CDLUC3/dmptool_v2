@@ -9,7 +9,7 @@ class Requirement < ActiveRecord::Base
 
   accepts_nested_attributes_for :enumerations, allow_destroy: true, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
 
-  default_scope order('position ASC')  # requirements should be ordered by position by default, rather than by the id or date
+  default_scope { order('position ASC') }  # requirements should be ordered by position by default, rather than by the id or date
 
   validates_columns :requirement_type, :obligation
   validates :text_brief, presence: true
@@ -145,8 +145,9 @@ class Requirement < ActiveRecord::Base
     renumber_from = self.position
     self.position = nil
     self.update_column(:position, nil)
-    Requirement.update_all("position = position - 1",
-                           ['requirements_template_id = ? AND position > ?', self.requirements_template_id, renumber_from] )
+    Requirement.where(requirements_template_id: self.requirements_template_id).
+                where("position > ?", renumber_from).
+                update_all("position = position - 1")
   end
 
   #positions this requirement before the ID of the other requirement in the order
@@ -156,8 +157,9 @@ class Requirement < ActiveRecord::Base
     remove_from_position
     before_req = Requirement.find(requirement_id)
     from_position = before_req.position
-    Requirement.update_all("position = position + 1",
-                           ['requirements_template_id = ? AND position >= ?', before_req.requirements_template_id, from_position] )
+    Requirement.where(requirements_template_id: before_req.requirements_template_id).
+        where("position >= ?", from_position).
+        update_all("position = position + 1")
     self.update_column(:position, from_position)
   end
 
@@ -168,8 +170,11 @@ class Requirement < ActiveRecord::Base
     remove_from_position
     after_req = Requirement.find(requirement_id)
     from_position = after_req.position
-    Requirement.update_all("position = position + 1",
-                           ['requirements_template_id = ? AND position > ?', after_req.requirements_template_id, from_position] )
+
+    Requirement.where(requirements_template_id: after_req.requirements_template_id).
+        where("position > ?", from_position).
+        update_all("position = position + 1")
+
     self.update_column(:position, from_position + 1)
   end
 
@@ -189,8 +194,10 @@ class Requirement < ActiveRecord::Base
 
   def close_gap_in_position
     renumber_from = self.position
-    Requirement.update_all("position = position - 1",
-                           ['requirements_template_id = ? AND position > ?', self.requirements_template_id, renumber_from] )
+
+    Requirement.where(requirements_template_id: self.requirements_template_id).
+        where("position > ?", renumber_from).
+        update_all("position = position - 1")
   end
 
 end

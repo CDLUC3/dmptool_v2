@@ -1,8 +1,14 @@
+<% if @owner_comments.nil? %>
+<div class="comment">
+	There are currently no comments.
+</div>
+<% else %>
 <% @owner_comments.each do |comment| %>
 	<div class="comment">
-		<%= user_name(comment) %>:<br/>
-		<%= comment.value %><br/>
-		<%= comment.created_at.strftime("%m/%d/%Y %I:%M %p") %>
-		<%= link_to "", comment, :method => :delete, :data => { :confirm => "Are you sure?"}, :class => "icon trash pull-right" %>
+		<span class="date-created"><%= comment.created_at.strftime("%m/%d/%Y %I:%M %p") %></span>
+		<strong><%= user_name(comment) %>:</strong>
+		<p><%= comment.value %></p>
+		<%= link_to "", comment, :method => :delete, :data => { :confirm => "Are you sure?"}, :class => "icon trash pull-right", :title => "Delete" %>
 	</div>
+<% end %>
 <% end %>

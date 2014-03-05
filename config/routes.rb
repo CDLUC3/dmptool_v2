@@ -1,10 +1,23 @@
 Dmptool2::Application.routes.draw do
 
-  namespace :api do
+  namespace :api, :defaults => {:format => :json} do
     namespace :v1 do
+      resources :resources
+      resources :institutions
       resources :users
+      resources :requirements_templates
+      resources :roles
+      resources :requirements
+      resources :comments
+      resources :plans
+      resources :resource_contexts
+      resources :responses
+      resources :published_plans
+      resources :plans_states
+      resources :sample_plans
     end
   end
+
 
   match '/500', :to => 'errors#internal_error', :via => :all 
   match '/404', :to => 'errors#not_found', :via => :all 
