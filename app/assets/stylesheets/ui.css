@@ -215,7 +215,7 @@ a.hide-plan-history .icon-chevron-up, a.hide-reviewer-comments .icon-chevron-up,
 	left: 100%;
 	top: -1px; }
 .history, .comments {
-	margin-top: -10px; }
+	margin: -10px 0 10px; }
 .history ul {
 	margin: 0; }
 .history li, .comment {
