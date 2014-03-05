@@ -64,23 +64,20 @@
           <div class="control-group">
             <label class="control-label">Current Status</label>
             <div class="controls">
-              <p><strong style="color:blue;"><%= state(@plan) %></strong><br/>
-              <%= link_to "Show History", '#', :id => 'show_plan_states_history', :class => "btn" %></p>
-              <fieldset id="plan_states_history">
-                <legend><%= link_to raw('<i class="icon-chevron-up pull-right"></i>'), '#', id: 'hide_plan_states_history' %></legend>
+              <p><strong class="blue"><%= state(@plan) %></strong> <%= link_to(content_tag(:span, "", :class => "icon-chevron-down") + "Show History", "#", :class => "view-plan-history") %><%= link_to(content_tag(:span, "", :class => "icon-chevron-up") + "Hide History", "#", :class => "hide-plan-history") %></p>
+              <div id="plan_history" class="history">
                 <%= render partial: 'plan_states_history' %>
-              </fieldset>
+              </div>
             </div>
           </div>
 
           <div class="control-group">
             <label class ="control-label">Reviewer Comments</label>
             <div class="controls">
-              <p><strong><%= link_to "View", "#", :class => "view-reviewer-comments" %><%= link_to "Hide", "#", :class => "hide-reviewer-comments" %></strong></p>
-              <div id="reviewer_comments">
-                <%= link_to(content_tag(:span, "", :class => "icon-chevron-up pull-right"), "#", :class => "hide-reviewer-comments") %>
+              <p><%= link_to(content_tag(:span, "", :class => "icon-chevron-down") + "View", "#", :class => "view-reviewer-comments") %><%= link_to(content_tag(:span, "", :class => "icon-chevron-up") + "Hide", "#", :class => "hide-reviewer-comments") %></p>
+              <div id="reviewer_comments" class="comments">
                 <%= render partial: 'comments/index_reviewer_comments' %>
-                <%= link_to "Add Comments", "#", remote: true, :class => "btn add_comments_link" %>
+                <p><%= link_to "Add Comments", "#", remote: true, :class => "btn add_comments_link" %></p>
               </div>
             </div>
           </div>
@@ -88,11 +85,10 @@
           <div class="control-group">
             <label class ="control-label">Owner Comments</label>
             <div class="controls">
-              <p><strong><%= link_to "View", "#", :class => "view-owner-comments" %><%= link_to "Hide", "#", :class => "hide-owner-comments" %></strong></p>
-              <div id="owner_comments">
-                <%= link_to(content_tag(:span, "", :class => "icon-chevron-up pull-right"), "#", :class => "hide-owner-comments") %>
+              <p><%= link_to(content_tag(:span, "", :class => "icon-chevron-down") + "View", "#", :class => "view-owner-comments") %><%= link_to(content_tag(:span, "", :class => "icon-chevron-up") + "Hide", "#", :class => "hide-owner-comments") %></p>
+              <div id="owner_comments" class="comments">
                 <%= render partial: "comments/index_owner_comments" %>
-                <%= link_to "Add Comments", "#", remote: true, :class => "btn add_comments_link" %>
+                <p><%= link_to "Add Comments", "#", remote: true, :class => "btn add_comments_link" %></p>
               </div>
             </div>
           </div>

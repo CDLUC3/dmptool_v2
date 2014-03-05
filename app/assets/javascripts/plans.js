@@ -80,7 +80,7 @@ $(function() {
 });
 
 $(function() {
-	$("#hide-owner-comments").click(function(event){
+	$(".hide-owner-comments").click(function(event){
 		event.preventDefault();
 		$("#owner_comments").hide();
 		$(".hide-owner-comments").hide();
@@ -89,19 +89,21 @@ $(function() {
 });
 
 $(function() {
-	$("#plan_states_history").hide();
-	$("#show_plan_states_history").click(function(event){
+	$("#plan_history, .hide-plan-history").hide();
+	$(".view-plan-history").click(function(event){
 		event.preventDefault();
-		$("#plan_states_history").show();
-		$("#show_plan_states_history").hide();
+		$("#plan_history").show();
+		$(".view-plan-history").hide();
+		$(".hide-plan-history").show();
 	});
 });
 
 $(function() {
-	$("#hide_plan_states_history").click(function(event){
+	$(".hide-plan-history").click(function(event){
 		event.preventDefault();
-		$("#plan_states_history").hide();
-		$("#show_plan_states_history").show();
+		$("#plan_history").hide();
+		$(".hide-plan-history").hide();
+		$(".view-plan-history").show();
 	});
 });
 

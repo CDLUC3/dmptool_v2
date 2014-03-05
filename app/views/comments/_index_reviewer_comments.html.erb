@@ -1,10 +1,14 @@
+<% if @review_comments.nil? %>
+<div class="comment">
+	There are currently no comments.
+</div>
+<% else %>
 <% @reviewer_comments.each do |comment| %>
-  <div class="comment">
-    	<span class="date-created"><%= comment.created_at.strftime("%m/%d/%Y %I:%M %p") %></span>
-    	<p><stonrg><%= user_name(comment) %>:</strong></p>
-    	<br/>
-      <p><%= comment.value %></p>
-      <%= link_to "", comment, :method => :delete, :data => { :confirm => "Are you sure?"}, :class => "icon trash pull-right", :title => "Delete" %>
-    </div>
-  </fieldset>
+	<div class="comment">
+		<span class="date-created"><%= comment.created_at.strftime("%m/%d/%Y %I:%M %p") %></span>
+		<strong><%= user_name(comment) %>:</strong>
+		<p><%= comment.value %></p>
+		<%= link_to "", comment, :method => :delete, :data => { :confirm => "Are you sure?"}, :class => "icon trash pull-right", :title => "Delete" %>
+	</div>
+<% end %>
 <% end %>
