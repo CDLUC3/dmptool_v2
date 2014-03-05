@@ -8,17 +8,13 @@ class PlansController < ApplicationController
   # GET /plans
   # GET /plans.json
   def index
-    if !safe_has_role?(Role::DMP_ADMIN)
-      user_id = current_user.id
-      plan_ids = UserPlan.where(user_id: user_id).pluck(:plan_id) unless user_id.nil?
-      @plans = Plan.where(id: plan_ids)
-    else
-      @plans = Plan.all
-    end
+   user_id = current_user.id
+   plan_ids = UserPlan.where(user_id: user_id).pluck(:plan_id) unless user_id.nil?
+   @plans = Plan.where(id: plan_ids)
 
     case params[:scope]
       when "all"
-        @plans
+        @plans = @plans.page(params[:page]).per(1000)
       when "all_limited"
         @plans = @plans.page(params[:page]).per(5)
       when "coowned"
