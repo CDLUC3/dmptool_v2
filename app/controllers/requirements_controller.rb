@@ -81,13 +81,15 @@ class RequirementsController < ApplicationController
         render 'reorder_fail' and return if params[:drag_id].blank? || params[:drop_id].blank?
         @drag_req = Requirement.find(params[:drag_id].first)
         if params[:drop_id] == 'drop_before_first' #a special case of dropping before -- the rest are dropping after
-          desc_ids = @drag_req.descendant_ids
-          old_path = (@drag_req.ancestry.nil? ? [] : @drag_req.ancestry.split("/")) + [@drag_req.id]
-          @drop_req = @drag_req.requirements_template.requirements.roots.order(:position).first
-          @drag_req.position_before(@drop_req.id)
-          @drag_req.update_column(:ancestry, nil)
-          if @drag_req.group
-            fix_descendant_ancestry(desc_ids, old_path, [@drag_req.id])
+          ActiveRecord::Base.transaction do
+            desc_ids = @drag_req.descendant_ids
+            old_path = (@drag_req.ancestry.nil? ? [] : @drag_req.ancestry.split("/")) + [@drag_req.id]
+            @drop_req = @drag_req.requirements_template.requirements.roots.order(:position).first
+            @drag_req.position_before(@drop_req.id)
+            @drag_req.update_column(:ancestry, nil)
+            if @drag_req.group
+              fix_descendant_ancestry(desc_ids, old_path, [@drag_req.id])
+            end
           end
         else
           render 'reorder_fail' and return if params[:drag_id] == params[:drop_id] #ignore drop on self
@@ -96,35 +98,43 @@ class RequirementsController < ApplicationController
           # add other validation that you can reorder here
 
           if @drag_req.group.blank? && @drop_req.group.blank? # one requirement dropped on another requirement
-            #unless @drop_req.ancestor_ids.include?(@drag_req.id) #do not change anything for dragging yourself into your own area
-            @drag_req.position_after(@drop_req.id)
-            @drag_req.update_column(:ancestry, @drop_req.ancestry)
+            ActiveRecord::Base.transaction do
+              #unless @drop_req.ancestor_ids.include?(@drag_req.id) #do not change anything for dragging yourself into your own area
+              @drag_req.position_after(@drop_req.id)
+              @drag_req.update_column(:ancestry, @drop_req.ancestry)
+            end
             #end
           elsif @drag_req.group.blank? && @drop_req.group #one requirement dropped on a folder
-            @drag_req.position_after(@drop_req.id)
-            a = (@drop_req.ancestry.nil? ? [] : @drop_req.ancestry.split("/"))
-            a = (a + [@drop_req.id]).join("/")
-            @drag_req.update_column(:ancestry, a)
+            ActiveRecord::Base.transaction do
+              @drag_req.position_after(@drop_req.id)
+              a = (@drop_req.ancestry.nil? ? [] : @drop_req.ancestry.split("/"))
+              a = (a + [@drop_req.id]).join("/")
+              @drag_req.update_column(:ancestry, a)
+            end
 
           elsif @drag_req.group && @drop_req.group #dropping on a folder on a folder
             unless @drop_req.ancestor_ids.include?(@drag_req.id) #do not change anything for dragging yourself into your own area
-              desc_ids = @drag_req.descendant_ids
-              old_path = (@drag_req.ancestry.nil? ? [] : @drag_req.ancestry.split("/")) + [@drag_req.id]
-              new_path = (@drop_req.ancestry.nil? ? [] : @drop_req.ancestry.split("/")) + [@drop_req.id]
-              @drag_req.position_after(@drop_req.id)
-              @drag_req.update_column(:ancestry, new_path.join("/")) #put it under the dropped folder
-              new_path = new_path + [@drag_req.id]
-              fix_descendant_ancestry(desc_ids, old_path, new_path)
+              ActiveRecord::Base.transaction do
+                desc_ids = @drag_req.descendant_ids
+                old_path = (@drag_req.ancestry.nil? ? [] : @drag_req.ancestry.split("/")) + [@drag_req.id]
+                new_path = (@drop_req.ancestry.nil? ? [] : @drop_req.ancestry.split("/")) + [@drop_req.id]
+                @drag_req.position_after(@drop_req.id)
+                @drag_req.update_column(:ancestry, new_path.join("/")) #put it under the dropped folder
+                new_path = new_path + [@drag_req.id]
+                fix_descendant_ancestry(desc_ids, old_path, new_path)
+              end
             end
           elsif @drag_req.group && @drop_req.group.blank? #dropping on a folder on a file
             unless @drop_req.ancestor_ids.include?(@drag_req.id) #do not change anything for dragging yourself into your own area
-              desc_ids = @drag_req.descendant_ids
-              old_path = (@drag_req.ancestry.nil? ? [] : @drag_req.ancestry.split("/")) + [@drag_req.id]
-              new_path = (@drop_req.ancestry.nil? ? [] : @drop_req.ancestry.split("/"))
-              @drag_req.position_after(@drop_req.id)
-              @drag_req.update_column(:ancestry, @drop_req.ancestry) #put it under same parent
-              new_path = new_path + [@drag_req.id]
-              fix_descendant_ancestry(desc_ids, old_path, new_path)
+              ActiveRecord::Base.transaction do
+                desc_ids = @drag_req.descendant_ids
+                old_path = (@drag_req.ancestry.nil? ? [] : @drag_req.ancestry.split("/")) + [@drag_req.id]
+                new_path = (@drop_req.ancestry.nil? ? [] : @drop_req.ancestry.split("/"))
+                @drag_req.position_after(@drop_req.id)
+                @drag_req.update_column(:ancestry, @drop_req.ancestry) #put it under same parent
+                new_path = new_path + [@drag_req.id]
+                fix_descendant_ancestry(desc_ids, old_path, new_path)
+              end
             end
           end
         end
