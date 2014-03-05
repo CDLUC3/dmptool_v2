@@ -1,7 +1,14 @@
 class Api::V1::ResourcesController < Api::V1::BaseController
 
+  respond_to :json
+
   def index
-    respond_with(Resource.all)
+    @resources = Resource.all
+  end
+
+  def show
+    @resource = Resource.find(params[:id])
   end
 
 end
+
