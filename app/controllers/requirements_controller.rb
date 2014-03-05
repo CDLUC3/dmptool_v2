@@ -90,6 +90,7 @@ class RequirementsController < ApplicationController
             fix_descendant_ancestry(desc_ids, old_path, [@drag_req.id])
           end
         else
+          render nothing: true && return if params[:drag_id] == params[:drop_id] #ignore drop on self
           @drop_req = Requirement.find(params[:drop_id].first)
           render nothing: true && return if @drag_req.requirements_template_id != @drag_req.requirements_template_id
           # add other validation that you can reorder here
