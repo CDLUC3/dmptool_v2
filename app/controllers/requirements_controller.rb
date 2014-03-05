@@ -8,6 +8,7 @@ class RequirementsController < ApplicationController
   # GET /requirements.json
   def index
     @requirement = @requirements_template.requirements.build
+    @requirement.requirements_template.ensure_requirements_position # be sure that position is set for these items, if not, set defaults
     @requirements = @requirements_template.requirements
   end
 

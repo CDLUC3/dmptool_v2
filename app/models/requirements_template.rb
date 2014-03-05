@@ -77,10 +77,16 @@ class RequirementsTemplate < ActiveRecord::Base
 
   #this adds the requirements position if they are not set correctly, but if set, leaves them alone
   def ensure_requirements_position
-    reqs = self.requirements.where(position: nil).count
-    return if reqs == 0
-    self.requirements.order(:id).each_with_index do |req, i|
+    reqs = self.requirements.where(position: nil)
+    return if reqs.length < 1
+    good_reqs = self.requirements.where("position IS NOT NULL").order(:position)
+    #consolidate ordered items at first
+    good_reqs.each_with_index do |req, i|
       req.update_column(:position, i+1)
+    end
+    #add order to items missing it at end
+    reqs.each_with_index do |req, i|
+      req.update_column(:position, i + good_reqs.length + 1)
     end
   end
 
