@@ -1,3 +1,4 @@
+$("#cover_dialog").hide();
 $('#main_requirements_tree').html("<%= escape_javascript( nested_requirements @requirements.arrange(order: :position) ) %>");
 $('#req_div_<%=@drag_req.id%>').animate({backgroundColor: 'yellow'}, 'fast');
 $('#req_div_<%=@drag_req.id%>').animate({backgroundColor: 'white'}, 'slow');
