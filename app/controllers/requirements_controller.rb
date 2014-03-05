@@ -78,7 +78,7 @@ class RequirementsController < ApplicationController
   def reorder
     respond_to do |format|
       format.js do
-        render nothing: true and return false if params[:drag_id].blank? || params[:drop_id].blank?
+        render 'reorder_fail' and return if params[:drag_id].blank? || params[:drop_id].blank?
         @drag_req = Requirement.find(params[:drag_id].first)
         if params[:drop_id] == 'drop_before_first' #a special case of dropping before -- the rest are dropping after
           desc_ids = @drag_req.descendant_ids
@@ -90,9 +90,9 @@ class RequirementsController < ApplicationController
             fix_descendant_ancestry(desc_ids, old_path, [@drag_req.id])
           end
         else
-          render nothing: true and return false if params[:drag_id] == params[:drop_id] #ignore drop on self
+          render 'reorder_fail' and return if params[:drag_id] == params[:drop_id] #ignore drop on self
           @drop_req = Requirement.find(params[:drop_id].first)
-          render nothing: true and return false if @drag_req.requirements_template_id != @drag_req.requirements_template_id #ignore drops between templates, not allowed
+          render 'reorder_fail' and return if @drag_req.requirements_template_id != @drag_req.requirements_template_id #ignore drops between templates, not allowed
           # add other validation that you can reorder here
 
           if @drag_req.group.blank? && @drop_req.group.blank? # one requirement dropped on another requirement
