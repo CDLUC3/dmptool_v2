@@ -1,21 +1,19 @@
-<div id = 'visibility_dialog_form'>
-  <%= form_tag(change_visibility_path, method: :post, html: { :class => "form-horizontal"}) do %>
-    <%= hidden_field_tag :plan_id, plan_id %>
-    <div class="control-group">
-      <div class="controls checkbox-controls">
-        <%= radio_button_tag :visibility, :institutional, :class => 'radio inline', :id => 'institutional' %>
-        <%= label_tag :institutional, "With others from #{institution_name(plan_id)}", :class => 'radio-label' %><br/>
-        <%= radio_button_tag :visibility, :public, :class => 'radio inline', :id => 'public' %>
-        <%= label_tag :public, 'Publicly on the web', :class => 'radio-label' %><br/>
-        <%= radio_button_tag :visibility, :private, :class => 'radio inline', :id => 'private', checked: true  %>
-        <%= label_tag :private, '...Or keep it Private', :class => 'radio-label'%>
-      </div>
+<%= form_tag(change_visibility_path, method: :post, html: { :class => "form-horizontal"}) do %>
+  <%= hidden_field_tag :plan_id, plan_id %>
+  <div class="control-group">
+    <div class="controls checkbox-controls">
+      <%= radio_button_tag :visibility, :institutional, :class => 'radio inline', :id => 'institutional' %>
+      <%= label_tag :institutional, "With others from #{institution_name(plan_id)}", :class => 'radio-label' %><br/>
+      <%= radio_button_tag :visibility, :public, :class => 'radio inline', :id => 'public' %>
+      <%= label_tag :public, 'Publicly on the web', :class => 'radio-label' %><br/>
+      <%= radio_button_tag :visibility, :private, :class => 'radio inline', :id => 'private', checked: true  %>
+      <%= label_tag :private, '...Or keep it Private', :class => 'radio-label'%>
     </div>
-    <br/>
-    <div>
-    <%= submit_tag "Share", :class => 'btn btn-success', method: 'post' %>
-      <p style="color:red;">Note: This cannot be undone </p>
-    <%= link_to "Cancel", '#', type: :reset, id: "cancel_action", style: "color:green;" %>
-    </div>
-  <% end %>
-</div>
+  </div>
+  <br/>
+  <div>
+  <%= submit_tag "Share", :class => 'btn btn-success', method: 'post' %>
+    <p style="color:red;">Note: This cannot be undone </p>
+  <%= button_tag 'Cancel', type: :reset, :class => 'btn btn-success', id: "cancel_action" %>
+  </div>
+<% end %>

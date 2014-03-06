@@ -45,17 +45,6 @@ class PlansController < ApplicationController
     @comment = Comment.new
   end
 
-  # GET /plans/1/edit
-  def edit
-    template_id = @plan.requirements_template_id
-    @requirements_template = RequirementsTemplate.find(template_id)
-    @comment = Comment.new
-    comments = Comment.where(plan_id: @plan.id, user_id: current_user.id)
-    @reviewer_comments = comments.where(visibility: :reviewer)
-    @owner_comments = comments.where(visibility: :owner)
-    @plan_states = @plan.plan_states
-  end
-
   # POST /plans
   # POST /plans.json
   def create
@@ -71,6 +60,15 @@ class PlansController < ApplicationController
         format.json { render json: @plan.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # GET /plans/1/edit
+  def edit
+    @comment = Comment.new
+    comments = Comment.where(plan_id: @plan.id, user_id: current_user.id)
+    @reviewer_comments = comments.where(visibility: :reviewer)
+    @owner_comments = comments.where(visibility: :owner)
+    @plan_states = @plan.plan_states
   end
 
   # PATCH/PUT /plans/1
@@ -191,8 +189,12 @@ class PlansController < ApplicationController
     id = params[:plan_id].to_i unless params[:plan_id].blank?
     plan = Plan.find(id)
     plan.visibility = params[:visibility]
-    plan.save!
-    redirect_to edit_plan_path(plan)
+    respond_to do |format|
+      if plan.save!
+        format.html { redirect_to edit_plan_path(plan)}
+        format.js
+      end
+    end
   end
 
   def public
