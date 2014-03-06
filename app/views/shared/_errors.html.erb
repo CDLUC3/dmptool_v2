@@ -36,9 +36,9 @@
 <% if errors %>
   <div id="error_explanation">
     <% models.each do |model| %>
-      <h2>
+      <p><strong>
         <%= "#{pluralize(model.errors.count, "error")} prohibited this #{model.class.model_name.human.downcase} from being saved:" %>
-      </h2>
+      </strong></p>
       <ul>
         <% model.errors.full_messages.each do |m| %>
           <li>
