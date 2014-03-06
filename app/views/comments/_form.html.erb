@@ -1,24 +1,22 @@
 <%# this partial requires plan_id to be passed in as a local variable %>
-<fieldset id="comment_dialog_form">
-  <%= form_for(@comment, remote: true,  html: { :class => 'form-horizontal' }) do |f| %>
-    <%= render partial: "shared/errors", locals: {model: @comment} %>
-    <div class="control-group">
-        <%= f.hidden_field :user_id, value: current_user.id %>
-        <%= f.hidden_field :plan_id, value: plan_id %>
-    </div>
-    <div class="control-group">
-    		<%= f.text_area :value, placeholder: 'Comment', :class => "input-block-level", rows: "8"%>
-    </div>
-    <div class="control-group">
-      <% if safe_has_role?(Role::INSTITUTIONAL_REVIEWER) %>
-        <%= f.hidden_field :visibility, value: :reviewer %>
-      <% else %>
-        <%= f.hidden_field :visibility, value: :owner %>
-      <% end %>
-    </div>
-    <div>
-      <%= f.submit "Submit", :class => 'btn btn-success pull-right', method: 'post' %>
-      <%= button_tag "Cancel", type: :reset, :class => 'btn btn-success pull-right', id: "cancel_action" %>
-    </div>
-  <% end %>
-</fieldset>
+<%= form_for(@comment, remote: true,  html: { :class => 'form-horizontal' }) do |f| %>
+  <%= render partial: "shared/errors", locals: {model: @comment} %>
+  <div class="control-group">
+      <%= f.hidden_field :user_id, value: current_user.id %>
+      <%= f.hidden_field :plan_id, value: plan_id %>
+  </div>
+  <div class="control-group">
+  		<%= f.text_area :value, placeholder: 'Comment', :class => "input-block-level", rows: "8"%>
+  </div>
+  <div class="control-group">
+    <% if safe_has_role?(Role::INSTITUTIONAL_REVIEWER) %>
+      <%= f.hidden_field :visibility, value: :reviewer %>
+    <% else %>
+      <%= f.hidden_field :visibility, value: :owner %>
+    <% end %>
+  </div>
+  <div>
+    <%= f.submit "Submit", :class => 'btn btn-success pull-right', method: 'post' %>
+    <%= button_tag "Cancel", type: :reset, :class => 'btn btn-success pull-right', id: "cancel_action" %>
+  </div>
+<% end %>

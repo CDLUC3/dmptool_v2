@@ -5,7 +5,7 @@
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="tab1">
-      <%= form_for @plan, html: { :class => 'form-horizontal' }  do |f| %>
+      <%= form_for @plan, html:{ :class => 'form-horizontal' }  do |f| %>
         <%= render partial: "shared/errors", locals: {model: @plan } %>
 
         <div class="control-group">
@@ -108,11 +108,10 @@
             <label class ="control-label">Available Actions</label>
               <div class="controls">
               <p><%= link_to "Preview DMP", preview_plan_path(@plan) %> |
-                <% if (@requirements_template.review_type == :formal_review) || (@requirements_template.review_type == :informal_review) %>
+                <% if (@plan.requirements_template.review_type == :formal_review) || (@plan.requirements_template.review_type == :informal_review) %>
                   <%= link_to "Submit DMP", preview_plan_path(@plan) %> |
                 <% end %>
-                <%= link_to "Deactivate DMP", "#" %> |
-                <%= link_to "Delete DMP",@plan, method: :delete,  style: 'color:red;', data: { confirm: 'Are you sure?', :id => 'delete_template' }%>
+                <%= link_to "Delete DMP",@plan, method: :delete,  style: 'color:red;', data: { confirm: 'Are you sure?', :id => 'delete_template'} %>
               </p>
             </div>
           </div>
@@ -120,7 +119,7 @@
         <% end %>
 
         <div class="buttons">
-          <%= f.submit 'Save Changes', :class => 'btn btn-success pull-left', method: 'post' %>
+          <%= f.submit 'Save', :class => 'btn' %>
           <%= button_tag 'Cancel', type: :reset, :class => 'btn btn-success'%>
           <% unless @plan.new_record? %>
             <%= link_to 'Plan Details >>', details_plan_path(@plan), method: 'get', :class => 'btn btn-green pull-right' %>
@@ -130,5 +129,3 @@
     </div>
   </div>
 </div>
-<%= render partial: 'change_visibility', locals: {:plan_id => params[:id]} %>
-<%= render partial: 'comments/form', locals: {:plan_id => params[:id]} %>

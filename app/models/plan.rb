@@ -14,6 +14,7 @@ class Plan < ActiveRecord::Base
   validates_columns :visibility
   validates :name, presence: true
   validates :visibility, presence: true
+  validates :requirements_template_id, presence: true
 
   # scopes for plan's visibility
   scope :institutional_visibility, -> { where(visibility: :institutional) }
@@ -33,7 +34,7 @@ class Plan < ActiveRecord::Base
     #add as a scope where s=start and e=end letter
     where("name REGEXP ?", "^[#{s}-#{e}]")
   end
-  
+
   def owner
     @owner ||= users.where('user_plans.owner' => true).first
   end

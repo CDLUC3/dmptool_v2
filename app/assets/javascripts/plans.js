@@ -127,13 +127,18 @@ $(function() {
 				effect: "toggle",
 				duration: 1000
 			},
+		 	buttons: {
+				Cancel: function()
+				{
+					$(this).dialog( "close" );
+				}
+			},
 			open: function()
 			{
 				$("#visibility_dialog_form").dialog("open");
 			},
       close: function() {
         $('#visibility_dialog_form').dialog("close");
-        $(this).find('form')[0].reset();
       }
 		}).prev ().find(".ui-dialog-titlebar-close").show();
 		return false
