@@ -3,6 +3,11 @@
 <div class="row-fluid">
 	<div class="details span4">
 	  <div class="tree-view border-box" id="main_requirements_border">
+      <div id="cover_dialog">
+        <div>
+          <%= image_tag("/assets/throbber.gif") %> Please wait a moment . . .
+        </div>
+      </div>
 	  	<p><strong>Template Outline</strong></p>
 	  	<div class="actions">
 		    <%= link_to(content_tag(:span, '', :class => 'icon add-group') + 'Add Group', new_requirements_template_requirement_path(@requirements_template, node_type: 'group') + '#jump') %>
@@ -56,6 +61,28 @@
       height: 23px;
       padding-top:3px;
     }
+
+    div#main_requirements_border {
+      position: relative;
+    }
+
+    div#cover_dialog {
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background-color:black;
+      z-index: 1000;
+      opacity:0.60;
+      filter:alpha(opacity=60); /* For IE8 and earlier */
+      display: none;
+    }
+
+    div#cover_dialog > div{
+      margin:50% 10px 0 65px;
+      color: white;
+    }
   </style>
 
   <script type="text/javascript">
@@ -94,12 +121,16 @@
       }
 
       // $.post("<%= reorder_requirements_path() %>", { drag_id: drag_id, drop_id: drop_id } );
+      $("#cover_dialog").show();
       $.ajax({
         url: '<%= reorder_requirements_path() %>',
         type: 'post',
         data: { drag_id: drag_id, drop_id: drop_id },
         headers: {
           'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          $("#cover_dialog").show();
         }
       });
     }
