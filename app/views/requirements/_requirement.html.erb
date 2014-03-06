@@ -10,12 +10,14 @@
                 id: "req_text_#{requirement.id}")
         %>
 			<% else %>
-				<span class="icon requirement"></span>
-				<%= link_to requirement.text_brief,
-                edit_requirements_template_requirement_path(requirement.requirements_template, requirement) + '#jump',
-                :class => 'requirements_text',
-                :id => "req_text_#{requirement.id}"
-        %>
+        <div>
+          <%= link_to content_tag(:span, '', :class => 'icon requirement') +
+                  requirement.text_brief,
+                  edit_requirements_template_requirement_path(requirement.requirements_template, requirement) + '#jump',
+                  :class => 'requirements_text',
+                  :id => "req_text_#{requirement.id}"
+          %>
+        </div>
 			<% end %>
 			<div class="actions">
 				<% if requirement.group == false %>
