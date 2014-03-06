@@ -86,6 +86,7 @@
 	padding-left: 45px;
 	position: relative; }	
 .header ul.nav > li.login a .icon.user-login {
+	position: absolute;
 	top: 13px;
 	left: 15px; }
 .header ul.nav > li.login a:hover .icon.user-login, 
@@ -207,8 +208,11 @@
 	line-height: 25px;
 	height: 25px;
 	margin-top: 15px;
-	padding: 0 0 0 40px;
 	position: relative; }
+.dashboard-header .inst-info a .icon {
+	margin-right: 5px;
+	top: 7px;
+}
 /* Dashboard Navigation */
 .dashboard-nav {
 	border-top: 1px solid #B6B6B7;

@@ -80,34 +80,52 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 /* DMPTool Pages */
 .dmptool-page p {
 	font-size: 1.167; }
+	
+	
+/* Details Pages */
+.requirements-tree-view .icon.confirm, .requirements-tree-view  .icon.requirement, .requirements-tree-view  .icon.add, .requirements-tree-view  .icon.remove, 
+.details .icon.add-group, .details .icon.add-requirement {
+	position: relative;
+	top: 3px; }
+.requirements-tree-view  .icon.requirement {
+	margin-right: 2px;
+}
+.requirements-tree-view  .folder-open.icon, .requirements-tree-view  .folder-closed.icon {
+	position: relative;
+	top: 4px;
+}
 
 /* Tree View */
-.tree-view .actions { 
-	}
-.requirements_tree_view .actions {
+.requirements-tree-view .actions {
 	margin: 0;
 	position: absolute;
 	top: 0;
 	right: 0; }
-.requirements_tree_view {
+.requirements-tree-view {
 	margin-top: 0; }
-.nested_requirements {
+.nested-requirements {
 	margin-left: 20px; }
-.requirements_tree_view ul {
+.requirements-tree-view ul {
 	line-height: 1.5;
 	margin: 0; }
-.requirements_tree_view ul > li {
+.requirements-tree-view ul > li {
 	position: relative;
-	margin: 0 0 0 0;
-	padding-right: 65px;
+	margin-bottom: 10px;
+	padding-right: 65px; }
+.requirements_group {
+  margin-bottom: 10px; }
+div.nested_requirements {
+	margin-left: 20px; }
+li.nested_requirements ul {
+	margin-left: 20px;
 }
-.requirements_tree_view div.requirements_group {
-  padding: 0 0 15px 0;
-}
-.requirements_tree_view ul li > a:first-child {
-	display: inline-block;
-	position: relative;
-	padding-left: 22px; }
+	
+
+
+	
+	
+	
+/* Institutions Hierarchy */
 .institutions {
 	margin: 10px 20px 20px; }
 .institution {
@@ -119,55 +137,38 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	position: relative; }
 
 
-	
-/* Misc. */
-.details[class*="span"] {
-	width: 328px; }
-.border-box {
-	border: 1px solid #C9C9CB;
-	margin-bottom: 10px;
-	padding: 10px 15px; }
-.tab-pane .border-box {
-	margin-bottom: 10px; }
 
-/* Modal Windows */
-/*
-.ui-widget-overlay {
-	background: #000000;
-	opacity: 0.75; }
-.ui-dialog {
-	padding: 0; }
-.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
-	border: 1px solid #4C4C4E;
-	border-radius: 0; }
-.ui-dialog .ui-dialog-titlebar {
-	border: none;
-	border-bottom: 1px solid #4C4C4E;
-	background: none;
-	overflow: visible; }
-.ui-widget-header {
-	color: #516935; }
-.ui-state-default, .ui-widget-header .ui-state-default {
-	border: none;
-	background: url(dmp_icons.png) no-repeat 0 0 transparent;
-	width: 25px;
-	height: 25px; }
-.ui-dialog .ui-dialog-titlebar-close {
-	margin: 0;
-	top: -3px;
-	right: -12px; }
-.ui-state-default .ui-icon {
-	background-image: none; }
-.ui-widget {
-	font-size: 1em; }
-.modal-header h3 strong {
-	font-weight: normal; }
-.modal-body p {
-	font-size: 1.125em;
-	margin: 0; }
-.modal-footer .btn + .btn {
-	margin: 0 5px 0 0; }
-*/
+
+
+.option_area {
+  float: left;
+  clear: left;
+  width: 50px;
+  height: 20px;
+  text-align: right;
+  padding: 5px 5px 5px 0px;
+}
+div.label_area {
+  float:left;
+  clear: right;
+  height: 20px;
+  padding: 5px 0 5px 0;
+}
+div.folder_label {
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+ul.closed_list {
+  display: none;
+}
+ul.opened_list {
+  display: block;
+}
+
+
+
+
 
 div.customization_tree{}
 
@@ -191,6 +192,8 @@ div.customization_tree li .icon {
 div.customization_tree li .icon.larger{
   left: -23px;
 }
+
+
 
 /* Error Page */
 .error-message {
@@ -218,13 +221,13 @@ a.hide-plan-history .icon-chevron-up, a.hide-reviewer-comments .icon-chevron-up,
 	margin: -10px 0 10px; }
 .history ul {
 	margin: 0; }
-.history li, .comment {
+.history li, .comments .comment {
 	border-radius: 4px;
 	background: #F0F0F0;
 	margin: 5px 0;
 	padding: 10px;
 	position: relative; }
-.comment {
+.comments .comment {
 	padding-right: 35px; }
 .history .date-updated, .comment .date-created {
 	position: absolute;
@@ -237,3 +240,13 @@ a.hide-plan-history .icon-chevron-up, a.hide-reviewer-comments .icon-chevron-up,
 	position: absolute;
 	bottom: 10px;
 	right: 10px; }
+	
+	/* Misc. */
+.details[class*="span"] {
+	width: 328px; }
+.border-box {
+	border: 1px solid #C9C9CB;
+	margin-bottom: 10px;
+	padding: 10px 15px; }
+.tab-pane .border-box {
+	margin-bottom: 10px; }

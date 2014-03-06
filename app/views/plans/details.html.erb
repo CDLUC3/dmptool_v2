@@ -1,16 +1,13 @@
 <h1 class="row-fluid"><span class="icon template-details"></span>DMP Details</h1>
-<hr/>
-<h4><%= @requirements_template.name %></h4>
+<h2><%= @requirements_template.name %></h2>
 <div class="row-fluid">
   <div class="details span4">
-    <p> Click on a section below to edit it at any time. </p>
-    <p>
-      <%= image_tag("checked.png", :alt => 'check box') %> = complete
-    </p>
-    <div class="tree-view border-box">
-      <h5>Template Outline</h5>
+    <p>Click on a section below to edit it at any time.</p>
+    <p><span class="icon confirm"></span> = complete</p>
+    <div class="border-box">
+      <p><strong>Template Outline</strong></p>
       <hr/>
-      <div>
+      <div class="requirements-tree-view">
         <%= render partial: 'shared/requirements_tree', locals: { requirements: @requirements } %>
       </div>
     </div>
@@ -49,10 +46,9 @@
       </fieldset>
     </div>
   </div>
-  <hr/>
   <div>
-    <%= button_to '<< Plan Overview', edit_plan_path(@plan),  method: 'get', :class => 'btn btn-green pull-left'  %>
-    <%= button_to 'Plan Preview >>', preview_plan_path(@plan),  method: 'get', :class => 'btn btn-green pull-right'  %>
+  	<%= button_to '<< Plan Overview', edit_plan_path(@plan),  method: 'get', :class => 'btn btn-green pull-left'  %>
+	<%= button_to 'Plan Preview >>', preview_plan_path(@plan),  method: 'get', :class => 'btn btn-green pull-right'  %>
   </div>
 </div>
 <script type="text/javascript">

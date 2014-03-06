@@ -132,13 +132,17 @@ a.icon {
 	text-decoration: none !important;
 	vertical-align: middle;
 	position: relative; }
-a .icon, h2 .icon {
-	position: absolute;
-	left: 0; }
 h1 .icon {
 	position: absolute;
 	top: 7px;
 	left: 12px; }
+h2 .icon {
+	position: absolute;
+	left: 0; }
+a .icon {
+	margin-right: 3px;
+	position: relative;
+	top: 3px; }
 	
 /* first row */
 .add.icon {
@@ -257,9 +261,9 @@ h1 .icon {
 .news.icon {
 	background-position: -80px -110px; width: 40px; height: 35px; }
 .folder-open.icon {
-	background-position: -120px -130px; width: 20px; height: 12px; top: 2px; }
+	background-position: -120px -130px; width: 20px; height: 15px; }
 .folder-closed.icon {
-	background-position: -140px -130px; width: 20px; height: 12px; top: 2px; }
+	background-position: -140px -130px; width: 20px; height: 15px; }
 
 /* Tree View Icons */
 a.icon.print {
@@ -285,18 +289,18 @@ a.add-requirement.icon {
 	background: none; width: auto; height: auto; padding-left: 17px; }
 	
 .icon-chevron-up {
-	background: url(dmp_icons.png) no-repeat -159px -130px transparent; width: 11px; height: 11px; top: 2px; }
+	background: url(dmp_icons.png) no-repeat -159px -130px transparent; width: 11px; height: 11px; }
 .icon-chevron-down {
-	background: url(dmp_icons.png) no-repeat -170px -130px transparent; width: 11px; height: 11px; top: 2px; }
+	background: url(dmp_icons.png) no-repeat -170px -130px transparent; width: 11px; height: 11px; }
 .icon-chevron-left {
-	background: url(dmp_icons.png) no-repeat -182px -130px transparent; width: 11px; height: 11px; top: 2px; }
+	background: url(dmp_icons.png) no-repeat -182px -130px transparent; width: 11px; height: 11px; }
 .icon-chevron-right {
-	background: url(dmp_icons.png) no-repeat -191px -130px transparent; width: 11px; height: 11px; top: 2px; }
+	background: url(dmp_icons.png) no-repeat -190px -130px transparent; width: 11px; height: 11px; left: 1px; position: relative; }
 	
 .icon-folder-close {
-	background: url(dmp_icons.png) no-repeat -140px -130px transparent; width: 20px; height: 12px; top: 2px; }
+	background: url(dmp_icons.png) no-repeat -140px -130px transparent; width: 20px; height: 12px; }
 .icon-folder-open {
-	background: url(dmp_icons.png) no-repeat -120px -130px transparent; width: 20px; height: 12px; top: 2px;}
+	background: url(dmp_icons.png) no-repeat -120px -130px transparent; width: 20px; height: 12px;}
 	
 .icon-file {
 	background: url(dmp_icons.png) no-repeat -95px 0 transparent; width: 14px; height: 15px; top: -4px; }
