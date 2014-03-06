@@ -31,7 +31,7 @@
                 <%= link_to('Overview', edit_plan_path(plan)) %>
               | <%= link_to('Details', details_plan_path(plan)) %>
               | <%= link_to('Share', '#', remote: true, :class => 'change_visibility_link') %>
-              <% unless (plan.requirements_template.review_type == :no_review || plan.requirements_template.review_type.blank?) %>
+              <% if ( plan.requirements_template.try(:review_type) && plan.requirements_template.review_type != :no_review) %>
                 | <%= link_to('Submit', preview_plan_path(plan)) %>
               <% end %>
               | <%= link_to('Copy', copy_existing_plans_template_path(:plan => plan)) %>
