@@ -2,7 +2,7 @@
 <h2><%= @requirements_template.name %></h2>
 <div class="row-fluid">
 	<div class="details span4">
-	  <div class="tree-view border-box" id="main_requirements_border">
+	  <div class="border-box" id="main_requirements_border">
       <div id="cover_dialog">
         <div>
           <%= image_tag("/assets/throbber.gif") %> Please wait a moment . . .
@@ -15,7 +15,7 @@
 		    <%= link_to(content_tag(:span, '', :class => 'icon add-requirement') + 'Add Requirement', new_requirements_template_requirement_path(@requirements_template) + '#jump') %>
 		  </div>
 	    <hr/>
-	    <div class="requirements-tree-view" id="main_requirements_tree">
+	    <div class="tree-view" id="main_requirements_tree">
 	      <%= nested_requirements @requirements.arrange(order: :position) %>
 	    </div>
 	  </div>
