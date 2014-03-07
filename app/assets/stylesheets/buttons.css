@@ -127,6 +127,8 @@ a.btn-large:hover, a.btn-large:focus, a.btn-large:active {
 	background-image: url(dmp_icons.png);
 	background-repeat: no-repeat;
 	background-color: transparent;
+	vertical-align: text-bottom;
+	margin: 0;
 	overflow: hidden; }
 a.icon {
 	text-decoration: none !important;
@@ -140,9 +142,7 @@ h2 .icon {
 	position: absolute;
 	left: 0; }
 a .icon {
-	margin-right: 3px;
-	position: relative;
-	top: 3px; }
+	margin-right: 5px; }
 	
 /* first row */
 .add.icon {
@@ -158,11 +158,11 @@ a .icon {
 .add-requirement.icon {
 	background-position: -80px 0; width: 14px; height: 15px; }
 .requirement.icon {
-	background-position: -95px 0; width: 14px; height: 15px; top: -1px; left: 2px; }
+	background-position: -95px 0; width: 14px; height: 15px; }
 .trash.icon {
 	background-position: -110px 0; width: 14px; height: 15px; }
 .institution.icon {
-	background-position: -125px 0; width: 15px; height: 15px; top: -3px; }
+	background-position: -125px 0; width: 15px; height: 15px; }
 .comment.icon {
 	background-position: -140px 0; width: 20px; height: 15px; }
 .print.icon {
@@ -295,12 +295,9 @@ a.add-requirement.icon {
 .icon-chevron-left {
 	background: url(dmp_icons.png) no-repeat -182px -130px transparent; width: 11px; height: 11px; }
 .icon-chevron-right {
-	background: url(dmp_icons.png) no-repeat -190px -130px transparent; width: 11px; height: 11px; left: 1px; position: relative; }
+	background: url(dmp_icons.png) no-repeat -190px -130px transparent; width: 11px; height: 11px; }
 	
 .icon-folder-close {
 	background: url(dmp_icons.png) no-repeat -140px -130px transparent; width: 20px; height: 12px; }
 .icon-folder-open {
 	background: url(dmp_icons.png) no-repeat -120px -130px transparent; width: 20px; height: 12px;}
-	
-.icon-file {
-	background: url(dmp_icons.png) no-repeat -95px 0 transparent; width: 14px; height: 15px; top: -4px; }

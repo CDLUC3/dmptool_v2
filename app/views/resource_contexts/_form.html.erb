@@ -1,84 +1,84 @@
 <h1 class="row-fluid"><span class="icon resource-template"></span>Customization Overview</h1>
-<p class="pull-right">( <strong class="red">&#42;</strong> = Required Field )</p>
-<p><strong>Basic Information</strong></p>
-<hr/>
-
-<%= form_for @resource_context, html:{ :class => 'form-horizontal', multipart: true}  do |f| %>
-
-  <%= render partial: "shared/errors", locals: {model: @resource_context } %>
-
-  <div class="control-group" id="inst_text">
-    <label class ="control-label">Customized for</label>
-    <div class="controls">
-      <p>
-        <%= @resource_context.institution_id.nil? ? "Original funder / template creator" :  @resource_context.institution.name %>
-      </p>
-      <%= f.hidden_field :institution_id %>
-    </div>
-  </div>
-
-  <%= f.hidden_field :requirements_template_id %>
-
-  <div class="control-group">
-    <%= f.label :name , "Customization Name", :class=> "control-label#{@required_fields_class}" %>
-    <div class="controls">
-      <%= f.text_field :name, :class => "input-xxlarge#{@required_fields_class}" %>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <label class ="control-label">Associated DMP template</label>
-    <div class="controls">
-      <p><%= link_to @req_temp.name, edit_requirements_template_path(@req_temp) %></p>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <%= f.label :review_type, :class => 'control-label' %>
-    <div class="controls radio-controls">
-      <%= f.radio_button :review_type, :formal_review, :class => 'radio inline', :id => 'formal_review'  %>
-      <%= label_tag :formal_review, 'Formal review required', :class => 'checkbox-label'%>&nbsp;&nbsp;&nbsp;&nbsp;
-      <%= f.radio_button :review_type, :informal_review, :class => 'radio inline', :id => 'informal_review'  %>
-      <%= label_tag :informal_review, 'Informal review', :class => 'checkbox-label'%>&nbsp;&nbsp;&nbsp;&nbsp;
-      <%= f.radio_button :review_type, :no_review, :class => 'radio inline', :id => 'no_review'  %>
-      <%= label_tag :no_review, 'No review required', :class => 'checkbox-label'%>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <%= f.label :contact_info, 'Contact Information',:class => "control-label#{@required_fields_class}" %>
-    <div class="controls">
-      <%= f.text_field :contact_info, :class => "input-xlarge#{@required_fields_class}" %>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <%= f.label :contact_email, 'Contact Email', :class => "control-label#{@required_fields_class}" %>
-    <div class="controls">
-      <%= f.text_field :contact_email, :class => "input-xlarge#{@required_fields_class}" %>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <label class ="control-label">Creation Date</label>
-    <div class="controls">
-      <p><%= (@resource_context.created_at.nil? ? 'none' : @resource_context.created_at) %></p>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <label class ="control-label">Last Modification Date</label>
-    <div class="controls">
-      <p><%= (@resource_context.updated_at.nil? ? 'none' : @resource_context.updated_at) %></p>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <label class ="control-label"></label>
-    <div class="controls">
-      <%= f.submit('Save') %>
-    </div>
-    <%= hidden_field_tag :after_save, 'this_page' %>
-  </div>
-
-<% end %>
+<div class="tabbable">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab">Basic Information</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+			<%= form_for @resource_context, html:{ :class => 'form-horizontal', multipart: true}  do |f| %>
+			
+			  <%= render partial: "shared/errors", locals: {model: @resource_context } %>
+			
+			  <div class="control-group" id="inst_text">
+			    <label class ="control-label">Customized for</label>
+			    <div class="controls">
+			      <p>
+			        <%= @resource_context.institution_id.nil? ? "Original funder / template creator" :  @resource_context.institution.name %>
+			      </p>
+			      <%= f.hidden_field :institution_id %>
+			    </div>
+			  </div>
+			
+			  <%= f.hidden_field :requirements_template_id %>
+			
+			  <div class="control-group">
+			    <%= f.label :name , "Customization Name", :class=> "control-label#{@required_fields_class}" %>
+			    <div class="controls">
+			      <%= f.text_field :name, :class => "input-xxlarge#{@required_fields_class}" %>
+			    </div>
+			  </div>
+			
+			  <div class="control-group">
+			    <label class ="control-label">Associated DMP template</label>
+			    <div class="controls">
+			      <p><%= link_to @req_temp.name, edit_requirements_template_path(@req_temp) %></p>
+			    </div>
+			  </div>
+			
+			  <div class="control-group">
+			    <%= f.label :review_type, :class => 'control-label' %>
+			    <div class="controls checkbox-controls">
+			      <%= f.radio_button :review_type, :formal_review, :class => 'radio inline', :id => 'formal_review'  %>
+			      <%= label_tag :formal_review, 'Formal review required', :class => 'checkbox-label'%><br/>
+			      <%= f.radio_button :review_type, :informal_review, :class => 'radio inline', :id => 'informal_review'  %>
+			      <%= label_tag :informal_review, 'Informal review', :class => 'checkbox-label'%><br/>
+			      <%= f.radio_button :review_type, :no_review, :class => 'radio inline', :id => 'no_review'  %>
+			      <%= label_tag :no_review, 'No review required', :class => 'checkbox-label'%>
+			    </div>
+			  </div>
+			
+			  <div class="control-group">
+			    <%= f.label :contact_info, 'Contact Information',:class => "control-label#{@required_fields_class}" %>
+			    <div class="controls">
+			      <%= f.text_field :contact_info, :class => "input-xlarge#{@required_fields_class}" %>
+			    </div>
+			  </div>
+			
+			  <div class="control-group">
+			    <%= f.label :contact_email, 'Contact Email', :class => "control-label#{@required_fields_class}" %>
+			    <div class="controls">
+			      <%= f.text_field :contact_email, :class => "input-xlarge#{@required_fields_class}" %>
+			    </div>
+			  </div>
+			
+			  <div class="control-group">
+			    <label class ="control-label">Creation Date</label>
+			    <div class="controls">
+			      <p><%= (@resource_context.created_at.nil? ? 'none' : @resource_context.created_at) %></p>
+			    </div>
+			  </div>
+			
+			  <div class="control-group">
+			    <label class ="control-label">Last Modification Date</label>
+			    <div class="controls">
+			      <p><%= (@resource_context.updated_at.nil? ? 'none' : @resource_context.updated_at) %></p>
+			    </div>
+			  </div>
+			<div class="buttons">
+			  <%= f.submit('Save') %>
+			</div>
+			<%= hidden_field_tag :after_save, 'this_page' %>
+			<% end %>
+		</div>
+	</div>
+</div>

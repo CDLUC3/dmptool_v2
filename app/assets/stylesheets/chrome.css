@@ -1,10 +1,10 @@
 .dashboard-nav {
-	padding-left: 10px;
-}
-
+	padding-left: 10px; }
 a.btn, button, button.btn, input[type=submit], input[type=submit].btn {
 	line-height: 32px; }
-	
 .btn.current {
-	line-height: 28px;
-}
+	line-height: 28px; }
+.tree-view .icon-chevron-right, .tree-view .icon-chevron-down {
+	bottom: 0; }
+a.view-plan-history .icon-chevron-down, a.view-reviewer-comments .icon-chevron-down, a.view-owner-comments .icon-chevron-down, a.hide-plan-history .icon-chevron-up, a.hide-reviewer-comments .icon-chevron-up, a.hide-owner-comments .icon-chevron-up {
+	top: 0; }

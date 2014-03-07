@@ -78,120 +78,69 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	height: 179px; }
 	
 /* DMPTool Pages */
+.dmptool-page {
+	margin-top: 10px; }
+.dmptool-page > .span6 {
+	margin: 0; }
+.dmptool-page > .span6:first-child {
+	border-right: 1px solid #B6B6B7;
+	margin-right: 10px;
+	padding-right: 10px; }
+.dmptool-page > .span6 h2 {
+	margin-top: 0;
+}
 .dmptool-page p {
 	font-size: 1.167; }
-	
-	
-/* Details Pages */
-.requirements-tree-view .icon.confirm, .requirements-tree-view  .icon.requirement, .requirements-tree-view  .icon.add, .requirements-tree-view  .icon.remove, 
-.details .icon.add-group, .details .icon.add-requirement {
-	position: relative;
-	top: 3px; }
-.requirements-tree-view  .icon.requirement {
-	margin-right: 2px;
-}
-.requirements-tree-view  .folder-open.icon, .requirements-tree-view  .folder-closed.icon {
-	position: relative;
-	top: 4px;
-}
 
 /* Tree View */
-.requirements-tree-view .actions {
-	margin: 0;
+.tree-view.institutions-list {
+	margin: 10px 20px 20px; }
+.tree-view.template-list {
+	margin-top: 20px; }
+.tree-view .icons {
 	position: absolute;
 	top: 0;
+	left: 0; }
+.tree-view .actions {
+	margin: 0;
+	position: absolute;
+	top: -1px;
 	right: 0; }
-.requirements-tree-view {
-	margin-top: 0; }
+.tree-view .icon-chevron-right, .tree-view .icon-chevron-down {
+	position: relative;
+	bottom: 2px; }
+.tree-view .icon-chevron-right {
+	left: 1px; }
+.tree-view .icon-folder-open, .tree-view .icon-folder-close {
+	position: relative;
+	right: 2px;
+	bottom: 3px; }
+.tree-view .icon.confirm {
+	margin-left: 5px; }
 .nested-requirements {
 	margin-left: 20px; }
-.requirements-tree-view ul {
-	line-height: 1.5;
+.tree-view ul {
 	margin: 0; }
-.requirements-tree-view ul > li {
-	position: relative;
+.tree-view li {
 	margin-bottom: 10px;
-	padding-right: 65px; }
-.requirements_group {
-  margin-bottom: 10px; }
-div.nested_requirements {
-	margin-left: 20px; }
-li.nested_requirements ul {
-	margin-left: 20px;
-}
-	
-
-
-	
-	
-	
-/* Institutions Hierarchy */
-.institutions {
-	margin: 10px 20px 20px; }
-.institution {
-	margin-bottom: 10px; }
-.nested_institutions {
-	margin-left: 35px; }
-.institution a {
-	padding-left: 22px;
+	padding: 0 65px 0 22px;
+	line-height: 1.5;
 	position: relative; }
+.tree-view.template-list li {
+	padding-left: 40px; }
+.tree-view.institutions-list li, .tree-view li.listed_requirement, .tree-view li.nested_requirements {
+	padding-right: 0; }
+.tree-view li.current {
+	font-weight: bold; }
+.nested_requirements ul, .nested_templates ul {
+	margin: 7px 0 0 0; }
+.nested_institutions ul {
+	margin: 7px 0 0 22px; }
+.nested_templates a {
+	font-weight: bold;
+	font-size: 1.167em;
+	text-decoration: none !important; }
 
-
-
-
-
-.option_area {
-  float: left;
-  clear: left;
-  width: 50px;
-  height: 20px;
-  text-align: right;
-  padding: 5px 5px 5px 0px;
-}
-div.label_area {
-  float:left;
-  clear: right;
-  height: 20px;
-  padding: 5px 0 5px 0;
-}
-div.folder_label {
-  font-size: 1.25em;
-  font-weight: bold;
-}
-
-ul.closed_list {
-  display: none;
-}
-ul.opened_list {
-  display: block;
-}
-
-
-
-
-
-div.customization_tree{}
-
-div.customization_tree ul{
-  margin: 5px 0px 0px 25px;
-}
-
-div.customization_tree li{
-  position: relative;
-}
-
-div.customization_tree li.current{
-  font-weight: bold;
-}
-
-div.customization_tree li .icon {
-  position: absolute;
-  left: -20px;
-}
-
-div.customization_tree li .icon.larger{
-  left: -23px;
-}
 
 
 
@@ -223,6 +172,7 @@ a.hide-plan-history .icon-chevron-up, a.hide-reviewer-comments .icon-chevron-up,
 	margin: 0; }
 .history li, .comments .comment {
 	border-radius: 4px;
+	border: 2px solid #B6B6B7;
 	background: #F0F0F0;
 	margin: 5px 0;
 	padding: 10px;
@@ -241,7 +191,7 @@ a.hide-plan-history .icon-chevron-up, a.hide-reviewer-comments .icon-chevron-up,
 	bottom: 10px;
 	right: 10px; }
 	
-	/* Misc. */
+/* Misc. */
 .details[class*="span"] {
 	width: 328px; }
 .border-box {
@@ -250,3 +200,29 @@ a.hide-plan-history .icon-chevron-up, a.hide-reviewer-comments .icon-chevron-up,
 	padding: 10px 15px; }
 .tab-pane .border-box {
 	margin-bottom: 10px; }
+
+.option_area {
+  float: left;
+  clear: left;
+  width: 50px;
+  height: 20px;
+  text-align: right;
+  padding: 5px 5px 5px 0px;
+}
+div.label_area {
+  float:left;
+  clear: right;
+  height: 20px;
+  padding: 5px 0 5px 0;
+}
+div.folder_label {
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+ul.closed_list {
+  display: none;
+}
+ul.opened_list {
+  display: block;
+}
