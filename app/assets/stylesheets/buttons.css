@@ -127,6 +127,8 @@ a.btn-large:hover, a.btn-large:focus, a.btn-large:active {
 	background-image: url(dmp_icons.png);
 	background-repeat: no-repeat;
 	background-color: transparent;
+	vertical-align: text-bottom;
+	margin: 0;
 	overflow: hidden; }
 a.icon {
 	text-decoration: none !important;
@@ -140,9 +142,7 @@ h2 .icon {
 	position: absolute;
 	left: 0; }
 a .icon {
-	margin-right: 3px;
-	position: relative;
-	top: 3px; }
+	margin-right: 5px; }
 	
 /* first row */
 .add.icon {
@@ -158,11 +158,11 @@ a .icon {
 .add-requirement.icon {
 	background-position: -80px 0; width: 14px; height: 15px; }
 .requirement.icon {
-	background-position: -95px 0; width: 14px; height: 15px; top: -1px; left: 2px; }
+	background-position: -95px 0; width: 14px; height: 15px; }
 .trash.icon {
 	background-position: -110px 0; width: 14px; height: 15px; }
 .institution.icon {
-	background-position: -125px 0; width: 15px; height: 15px; top: -3px; }
+	background-position: -125px 0; width: 15px; height: 15px; }
 .comment.icon {
 	background-position: -140px 0; width: 20px; height: 15px; }
 .print.icon {
@@ -170,32 +170,18 @@ a .icon {
 .email.icon {
 	background-position: -180px 0; width: 15px; height: 10px; }
 /* second row */
-.arrow-up.icon {
-	background-position: 0px -15px; width: 10px; height: 15px; }
-.arrow-up.icon:hover, .arrow-up.icon:focus, .arrow-up.icon:active {
-	background-position: -25px -15px; }
-.arrow-right.icon {
-	background-position: -15px -15px; width: 15px; height: 10px; }
-.arrow-right.icon:hover, .arrow-right.icon:focus, .arrow-right.icon:active {
-	background-position: -40px -15px; }
-.arrow-down.icon {
-	background-position: -15px -25px; width: 10px; height: 15px; }
-.arrow-down.icon:hover, .arrow-down.icon:focus, .arrow-down.icon:active {
-	background-position: -40px -25px; }
-.arrow-left.icon {
-	background-position: 0px -30px; width: 15px; height: 10px; }
-.arrow-left.icon:hover, .arrow-left.icon:focus, .arrow-left.icon:active {
-	background-position: -25px -030px; }
 .close.icon {
-	background-position: -50px -15px; width: 25px; height: 25px; }
+	background-position: 0px -15px; width: 25px; height: 25px; }
 .institution-contact.icon {
-	background-position: -85px -15px; width: 30px; height: 25px; }
+	background-position: -25px -15px; width: 30px; height: 25px; }
 .institution-domain.icon {
-	background-position: -115px -15px; width: 30px; height: 25px; }
+	background-position: -55px -15px; width: 30px; height: 25px; }
 .public-dmps.icon {
-	background-position: -145px -15px; width: 30px; height: 25px; top: 8px; }
+	background-position: -85px -15px; width: 30px; height: 25px; top: 8px; }
 .login.icon {
-	background-position: -175px -15px; width: 25px; height: 25px; }
+	background-position: -115px -15px; width: 25px; height: 25px; }
+.institution-profile.icon {
+	background-position: -140px -40px; width: 25px; height: 25px; }
 /* third row */
 .new-template.icon {
 	background-position: 0px -40px; width: 25px; height: 25px; }
@@ -211,7 +197,7 @@ a .icon {
 	background-position: -125px -40px; width: 25px; height: 25px; }
 .review.icon {
 	background-position: -150px -40px; width: 25px; height: 25px; }
-.institution-profile.icon {
+.approve-template.icon {
 	background-position: -175px -40px; width: 25px; height: 25px; }
 /* fourth row */
 .edit-user.icon {
@@ -295,12 +281,9 @@ a.add-requirement.icon {
 .icon-chevron-left {
 	background: url(dmp_icons.png) no-repeat -182px -130px transparent; width: 11px; height: 11px; }
 .icon-chevron-right {
-	background: url(dmp_icons.png) no-repeat -190px -130px transparent; width: 11px; height: 11px; left: 1px; position: relative; }
+	background: url(dmp_icons.png) no-repeat -190px -130px transparent; width: 11px; height: 11px; }
 	
 .icon-folder-close {
 	background: url(dmp_icons.png) no-repeat -140px -130px transparent; width: 20px; height: 12px; }
 .icon-folder-open {
 	background: url(dmp_icons.png) no-repeat -120px -130px transparent; width: 20px; height: 12px;}
-	
-.icon-file {
-	background: url(dmp_icons.png) no-repeat -95px 0 transparent; width: 14px; height: 15px; top: -4px; }

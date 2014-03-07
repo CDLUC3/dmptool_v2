@@ -40,7 +40,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 #gem 'turbolinks', '1.0.0'
 #gem 'jquery-turbolinks'
-gem 'jbuilder', '1.0.1'
+#gem 'jbuilder', '1.0.1'
 gem 'kaminari'
 gem 'carrierwave'
 gem "mini_magick"

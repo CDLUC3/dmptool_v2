@@ -1,0 +1,40 @@
+a.ui-draggable-dragging {
+  display: block;
+  padding: 0 0 0 0;
+  background-color: yellow;
+  border-style: solid;
+  border-width: 1px 1px 1px 1px;
+  border-color: black;
+}
+
+div.highlight {
+  background-color: yellow;
+}
+
+div#drop_before_first {
+  width:100%;
+  height: 23px;
+  padding-top:3px;
+}
+
+div#main_requirements_border {
+  position: relative;
+}
+
+div#cover_dialog {
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-color:black;
+  z-index: 1000;
+  opacity:0.60;
+  filter:alpha(opacity=60); /* For IE8 and earlier */
+  display: none;
+}
+
+div#cover_dialog > div{
+  margin:50% 10px 0 65px;
+  color: white;
+}

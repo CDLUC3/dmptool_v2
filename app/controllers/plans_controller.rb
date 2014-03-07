@@ -126,7 +126,7 @@ class PlansController < ApplicationController
 
   def review_dmps
     if safe_has_role?(Role::INSTITUTIONAL_REVIEWER)
-      user = current_user.id
+      user_id = current_user.id
       user_plans = UserPlan.where(user_id: user_id).pluck(:id)
       @plans = Plan.where(id: user_plans)
     end

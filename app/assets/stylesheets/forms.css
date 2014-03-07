@@ -1,5 +1,6 @@
 /* Forms */
-
+.buttons form {
+	margin-bottom: 0; }
 span.required, span[id*="status_"] {
 	color: #DA0049; }
 fieldset {
@@ -37,16 +38,13 @@ input.input-large {
 	
 input[type=radio], input[type=checkbox] {
 	border: none;
-	vertical-align: top;
+	vertical-align: middle;
 	height: 17px;
 	margin: 0 4px 0 0;
 	padding: 0; }
 	
 textarea {
   resize: vertical; }
-  
-.radio.inline, .checkbox.inline {
-	vertical-align: top; }
 .control-group, .form-horizontal .control-group {
 	margin-bottom: 10px; }
 .form-horizontal .controls {
@@ -151,10 +149,10 @@ input[type=text].filled, input[type=password].filled, input[type=email].filled, 
 
 /* Alerts */	
 .alert {
-	border-radius: 0;
+	border-radius: 0 !important;
 	-moz-border-radius: 0;
 	-webkit-border-radius: 0;
-	margin: 0;
+	margin: 0 !important;
 	padding: 8px 10px 5px; }
 .alert p {
 	font-size: 1.167em;

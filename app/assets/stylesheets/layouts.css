@@ -207,11 +207,11 @@
 	color: #4C4C4E;
 	line-height: 25px;
 	height: 25px;
-	margin-top: 15px;
-	position: relative; }
+	margin-top: 15px; }
 .dashboard-header .inst-info a .icon {
 	margin-right: 5px;
-	top: 7px;
+	position: relative;
+	top: 5px;
 }
 /* Dashboard Navigation */
 .dashboard-nav {
@@ -270,14 +270,16 @@
 	background: #E9E9EA;
 	list-style: none;
 	height: 29px;
+	margin-right: -15px;
 	padding: 10px 0;
 	position: relative; }
 .dashboard-nav ul.nav ul li:first-child {
+	margin-right: 0;
 	padding-left: 15px; }
 .dashboard-nav ul.nav ul li.last {
 	background: url(tab_arrow.png) no-repeat 0 -87px transparent;
 	width: 15px;
-	margin-left: -30px; }
+	margin-left: -15px; }
 .dashboard-nav ul.nav ul li a {
 	float: left;
 	background: url(tab_arrow.png) no-repeat 0 0 transparent;
