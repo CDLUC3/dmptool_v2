@@ -2,5 +2,11 @@ a.btn, button, button.btn, input[type=submit], input[type=submit].btn {
 	line-height: 32px; }
 .btn.current {
 	line-height: 28px; }
+	
+.table {
+	border-collapse: collapse; }
+.toggle-links {
+	min-height: 20px;
+}
 .template-links {
 	visibility: visible !important; }
