@@ -33,5 +33,9 @@ module ApplicationHelper
     end
   end
 
+  def plans_count_for_institution(institution)
+    Plan.joins(:requirements_template).where("requirements_templates.institution_id IN (?)", [institution.id]).count  
+  end
+
 
 end
