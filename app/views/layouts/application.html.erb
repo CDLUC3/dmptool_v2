@@ -19,7 +19,7 @@
    			document.write('<link rel="stylesheet" media="all" href="/assets/chrome.css?body=1" />');
 			}
 			/* Test for MSIE x.x */
-			if (navigator.userAgent.match(/MSIE (\d+\.\d+);/)) {
+			if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
 				/* capture x.x and store as number */
 				var ieversion = new Number(RegExp.$1);
 				/* Test for IE version and include appropriate stylesheet */
