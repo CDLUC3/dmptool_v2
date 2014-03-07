@@ -55,14 +55,14 @@
 				<p><strong>Optional Information</strong></p>
 				<hr/>
 				<div class="control-group">
-					<%= f.label :start_date, :class => "control-label" %>
+					<%= label_tag :start_date, "Start Date", :class => "control-label" %>
 					<div class="controls">
 						<%= f.text_field :start_date, value: @requirements_template.start_date.blank? ? " " : @requirements_template.start_date.strftime('%m/%d/%Y'), id: 'start_date', :class => 'datepicker' %>
 					</div>
 				</div>
 
 				<div class="control-group">
-					<%= f.label :end_date, :class => 'control-label' %>
+					<%= label_tag :end_date, "End Date", :class => 'control-label' %>
 					<div class="controls">
 						<%= f.text_field :end_date, value: @requirements_template.end_date.blank? ? " " : @requirements_template.end_date.strftime('%m/%d/%Y'), id: 'end_date', :class => 'datepicker' %>
 					</div>
