@@ -15,6 +15,13 @@
       <%= f.hidden_field :visibility, value: :owner %>
     <% end %>
   </div>
+  <div class="control-group">
+    <% if params[:comment_type] == :reviewer %>
+      <%= f.hidden_field :comment_type, value: :reviewer %>
+    <% else %>
+      <%= f.hidden_field :comment_type, value: :owner %>
+    <% end %>
+  </div>
   <div>
     <%= f.submit "Submit", :class => 'btn btn-success pull-right', method: 'post' %>
     <%= button_tag "Cancel", type: :reset, :class => 'btn btn-success pull-right', id: "cancel_action" %>

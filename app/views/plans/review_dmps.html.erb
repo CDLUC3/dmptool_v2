@@ -20,11 +20,7 @@
 	        <td><%= state(plan) %></td>
 	        <td class="nowrap">
 	        	<div class="actions">
-		        	<%= link_to "", "#", :class => "icon confirm" %>
-		        	|
-		        	<%= link_to "", "#", :class => "icon cancel" %>
-		        	|
-		        	<%= link_to "", "#", :class => "icon comment" %>
+		        	<%= link_to "Perform Review", perform_review_plan_path(plan), :class => "icon confirm" %>
 		        </div>
 	        </td>
 	      </tr>
