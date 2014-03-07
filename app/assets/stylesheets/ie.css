@@ -2,5 +2,3 @@ a.btn, button, button.btn, input[type=submit], input[type=submit].btn {
 	line-height: 32px; }
 .btn.current {
 	line-height: 28px; }
-body {
-	background: red; }
