@@ -64,16 +64,13 @@ class PlansController < ApplicationController
 
   # GET /plans/1/edit
   def edit
-    @comment = Comment.new
-    comments = Comment.where(plan_id: @plan.id, user_id: current_user.id)
-    @reviewer_comments = comments.where(visibility: :reviewer)
-    @owner_comments = comments.where(visibility: :owner)
-    @plan_states = @plan.plan_states
+    set_comments
   end
 
   # PATCH/PUT /plans/1
   # PATCH/PUT /plans/1.json
   def update
+    set_comments
     respond_to do |format|
       if @plan.update(plan_params)
         format.html { redirect_to edit_plan_path(@plan), notice: 'Plan was successfully updated.' }
@@ -282,5 +279,13 @@ class PlansController < ApplicationController
         end
       end
       return resources
+    end
+
+    def set_comments
+      @comment = Comment.new
+      comments = Comment.where(plan_id: @plan.id, user_id: current_user.id)
+      @reviewer_comments = comments.where(visibility: :reviewer)
+      @owner_comments = comments.where(visibility: :owner)
+      @plan_states = @plan.plan_states
     end
 end
