@@ -2,7 +2,7 @@ class PlansController < ApplicationController
 
   before_action :require_login, except: [:public, :show]
   #note show will need to be protected from logins in some cases, but only from non-public plan viewing
-  before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details, :preview]
+  before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details, :preview, :perform_review]
   before_action :select_requirements_template, only: [:select_dmp_template]
 
   # GET /plans
@@ -124,6 +124,10 @@ class PlansController < ApplicationController
 
   end
 
+  def perform_review
+    set_comments
+  end
+
   def review_dmps
     if safe_has_role?(Role::INSTITUTIONAL_REVIEWER)
       user_id = current_user.id
@@ -187,8 +191,8 @@ class PlansController < ApplicationController
     plan = Plan.find(id)
     plan.visibility = params[:visibility]
     respond_to do |format|
-      if plan.save!
-        format.html { redirect_to edit_plan_path(plan)}
+      if plan.save
+        format.html { redirect_to :back }
         format.js
       end
     end
@@ -284,8 +288,8 @@ class PlansController < ApplicationController
     def set_comments
       @comment = Comment.new
       comments = Comment.where(plan_id: @plan.id, user_id: current_user.id)
-      @reviewer_comments = comments.where(visibility: :reviewer)
-      @owner_comments = comments.where(visibility: :owner)
+      @reviewer_comments = comments.reviewer_comment
+      @owner_comments = comments.owner_comment
       @plan_states = @plan.plan_states
     end
 end
