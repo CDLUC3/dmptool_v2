@@ -207,11 +207,11 @@
 	color: #4C4C4E;
 	line-height: 25px;
 	height: 25px;
-	margin-top: 15px;
-	position: relative; }
+	margin-top: 15px; }
 .dashboard-header .inst-info a .icon {
 	margin-right: 5px;
-	top: 7px;
+	position: relative;
+	top: 5px;
 }
 /* Dashboard Navigation */
 .dashboard-nav {

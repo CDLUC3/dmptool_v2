@@ -14,6 +14,9 @@
 			if (navigator.userAgent.match(/Chrome/)) {
    			document.write('<link rel="stylesheet" media="all" href="/assets/chrome.css?body=1" />')
 			}
+			if (navigator.userAgent.match(/MSIE 8.0/)) {
+				document.write('<link rel="stylesheet" media="all" href="/assets/ie.css?body=1" />')
+			}
     </script>
   </head>
   <body>
@@ -23,23 +26,14 @@
   	<% if current_user %>
   		<%= render 'layouts/dashboard_header' unless ['static_pages', 'user_sessions'].include?(controller_name) && !['guidance', 'public_dmps'].include?(action_name) %>
   	<% end %>
-    <% flash.each do |key, value| %>
-      <div class="alert alert-<%= key %>">
-        <% if value.class == Array
-          txt = value.map{|i| h(i)}.join("<br/>")
-        %>
-          <p>
-            <%= raw txt %>
-          </p>
-        <% else %>
-          <p><%= value %></p>
-        <% end %>
-      </div>
-    <% end %>
+
+    <%= render partial: "shared/flash_messages", flash: flash %>
+
+
 
     <%= yield %>
   </div>
-  
+
   <%= render 'layouts/footer' %>
   </body>
 </html>

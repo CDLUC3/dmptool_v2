@@ -14,7 +14,9 @@
 		    <%=  raw('&nbsp;') %>
 		    <%= link_to(content_tag(:span, '', :class => 'icon add-requirement') + 'Add Requirement', new_requirements_template_requirement_path(@requirements_template) + '#jump') %>
 		  </div>
-	    <hr/>
+			<div id="drop_before_first">
+	    	<hr/>
+	    </div>
 	    <div class="tree-view" id="main_requirements_tree">
 	      <%= nested_requirements @requirements.arrange(order: :position) %>
 	    </div>
@@ -130,7 +132,7 @@
           'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
         error: function (xhr, ajaxOptions, thrownError) {
-          $("#cover_dialog").show();
+          $("#cover_dialog").hide();
         }
       });
     }

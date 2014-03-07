@@ -78,6 +78,17 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	height: 179px; }
 	
 /* DMPTool Pages */
+.dmptool-page {
+	margin-top: 10px; }
+.dmptool-page > .span6 {
+	margin: 0; }
+.dmptool-page > .span6:first-child {
+	border-right: 1px solid #B6B6B7;
+	margin-right: 10px;
+	padding-right: 10px; }
+.dmptool-page > .span6 h2 {
+	margin-top: 0;
+}
 .dmptool-page p {
 	font-size: 1.167; }
 
@@ -161,6 +172,7 @@ a.hide-plan-history .icon-chevron-up, a.hide-reviewer-comments .icon-chevron-up,
 	margin: 0; }
 .history li, .comments .comment {
 	border-radius: 4px;
+	border: 2px solid #B6B6B7;
 	background: #F0F0F0;
 	margin: 5px 0;
 	padding: 10px;

@@ -1,5 +1,5 @@
 module ApplicationHelper
-  
+
   def link_to_add_fields(name, f, association)
     new_object = f.object.send(association).klass.new
     id = new_object.object_id
@@ -16,5 +16,22 @@ module ApplicationHelper
     end
     u
   end
+
+
+  def bootstrap_class_for flash_type
+    case flash_type
+    when :success
+    "alert-success"
+    when :error
+    "alert-error"
+    when :alert
+    "alert-block"
+    when :notice
+    "alert-info"
+    else
+    flash_type.to_s
+    end
+  end
+
 
 end
