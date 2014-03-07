@@ -2,16 +2,8 @@ object @institution
 
 attributes :id, :full_name
 
-node(:plans_count) { @plans_count }
+node(:plans_count) { |institution| plans_count_for_institution(institution) }
 
 
-#child :requirements_templates do
-#  attributes :id
-#end
-
-
-#object false
-#child(@institution) { attributes :id, :full_name }
-#node(:plans_count) {@plans_count}
 
 
