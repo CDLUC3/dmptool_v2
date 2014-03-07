@@ -18,15 +18,31 @@
 				/* include chrome stylesheet */
    			document.write('<link rel="stylesheet" media="all" href="/assets/chrome.css?body=1" />');
 			}
-			/* Test for MSIE x.x */
-			if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
-				/* capture x.x and store as number */
-				var ieversion = new Number(RegExp.$1);
-				/* Test for IE version and include appropriate stylesheet */
-				if(ieversion>=8 && ieversion<9){
-   					document.write('<link rel="stylesheet" media="all" href="/assets/ie.css?body=1" />');
-   			}
+			function getIEVersion(){
+  			var rv = -1; // Return value assumes failure.
+  			if (navigator.appName == "Microsoft Internet Explorer"){
+    			var ua = navigator.userAgent;
+    			var re  = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+    			if (re.exec(ua) != null){
+      			versionNumber = parseFloat( RegExp.$1 );
+  				}
+  				return rv;
+				}
+				function checkVersion() {
+  				var IEVersion = getIEVersion();
+  				if (IEVersion > -1 ){
+   					if (IEVersion >= 9.0){
+      				/* do nothing */
+    				}
+    				else if (IEVersion >= 8.0){
+     					document.write('<link rel="stylesheet" media="all" href="/assets/ie.css?body=1" />');
+     				}
+     				else {
+     					alert("Please upgrade to a newer version of Internet Explorer!");
+  				}
+  			}
 			}
+
     </script>
   </head>
   <body>
