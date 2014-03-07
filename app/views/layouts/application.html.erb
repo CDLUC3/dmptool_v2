@@ -8,14 +8,24 @@
     <%= csrf_meta_tags %>
     <%= render 'layouts/shim' %>
     <script>
+    	/* Test for Safari */
     	if (navigator.userAgent.match(/AppleWebKit/) && ! navigator.userAgent.match(/Chrome/)) {
-   			document.write('<link rel="stylesheet" media="all" href="/assets/safari.css?body=1" />')
+    		/* include safari stylesheet*/
+   			document.write('<link rel="stylesheet" media="all" href="/assets/safari.css?body=1" />');
 			}
+			/* Test for Chrome */
 			if (navigator.userAgent.match(/Chrome/)) {
-   			document.write('<link rel="stylesheet" media="all" href="/assets/chrome.css?body=1" />')
+				/* include chrome stylesheet */
+   			document.write('<link rel="stylesheet" media="all" href="/assets/chrome.css?body=1" />');
 			}
-			if (navigator.userAgent.match(/MSIE 8.0/)) {
-   			document.write('<link rel="stylesheet" media="all" href="/assets/ie.css?body=1" />')
+			/* Test for MSIE x.x */
+			if (navigator.userAgent.match(/MSIE (\d+\.\d+);/)) {
+				/* capture x.x and store as number */
+				var ieversion = new Number(RegExp.$1);
+				/* Test for IE version and include appropriate stylesheet */
+				if(ieversion>=8 && ieversion<9){
+   					document.write('<link rel="stylesheet" media="all" href="/assets/ie.css?body=1" />');
+   			}
 			}
     </script>
   </head>
