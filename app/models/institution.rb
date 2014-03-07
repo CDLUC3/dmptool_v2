@@ -73,4 +73,15 @@ class Institution < ActiveRecord::Base
     conditions = " ( " + items.map{|item| "full_name LIKE ?" }.join(' AND ') + " ) " 
     where(conditions, *items.map{|item| "%#{item}%" })
   end
+
+  def self.unique_plans
+    joins(:requirements_templates, :plans).
+    where(:requirements_templates => { :institution_id => self.subtree_ids }).
+    group(:plan_id)
+  end
+
+
+
+
+
 end
