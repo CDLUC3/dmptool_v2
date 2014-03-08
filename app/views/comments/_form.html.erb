@@ -16,11 +16,7 @@
     <% end %>
   </div>
   <div class="control-group">
-    <% if params[:comment_type] == :reviewer %>
-      <%= f.hidden_field :comment_type, value: :reviewer %>
-    <% else %>
-      <%= f.hidden_field :comment_type, value: :owner %>
-    <% end %>
+    <%= f.hidden_field :comment_type, value: '' %>
   </div>
   <div>
     <%= f.submit "Submit", :class => 'btn btn-success pull-right', method: 'post' %>
