@@ -172,9 +172,7 @@
 	margin-left: 7px; }
 	
 /* Dashboard */
-.dashboard {
-	min-height: 190px;
-	margin-bottom: -20px; }
+.dashboard { }
 /* Dashboard Header */
 .dashboard-header.row-fluid {
 	height: 120px;

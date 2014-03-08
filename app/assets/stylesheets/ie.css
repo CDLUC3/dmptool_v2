@@ -1,7 +1,51 @@
-body {
-	background-color: green;
-}
-a.btn, button, button.btn, input[type=submit], input[type=submit].btn {
-	line-height: 32px; }
+.header ul.nav {
+	width: auto; }
+	
+.table {
+	border-collapse: collapse; }
+
+.table-striped td {
+	border-top: 1px solid #B6B6B7; }
+
+.toggle-links {
+	min-height: 20px; }
+	
+.template-links {
+	visibility: visible !important; }
+	
+a.btn, button.btn, input[type=submit], input[type=submit].btn {
+	line-height: 30px; }
+	
+.inst-logo.span5 {
+	width: 180px; }
+	
+.inst-title.span5 {
+	width: 364px; }
+
+.inst-info.span5 {
+	width: 330px; }
+	
 .btn.current {
-	line-height: 28px; }
+	line-height: 26px; }
+	
+.buckets-header .span4 {
+	height: 48px;
+	padding-bottom: 0; }
+	
+.row-fluid.buckets .span4 {
+	width: 298px; }
+	
+.footer-links.span5 {
+	width: 380px; }
+	
+.tab-pane form .buttons {
+	padding-left: 20px;
+	padding-right: 20px; }
+
+.tabbable.span8 {
+	width: 620px;
+}
+
+.tree-view .actions .icons {
+	margin-left: 2px;
+}
