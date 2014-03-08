@@ -4,6 +4,9 @@
 .table {
 	border-collapse: collapse; }
 
+.table-striped td {
+	border-top: 1px solid #B6B6B7; }
+
 .toggle-links {
 	min-height: 20px; }
 	
@@ -31,3 +34,18 @@ a.btn, button.btn, input[type=submit], input[type=submit].btn {
 	
 .row-fluid.buckets .span4 {
 	width: 298px; }
+	
+.footer-links.span5 {
+	width: 380px; }
+	
+.tab-pane form .buttons {
+	padding-left: 20px;
+	padding-right: 20px; }
+
+.tabbable.span8 {
+	width: 620px;
+}
+
+.tree-view .actions .icons {
+	margin-left: 2px;
+}
