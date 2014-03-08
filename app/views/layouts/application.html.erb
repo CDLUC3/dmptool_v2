@@ -8,16 +8,19 @@
     <%= csrf_meta_tags %>
     <%= render 'layouts/shim' %>
     <script>
+    	/* Test for Safari */
     	if (navigator.userAgent.match(/AppleWebKit/) && ! navigator.userAgent.match(/Chrome/)) {
-   			document.write('<link rel="stylesheet" media="all" href="/assets/safari.css?body=1" />')
+    		/* include safari stylesheet*/
+   			document.write('<link rel="stylesheet" media="all" href="/assets/safari.css?body=1" />');
 			}
+			/* Test for Chrome */
 			if (navigator.userAgent.match(/Chrome/)) {
-   			document.write('<link rel="stylesheet" media="all" href="/assets/chrome.css?body=1" />')
-			}
-			if (navigator.userAgent.match(/MSIE 8.0/)) {
-   			document.write('<link rel="stylesheet" media="all" href="/assets/ie.css?body=1" />')
+				/* include chrome stylesheet */
+   			document.write('<link rel="stylesheet" media="all" href="/assets/chrome.css?body=1" />');
 			}
     </script>
+    <!--[if IE 8]><link rel="stylesheet" media="all" href="/assets/ie.css" /><![endif]-->
+    <!--[if IE 7]><link rel="stylesheet" media="all" href="/assets/ie.css" /><![endif]-->
   </head>
   <body>
   <%= render 'layouts/header' %>

@@ -33,7 +33,7 @@
 
 	
 /* Buttons */
-a.btn, button, button.btn, input[type=submit], input[type=submit].btn {
+a.btn, button.btn, input[type=submit], input[type=submit].btn, .ui-datepicker-trigger {
 	display: inline-block;
 	border: none;
 	border-radius: 15px;
@@ -54,7 +54,7 @@ a.btn, button, button.btn, input[type=submit], input[type=submit].btn {
 	height: 30px;
 	margin-right: 5px;
 	padding: 0 20px; }
-button.ui-datepicker-trigger {
+.ui-datepicker-trigger {
 	border: 1px solid #B6B6B7;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -63,12 +63,11 @@ button.ui-datepicker-trigger {
 button img {
 	display: block; }
 .buttons.pagination a.btn, 
-.buttons.pagination button, .buttons.pagination button.btn, 
+.buttons.pagination button.btn, 
 .buttons.pagination input[type=submit], .buttons.pagination input[type=submit].btn {
 	position: absolute;
 	left: 10px; }
 a.btn:hover, a.btn:focus, a.btn:active,
-button:hover, button:focus, button:active, 
 button.btn:hover, button.btn:focus, button.btn:active {
 	box-shadow: none;
 	-moz-box-shadow: none;
@@ -181,7 +180,7 @@ a .icon {
 .login.icon {
 	background-position: -115px -15px; width: 25px; height: 25px; }
 .institution-profile.icon {
-	background-position: -140px -40px; width: 25px; height: 25px; }
+	background-position: -140px -15px; width: 25px; height: 25px; }
 /* third row */
 .new-template.icon {
 	background-position: 0px -40px; width: 25px; height: 25px; }
