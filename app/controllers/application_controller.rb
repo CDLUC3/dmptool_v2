@@ -129,26 +129,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def select_requirements_template
-      req_temp = RequirementsTemplate.includes(:institution)
-      valid_buckets = nil
-      if current_user.has_role?(Role::DMP_ADMIN)
-        #all records
-      elsif current_user.has_role?(Role::TEMPLATE_EDITOR) || current_user.has_role?(Role::INSTITUTIONAL_ADMIN)
-        req_temp = req_temp.where(institution_id: current_user.institution.subtree_ids)
-        valid_buckets = current_user.institution.child_ids
-        base_inst = current_user.institution.id
-        valid_buckets = [ current_user.institution.id ] if valid_buckets.length < 1
-      else
-        @rt_tree = {}
-        return
-      end
-      if !params[:q].blank?
-        req_temp = req_temp.name_search_terms(params[:q])
-      end
-      if !params[:s].blank? && !params[:e].blank?
-        req_temp = req_temp.letter_range(params[:s], params[:e])
-      end
+    def process_requirements_template(req_temp, valid_buckets)
 
       rt_tree = {}
       #this creates a hash with institutions as keys and requirements_templates as values like below
@@ -213,4 +194,4 @@ class ApplicationController < ActionController::Base
         @rt_tree = temp
       end
     end
-end
+  end

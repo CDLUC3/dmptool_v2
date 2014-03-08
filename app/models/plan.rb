@@ -38,4 +38,8 @@ class Plan < ActiveRecord::Base
   def owner
     @owner ||= users.where('user_plans.owner' => true).first
   end
+
+  def plans_count_for_institution(institution)
+    Plan.where(:requirements_templates => { :institution_id => institution.subtree_ids }).count
+  end
 end

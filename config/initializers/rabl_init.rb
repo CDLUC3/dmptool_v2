@@ -1,0 +1,2 @@
+require 'rabl'
+Rabl.register!

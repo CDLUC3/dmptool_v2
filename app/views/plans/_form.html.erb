@@ -77,7 +77,7 @@
               <p><%= link_to(content_tag(:span, "", :class => "icon-chevron-down") + "View", "#", :class => "view-reviewer-comments") %><%= link_to(content_tag(:span, "", :class => "icon-chevron-up") + "Hide", "#", :class => "hide-reviewer-comments") %></p>
               <div id="reviewer_comments" class="comments">
                 <%= render partial: 'comments/index_reviewer_comments' %>
-                <p><%= link_to "Add Comments", "#", remote: true, :class => "btn add_comments_link" %></p>
+                <p><%= link_to "Add Comments", "#", data: {:comment_type => :reviewer}, :class => "btn add_comments_link" %></p>
               </div>
             </div>
           </div>
@@ -88,7 +88,7 @@
               <p><%= link_to(content_tag(:span, "", :class => "icon-chevron-down") + "View", "#", :class => "view-owner-comments") %><%= link_to(content_tag(:span, "", :class => "icon-chevron-up") + "Hide", "#", :class => "hide-owner-comments") %></p>
               <div id="owner_comments" class="comments">
                 <%= render partial: "comments/index_owner_comments" %>
-                <p><%= link_to "Add Comments", "#", remote: true, :class => "btn add_comments_link" %></p>
+                <p><%= link_to "Add Comments", new_comment_path(comment_type: :owner), :class => "btn add_comments_link" %></p>
               </div>
             </div>
           </div>
@@ -101,7 +101,6 @@
               <%= link_to "Change Settings", "#", remote: true, :class => "btn change_visibility_link" %></p>
             </div>
           </div>
-
           <hr/>
 
           <div class="control-group">
@@ -125,6 +124,7 @@
             <%= link_to 'Plan Details >>', details_plan_path(@plan), method: 'get', :class => 'btn btn-green pull-right' %>
           <% end %>
         </div>
+
       <% end %>
     </div>
   </div>

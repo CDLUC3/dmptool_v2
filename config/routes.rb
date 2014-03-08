@@ -15,13 +15,15 @@ Dmptool2::Application.routes.draw do
       resources :published_plans
       resources :plans_states
       resources :sample_plans
+
+      get 'institutions/:id/plans_count', to: 'institutions#plans_count_show'
     end
   end
 
 
-  match '/500', :to => 'errors#internal_error', :via => :all 
-  match '/404', :to => 'errors#not_found', :via => :all 
-  match '/403', :to => 'errors#forbidden', :via => :all 
+  match '/500', :to => 'errors#internal_error', :via => :all
+  match '/404', :to => 'errors#not_found', :via => :all
+  match '/403', :to => 'errors#forbidden', :via => :all
 
   get "dashboard/show"
   root 'static_pages#home'
@@ -84,6 +86,7 @@ Dmptool2::Application.routes.draw do
       get :export
       get :details
       get :preview
+      get :perform_review
     end
   end
   resources :comments

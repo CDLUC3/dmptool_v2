@@ -2,8 +2,7 @@ class PlansController < ApplicationController
 
   before_action :require_login, except: [:public, :show]
   #note show will need to be protected from logins in some cases, but only from non-public plan viewing
-  before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details, :preview]
-  before_action :select_requirements_template, only: [:select_dmp_template]
+  before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details, :preview, :perform_review]
 
   # GET /plans
   # GET /plans.json
@@ -64,16 +63,13 @@ class PlansController < ApplicationController
 
   # GET /plans/1/edit
   def edit
-    @comment = Comment.new
-    comments = Comment.where(plan_id: @plan.id, user_id: current_user.id)
-    @reviewer_comments = comments.where(visibility: :reviewer)
-    @owner_comments = comments.where(visibility: :owner)
-    @plan_states = @plan.plan_states
+    set_comments
   end
 
   # PATCH/PUT /plans/1
   # PATCH/PUT /plans/1.json
   def update
+    set_comments
     respond_to do |format|
       if @plan.update(plan_params)
         format.html { redirect_to edit_plan_path(@plan), notice: 'Plan was successfully updated.' }
@@ -127,6 +123,10 @@ class PlansController < ApplicationController
 
   end
 
+  def perform_review
+    set_comments
+  end
+
   def review_dmps
     if safe_has_role?(Role::INSTITUTIONAL_REVIEWER)
       user_id = current_user.id
@@ -146,6 +146,28 @@ class PlansController < ApplicationController
   end
 
   def select_dmp_template
+    #TODO  Need to create correct scope for viwing public templates and other things, code may also be refactored
+    req_temp = RequirementsTemplate.includes(:institution)
+    valid_buckets = nil
+    if current_user.has_role?(Role::DMP_ADMIN)
+      #all records
+    elsif current_user.has_role?(Role::TEMPLATE_EDITOR) || current_user.has_role?(Role::INSTITUTIONAL_ADMIN)
+      req_temp = req_temp.where(institution_id: current_user.institution.subtree_ids)
+      valid_buckets = current_user.institution.child_ids
+      base_inst = current_user.institution.id
+      valid_buckets = [ current_user.institution.id ] if valid_buckets.length < 1
+    else
+      @rt_tree = {}
+      return
+    end
+    if !params[:q].blank?
+      req_temp = req_temp.name_search_terms(params[:q])
+    end
+    if !params[:s].blank? && !params[:e].blank?
+      req_temp = req_temp.letter_range(params[:s], params[:e])
+    end
+    process_requirements_template(req_temp, valid_buckets)
+
     @back_to = plan_template_information_path
     @back_text = "<< Create New DMP"
     @submit_to = new_plan_path
@@ -190,8 +212,8 @@ class PlansController < ApplicationController
     plan = Plan.find(id)
     plan.visibility = params[:visibility]
     respond_to do |format|
-      if plan.save!
-        format.html { redirect_to edit_plan_path(plan)}
+      if plan.save
+        format.html { redirect_to :back }
         format.js
       end
     end
@@ -282,5 +304,13 @@ class PlansController < ApplicationController
         end
       end
       return resources
+    end
+
+    def set_comments
+      @comment = Comment.new
+      comments = Comment.where(plan_id: @plan.id, user_id: current_user.id)
+      @reviewer_comments = comments.reviewer_comment
+      @owner_comments = comments.owner_comment
+      @plan_states = @plan.plan_states
     end
 end
