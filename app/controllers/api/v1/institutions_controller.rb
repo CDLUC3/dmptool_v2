@@ -8,6 +8,10 @@ class Api::V1::InstitutionsController < Api::V1::BaseController
 
 	def show
     	@institution = Institution.find(params[:id])
-  	end  	
+  	end  
+
+  	def plans_count_show
+    	@institution = Institution.find(params[:id])
+  	end 	
 
 end

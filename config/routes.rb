@@ -15,6 +15,8 @@ Dmptool2::Application.routes.draw do
       resources :published_plans
       resources :plans_states
       resources :sample_plans
+
+      get 'institutions/:id/plans_count', to: 'institutions#plans_count_show'
     end
   end
 
