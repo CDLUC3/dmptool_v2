@@ -1,6 +1,65 @@
-# -*- mode: ruby -*-
 require 'nokogiri'
 
+def mk_formatted_text(n)
+  case n.name
+  when "b", "strong"
+    {:text => n.text,
+      :styles => [:bold]}
+  when "i", "em"
+    {:text => n.text,
+      :styles => [:italic]}
+  when "sup"
+    {:text => n.text,
+      :styles => [:superscript]}
+  when "sub"
+    {:text => n.text,
+      :styles => [:subscript]}
+  when "text"
+    {:text => n.text}
+  else
+    raise Exception.new("Unexpected tag: #{n.name}.")
+  end
+end
+
+def mk_formatted_texts(n)
+  return n.map {|c| mk_formatted_text(c)}
+end
+
+def render_html(pdf, n, state={})
+  case n.name
+  when "document", "html", "body"
+    n.children.each do |c|
+      render_html(pdf, c)
+    end
+  when "p"
+    pdf.formatted_text(mk_formatted_texts(n.children))
+  when "ul"
+    pdf.indent(10) do
+      n.children.each do |li|
+        render_html(pdf, li, {:list_mode=>:ul})
+      end
+    end
+  when "ol"
+    pdf.indent(10) do
+      # keep this here so that render_html can modify it
+      state = {:list_mode=>:ol, :index=>1}
+      n.children.each do |li|
+        render_html(pdf, li, state)
+      end
+    end
+  when "li"
+    if state[:list_mode] == :ul
+      pdf.formatted_text([{:text=>"\u2022 "}] + mk_formatted_texts(n.children))
+    else # :ol
+      pdf.formatted_text([{:text=>"#{state[:index]}. "}] + mk_formatted_texts(n.children))
+      state[:index] = state[:index] + 1
+    end 
+  else
+    if !n.text.blank? then
+      pdf.formatted_text([mk_formatted_text(n)])
+    end
+  end
+end
 
 def print_responses(pdf, requirement, heading)
   pdf.pad(12) do
@@ -25,9 +84,7 @@ def print_responses(pdf, requirement, heading)
       pdf.font("Helvetica", :style=>:normal)
       pdf.pad(10) do
         pdf.indent(12) do
-          html.css('p').each do |p|
-            pdf.text(p.inner_html)
-          end
+          render_html(pdf, html)
         end
       end
     end
