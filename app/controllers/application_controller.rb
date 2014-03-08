@@ -129,7 +129,14 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def process_requirements_template(req_temp, valid_buckets)
+    def process_requirements_template(req_temp)
+
+      insts = get_base_institution_buckets(req_temp)
+      return {} if insts.blank?
+      valid_buckets = insts.map{|i| i.id}
+      out_insts = {}
+      insts.each{|i| out_insts[i.id] = i}
+
 
       rt_tree = {}
       #this creates a hash with institutions as keys and requirements_templates as values like below
@@ -139,17 +146,12 @@ class ApplicationController < ActionController::Base
       # is not the same.
       req_temp.each do |rt|
         unless rt.institution.nil?
-          if valid_buckets.nil?
-            root_inst = rt.institution.root
+          inst_id = valid_buckets & rt.institution.path_ids #get intersection of bucket and path id to get institution
+          my_inst = out_insts[inst_id]
+          if rt_tree.has_key?(my_inst)
+            rt_tree[my_inst].push(rt)
           else
-            inst_id = valid_buckets & rt.institution.path_ids
-            inst_id = [ base_inst ] if inst_id.empty?
-            root_inst = Institution.find(inst_id.first)
-          end
-          if rt_tree.has_key?(root_inst)
-            rt_tree[root_inst].push(rt)
-          else
-            rt_tree[root_inst] = [ rt ]
+            rt_tree[my_inst] = [ rt ]
           end
         end
       end
@@ -170,12 +172,12 @@ class ApplicationController < ActionController::Base
       end
 
       # sort out for institutional admins so that their institution templates appear on first level if any
-      if !valid_buckets.nil? && @rt_tree.has_key?(current_user.institution)
-        templates = @rt_tree.delete(current_user.institution)
-        templates.each do |t|
-          @rt_tree[t] = nil
-        end
-      end
+      #if !valid_buckets.nil? && @rt_tree.has_key?(current_user.institution)
+      #  templates = @rt_tree.delete(current_user.institution)
+      #  templates.each do |t|
+      #    @rt_tree[t] = nil
+      #  end
+      #end
 
       #sort first level items by name (both institutions and requirements templates)
       @rt_tree = Hash[@rt_tree.sort{|x,y| x[0].name.downcase <=> y[0].name.downcase}]
@@ -193,5 +195,19 @@ class ApplicationController < ActionController::Base
         end
         @rt_tree = temp
       end
+    end
+
+  private
+    def get_base_institution_buckets(requirements_templates)
+      insts = Institution.where(id: requirements_templates.pluck(:institution_id)).distinct
+      least_depth = 1000
+      insts.each do |i|
+        least_depth = i.depth if i.depth < least_depth
+        break if least_depth == 0
+      end
+      return nil if least_depth == 1000
+      inst_ids = insts.map { |i|  (i.ancestor_ids + [ i.id])[least_depth] }
+
+      Institution.find(inst_ids)
     end
   end

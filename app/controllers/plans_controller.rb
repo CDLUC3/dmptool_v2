@@ -166,7 +166,7 @@ class PlansController < ApplicationController
     if !params[:s].blank? && !params[:e].blank?
       req_temp = req_temp.letter_range(params[:s], params[:e])
     end
-    process_requirements_template(req_temp, valid_buckets)
+    process_requirements_template(req_temp)
 
     @back_to = plan_template_information_path
     @back_text = "<< Create New DMP"
