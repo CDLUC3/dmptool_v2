@@ -10,19 +10,19 @@
 	<table>
 		<tr>
 			<td><strong>DMP Template:</strong></td>
-			<td>DMP Template Name</td>
+			<td><%= @plan.requirements_template.name %></td>
 			<td><strong>Solicitation Number:</strong></td>
-			<td>NSF123456789</td>
+			<td><%= @plan.solicitation_identifier %></td>
 		</tr>
 		<tr>
 			<td><strong>Institution:</strong></td>
-			<td>Intitution Name</td>
+			<td><%= @plan.owner.institution.name %></td>
 			<td><strong>Submission Deadline:</strong></td>
-			<td>08/30/2013</td>
+			<td><%= @plan.submission_deadline || "[not specified]" %></td>
 		</tr>
 		<tr>
 			<td><strong>DMP Name:</strong></td>
-			<td>DMP Name</td>
+			<td><%= @plan.name %></td>
 			<td></td>
 			<td></td>
 		</tr>
