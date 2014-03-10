@@ -22,7 +22,7 @@
 	<%= link_to('T - Z', { :s => 't', :e => 'z' }, :class => 'btn viewT-Z') %> 
 	<%= link_to('All', { :s => 'a', :e => 'z' }, :class => 'btn viewA-Z') %>
 </div>
-<% unless @rt_tree.empty? %>
+<% unless @rt_tree.blank? %>
 <%= form_tag(@submit_to, method: "get", id: 'requirements_template_form') do %>
 <div class="row-fluid">
 	<div class="tree-view template-list span8">
@@ -64,7 +64,8 @@
 <%= link_to(@back_text, @back_to, method: :get, :class => "btn pull-left") %>
 <%= submit_tag(@submit_text, id: 'next', method: :get, :class => "btn pull-right") %>
 <% else %>
-	<p>No results were found for your search terms, please modify your search terms to show results.</p>
+  <br/>
+	<p>No DMP templates were available to show. If you are filtering or searching, please modify your search to see more items.</p>
 <% end %>
 <div id="dialog" title="Please select a DMP Template">
   You must select a DMP template before continuing.
