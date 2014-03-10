@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   # enable_authorization
 
-  helper_method :current_user, :safe_has_role?
+  helper_method :current_user, :safe_has_role?, :require_login
 
   protected
 
