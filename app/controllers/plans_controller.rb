@@ -13,7 +13,7 @@ class PlansController < ApplicationController
 
     case params[:scope]
       when "all"
-        @plans = @plans.page(params[:page]).per(1000)
+        @plans = @plans.page(params[:page]).per(9999)
       when "all_limited"
         @plans = @plans.page(params[:page]).per(5)
       when "coowned"
@@ -309,8 +309,8 @@ class PlansController < ApplicationController
     def set_comments
       @comment = Comment.new
       comments = Comment.where(plan_id: @plan.id, user_id: current_user.id)
-      @reviewer_comments = comments.reviewer_comment
-      @owner_comments = comments.owner_comment
+      @reviewer_comments = comments.reviewer_comments.page(params[:page]).per(5)
+      @owner_comments = comments.owner_comments.page(params[:page]).per(5)
       @plan_states = @plan.plan_states
     end
 end

@@ -18,7 +18,7 @@ $(function() {
     $('#comment_comment_type').attr('value', $(event.target).attr("data-comment-type"));
 		$('#comment_dialog_form').dialog( {
 			width: 600,
-			height: 300,
+			height: 310,
 			modal: true,
 			closeOnEscape: true,
 			draggable: true,

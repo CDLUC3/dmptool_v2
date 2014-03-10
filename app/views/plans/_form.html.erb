@@ -88,7 +88,7 @@
               <p><%= link_to(content_tag(:span, "", :class => "icon-chevron-down") + "View", "#", :class => "view-owner-comments") %><%= link_to(content_tag(:span, "", :class => "icon-chevron-up") + "Hide", "#", :class => "hide-owner-comments") %></p>
               <div id="owner_comments" class="comments">
                 <%= render partial: "comments/index_owner_comments" %>
-                <p><%= link_to "Add Comments", new_comment_path(comment_type: :owner), :class => "btn add_comments_link" %></p>
+                <p><%= link_to "Add Comments", "#", data: {:comment_type => :owner}, :class => "btn add_comments_link" %></p>
               </div>
             </div>
           </div>
