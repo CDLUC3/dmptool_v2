@@ -13,8 +13,8 @@ class Comment < ActiveRecord::Base
   scope :owner, -> { where(visibility: :owner) }
   scope :reviewer, -> { where(visibility: :reviewer) }
 
-  scope :owner_comment, -> { where(comment_type: :owner) }
-  scope :reviewer_comment, -> { where(comment_type: :reviewer) }
+  scope :owner_comments, -> { where(comment_type: :owner) }
+  scope :reviewer_comments, -> { where(comment_type: :reviewer) }
 
   def owner?
     visibility == :owner
