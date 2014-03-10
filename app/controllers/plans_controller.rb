@@ -146,26 +146,17 @@ class PlansController < ApplicationController
   end
 
   def select_dmp_template
-    #TODO  Need to create correct scope for viwing public templates and other things, code may also be refactored
     req_temp = RequirementsTemplate.includes(:institution)
-    valid_buckets = nil
-    if current_user.has_role?(Role::DMP_ADMIN)
-      #all records
-    elsif current_user.has_role?(Role::TEMPLATE_EDITOR) || current_user.has_role?(Role::INSTITUTIONAL_ADMIN)
-      req_temp = req_temp.where(institution_id: current_user.institution.subtree_ids)
-      valid_buckets = current_user.institution.child_ids
-      base_inst = current_user.institution.id
-      valid_buckets = [ current_user.institution.id ] if valid_buckets.length < 1
-    else
-      @rt_tree = {}
-      return
-    end
+    req_temp = req_temp.where("institution_id in (?) OR visibility = 'public'", current_user.institution.subtree_ids).
+                where('(start_date IS NULL OR start_date < ?) AND (end_date IS NULL or end_date > ?)', Time.new, Time.new)
+
     if !params[:q].blank?
       req_temp = req_temp.name_search_terms(params[:q])
     end
     if !params[:s].blank? && !params[:e].blank?
       req_temp = req_temp.letter_range(params[:s], params[:e])
     end
+
     process_requirements_template(req_temp)
 
     @back_to = plan_template_information_path
