@@ -1,2 +1,14 @@
-
-	<%= render partial: 'comments/index_reviewer_comments', locals: {:plan_id => params[:id]} %>
+<fieldset class="comments" style= "border:0.5px solid #B6B6B7;padding:1em;margin-top:2em;">
+  <%= render partial: "comments/index_reviewer_comments" %>
+  <p><%= link_to "Add Comments", "#", data: {:comment_type => :reviewer}, :class => "btn add_comments_link" %></p>
+</fieldset>
+<fieldset style= "border:0.5px solid #B6B6B7;padding:1em;margin-top:2em;">
+  <label class ="control-label">Review Decision:</label>
+	<div class="controls">
+		<%= button_to "Approve", "#", method: :get, :class => 'btn btn-success pull-left' %>
+		<%= button_to "Reject", "#", data: {:comment_type => :reviewer}, :class => "btn btn-danger add_comments_link"  %>
+	</div>
+</fieldset>
+<div id = "comment_dialog_form">
+	<%= render partial: 'comments/form', locals: {:plan_id => params[:id]} %>
+</div>
