@@ -1,3 +1,4 @@
+# -*- mode: ruby -*-
 require 'nokogiri'
 
 def mk_formatted_text(n)
