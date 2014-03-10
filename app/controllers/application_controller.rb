@@ -129,47 +129,24 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def process_requirements_template(req_temp)
+    def process_requirements_template(requirement_templates)
 
-      insts = get_base_institution_buckets(req_temp)
-      return {} if insts.blank?
-      valid_buckets = insts.map{|i| i.id}
-      out_insts = {}
-      insts.each{|i| out_insts[i.id] = i}
+      institutions = get_base_institution_buckets(requirement_templates)
+      return {} if institutions.blank?
 
-
-      rt_tree = {}
       #this creates a hash with institutions as keys and requirements_templates as values like below
       # { <institution_object1> => [<requirements_template_1>, <requirements_template_2> ],
       #     <institution_object2> => [<requirements_template_1>] }
       # This works slightly different between institutional admins and WAS admins since the tree
       # is not the same.
-      req_temp.each do |rt|
-        unless rt.institution.nil?
-          inst_id = valid_buckets & rt.institution.path_ids #get intersection of bucket and path id to get institution
-          my_inst = out_insts[inst_id]
-          if rt_tree.has_key?(my_inst)
-            rt_tree[my_inst].push(rt)
-          else
-            rt_tree[my_inst] = [ rt ]
-          end
-        end
-      end
+      rt_tree = Hash[institutions.map{|i| [i, requirement_templates.where(institution_id: i.id)] }]
 
       #this transforms the hash so that there is a possible 2-level heirarchy like institution => [req_template1, req_template2] or
       # req_template => nil, see example below:
       # { <institution_object1> => [<requirements_template_1>, <requirements_template_2> ],
       #     <requirements_template_1> => nil }
-      @rt_tree = {}
-      rt_tree.each do |k,v|
-        if v.length > 1
-          @rt_tree[k] = v
-        else
-          v.each do |i|
-            @rt_tree[i] = nil
-          end
-        end
-      end
+      @rt_tree = Hash[rt_tree.map{|i| (i[1].length == 1 ? [i[1].first, nil] : i )} ]
+
 
       # sort out for institutional admins so that their institution templates appear on first level if any
       #if !valid_buckets.nil? && @rt_tree.has_key?(current_user.institution)
@@ -189,11 +166,7 @@ class ApplicationController < ActionController::Base
 
       #put all results at top level if only one institution has results
       if @rt_tree.length == 1 && !@rt_tree.first[1].nil?
-        temp = {}
-        @rt_tree.first[1].each do |i|
-          temp[i] = nil
-        end
-        @rt_tree = temp
+        @rt_tree = Hash[ @rt_tree.first[1].map{|i| [i, nil]} ]
       end
     end
 
@@ -205,7 +178,7 @@ class ApplicationController < ActionController::Base
         least_depth = i.depth if i.depth < least_depth
         break if least_depth == 0
       end
-      return nil if least_depth == 1000
+      return {} if least_depth == 1000
       inst_ids = insts.map { |i|  (i.ancestor_ids + [ i.id])[least_depth] }
 
       Institution.find(inst_ids)

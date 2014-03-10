@@ -197,13 +197,11 @@ class ResourceContextsController < ApplicationController
   end
 
   def dmp_for_customization
-    #TODO  Need to refactor this to be better for sharing two places
-
     req_temp = RequirementsTemplate.includes(:institution)
     valid_buckets = nil
     if current_user.has_role?(Role::DMP_ADMIN)
       #all records
-    elsif current_user.has_role?(Role::TEMPLATE_EDITOR) || current_user.has_role?(Role::INSTITUTIONAL_ADMIN)
+    elsif current_user.has_role?(Role::RESOURCE_EDITOR) || current_user.has_role?(Role::INSTITUTIONAL_ADMIN)
       req_temp = req_temp.where(institution_id: current_user.institution.subtree_ids)
     else
       @rt_tree = {}
