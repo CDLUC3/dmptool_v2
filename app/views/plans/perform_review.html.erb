@@ -4,10 +4,9 @@
 </fieldset>
 <fieldset style= "border:0.5px solid #B6B6B7;padding:1em;margin-top:2em;">
   <label class ="control-label">Review Decision:</label>
-	<div class="controls">
-		<%= button_to "Approve", "#", method: :get, :class => 'btn btn-success pull-left' %>
-		<%= button_to "Reject", "#", data: {:comment_type => :reviewer}, :class => "btn btn-danger add_comments_link"  %>
-	</div>
+	<%= link_to "Approve", "#", method: :get, :class => 'btn btn-success' %>
+	<%= link_to "Reject", "#", data: {:comment_type => :reviewer}, :class => "btn btn-danger add_comments_link"  %>
+
 </fieldset>
 <div id = "comment_dialog_form">
 	<%= render partial: 'comments/form', locals: {:plan_id => params[:id]} %>
