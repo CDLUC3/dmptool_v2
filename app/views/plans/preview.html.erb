@@ -3,6 +3,7 @@
 <div class="row-fluid">
 	<%= link_to "Export as PDF", plan_path(@plan, :format=>"pdf"), :class => "btn pull-left" %>
 	<%= link_to "Export as RTF", plan_path(@plan, :format=>"rtf"), :class => "btn pull-left" %>
+        <%= link_to(content_tag(:span, "", :class => "icon print") + "Print", "#", :class => "btn pull-left")  %>
 	<%= link_to "Submit", "#", :class => "btn btn-green pull-right" %>
 </div>
 <br/>
@@ -29,7 +30,6 @@
 	</table>
 	<hr/>
 	<div class="row-fluid">
-		<%= link_to(content_tag(:span, "", :class => "icon print") + "Print", "#", :class => "icon print pull-right")  %>
 	</div>
 	<div class="dmp-preview">
           <%= render(partial: "requirement",
