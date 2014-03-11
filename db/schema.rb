@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140307104348) do
+ActiveRecord::Schema.define(version: 20140311221831) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -56,6 +56,8 @@ ActiveRecord::Schema.define(version: 20140307104348) do
     t.string   "value"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "position"
+    t.boolean  "default"
   end
 
   create_table "institutions", force: true do |t|
@@ -79,9 +81,10 @@ ActiveRecord::Schema.define(version: 20140307104348) do
 
   create_table "labels", force: true do |t|
     t.string   "desc"
-    t.string   "group"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "position"
+    t.integer  "requirement_id"
   end
 
   create_table "old_authentications", force: true do |t|
@@ -197,9 +200,12 @@ ActiveRecord::Schema.define(version: 20140307104348) do
     t.integer  "plan_id"
     t.integer  "requirement_id"
     t.integer  "label_id"
-    t.text     "value"
+    t.text     "text_value"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "numeric_value"
+    t.date     "date_value"
+    t.integer  "enumeration_id"
   end
 
   create_table "roles", force: true do |t|
