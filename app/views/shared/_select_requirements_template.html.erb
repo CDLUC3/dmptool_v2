@@ -23,6 +23,7 @@
   <%= link_to('T - Z', {:s => 't', :e => 'z'}, :class => 'btn viewT-Z') %>
   <%= link_to('All', {:s => 'a', :e => 'z'}, :class => 'btn viewA-Z') %>
 </div>
+<br/>
 <% unless @rt_tree.blank? %>
   <%= form_tag(@submit_to, method: "get", id: 'requirements_template_form') do %>
     <div class="row-fluid">

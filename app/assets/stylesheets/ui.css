@@ -147,7 +147,33 @@ li.nested_requirements ul {
 	position: relative; }
 
 
+/* choose DMP template from tree view by institution */
+div.template-list li {
+  clear:both;
+  padding: 5px 0 0 0;
+}
+div.template-list div.icons{
+  float: left;
+  clear: left;
+  width: 40px;
+}
 
+div.template-list li label{
+  display: block;
+  float: left;
+  clear: right;
+}
+
+div.template-list ul{
+  margin-top: 0px;
+  margin-left: 19px;
+}
+
+div.template-list .icon.requirement {
+  vertical-align: text-top;
+}
+
+/* end DMP choose template */
 
 
 .option_area {
