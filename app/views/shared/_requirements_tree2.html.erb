@@ -4,7 +4,7 @@
 
   <% if requirement.is_group? %>
     <li class="li_folder" id="requirement_<%= requirement.id %>">
-      <i class="icon requirements-group-open larger"></i>
+      <i class="icon folder-open larger"></i>
       <%= requirement.text_brief %>
       <%# link_to requirement.text_brief,
                   customization_requirement_path(@customization, requirement_id: requirement.id, node_type: 'group') %>

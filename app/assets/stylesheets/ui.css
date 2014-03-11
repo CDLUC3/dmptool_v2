@@ -139,15 +139,45 @@ li.nested_requirements ul {
 .institutions {
 	margin: 10px 20px 20px; }
 .institution {
-	margin-bottom: 10px; }
+	margin-bottom: 8px; }
+.institutions .institution span.icon {
+  vertical-align: top;
+}
 .nested_institutions {
-	margin-left: 35px; }
+	margin-left: 25px; }
 .institution a {
-	padding-left: 22px;
+  display: inline-block;
+  padding: 2px 0 0 10px;
 	position: relative; }
 
 
+/* choose DMP template from tree view by institution */
+div.template-list li {
+  clear:both;
+  padding: 5px 0 0 0;
+}
+div.template-list div.icons{
+  float: left;
+  clear: left;
+  width: 40px;
+}
 
+div.template-list li label{
+  display: block;
+  float: left;
+  clear: right;
+}
+
+div.template-list ul{
+  margin-top: 0px;
+  margin-left: 19px;
+}
+
+div.template-list .icon.requirement {
+  vertical-align: text-top;
+}
+
+/* end DMP choose template */
 
 
 .option_area {
