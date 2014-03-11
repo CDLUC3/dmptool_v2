@@ -1,3 +1,6 @@
+<script type="text/javascript">
+window.print()
+</script>
 <%= render(partial: "requirement",
            collection: (@plan.requirements_template.requirements.order(:position).roots),
            locals: { heading: "" }) %>
