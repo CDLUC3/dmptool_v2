@@ -89,7 +89,7 @@ class ResponsesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def response_params
-      params.require(:response).permit(:value, :plan_id, :requirement_id, :label_id)
+      params.require(:response).permit(:text_value, :numeric_value, :date_value, :enumeration_id, :plan_id, :requirement_id, :label_id)
     end
 
     def set_values
