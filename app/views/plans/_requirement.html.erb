@@ -7,10 +7,5 @@
     </div>
   <%- end -%>
   <div>
-    <%- resp = requirement.responses.where(plan: @plan).take %>
-    <%- if resp.blank? -%>
-      [No response]
-    <%- else -%>
-      <%= resp.value.html_safe %>
-    <% end %>
+    <%= response_value_s(requirement.responses.where(plan: @plan).take) %>
   </div>

@@ -44,7 +44,7 @@ module ApplicationHelper
       # TODO - format ?
       return response.date_value.to_s
     else
-      return response.text_value.to_s
+      return response.text_value.html_safe
     end
   end
 end
