@@ -1,10 +1,11 @@
 a.ui-draggable-dragging {
-  display: block;
-  padding: 0 0 0 0;
-  background-color: yellow;
+  /* display: block; */
+  padding: 3px 3px 3px 3px;
+  background-color: #fcf8e3;
   border-style: solid;
   border-width: 1px 1px 1px 1px;
   border-color: black;
+  text-decoration: none;
 }
 
 div.highlight {
