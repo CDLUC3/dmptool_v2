@@ -27,7 +27,7 @@
       <tr>
         <td class="plan_name">
           <div class="toggle-links">
-            <%= link_to (content_tag(:strong, plan.name)), '#', :id => "#{plan.name}" %>
+            <strong id ="#{plan.name}"><%= plan.name %></strong>
             <div class="template-links">
                 <%= link_to('Overview', edit_plan_path(plan)) %>
               | <%= link_to('Details', details_plan_path(plan)) %>
@@ -44,7 +44,7 @@
           </div>
         </td>
         <td><%= owner_name(plan) %></td>
-        <td><%= state(plan) %></td>
+        <td><strong><%= state(plan) %></strong></td>
         <td><%= plan.visibility.capitalize %></td>
         <td><%= plan.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
       </tr>
