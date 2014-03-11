@@ -55,13 +55,7 @@ def print_responses(doc, requirement, heading, styles)
       print_responses(doc, child, "#{heading}.#{i+1}", styles)
     end
   else
-    resp = Response.where(:requirement=>requirement, :plan=>@plan).first
-    raw_html = if resp.nil? then
-                 "[No response]"
-               else
-                 resp.value
-               end
-    html = Nokogiri::HTML(raw_html)
+    html = Nokogiri::HTML(response_value_s(Response.where(:requirement=>requirement, :plan=>@plan).first))
     render_html(doc, html, styles)
   end
 end
