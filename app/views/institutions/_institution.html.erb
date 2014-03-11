@@ -1,8 +1,4 @@
-<ul>
-	<li>
-	  <div class="icons">
-	  	<span class="icon institution"></span>
-	  </div>
-	  <%= link_to institution.full_name, edit_institution_path(institution) %>
-	</li>
-</ul>
+
+<div class="institution">
+  <%= link_to(content_tag(:span, '', :class => 'icon institution') + institution.full_name, edit_institution_path(institution))%>
+</div>
