@@ -36,9 +36,10 @@
       <div class="tab-pane" id="tab4">
         <%= render partial: 'example_response', locals: { requirement_id: params[:requirement_id] } %>
       </div>
-      <hr style="height:1px; border:none; background-color:#000;"/>
+
+      <br/>
       <fieldset>
-        <strong> Your Response </strong>
+        <strong style="color:#516935; margin-left: 1em;"> Your Response </strong>
         <% if @requirement.obligation == :mandatory %>
           <strong>(Mandatory)</strong>
         <% end %>
@@ -48,7 +49,7 @@
   </div>
   <div>
   	<%= button_to '<< Plan Overview', edit_plan_path(@plan),  method: 'get', :class => 'btn btn-green pull-left'  %>
-	<%= button_to 'Plan Preview >>', preview_plan_path(@plan),  method: 'get', :class => 'btn btn-green pull-right'  %>
+    <%= button_to 'Plan Preview >>', preview_plan_path(@plan),  method: 'get', :class => 'btn btn-green pull-right'  %>
   </div>
 </div>
 <script type="text/javascript">
