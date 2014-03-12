@@ -291,3 +291,29 @@ a.hide-plan-history .icon-chevron-up, a.hide-reviewer-comments .icon-chevron-up,
 	padding: 10px 15px; }
 .tab-pane .border-box {
 	margin-bottom: 10px; }
+
+/* scrollable containers */
+div.scrollable-container
+{
+  border: 1px solid #C9C9CB;
+  height:300px;
+  background:green;
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+}
+
+div.scrollable-content
+{
+  box-sizing: border-box;
+  height:100%;
+  overflow:auto;
+  background:#fff;
+  padding: 0 10px 0 10px;
+}
+
+
+div.scrollable-bottom-handle {
+  height : 8px;
+  background : #dedede;
+  bottom:0;
+}
