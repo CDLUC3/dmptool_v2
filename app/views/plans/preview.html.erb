@@ -9,36 +9,11 @@
 	<%= link_to "Submit", "#", :class => "btn btn-green pull-right" %>
 </div>
 <br/>
+
 <div class="border-box">
-	<table>
-		<tr>
-			<td><strong>DMP Template:</strong></td>
-			<td><%= @plan.requirements_template.name %></td>
-			<td><strong>Solicitation Number:</strong></td>
-			<td><%= @plan.solicitation_identifier %></td>
-		</tr>
-		<tr>
-			<td><strong>Institution:</strong></td>
-			<td><%= @plan.owner.institution.name %></td>
-			<td><strong>Submission Deadline:</strong></td>
-			<td><%= @plan.submission_deadline || "[not specified]" %></td>
-		</tr>
-		<tr>
-			<td><strong>DMP Name:</strong></td>
-			<td><%= @plan.name %></td>
-			<td></td>
-			<td></td>
-		</tr>
-	</table>
-	<hr/>
-	<div class="row-fluid">
-	</div>
-	<div class="dmp-preview">
-          <%= render(partial: "requirement",
-                     collection: (@plan.requirements_template.requirements.order(:position).roots),
-                     locals: { heading: "" }) %>
-	</div>
+  <%= render :partial => 'html_render', locals: {plan: @plan} %>
 </div>
+
 <div class="buttons">
 	<p class="pull-left"><strong>This DMP is</strong> <span style="color: blue;">private</span>.</p>
 	<%= link_to "Change Settings", "#", remote: true, :class => "btn change_visibility_link" %>
