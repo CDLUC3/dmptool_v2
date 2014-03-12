@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140311221831) do
+ActiveRecord::Schema.define(version: 20140312212258) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -206,6 +206,7 @@ ActiveRecord::Schema.define(version: 20140311221831) do
     t.integer  "numeric_value"
     t.date     "date_value"
     t.integer  "enumeration_id"
+    t.integer  "lock_version",   default: 0, null: false
   end
 
   create_table "roles", force: true do |t|
