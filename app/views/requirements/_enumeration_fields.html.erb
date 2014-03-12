@@ -1,8 +1,15 @@
 <div class="control-group">
-  <%= f.label :item_value, :class => "control-label" %>
+	<%= f.label :item_value, :class => "control-label" %>
   <div class="controls">
-    <%= f.text_field(:value, :class => "input-medium") %>
-    <%= f.hidden_field :_destroy %>
-    <%= link_to "Remove", '#', :class => "remove_fields btn" %>
+	    <%= f.text_field(:value, :class => "input-medium") %>
+	    <%= f.check_box(:default, :class => "requirement_enumerations_attributes") %>
+	  	<%= label_tag :default, '(set default)', :class => 'checkbox-label' %>
+    	<%= f.hidden_field :_destroy %>
+    	<%= link_to(content_tag(:span, "", :class => "icon remove")+ 'Remove', '#', :class => "red remove_fields") %>
   </div>
-</div>
+
+<script type="text/javascript">
+$("input[type='checkbox']").on('change', function() {
+  $("input[type='checkbox']").not(this).prop('checked', false);
+});
+</script>

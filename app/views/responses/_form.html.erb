@@ -1,5 +1,8 @@
 <%# this partial requires plan_id, requirement_id to be passed in as a local variable %>
 <%= form_for(@response,  html: { :class => 'form-horizontal' }) do |f| %>
+
+  <%= f.hidden_field :lock_version %>
+
   <%= render partial: "shared/errors", locals: {model: @response} %>
   <div class="control-group">
       <%= f.hidden_field :requirement_id, value: requirement_id %>
@@ -7,13 +10,13 @@
       <%= f.hidden_field :label_id %>
       <%= hidden_field_tag :next_requirement_id, @next_requirement_id %>
   </div>
-  <% if Requirement.find(requirement_id).requirement_type == :text %>
+  <% if requirement(requirement_id).requirement_type == :text %>
     <div class="control-group">
     		<%= f.cktext_area :text_value, placeholder: 'response', :class => "input-block-level" %>
     </div>
   <% end %>
 
-  <% if Requirement.find(requirement_id).requirement_type == :numeric %>
+  <% if requirement(requirement_id).requirement_type == :numeric %>
     <div class="control-group">
       <%= f.label :numeric_value, 'Numeric Data Entry', :class => 'control-label' %>
       <div class="controls">
@@ -23,12 +26,12 @@
     <div class="control-group">
       <%= f.label :label_id, 'Unit of Measure', :class => 'control-label' %>
       <div class="controls">
-        <%= f.select(:label_id, Label.all.collect {|l| [ l.desc, l.id ] }) %>
+        <%= f.select(:label_id, requirement(requirement_id).labels.collect {|l| [ l.desc, l.id ] }) %>
       </div>
     </div>
   <% end %>
 
-  <% if Requirement.find(requirement_id).requirement_type == :date %>
+  <% if requirement(requirement_id).requirement_type == :date %>
     <div class="control-group">
       <%= f.label :date_value, :class => "control-label" %>
       <div class="controls">
@@ -37,17 +40,17 @@
     </div>
   <% end %>
 
-  <% if Requirement.find(requirement_id).requirement_type == :enum %>
+  <% if requirement(requirement_id).requirement_type == :enum %>
     <div class="control-group">
-      <%= f.label :enumeration_id, 'Enum Value', :class => 'control-label' %>
+      <%= f.label :enumeration_id, 'Enumeration Value', :class => 'control-label' %>
       <div class="controls">
-        <%= f.select(:enumeration_id, Enumeration.all.collect {|e| [ e.value, e.id ] }) %>
+        <%= f.select(:enumeration_id, requirement(requirement_id).enumerations.collect {|e| [ e.value, e.id ]} ) %>
       </div>
     </div>
   <% end %>
 
   <br/>
-  <% if Requirement.find(requirement_id).obligation == :mandatory %>
+  <% if requirement(requirement_id).obligation == :mandatory %>
       <%= f.submit "Save and Next", name: 'save_and_next', :class => 'btn btn-success pull-right', method: 'post', id: 'save_and_next', remote: true %>
       <%= f.submit "Save Response", name: 'save_only', :class => 'btn btn-success pull-right', method: 'post', id: 'save_only', remote: true %>
       <%= link_to "Cancel Changes", type: :reset, :class => 'btn pull-left', id: "cancel_action" %>
