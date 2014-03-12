@@ -1,5 +1,8 @@
 <%# this partial requires plan_id, requirement_id to be passed in as a local variable %>
 <%= form_for(@response,  html: { :class => 'form-horizontal' }) do |f| %>
+
+  <%= f.hidden_field :lock_version %>
+
   <%= render partial: "shared/errors", locals: {model: @response} %>
   <div class="control-group">
       <%= f.hidden_field :requirement_id, value: requirement_id %>
