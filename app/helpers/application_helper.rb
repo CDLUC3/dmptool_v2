@@ -1,7 +1,4 @@
 module ApplicationHelper
-
-  
-
   def link_to_add_fields(name, f, association)
     new_object = f.object.send(association).klass.new
     id = new_object.object_id
@@ -34,7 +31,7 @@ module ApplicationHelper
     flash_type.to_s
     end
   end
-  
+
   def response_value_s(response)
     if response.nil? then
       return "[No response]"

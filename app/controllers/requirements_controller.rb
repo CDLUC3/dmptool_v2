@@ -154,7 +154,7 @@ class RequirementsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def requirement_params
-      params.require(:requirement).permit(:position, :text_brief, :text_full, :requirement_type, :obligation, :default, :requirements_template_id, :parent_id, :group, enumerations_attributes: [:id, :requirement_id, :value])
+      params.require(:requirement).permit(:position, :text_brief, :text_full, :requirement_type, :obligation, :default, :requirements_template_id, :parent_id, :group, enumerations_attributes: [:id, :requirement_id, :value, :default, :_destroy])
     end
 
     # Fetch the corresponding Requirements Template
