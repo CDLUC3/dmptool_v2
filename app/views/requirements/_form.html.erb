@@ -36,11 +36,19 @@
         <%= f.select :requirement_type, options_for_select([:text, :numeric, :date, :enum], @requirement.requirement_type) %>
       </div>
     </div>
-    <fieldset class="requirement_type">
+
+    <fieldset class="requirement_type_enum">
       <%= f.fields_for :enumerations do |builder| %>
         <%= render 'enumeration_fields', f: builder %>
       <% end %>
       <%= link_to_add_fields 'Click to Add Item', f, :enumerations %>
+    </fieldset>
+
+    <fieldset class="requirement_type_numeric">
+      <%= f.fields_for :labels do |builder| %>
+        <%= render 'label_fields', f: builder %>
+      <% end %>
+      <%= link_to_add_fields 'Click to Add Unit', f, :labels %>
     </fieldset>
   </fieldset>
   <div class="buttons">

@@ -22,6 +22,7 @@ class RequirementsController < ApplicationController
     @requirement = @requirements_template.requirements.build(:parent_id => params[:parent_id])
     @requirements = @requirements_template.requirements
     @requirement.enumerations.build
+    @requirement.labels.build
     render 'index'
   end
 
@@ -29,6 +30,7 @@ class RequirementsController < ApplicationController
   def edit
     @requirements = @requirements_template.requirements
     @enumerations = @requirement.enumerations
+    @labels = @requirement.labels
     render 'index'
   end
 
@@ -154,7 +156,7 @@ class RequirementsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def requirement_params
-      params.require(:requirement).permit(:position, :text_brief, :text_full, :requirement_type, :obligation, :default, :requirements_template_id, :parent_id, :group, enumerations_attributes: [:id, :requirement_id, :value, :default, :_destroy])
+      params.require(:requirement).permit(:position, :text_brief, :text_full, :requirement_type, :obligation, :default, :requirements_template_id, :parent_id, :group, enumerations_attributes: [:id, :requirement_id, :value, :default, :position, :_destroy], labels_attributes: [:id, :requirement_id, :desc, :position, :_destroy])
     end
 
     # Fetch the corresponding Requirements Template

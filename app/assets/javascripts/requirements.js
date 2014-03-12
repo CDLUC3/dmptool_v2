@@ -3,7 +3,7 @@
 
 
 $(function() {
-	$("fieldset.requirement_type").hide();
+	$("fieldset.requirement_type_enum").hide();
 	$(document).on("ready", showHideEnum());
 	$("#requirement_requirement_type").bind('change', function(){
 		showHideEnum();
@@ -11,13 +11,28 @@ $(function() {
 
 	function showHideEnum() {
 		if($("#requirement_requirement_type").val() == "enum") {
-			$("fieldset.requirement_type").show();
+			$("fieldset.requirement_type_enum").show();
 		} else {
-			$("fieldset.requirement_type").hide();
+			$("fieldset.requirement_type_enum").hide();
 		}
 	}
 });
 
+$(function() {
+  $("fieldset.requirement_type_numeric").hide();
+  $(document).on("ready", showHideLabel());
+  $("#requirement_requirement_type").bind('change', function(){
+    showHideLabel();
+  });
+
+  function showHideLabel() {
+    if($("#requirement_requirement_type").val() == "numeric") {
+      $("fieldset.requirement_type_numeric").show();
+    } else {
+      $("fieldset.requirement_type_numeric").hide();
+    }
+  }
+});
 
 // from http://nack.co/get-url-parameters-using-jquery/ to check parameters.
 $.urlParam = function(name){
