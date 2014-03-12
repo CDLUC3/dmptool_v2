@@ -5,7 +5,7 @@ class Response < ActiveRecord::Base
 
   validates :plan_id, presence: true, numericality: true
   validates :requirement_id, presence: true, numericality: true
-  validates :value, presence: true, if: :validate_only_if_obligation_mandatory
+  validates :text_value, presence: true, if: :validate_only_if_obligation_mandatory
 
   def validate_only_if_obligation_mandatory
   	requirement_id = self.requirement_id
