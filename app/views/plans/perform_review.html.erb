@@ -1,42 +1,13 @@
-<style>
-
-  .content
-  {
-    height:300px;
-    background:#fff;
-    padding: 0 0 0 0;
-    margin: 0 0 0 0;
-  }
-
-  .text
-  {
-    position : relative;
-    height:100%;
-    overflow:auto;
-    background:#fff;
-    padding: 5px 10px 5px 10px;
-  }
-
-
-  #handle {
-    height : 8px;
-    background : #dedede;
-    bottom:-40;
-  }
-
-
-</style>
-
 <h1 class="row-fluid"><span class="icon review"></span>Review DMPs</h1>
 <br/>
 <strong>Perform Review </strong>
 
 
-<div class="content border-box">
-  <div class="text">
+<div class="scrollable-container">
+  <div class="scrollable-content">
     <%= render :partial => 'html_render', locals: {plan: @plan} %>
   </div>
-  <div id="handle" class = "ui-resizable-handle ui-resizable-s"></div>
+  <div class="scrollable-bottom-handle ui-resizable-handle ui-resizable-s"></div>
 </div>
 
 
@@ -57,5 +28,5 @@
 <%= link_to 'Back', review_dmps_path(@plan), method: :get, :class => 'btn btn-green pull-left' %>
 
 <script type="text/javascript">
-  $(".content").resizable({ containment: "parent", minHeight: 150, minWidth: 150, handles: "s" });
+  $("div.scrollable-container").resizable({ containment: "parent", minHeight: 150, handles: "s" });
 </script>
