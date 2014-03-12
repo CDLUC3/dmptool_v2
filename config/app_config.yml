@@ -5,6 +5,8 @@ development:
   feedback_email_from:    no-reply-dmptool@ucop.edu
   recaptcha_public_key:   6Ld2AAYAAAAAAKrPZimDhCZY56x_VK2RuAgao1_6
   recaptcha_private_key:  6Ld2AAYAAAAAAHAzVcdFizHHGPInfgr4aGOm4n4x
+  google_analytics_key:   UA-30638119-8
+  google_analytics_host:  cdlib.org
 
 development_nonlocal:
   development
@@ -16,6 +18,8 @@ stage:
   feedback_email_from:    no-reply-dmptool@ucop.edu
   recaptcha_public_key:   6Ld2AAYAAAAAAKrPZimDhCZY56x_VK2RuAgao1_6
   recaptcha_private_key:  6Ld2AAYAAAAAAHAzVcdFizHHGPInfgr4aGOm4n4x
+  google_analytics_key:   UA-30638119-9
+  google_analytics_host:  cdlib.org
 
 stage_development:
   stage
@@ -27,6 +31,8 @@ production:
   feedback_email_from:    no-reply-dmptool@ucop.edu
   recaptcha_public_key:   6Ld2AAYAAAAAAKrPZimDhCZY56x_VK2RuAgao1_6
   recaptcha_private_key:  6Ld2AAYAAAAAAHAzVcdFizHHGPInfgr4aGOm4n4x
+  google_analytics_key:
+  google_analytics_host:
 
 production_development:
   production
@@ -39,6 +45,8 @@ test:
   feedback_email_from:    no-reply-dmptool@ucop.edu
   recaptcha_public_key:   6Ld2AAYAAAAAAKrPZimDhCZY56x_VK2RuAgao1_6
   recaptcha_private_key:  6Ld2AAYAAAAAAHAzVcdFizHHGPInfgr4aGOm4n4x
+  google_analytics_key:
+  google_analytics_host:
 
 test_nonlocal:
   development
