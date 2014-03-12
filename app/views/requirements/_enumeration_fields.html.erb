@@ -7,4 +7,9 @@
     	<%= f.hidden_field :_destroy %>
     	<%= link_to(content_tag(:span, "", :class => "icon remove")+ 'Remove', '#', :class => "red remove_fields") %>
   </div>
-</div>
+
+<script type="text/javascript">
+$("input[type='checkbox']").on('change', function() {
+  $("input[type='checkbox']").not(this).prop('checked', false);
+});
+</script>
