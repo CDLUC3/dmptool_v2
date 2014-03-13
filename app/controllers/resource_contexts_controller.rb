@@ -250,6 +250,7 @@ class ResourceContextsController < ApplicationController
 
   def select_resource
    
+    @tab = params[:tab]
     @resource_level = params[:resource_level]
     @template_id = params[:template_id]
     @customization_overview_id = params[:customization_overview_id]
@@ -275,6 +276,19 @@ class ResourceContextsController < ApplicationController
 
     if @resource_level != "requirement"
       @resource_contexts = @resource_contexts.help_text_and_url_resources
+    end
+
+    case @tab
+      when "Guidance"
+        @resource_contexts = @resource_contexts.help_text.page(params[:page]).per(20)
+      when "Actionable Links"
+        @resource_contexts = @resource_contexts.actionable_url.page(params[:page]).per(20)
+      when "Suggested Response"
+        @resource_contexts = @resource_contexts.suggested_response.page(params[:page]).per(20)
+      when "Example Response"
+        @resource_contexts = @resource_contexts.example_response.page(params[:page]).per(20)
+      else
+       @resource_contexts = @resource_contexts.page(params[:page]).per(20)
     end
 
     if !params[:q].blank?

@@ -50,24 +50,36 @@ class ResponsesController < ApplicationController
       @requirement_id = response_params[:requirement_id]
       @next_requirement_id = params[:next_requirement_id]
       @plan = Plan.find(response_params[:plan_id])
+
       if params[:save_and_next] || !params[:save_only]
         if @response.update!(response_params)
           format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id), notice: 'response was successfully updated.' }
           format.json { head :no_content }
+
         else
+          redirect_to details_plan_path(@plan, requirement_id: @requirement_id)
           format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id) }
           format.json { render json: @response.errors, status: :unprocessable_entity }
         end
+
       else
-        if @response.update!(response_params)
+        
+        if @response.update(response_params)
           format.html { redirect_to details_plan_path(@plan, requirement_id: @requirement_id), notice: 'response was successfully updated.' }
           format.json { head :no_content }
+
         else
           format.html { redirect_to details_plan_path(@plan, requirement_id: @requirement_id) }
           format.json { render json: @response.errors, status: :unprocessable_entity }
         end
       end
     end
+
+  rescue ActiveRecord::StaleObjectError
+    #render :conflict_resolution_view
+    flash[:error] = "This record changed while you were editing."
+    redirect_to details_plan_path(@plan, requirement_id: @requirement_id)
+
   end
 
   # DELETE /responses/1
