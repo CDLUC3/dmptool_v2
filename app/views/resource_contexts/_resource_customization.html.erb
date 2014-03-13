@@ -29,8 +29,10 @@
 					<div class="template-links">
 						<%= link_to 'Overview', edit_resource_context_path(resource_context) %> |
             <%= link_to 'Details', customization_requirement_path(resource_context.id) %> |
-            <%= link_to 'Delete', resource_context_path(resource_context), :class => "delete",
-                        method: :delete, data: { confirm: 'Are you sure?' } %>
+            <%= link_to 'Delete', 
+            				delete_resource_context_path(resource_context: resource_context), 
+            				:class => "delete",
+                    method: :delete %>
 					</div>
 				</div>
 			</td>

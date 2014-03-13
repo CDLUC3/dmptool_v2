@@ -160,7 +160,18 @@ class ResourceContextsController < ApplicationController
   end
 
   def destroy
-    @resource_context.destroy
+    
+    @resource_context = ResourceContext.find(params[:resource_context])
+    
+    @resource_contexts = ResourceContext.
+                          where(institution_id: @resource_context.institution_id,
+                                requirements_template_id: @resource_context.requirements_template_id)
+    #@resource_context.destroy
+
+    @resource_contexts.each do |resource_context|
+        resource_context.destroy
+    end
+
     respond_to do |format|
       format.html { redirect_to resource_contexts_url }
       format.json { head :no_content }
