@@ -18,7 +18,7 @@
 
   <% if requirement(requirement_id).requirement_type == :numeric %>
     <div class="control-group">
-      <%= f.label :numeric_value, 'Numeric Data Entry', :class => 'control-label' %>
+      <%= f.label :numeric_value, 'Value', :class => 'control-label' %>
       <div class="controls">
         <%= f.number_field :numeric_value %>
       </div>
@@ -42,7 +42,7 @@
 
   <% if requirement(requirement_id).requirement_type == :enum %>
     <div class="control-group">
-      <%= f.label :enumeration_id, 'Enumeration Value', :class => 'control-label' %>
+      <%= f.label :enumeration_id, 'Please Select One', :class => 'control-label' %>
       <div class="controls">
         <%= f.select(:enumeration_id, requirement(requirement_id).enumerations.collect {|e| [ e.value, e.id ]} ) %>
       </div>
