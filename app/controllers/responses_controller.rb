@@ -76,7 +76,8 @@ class ResponsesController < ApplicationController
     end
 
   rescue ActiveRecord::StaleObjectError
-    flash[:error] = "Locking Message"
+    #render :conflict_resolution_view
+    flash[:error] = "This record changed while you were editing."
     redirect_to details_plan_path(@plan, requirement_id: @requirement_id)
 
   end
