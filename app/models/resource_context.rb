@@ -22,6 +22,22 @@ class ResourceContext < ActiveRecord::Base
     joins(:resource).where("resources.resource_type IN (?)", ["actionable_url","help_text"])
   end
 
+  def self.help_text
+    joins(:resource).where("resources.resource_type = ?", "help_text")
+  end
+
+  def self.actionable_url
+    joins(:resource).where("resources.resource_type = ?", "actionable_url")
+  end
+
+  def self.suggested_response
+    joins(:resource).where("resources.resource_type = ?", "suggested_response")
+  end
+
+  def self.example_response
+    joins(:resource).where("resources.resource_type = ?", "example_response")
+  end
+
   def self.order_by_template_name
     joins(:requirements_template).order('requirements_templates.name ASC')
   end
