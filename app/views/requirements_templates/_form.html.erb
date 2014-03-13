@@ -105,9 +105,14 @@
 					<%= link_to_add_fields 'Add Sample Plan', f , :sample_plans %>
 				</div>
 				<br/>
-			<div class="buttons">
-				<%= f.submit 'Save Changes', :class => 'btn btn-green', method: 'post' %>
-			</div>
+
+				<div class="buttons">
+					<%= f.submit 'Save Changes', :class => 'btn btn-green' %>
+					<%= button_tag 'Cancel', type: :reset, :class => 'btn'%>
+					<% unless @requirements_template.new_record? %>
+						<%= link_to 'Template Details >>', requirements_template_requirements_path(@requirements_template), method: :get, :class => 'btn btn-green pull-right' %>
+	         <% end %>
+				</div>
 			<% end %>
 		</div>
 	</div>
