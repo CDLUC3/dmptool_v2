@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :ldap_create, :password, :password_confirmation
 
-  VALID_EMAIL_REGEX = /^[^@]+@[^@]+\.[^@]+$/i #very simple, but requires basic format and emails are nearly impossible to validate anyway
+  VALID_EMAIL_REGEX = /\A[^@]+@[^@]+\.[^@]+\z/i #very simple, but requires basic format and emails are nearly impossible to validate anyway
   validates :institution_id, presence: true, numericality: true
   validates :email, presence: true, uniqueness: true ,format: { with: VALID_EMAIL_REGEX }
   validates :prefs, presence: true
