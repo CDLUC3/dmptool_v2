@@ -33,13 +33,6 @@ module PlansHelper
 		end
 	end
 
-	def requirements_template(requirements_template_id)
-		requirements_template_id = requirements_template_id
-		unless requirements_template_id.nil?
-			requirements_template_name = RequirementsTemplate.find(requirements_template_id).name
-		end
-	end
-
 	def institution_name(plan_id)
 		unless !Plan.exists?(plan_id)
 			requirements_template_id = Plan.find(plan_id).requirements_template_id

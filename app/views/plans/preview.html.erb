@@ -3,10 +3,14 @@
 <div class="row-fluid">
 	<%= link_to "Export as PDF", plan_path(@plan, :format=>"pdf"), :class => "btn pull-left" %>
 	<%= link_to "Export as RTF", plan_path(@plan, :format=>"rtf"), :class => "btn pull-left" %>
-        <%= link_to(content_tag(:span, "", :class => "icon print") + "Print", 
-                    plan_path(@plan, :format=>"html"), 
+        <%= link_to(content_tag(:span, "", :class => "icon print") + "Print",
+                    plan_path(@plan, :format=>"html"),
                     :class => "btn pull-left")  %>
-	<%= link_to "Submit", "#", :class => "btn btn-green pull-right" %>
+ 	<% if (@plan.requirements_template.review_type == :formal_review) || (@plan.requirements_template.review_type == :informal_review) %>
+    <%= link_to "Submit", "#", :class => "btn btn-green pull-right" %>
+  <% else %>
+		<%= link_to "Finish", "#", :class => "btn btn-green pull-right" %>
+	<% end %>
 </div>
 <br/>
 
