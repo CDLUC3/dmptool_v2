@@ -11,16 +11,20 @@
 </div>
 
 
-<fieldset class="comments" style= "border:0.5px solid #B6B6B7;padding:1em;margin-top:2em;">
+<fieldset class="comments comment_box">
 	<strong>Comments </strong>
 	<%= render partial: "comments/index_reviewer_comments" %>
   <p><%= link_to "Add Comments", "#", data: {:comment_type => :reviewer}, :class => "btn add_comments_link" %></p>
 </fieldset>
 <% if @plan.requirements_template.review_type == :formal_review %>
-  <fieldset style= "border:0.5px solid #B6B6B7;padding:1em;margin-top:2em;">
+  <fieldset class="spaced_below"">
     <label class ="control-label">Review Decision:</label>
     <%= link_to "Approve", "#", method: :get, :class => 'btn btn-success' %>
     <%= link_to "Reject", "#", data: {:comment_type => :reviewer}, :class => "btn btn-danger add_comments_link"  %>
+  </fieldset>
+<% elsif @plan.requirements_template.review_type == :informal_review %>
+  <fieldset class="spaced_below"">
+  <%= link_to "Plan Reviewed", "#", method: :get, :class => 'btn btn-success' %>
   </fieldset>
 <% end %>
 <div id = "comment_dialog_form">
