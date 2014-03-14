@@ -1,4 +1,4 @@
-class ResourcesController < ApplicationController
+ class ResourcesController < ApplicationController
 
   before_action :require_login, only: [:show]
   before_action :set_resource, only: [:show, :edit, :update]
