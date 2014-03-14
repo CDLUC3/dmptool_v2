@@ -1,26 +1,20 @@
-<% if @owner_comments.nil? %>
+<% @owner_comments.each do |comment| %>
 	<div class="comment">
-		There are currently no comments.
-	</div>
-	<% else %>
-	<% @owner_comments.each do |comment| %>
-		<div class="comment">
-			<span class="date-created"><%= comment.created_at.strftime("%m/%d/%Y %I:%M %p") %></span>
-			<strong><%= user_name(comment) %>:</strong>
-			<p class="cust_text" id="comment_value_trunc_<%= comment.id %>">
-			  <% trunc_text = truncate(strip_tags(comment.value), length: 150, separator: ' ') %>
-			  <%= trunc_text %>
-			  <% if trunc_text != comment.value %>
-			    &nbsp;&nbsp;&nbsp;<a href="#" class="show_full">More</a>
-			  <% end %>
-			</p>
-			<div class="cust_text_full" id="comment_value_full_<%= comment.id %>">
-			  <div>
-			    <%= comment.value %>
-			  </div>
-			  <a href="#" class="show_less">Show less</a>
-			</div>
-			<%= link_to "", comment, :method => :delete, :data => { :confirm => "Are you sure?"}, :class => "icon trash pull-right", :title => "Delete" %>
+		<span class="date-created"><%= comment.created_at.strftime("%m/%d/%Y %I:%M %p") %></span>
+		<strong><%= user_name(comment) %>:</strong>
+		<p class="cust_text" id="comment_value_trunc_<%= comment.id %>">
+		  <% trunc_text = truncate(strip_tags(comment.value), length: 150, separator: ' ') %>
+		  <%= trunc_text %>
+		  <% if trunc_text != comment.value %>
+		    &nbsp;&nbsp;&nbsp;<a href="#" class="show_full">More</a>
+		  <% end %>
+		</p>
+		<div class="cust_text_full" id="comment_value_full_<%= comment.id %>">
+		  <div>
+		    <%= comment.value %>
+		  </div>
+		  <a href="#" class="show_less">Show less</a>
 		</div>
-	<% end %>
+		<%= link_to "", comment, :method => :delete, :data => { :confirm => "Are you sure?"}, :class => "icon trash pull-right", :title => "Delete" %>
+	</div>
 <% end %>
