@@ -32,26 +32,46 @@ $.rails.confirmed = function(link) {
   return link.simulate('click');
 };
 
-$.rails.showConfirmDialog = function(link) {
-  var html, message, yesVal, noVal;
-  message = link.attr('data-confirm');
-  yesVal = (typeof link.attr('data-yesval') === 'undefined' ? 'Delete': link.attr('data-yesval'));
-  noVal = (typeof link.attr('data-noval') === 'undefined' ? 'Cancel': link.attr('data-noval'));
-  html =	"<div class=\"modal\" id=\"confirmationDialog\">\n" +
-      "<div class=\"modal-header\">\n" +
-      "<a class=\"close\" data-dismiss=\"modal\">×</a>\n" +
-      "<h3><strong>" + message + "</strong></h3>\n" +
-      "</div>\n" +
-      "<div class=\"modal-footer\">\n" +
-      "<a data-dismiss=\"modal\" class=\"btn\">" + noVal + "</a>\n" +
-      "<a data-dismiss=\"modal\" class=\"btn btn-green\">" + yesVal + "</a>\n" +
-      "</div>\n" +
-      "</div>";
-  $(html).modal();
-  return $('#confirmationDialog .confirm').on('click', function() {
-    return $.rails.confirmed(link);
-  });
-};
+// $.rails.showConfirmDialog = function(link) {
+//   var html, message, yesVal, noVal;
+//   message = link.attr('data-confirm');
+//   yesVal = (typeof link.attr('data-yesval') === 'undefined' ? 'Delete': link.attr('data-yesval'));
+//   noVal = (typeof link.attr('data-noval') === 'undefined' ? 'Cancel': link.attr('data-noval'));
+//   html =	"<div class=\"modal\" id=\"confirmationDialog\">\n" +
+//       "<div class=\"modal-header\">\n" +
+//       "<a class=\"close\" data-dismiss=\"modal\">×</a>\n" +
+//       "<h3><strong>" + message + "</strong></h3>\n" +
+//       "</div>\n" +
+//       "<div class=\"modal-footer\">\n" +
+//       "<a data-dismiss=\"modal\" class=\"btn\">" + noVal + "</a>\n" +
+//       "<a data-dismiss=\"modal\" class=\"btn btn-green\">" + yesVal + "</a>\n" +
+//       "</div>\n" +
+//       "</div>";
+//   $(html).modal();
+//   return $('#confirmationDialog .confirm').on('click', function() {
+//     return $.rails.confirmed(link);
+//   });
+// };
+
+$.rails.showConfirmDialog = (link) ->
+  message = link.attr 'data-confirm'
+  html = """
+    <div class="modal" id="confirmationDialog">
+    <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3>#{message}</h3>
+    </div>
+    <div class="modal-body">
+    <p>Are you sure you want to delete?</p>
+    </div>
+    <div class="modal-footer">
+    <a data-dismiss="modal" class="btn">Cancel</a>
+    <a data-dismiss="modal" class="btn btn-primary confirm">OK</a>
+    </div>
+    </div>
+    """
+$(html).modal()
+$('#confirmationDialog .confirm').on 'click', -> $.rails.confirmed(link)
 
 function tab_jump(){
   // allows jumping to specific tab with Twitter Bootstrap on page load

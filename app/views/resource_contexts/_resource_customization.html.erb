@@ -31,8 +31,11 @@
             <%= link_to 'Details', customization_requirement_path(resource_context.id) %> |
             <%= link_to 'Delete', 
             				delete_resource_context_path(resource_context: resource_context), 
-            				:class => "delete",
-                    method: :delete %>
+                    method: :delete,
+                    confirm: "Are you sure?",
+                    :class => "delete" %>
+
+
 					</div>
 				</div>
 			</td>
