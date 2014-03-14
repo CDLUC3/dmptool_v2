@@ -139,6 +139,8 @@ Dmptool2::Application.routes.draw do
   post 'select_resource', to: 'resource_contexts#select_resource'
   get 'select_resource', to: 'resource_contexts#select_resource'
 
+  delete 'delete_resource_context', to: 'resource_contexts#destroy'
+
   post 'create_customization_resource_from_select_resource', to: 'resources#create_customization_resource_from_select_resource'
 
   post 'copy_selected_customization_resource', to: 'resources#copy_selected_customization_resource'

@@ -160,7 +160,18 @@ class ResourceContextsController < ApplicationController
   end
 
   def destroy
-    @resource_context.destroy
+    
+    @resource_context = ResourceContext.find(params[:resource_context])
+    
+    @resource_contexts = ResourceContext.
+                          where(institution_id: @resource_context.institution_id,
+                                requirements_template_id: @resource_context.requirements_template_id)
+    #@resource_context.destroy
+
+    @resource_contexts.each do |resource_context|
+        resource_context.destroy
+    end
+
     respond_to do |format|
       format.html { redirect_to resource_contexts_url }
       format.json { head :no_content }
@@ -169,7 +180,7 @@ class ResourceContextsController < ApplicationController
 
 
   def resource_customizations
-    @resource_contexts = ResourceContext.template_level.no_resource_no_requirement.page(params[:page])
+    @resource_contexts = ResourceContext.template_level.no_resource_no_requirement.order_by_name.page(params[:page])
 
     unless safe_has_role?(Role::DMP_ADMIN)
       @resource_contexts = @resource_contexts.
@@ -179,7 +190,7 @@ class ResourceContextsController < ApplicationController
 
     case params[:scope]
       when "all"
-        @resource_contexts 
+        @resource_contexts.order_by_name 
       when "Name"
         @resource_contexts = @resource_contexts.order_by_name.per(10)
       when "Template"
@@ -191,7 +202,7 @@ class ResourceContextsController < ApplicationController
       when "Last_Modification_Date"
         @resource_contexts = @resource_contexts.order_by_updated_at.per(10) 
       else
-        @resource_contexts = @resource_contexts.per(10)
+        @resource_contexts = @resource_contexts.order_by_name.per(10)
     end
     
   end

@@ -32,26 +32,48 @@ $.rails.confirmed = function(link) {
   return link.simulate('click');
 };
 
-$.rails.showConfirmDialog = function(link) {
-  var html, message, yesVal, noVal;
-  message = link.attr('data-confirm');
-  yesVal = (typeof link.attr('data-yesval') === 'undefined' ? 'Delete': link.attr('data-yesval'));
-  noVal = (typeof link.attr('data-noval') === 'undefined' ? 'Cancel': link.attr('data-noval'));
-  html =	"<div class=\"modal\" id=\"confirmationDialog\">\n" +
+
+
+$.rails.showConfirmDialog = function(link){
+  var message = link.attr('data-confirm');
+
+  var  html = "<div class=\"modal\" id=\"confirmationDialog\">\n" +
       "<div class=\"modal-header\">\n" +
       "<a class=\"close\" data-dismiss=\"modal\">×</a>\n" +
       "<h3><strong>" + message + "</strong></h3>\n" +
       "</div>\n" +
       "<div class=\"modal-footer\">\n" +
-      "<a data-dismiss=\"modal\" class=\"btn\">" + noVal + "</a>\n" +
-      "<a data-dismiss=\"modal\" class=\"btn btn-green\">" + yesVal + "</a>\n" +
+      "<a data-dismiss=\"modal\" class=\"btn\">" + "Cancel" + "</a>\n" +
+      "<a data-dismiss=\"modal\" class=\"btn btn-green confirm\">" + "OK" + "</a>\n" +
       "</div>\n" +
       "</div>";
+
   $(html).modal();
   return $('#confirmationDialog .confirm').on('click', function() {
     return $.rails.confirmed(link);
   });
 };
+
+// $.rails.showConfirmDialog = function(link) {
+//   var html, message, yesVal, noVal;
+//   message = link.attr('data-confirm');
+//   yesVal = (typeof link.attr('data-yesval') === 'undefined' ? 'Delete': link.attr('data-yesval'));
+//   noVal = (typeof link.attr('data-noval') === 'undefined' ? 'Cancel': link.attr('data-noval'));
+//   html = "<div class=\"modal\" id=\"confirmationDialog\">\n" +
+//       "<div class=\"modal-header\">\n" +
+//       "<a class=\"close\" data-dismiss=\"modal\">×</a>\n" +
+//       "<h3><strong>" + message + "</strong></h3>\n" +
+//       "</div>\n" +
+//       "<div class=\"modal-footer\">\n" +
+//       "<a data-dismiss=\"modal\" class=\"btn\">" + noVal + "</a>\n" +
+//       "<a data-dismiss=\"modal\" class=\"btn btn-green\">" + yesVal + "</a>\n" +
+//       "</div>\n" +
+//       "</div>";
+//   $(html).modal();
+//   return $('#confirmationDialog .confirm').on('click', function() {
+//     return $.rails.confirmed(link);
+//   });
+// };
 
 function tab_jump(){
   // allows jumping to specific tab with Twitter Bootstrap on page load
