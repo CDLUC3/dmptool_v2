@@ -235,6 +235,12 @@ class InstitutionsController < ApplicationController
     @users = User.joins({:authorizations => :role}).where("roles.name = ?", role_name)
   end
 
+  def self.unique_plans
+    joins(:requirements_templates, :plans).
+    where(:requirements_templates => { :institution_id => self.subtree_ids }).
+    group(:plan_id)
+  end
+
 end
 
 
