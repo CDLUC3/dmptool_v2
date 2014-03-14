@@ -25,7 +25,7 @@
 		<tr>
 			<td class="resource_contexts_name">
 				<div class="toggle-links">
-					<%= link_to (content_tag(:strong, resource_context.name)), '#' %>
+					<%= content_tag(:strong, resource_context.name) %>
 					<div class="template-links">
 						<%= link_to 'Overview', edit_resource_context_path(resource_context) %> |
             <%= link_to 'Details', customization_requirement_path(resource_context.id) %> |
