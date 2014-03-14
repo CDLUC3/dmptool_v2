@@ -54,6 +54,7 @@ $.rails.showConfirmDialog = function(link){
   });
 };
 
+//THIS DOESN'T WORK
 // $.rails.showConfirmDialog = function(link) {
 //   var html, message, yesVal, noVal;
 //   message = link.attr('data-confirm');

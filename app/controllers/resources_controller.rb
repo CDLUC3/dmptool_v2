@@ -151,12 +151,18 @@ class ResourcesController < ApplicationController
         ResourceContext.destroy(@customization_ids)
       end
       respond_to do |format|
-        #format.html { redirect_to edit_resource_context_path(params[:customization_overview_id]), notice: 'Resource was successfully eliminated.' }
-        format.html { 
-          redirect_to edit_resource_context_path(params[:customization_overview_id]), 
-            notice: 'Resource was successfully eliminated.' }
-        
-        format.json { head :no_content }
+        if @customization_id #customization resource
+          format.html { 
+            redirect_to edit_resource_context_path(params[:customization_overview_id]), 
+              notice: 'Resource was successfully eliminated.' 
+          }
+          
+        else #institutional resource
+          format.html { 
+            redirect_to institutions_path(anchor: 'tab_tab2'), 
+              notice: 'Resource was successfully eliminated.' 
+          }
+        end
       end
     else
       format.html { redirect_to edit_resource_context_path(params[:customization_overview_id]), notice: "A problem prevented this resource to be eliminated. " }
