@@ -1,4 +1,5 @@
-<h1 class="row-fluid"><span class="icon dmp-template"></span>Active DMPs </h1>
+<% @plan_id = nil %>
+<h1 class="row-fluid"><span class="icon dmp-template"></span>My DMPs</h1>
 <div class="table-scope">
   <%= link_to "All (#{@all}) ", {scope: "all_limited"}, :class => "all_limited" %>
   |
@@ -26,23 +27,24 @@
       <tr>
         <td class="plan_name">
           <div class="toggle-links">
-            <%= link_to (content_tag(:strong, plan.name)), '#', :id => "#{plan.name}" %>
+            <strong id ="#{plan.name}"><%= plan.name %></strong>
             <div class="template-links">
                 <%= link_to('Overview', edit_plan_path(plan)) %>
               | <%= link_to('Details', details_plan_path(plan)) %>
               | <%= link_to('Share', '#', remote: true, :class => 'change_visibility_link') %>
-              <% unless (plan.requirements_template.review_type == :no_review || plan.requirements_template.review_type.blank?) %>
+              <% @plan_id = plan.id %>
+              <% if ( plan.requirements_template.try(:review_type) && plan.requirements_template.review_type != :no_review) %>
                 | <%= link_to('Submit', preview_plan_path(plan)) %>
               <% end %>
               | <%= link_to('Copy', copy_existing_plans_template_path(:plan => plan)) %>
-              | <%= link_to('Delete', plan, :class => "delete", :id => "delete_#{plan.name}", method: :delete, data: { confirm: 'Are you sure?' }) %>
               | Export as <%= link_to('PDF', plan_path(plan, :format => "pdf")) %>
               | <%= link_to('RTF', plan_path(plan, :format => "rtf")) %>
+              | <%= link_to('Delete', plan, :class => "delete", :id => "delete_#{plan.name}", method: :delete, data: { confirm: 'Are you sure?' }) %>
             </div>
           </div>
         </td>
         <td><%= owner_name(plan) %></td>
-        <td><%= state(plan) %></td>
+        <td><strong><%= state(plan) %></strong></td>
         <td><%= plan.visibility.capitalize %></td>
         <td><%= plan.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
       </tr>
@@ -57,5 +59,6 @@
   </tbody>
 </table>
 <%= button_to 'Create New DMP', plan_template_information_path, :method => :get, :class => 'btn' %>
-
-<%= render 'plan_states_table' %>
+<div id = 'visibility_dialog_form'>
+  <%= render partial: 'change_visibility', locals: {:plan_id => @plan_id} %>
+</div>

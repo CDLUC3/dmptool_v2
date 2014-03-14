@@ -4,6 +4,7 @@ class Comment < ActiveRecord::Base
   belongs_to :plan
 
   validates_columns :visibility
+  validates_columns :comment_type
   validates :user_id, presence: true, numericality: true
   validates :plan_id, presence: true, numericality: true
   validates :visibility, presence: true
@@ -11,6 +12,9 @@ class Comment < ActiveRecord::Base
 
   scope :owner, -> { where(visibility: :owner) }
   scope :reviewer, -> { where(visibility: :reviewer) }
+
+  scope :owner_comments, -> { where(comment_type: :owner) }
+  scope :reviewer_comments, -> { where(comment_type: :reviewer) }
 
   def owner?
     visibility == :owner

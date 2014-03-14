@@ -1,0 +1,34 @@
+<h1 class="row-fluid"><span class="icon review"></span>Review DMPs</h1>
+<br/>
+<strong>Perform Review </strong>
+
+
+<div class="scrollable-container">
+  <div class="scrollable-content">
+    <%= render :partial => 'html_render', locals: {plan: @plan} %>
+  </div>
+  <div class="scrollable-bottom-handle ui-resizable-handle ui-resizable-s"></div>
+</div>
+
+
+<fieldset class="comments" style= "border:0.5px solid #B6B6B7;padding:1em;margin-top:2em;">
+	<strong>Comments </strong>
+	<%= render partial: "comments/index_reviewer_comments" %>
+  <p><%= link_to "Add Comments", "#", data: {:comment_type => :reviewer}, :class => "btn add_comments_link" %></p>
+</fieldset>
+<% if @plan.requirements_template.review_type == :formal_review %>
+  <fieldset style= "border:0.5px solid #B6B6B7;padding:1em;margin-top:2em;">
+    <label class ="control-label">Review Decision:</label>
+    <%= link_to "Approve", "#", method: :get, :class => 'btn btn-success' %>
+    <%= link_to "Reject", "#", data: {:comment_type => :reviewer}, :class => "btn btn-danger add_comments_link"  %>
+  </fieldset>
+<% end %>
+<div id = "comment_dialog_form">
+	<%= render partial: 'comments/form', locals: {:plan_id => params[:id]} %>
+</div>
+<hr/>
+<%= link_to 'Back', review_dmps_path(@plan), method: :get, :class => 'btn btn-green pull-left' %>
+
+<script type="text/javascript">
+  $("div.scrollable-container").resizable({ containment: "parent", minHeight: 150, handles: "s" });
+</script>

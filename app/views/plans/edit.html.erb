@@ -1,3 +1,128 @@
-<%= render 'form' %>
-	</div>
+<h1 class="row-fluid"><span class="icon overview"></span>DMP Overview</h1>
+<div class="tabbable">
+  <ul class="nav-tabs">
+    <li class="active"><a href="#" data-toggle="tab">DMP Overview</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      <%= form_for @plan, html:{ :class => 'form-horizontal' }  do |f| %>
+        <%= render partial: "shared/errors", locals: {model: @plan } %>
+
+        <div class="control-group">
+          <%= label_tag :selected_requirement_template, 'DMP Template', :class => 'control-label' %>
+          <div class="controls">
+            <% if @plan.new_record? && current_page?(controller: 'plans', action: 'new') %>
+              <%= f.hidden_field :requirements_template_id, value: params[:requirements_template_id], id: 'dmp_template_id' %>
+              <%= text_field_tag(:selected_requirement_template, requirements_template(params[:requirements_template_id]), id: 'selected_requirement_template_name', :class => 'input-xxlarge', disabled: true) %>
+            <% elsif @plan.new_record? && current_page?(controller: 'plans', action: 'copy_existing_template') %>
+              <%= f.hidden_field :requirements_template_id, value: @plan.requirements_template_id, id: 'dmp_template_id' %>
+              <%= text_field_tag(:selected_requirement_template, requirements_template(@plan.requirements_template_id), id: 'selected_requirement_template_name', :class => 'input-xxlarge', disabled: true) %>
+            <% else %>
+              <%= f.hidden_field :requirements_template_id, value: @plan.requirements_template_id, id: 'dmp_template_id' %>
+              <%= text_field_tag(:selected_requirement_template, requirements_template(@plan.requirements_template_id), id: 'selected_requirement_template_name', :class => 'input-xxlarge', disabled: true) %>
+            <% end %>
+          </div>
+        </div>
+        <div class="control-group">
+          <%= f.label :name , 'DMP Plan', :class => 'control-label' %>
+          <div class="controls">
+            <%= f.text_area :name , :class => 'input-xxlarge' %>
+          </div>
+        </div>
+        <div class="control-group">
+          <%= f.label :solicitation_identifier , 'Solicitation Identifier ', :class => 'control-label' %>
+          <div class="controls">
+            <%= f.text_field :solicitation_identifier  , :class => 'input-xxlarge'%>
+          </div>
+        </div>
+        <div class="control-group">
+          <%= f.label :submission_deadline, 'Submission Deadline',:class => "control-label" %>
+          <div class="controls">
+            <%= f.text_field :submission_deadline, value: @plan.submission_deadline.blank? ? " " : @plan.submission_deadline.strftime('%m/%d/%Y'), :class => 'datepicker' %>
+          </div>
+        </div>
+        
+        <div class="control-group">
+          <label class="control-label">Co-owners</label>
+          <div class="controls">
+            <p><%= link_to "Add Co-owners", add_coowner_plan_path(@plan), method: :post, :id => "add_coonwers_view", :class => "btn" %></p>
+          </div>
+        </div>
+
+        <% unless @plan.new_record? %>
+
+          <div class="control-group">
+            <label class="control-label">Current Status</label>
+            <div class="controls">
+              <p><strong class="blue"><%= state(@plan) %></strong> <%= link_to(content_tag(:span, "", :class => "icon-chevron-down") + "Show History", "#", :class => "view-plan-history") %><%= link_to(content_tag(:span, "", :class => "icon-chevron-up") + "Hide History", "#", :class => "hide-plan-history") %></p>
+              <div id="plan_history" class="history">
+                <%= render partial: 'plan_states_history' %>
+              </div>
+            </div>
+          </div>
+					<hr/>
+          <div class="control-group">
+            <label class ="control-label">Reviewer Comments</label>
+            <div class="controls">
+              <p><%= link_to(content_tag(:span, "", :class => "icon-chevron-down") + "View", "#", :class => "view-reviewer-comments") %><%= link_to(content_tag(:span, "", :class => "icon-chevron-up") + "Hide", "#", :class => "hide-reviewer-comments") %></p>
+              <div id="reviewer_comments" class="comments">
+                <%= render partial: 'comments/index_reviewer_comments' %>
+                <p><%= link_to "Add Comments", "#", data: {:comment_type => :reviewer}, :class => "btn add_comments_link" %></p>
+              </div>
+            </div>
+          </div>
+					<hr/>
+          <div class="control-group">
+            <label class ="control-label">Owner Comments</label>
+            <div class="controls">
+              <p><%= link_to(content_tag(:span, "", :class => "icon-chevron-down") + "View", "#", :class => "view-owner-comments") %><%= link_to(content_tag(:span, "", :class => "icon-chevron-up") + "Hide", "#", :class => "hide-owner-comments") %></p>
+              <div id="owner_comments" class="comments">
+                <%= render partial: "comments/index_owner_comments" %>
+                <p><%= link_to "Add Comments", "#", data: {:comment_type => :owner}, :class => "btn add_comments_link" %></p>
+              </div>
+            </div>
+          </div>
+          <hr/>
+
+          <div class="control-group">
+            <label class ="control-label">Visibility</label>
+            <div class="controls">
+              <p> This DMP is <strong class="blue"><%=@plan.visibility.capitalize %></strong><br/>
+              <%= link_to "Change Settings", "#", remote: true, :class => "btn change_visibility_link" %></p>
+            </div>
+          </div>
+          <hr/>
+
+          <div class="control-group">
+            <label class ="control-label">Available Actions</label>
+              <div class="controls">
+              <p><%= link_to "Preview DMP", preview_plan_path(@plan) %> |
+                <% if (@plan.requirements_template.review_type == :formal_review) || (@plan.requirements_template.review_type == :informal_review) %>
+                  <%= link_to "Submit DMP", preview_plan_path(@plan) %> |
+                <% end %>
+                <%= link_to "Delete DMP",@plan, method: :delete,  style: 'color:red;', data: { confirm: 'Are you sure?', :id => 'delete_template'} %>
+              </p>
+            </div>
+          </div>
+
+        <% end %>
+
+        <div class="buttons">
+          <%= f.submit 'Save', :class => 'btn' %>
+          <%= button_tag 'Cancel', type: :reset, :class => 'btn btn-success'%>
+          <% unless @plan.new_record? %>
+            <%= link_to 'Plan Details >>', details_plan_path(@plan), method: 'get', :class => 'btn btn-green pull-right' %>
+          <% end %>
+        </div>
+
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div id = 'visibility_dialog_form'>
+	<%= render partial: 'change_visibility', locals: {:plan_id => params[:id]} %>
+</div>
+<div id = "comment_dialog_form">
+	<%= render partial: 'comments/form', locals: {:plan_id => params[:id]} %>
 </div>

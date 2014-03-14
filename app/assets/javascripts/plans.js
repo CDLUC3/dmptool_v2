@@ -15,9 +15,10 @@ $(function() {
 	$('#comment_dialog_form').hide();
 	$('.add_comments_link').click(function(event) {
 		event.preventDefault();
+    $('#comment_comment_type').attr('value', $(event.target).attr("data-comment-type"));
 		$('#comment_dialog_form').dialog( {
 			width: 600,
-			height: 300,
+			height: 310,
 			modal: true,
 			closeOnEscape: true,
 			draggable: true,
@@ -127,13 +128,18 @@ $(function() {
 				effect: "toggle",
 				duration: 1000
 			},
+		 	buttons: {
+				Cancel: function()
+				{
+					$(this).dialog( "close" );
+				}
+			},
 			open: function()
 			{
 				$("#visibility_dialog_form").dialog("open");
 			},
       close: function() {
         $('#visibility_dialog_form').dialog("close");
-        $(this).find('form')[0].reset();
       }
 		}).prev ().find(".ui-dialog-titlebar-close").show();
 		return false

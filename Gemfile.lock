@@ -119,8 +119,6 @@ GEM
     highline (1.6.20)
     hike (1.2.3)
     i18n (0.6.9)
-    jbuilder (1.0.1)
-      activesupport (>= 3.0.0)
     jquery-rails (3.1.0)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
@@ -277,7 +275,6 @@ DEPENDENCIES
   factory_girl_rails
   faker
   ifad-rtf!
-  jbuilder (= 1.0.1)
   jquery-rails
   jquery-ui-rails
   kaminari

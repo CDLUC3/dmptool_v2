@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140228221118) do
+ActiveRecord::Schema.define(version: 20140312212258) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -43,11 +43,12 @@ ActiveRecord::Schema.define(version: 20140228221118) do
 
   create_table "comments", force: true do |t|
     t.integer  "user_id"
-    t.enum     "visibility", limit: [:owner, :reviewer]
+    t.enum     "visibility",   limit: [:owner, :reviewer]
     t.integer  "plan_id"
     t.text     "value"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.enum     "comment_type", limit: [:owner, :reviewer]
   end
 
   create_table "enumerations", force: true do |t|
@@ -55,6 +56,8 @@ ActiveRecord::Schema.define(version: 20140228221118) do
     t.string   "value"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "position"
+    t.boolean  "default"
   end
 
   create_table "institutions", force: true do |t|
@@ -78,9 +81,10 @@ ActiveRecord::Schema.define(version: 20140228221118) do
 
   create_table "labels", force: true do |t|
     t.string   "desc"
-    t.string   "group"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "position"
+    t.integer  "requirement_id"
   end
 
   create_table "old_authentications", force: true do |t|
@@ -196,9 +200,13 @@ ActiveRecord::Schema.define(version: 20140228221118) do
     t.integer  "plan_id"
     t.integer  "requirement_id"
     t.integer  "label_id"
-    t.text     "value"
+    t.text     "text_value"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "numeric_value"
+    t.date     "date_value"
+    t.integer  "enumeration_id"
+    t.integer  "lock_version",   default: 0, null: false
   end
 
   create_table "roles", force: true do |t|

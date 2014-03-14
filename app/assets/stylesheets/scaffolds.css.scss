@@ -26,7 +26,7 @@ h1.row-fluid  {
 	line-height: 44px;
 	width: auto;
 	height: 40px;
-	margin: 20px 0 0 0;
+	margin: 0;
 	padding: 0 0 0 50px;
 	position: relative; }
 h2, h3, h4, h5, h6 {
@@ -93,8 +93,8 @@ a {
   	color: #516935; } }
 
 .red {
-	color: #DA0049; }
+	color: #DA0049 !important; }
 .green {
-	color: #86A641; }
+	color: #86A641 !important; }
 .blue {
-	color: #0000FF; }
+	color: #0000FF !important; }

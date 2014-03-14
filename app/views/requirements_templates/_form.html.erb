@@ -7,7 +7,7 @@
 		<div class="tab-pane active" id="tab1">
 			<%= form_for @requirements_template, html: { :class => 'form-horizontal' } do |f| %>
         <%= render partial: "shared/errors", locals: {model: @requirements_template } %>
-			  
+
 				<div class="control-group">
 					<%= f.label :template_name, :class => 'control-label' %>
 					<div class="controls">
@@ -26,7 +26,7 @@
 				</div>
 
 				<%= render partial: 'date_fields' , locals: { f: f } unless @requirements_template.new_record? %>
-				
+
 
 				<% if safe_has_role?(Role::DMP_ADMIN) %>
 					<div class="control-group" >
@@ -55,14 +55,14 @@
 				<p><strong>Optional Information</strong></p>
 				<hr/>
 				<div class="control-group">
-					<%= f.label :start_date, :class => "control-label" %>
+					<%= label_tag :start_date, "Start Date", :class => "control-label" %>
 					<div class="controls">
 						<%= f.text_field :start_date, value: @requirements_template.start_date.blank? ? " " : @requirements_template.start_date.strftime('%m/%d/%Y'), id: 'start_date', :class => 'datepicker' %>
 					</div>
 				</div>
 
 				<div class="control-group">
-					<%= f.label :end_date, :class => 'control-label' %>
+					<%= label_tag :end_date, "End Date", :class => 'control-label' %>
 					<div class="controls">
 						<%= f.text_field :end_date, value: @requirements_template.end_date.blank? ? " " : @requirements_template.end_date.strftime('%m/%d/%Y'), id: 'end_date', :class => 'datepicker' %>
 					</div>
@@ -72,15 +72,15 @@
 					<%= f.label :review_requirement, :class => 'control-label' %>
 					<div class="controls checkbox-controls">
 						<%= f.radio_button :review_type, :formal_review, :class => 'radio inline' %>
-						<%= label_tag :formal_review, 'Formal Review Required', :class => 'radio-label' %><br/>
+						<%= label_tag :formal_review, 'Review Required', :class => 'radio-label' %><br/>
 						<%= f.radio_button :review_type, :informal_review, :class => 'radio inline' %>
-						<%= label_tag :informal_review, 'Informal Review Required', :class => 'radio-label' %><br/>
+						<%= label_tag :informal_review, 'Informal Review Allowed', :class => 'radio-label' %><br/>
 						<% unless @requirements_template.new_record? %>
 							<%= f.radio_button :review_type, :no_review, :class => 'radio inline' %>
 						<% else %>
 							<%= f.radio_button :review_type, :no_review, :class => 'radio inline', checked: true %>
 						<% end %>
-						<%= label_tag :no_review, 'No Review Required', :class => 'radio-label' %>
+						<%= label_tag :no_review, 'No Review Needed', :class => 'radio-label' %>
 					</div>
 				</div>
 
@@ -105,9 +105,14 @@
 					<%= link_to_add_fields 'Add Sample Plan', f , :sample_plans %>
 				</div>
 				<br/>
-			<div class="buttons">
-				<%= f.submit 'Save Changes', :class => 'btn btn-green', method: 'post' %>
-			</div>
+
+				<div class="buttons">
+					<%= f.submit 'Save Changes', :class => 'btn btn-green' %>
+					<%= button_tag 'Cancel', type: :reset, :class => 'btn'%>
+					<% unless @requirements_template.new_record? %>
+						<%= link_to 'Template Details >>', requirements_template_requirements_path(@requirements_template), method: :get, :class => 'btn btn-green pull-right' %>
+	         <% end %>
+				</div>
 			<% end %>
 		</div>
 	</div>

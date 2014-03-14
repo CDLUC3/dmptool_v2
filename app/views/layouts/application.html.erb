@@ -8,13 +8,20 @@
     <%= csrf_meta_tags %>
     <%= render 'layouts/shim' %>
     <script>
+    	/* Test for Safari */
     	if (navigator.userAgent.match(/AppleWebKit/) && ! navigator.userAgent.match(/Chrome/)) {
-   			document.write('<link rel="stylesheet" media="all" href="/assets/safari.css?body=1" />')
+    		/* include safari stylesheet*/
+   			document.write('<link rel="stylesheet" media="all" href="/assets/safari.css?body=1" />');
 			}
+			/* Test for Chrome */
 			if (navigator.userAgent.match(/Chrome/)) {
-   			document.write('<link rel="stylesheet" media="all" href="/assets/chrome.css?body=1" />')
+				/* include chrome stylesheet */
+   			document.write('<link rel="stylesheet" media="all" href="/assets/chrome.css?body=1" />');
 			}
     </script>
+    <!--[if IE 8]><link rel="stylesheet" media="all" href="/assets/ie.css" /><![endif]-->
+    <!--[if IE 7]><link rel="stylesheet" media="all" href="/assets/ie.css" /><![endif]-->
+    <%= render :partial => 'layouts/analytics' %>
   </head>
   <body>
   <%= render 'layouts/header' %>
@@ -23,23 +30,14 @@
   	<% if current_user %>
   		<%= render 'layouts/dashboard_header' unless ['static_pages', 'user_sessions'].include?(controller_name) && !['guidance', 'public_dmps'].include?(action_name) %>
   	<% end %>
-    <% flash.each do |key, value| %>
-      <div class="alert alert-<%= key %>">
-        <% if value.class == Array
-          txt = value.map{|i| h(i)}.join("<br/>")
-        %>
-          <p>
-            <%= raw txt %>
-          </p>
-        <% else %>
-          <p><%= value %></p>
-        <% end %>
-      </div>
-    <% end %>
+
+    <%= render partial: "shared/flash_messages", flash: flash %>
+
+
 
     <%= yield %>
   </div>
-  
+
   <%= render 'layouts/footer' %>
   </body>
 </html>

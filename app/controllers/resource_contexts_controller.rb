@@ -160,7 +160,18 @@ class ResourceContextsController < ApplicationController
   end
 
   def destroy
-    @resource_context.destroy
+    
+    @resource_context = ResourceContext.find(params[:resource_context])
+    
+    @resource_contexts = ResourceContext.
+                          where(institution_id: @resource_context.institution_id,
+                                requirements_template_id: @resource_context.requirements_template_id)
+    #@resource_context.destroy
+
+    @resource_contexts.each do |resource_context|
+        resource_context.destroy
+    end
+
     respond_to do |format|
       format.html { redirect_to resource_contexts_url }
       format.json { head :no_content }
@@ -169,7 +180,7 @@ class ResourceContextsController < ApplicationController
 
 
   def resource_customizations
-    @resource_contexts = ResourceContext.template_level.no_resource_no_requirement.page(params[:page])
+    @resource_contexts = ResourceContext.template_level.no_resource_no_requirement.order_by_name.page(params[:page])
 
     unless safe_has_role?(Role::DMP_ADMIN)
       @resource_contexts = @resource_contexts.
@@ -179,7 +190,7 @@ class ResourceContextsController < ApplicationController
 
     case params[:scope]
       when "all"
-        @resource_contexts 
+        @resource_contexts.order_by_name 
       when "Name"
         @resource_contexts = @resource_contexts.order_by_name.per(10)
       when "Template"
@@ -191,13 +202,30 @@ class ResourceContextsController < ApplicationController
       when "Last_Modification_Date"
         @resource_contexts = @resource_contexts.order_by_updated_at.per(10) 
       else
-        @resource_contexts = @resource_contexts.per(10)
+        @resource_contexts = @resource_contexts.order_by_name.per(10)
     end
     
   end
 
   def dmp_for_customization
-    select_requirements_template
+    req_temp = RequirementsTemplate.includes(:institution)
+    valid_buckets = nil
+    if current_user.has_role?(Role::DMP_ADMIN)
+      #all records
+    elsif current_user.has_role?(Role::RESOURCE_EDITOR) || current_user.has_role?(Role::INSTITUTIONAL_ADMIN)
+      req_temp = req_temp.where(institution_id: current_user.institution.subtree_ids)
+    else
+      @rt_tree = {}
+      return
+    end
+    if !params[:q].blank?
+      req_temp = req_temp.name_search_terms(params[:q])
+    end
+    if !params[:s].blank? && !params[:e].blank?
+      req_temp = req_temp.letter_range(params[:s], params[:e])
+    end
+    process_requirements_template(req_temp)
+
     @back_to = resource_contexts_path
     @back_text = "Previous page"
     @submit_to = new_resource_context_path
@@ -233,6 +261,7 @@ class ResourceContextsController < ApplicationController
 
   def select_resource
    
+    @tab = params[:tab]
     @resource_level = params[:resource_level]
     @template_id = params[:template_id]
     @customization_overview_id = params[:customization_overview_id]
@@ -258,6 +287,19 @@ class ResourceContextsController < ApplicationController
 
     if @resource_level != "requirement"
       @resource_contexts = @resource_contexts.help_text_and_url_resources
+    end
+
+    case @tab
+      when "Guidance"
+        @resource_contexts = @resource_contexts.help_text.page(params[:page]).per(20)
+      when "Actionable Links"
+        @resource_contexts = @resource_contexts.actionable_url.page(params[:page]).per(20)
+      when "Suggested Response"
+        @resource_contexts = @resource_contexts.suggested_response.page(params[:page]).per(20)
+      when "Example Response"
+        @resource_contexts = @resource_contexts.example_response.page(params[:page]).per(20)
+      else
+       @resource_contexts = @resource_contexts.page(params[:page]).per(20)
     end
 
     if !params[:q].blank?

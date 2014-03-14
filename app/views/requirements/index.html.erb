@@ -3,16 +3,21 @@
 <div class="row-fluid">
 	<div class="details span4">
 	  <div class="tree-view border-box" id="main_requirements_border">
+      <div id="cover_dialog">
+        <div>
+          <%= image_tag("/assets/throbber.gif") %> Please wait a moment . . .
+        </div>
+      </div>
 	  	<p><strong>Template Outline</strong></p>
 	  	<div class="actions">
-		    <%= link_to(content_tag(:span, '', :class => 'icon add-group') + 'Add Group', new_requirements_template_requirement_path(@requirements_template, node_type: 'group') + '#jump', :class => 'icon new') %>
+		    <%= link_to(content_tag(:span, '', :class => 'icon add-group') + 'Add Group', new_requirements_template_requirement_path(@requirements_template, node_type: 'group') + '#jump') %>
 		    <%=  raw('&nbsp;') %>
-		    <%= link_to(content_tag(:span, '', :class => 'icon add-requirement') + 'Add Requirement', new_requirements_template_requirement_path(@requirements_template) + '#jump', :class => 'icon new add-requirement') %>
+		    <%= link_to(content_tag(:span, '', :class => 'icon add-requirement') + 'Add Requirement', new_requirements_template_requirement_path(@requirements_template) + '#jump') %>
 		  </div>
-      <div id="drop_before_first">
-	      <hr/>
-      </div>
-	    <div class="requirements_tree_view" id="main_requirements_tree">
+			<div id="drop_before_first">
+	    	<hr/>
+	    </div>
+	    <div class="requirements-tree-view" id="main_requirements_tree">
 	      <%= nested_requirements @requirements.arrange(order: :position) %>
 	    </div>
 	  </div>
@@ -38,73 +43,4 @@
 	  	</div>
 		</div>
 	</div>
-
-  <style>
-    a.ui-draggable-dragging {
-      display: block;
-      padding: 0 0 0 0;
-      background-color: yellow;
-      border-style: solid;
-      border-width: 1px 1px 1px 1px;
-      border-color: black;
-    }
-
-    div.highlight {
-      background-color: yellow;
-    }
-
-    div#drop_before_first {
-      width:100%;
-      height: 23px;
-      padding-top:3px;
-    }
-  </style>
-
-  <script type="text/javascript">
-    $( document).ready(function() {
-      addEventsToTree();
-    });
-
-    function addEventsToTree(){
-      $('a.requirements_text').draggable({
-        containment: '#main_requirements_border',
-        cursor: 'move',
-        // snap: 'div.requirements_group',
-        stack: 'div.requirements_group',
-        revert: true
-      });
-
-      $('div.requirements_group').droppable( {
-        drop: handleDropEvent
-      });
-
-      $('#drop_before_first').droppable( {
-        drop: handleDropEvent
-      });
-    }
-
-    function handleDropEvent( event, ui ) {
-      $(event.target).draggable({
-        revertDuration: 0
-      });
-      var draggable = ui.draggable;
-      var drag_id = draggable.attr('id').match(/\d+$/g);
-      if(event.target.id == 'drop_before_first'){
-        var drop_id = event.target.id;
-      }else{
-        var drop_id = event.target.id.match(/\d+$/g);
-      }
-
-      // $.post("<%= reorder_requirements_path() %>", { drag_id: drag_id, drop_id: drop_id } );
-      $.ajax({
-        url: '<%= reorder_requirements_path() %>',
-        type: 'post',
-        data: { drag_id: drag_id, drop_id: drop_id },
-        headers: {
-          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-        }
-      });
-    }
-
-  </script>
 </div>

@@ -1,4 +1,4 @@
-<h1 class="row-fluid"><span class="icon review"></span>Review DMPS</h1>
+<h1 class="row-fluid"><span class="icon review"></span>Review DMPs</h1>
 <div class="dmptool-page">
 	<h2>DMPs Pending My Review</h2>
 	<table class="table table-striped" id="review_dmps">
@@ -8,7 +8,7 @@
 	      <th>Owner</th>
 	      <th>Submission Date</th>
 	      <th class="span1">Status</th>
-	      <th class="span1">Action</th>
+	      <th class="span1">Review DMP</th>
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -17,14 +17,10 @@
 					<td class="span7"><%=link_to (content_tag(:strong, plan.name)), '#', :id => "#{plan.name}" %></td>
 	        <td><%= owner_name(plan) %></td>
 	        <td><%= plan.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
-	        <td><%= state(plan) %></td>
-	        <td class="nowrap">
+	        <td class="span1"><strong><%= state(plan) %></strong></td>
+	        <td class="span1">
 	        	<div class="actions">
-		        	<%= link_to "", "#", :class => "icon confirm" %>
-		        	|
-		        	<%= link_to "", "#", :class => "icon cancel" %>
-		        	|
-		        	<%= link_to "", "#", :class => "icon comment" %>
+		        	<%= link_to "", perform_review_plan_path(plan), :class => "icon approve-template" %>
 		        </div>
 	        </td>
 	      </tr>

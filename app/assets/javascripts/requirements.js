@@ -3,7 +3,7 @@
 
 
 $(function() {
-	$("fieldset.requirement_type").hide();
+	$("fieldset.requirement_type_enum").hide();
 	$(document).on("ready", showHideEnum());
 	$("#requirement_requirement_type").bind('change', function(){
 		showHideEnum();
@@ -11,13 +11,28 @@ $(function() {
 
 	function showHideEnum() {
 		if($("#requirement_requirement_type").val() == "enum") {
-			$("fieldset.requirement_type").show();
+			$("fieldset.requirement_type_enum").show();
 		} else {
-			$("fieldset.requirement_type").hide();
+			$("fieldset.requirement_type_enum").hide();
 		}
 	}
 });
 
+$(function() {
+  $("fieldset.requirement_type_numeric").hide();
+  $(document).on("ready", showHideLabel());
+  $("#requirement_requirement_type").bind('change', function(){
+    showHideLabel();
+  });
+
+  function showHideLabel() {
+    if($("#requirement_requirement_type").val() == "numeric") {
+      $("fieldset.requirement_type_numeric").show();
+    } else {
+      $("fieldset.requirement_type_numeric").hide();
+    }
+  }
+});
 
 // from http://nack.co/get-url-parameters-using-jquery/ to check parameters.
 $.urlParam = function(name){
@@ -36,3 +51,57 @@ $(document).ready(function() {
   	$("#requirement_requirement_type option:selected").remove();
  	}
 });
+
+
+
+/* For the index.html.erb action in requirements */
+
+$( document).ready(function() {
+  addEventsToTree();
+});
+
+function addEventsToTree(){
+  $('a.requirements_text').draggable({
+    containment: '#main_requirements_border',
+    cursor: 'move',
+    // snap: 'div.requirements_group',
+    stack: 'div.requirements_group',
+    revert: true
+  });
+
+  $('div.requirements_group').droppable( {
+    drop: handleDropEvent
+  });
+
+  $('#drop_before_first').droppable( {
+    drop: handleDropEvent
+  });
+}
+
+function handleDropEvent( event, ui ) {
+  $(event.target).draggable({
+    revertDuration: 0
+  });
+  var draggable = ui.draggable;
+  var drag_id = draggable.attr('id').match(/\d+$/g);
+  if(event.target.id == 'drop_before_first'){
+    var drop_id = event.target.id;
+  }else{
+    var drop_id = event.target.id.match(/\d+$/g);
+  }
+
+  $("#cover_dialog").show();
+  $.ajax({
+    url: '/requirements/reorder', // ' reorder_requirements_path() ',
+    type: 'post',
+    data: { drag_id: drag_id, drop_id: drop_id },
+    headers: {
+      'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+      $("#cover_dialog").hide();
+    }
+  });
+}
+
+/* end for the requirements/index.html.erb action */

@@ -33,7 +33,7 @@
 
 	
 /* Buttons */
-a.btn, button, button.btn, input[type=submit], input[type=submit].btn {
+a.btn, button.btn, input[type=submit], input[type=submit].btn, .ui-datepicker-trigger {
 	display: inline-block;
 	border: none;
 	border-radius: 15px;
@@ -54,7 +54,7 @@ a.btn, button, button.btn, input[type=submit], input[type=submit].btn {
 	height: 30px;
 	margin-right: 5px;
 	padding: 0 20px; }
-button.ui-datepicker-trigger {
+.ui-datepicker-trigger {
 	border: 1px solid #B6B6B7;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -63,12 +63,11 @@ button.ui-datepicker-trigger {
 button img {
 	display: block; }
 .buttons.pagination a.btn, 
-.buttons.pagination button, .buttons.pagination button.btn, 
+.buttons.pagination button.btn, 
 .buttons.pagination input[type=submit], .buttons.pagination input[type=submit].btn {
 	position: absolute;
 	left: 10px; }
 a.btn:hover, a.btn:focus, a.btn:active,
-button:hover, button:focus, button:active, 
 button.btn:hover, button.btn:focus, button.btn:active {
 	box-shadow: none;
 	-moz-box-shadow: none;
@@ -132,13 +131,17 @@ a.icon {
 	text-decoration: none !important;
 	vertical-align: middle;
 	position: relative; }
-a .icon, h2 .icon {
-	position: absolute;
-	left: 0; }
 h1 .icon {
 	position: absolute;
 	top: 7px;
 	left: 12px; }
+h2 .icon {
+	position: absolute;
+	left: 0; }
+a .icon {
+	margin-right: 3px;
+	position: relative;
+	top: 3px; }
 	
 /* first row */
 .add.icon {
@@ -166,32 +169,18 @@ h1 .icon {
 .email.icon {
 	background-position: -180px 0; width: 15px; height: 10px; }
 /* second row */
-.arrow-up.icon {
-	background-position: 0px -15px; width: 10px; height: 15px; }
-.arrow-up.icon:hover, .arrow-up.icon:focus, .arrow-up.icon:active {
-	background-position: -25px -15px; }
-.arrow-right.icon {
-	background-position: -15px -15px; width: 15px; height: 10px; }
-.arrow-right.icon:hover, .arrow-right.icon:focus, .arrow-right.icon:active {
-	background-position: -40px -15px; }
-.arrow-down.icon {
-	background-position: -15px -25px; width: 10px; height: 15px; }
-.arrow-down.icon:hover, .arrow-down.icon:focus, .arrow-down.icon:active {
-	background-position: -40px -25px; }
-.arrow-left.icon {
-	background-position: 0px -30px; width: 15px; height: 10px; }
-.arrow-left.icon:hover, .arrow-left.icon:focus, .arrow-left.icon:active {
-	background-position: -25px -030px; }
 .close.icon {
-	background-position: -50px -15px; width: 25px; height: 25px; }
+	background-position: 0px -15px; width: 25px; height: 25px; }
 .institution-contact.icon {
-	background-position: -85px -15px; width: 30px; height: 25px; }
+	background-position: -25px -15px; width: 30px; height: 25px; }
 .institution-domain.icon {
-	background-position: -115px -15px; width: 30px; height: 25px; }
+	background-position: -55px -15px; width: 30px; height: 25px; }
 .public-dmps.icon {
-	background-position: -145px -15px; width: 30px; height: 25px; top: 8px; }
+	background-position: -85px -15px; width: 30px; height: 25px; top: 8px; }
 .login.icon {
-	background-position: -175px -15px; width: 25px; height: 25px; }
+	background-position: -115px -15px; width: 25px; height: 25px; }
+.institution-profile.icon {
+	background-position: -140px -15px; width: 25px; height: 25px; }
 /* third row */
 .new-template.icon {
 	background-position: 0px -40px; width: 25px; height: 25px; }
@@ -207,7 +196,7 @@ h1 .icon {
 	background-position: -125px -40px; width: 25px; height: 25px; }
 .review.icon {
 	background-position: -150px -40px; width: 25px; height: 25px; }
-.institution-profile.icon {
+.approve-template.icon {
 	background-position: -175px -40px; width: 25px; height: 25px; }
 /* fourth row */
 .edit-user.icon {
@@ -257,9 +246,9 @@ h1 .icon {
 .news.icon {
 	background-position: -80px -110px; width: 40px; height: 35px; }
 .folder-open.icon {
-	background-position: -120px -130px; width: 20px; height: 12px; top: 2px; }
+	background-position: -120px -130px; width: 20px; height: 15px; }
 .folder-closed.icon {
-	background-position: -140px -130px; width: 20px; height: 12px; top: 2px; }
+	background-position: -140px -130px; width: 20px; height: 15px; }
 
 /* Tree View Icons */
 a.icon.print {
@@ -285,18 +274,18 @@ a.add-requirement.icon {
 	background: none; width: auto; height: auto; padding-left: 17px; }
 	
 .icon-chevron-up {
-	background: url(dmp_icons.png) no-repeat -159px -130px transparent; width: 11px; height: 11px; top: 2px; }
+	background: url(dmp_icons.png) no-repeat -159px -130px transparent; width: 11px; height: 11px; }
 .icon-chevron-down {
-	background: url(dmp_icons.png) no-repeat -170px -130px transparent; width: 11px; height: 11px; top: 2px; }
+	background: url(dmp_icons.png) no-repeat -170px -130px transparent; width: 11px; height: 11px; }
 .icon-chevron-left {
-	background: url(dmp_icons.png) no-repeat -182px -130px transparent; width: 11px; height: 11px; top: 2px; }
+	background: url(dmp_icons.png) no-repeat -182px -130px transparent; width: 11px; height: 11px; }
 .icon-chevron-right {
-	background: url(dmp_icons.png) no-repeat -191px -130px transparent; width: 11px; height: 11px; top: 2px; }
+	background: url(dmp_icons.png) no-repeat -190px -130px transparent; width: 11px; height: 11px; left: 1px; position: relative; }
 	
 .icon-folder-close {
-	background: url(dmp_icons.png) no-repeat -140px -130px transparent; width: 20px; height: 12px; top: 2px; }
+	background: url(dmp_icons.png) no-repeat -140px -130px transparent; width: 20px; height: 12px; }
 .icon-folder-open {
-	background: url(dmp_icons.png) no-repeat -120px -130px transparent; width: 20px; height: 12px; top: 2px;}
+	background: url(dmp_icons.png) no-repeat -120px -130px transparent; width: 20px; height: 12px;}
 	
 .icon-file {
 	background: url(dmp_icons.png) no-repeat -95px 0 transparent; width: 14px; height: 15px; top: -4px; }

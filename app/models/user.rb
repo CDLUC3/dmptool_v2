@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :ldap_create, :password, :password_confirmation
 
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  VALID_EMAIL_REGEX = /\A[^@]+@[^@]+\.[^@]+\z/i #very simple, but requires basic format and emails are nearly impossible to validate anyway
   validates :institution_id, presence: true, numericality: true
   validates :email, presence: true, uniqueness: true ,format: { with: VALID_EMAIL_REGEX }
   validates :prefs, presence: true
@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
     ActiveRecord::Base.transaction do
       if user.nil?
         user = User.new
-        user.email = auth[:info][:email]
+        user.email = smart_userid_from_omniauth(auth[:info][:email])
         # Set any of the omniauth fields that have values  in the database.
         # The keys are the omniauth field names, the values are the database field names
         # for mapping omniauth field names to db field names.
@@ -81,6 +81,19 @@ class User < ActiveRecord::Base
       return uid.match(/^uid=(\S+?),ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)[1]
     end
     uid
+  end
+
+  #fixes weird emails
+  def self.smart_email_from_omniauth(email)
+    e = email
+    if email.class == Array
+      e = email.first
+    end
+    matches = e.match(/(^.*?)[;,]/i)
+    if matches
+      e = matches[1]
+    end
+    e
   end
 
    def self.search_terms(terms)

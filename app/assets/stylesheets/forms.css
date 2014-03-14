@@ -1,5 +1,6 @@
 /* Forms */
-
+.buttons form {
+	margin-bottom: 0; }
 span.required, span[id*="status_"] {
 	color: #DA0049; }
 fieldset {
@@ -37,16 +38,13 @@ input.input-large {
 	
 input[type=radio], input[type=checkbox] {
 	border: none;
-	vertical-align: top;
+	vertical-align: middle;
 	height: 17px;
 	margin: 0 4px 0 0;
 	padding: 0; }
 	
 textarea {
   resize: vertical; }
-  
-.radio.inline, .checkbox.inline {
-	vertical-align: top; }
 .control-group, .form-horizontal .control-group {
 	margin-bottom: 10px; }
 .form-horizontal .controls {
@@ -151,10 +149,10 @@ input[type=text].filled, input[type=password].filled, input[type=email].filled, 
 
 /* Alerts */	
 .alert {
-	border-radius: 0;
+	border-radius: 0 !important;
 	-moz-border-radius: 0;
 	-webkit-border-radius: 0;
-	margin: 0;
+	margin: 0 !important;
 	padding: 8px 10px 5px; }
 .alert p {
 	font-size: 1.167em;
@@ -175,16 +173,7 @@ div.field_with_errors input {
   border-color: red;
   background-color: papayawhip; }
 #error_explanation {
+	border-radius: 4px;
   border: 2px solid #FF0000;
-  background-color: #F0F0F0;
-  width: 450px;
-  padding: 7px 7px 0;
-  margin-bottom: 20px; 
-  h2 {
-    background-color: #CC0000;
-    color: #FFF;
-  	font-size: 12px;
-  	font-weight: bold;
-    text-align: left;
-    margin: -7px -7px 0;
-    padding: 5px 5px 5px 15px; } }
+  background: #F0F0F0;
+  padding: 5px 5px 0; }

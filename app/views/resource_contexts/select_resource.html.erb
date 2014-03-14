@@ -1,18 +1,11 @@
-<h1 class="row-fluid"><span class="icon resource-template"></span>Existing Resources 
-
-
+<h1 class="row-fluid"><span class="icon resource-template"></span>Existing Resources</h1>
 <% unless safe_has_role?(Role::DMP_ADMIN) %>
-	for <%= current_user.institution.full_name %> </h2>
+	<h2>For <%= current_user.institution.full_name %></h2>
+<% else %>
+	<br/>
 <% end %>
-</h1>
-
-<div> 
-
-<br>
-
-</div>
-
-<div><%= render 'resource_search' %></div>
+<div class="row-fluid">
+<%= render 'resource_search' %>
 
 <%= form_tag copy_selected_customization_resource_path, :method => :post  do %>
 
@@ -117,14 +110,12 @@
 
 <%end%>
 
-<div class="buttons">
 	<%= button_to 'Add another Resource', 
 						new_customization_resource_path(template_id: @template_id, 
 						customization_overview_id: @customization_overview_id,
 						resource_level: @resource_level,
 						requirement_id: @requirement_id), 
 						:method => :post, 
-						:class => "btn btn-green" %>	
+						:class => "btn btn-green" %>
 </div>
-
 

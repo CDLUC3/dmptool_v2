@@ -3,18 +3,18 @@ class PlansController < ApplicationController
   before_action :require_login, except: [:public, :show]
   #note show will need to be protected from logins in some cases, but only from non-public plan viewing
   before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details, :preview]
-  before_action :select_requirements_template, only: [:select_dmp_template]
+  #before_action :select_requirements_template, only: [:select_dmp_template]
 
   # GET /plans
   # GET /plans.json
   def index
-    user_id = current_user.id
-    plan_ids = UserPlan.where(user_id: user_id).pluck(:plan_id) unless user_id.nil?
-    @plans = Plan.where(id: plan_ids)
+   user_id = current_user.id
+   plan_ids = UserPlan.where(user_id: user_id).pluck(:plan_id) unless user_id.nil?
+   @plans = Plan.where(id: plan_ids)
 
     case params[:scope]
       when "all"
-        @plans = @plans.page(params[:page]).per(1000)
+        @plans = @plans.page(params[:page]).per(9999)
       when "all_limited"
         @plans = @plans.page(params[:page]).per(5)
       when "coowned"
@@ -45,17 +45,6 @@ class PlansController < ApplicationController
     @comment = Comment.new
   end
 
-  # GET /plans/1/edit
-  def edit
-    template_id = @plan.requirements_template_id
-    @requirements_template = RequirementsTemplate.find(template_id)
-    @comment = Comment.new
-    comments = Comment.where(plan_id: @plan.id, user_id: current_user.id)
-    @reviewer_comments = comments.where(visibility: :reviewer)
-    @owner_comments = comments.where(visibility: :owner)
-    @plan_states = @plan.plan_states
-  end
-
   # POST /plans
   # POST /plans.json
   def create
@@ -73,9 +62,15 @@ class PlansController < ApplicationController
     end
   end
 
+  # GET /plans/1/edit
+  def edit
+    set_comments
+  end
+
   # PATCH/PUT /plans/1
   # PATCH/PUT /plans/1.json
   def update
+    set_comments
     respond_to do |format|
       if @plan.update(plan_params)
         format.html { redirect_to edit_plan_path(@plan), notice: 'Plan was successfully updated.' }
@@ -129,9 +124,13 @@ class PlansController < ApplicationController
 
   end
 
+  def perform_review
+    set_comments
+  end
+
   def review_dmps
     if safe_has_role?(Role::INSTITUTIONAL_REVIEWER)
-      user = current_user.id
+      user_id = current_user.id
       user_plans = UserPlan.where(user_id: user_id).pluck(:id)
       @plans = Plan.where(id: user_plans)
     end
@@ -148,6 +147,19 @@ class PlansController < ApplicationController
   end
 
   def select_dmp_template
+    req_temp = RequirementsTemplate.includes(:institution)
+    req_temp = req_temp.where("institution_id in (?) OR visibility = 'public'", current_user.institution.subtree_ids).
+                where('(start_date IS NULL OR start_date < ?) AND (end_date IS NULL or end_date > ?)', Time.new, Time.new)
+
+    if !params[:q].blank?
+      req_temp = req_temp.name_search_terms(params[:q])
+    end
+    if !params[:s].blank? && !params[:e].blank?
+      req_temp = req_temp.letter_range(params[:s], params[:e])
+    end
+
+    process_requirements_template(req_temp)
+
     @back_to = plan_template_information_path
     @back_text = "<< Create New DMP"
     @submit_to = new_plan_path
@@ -191,8 +203,12 @@ class PlansController < ApplicationController
     id = params[:plan_id].to_i unless params[:plan_id].blank?
     plan = Plan.find(id)
     plan.visibility = params[:visibility]
-    plan.save!
-    redirect_to edit_plan_path(plan)
+    respond_to do |format|
+      if plan.save
+        format.html { redirect_to :back }
+        format.js
+      end
+    end
   end
 
   def public
@@ -280,5 +296,13 @@ class PlansController < ApplicationController
         end
       end
       return resources
+    end
+
+    def set_comments
+      @comment = Comment.new
+      comments = Comment.where(plan_id: @plan.id, user_id: current_user.id)
+      @reviewer_comments = comments.reviewer_comments.page(params[:page]).per(5)
+      @owner_comments = comments.owner_comments.page(params[:page]).per(5)
+      @plan_states = @plan.plan_states
     end
 end
