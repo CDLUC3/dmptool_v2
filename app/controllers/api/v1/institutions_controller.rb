@@ -1,5 +1,5 @@
 class Api::V1::InstitutionsController < Api::V1::BaseController
-  before_action :require_admin
+  #before_action :require_admin
 	 
 	respond_to :json
 
