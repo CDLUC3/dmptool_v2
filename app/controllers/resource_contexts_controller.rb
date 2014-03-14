@@ -180,7 +180,7 @@ class ResourceContextsController < ApplicationController
 
 
   def resource_customizations
-    @resource_contexts = ResourceContext.template_level.no_resource_no_requirement.page(params[:page])
+    @resource_contexts = ResourceContext.template_level.no_resource_no_requirement.order_by_name.page(params[:page])
 
     unless safe_has_role?(Role::DMP_ADMIN)
       @resource_contexts = @resource_contexts.
@@ -190,7 +190,7 @@ class ResourceContextsController < ApplicationController
 
     case params[:scope]
       when "all"
-        @resource_contexts 
+        @resource_contexts.order_by_name 
       when "Name"
         @resource_contexts = @resource_contexts.order_by_name.per(10)
       when "Template"
@@ -202,7 +202,7 @@ class ResourceContextsController < ApplicationController
       when "Last_Modification_Date"
         @resource_contexts = @resource_contexts.order_by_updated_at.per(10) 
       else
-        @resource_contexts = @resource_contexts.per(10)
+        @resource_contexts = @resource_contexts.order_by_name.per(10)
     end
     
   end
