@@ -238,7 +238,7 @@ class User < ActiveRecord::Base
     40.times.collect {TOKEN_CHARS.sample}.join('')
   end
 
-  def unpicky(hash, key)
+  def self.unpicky(hash, key)
     hash[key.intern] || hash[key.to_s]
   end
 end
