@@ -41,22 +41,24 @@ class User < ActiveRecord::Base
 
   def self.from_omniauth(auth, institution_id)
     uid = smart_userid_from_omniauth(auth)
-    return nil if uid.blank? || auth[:info][:email].blank?
+    return nil if uid.blank? || unpicky(auth, :info).blank? || unpicky(unpicky(auth, :info), :email).blank?
     a = Authentication.find_by_uid(uid)
     (a.nil? ? nil: a.user) || create_from_omniauth(auth, institution_id)
   end
 
   def self.create_from_omniauth(auth, institution_id)
-    user = User.find_by_email(auth[:info][:email])
+    info = unpicky(auth, :info)
+    email = unpicky(info, :email)
+    user = User.find_by_email(email)
     ActiveRecord::Base.transaction do
       if user.nil?
         user = User.new
-        user.email = smart_userid_from_omniauth(auth[:info][:email])
+        user.email = smart_email_from_omniauth(email)
         # Set any of the omniauth fields that have values  in the database.
         # The keys are the omniauth field names, the values are the database field names
         # for mapping omniauth field names to db field names.
         {:first_name => :first_name, :last_name => :last_name}.each do |k, v|
-          user.send("#{v}=", auth[:info][k]) if !auth[:info][k].blank?
+          user.send("#{v}=", unpicky(info, k) if !unpicky(info, k).blank?
         end
         #fix login_id for CDL LDAP to be simple username
         user.login_id = smart_userid_from_omniauth(auth)
@@ -76,7 +78,8 @@ class User < ActiveRecord::Base
   #while for shibboleth we have a longer qualified string which we need to distinguish
   #since an unqualified login or an email may not be unique
   def self.smart_userid_from_omniauth(auth)
-    uid = auth[:info][:uid] || auth[:uid]
+    info = unpicky(auth, :info)
+    uid = (info ? unpicky(info, :uid) : nil) || unpicky(auth, :uid)
     if uid.match(/^uid=\S+?,ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)
       return uid.match(/^uid=(\S+?),ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)[1]
     end
@@ -233,5 +236,9 @@ class User < ActiveRecord::Base
   TOKEN_CHARS = ('a'..'z').to_a + ('A'..'Z').to_a + ('0'..'9').to_a
   def generate_token
     40.times.collect {TOKEN_CHARS.sample}.join('')
+  end
+
+  def unpicky(hash, key)
+    hash[key.intern] || hash[key.to_s]
   end
 end
