@@ -58,7 +58,7 @@ class User < ActiveRecord::Base
         # The keys are the omniauth field names, the values are the database field names
         # for mapping omniauth field names to db field names.
         {:first_name => :first_name, :last_name => :last_name}.each do |k, v|
-          user.send("#{v}=", unpicky(info, k) if !unpicky(info, k).blank?
+          user.send("#{v}=", unpicky(info, k)) if !unpicky(info, k).blank?
         end
         #fix login_id for CDL LDAP to be simple username
         user.login_id = smart_userid_from_omniauth(auth)
