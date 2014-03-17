@@ -38,6 +38,7 @@
     @customization_id = params[:customization_id]
     @template_id = params[:template_id]
     @requirement_id = params[:requirement_id]
+    @tab = params[:tab]
 
     @resource_templates_id = ResourceContext.where(resource_id: @resource.id).pluck(:requirements_template_id)
 
@@ -69,6 +70,7 @@
 
   def update_customization_resource
     
+    @tab = params[:tab]
     @resource = Resource.find(params[:id])
     @customization_id = params[:customization_id]
     @resource_level = params[:resource_level]
@@ -81,6 +83,7 @@
           
           format.html { redirect_to customization_requirement_path(id: @customization_id, 
                         requirement_id:  @requirement_id),
+                        #anchor: @tab,
                         notice: 'Resource was successfully updated.' }
         else
           format.html { redirect_to customization_requirement_path(id: @customization_id, 

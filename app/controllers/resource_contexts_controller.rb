@@ -273,15 +273,27 @@ class ResourceContextsController < ApplicationController
     
     @custom_origin = params[:custom_origin]
     @tab = params[:tab]
+    @tab_number = '#'
     @resource_level = params[:resource_level]
     @template_id = params[:template_id]
     @customization_overview_id = params[:customization_overview_id]
     @requirement_id = params[:requirement_id]
     @customization = ResourceContext.find(@customization_overview_id)
 
+    case @tab
+      when "Guidance"
+        @tab_number = '#tab_tab1'
+      when "Actionable Links"
+        @tab_number = '#tab_tab2'
+      when "Example Response" || "Suggested Response"
+        @tab_number = '#tab_tab3'
+    end
+
     case @custom_origin
       when "Overview"
         @origin_path =  "#{edit_resource_context_path(@customization_overview_id)}"
+      when "Details"
+        @origin_path =  "#{customization_requirement_path(@customization_overview_id)}"
     end
 
     if safe_has_role?(Role::DMP_ADMIN) 

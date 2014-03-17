@@ -20,6 +20,7 @@
 											customization_overview_id: @customization_overview_id,
 											template_id: @template_id,
 											resource_level: @resource_level,
+											tab_number: 		@tab_number,
 											requirement_id: @requirement_id}%></th>		
 				
 				<th class="span4"><%= link_to "Details", 
@@ -28,6 +29,7 @@
 											customization_overview_id: @customization_overview_id,
 											template_id: @template_id,
 											resource_level: @resource_level,
+											tab_number: 		@tab_number,
 											requirement_id: @requirement_id}%></th>	
 				<th><%= link_to "Type", 
 							{scope: "Type", 
@@ -35,6 +37,7 @@
 							customization_overview_id: @customization_overview_id,
 							template_id: @template_id,
 							resource_level: @resource_level,
+							tab_number: 		@tab_number,
 							requirement_id: @requirement_id} %></th>	
 
 				<th><%= link_to "Institution", 
@@ -43,6 +46,7 @@
 							customization_overview_id: @customization_overview_id,
 							template_id: @template_id,
 							resource_level: @resource_level,
+							tab_number: 		@tab_number,
 							requirement_id: @requirement_id} %></th>	
 
 				<th><%= link_to "Creation Date", 
@@ -51,6 +55,7 @@
 							customization_overview_id: @customization_overview_id,
 							template_id: @template_id,
 							resource_level: @resource_level,
+							tab_number: 		@tab_number,
 							requirement_id: @requirement_id} %></th>	
 
 				<th><%= link_to "Last Modification Date", 
@@ -59,6 +64,7 @@
 							customization_overview_id: @customization_overview_id,
 							template_id: @template_id,
 							resource_level: @resource_level,
+							tab_number: 		@tab_number,
 							requirement_id: @requirement_id} %></th>
 								
 				<th>Level</th>
@@ -86,7 +92,9 @@
 														customization_id: @customization_overview_id, 
 														template_id: @template_id,
 														resource_level: @resource_level,
-														requirement_id: @requirement_id),
+														requirement_id: @requirement_id,
+														tab_number: 		@tab_number,
+														custom_origin: @custom_origin),
 						 :class => 'icon edit-user' %>
 					</td>
 				</tr>
@@ -117,6 +125,7 @@
 							customization_overview_id: @customization_overview_id,
 							resource_level: @resource_level,
 							requirement_id: @requirement_id,
+							tab_number: 		@tab_number,
 							custom_origin: @custom_origin), 
 							:method => :post, 
 							:class => "btn btn-green" %>	
@@ -127,7 +136,7 @@
 
 <%end%>
 	<div class="actions pull-left">
-		<%= link_to '<< Back to ' + "#{@custom_origin}", "#{@origin_path}" ,  :class => "btn" %>
+		<%= link_to '<< Back to ' + "#{@custom_origin}", "#{@origin_path}"+"#{@tab_number}",  :class => "btn" %>
 	</div>
 </div>
 
