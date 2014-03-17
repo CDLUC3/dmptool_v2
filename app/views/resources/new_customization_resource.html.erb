@@ -46,10 +46,19 @@
         </div>
       </div>
 
-      <div class="actions pull-right">
-        <%= f.submit 'Save Changes', :class => "btn" %>
-        <%= link_to 'Cancel', :back, :class => "btn" %>
+      <div class="actions pull-left">
+        <%= link_to '<< Back', :back,
+                #template_id: @template_id,
+                #customization_overview_id: @customization_id,
+                :class => "btn" %>
       </div>
+
+      <div class="actions pull-right">
+        <%= button_tag 'Undo Changes', type: :reset, :class => "btn" %>
+        <%= f.submit 'Save Changes', :class => "btn" %>
+      </div>
+
     </fieldset>
+
   <% end %>
 
