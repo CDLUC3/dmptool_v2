@@ -15,7 +15,8 @@
 				<th>Select</th>
 
 				<th><%= link_to "Resource Id", 
-											{scope: "Resource_id", 
+											{scope: "Resource_id",
+											 tab: @tab, 
 											customization_overview_id: @customization_overview_id,
 											template_id: @template_id,
 											resource_level: @resource_level,
@@ -23,12 +24,14 @@
 				
 				<th class="span4"><%= link_to "Details", 
 											{scope: "Details", 
+												 tab: @tab,
 											customization_overview_id: @customization_overview_id,
 											template_id: @template_id,
 											resource_level: @resource_level,
 											requirement_id: @requirement_id}%></th>	
 				<th><%= link_to "Type", 
 							{scope: "Type", 
+								 tab: @tab,
 							customization_overview_id: @customization_overview_id,
 							template_id: @template_id,
 							resource_level: @resource_level,
@@ -36,6 +39,7 @@
 
 				<th><%= link_to "Institution", 
 							{scope: "Institution", 
+								 tab: @tab,
 							customization_overview_id: @customization_overview_id,
 							template_id: @template_id,
 							resource_level: @resource_level,
@@ -43,13 +47,15 @@
 
 				<th><%= link_to "Creation Date", 
 							{scope: "Creation_Date", 
+							 tab: @tab,
 							customization_overview_id: @customization_overview_id,
 							template_id: @template_id,
 							resource_level: @resource_level,
 							requirement_id: @requirement_id} %></th>	
 
 				<th><%= link_to "Last Modification Date", 
-							{scope: "Last_Modification_Date", 
+							{scope: "Last_Modification_Date",
+							 tab: @tab, 
 							customization_overview_id: @customization_overview_id,
 							template_id: @template_id,
 							resource_level: @resource_level,
@@ -101,6 +107,7 @@
 	<%= hidden_field_tag :resource_level, @resource_level  %>
 	<%= hidden_field_tag :requirement_id, @requirement_id  %>
 	<%= hidden_field_tag :customization_overview_id, @customization_overview_id %>
+	<%= hidden_field_tag :tab, @tab %>
 
 
 	<div class="buttons">

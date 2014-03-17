@@ -305,15 +305,15 @@ class ResourceContextsController < ApplicationController
 
     case @tab
       when "Guidance"
-        @resource_contexts = @resource_contexts.help_text.page(params[:page]).per(20)
+        @resource_contexts = @resource_contexts.help_text
       when "Actionable Links"
-        @resource_contexts = @resource_contexts.actionable_url.page(params[:page]).per(20)
+        @resource_contexts = @resource_contexts.actionable_url
       when "Suggested Response"
-        @resource_contexts = @resource_contexts.suggested_response.page(params[:page]).per(20)
+        @resource_contexts = @resource_contexts.suggested_response
       when "Example Response"
-        @resource_contexts = @resource_contexts.example_response.page(params[:page]).per(20)
+        @resource_contexts = @resource_contexts.example_response
       else
-       @resource_contexts = @resource_contexts.page(params[:page]).per(20)
+       @resource_contexts = @resource_contexts
     end
 
     if !params[:q].blank?
@@ -322,20 +322,22 @@ class ResourceContextsController < ApplicationController
 
     case params[:scope]
       when "Resource_id"
-        @resource_contexts = @resource_contexts.order_by_resource_id.page(params[:page]).per(20)
+        @resource_contexts = @resource_contexts.order_by_resource_id
       when "Details"
-        @resource_contexts = @resource_contexts.order_by_resource_label.page(params[:page]).per(20)
+        @resource_contexts = @resource_contexts.order_by_resource_label
       when "Type"
-        @resource_contexts = @resource_contexts.order_by_resource_type.page(params[:page]).per(20)
+        @resource_contexts = @resource_contexts.order_by_resource_type
       when "Institution"
-        @resource_contexts = @resource_contexts.order_by_institution_name.page(params[:page]).per(20)
+        @resource_contexts = @resource_contexts.order_by_institution_name
       when "Creation_Date"
-        @resource_contexts = @resource_contexts.order_by_resource_created_at.page(params[:page]).per(20)
+        @resource_contexts = @resource_contexts.order_by_resource_created_at
       when "Last_Modification_Date"
-        @resource_contexts = @resource_contexts.order_by_resource_updated_at.page(params[:page]).per(20)
+        @resource_contexts = @resource_contexts.order_by_resource_updated_at
       else
-       @resource_contexts = @resource_contexts.page(params[:page]).per(20)
+       @resource_contexts = @resource_contexts
     end
+
+    @resource_contexts = @resource_contexts.page(params[:page]).per(20)
 
   end
 
