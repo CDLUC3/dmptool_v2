@@ -35,7 +35,7 @@
 							<%= collection_select(:requirements_template, :institution_id, Institution.all, :id, :full_name, { prompt: "-Select a Institution"} ) %>
 						</div>
 					</div>
-				<% elsif safe_has_role?(Role::INSTITUTIONAL_ADMIN)%>
+				<% elsif user_role_in?(:institutional_admin)%>
 					<div class="control-group" >
 						<%= f.label :institution, :class => "control-label" %>
 						<div class="controls" >

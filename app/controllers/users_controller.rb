@@ -193,7 +193,7 @@ class UsersController < ApplicationController
       like = params[:name_term].concat("%")
       if user_role_in?(:dmp_admin)
         u = User
-      elsif current_user.has_role?(Role::INSTITUTIONAL_ADMIN) || current_user.has_role?(role_number)
+      elsif user_role_in?(:institutional_admin) || current_user.has_role?(role_number)
         u = current_user.institution.users_deep
       end
       @users = u.where("CONCAT(first_name, ' ', last_name) LIKE ? ", like).active
