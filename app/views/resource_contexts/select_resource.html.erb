@@ -88,14 +88,14 @@
 					<td><%= resource_context.resource.updated_at.nil? ? " " :  resource_context.resource.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 					<td><%= resource_context.resource_level %></td>
 					<td class="span1"><%= link_to raw(''), 
-						edit_customization_resource_path(id: resource_context.resource_id, 
+									edit_customization_resource_path(id: resource_context.resource_id, 
 														customization_id: @customization_overview_id, 
 														template_id: @template_id,
 														resource_level: @resource_level,
 														requirement_id: @requirement_id,
 														tab_number: 		@tab_number,
 														custom_origin: @custom_origin),
-						 :class => 'icon edit-user' %>
+						 			:class => 'icon edit-user' %>
 					</td>
 				</tr>
 			<% end %>
@@ -136,7 +136,7 @@
 
 <%end%>
 	<div class="actions pull-left">
-		<%= link_to '<< Back to ' + "#{@custom_origin}", "#{@origin_path}"+"#{@tab_number}",  :class => "btn" %>
+		<%= link_to '<< Back to ' + "#{@custom_origin}", "#{@origin_path}"+'#'+"#{@tab_number}",  :class => "btn" %>
 	</div>
 </div>
 

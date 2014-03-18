@@ -6,6 +6,7 @@
                   id: @resource.id, 
                   template_id: @template_id, 
                   resource_level: @resource_level,
+                  tab_number: @tab_number,
                   requirement_id: @requirement_id),  
         html: { :class => 'form-horizontal' } do |f| %>
 
@@ -51,8 +52,8 @@
 
     <div class="actions pull-left">
         <%= link_to '<< Back', :back,
-                template_id: @template_id,
-                customization_overview_id: @customization_id,
+                #template_id: @template_id,
+                #customization_overview_id: @customization_id,
                 :class => "btn" %>
     </div>
 

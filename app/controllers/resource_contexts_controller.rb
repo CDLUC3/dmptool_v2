@@ -273,7 +273,7 @@ class ResourceContextsController < ApplicationController
     
     @custom_origin = params[:custom_origin]
     @tab = params[:tab]
-    @tab_number = '#'
+    @tab_number = ''
     @resource_level = params[:resource_level]
     @template_id = params[:template_id]
     @customization_overview_id = params[:customization_overview_id]
@@ -282,11 +282,11 @@ class ResourceContextsController < ApplicationController
 
     case @tab
       when "Guidance"
-        @tab_number = '#tab_tab1'
+        @tab_number = 'tab_tab1'
       when "Actionable Links"
-        @tab_number = '#tab_tab2'
+        @tab_number = 'tab_tab2'
       when "Example Response" || "Suggested Response"
-        @tab_number = '#tab_tab3'
+        @tab_number = 'tab_tab3'
     end
 
     case @custom_origin
