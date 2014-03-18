@@ -10,7 +10,7 @@ class InstitutionsController < ApplicationController
   # GET /institutions.json
   def index
 
-    if safe_has_role?(Role::DMP_ADMIN)
+    if user_role_in?(:dmp_admin)
       @institutions = Institution.all
     else
       @institutions = Institution.where(id: [current_user.institution.subtree_ids])
@@ -195,7 +195,7 @@ class InstitutionsController < ApplicationController
 
   def institutional_admins
     @user_ids = Authorization.where(role_id: 5).pluck(:user_id) #All the institutional_admins
-    if safe_has_role?(Role::DMP_ADMIN)
+    if user_role_in?(:dmp_admin)
       @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
     else
       @users = User.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).order('created_at DESC').page(params[:page]).per(10)

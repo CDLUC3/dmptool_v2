@@ -13,7 +13,7 @@ class ResourceContextsController < ApplicationController
   # GET /resource_templates/new
   def new
     redirect_to :back and return if params[:requirements_template_id].blank?
-    if current_user.has_role?(Role::DMP_ADMIN) && params[:institution_id].blank?
+    if user_role_in?(:dmp_admin) && params[:institution_id].blank?
       redirect_to({:action => :choose_institution, :requirements_template_id => params[:requirements_template_id]}) and return
     end
     @req_temp = RequirementsTemplate.find(params[:requirements_template_id])
@@ -22,7 +22,7 @@ class ResourceContextsController < ApplicationController
     @resource_context.requirements_template_id = @req_temp.id
 
     #if it is for the template or for a a different institution
-    if current_user.has_role?(Role::DMP_ADMIN)
+    if user_role_in?(:dmp_admin)
       if params[:institution_id] == "none"
         @resource_context.name = "#{@req_temp.name}"
       else
@@ -38,7 +38,7 @@ class ResourceContextsController < ApplicationController
     @resource_context.review_type = "formal_review"
 
     #the institution_id should be nil if it's none, otherwise set it
-    if current_user.has_role?(Role::DMP_ADMIN)
+    if user_role_in?(:dmp_admin)
       @resource_context.institution_id = ( params[:institution_id] == "none" ? nil : params[:institution_id])
     else
       @resource_context.institution_id = current_user.institution_id
@@ -224,9 +224,9 @@ class ResourceContextsController < ApplicationController
   def dmp_for_customization
     req_temp = RequirementsTemplate.includes(:institution)
     valid_buckets = nil
-    if current_user.has_role?(Role::DMP_ADMIN)
+    if user_role_in?(:dmp_admin)
       #all records
-    elsif current_user.has_role?(Role::RESOURCE_EDITOR) || current_user.has_role?(Role::INSTITUTIONAL_ADMIN)
+    elsif user_role_in?(:resource_editor, :institutional_admin)
       req_temp = req_temp.where("institution_id in (?) OR visibility = 'public'", current_user.institution.subtree_ids).
           where('(start_date IS NULL OR start_date < ?) AND (end_date IS NULL or end_date > ?)', Time.new, Time.new)
     else

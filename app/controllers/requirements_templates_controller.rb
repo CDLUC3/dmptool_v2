@@ -173,14 +173,14 @@ class RequirementsTemplatesController < ApplicationController
           @users = User.where(id: @user_ids).page(params[:page]).per(3)
       end
 
-      if !safe_has_role?(Role::DMP_ADMIN)
+      if !user_role_in(dmp_admin)
          @users = @users.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).page(params[:page])
       end
 
     end
 
   def count
-    if current_user.has_role?(Role::DMP_ADMIN)
+    if user_role_in?(:dmp_admin)
       @all = RequirementsTemplate.count
       @active = RequirementsTemplate.active.count
       @inactive = RequirementsTemplate.inactive.count

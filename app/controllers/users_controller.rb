@@ -191,7 +191,7 @@ class UsersController < ApplicationController
     role_number = params[:role_number].to_i
     if !params[:name_term].blank?
       like = params[:name_term].concat("%")
-      if current_user.has_role?(Role::DMP_ADMIN)
+      if user_role_in?(:dmp_admin)
         u = User
       elsif current_user.has_role?(Role::INSTITUTIONAL_ADMIN) || current_user.has_role?(role_number)
         u = current_user.institution.users_deep
