@@ -130,14 +130,15 @@ class ResourceContextsController < ApplicationController
 
     elsif params[:template_id]  && params[:unlink_from_customization].nil?
       @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
-                                                requirements_template_id: @template_id)
+                                                requirements_template_id: @template_id).
+                                            requirement_level
     
     elsif params[:unlink_from_customization] && !params[:template_id].nil? && !params[:resource_id].nil?
 
       @resource_context = ResourceContext.find(params[:customization_id])
       @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
                                               requirements_template_id: @template_id,
-                                              #requirement_id: nil,
+                                              requirement_id: nil,
                                               institution_id: @resource_context.institution_id)
     else
 
