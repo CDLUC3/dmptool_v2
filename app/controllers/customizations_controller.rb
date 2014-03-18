@@ -20,6 +20,7 @@ class CustomizationsController < ApplicationController
   def show
     # :id is customization id and :requirement_id
     @customization = ResourceContext.find(params[:id])
+    @resource_context = @customization
     redirect_to(resource_contexts_path, :notice => "This isn't a valid customization") and return unless @customization.resource_id.blank?
     @requirements_template = @customization.requirements_template
     @requirements = @requirements_template.requirements
@@ -53,7 +54,7 @@ class CustomizationsController < ApplicationController
     @template_id = @requirements_template.id
     @customization_id = @customization.id
     @resource_level = "requirement"
-##############################################
+    ##############################################
     
 
   end

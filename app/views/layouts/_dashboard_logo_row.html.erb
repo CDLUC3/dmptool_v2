@@ -1,0 +1,33 @@
+<div class="dashboard-header row-fluid">
+  <% unless current_user.institution.nil? %>
+    <div class="inst-logo span3">
+      <%= image_tag current_user.institution.logo, :alt => "#{current_user.institution.nickname}" %>
+    </div>
+    <div class="inst-title span5">
+      <%= current_user.institution.full_name %>
+    </div>
+    <div class="inst-info span4">
+      <%= link_to "http://#{current_user.institution.url}", :id => 'inst-domain' do %>
+        <span class="icon institution-domain"></span><%= current_user.institution.url %>
+      <% end %>
+      <%= mail_to current_user.institution.contact_email, :id => "inst-contact" do %>
+        <span class="icon institution-contact"></span>Contact <%= current_user.institution.contact_info %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="inst-logo span3">
+      <%= image_tag("", :width => '164', :height => '51', :alt => 'Institution Logo') %>
+    </div>
+    <div class="inst-title span5">
+      Institution Name
+    </div>
+    <div class="inst-info span4">
+      <%= link_to '#', :id => 'institution-domain' do %>
+        <span class="icon institution-domain"></span>www.domainname.edu
+      <% end %>
+      <%= link_to '#', :id => 'institution-contact' do %>
+        <span class="icon institution-contact"></span>Contact Institution Admin
+      <% end %>
+    </div>
+  <% end %>
+</div>
