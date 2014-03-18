@@ -38,20 +38,43 @@
         <div class="control-group">
           <%= f.label :submission_deadline, 'Submission Deadline',:class => "control-label" %>
           <div class="controls">
-            <%= f.text_field :submission_deadline, value: @plan.submission_deadline.blank? ? " " : @plan.submission_deadline.strftime('%m/%d/%Y'), :class => 'datepicker' %>
+            <%= f.text_field :submission_deadline, value: @plan.submission_deadline.blank? ? " " : @plan.submission_deadline.strftime('%m/%d/%Y'), :class => 'datepicker', id:'submission_deadline' %>
           </div>
         </div>
-        <div class="control-group">
-          <%= f.label :visibility, :class => 'control-label' %>
-          <div class="controls checkbox-controls">
-            <%= f.radio_button :visibility, :public, :class => 'radio inline', :id => 'public'  %>
-            <%= label_tag :public, 'public', :class => 'radio-label'%><br/>
-            <%= f.radio_button :visibility, :institutional, :class => 'radio inline', :id => 'institutional'  %>
-            <%= label_tag :institutional, 'institutional', :class => 'radio-label'%><br/>
-            <%= f.radio_button :visibility, :private, :class => 'radio inline', :id => 'private'  %>
-            <%= label_tag :private, 'private', :class => 'radio-label'%>
+
+        <% if @plan.new_record? %>
+          <div class="control-group">
+            <%= f.label :visibility, :class => 'control-label' %>
+            <div class="controls checkbox-controls">
+              <%= f.radio_button :visibility, :public, :class => 'radio inline', :id => 'public'  %>
+              <%= label_tag :public, 'public', :class => 'radio-label'%><br/>
+              <%= f.radio_button :visibility, :institutional, :class => 'radio inline', :id => 'institutional'  %>
+              <%= label_tag :institutional, 'institutional', :class => 'radio-label'%><br/>
+              <%= f.radio_button :visibility, :private, :class => 'radio inline', :id => 'private', checked: true  %>
+              <%= label_tag :private, 'private', :class => 'radio-label'%>
+            </div>
           </div>
-        </div>
+          <%= render partial: '/users/plan_autocomplete_widget',
+              :locals =>
+             {  user_role: 'coowner',
+                submit_url: add_coowner_autocomplete_path,
+                item_description: 'Co-Owner'
+             } %>
+
+        <% else %>
+
+          <div class="control-group">
+            <%= f.label :visibility, :class => 'control-label' %>
+            <div class="controls checkbox-controls">
+              <%= f.radio_button :visibility, :public, :class => 'radio inline', :id => 'public'  %>
+              <%= label_tag :public, 'public', :class => 'radio-label'%><br/>
+              <%= f.radio_button :visibility, :institutional, :class => 'radio inline', :id => 'institutional'  %>
+              <%= label_tag :institutional, 'institutional', :class => 'radio-label'%><br/>
+              <%= f.radio_button :visibility, :private, :class => 'radio inline', :id => 'private'  %>
+              <%= label_tag :private, 'private', :class => 'radio-label'%>
+            </div>
+          </div>
+        <% end %>
 
         <% unless @plan.new_record? %>
           <div class="control-group">
@@ -63,29 +86,31 @@
               </div>
             </div>
           </div>
-					<hr/>
-          <div class="control-group">
-            <label class ="control-label">Reviewer Comments</label>
-            <div class="controls">
-              <p><%= link_to(content_tag(:span, "", :class => "icon-chevron-down") + "View", "#", :class => "view-reviewer-comments") %><%= link_to(content_tag(:span, "", :class => "icon-chevron-up") + "Hide", "#", :class => "hide-reviewer-comments") %></p>
-              <div id="reviewer_comments" class="comments">
-                <% if @reviewer_comments.empty? %>
-                  <strong>There are currently no comments.</strong>
+          <% if (@plan.requirements_template.review_type == :formal_review) || (@plan.requirements_template.review_type == :informal_review) %>
+            <hr/>
+            <div class="control-group">
+              <label class ="control-label">Reviewer Comments</label>
+              <div class="controls">
+                <p><%= link_to(content_tag(:span, "", :class => "icon-chevron-down") + "View", "#", :class => "view-reviewer-comments") %><%= link_to(content_tag(:span, "", :class => "icon-chevron-up") + "Hide", "#", :class => "hide-reviewer-comments") %></p>
+                <div id="reviewer_comments" class="comments">
+                  <% if @reviewer_comments.empty? %>
+                    <strong>There are currently no comments.</strong>
+                    <br/>
+                  <% else %>
+                    <div class="scrollable-container">
+                      <div class="scrollable-content">
+                        <br/>
+                        <%= render partial: 'comments/index_reviewer_comments' %>
+                      </div>
+                    <div class="scrollable-bottom-handle ui-resizable-handle ui-resizable-s"></div>
+                  </div>
+                  <% end %>
                   <br/>
-                <% else %>
-                  <div class="scrollable-container">
-                    <div class="scrollable-content">
-                      <br/>
-                      <%= render partial: 'comments/index_reviewer_comments' %>
-                    </div>
-                  <div class="scrollable-bottom-handle ui-resizable-handle ui-resizable-s"></div>
+                  <p><%= link_to "Add Comments", "#", data: {:comment_type => :reviewer}, :class => "btn add_comments_link" %></p>
                 </div>
-                <% end %>
-                <br/>
-                <p><%= link_to "Add Comments", "#", data: {:comment_type => :reviewer}, :class => "btn add_comments_link" %></p>
               </div>
             </div>
-          </div>
+          <% end %>
 					<hr/>
           <div class="control-group">
             <label class ="control-label">Owner Comments</label>
