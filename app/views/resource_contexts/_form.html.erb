@@ -22,9 +22,9 @@
 			  <%= f.hidden_field :requirements_template_id %>
 			
 			  <div class="control-group">
-			    <%= f.label :name , "Customization Name", :class=> "control-label#{@required_fields_class}" %>
+			    <%= f.label :name , "Customization Name", :class=> "control-label required" %>
 			    <div class="controls">
-			      <%= f.text_field :name, :class => "input-xxlarge#{@required_fields_class}" %>
+			      <%= f.text_field :name, :class => "input-xxlarge required" %>
 			    </div>
 			  </div>
 			
@@ -48,16 +48,16 @@
 			  </div>
 			
 			  <div class="control-group">
-			    <%= f.label :contact_info, 'Contact Information',:class => "control-label#{@required_fields_class}" %>
+			    <%= f.label :contact_info, 'Contact Information',:class => "control-label" %>
 			    <div class="controls">
-			      <%= f.text_field :contact_info, :class => "input-xlarge#{@required_fields_class}" %>
+			      <%= f.text_field :contact_info, :class => "input-xlarge" %>
 			    </div>
 			  </div>
 			
 			  <div class="control-group">
-			    <%= f.label :contact_email, 'Contact Email', :class => "control-label#{@required_fields_class}" %>
+			    <%= f.label :contact_email, 'Contact Email', :class => "control-label" %>
 			    <div class="controls">
-			      <%= f.text_field :contact_email, :class => "input-xlarge#{@required_fields_class}" %>
+			      <%= f.text_field :contact_email, :class => "input-xlarge" %>
 			    </div>
 			  </div>
 			

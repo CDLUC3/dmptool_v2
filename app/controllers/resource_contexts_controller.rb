@@ -30,10 +30,8 @@ class ResourceContextsController < ApplicationController
         that_inst = Institution.find(params[:institution_id])
         @resource_context.name = "#{@req_temp.name} for #{that_inst.name}"
       end
-      @required_fields_class = ''
     else
       @resource_context.name = "#{@req_temp.name} for #{current_user.institution.name}"
-      @required_fields_class = ' required'
     end
 
     @resource_context.review_type = "formal_review"
