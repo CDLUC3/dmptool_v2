@@ -276,8 +276,6 @@
     @customization_overview_id = params[:customization_overview_id]
     @customization_overview = ResourceContext.find(@customization_overview_id)  
 
-    debugger
-
     if safe_has_role?(Role::DMP_ADMIN)
       @current_institution_id = @customization_overview.institution_id
     else 
@@ -312,7 +310,7 @@
           end
         end    
  
-      end #if
+      end #if params[:resource_level] == "requirement" 
 
 
     else #template resource
@@ -321,23 +319,23 @@
         
         respond_to do |format|
                 format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
-                          notice: "The resource you selected is already in your context. " }
+                          notice: "The resource you selected is already in your context." }
         end
               
       else
      
-              @resource_context = ResourceContext.new(resource_id: @resource_id, 
-                                                      institution_id: @current_institution_id, 
-                                                      requirements_template_id: @template_id) 
-              respond_to do |format| 
-                    if @resource_context.save
-                      format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
-                                    notice: "Resource was successfully added." }        
-                    else
-                      format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
-                                    notice: "A problem prevented this resource to be added. " }
-                    end
-              end    
+        @resource_context = ResourceContext.new(resource_id: @resource_id, 
+                                                institution_id: @current_institution_id, 
+                                                requirements_template_id: @template_id) 
+        respond_to do |format| 
+              if @resource_context.save
+                format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
+                              notice: "Resource was successfully added." }        
+              else
+                format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
+                              notice: "A problem prevented this resource to be added. " }
+              end
+        end    
       end 
 
     end
@@ -348,7 +346,8 @@
   def template_customization_present?(resource_id, template_id, current_institution_id)
     ResourceContext.where(resource_id: resource_id, 
                           requirements_template_id: template_id, 
-                          institution_id: current_institution_id).
+                          institution_id: current_institution_id,
+                          requirement_id: nil).
                     pluck(:id).count > 0 
   end
 
