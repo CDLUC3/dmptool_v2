@@ -73,7 +73,6 @@
   def update_customization_resource
     
     @tab = params[:tab]
-    
     @tab_number = params[:tab_number]
     @custom_origin = params[:custom_origin]
     @resource = Resource.find(params[:id])
@@ -196,6 +195,7 @@
 
   def new_customization_resource
 
+    @tab = params[:tab]
     @tab_number = params[:tab_number]
     @requirement_id = params[:requirement_id]
     @resource_level = params[:resource_level]
@@ -205,7 +205,6 @@
     @resource = Resource.new
 
     @customization_overview = ResourceContext.find(@customization_overview_id)
-
     @current_institution_id = nil
 
     if user_role_in?(:dmp_admin)
@@ -214,11 +213,27 @@
       @current_institution_id = current_user.institution.id
     end
    
+    case @tab
+      when "Guidance"
+        @selected = "help_text"
+      when "Actionable Links"
+        @selected = "actionable_url"
+      when "Suggested Response"
+        @selected = "suggested_response"
+      when "Example Response"
+        @selected = "example_response"
+      else
+       @selected = "help_text"
+    end
+      
+
   end
 
 
   def create_customization_resource
     
+    @tab = params[:tab]
+    @custom_origin = params[:custom_origin]
     @tab_number = params[:tab_number]
     @requirement_id = params[:requirement_id]
     @resource_level = params[:resource_level]
@@ -285,6 +300,9 @@
 
   def copy_selected_customization_resource
 
+    @tab = params[:tab]
+    @custom_origin = params[:custom_origin]
+    @tab_number = params[:tab_number]
     @requirement_id = params[:requirement_id]
     @resource_level = params[:resource_level]
     @resource_id = params[:resource]
@@ -299,13 +317,14 @@
       @current_institution_id = current_user.institution.id
     end
          
-    if params[:resource_level] == "requirement"  
+    #if params[:resource_level] == "requirement" #details 
+    if @custom_origin == "Details" 
 
       if requirement_customization_present?(@resource_id, @template_id, @current_institution_id, @requirement_id)     
         respond_to do |format|
           format.html { 
               redirect_to customization_requirement_path(id: @customization_overview_id, requirement_id:  @requirement_id), 
-              anchor: 'tab_tab1', 
+              anchor: '#'+@tab_number, 
               notice: "The resource you selected is already in your context." }
         end
         return
@@ -318,11 +337,11 @@
         respond_to do |format| 
           if @resource_context.save
             format.html { redirect_to customization_requirement_path(id: @customization_overview_id, requirement_id:  @requirement_id),
-                anchor: 'tab_tab1',  
+                anchor: '#'+@tab_number,  
                 notice: "Resource was successfully added." }        
           else
             format.html { redirect_to customization_requirement_path(id: @customization_overview_id, requirement_id:  @requirement_id), 
-                anchor: 'tab_tab1', 
+                anchor: '#'+@tab_number, 
                 notice: "A problem prevented this resource to be added. " }
           end
         end    
@@ -330,7 +349,7 @@
       end #if params[:resource_level] == "requirement" 
 
 
-    else #template resource
+    elsif  @custom_origin == "Overview"
  
       if template_customization_present?(@resource_id, @template_id, @current_institution_id)
         
@@ -355,8 +374,30 @@
         end    
       end 
 
+    else
+      if template_customization_present?(@resource_id, @template_id, @current_institution_id)
+        
+        respond_to do |format|
+                format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
+                          notice: "The resource you selected is already in your context." }
+        end
+              
+      else  
+        @resource_context = ResourceContext.new(resource_id: @resource_id, 
+                                                institution_id: @current_institution_id, 
+                                                requirements_template_id: @template_id) 
+        respond_to do |format| 
+              if @resource_context.save
+                format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
+                              notice: "Resource was successfully added." }        
+              else
+                format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
+                              notice: "A problem prevented this resource to be added. " }
+              end
+        end    
+      end 
     end
-         
+        
   end
 
 

@@ -18,10 +18,12 @@
         <div class="controls">
           <% if  @resource_level=="requirement" %>
             <%= f.select :resource_type,
-            		options_for_select([:actionable_url, :help_text, :example_response, :suggested_response], @resource.resource_type) %>
+            		options_for_select([:actionable_url, :help_text, :example_response, :suggested_response],
+                    selected: @selected)%> 
           <% else %>
             <%= f.select :resource_type,
-                options_for_select([:actionable_url, :help_text], @resource.resource_type) %>
+                options_for_select([:actionable_url, :help_text], 
+                  selected: @selected)%>
           <% end %>
         </div>
       </div>
