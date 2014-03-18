@@ -70,11 +70,11 @@ class ResourceContext < ActiveRecord::Base
   end
 
   def self.order_by_resource_created_at
-    joins(:resource).order('resources.created_at ASC')
+    joins(:resource).order('resources.created_at DESC')
   end
 
   def self.order_by_resource_updated_at
-    joins(:resource).order('resources.updated_at ASC')
+    joins(:resource).order('resources.updated_at DESC')
   end
 
   def self.no_resource_no_requirement

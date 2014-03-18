@@ -15,7 +15,11 @@
 	<strong>Comments </strong>
 	<%= render partial: "comments/index_reviewer_comments" %>
   <p><%= link_to "Add Comments", "#", data: {:comment_type => :reviewer}, :class => "btn add_comments_link" %></p>
+  <div>
+    <%= paginate @reviewer_comments %>
+  </div>
 </fieldset>
+
 <% if @plan.requirements_template.review_type == :formal_review %>
   <fieldset class="spaced_below"">
     <label class ="control-label">Review Decision:</label>

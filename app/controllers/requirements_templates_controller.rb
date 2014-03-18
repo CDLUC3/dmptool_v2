@@ -23,17 +23,17 @@ class RequirementsTemplatesController < ApplicationController
       when "all"
         @requirements_templates = @requirements_templates.page(params[:page]).per(100)
       when "all_limited"
-        @requirements_templates = @requirements_templates.page(params[:page]).per(5)
+        @requirements_templates = @requirements_templates.page(params[:page]).per(10)
       when "active"
-        @requirements_templates = @requirements_templates.active.page(params[:page]).per(5)
+        @requirements_templates = @requirements_templates.active.page(params[:page]).per(10)
       when "inactive"
-        @requirements_templates = @requirements_templates.inactive.page(params[:page]).per(5)
+        @requirements_templates = @requirements_templates.inactive.page(params[:page]).per(10)
       when "public"
-        @requirements_templates = @requirements_templates.public_visibility.page(params[:page]).per(5)
+        @requirements_templates = @requirements_templates.public_visibility.page(params[:page]).per(10)
       when "institutional"
-        @requirements_templates = @requirements_templates.institutional_visibility.page(params[:page]).per(5)
+        @requirements_templates = @requirements_templates.institutional_visibility.page(params[:page]).per(10)
       else
-        @requirements_templates = @requirements_templates.page(params[:page]).per(5)
+        @requirements_templates = @requirements_templates.page(params[:page]).per(10)
     end
     
     template_editors

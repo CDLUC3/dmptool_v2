@@ -33,7 +33,7 @@ ul.nav-tabs li a {
 	color: #516935;
 	height: 30px; }
 ul.nav-tabs li a:hover, .tabs ul.nav-tabs li a:focus {
-	height: 29px; } 
+	height: 29px; }
 ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	border: 1px solid #C9C9CB;
 	border-bottom: none;
@@ -66,7 +66,7 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	width: 400px; }
 .tab-pane select.input-xxlarge {
 	width: 415px; }
-	
+
 /* Log In */
 .login.row-fluid, .contact.row-fluid {
 	margin: 20px 35px; }
@@ -76,7 +76,7 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	width: 330px; }
 .control-group.switch_institution {
 	height: 179px; }
-	
+
 /* DMPTool Pages */
 .dmptool-page {
 	margin-top: 10px; }
@@ -90,10 +90,10 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	margin-top: 0; }
 .dmptool-page p {
 	font-size: 1.167; }
-	
-	
+
+
 /* Details Pages */
-.requirements-tree-view .icon.confirm, .requirements-tree-view  .icon.requirement, .requirements-tree-view  .icon.add, .requirements-tree-view  .icon.remove, 
+.requirements-tree-view .icon.confirm, .requirements-tree-view  .icon.requirement, .requirements-tree-view  .icon.add, .requirements-tree-view  .icon.remove,
 .details .icon.add-group, .details .icon.add-requirement {
 	position: relative;
 	top: 3px; }
@@ -129,12 +129,12 @@ div.nested_requirements {
 li.nested_requirements ul {
 	margin-left: 20px;
 }
-	
 
 
-	
-	
-	
+
+
+
+
 /* Institutions Hierarchy */
 .institutions {
 	margin: 10px 20px 20px; }
@@ -244,7 +244,7 @@ div.customization_tree li .icon.larger{
 
 /* Overview History and Comments */
 a.view-plan-history, a.hide-plan-history,
-a.view-reviewer-comments, a.view-owner-comments, 
+a.view-reviewer-comments, a.view-owner-comments,
 a.hide-reviewer-comments, a.hide-owner-comments {
 	color: #86A641;
 	font-weight: bold;
@@ -281,7 +281,7 @@ a.hide-plan-history .icon-chevron-up, a.hide-reviewer-comments .icon-chevron-up,
 	position: absolute;
 	bottom: 10px;
 	right: 10px; }
-	
+
 	/* Misc. */
 .details[class*="span"] {
 	width: 328px; }
@@ -310,7 +310,6 @@ div.scrollable-content
   background:#fff;
   padding: 0 10px 0 10px;
 }
-
 
 div.scrollable-bottom-handle {
   height : 8px;
