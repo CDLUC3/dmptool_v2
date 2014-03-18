@@ -41,8 +41,9 @@
       <% if user_role_in?(:resource_editor, :dmp_admin, :institutional_admin) %>
         <% if current_page_includes?(edit_resource_context_path(@resource_context),
                                      new_resource_context_path,
-                                     customization_requirement_path(@resource_context),
-                                     customization_requirement_path(@resource_context, requirement_id: params[:requirement_id])) %>
+                                     customization_requirement_path(@resource_context)) ||
+            (params[:controller] == 'customizations' &&
+                current_page?(customization_requirement_path(@resource_context, requirement_id: params[:requirement_id]))) %>
           <%= render partial: 'layouts/dashboard_customizations_submenu' %>
         <% else %>
           <li <%= 'class=current' if current_page_includes?(resource_contexts_path, dmp_for_customization_path) %> >
