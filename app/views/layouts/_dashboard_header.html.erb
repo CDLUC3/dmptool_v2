@@ -42,7 +42,7 @@
         <% if current_page_includes?(edit_resource_context_path(@resource_context),
                                      new_resource_context_path,
                                      customization_requirement_path(@resource_context)) ||
-            (params[:controller] == 'customizations' &&
+            (params[:requirement_id] &&
                 current_page?(customization_requirement_path(@resource_context, requirement_id: params[:requirement_id]))) %>
           <%= render partial: 'layouts/dashboard_customizations_submenu' %>
         <% else %>

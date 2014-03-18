@@ -166,9 +166,9 @@ class AuthorizationsController < ApplicationController
 
   def check_correct_permissions(user_id, role_id)
     
-    user = User.find(user_id)  
-    safe_has_role?(Role::DMP_ADMIN) || 
-      ( current_user.has_role?(Role::INSTITUTIONAL_ADMIN) && 
+    user = User.find(user_id)
+    user_role_in?(:dmp_admin) ||
+      ( user_role_in?(:institutional_admin) &&
         current_user.institution.subtree_ids.include?(user.institution_id) 
       ) || 
       ( safe_has_role?(role_id) && 

@@ -13,7 +13,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
 
   def require_admin
-    unless safe_has_role?(Role::DMP_ADMIN)
+    unless user_role_in?(:dmp_admin)
       flash[:error] = "You must be an administrator to access this page."
       session[:return_to] = request.original_url
       redirect_to choose_institution_path and return

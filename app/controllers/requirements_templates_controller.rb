@@ -9,7 +9,7 @@ class RequirementsTemplatesController < ApplicationController
   # GET /requirements_templates
   # GET /requirements_templates.json
   def index
-    if !safe_has_role?(Role::DMP_ADMIN)
+    if !user_role_in?(:dmp_admin)
       #@requirements_templates = @requirements_templates.where.
                                 #any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public)
       @requirements_templates = RequirementsTemplate.where.
@@ -69,7 +69,7 @@ class RequirementsTemplatesController < ApplicationController
   end
 
   def template_information
-    if !safe_has_role?(Role::DMP_ADMIN)
+    if !user_role_in?(:dmp_admin)
       @requirements_templates = RequirementsTemplate.where(institution_id: [current_user.institution.subtree_ids]).institutional_visibility.active.page(params[:page]).per(5)
     else
       @requirements_templates = RequirementsTemplate.public_visibility.active.page(params[:page]).per(5)
@@ -126,7 +126,7 @@ class RequirementsTemplatesController < ApplicationController
   def copy_existing_template
     id = params[:requirements_template].to_i unless params[:requirements_template].blank?
 
-    if !safe_has_role?(Role::DMP_ADMIN)
+    if !user_role_in?(:dmp_admin)
       requirements_template = RequirementsTemplate.where(id: id, institution_id: [current_user.institution.subtree_ids]).first
     else
       requirements_template = RequirementsTemplate.where(id: id).first
@@ -173,14 +173,14 @@ class RequirementsTemplatesController < ApplicationController
           @users = User.where(id: @user_ids).page(params[:page]).per(3)
       end
 
-      if !safe_has_role?(Role::DMP_ADMIN)
+      if !user_role_in?(:dmp_admin)
          @users = @users.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).page(params[:page])
       end
 
     end
 
   def count
-    if current_user.has_role?(Role::DMP_ADMIN)
+    if user_role_in?(:dmp_admin)
       @all = RequirementsTemplate.count
       @active = RequirementsTemplate.active.count
       @inactive = RequirementsTemplate.inactive.count
