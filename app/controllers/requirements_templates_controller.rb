@@ -18,6 +18,7 @@ class RequirementsTemplatesController < ApplicationController
       @requirements_templates = RequirementsTemplate.all
     end
 
+    @requirements_templates = @requirements_templates.order(name: :asc)
     case params[:scope]
       when "all"
         @requirements_templates = @requirements_templates.page(params[:page]).per(100)
@@ -32,9 +33,9 @@ class RequirementsTemplatesController < ApplicationController
       when "institutional"
         @requirements_templates = @requirements_templates.institutional_visibility.page(params[:page]).per(5)
       else
-        @requirements_templates = @requirements_templates.order(created_at: :asc).page(params[:page]).per(5)
+        @requirements_templates = @requirements_templates.page(params[:page]).per(5)
     end
-
+    
     template_editors
     count
   end
