@@ -40,6 +40,7 @@
     @requirement_id = params[:requirement_id]
     @tab = params[:tab]
     @tab_number = params[:tab_number]
+    @custom_origin = params[:custom_origin]
 
     @resource_templates_id = ResourceContext.where(resource_id: @resource.id).pluck(:requirements_template_id)
 
@@ -74,6 +75,7 @@
     @tab = params[:tab]
     
     @tab_number = params[:tab_number]
+    @custom_origin = params[:custom_origin]
     @resource = Resource.find(params[:id])
     @customization_id = params[:customization_id]
     @resource_level = params[:resource_level]
@@ -152,21 +154,36 @@
     @resource = Resource.find(@resource_id)
     @customization_ids = ResourceContext.where(resource_id: @resource_id).pluck(:id)
     @customization_id = params[:customization_overview_id]
+    @custom_origin = params[:custom_origin]
+    @tab_number = params[:tab_number]
+    @requirement_id = params[:requirement_id]
 
     if @resource.destroy
       if @customization_ids
         ResourceContext.destroy(@customization_ids)
       end
       respond_to do |format|
-        if @customization_id #customization resource
+        #if @customization_id #customization resource
+        if @custom_origin == "Overview" #customization resource
           format.html { 
             redirect_to edit_resource_context_path(params[:customization_overview_id]), 
               notice: 'Resource was successfully eliminated.' 
           }
-          
-        else #institutional resource
+        elsif @custom_origin == "Details"
+          format.html { 
+            redirect_to customization_requirement_path(id: @customization_id, 
+                      requirement_id:  @requirement_id), 
+                      anchor: '#'+@tab_number,
+                      notice: "A problem prevented this resource to be created. " 
+          }
+        elsif !@customization_id #institutional resource
           format.html { 
             redirect_to institutions_path(anchor: 'tab_tab2'), 
+              notice: 'Resource was successfully eliminated.' 
+          }
+        else 
+          format.html { 
+            redirect_to edit_resource_context_path(params[:customization_overview_id]), 
               notice: 'Resource was successfully eliminated.' 
           }
         end
