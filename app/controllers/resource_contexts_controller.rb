@@ -227,7 +227,8 @@ class ResourceContextsController < ApplicationController
     if current_user.has_role?(Role::DMP_ADMIN)
       #all records
     elsif current_user.has_role?(Role::RESOURCE_EDITOR) || current_user.has_role?(Role::INSTITUTIONAL_ADMIN)
-      req_temp = req_temp.where(institution_id: current_user.institution.subtree_ids)
+      req_temp = req_temp.where("institution_id in (?) OR visibility = 'public'", current_user.institution.subtree_ids).
+          where('(start_date IS NULL OR start_date < ?) AND (end_date IS NULL or end_date > ?)', Time.new, Time.new)
     else
       @rt_tree = {}
       return
