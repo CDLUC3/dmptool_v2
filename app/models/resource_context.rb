@@ -10,6 +10,8 @@ class ResourceContext < ActiveRecord::Base
   validates :contact_email, format: { with: /.+\@.+\..+/,
                                       message: "%{value} address must be valid" }, if: "resource_id.blank? && !institution_id.blank?"
   validates :review_type, presence: true, if: "resource_id.blank? && !institution_id.blank?"
+  validates :institution_id, uniqueness: { scope: [:institution_id, :requirements_template_id, :requirement_id, :resource_id],
+            message: "You are attempting to insert a duplicate of a customization that already exists." }
 
   
    def self.search_terms(terms)

@@ -13,6 +13,7 @@ class ResourceContextsController < ApplicationController
   # GET /resource_templates/new
   def new
     redirect_to :back and return if params[:requirements_template_id].blank?
+    #institution_id, requirements_template_id, resource_id is NULL
     if user_role_in?(:dmp_admin) && params[:institution_id].blank?
       redirect_to({:action => :choose_institution, :requirements_template_id => params[:requirements_template_id]}) and return
     end
@@ -48,8 +49,8 @@ class ResourceContextsController < ApplicationController
 
     existing = ResourceContext.where(institution_id:        @resource_context.institution_id).
                         where(requirements_template_id:     @resource_context.requirements_template_id).
-                        where(requirement_id:               nil).
-                        where(resource_id:                  nil)
+                        where('requirement_id IS NULL').
+                        where('resource_id IS NULL')
     if existing.length > 0
       redirect_to(edit_resource_context_path(existing.first.id) ) and return
     end
