@@ -191,7 +191,7 @@
 
     @current_institution_id = nil
 
-    if safe_has_role?(Role::DMP_ADMIN)
+    if user_role_in?(:dmp_admin)
       @current_institution_id = @customization_overview.institution_id
     else 
       @current_institution_id = current_user.institution.id
@@ -209,7 +209,7 @@
     @customization_overview_id = params[:customization_overview_id]
     @customization_overview = ResourceContext.find(@customization_overview_id)
 
-    if safe_has_role?(Role::DMP_ADMIN)
+    if user_role_in?(:dmp_admin)
       @current_institution_id = @customization_overview.institution_id
     else 
       @current_institution_id = current_user.institution.id
@@ -276,7 +276,7 @@
     @customization_overview_id = params[:customization_overview_id]
     @customization_overview = ResourceContext.find(@customization_overview_id)  
 
-    if safe_has_role?(Role::DMP_ADMIN)
+    if user_role_in?(:dmp_admin)
       @current_institution_id = @customization_overview.institution_id
     else 
       @current_institution_id = current_user.institution.id

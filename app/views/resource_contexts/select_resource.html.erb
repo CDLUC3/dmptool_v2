@@ -1,5 +1,5 @@
 <h1 class="row-fluid"><span class="icon resource-template"></span>Existing Resources</h1>
-<% unless safe_has_role?(Role::DMP_ADMIN) %>
+<% unless user_role_in?(:dmp_admin) %>
 	<h2>For <%= current_user.institution.full_name %></h2>
 <% else %>
 	<br/>

@@ -28,7 +28,7 @@
 				<%= render partial: 'date_fields' , locals: { f: f } unless @requirements_template.new_record? %>
 
 
-				<% if safe_has_role?(Role::DMP_ADMIN) %>
+				<% if user_role_in?(:dmp_admin) %>
 					<div class="control-group" >
 						<%= f.label :institution, :class => "control-label" %>
 						<div class="controls" >

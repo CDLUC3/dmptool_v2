@@ -196,7 +196,7 @@ class ResourceContextsController < ApplicationController
   def resource_customizations
     @resource_contexts = ResourceContext.template_level.no_resource_no_requirement.order_by_name.page(params[:page])
 
-    unless safe_has_role?(Role::DMP_ADMIN)
+    unless user_role_in?(:dmp_admin)
       @resource_contexts = @resource_contexts.
                             where(institution_id: [current_user.institution.subtree_ids]).
                             order('name ASC')
@@ -297,7 +297,7 @@ class ResourceContextsController < ApplicationController
         @origin_path =  "#{customization_requirement_path(@customization_overview_id)}"
     end
 
-    if safe_has_role?(Role::DMP_ADMIN) 
+    if user_role_in?(:dmp_admin)
 
       @resource_contexts = ResourceContext.joins(:resource).
                               where("resource_id IS NOT NULL").

@@ -93,7 +93,7 @@ class PlansController < ApplicationController
   end
 
   def template_information
-    if !safe_has_role?(Role::DMP_ADMIN)
+    if !user_role_in?(:dmp_admin)
       user_plans = UserPlan.where(user_id: current_user.id)
       plan_ids=user_plans.pluck(:plan_id)
       @plans = Plan.page(params[:page]).per(5)
@@ -134,7 +134,7 @@ class PlansController < ApplicationController
       user_plans = UserPlan.where(user_id: user_id).pluck(:id)
       @plans = Plan.where(id: user_plans)
     end
-    if safe_has_role?(Role::DMP_ADMIN)
+    if user_role_in?(:dmp_admin)
       @plans = Plan.all
     end
 

@@ -1,5 +1,5 @@
 <h2> <%= @template_name %>  
-	<% unless safe_has_role?(Role::DMP_ADMIN) %>
+	<% unless user_role_in?(:dmp_admin) %>
 		
 		for <%= @customization_institution_name %> 
 
