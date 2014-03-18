@@ -44,4 +44,11 @@ module ApplicationHelper
       return response.text_value.html_safe
     end
   end
+
+  def current_page_includes?(*args)
+    args.each do |a|
+      return true if current_page?(a)
+    end
+    return false
+  end
 end

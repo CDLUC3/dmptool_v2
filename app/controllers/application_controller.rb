@@ -1,11 +1,19 @@
 class ApplicationController < ActionController::Base
 
+  ROLES =
+      {	  :dmp_admin              => 1,
+          :resource_editor        => 2,
+          :template_editor        => 3,
+          :institutional_reviewer => 4,
+          :institutional_admin    => 5}
+
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   # enable_authorization
 
-  helper_method :current_user, :safe_has_role?, :require_login
+  helper_method :current_user, :safe_has_role?, :require_login, :user_role_in?
 
   protected
 
@@ -61,6 +69,17 @@ class ApplicationController < ActionController::Base
       else
         current_user.has_role_name?(role)
       end
+    end
+
+    # a shorter method to see if user has any of these roles and returns true if has any of the roles passed in.
+    # pass in any of these
+    # :dmp_admin, :resource_editor, :template_editor,  :institutional_reviewer, :institutional_admin
+    def user_role_in?(*roles)
+      return false if current_user.nil?
+      r = roles.map {|i| ROLES[i]}
+      matching_roles = current_user.roles.pluck(:id) & r
+      return true if matching_roles.length > 0
+      return false
     end
 
     def check_admin_access
