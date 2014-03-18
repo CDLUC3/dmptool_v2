@@ -108,7 +108,7 @@ class ApplicationController < ActionController::Base
     end
 
     def check_dmp_admin_access
-      unless user_has_role?(:dmp_admin)
+      unless user_role_in?(:dmp_admin)
         if current_user
           flash[:error] = "You don't have access to this content."
         else
