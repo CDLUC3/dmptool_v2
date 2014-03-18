@@ -1,5 +1,5 @@
 <li class='current-parent'>
-  <%= link_to(content_tag(:span, 'Customizations'), requirements_templates_path) %>
+  <%= link_to(content_tag(:span, 'Customizations'), resource_contexts_path) %>
   <ul class="children dmp-templates">
     <!-- The following adds "current" class when on Customization Overview page -->
     <% if current_page_includes?(edit_resource_context_path(@resource_context), new_resource_context_path) %>
