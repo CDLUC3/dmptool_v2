@@ -38,6 +38,8 @@
     @customization_id = params[:customization_id]
     @template_id = params[:template_id]
     @requirement_id = params[:requirement_id]
+    @tab = params[:tab]
+    @tab_number = params[:tab_number]
 
     @resource_templates_id = ResourceContext.where(resource_id: @resource.id).pluck(:requirements_template_id)
 
@@ -69,6 +71,9 @@
 
   def update_customization_resource
     
+    @tab = params[:tab]
+    
+    @tab_number = params[:tab_number]
     @resource = Resource.find(params[:id])
     @customization_id = params[:customization_id]
     @resource_level = params[:resource_level]
@@ -81,11 +86,13 @@
           
           format.html { redirect_to customization_requirement_path(id: @customization_id, 
                         requirement_id:  @requirement_id),
+                        anchor: '#'+@tab_number,
                         notice: 'Resource was successfully updated.' }
         else
           format.html { redirect_to customization_requirement_path(id: @customization_id, 
-                        requirement_id:  @requirement_id), 
-                        notice: "A problem prevented this resource to be created. " }
+                        requirement_id:  @requirement_id),
+                        anchor: '#'+@tab_number, 
+                        notice: "A problem prevented this resource to be updated. " }
           format.json { render json: @resource.errors, status: :unprocessable_entity }
         end
       end
@@ -98,7 +105,7 @@
                         notice: 'Resource was successfully updated.' }
         else
           format.html { redirect_to edit_resource_context_path(@customization_id), 
-                          notice: "A problem prevented this resource to be created. " }
+                          notice: "A problem prevented this resource to be updated. " }
           format.json { render json: @resource.errors, status: :unprocessable_entity }
         end
       end
@@ -132,7 +139,7 @@
         format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: 'Resource was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: "A problem prevented this resource to be created. " }
+        format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: "A problem prevented this resource to be updated. " }
         format.json { render json: @resource.errors, status: :unprocessable_entity }
       end
     end
@@ -172,6 +179,7 @@
 
   def new_customization_resource
 
+    @tab_number = params[:tab_number]
     @requirement_id = params[:requirement_id]
     @resource_level = params[:resource_level]
     @template_id = params[:template_id]
@@ -194,6 +202,7 @@
 
   def create_customization_resource
     
+    @tab_number = params[:tab_number]
     @requirement_id = params[:requirement_id]
     @resource_level = params[:resource_level]
     @template_id = params[:template_id]
@@ -208,7 +217,7 @@
 
     case params[:resource_level]
       
-      when "requirement"
+      when "requirement" #origin == Details
     
         @resource = Resource.new(resource_params)
 
@@ -223,6 +232,7 @@
               format.html { 
                 redirect_to customization_requirement_path(id: @customization_overview_id, 
                       requirement_id:  @requirement_id), 
+                      anchor: '#'+@tab_number,
                       notice: "Resource was successfully created." }
             end
              
@@ -230,6 +240,7 @@
             format.html { 
               redirect_to customization_requirement_path(id: @customization_overview_id, 
                       requirement_id:  @requirement_id), 
+                      anchor: '#'+@tab_number,
                       notice: "A problem prevented this resource to be created. " }
           end
         end
@@ -264,6 +275,8 @@
     @resource = Resource.find(@resource_id)
     @customization_overview_id = params[:customization_overview_id]
     @customization_overview = ResourceContext.find(@customization_overview_id)  
+
+    debugger
 
     if safe_has_role?(Role::DMP_ADMIN)
       @current_institution_id = @customization_overview.institution_id
@@ -306,10 +319,10 @@
  
       if template_customization_present?(@resource_id, @template_id, @current_institution_id)
         
-              respond_to do |format|
-                      format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
-                                notice: "The resource you selected is already in your context. " }
-              end
+        respond_to do |format|
+                format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
+                          notice: "The resource you selected is already in your context. " }
+        end
               
       else
      

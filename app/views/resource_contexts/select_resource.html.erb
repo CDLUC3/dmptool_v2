@@ -20,6 +20,7 @@
 											customization_overview_id: @customization_overview_id,
 											template_id: @template_id,
 											resource_level: @resource_level,
+											tab_number: 		@tab_number,
 											requirement_id: @requirement_id}%></th>		
 				
 				<th class="span4"><%= link_to "Details", 
@@ -28,6 +29,7 @@
 											customization_overview_id: @customization_overview_id,
 											template_id: @template_id,
 											resource_level: @resource_level,
+											tab_number: 		@tab_number,
 											requirement_id: @requirement_id}%></th>	
 				<th><%= link_to "Type", 
 							{scope: "Type", 
@@ -35,6 +37,7 @@
 							customization_overview_id: @customization_overview_id,
 							template_id: @template_id,
 							resource_level: @resource_level,
+							tab_number: 		@tab_number,
 							requirement_id: @requirement_id} %></th>	
 
 				<th><%= link_to "Institution", 
@@ -43,6 +46,7 @@
 							customization_overview_id: @customization_overview_id,
 							template_id: @template_id,
 							resource_level: @resource_level,
+							tab_number: 		@tab_number,
 							requirement_id: @requirement_id} %></th>	
 
 				<th><%= link_to "Creation Date", 
@@ -51,6 +55,7 @@
 							customization_overview_id: @customization_overview_id,
 							template_id: @template_id,
 							resource_level: @resource_level,
+							tab_number: 		@tab_number,
 							requirement_id: @requirement_id} %></th>	
 
 				<th><%= link_to "Last Modification Date", 
@@ -59,6 +64,7 @@
 							customization_overview_id: @customization_overview_id,
 							template_id: @template_id,
 							resource_level: @resource_level,
+							tab_number: 		@tab_number,
 							requirement_id: @requirement_id} %></th>
 								
 				<th>Level</th>
@@ -82,12 +88,14 @@
 					<td><%= resource_context.resource.updated_at.nil? ? " " :  resource_context.resource.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 					<td><%= resource_context.resource_level %></td>
 					<td class="span1"><%= link_to raw(''), 
-						edit_customization_resource_path(id: resource_context.resource_id, 
+									edit_customization_resource_path(id: resource_context.resource_id, 
 														customization_id: @customization_overview_id, 
 														template_id: @template_id,
 														resource_level: @resource_level,
-														requirement_id: @requirement_id),
-						 :class => 'icon edit-user' %>
+														requirement_id: @requirement_id,
+														tab_number: 		@tab_number,
+														custom_origin: @custom_origin),
+						 			:class => 'icon edit-user' %>
 					</td>
 				</tr>
 			<% end %>
@@ -110,19 +118,25 @@
 	<%= hidden_field_tag :tab, @tab %>
 
 
-	<div class="buttons">
-		<%= submit_tag 'Submit',  :class => "btn btn-green" %>	
+	<div class="actions pull-right">
+		
+		<%= link_to 'Add another Resource', 
+							new_customization_resource_path(template_id: @template_id, 
+							customization_overview_id: @customization_overview_id,
+							resource_level: @resource_level,
+							requirement_id: @requirement_id,
+							tab_number: 		@tab_number,
+							custom_origin: @custom_origin), 
+							:method => :post, 
+							:class => "btn btn-green" %>	
+
+		<%= submit_tag 'Submit',  :class => "btn btn-green" %>
 	</div>
 
 
 <%end%>
-
-	<%= button_to 'Add another Resource', 
-						new_customization_resource_path(template_id: @template_id, 
-						customization_overview_id: @customization_overview_id,
-						resource_level: @resource_level,
-						requirement_id: @requirement_id), 
-						:method => :post, 
-						:class => "btn btn-green" %>
+	<div class="actions pull-left">
+		<%= link_to '<< Back to ' + "#{@custom_origin}", "#{@origin_path}"+'#'+"#{@tab_number}",  :class => "btn" %>
+	</div>
 </div>
 
