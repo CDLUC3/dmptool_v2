@@ -139,11 +139,15 @@ Dmptool2::Application.routes.draw do
   post 'select_resource', to: 'resource_contexts#select_resource'
   get 'select_resource', to: 'resource_contexts#select_resource'
 
+  delete 'delete_resource_context', to: 'resource_contexts#destroy'
+
   post 'create_customization_resource_from_select_resource', to: 'resources#create_customization_resource_from_select_resource'
 
   post 'copy_selected_customization_resource', to: 'resources#copy_selected_customization_resource'
 
   post 'unlink_resource', to: 'resource_contexts#unlink_resource'
+  post 'unlink_institutional_resource', to: 'resource_contexts#unlink_institutional_resource'
+  
 
 
   # The priority is based upon order of creation: first created -> highest priority.

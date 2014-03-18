@@ -9,7 +9,7 @@
   		<%= f.text_area :value, placeholder: 'Comment', :class => "input-block-level", rows: "8"%>
   </div>
   <div class="control-group">
-    <% if safe_has_role?(Role::INSTITUTIONAL_REVIEWER) %>
+    <% if user_role_in?(:institutional_reviewer) %>
       <%= f.hidden_field :visibility, value: :reviewer %>
     <% else %>
       <%= f.hidden_field :visibility, value: :owner %>

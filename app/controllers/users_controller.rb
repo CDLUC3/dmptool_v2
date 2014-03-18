@@ -6,6 +6,7 @@ class UsersController < ApplicationController
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :check_dmp_admin_access, only: [:index, :edit_user_roles, :update_user_roles, :destroy]
+  before_action :require_logout, only: [:new]
 
   # GET /users
   # GET /users.json
@@ -14,8 +15,7 @@ class UsersController < ApplicationController
   def index
 
     @users = User.page(params[:page]).order(last_name: :asc).per(50)
-    
-    
+
     if !params[:q].blank?
       @users = @users.search_terms(params[:q])
     end
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
-    @institution_list = Institution.all
+    @institution_list = InstitutionsController.institution_select_list
   end
 
   # GET /users/1/edit
@@ -54,6 +54,7 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
+    @institution_list = InstitutionsController.institution_select_list
     @user = User.new(user_params)
     @user.ldap_create = true
     if [@user.valid?, valid_password(user_params[:password], user_params[:password_confirmation])].all?
@@ -190,9 +191,9 @@ class UsersController < ApplicationController
     role_number = params[:role_number].to_i
     if !params[:name_term].blank?
       like = params[:name_term].concat("%")
-      if current_user.has_role?(Role::DMP_ADMIN)
+      if user_role_in?(:dmp_admin)
         u = User
-      elsif current_user.has_role?(Role::INSTITUTIONAL_ADMIN) || current_user.has_role?(role_number)
+      elsif user_role_in?(:institutional_admin) || current_user.has_role?(role_number)
         u = current_user.institution.users_deep
       end
       @users = u.where("CONCAT(first_name, ' ', last_name) LIKE ? ", like).active

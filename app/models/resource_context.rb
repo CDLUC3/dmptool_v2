@@ -6,13 +6,12 @@ class ResourceContext < ActiveRecord::Base
 
 
   validates :name, presence: {message: "%{value} must be filled in"}, if: "resource_id.blank?"
-  validates :contact_info, presence: {message: "%{value} must be filled in"}, if: "resource_id.blank? && !institution_id.blank?"
-  validates :contact_email, format: { with: /.+\@.+\..+/,
-                                      message: "%{value} address must be valid" }, if: "resource_id.blank? && !institution_id.blank?"
   validates :review_type, presence: true, if: "resource_id.blank? && !institution_id.blank?"
+  validates :institution_id, uniqueness: { scope: [:institution_id, :requirements_template_id, :requirement_id, :resource_id],
+            message: "You are attempting to insert a duplicate of a customization that already exists." }
 
   
-   def self.search_terms(terms)
+  def self.search_terms(terms)
     items = terms.split
     conditions = " ( " + items.map{|item| "resources.label LIKE ?" }.join(' AND ') + " ) " 
     where(conditions, *items.map{|item| "%#{item}%" })
@@ -71,11 +70,11 @@ class ResourceContext < ActiveRecord::Base
   end
 
   def self.order_by_resource_created_at
-    joins(:resource).order('resources.created_at ASC')
+    joins(:resource).order('resources.created_at DESC')
   end
 
   def self.order_by_resource_updated_at
-    joins(:resource).order('resources.updated_at ASC')
+    joins(:resource).order('resources.updated_at DESC')
   end
 
   def self.no_resource_no_requirement

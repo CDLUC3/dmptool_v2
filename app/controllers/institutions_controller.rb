@@ -10,7 +10,7 @@ class InstitutionsController < ApplicationController
   # GET /institutions.json
   def index
 
-    if safe_has_role?(Role::DMP_ADMIN)
+    if user_role_in?(:dmp_admin)
       @institutions = Institution.all
     else
       @institutions = Institution.where(id: [current_user.institution.subtree_ids])
@@ -163,7 +163,14 @@ class InstitutionsController < ApplicationController
   end
 
   def self.institution_select_list
-    ancestry_options(Institution.unscoped.arrange(order: :full_name)){|i| "#{'-' * i.depth} #{i.full_name}" }
+    insts = ancestry_options(Institution.unscoped.arrange(order: :full_name)){|i| "#{'-' * i.depth} #{i.full_name}" }
+    non_partner = insts.map{|i| i[1]}.index(0) #find non-partner institution, ie none of the above, always index 0
+    if non_partner
+      item = insts.delete_at(non_partner)
+      item = ["None of the above", 0] # This institution is always renamed because we like it that way in the list
+      insts.push(item) #put it at the end of the list cause we like it that way
+    end
+    insts
   end
 
   def self.ancestry_options(items, &block)
@@ -188,7 +195,7 @@ class InstitutionsController < ApplicationController
 
   def institutional_admins
     @user_ids = Authorization.where(role_id: 5).pluck(:user_id) #All the institutional_admins
-    if safe_has_role?(Role::DMP_ADMIN)
+    if user_role_in?(:dmp_admin)
       @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
     else
       @users = User.where(id: @user_ids, institution_id: [current_user.institution.subtree_ids]).order('created_at DESC').page(params[:page]).per(10)
@@ -233,6 +240,12 @@ class InstitutionsController < ApplicationController
   def users_in_role_for_any_institutions(role_name)
     @user_ids = Authorization.pluck(:user_id)
     @users = User.joins({:authorizations => :role}).where("roles.name = ?", role_name)
+  end
+
+  def self.unique_plans
+    joins(:requirements_templates, :plans).
+    where(:requirements_templates => { :institution_id => self.subtree_ids }).
+    group(:plan_id)
   end
 
 end

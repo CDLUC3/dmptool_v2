@@ -1,11 +1,19 @@
 class ApplicationController < ActionController::Base
 
+  ROLES =
+      {	  :dmp_admin              => 1,
+          :resource_editor        => 2,
+          :template_editor        => 3,
+          :institutional_reviewer => 4,
+          :institutional_admin    => 5}
+
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   # enable_authorization
 
-  helper_method :current_user, :safe_has_role?, :require_login
+  helper_method :current_user, :safe_has_role?, :require_login, :user_role_in?
 
   protected
 
@@ -21,9 +29,17 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    #require that a user is logged out
+    def require_logout
+      if session && !session[:user_id].blank?
+        flash[:error] = "The page you're trying to access is only available to logged out users."
+        redirect_to dashboard_path and return
+      end
+    end
+
     #checks you're an editor for customizations in general
     def check_customization_editor
-      unless current_user.has_role?(Role::DMP_ADMIN) || current_user.has_role?(Role::RESOURCE_EDITOR)
+      unless user_role_in?(:dmp_admin, :resource_editor)
         redirect_to dashboard_path, :notice => 'You do not have permission to view this page.' and return
       end
     end
@@ -39,7 +55,7 @@ class ApplicationController < ActionController::Base
         redirect_to resource_contexts_path, :notice => "You've selected an incorrect customization" and return
       end
       # the user doesn't have permissions on this institution and isn't a DMP admin
-      if !current_user.institution.subtree_ids.include?(cust.institution_id) && !current_user.has_role?(Role::DMP_ADMIN)
+      if !current_user.institution.subtree_ids.include?(cust.institution_id) && !user_role_in?(:dmp_admin)
         redirect_to dashboard_path, :notice => 'You do not have permission to view this page.' and return
       end
     end
@@ -55,11 +71,22 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    # a shorter method to see if user has any of these roles and returns true if has any of the roles passed in.
+    # pass in any of these
+    # :dmp_admin, :resource_editor, :template_editor,  :institutional_reviewer, :institutional_admin
+    def user_role_in?(*roles)
+      if (roles - ROLES.keys).length > 0
+        raise "role not defined in application_controller#user_role_in?.  It's likely you've mistyped a role symbol."
+      end
+      return false if current_user.nil?
+      r = roles.map {|i| ROLES[i]}
+      matching_roles = current_user.roles.pluck(:id) & r
+      return true if matching_roles.length > 0
+      return false
+    end
+
     def check_admin_access
-      unless (safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::RESOURCE_EDITOR) ||
-            safe_has_role?(Role::TEMPLATE_EDITOR) ||
-            safe_has_role?(Role::INSTITUTIONAL_REVIEWER) ||
-            safe_has_role?(Role::INSTITUTIONAL_ADMIN))
+      unless user_role_in?(:dmp_admin, :resource_editor, :template_editor, :institutional_reviewer, :institutional_reviewer)
         if current_user
           flash[:error] = "You don't have access to this content."
         else
@@ -70,7 +97,7 @@ class ApplicationController < ActionController::Base
     end
 
     def check_institution_admin_access
-      unless (safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::INSTITUTIONAL_ADMIN) )
+      unless user_role_in?(:dmp_admin, :institutional_admin)
         if current_user
           flash[:error] = "You don't have access to this content."
         else
@@ -81,7 +108,7 @@ class ApplicationController < ActionController::Base
     end
 
     def check_dmp_admin_access
-      unless (safe_has_role?(Role::DMP_ADMIN) )
+      unless user_role_in?(:dmp_admin)
         if current_user
           flash[:error] = "You don't have access to this content."
         else
@@ -92,8 +119,7 @@ class ApplicationController < ActionController::Base
     end
 
     def check_DMPTemplate_editor_access
-      unless (safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::INSTITUTIONAL_ADMIN) ||
-               safe_has_role?(Role::TEMPLATE_EDITOR) )
+      unless user_role_in?(:dmp_admin, :institutional_admin, :template_editor)
         if current_user
           flash[:error] = "You don't have access to this content."
         else
@@ -104,8 +130,7 @@ class ApplicationController < ActionController::Base
     end
 
     def check_resource_editor_access
-      unless (safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::INSTITUTIONAL_ADMIN) ||
-               safe_has_role?(Role::RESOURCE_EDITOR) )
+      unless user_role_in?(:dmp_admin, :institutional_admin, :resource_editor)
         if current_user
           flash[:error] = "You don't have access to this content."
         else
@@ -121,12 +146,6 @@ class ApplicationController < ActionController::Base
 
     def make_institution_dropdown_list
       @inst_list = InstitutionsController.institution_select_list
-      non_partner = @inst_list.map{|i| i[1]}.index(0) #find non-partner institution, ie none of the above, always index 0
-      if non_partner
-        item = @inst_list.delete_at(non_partner)
-        item = ["None of the above", 0] # This institution is always renamed because we like it that way in the list
-        @inst_list.push(item) #put it at the end of the list cause we like it that way
-      end
     end
 
     def process_requirements_template(requirement_templates)

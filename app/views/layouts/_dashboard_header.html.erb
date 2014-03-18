@@ -1,111 +1,76 @@
-	<div class="dashboard row">
-	<div class="dashboard-header row-fluid">
-		<% unless current_user.institution.nil? %>
-			<div class="inst-logo span3">
-				<%= image_tag current_user.institution.logo, :alt => "#{current_user.institution.nickname}" %>
-			</div>
-			<div class="inst-title span5">
-				<%= current_user.institution.full_name %>
-			</div>
-			<div class="inst-info span4">
-				<%= link_to "http://#{current_user.institution.url}", :id => 'inst-domain' do %>
-					<span class="icon institution-domain"></span><%= current_user.institution.url %>
-				<% end %>
-				<%= mail_to current_user.institution.contact_email, :id => "inst-contact" do %>
-					<span class="icon institution-contact"></span>Contact <%= current_user.institution.contact_info %>
-				<% end %>
-			</div>
-		<% else %>
-			<div class="inst-logo span3">
-				<%= image_tag("", :width => '164', :height => '51', :alt => 'Institution Logo') %>
-			</div>
-			<div class="inst-title span5">
-				Institution Name
-			</div>
-			<div class="inst-info span4">
-				<%= link_to '#', :id => 'institution-domain' do %>
-					<span class="icon institution-domain"></span>www.domainname.edu
-				<% end %>
-				<%= link_to '#', :id => 'institution-contact' do %>
-					<span class="icon institution-contact"></span>Contact Institution Admin
-				<% end %>
-			</div>
-		<% end %>
-	</div>
-	<div class="dashboard-nav row-fluid" id="quick_dashboard">
-		<ul class="nav">
-			<li <%= "class=current" if current_page?(dashboard_path) %>><%= link_to(content_tag(:span, 'My Dashboard'),  dashboard_path) %></li>
-			<li <%= "class=current" if current_page?(plans_path) %>><%= link_to(content_tag(:span, 'My DMPs'), plans_path) %></li>
+<div class="dashboard row">
+  <%= render partial: 'layouts/dashboard_logo_row' %>
+  <div class="dashboard-nav row-fluid" id="quick_dashboard">
+    <ul class="nav">
 
-			<!-- The following adds "current-parent" class when on a DMPs  child page -->
-			<% if((current_page?(edit_plan_path(@plan)) || (current_page?(details_plan_path(@plan)) || current_page?(preview_plan_path(@plan)) || (current_page?(plan_template_information_path)) || current_page?(copy_existing_plans_template_path)) || current_page?(select_dmp_template_path))) %>
-				<li <%= 'class=current-parent' if (current_page?(edit_plan_path(@plan)) || current_page?(details_plan_path(@plan)) || current_page?(preview_plan_path(@plan))) %>> <%= link_to(content_tag(:span, 'Create New DMP'), plan_template_information_path) %>
-					<ul class="children dmp-templates">
-					<!-- The following adds "current" class when on DMP Overview page -->
-						<% if(current_page?(controller: 'plans', action: 'new')) || (current_page?(edit_plan_path(@plan))) %>
-						<li class="current"><%= link_to(content_tag(:span, 'DMP Overview'), '#') %></li>
-						<li><%= link_to(content_tag(:span, 'DMP Details'), details_plan_path(@plan)) %></li>
-						<li><%= link_to(content_tag(:span, 'DMP Preview'), preview_plan_path(@plan)) %></li>
-						<li class="last"></li>
-						<% end %>
-						<!-- The following adds "current" class when on DMP Details page -->
-						<% if (current_page?(details_plan_path(@plan))) %>
-						<li><%= link_to(content_tag(:span, 'DMP Overview'), edit_plan_path(@plan)) %></li>
-						<li class="current"><%= link_to(content_tag(:span, 'DMP Details'), '#') %></li>
-						<li><%= link_to(content_tag(:span, 'DMP Preview'), preview_plan_path(@plan)) %></li>
-						<li class="last"></li>
-						<% end %>
-						<% if (current_page?(preview_plan_path(@plan))) %>
-						<li><%= link_to(content_tag(:span, 'DMP Overview'), edit_plan_path(@plan)) %></li>
-						<li><%= link_to(content_tag(:span, 'DMP Details'), details_plan_path(@plan)) %></li>
-						<li class="current"><%= link_to(content_tag(:span, 'DMP Preview'), '#') %></li>
-						<li class="last"></li>
-						<% end %>
-					</ul>
-				</li>
-			<% else %>
-				<li <%= "class=current" if (current_page?(plan_template_information_path) || current_page?(copy_existing_plans_template_path) || current_page?(select_dmp_template_path)) %>><%= link_to(content_tag(:span, 'Create New DMP'),plan_template_information_path) %></li>
-			<% end %>
+      <!-- My Dashboard -->
+      <li <%= "class=current" if current_page?(dashboard_path) %>><%= link_to(content_tag(:span, 'My Dashboard'), dashboard_path) %></li>
 
+      <!-- My DMPs -->
+      <li <%= "class=current" if current_page?(plans_path) %>><%= link_to(content_tag(:span, 'My DMPs'), plans_path) %></li>
 
-			<% if (safe_has_role?(Role::INSTITUTIONAL_REVIEWER) ||  safe_has_role?(Role::DMP_ADMIN))%>
-				<li <%= "class=current" if current_page?(review_dmps_path) %>><%= link_to(content_tag(:span, 'Review DMPs'), review_dmps_path) %></li>
-			<% end %>
+      <!-- Create New DMP -->
+      <% if current_page_includes?(edit_plan_path(@plan), details_plan_path(@plan), preview_plan_path(@plan),
+                    plan_template_information_path, copy_existing_plans_template_path, select_dmp_template_path) %>
+        <%= render partial: 'layouts/dashboard_create_dmp_submenu' %>
+      <% else %>
+        <li <%= "class=current" if current_page_includes?(plan_template_information_path, copy_existing_plans_template_path, select_dmp_template_path) %>>
+          <%= link_to(content_tag(:span, 'Create New DMP'), plan_template_information_path) %>
+        </li>
+      <% end %>
 
+      <!-- Review DMPs -->
+      <% if user_role_in?(:institutional_reviewer, :dmp_admin) %>
+        <li <%= "class=current" if current_page?(review_dmps_path) %>><%= link_to(content_tag(:span, 'Review DMPs'), review_dmps_path) %></li>
+      <% end %>
 
-			<% if (safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::INSTITUTIONAL_ADMIN)|| safe_has_role?(Role::TEMPLATE_EDITOR))%>
-				<!-- The following adds "current-parent" class when on a DMP Templates child page -->
-				<% if(current_page?(controller: 'requirements_templates', action: 'new')) || (current_page?(edit_requirements_template_path(@requirements_template))) || (current_page?(requirements_template_requirements_path(@requirements_template))) %>
-					<li <%= 'class=current-parent' if (current_page?(controller: 'requirements_templates', action: 'new') || current_page?(edit_requirements_template_path(@requirements_template)) || current_page?(requirements_template_requirements_path(@requirements_template))) %>> <%= link_to(content_tag(:span, 'DMP Templates'), requirements_templates_path) %>
-						<ul class="children dmp-templates">
-							<!-- The following adds "current" class when on DMP Template Overview page -->
-							<% if(current_page?(controller: 'requirements_templates', action: 'new')) || (current_page?(edit_requirements_template_path(@requirements_template))) %>
-								<li class="current"><%= link_to(content_tag(:span, 'Template Overview'), '#') %></li>
-								<li><%= link_to(content_tag(:span, 'Template Details'), requirements_template_requirements_path(@requirements_template)) %></li>
-								<li class="last"></li>
-							<% end %>
-							<!-- The following adds "current" class when on DMP Template Details page -->
-							<% if (current_page?(requirements_template_requirements_path(@requirements_template))) %>
-								<li><%= link_to(content_tag(:span, 'Template Overview'), edit_requirements_template_path(@requirements_template)) %></li>
-								<li class="current"><%= link_to(content_tag(:span, 'Template Details'), '#') %></li>
-								<li class="last"></li>
-							<% end %>
-						</ul>
-					</li>
-				<% else %>
-					<li <%= 'class=current' if current_page?(requirements_templates_path) %>> <%= link_to(content_tag(:span, 'DMP Templates'), requirements_templates_path) %></li>
-				<% end %>
-			<% end %>
-			<% if (safe_has_role?(Role::RESOURCE_EDITOR) || safe_has_role?(Role::DMP_ADMIN) || safe_has_role?(Role::INSTITUTIONAL_ADMIN))%>
-				<li <%= 'class=current' if (current_page?(resource_contexts_path) || current_page?(dmp_for_customization_path)) %> > <%= link_to(content_tag(:span, 'Customizations'), resource_contexts_path) %></li>
-			<% end %>
-			<% if ( safe_has_role?(Role::INSTITUTIONAL_ADMIN)||  safe_has_role?(Role::DMP_ADMIN) )%>
-				<li <%= 'class=current' if (current_page?(institutions_path) || current_page?(new_institution_path)) %> > <%= link_to(content_tag(:span, 'Institution Profile'), institutions_path) %></li>
-			<% end %>
-			<li <%= 'class=current' if current_page?(edit_user_path(current_user)) %>> <%= link_to(content_tag(:span, 'My Profile'), edit_user_path(current_user)) %></li>
-			<% if safe_has_role?(Role::DMP_ADMIN) %>
-				<li <%= 'class=current' if current_page?(users_url) %>> <%= link_to(content_tag(:span, 'DMP Administration'), users_url) %></li>
-			<% end %>
-		</ul>
-	</div>
+      <!-- DMP Templates -->
+      <% if user_role_in?(:dmp_admin, :institutional_admin, :template_editor) %>
+        <% if current_page_includes?({controller: 'requirements_templates', action: 'new'},
+                                     edit_requirements_template_path(@requirements_template),
+                                     requirements_template_requirements_path(@requirements_template)) %>
+          <%= render partial: 'layouts/dashboard_requirements_template_submenu' %>
+        <% else %>
+          <li <%= 'class=current' if current_page?(requirements_templates_path) %>>
+            <%= link_to(content_tag(:span, 'DMP Templates'), requirements_templates_path) %>
+          </li>
+        <% end %>
+      <% end %>
+
+      <!-- Customizations -->
+      <% if user_role_in?(:resource_editor, :dmp_admin, :institutional_admin) %>
+        <% if current_page_includes?(edit_resource_context_path(@resource_context),
+                                     new_resource_context_path,
+                                     customization_requirement_path(@resource_context)) ||
+            (params[:requirement_id] &&
+                current_page?(customization_requirement_path(@resource_context, requirement_id: params[:requirement_id]))) %>
+          <%= render partial: 'layouts/dashboard_customizations_submenu' %>
+        <% else %>
+          <li <%= 'class=current' if current_page_includes?(resource_contexts_path, dmp_for_customization_path) %> >
+            <%= link_to(content_tag(:span, 'Customizations'), resource_contexts_path) %>
+          </li>
+        <% end %>
+      <% end %>
+
+      <!-- Institution Profile -->
+      <% if user_role_in?(:institutional_admin, :dmp_admin) %>
+        <li <%= 'class=current' if current_page_includes?(institutions_path, new_institution_path) %> >
+          <%= link_to(content_tag(:span, 'Institution Profile'), institutions_path) %>
+        </li>
+      <% end %>
+
+      <!-- My Profile -->
+      <li <%= 'class=current' if current_page?(edit_user_path(current_user)) %>>
+        <%= link_to(content_tag(:span, 'My Profile'), edit_user_path(current_user)) %>
+      </li>
+
+      <!-- DMP Administration -->
+      <% if user_role_in?(:dmp_admin) %>
+        <li <%= 'class=current' if current_page?(users_url) %>>
+          <%= link_to(content_tag(:span, 'DMP Administration'), users_url) %>
+        </li>
+      <% end %>
+
+    </ul>
+  </div>
 </div>

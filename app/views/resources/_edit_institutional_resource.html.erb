@@ -36,11 +36,25 @@
         </div>
       </div>
 
-      <div class="actions pull-right">
-        <%= f.submit 'Save Changes', :class => "btn" %>
-        <%= link_to 'Cancel', institutions_path(anchor: 'tab_tab2'), :class => "btn" %>
+      <div class="actions pull-left">
+        <%= link_to '<< Back', institutions_path(anchor: 'tab_tab2'), :class => "btn" %>
       </div>
+
+      <div class="actions pull-right">
+        <%= button_tag 'Undo Changes', type: :reset, :class => "btn" %>
+      
+        <%= f.submit 'Save Changes', :class => "btn" %>
+      
+        <%= link_to 'Delete Resource', 
+                delete_resource_path(resource_id: @resource.id),
+                                      :method => :delete, 
+                                      :data => { :confirm => 'Are you sure?' },                   
+                                      :class => "btn" %>
+
+      </div>
+      
     </fieldset>
+
   <% end %>
 
 

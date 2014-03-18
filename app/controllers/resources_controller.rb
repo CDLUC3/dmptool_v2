@@ -1,4 +1,4 @@
-class ResourcesController < ApplicationController
+ class ResourcesController < ApplicationController
 
   before_action :require_login, only: [:show]
   before_action :set_resource, only: [:show, :edit, :update]
@@ -38,6 +38,9 @@ class ResourcesController < ApplicationController
     @customization_id = params[:customization_id]
     @template_id = params[:template_id]
     @requirement_id = params[:requirement_id]
+    @tab = params[:tab]
+    @tab_number = params[:tab_number]
+    @custom_origin = params[:custom_origin]
 
     @resource_templates_id = ResourceContext.where(resource_id: @resource.id).pluck(:requirements_template_id)
 
@@ -69,6 +72,10 @@ class ResourcesController < ApplicationController
 
   def update_customization_resource
     
+    @tab = params[:tab]
+    
+    @tab_number = params[:tab_number]
+    @custom_origin = params[:custom_origin]
     @resource = Resource.find(params[:id])
     @customization_id = params[:customization_id]
     @resource_level = params[:resource_level]
@@ -81,11 +88,13 @@ class ResourcesController < ApplicationController
           
           format.html { redirect_to customization_requirement_path(id: @customization_id, 
                         requirement_id:  @requirement_id),
+                        anchor: '#'+@tab_number,
                         notice: 'Resource was successfully updated.' }
         else
           format.html { redirect_to customization_requirement_path(id: @customization_id, 
-                        requirement_id:  @requirement_id), 
-                        notice: "A problem prevented this resource to be created. " }
+                        requirement_id:  @requirement_id),
+                        anchor: '#'+@tab_number, 
+                        notice: "A problem prevented this resource to be updated. " }
           format.json { render json: @resource.errors, status: :unprocessable_entity }
         end
       end
@@ -98,7 +107,7 @@ class ResourcesController < ApplicationController
                         notice: 'Resource was successfully updated.' }
         else
           format.html { redirect_to edit_resource_context_path(@customization_id), 
-                          notice: "A problem prevented this resource to be created. " }
+                          notice: "A problem prevented this resource to be updated. " }
           format.json { render json: @resource.errors, status: :unprocessable_entity }
         end
       end
@@ -132,7 +141,7 @@ class ResourcesController < ApplicationController
         format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: 'Resource was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: "A problem prevented this resource to be created. " }
+        format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: "A problem prevented this resource to be updated. " }
         format.json { render json: @resource.errors, status: :unprocessable_entity }
       end
     end
@@ -145,18 +154,39 @@ class ResourcesController < ApplicationController
     @resource = Resource.find(@resource_id)
     @customization_ids = ResourceContext.where(resource_id: @resource_id).pluck(:id)
     @customization_id = params[:customization_overview_id]
+    @custom_origin = params[:custom_origin]
+    @tab_number = params[:tab_number]
+    @requirement_id = params[:requirement_id]
 
     if @resource.destroy
       if @customization_ids
         ResourceContext.destroy(@customization_ids)
       end
       respond_to do |format|
-        #format.html { redirect_to edit_resource_context_path(params[:customization_overview_id]), notice: 'Resource was successfully eliminated.' }
-        format.html { 
-          redirect_to edit_resource_context_path(params[:customization_overview_id]), 
-            notice: 'Resource was successfully eliminated.' }
-        
-        format.json { head :no_content }
+        #if @customization_id #customization resource
+        if @custom_origin == "Overview" #customization resource
+          format.html { 
+            redirect_to edit_resource_context_path(params[:customization_overview_id]), 
+              notice: 'Resource was successfully eliminated.' 
+          }
+        elsif @custom_origin == "Details"
+          format.html { 
+            redirect_to customization_requirement_path(id: @customization_id, 
+                      requirement_id:  @requirement_id), 
+                      anchor: '#'+@tab_number,
+                      notice: "A problem prevented this resource to be created. " 
+          }
+        elsif !@customization_id #institutional resource
+          format.html { 
+            redirect_to institutions_path(anchor: 'tab_tab2'), 
+              notice: 'Resource was successfully eliminated.' 
+          }
+        else 
+          format.html { 
+            redirect_to edit_resource_context_path(params[:customization_overview_id]), 
+              notice: 'Resource was successfully eliminated.' 
+          }
+        end
       end
     else
       format.html { redirect_to edit_resource_context_path(params[:customization_overview_id]), notice: "A problem prevented this resource to be eliminated. " }
@@ -166,6 +196,7 @@ class ResourcesController < ApplicationController
 
   def new_customization_resource
 
+    @tab_number = params[:tab_number]
     @requirement_id = params[:requirement_id]
     @resource_level = params[:resource_level]
     @template_id = params[:template_id]
@@ -177,7 +208,7 @@ class ResourcesController < ApplicationController
 
     @current_institution_id = nil
 
-    if safe_has_role?(Role::DMP_ADMIN)
+    if user_role_in?(:dmp_admin)
       @current_institution_id = @customization_overview.institution_id
     else 
       @current_institution_id = current_user.institution.id
@@ -188,13 +219,14 @@ class ResourcesController < ApplicationController
 
   def create_customization_resource
     
+    @tab_number = params[:tab_number]
     @requirement_id = params[:requirement_id]
     @resource_level = params[:resource_level]
     @template_id = params[:template_id]
     @customization_overview_id = params[:customization_overview_id]
     @customization_overview = ResourceContext.find(@customization_overview_id)
 
-    if safe_has_role?(Role::DMP_ADMIN)
+    if user_role_in?(:dmp_admin)
       @current_institution_id = @customization_overview.institution_id
     else 
       @current_institution_id = current_user.institution.id
@@ -202,7 +234,7 @@ class ResourcesController < ApplicationController
 
     case params[:resource_level]
       
-      when "requirement"
+      when "requirement" #origin == Details
     
         @resource = Resource.new(resource_params)
 
@@ -217,6 +249,7 @@ class ResourcesController < ApplicationController
               format.html { 
                 redirect_to customization_requirement_path(id: @customization_overview_id, 
                       requirement_id:  @requirement_id), 
+                      anchor: '#'+@tab_number,
                       notice: "Resource was successfully created." }
             end
              
@@ -224,6 +257,7 @@ class ResourcesController < ApplicationController
             format.html { 
               redirect_to customization_requirement_path(id: @customization_overview_id, 
                       requirement_id:  @requirement_id), 
+                      anchor: '#'+@tab_number,
                       notice: "A problem prevented this resource to be created. " }
           end
         end
@@ -259,7 +293,7 @@ class ResourcesController < ApplicationController
     @customization_overview_id = params[:customization_overview_id]
     @customization_overview = ResourceContext.find(@customization_overview_id)  
 
-    if safe_has_role?(Role::DMP_ADMIN)
+    if user_role_in?(:dmp_admin)
       @current_institution_id = @customization_overview.institution_id
     else 
       @current_institution_id = current_user.institution.id
@@ -293,32 +327,32 @@ class ResourcesController < ApplicationController
           end
         end    
  
-      end #if
+      end #if params[:resource_level] == "requirement" 
 
 
     else #template resource
  
       if template_customization_present?(@resource_id, @template_id, @current_institution_id)
         
-              respond_to do |format|
-                      format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
-                                notice: "The resource you selected is already in your context. " }
-              end
+        respond_to do |format|
+                format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
+                          notice: "The resource you selected is already in your context." }
+        end
               
       else
      
-              @resource_context = ResourceContext.new(resource_id: @resource_id, 
-                                                      institution_id: @current_institution_id, 
-                                                      requirements_template_id: @template_id) 
-              respond_to do |format| 
-                    if @resource_context.save
-                      format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
-                                    notice: "Resource was successfully added." }        
-                    else
-                      format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
-                                    notice: "A problem prevented this resource to be added. " }
-                    end
-              end    
+        @resource_context = ResourceContext.new(resource_id: @resource_id, 
+                                                institution_id: @current_institution_id, 
+                                                requirements_template_id: @template_id) 
+        respond_to do |format| 
+              if @resource_context.save
+                format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
+                              notice: "Resource was successfully added." }        
+              else
+                format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
+                              notice: "A problem prevented this resource to be added. " }
+              end
+        end    
       end 
 
     end
@@ -329,7 +363,8 @@ class ResourcesController < ApplicationController
   def template_customization_present?(resource_id, template_id, current_institution_id)
     ResourceContext.where(resource_id: resource_id, 
                           requirements_template_id: template_id, 
-                          institution_id: current_institution_id).
+                          institution_id: current_institution_id,
+                          requirement_id: nil).
                     pluck(:id).count > 0 
   end
 

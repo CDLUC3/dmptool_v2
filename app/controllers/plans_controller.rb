@@ -3,6 +3,7 @@ class PlansController < ApplicationController
   before_action :require_login, except: [:public, :show]
   #note show will need to be protected from logins in some cases, but only from non-public plan viewing
   before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details, :preview, :perform_review]
+  #before_action :select_requirements_template, only: [:select_dmp_template]
 
   # GET /plans
   # GET /plans.json
@@ -92,7 +93,7 @@ class PlansController < ApplicationController
   end
 
   def template_information
-    if !safe_has_role?(Role::DMP_ADMIN)
+    if !user_role_in?(:dmp_admin)
       user_plans = UserPlan.where(user_id: current_user.id)
       plan_ids=user_plans.pluck(:plan_id)
       @plans = Plan.page(params[:page]).per(5)
@@ -128,12 +129,12 @@ class PlansController < ApplicationController
   end
 
   def review_dmps
-    if safe_has_role?(Role::INSTITUTIONAL_REVIEWER)
+    if user_role_in?(:institutional_reviewer)
       user_id = current_user.id
       user_plans = UserPlan.where(user_id: user_id).pluck(:id)
       @plans = Plan.where(id: user_plans)
     end
-    if safe_has_role?(Role::DMP_ADMIN)
+    if user_role_in?(:dmp_admin)
       @plans = Plan.all
     end
 

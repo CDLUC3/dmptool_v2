@@ -24,3 +24,13 @@ div.help_box {
     height: 60px;
     overflow: auto;
 }
+
+div.comment_box{
+  border:0.5px solid #B6B6B7;
+  padding:1em;
+  margin-top:2em;
+}
+
+.spaced_below{
+  margin-top: 3em;
+}

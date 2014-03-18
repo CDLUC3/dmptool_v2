@@ -1,0 +1,21 @@
+<li <%= 'class=current-parent' if current_page_includes?({controller: 'requirements_templates', action: 'new'},
+                                                         edit_requirements_template_path(@requirements_template),
+                                                         requirements_template_requirements_path(@requirements_template)) %>>
+  <%= link_to(content_tag(:span, 'DMP Templates'), requirements_templates_path) %>
+  <ul class="children dmp-templates">
+    <!-- The following adds "current" class when on DMP Template Overview page -->
+    <% if current_page_includes?({controller: 'requirements_templates', action: 'new'},
+                                 edit_requirements_template_path(@requirements_template)) %>
+
+      <li class="current"><%= link_to(content_tag(:span, 'Template Overview'), '#') %></li>
+      <li><%= link_to(content_tag(:span, 'Template Details'), requirements_template_requirements_path(@requirements_template)) %></li>
+      <li class="last"></li>
+    <% end %>
+    <!-- The following adds "current" class when on DMP Template Details page -->
+    <% if current_page?(requirements_template_requirements_path(@requirements_template)) %>
+      <li><%= link_to(content_tag(:span, 'Template Overview'), edit_requirements_template_path(@requirements_template)) %></li>
+      <li class="current"><%= link_to(content_tag(:span, 'Template Details'), '#') %></li>
+      <li class="last"></li>
+    <% end %>
+  </ul>
+</li>

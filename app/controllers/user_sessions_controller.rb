@@ -46,19 +46,14 @@ class UserSessionsController < ApplicationController
   end
 
   def destroy
-    session[:user_id] = nil
+    reset_session
+    session[:user_id]
     redirect_to root_path, notice: "Signed out."
   end
 
   #allow choosing the institution before logging in.
   def institution
      @inst_list = InstitutionsController.institution_select_list
-     non_partner = @inst_list.map{|i| i[1]}.index(0) #find non-partner institution, ie none of the above, always index 0
-     if non_partner
-       item = @inst_list.delete_at(non_partner)
-       item = ["None of the above", 0] # This institution is always renamed because we like it that way in the list
-       @inst_list.push(item) #put it at the end of the list cause we like it that way
-     end
   end
   
   #email username from email address -- get the form, post the submission

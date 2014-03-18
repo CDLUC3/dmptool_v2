@@ -1,5 +1,5 @@
 class Api::V1::InstitutionsController < Api::V1::BaseController
-  before_action :require_admin
+  #before_action :require_admin
 	 
 	respond_to :json
 
@@ -28,7 +28,7 @@ class Api::V1::InstitutionsController < Api::V1::BaseController
 	end	
 
   def require_admin
-    unless safe_has_role?(Role::DMP_ADMIN)
+    unless user_role_in?(:dmp_admin)
       flash[:error] = "You must be an administrator to access this page."
       session[:return_to] = request.original_url
       redirect_to choose_institution_path and return

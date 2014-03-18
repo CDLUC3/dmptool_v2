@@ -1,5 +1,5 @@
 <h2> <%= @template_name %>  
-	<% unless safe_has_role?(Role::DMP_ADMIN) %>
+	<% unless user_role_in?(:dmp_admin) %>
 		
 		for <%= @customization_institution_name %> 
 
@@ -33,10 +33,11 @@
                             				template_id: @customization.requirements_template_id, 
                                             customization_id: @customization.id,
                                             institution_id: @customization.institution_id,
-                                            unlink_from_customization: true),  
+                                            unlink_from_customization: true,
+                                            custom_origin: "Overview"),  
                                   			method: :post %>  
             </td>
-			<td class="span1"><%= link_to raw(''), edit_customization_resource_path(id: resource_context.resource_id, customization_id: @customization.id), :class => 'icon edit-user' %></td>
+			<td class="span1"><%= link_to raw(''), edit_customization_resource_path(id: resource_context.resource_id, customization_id: @customization.id, custom_origin: "Overview"), :class => 'icon edit-user' %></td>
 			<td><%= resource_context.institution.nil? ? " " :  resource_context.institution.nickname %></td>
 			<td><%= resource_context.created_at.nil? ? " " :  resource_context.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 			<td><%= resource_context.updated_at.nil? ? " " :  resource_context.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
@@ -52,7 +53,8 @@
 <div class="buttons">
 	<%= button_to 'Add another Resource', 
 								select_resource_path(template_id: @template.id, 
-								customization_overview_id: @resource_context.id), 
+								customization_overview_id: @resource_context.id,
+								custom_origin: "Overview"), 
 								:method => :post, 
 								:class => "btn btn-green" %>
 </div>
