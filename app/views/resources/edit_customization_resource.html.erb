@@ -7,7 +7,8 @@
                   template_id: @template_id, 
                   resource_level: @resource_level,
                   tab_number: @tab_number,
-                  requirement_id: @requirement_id),  
+                  requirement_id: @requirement_id,
+                  custom_origin: @custom_origin),  
         html: { :class => 'form-horizontal' } do |f| %>
 
   <%= render partial: "shared/errors", locals: {model: @resource } %>
@@ -65,7 +66,10 @@
       
 
       <%= link_to 'Delete Resource', delete_resource_path(resource_id: @resource.id, 
-                                      customization_overview_id: @customization_id), 
+                                      customization_overview_id: @customization_id,
+                                      custom_origin: @custom_origin,
+                                      requirement_id: @requirement_id,
+                                      tab_number: @tab_number), 
                                       :method => :delete,
                                     data: { confirm: 'Are you sure? This resource will be deleted from all templates!' }, 
                                     :class => "btn" %>

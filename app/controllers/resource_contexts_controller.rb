@@ -137,6 +137,7 @@ class ResourceContextsController < ApplicationController
       @resource_context = ResourceContext.find(params[:customization_id])
       @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
                                               requirements_template_id: @template_id,
+                                              #requirement_id: nil,
                                               institution_id: @resource_context.institution_id)
     else
 
