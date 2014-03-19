@@ -86,13 +86,14 @@
         if @resource.update(resource_params)
           
           format.html { redirect_to customization_requirement_path(id: @customization_id, 
-                        requirement_id:  @requirement_id),
-                        anchor: '#'+@tab_number,
+                        requirement_id:  @requirement_id, 
+                        anchor: @tab_number),
+                        
                         notice: 'Resource was successfully updated.' }
         else
           format.html { redirect_to customization_requirement_path(id: @customization_id, 
-                        requirement_id:  @requirement_id),
-                        anchor: '#'+@tab_number, 
+                        requirement_id:  @requirement_id,
+                        anchor: @tab_number),
                         notice: "A problem prevented this resource to be updated. " }
           format.json { render json: @resource.errors, status: :unprocessable_entity }
         end
@@ -263,16 +264,16 @@
             if @resource_context.save
               format.html { 
                 redirect_to customization_requirement_path(id: @customization_overview_id, 
-                      requirement_id:  @requirement_id), 
-                      anchor: '#'+@tab_number,
+                      requirement_id:  @requirement_id,
+                      anchor: @tab_number), 
                       notice: "Resource was successfully created." }
             end
              
           else
             format.html { 
               redirect_to customization_requirement_path(id: @customization_overview_id, 
-                      requirement_id:  @requirement_id), 
-                      anchor: '#'+@tab_number,
+                      requirement_id:  @requirement_id,
+                      anchor: @tab_number), 
                       notice: "A problem prevented this resource to be created. " }
           end
         end
@@ -323,8 +324,9 @@
       if requirement_customization_present?(@resource_id, @template_id, @current_institution_id, @requirement_id)     
         respond_to do |format|
           format.html { 
-              redirect_to customization_requirement_path(id: @customization_overview_id, requirement_id:  @requirement_id), 
-              anchor: '#'+@tab_number, 
+              redirect_to customization_requirement_path(id: @customization_overview_id, 
+                requirement_id:  @requirement_id,
+                anchor: @tab_number), 
               notice: "The resource you selected is already in your context." }
         end
         return
@@ -336,12 +338,14 @@
                                                 requirement_id: @requirement_id) 
         respond_to do |format| 
           if @resource_context.save
-            format.html { redirect_to customization_requirement_path(id: @customization_overview_id, requirement_id:  @requirement_id),
-                anchor: '#'+@tab_number,  
+            format.html { redirect_to customization_requirement_path(id: @customization_overview_id, 
+              requirement_id:  @requirement_id,
+                      anchor: @tab_number), 
                 notice: "Resource was successfully added." }        
           else
-            format.html { redirect_to customization_requirement_path(id: @customization_overview_id, requirement_id:  @requirement_id), 
-                anchor: '#'+@tab_number, 
+            format.html { redirect_to customization_requirement_path(id: @customization_overview_id, 
+              requirement_id:  @requirement_id,
+                      anchor: @tab_number), 
                 notice: "A problem prevented this resource to be added. " }
           end
         end    
