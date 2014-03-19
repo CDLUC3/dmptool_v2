@@ -10,6 +10,35 @@ class ResourceContext < ActiveRecord::Base
   validates :institution_id, uniqueness: { scope: [:institution_id, :requirements_template_id, :requirement_id, :resource_id],
             message: "You are attempting to insert a duplicate of a customization that already exists." }
 
+  #these are the context levels, their names, descriptions and which items they must have set of
+  # institution_id, requirements_template_id, requirement_id, resource_id
+  CONTEXT_LEVELS = {
+      1 => {name: 'Global',
+            inst: false,    req_temp: false,    req: false,     res: true},
+            # Stephen's #1 shown for every requirement for all templates, no matter what viewing institution
+      2 => {name: 'Template',
+            inst: false,    req_temp: true,     req: false,     res: true},
+            # Stephen's #2, set for all views of that template, no matter what viewing institution
+      3 => {name: 'Requirement',
+            inst: false,    req_temp: true,     req: true,      res: true},
+            # Stephen's #3, set for all views of that requirement, no matter what viewing institution
+      4 => {name: 'Institution',
+            inst: true,     req_temp: false,    req: false,     res: true},
+            # Stephen's #4, set for all of a viewing institution, every requirement and template
+      5 => {name: 'Template - Institution',
+            inst: true,     req_temp: true,     req: false,     res: true},
+            # Stephen's #5, set for views of an entire template (all requirements) only by a viewing institution
+      6 => {name: 'Container - Institution',
+            inst: true,     req_temp: true,     req: false,     res: false},
+            # Stephen's #6, a container for customizing for a template for a viewing institution
+      7 => {name: 'Requirement - Institution',
+            inst: true,     req_temp: true,     req: true,      res: true},
+            # Stephen's #7, set for views of a requirement by a viewing institution
+      8 => {name: 'Container - Template',
+            inst: false,    req_temp: true,     req: false,     res: false}
+            # Marisa's  #8, a container for customizing for a template for all viewing institutions
+  }
+
   
   def self.search_terms(terms)
     items = terms.split
@@ -113,38 +142,18 @@ class ResourceContext < ActiveRecord::Base
     where("resource_id IS NOT NULL") 
   end
 
-  
+
+  #see context level variables at top for information
   def resource_level
-    if requirements_template_id == nil && self.requirement_id == nil && self.resource_id != nil && self.institution_id != nil
-      return "Institution" # Stephen's #4, set for all of a viewing institution, every requirement and template
-    end
-    if requirements_template_id != nil && self.requirement_id == nil && self.resource_id != nil && self.institution_id == nil
-      return "Template" # Stephen's #2, set for all views of that template, no matter what viewing institution
-    end
-    
-    if self.requirement_id != nil && self.resource_id != nil && self.institution_id == nil
-      return "Requirement" # Stephen's #3, set for all views of that requirement, no matter what viewing institution
-    end
-    if self.requirements_template_id != nil && self.requirement_id == nil && self.resource_id != nil && self.institution_id != nil
-      return "Template - Institution" # Stephen's #5, set for views of an entire template (all requirements) only by a viewing institution
-    end
-    if self.requirement_id != nil && self.resource_id != nil && self.institution_id != nil
-      return "Requirement - Institution" # Stephen's #7, set for views of a requirement by a viewing institution
-    end
-    if self.requirements_template == nil && self.requirement_id == nil && self.resource_id != nil && self.institution_id == nil
-      return "Global" # Stephen's #1 shown for every requirement for all templates, no matter what viewing institution
-    end
-    if self.resource_id.nil? && self.institution_id != nil && self.requirements_template_id != nil && self.requirement_id.nil?
-      return "Container - Institution" # Stephen's case #6, a container for customizing for a template for a viewing institution
-    end
-    if self.resource_id.nil? && self.institution_id.nil? && self.requirements_template_id != nil && self.requirement_id.nil?
-      return "Container - Template" # Marisa's case #8, a container for customizing for a template for all viewing institutions
+    CONTEXT_LEVELS.each do |k,v|
+      if  v[:inst] != institution_id.nil? &&
+          v[:req_temp] != requirements_template_id.nil? &&
+          v[:req] != requirement_id.nil? &&
+          v[:res] != resource_id.nil?
+        return v[:name]
+      end
     end
     return " "
   end
-
-
- 
-
 end
 
