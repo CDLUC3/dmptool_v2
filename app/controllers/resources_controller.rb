@@ -88,7 +88,6 @@
           format.html { redirect_to customization_requirement_path(id: @customization_id, 
                         requirement_id:  @requirement_id, 
                         anchor: @tab_number),
-                        
                         notice: 'Resource was successfully updated.' }
         else
           format.html { redirect_to customization_requirement_path(id: @customization_id, 
@@ -314,7 +313,7 @@
     @customization_overview_id = params[:customization_overview_id]
     @customization_overview = ResourceContext.find(@customization_overview_id) 
 
-     
+
 
     if user_role_in?(:dmp_admin)
       @current_institution_id = @customization_overview.institution_id
@@ -322,7 +321,6 @@
       @current_institution_id = current_user.institution.id
     end
          
-    #if params[:resource_level] == "requirement" #details 
     if @custom_origin == "Details" 
 
       if requirement_customization_present?(@resource_id, @template_id, @current_institution_id, @requirement_id)     
@@ -334,7 +332,8 @@
               notice: "The resource you selected is already in your context." }
         end
         return
-      else
+      
+      else 
      
         @resource_context = ResourceContext.new(resource_id: @resource_id, 
                                                 institution_id: @current_institution_id, 

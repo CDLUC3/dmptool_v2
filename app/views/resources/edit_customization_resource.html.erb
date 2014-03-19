@@ -71,7 +71,8 @@
                                       customization_overview_id: @customization_id,
                                       custom_origin: @custom_origin,
                                       requirement_id: @requirement_id,
-                                      tab_number: @tab_number), 
+                                      tab_number: @tab_number,
+                                      tab: @tab), 
                                       :method => :delete,
                                     data: { confirm: 'Are you sure? This resource will be deleted from all templates!' }, 
                                     :class => "btn" %>
