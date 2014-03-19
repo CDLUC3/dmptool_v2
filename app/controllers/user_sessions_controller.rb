@@ -84,9 +84,9 @@ class UserSessionsController < ApplicationController
       email = params[:email]
       if email.present?
         if email.match(/^.+\@.+\..+$/)
-          users =  User.where(email: email).includes(:authentications).where(active: true).where(authentications: {:provider => 'ldap'})
+          users =  User.where(email: email).where(active: true)
         else
-          users =  User.includes(:authentications).where(active: true).where(authentications: {:provider => 'ldap', :uid => email})
+          users =  User.where(active: true).where(login_id: email)
         end
         if users.length > 0
           user = users.first
