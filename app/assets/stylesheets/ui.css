@@ -111,6 +111,9 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	position: absolute;
 	top: 0;
 	right: 0; }
+.requirements-tree-view .current {
+    font-weight: bold;
+}
 .requirements-tree-view {
 	margin-top: 0; }
 .nested-requirements {
