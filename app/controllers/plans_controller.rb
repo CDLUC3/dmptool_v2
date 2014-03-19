@@ -147,9 +147,13 @@ class PlansController < ApplicationController
   end
 
   def select_dmp_template
-    req_temp = RequirementsTemplate.includes(:institution)
-    req_temp = req_temp.where("institution_id in (?) OR visibility = 'public'", current_user.institution.subtree_ids).
-                where('(start_date IS NULL OR start_date < ?) AND (end_date IS NULL or end_date > ?)', Time.new, Time.new)
+    #req_temp = RequirementsTemplate.includes(:institution)
+    #req_temp = req_temp.where("institution_id in (?) OR visibility = 'public'", current_user.institution.subtree_ids).
+    #            where('(start_date IS NULL OR start_date < ?) AND (end_date IS NULL or end_date > ?)', Time.new, Time.new)
+
+    req_temp = RequirementsTemplate.
+                  any_of(visibility: :public, institution_id: [current_user.institution.subtree_ids])
+                  
 
     if !params[:q].blank?
       req_temp = req_temp.name_search_terms(params[:q])
