@@ -54,10 +54,7 @@
     </div>
 
     <div class="actions pull-left">
-        <%= link_to '<< Back', :back,
-                #template_id: @template_id,
-                #customization_overview_id: @customization_id,
-                :class => "btn" %>
+        <%= link_to '<< Back', request.env["HTTP_REFERER"] + '#' + @tab_number, :class => "btn" %>
     </div>
 
     <div class="actions pull-right">
