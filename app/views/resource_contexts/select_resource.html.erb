@@ -18,54 +18,67 @@
 											{scope: "Resource_id",
 											 tab: @tab, 
 											customization_overview_id: @customization_overview_id,
-											template_id: @template_id,
+											template_id: 		@template_id,
 											resource_level: @resource_level,
 											tab_number: 		@tab_number,
-											requirement_id: @requirement_id}%></th>		
+											custom_origin: 	@custom_origin,
+											requirement_id: @requirement_id}%>
+				</th>		
 				
 				<th class="span4"><%= link_to "Details", 
 											{scope: "Details", 
-												 tab: @tab,
+											tab: 					@tab,
 											customization_overview_id: @customization_overview_id,
-											template_id: @template_id,
+											template_id: 		@template_id,
 											resource_level: @resource_level,
 											tab_number: 		@tab_number,
-											requirement_id: @requirement_id}%></th>	
+											custom_origin: 	@custom_origin,
+											requirement_id: @requirement_id}%>
+				</th>	
+				
 				<th><%= link_to "Type", 
 							{scope: "Type", 
-								 tab: @tab,
-							customization_overview_id: @customization_overview_id,
-							template_id: @template_id,
-							resource_level: @resource_level,
-							tab_number: 		@tab_number,
-							requirement_id: @requirement_id} %></th>	
+								tab: 												@tab,
+								customization_overview_id: 	@customization_overview_id,
+								template_id: 								@template_id,
+								resource_level: 						@resource_level,
+								tab_number: 								@tab_number,
+								custom_origin: 							@custom_origin,
+								requirement_id: 						@requirement_id} %>
+				</th>	
 
 				<th><%= link_to "Institution", 
 							{scope: "Institution", 
-								 tab: @tab,
-							customization_overview_id: @customization_overview_id,
-							template_id: @template_id,
-							resource_level: @resource_level,
-							tab_number: 		@tab_number,
-							requirement_id: @requirement_id} %></th>	
+							tab: 												@tab,
+							customization_overview_id: 	@customization_overview_id,
+							template_id: 								@template_id,
+							resource_level: 						@resource_level,
+							tab_number: 								@tab_number,
+							custom_origin: 							@custom_origin,
+							requirement_id: 						@requirement_id} %>
+				</th>	
 
 				<th><%= link_to "Creation Date", 
 							{scope: "Creation_Date", 
 							 tab: @tab,
 							customization_overview_id: @customization_overview_id,
-							template_id: @template_id,
+							template_id: 		@template_id,
 							resource_level: @resource_level,
 							tab_number: 		@tab_number,
-							requirement_id: @requirement_id} %></th>	
+							custom_origin: 	@custom_origin,
+							requirement_id: @requirement_id} %>
+				</th>	
 
 				<th><%= link_to "Last Modification Date", 
 							{scope: "Last_Modification_Date",
 							 tab: @tab, 
 							customization_overview_id: @customization_overview_id,
-							template_id: @template_id,
+							template_id: 		@template_id,
 							resource_level: @resource_level,
 							tab_number: 		@tab_number,
-							requirement_id: @requirement_id} %></th>
+							custom_origin: 	@custom_origin,
+							requirement_id: @requirement_id} %>
+				</th>
 								
 				<th>Level</th>
 				<th width="span1">Edit</th>
@@ -94,14 +107,12 @@
 														resource_level: @resource_level,
 														requirement_id: @requirement_id,
 														tab_number: 		@tab_number,
+														tab: 						@tab,
 														custom_origin: @custom_origin),
 						 			:class => 'icon edit-user' %>
 					</td>
 				</tr>
 			<% end %>
-
-			
-
 
 		<tbody>
 	</table>
@@ -126,7 +137,8 @@
 							resource_level: @resource_level,
 							requirement_id: @requirement_id,
 							tab_number: 		@tab_number,
-							custom_origin: @custom_origin), 
+							tab:  					@tab,
+							custom_origin: 	@custom_origin), 
 							:method => :post, 
 							:class => "btn btn-green" %>	
 
