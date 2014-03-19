@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
 
     #checks you're an editor for customizations in general
     def check_customization_editor
-      unless user_role_in?(:dmp_admin, :resource_editor)
+      unless user_role_in?(:dmp_admin, :resource_editor, :institutional_admin)
         redirect_to dashboard_path, :notice => 'You do not have permission to view this page.' and return
       end
     end
