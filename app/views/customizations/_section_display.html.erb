@@ -42,14 +42,14 @@
               # :class => 'icon edit-user', :title => 'Edit Customization' %>
 
             <%= link_to raw(''),
-                        edit_resource_path(  id:                 resource.id,
-                                             resource_level:     'requirement',
-                                             customization_id:   @customization.id,
-                                             template_id:        @requirements_template.id,
-                                             requirement_id:     params[:requirement_id],
-                                             tab:                tab_name,
-                                             tab_number:         "tab_tab#{tab_number}",
-                                             custom_origin:      'Details'),
+                        edit_customization_resource_path( id:                 resource.id,
+                                                          resource_level:     'requirement',
+                                                          customization_id:   @customization.id,
+                                                          template_id:        @requirements_template.id,
+                                                          requirement_id:     params[:requirement_id],
+                                                          tab:                tab_name,
+                                                          tab_number:         "tab_tab#{tab_number}",
+                                                          custom_origin:      'Details'),
                         :class => 'icon edit-user', :title => 'Edit Customization' %>
           <% end %>
         </div>
