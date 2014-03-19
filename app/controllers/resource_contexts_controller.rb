@@ -223,23 +223,30 @@ class ResourceContextsController < ApplicationController
   end
 
   def dmp_for_customization
-    req_temp = RequirementsTemplate.includes(:institution)
+    
     valid_buckets = nil
+    
     if user_role_in?(:dmp_admin)
-      #all records
+      req_temp = RequirementsTemplate.includes(:institution).where(active: true)
+    
     elsif user_role_in?(:resource_editor, :institutional_admin)
-      req_temp = req_temp.where("institution_id in (?) OR visibility = 'public'", current_user.institution.subtree_ids).
-          where('(start_date IS NULL OR start_date < ?) AND (end_date IS NULL or end_date > ?)', Time.new, Time.new)
+      req_temp = RequirementsTemplate.
+                        includes(:institution).
+                        where(active: true).
+                        any_of(visibility: :public, institution_id: [current_user.institution.subtree_ids])
     else
       @rt_tree = {}
       return
     end
+
     if !params[:q].blank?
       req_temp = req_temp.name_search_terms(params[:q])
     end
+
     if !params[:s].blank? && !params[:e].blank?
       req_temp = req_temp.letter_range(params[:s], params[:e])
     end
+    
     process_requirements_template(req_temp)
 
     @back_to = resource_contexts_path
