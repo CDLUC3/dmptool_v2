@@ -10,8 +10,7 @@ class RequirementsTemplatesController < ApplicationController
   # GET /requirements_templates.json
   def index
     if !user_role_in?(:dmp_admin)
-      #@requirements_templates = @requirements_templates.where.
-                                #any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public)
+      
       @requirements_templates = RequirementsTemplate.where.
                                 any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public)
     else
@@ -41,7 +40,6 @@ class RequirementsTemplatesController < ApplicationController
   end
 
   # GET /requirements_templates/1
-  # GET /requirements_templates/1.json
   def show
     render 'edit'
   end
@@ -81,7 +79,7 @@ class RequirementsTemplatesController < ApplicationController
                                 any_of(visibility: :public, institution_id: [current_user.institution.subtree_ids]).   
                                 page(params[:page]).per(5)
     end
-    
+
   end
 
   # GET /requirements_templates/1/edit
@@ -132,13 +130,17 @@ class RequirementsTemplatesController < ApplicationController
   end
 
   def copy_existing_template
+    
     id = params[:requirements_template].to_i unless params[:requirements_template].blank?
 
-    if !user_role_in?(:dmp_admin)
-      requirements_template = RequirementsTemplate.where(id: id, institution_id: [current_user.institution.subtree_ids]).first
-    else
+    if user_role_in?(:dmp_admin)
       requirements_template = RequirementsTemplate.where(id: id).first
+    else 
+      requirements_template = RequirementsTemplate.
+                                where(id: id, institution_id: [current_user.institution.subtree_ids]).
+                                first 
     end
+
     @requirements_template = requirements_template.dup include: [:sample_plans, :additional_informations, :requirements], validate: false
     respond_to do |format|
       if @requirements_template.save
