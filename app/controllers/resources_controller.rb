@@ -312,7 +312,9 @@
     @template_id = params[:template_id]
     @resource = Resource.find(@resource_id)
     @customization_overview_id = params[:customization_overview_id]
-    @customization_overview = ResourceContext.find(@customization_overview_id)  
+    @customization_overview = ResourceContext.find(@customization_overview_id) 
+
+     
 
     if user_role_in?(:dmp_admin)
       @current_institution_id = @customization_overview.institution_id
