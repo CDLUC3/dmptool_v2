@@ -32,7 +32,7 @@
                                   tab:                tab_name,
                                   tab_number:         "tab_tab#{tab_number}",
                                   custom_origin:      'Details',
-                                  origin_url:         request.original_url),
+                                  origin_url:         smart_origin_url),
                 :class => 'icon edit-user', :title => 'Edit Customization' %>
           <% else %>
 
@@ -45,7 +45,7 @@
                                                           tab:                tab_name,
                                                           tab_number:         "tab_tab#{tab_number}",
                                                           custom_origin:      'Details',
-                                                          origin_url:         request.original_url),
+                                                          origin_url:         smart_origin_url),
                         :class => 'icon edit-user', :title => 'Edit Customization' %>
           <% end %>
         </div>

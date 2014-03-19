@@ -90,14 +90,14 @@
 
 	<div class="actions pull-right">
 		
-		<%= link_to 'Add another Resource', 
+		<%= link_to 'Add another Rrrresource',
 							new_customization_resource_path(template_id: @template_id, 
 							customization_overview_id: @customization_overview_id,
 							resource_level: @resource_level,
 							requirement_id: @requirement_id,
-							tab_number: 		@tab_number,
-							tab:  					@tab,
-							custom_origin: 	@custom_origin), 
+							tab_number: 		params[:tab_number],
+							tab:  					params[:tab],
+							custom_origin: 	@custom_origin),
 							:method => :post, 
 							:class => "btn btn-green" %>	
 

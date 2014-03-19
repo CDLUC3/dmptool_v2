@@ -121,15 +121,16 @@
     @resource = Resource.new(resource_params)
     @current_institution = current_user.institution
     respond_to do |format|
-      if @resource.save 
+      @tab_number = (params[:tab_number].blank? ? 'tab_tab2' : params[:tab_number] )
+      if @resource.save
         @resource_id = @resource.id
         @resource_context = ResourceContext.new(resource_id: @resource_id, institution_id: @current_institution.id)
         if @resource_context.save
-          format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: "Resource was successfully created." }
+          format.html { redirect_to redirect_to params[:origin_url] + "#" + @tab_number, notice: "Resource was successfully created." }
         end
          
       else
-        format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: "A problem prevented this resource to be created. " }
+        format.html { redirect_to redirect_to params[:origin_url] + "#" + @tab_number, notice: "A problem prevented this resource to be created. " }
       end
     end
   end

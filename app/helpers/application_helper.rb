@@ -51,4 +51,13 @@ module ApplicationHelper
     end
     return false
   end
+
+  #returns the origin url, but only if it isn't set already in params
+  def smart_origin_url
+    if params[:origin_url].blank?
+      request.original_url
+    else
+      params[:origin_url]
+    end
+  end
 end
