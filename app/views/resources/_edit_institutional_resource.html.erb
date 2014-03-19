@@ -27,6 +27,9 @@
           <%= f.text_area :text, size: "20x10",placeholder: "Enter the text", :class => "input-xlarge" %>
         </div>
       </div>
+
+      <%= hidden_field_tag(:origin_url, params[:origin_url]) %>
+      <%= hidden_field_tag(:tab_number, params[:tab_number]) %>
       
 
       <div class="control-group">
@@ -37,8 +40,9 @@
       </div>
 
       <div class="actions pull-left">
-        <%= link_to '<< Back', institutions_path(anchor: 'tab_tab2'), :class => "btn" %>
+        <%= link_to '<< Back', :back, :class => "btn" %>
       </div>
+
 
       <div class="actions pull-right">
         <%= button_tag 'Undo Changes', type: :reset, :class => "btn" %>
