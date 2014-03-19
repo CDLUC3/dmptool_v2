@@ -70,17 +70,18 @@ class RequirementsTemplatesController < ApplicationController
   end
 
   def template_information
+
     if user_role_in?(:dmp_admin)
       @requirements_templates = RequirementsTemplate.
-                                  any_of(visibility: :public, institution_id: [current_user.institution.subtree_ids]).
-                                  active.
+                                  where(active: true).
                                   page(params[:page]).per(5)
     else
       @requirements_templates = RequirementsTemplate.
-                                any_of(visibility: :public, institution_id: [current_user.institution.subtree_ids]).
-                                active.
+                                where(active: true).
+                                any_of(visibility: :public, institution_id: [current_user.institution.subtree_ids]).   
                                 page(params[:page]).per(5)
     end
+    
   end
 
   # GET /requirements_templates/1/edit
