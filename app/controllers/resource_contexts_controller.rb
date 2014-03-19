@@ -350,7 +350,7 @@ class ResourceContextsController < ApplicationController
       when "Last_Modification_Date"
         @resource_contexts = @resource_contexts.order_by_resource_updated_at
       else
-       @resource_contexts = @resource_contexts
+       @resource_contexts = @resource_contexts.order_by_resource_label
     end
 
     @resource_contexts = @resource_contexts.page(params[:page]).per(20)
