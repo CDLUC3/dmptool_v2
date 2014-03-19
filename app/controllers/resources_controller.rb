@@ -38,8 +38,8 @@
     @customization_id = params[:customization_id]
     @template_id = params[:template_id]
     @requirement_id = params[:requirement_id]
-    @tab = params[:tab]
-    @tab_number = params[:tab_number]
+    @tab = params[:tab] 
+    @tab_number = params[:tab_number] || ''
     @custom_origin = params[:custom_origin]
 
     @resource_templates_id = ResourceContext.where(resource_id: @resource.id).pluck(:requirements_template_id)

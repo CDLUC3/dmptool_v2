@@ -40,7 +40,7 @@
       </div>
 
       <div class="actions pull-left">
-        <%= link_to '<< Back', :back, :class => "btn" %>
+        <%= link_to '<< Back', request.env["HTTP_REFERER"] + '#' + params[:tab_number], :class => "btn" %>
       </div>
 
 
