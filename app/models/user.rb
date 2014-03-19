@@ -99,14 +99,13 @@ class User < ActiveRecord::Base
     e
   end
 
-   def self.search_terms(terms)
-    #searches both institution name and template name
+  def self.search_terms(terms)
     items = terms.split
     conditions1 = items.map{|item| "CONCAT(first_name, ' ', last_name) LIKE ?" }
-    #conditions2 = items.map{|item| "last_name LIKE ?" }
-    conditions = "#{conditions1.join(' AND ')}" #+ ' OR ' + "(#{conditions2.join(' AND ')}) )"
+    conditions2 = items.map{|item| "email LIKE ?" }
+    conditions = "( (#{conditions1.join(' AND ')})" + ' OR ' + "(#{conditions2.join(' AND ')}) )"
     values = items.map{|item| "%#{item}%" }
-    self.where(conditions, *(values) )
+    self.where(conditions, *(values * 2) )
   end
 
   def full_name
