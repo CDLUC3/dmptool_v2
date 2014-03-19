@@ -35,9 +35,6 @@
                                   origin_url:         request.original_url),
                 :class => 'icon edit-user', :title => 'Edit Customization' %>
           <% else %>
-            <%# link_to raw(''),
-              # edit_customization_resource_path(id: resource.id, customization_id: @customization.id, custom_origin: 'Details'),
-              # :class => 'icon edit-user', :title => 'Edit Customization' %>
 
             <%= link_to raw(''),
                         edit_customization_resource_path( id:                 resource.id,
@@ -47,7 +44,8 @@
                                                           requirement_id:     params[:requirement_id],
                                                           tab:                tab_name,
                                                           tab_number:         "tab_tab#{tab_number}",
-                                                          custom_origin:      'Details'),
+                                                          custom_origin:      'Details',
+                                                          origin_url:         request.original_url),
                         :class => 'icon edit-user', :title => 'Edit Customization' %>
           <% end %>
         </div>

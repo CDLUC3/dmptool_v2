@@ -37,7 +37,14 @@
                                             custom_origin: "Overview"),  
                                   			method: :post %>  
             </td>
-			<td class="span1"><%= link_to raw(''), edit_customization_resource_path(id: resource_context.resource_id, customization_id: @customization.id, custom_origin: "Overview"), :class => 'icon edit-user' %></td>
+			<td class="span1">
+        <%= link_to raw(''),
+              edit_customization_resource_path(id: resource_context.resource_id,
+                                               customization_id: @customization.id,
+                                               custom_origin: "Overview",
+                                               origin_url: request.original_url),
+              :class => 'icon edit-user' %>
+      </td>
 			<td><%= resource_context.institution.nil? ? " " :  resource_context.institution.nickname %></td>
 			<td><%= resource_context.created_at.nil? ? " " :  resource_context.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 			<td><%= resource_context.updated_at.nil? ? " " :  resource_context.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>

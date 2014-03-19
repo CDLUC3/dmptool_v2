@@ -142,7 +142,7 @@
         format.html { redirect_to params[:origin_url] + "#" + @tab_number, notice: 'Resource was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { redirect_to params[:origin_url] + "#" + @tab_numberco, notice: "A problem prevented this resource to be updated. " }
+        format.html { redirect_to params[:origin_url] + "#" + @tab_number, notice: "A problem prevented this resource to be updated. " }
         format.json { render json: @resource.errors, status: :unprocessable_entity }
       end
     end
