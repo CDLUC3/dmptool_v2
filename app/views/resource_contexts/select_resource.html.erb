@@ -14,70 +14,28 @@
 			<tr>
 				<th>Select</th>
 
-				<th><%= link_to "Resource Id", 
-											{scope: "Resource_id",
-											 tab: @tab, 
-											customization_overview_id: @customization_overview_id,
-											template_id: 		@template_id,
-											resource_level: @resource_level,
-											tab_number: 		@tab_number,
-											custom_origin: 	@custom_origin,
-											requirement_id: @requirement_id}%>
+				<th><%= link_to "Resource Id",
+											params.merge({scope: "Resource_id", authenticity_token: nil })%>
 				</th>		
 				
-				<th class="span4"><%= link_to "Details", 
-											{scope: "Details", 
-											tab: 					@tab,
-											customization_overview_id: @customization_overview_id,
-											template_id: 		@template_id,
-											resource_level: @resource_level,
-											tab_number: 		@tab_number,
-											custom_origin: 	@custom_origin,
-											requirement_id: @requirement_id}%>
+				<th class="span4"><%= link_to "Details",
+                      params.merge({scope: "Details", authenticity_token: nil})%>
 				</th>	
 				
-				<th><%= link_to "Type", 
-							{scope: "Type", 
-								tab: 												@tab,
-								customization_overview_id: 	@customization_overview_id,
-								template_id: 								@template_id,
-								resource_level: 						@resource_level,
-								tab_number: 								@tab_number,
-								custom_origin: 							@custom_origin,
-								requirement_id: 						@requirement_id} %>
+				<th><%= link_to "Type",
+                      params.merge({scope: "Type", authenticity_token: nil}) %>
 				</th>	
 
-				<th><%= link_to "Institution", 
-							{scope: "Institution", 
-							tab: 												@tab,
-							customization_overview_id: 	@customization_overview_id,
-							template_id: 								@template_id,
-							resource_level: 						@resource_level,
-							tab_number: 								@tab_number,
-							custom_origin: 							@custom_origin,
-							requirement_id: 						@requirement_id} %>
+				<th><%= link_to "Institution",
+                      params.merge({scope: "Institution", authenticity_token: nil}) %>
 				</th>	
 
-				<th><%= link_to "Creation Date", 
-							{scope: "Creation_Date", 
-							 tab: @tab,
-							customization_overview_id: @customization_overview_id,
-							template_id: 		@template_id,
-							resource_level: @resource_level,
-							tab_number: 		@tab_number,
-							custom_origin: 	@custom_origin,
-							requirement_id: @requirement_id} %>
+				<th><%= link_to "Creation Date",
+                      params.merge({scope: "Creation_Date", authenticity_token: nil}) %>
 				</th>	
 
-				<th><%= link_to "Last Modification Date", 
-							{scope: "Last_Modification_Date",
-							 tab: @tab, 
-							customization_overview_id: @customization_overview_id,
-							template_id: 		@template_id,
-							resource_level: @resource_level,
-							tab_number: 		@tab_number,
-							custom_origin: 	@custom_origin,
-							requirement_id: @requirement_id} %>
+				<th><%= link_to "Last Modification Date",
+                      params.merge({scope: "Last_Modification_Date", authenticity_token: nil}) %>
 				</th>
 								
 				<th>Level</th>

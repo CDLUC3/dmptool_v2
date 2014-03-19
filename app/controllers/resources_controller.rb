@@ -137,11 +137,12 @@
   #update institutional resource
   def update
     respond_to do |format|
+      @tab_number = (params[:tab_number].blank? ? 'tab_tab2' : params[:tab_number])
       if @resource.update(resource_params)
-        format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: 'Resource was successfully updated.' }
+        format.html { redirect_to params[:origin_url] + "#" + @tab_number, notice: 'Resource was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { redirect_to institutions_path(anchor: 'tab_tab2'), notice: "A problem prevented this resource to be updated. " }
+        format.html { redirect_to params[:origin_url] + "#" + @tab_numberco, notice: "A problem prevented this resource to be updated. " }
         format.json { render json: @resource.errors, status: :unprocessable_entity }
       end
     end
