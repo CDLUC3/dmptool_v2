@@ -61,7 +61,8 @@
 	<%= button_to 'Add another Resource', 
 								select_resource_path(template_id: @template.id, 
 								customization_overview_id: @resource_context.id,
-								custom_origin: "Overview"), 
+								custom_origin: "Overview",
+                origin_url: request.original_url),
 								:method => :post, 
 								:class => "btn btn-green" %>
 </div>

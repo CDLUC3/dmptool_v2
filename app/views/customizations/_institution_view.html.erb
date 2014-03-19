@@ -86,7 +86,9 @@
                                          resource_level: 'requirement',
                                          customization_overview_id: @customization.id,
                                          custom_origin: "Details",
-                                         tab: tab[:name]),
+                                         tab: tab[:name],
+                                         tab_number: "tab_tab#{index+1}",
+                                         origin_url: request.original_url),
                     :method => :post, :class => 'btn btn-green' %>
       </p>
     </div>
