@@ -4,6 +4,7 @@
 # partial_name -- the name of the partial to call to display each line item
 # collection -- the collection of items to display
 # editable -- true or false value for whether this item should be editable
+# cust_level -- The level (1-8, see resource_context model) that this customization is
 %>
 
 <% if collection.length > 0 %>
@@ -13,14 +14,20 @@
     <div style="clear:both">
       <div class="<%= editable ? 'editable_resource': '' %>">
         <%= render  :partial => partial_name,
-                :locals => { :resource => resource, :editable => editable } %>
+                :locals => { :resource => resource, :editable => editable, :cust_level => cust_level } %>
       </div>
 
       <% if editable %>
         <div class="edit_icon_right">
-          <%= link_to raw(''),
-              edit_customization_resource_path(id: resource.id, customization_id: @customization.id),
-              :class => 'icon edit-user', :title => 'Edit Customization' %>
+          <% if cust_level == '4' %>
+            <%= link_to raw(''),
+            edit_resource_path(id: resource.id, customization_id: @customization.id, custom_origin: 'Details'),
+            :class => 'icon edit-user', :title => 'Edit Customization' %>
+          <% else %>
+            <%= link_to raw(''),
+                edit_customization_resource_path(id: resource.id, customization_id: @customization.id, custom_origin: 'Details'),
+                :class => 'icon edit-user', :title => 'Edit Customization' %>
+          <% end %>
         </div>
       <% end %>
     </div>
