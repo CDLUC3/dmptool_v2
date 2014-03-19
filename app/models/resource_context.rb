@@ -39,6 +39,8 @@ class ResourceContext < ActiveRecord::Base
             # Marisa's  #8, a container for customizing for a template for all viewing institutions
   }
 
+  CONTEXT_NAMES_TO_NUMBERS = Hash[ CONTEXT_LEVELS.map{|k,v| [v[:name], k]}]
+
   
   def self.search_terms(terms)
     items = terms.split
@@ -154,6 +156,17 @@ class ResourceContext < ActiveRecord::Base
       end
     end
     return " "
+  end
+
+  def self.context_name_to_number(level_name)
+    keys = CONTEXT_NAMES_TO_NUMBERS.keys
+    raise "bad level name" unless keys.include?(level_name)
+    CONTEXT_NAMES_TO_NUMBERS[level_name]
+  end
+
+  def self.context_info(level_number)
+    raise "bad level number" unless CONTEXT_LEVELS.has_key(level_number)
+    CONTEXT_LEVELS[level_number]
   end
 end
 
