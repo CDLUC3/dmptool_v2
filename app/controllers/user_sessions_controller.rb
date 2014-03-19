@@ -93,7 +93,7 @@ class UserSessionsController < ApplicationController
           email = user.email
           token = user.ensure_token
           reset_url = complete_password_reset_url(:id => user.id, :token => token, :protocol => 'https')
-          UsersMailer.password_reset(user.authentications.first.uid, email, reset_url).deliver
+          UsersMailer.password_reset(user.login_id, email, reset_url).deliver
           
           flash[:notice] = "An email has been sent to #{email} with instructions for resetting your password."
           redirect_to login_path and return
