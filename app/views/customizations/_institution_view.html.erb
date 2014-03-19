@@ -12,7 +12,9 @@
                                :partial_name  => tab[:partial],
                                :collection    => @requirement.requirement_resources.send(tab[:scope]),
                                :editable      => template_cust, #editable if this is a template customization
-                               :cust_level    => '3'}
+                               :cust_level    => '3',
+                               :tab_name      => tab[:name],
+                               :tab_number    => index+1 }
         %>
 
       <% else %>
@@ -22,7 +24,9 @@
                                :partial_name  => tab[:partial],
                                :collection    => @requirement.global_resources.send(tab[:scope]),
                                :editable      => template_cust,
-                               :cust_level    => '1'}
+                               :cust_level    => '1',
+                               :tab_name      => tab[:name],
+                               :tab_number    => index+1 }
         %>
 
         <%= render :partial => 'section_display', #levels 2 + 3
@@ -31,7 +35,9 @@
                                :collection    => @requirement.template_resources.send(tab[:scope]) +
                                    @requirement.requirement_resources.send(tab[:scope]),
                                :editable      => template_cust, #editable if this is a template customization
-                               :cust_level    => '2+3'}
+                               :cust_level    => '2+3',
+                               :tab_name      => tab[:name],
+                               :tab_number    => index+1 }
         %>
       <% end %>
 
@@ -42,7 +48,9 @@
                                  :partial_name => tab[:partial],
                                  :collection => @requirement.institution_customization_resources(@institution).send(tab[:scope]),
                                  :editable => !template_cust,
-                                 :cust_level    => '4'}
+                                 :cust_level    => '4',
+                                 :tab_name      => tab[:name],
+                                 :tab_number    => index+1 }
           %>
 
           <%= render :partial => 'section_display', #level 5
@@ -50,7 +58,9 @@
                                  :partial_name => tab[:partial],
                                  :collection => @requirement.template_customization_resources(@institution).send(tab[:scope]),
                                  :editable => !template_cust,
-                                 :cust_level    => '5'}
+                                 :cust_level    => '5',
+                                 :tab_name      => tab[:name],
+                                 :tab_number    => index+1 }
           %>
 
         <% end %>
@@ -60,8 +70,9 @@
                                :partial_name => tab[:partial],
                                :collection => @requirement.requirement_customization_resources(@institution).send(tab[:scope]),
                                :editable => !template_cust,
-                               :cust_level    => '7'
-                               }
+                               :cust_level    => '7',
+                               :tab_name      => tab[:name],
+                               :tab_number    => index+1 }
         %>
 
 

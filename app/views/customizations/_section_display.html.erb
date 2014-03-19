@@ -5,6 +5,8 @@
 # collection -- the collection of items to display
 # editable -- true or false value for whether this item should be editable
 # cust_level -- The level (1-8, see resource_context model) that this customization is
+# tab_number -- the tab number (1-4)
+# tab_name -- the string name of the tab like "Guidance"
 %>
 
 <% if collection.length > 0 %>
@@ -19,14 +21,36 @@
 
       <% if editable %>
         <div class="edit_icon_right">
+          <% #pass these along: :resource, :resource_level, :customization_id, :template_id, :requirement_id, :tab, :tab_number, :custom_origin %>
           <% if cust_level == '4' %>
+            <%# link_to raw(''),
+             # edit_resource_path(id: resource.id, customization_id: @customization.id, custom_origin: 'Details'),
+             # :class => 'icon edit-user', :title => 'Edit Customization' %>
             <%= link_to raw(''),
-            edit_resource_path(id: resource.id, customization_id: @customization.id, custom_origin: 'Details'),
-            :class => 'icon edit-user', :title => 'Edit Customization' %>
-          <% else %>
-            <%= link_to raw(''),
-                edit_customization_resource_path(id: resource.id, customization_id: @customization.id, custom_origin: 'Details'),
+             edit_resource_path(  id:                 resource.id,
+                                  resource_level:     'requirement',
+                                  customization_id:   @customization.id,
+                                  template_id:        @requirements_template.id,
+                                  requirement_id:     params[:requirement_id],
+                                  tab:                tab_name,
+                                  tab_number:         "tab_tab#{tab_number}",
+                                  custom_origin:      'Details'),
                 :class => 'icon edit-user', :title => 'Edit Customization' %>
+          <% else %>
+            <%# link_to raw(''),
+              # edit_customization_resource_path(id: resource.id, customization_id: @customization.id, custom_origin: 'Details'),
+              # :class => 'icon edit-user', :title => 'Edit Customization' %>
+
+            <%= link_to raw(''),
+                        edit_resource_path(  id:                 resource.id,
+                                             resource_level:     'requirement',
+                                             customization_id:   @customization.id,
+                                             template_id:        @requirements_template.id,
+                                             requirement_id:     params[:requirement_id],
+                                             tab:                tab_name,
+                                             tab_number:         "tab_tab#{tab_number}",
+                                             custom_origin:      'Details'),
+                        :class => 'icon edit-user', :title => 'Edit Customization' %>
           <% end %>
         </div>
       <% end %>
