@@ -246,7 +246,7 @@ class ResourceContextsController < ApplicationController
     if !params[:s].blank? && !params[:e].blank?
       req_temp = req_temp.letter_range(params[:s], params[:e])
     end
-    
+
     process_requirements_template(req_temp)
 
     @back_to = resource_contexts_path
@@ -294,7 +294,9 @@ class ResourceContextsController < ApplicationController
         @tab_number = 'tab_tab1'
       when "Actionable Links"
         @tab_number = 'tab_tab2'
-      when "Example Response" || "Suggested Response"
+      when "Example Response" 
+        @tab_number = 'tab_tab3'
+      when "Suggested Response"
         @tab_number = 'tab_tab3'
     end
 
