@@ -1,8 +1,11 @@
 <div>
-	<% flash.each do |type, message| %>
-		<div class="alert <%= bootstrap_class_for(type) %> fade in">
-		<button class="close" data-dismiss="alert">×</button>
-		<%= message %>
-		</div>
-	<% end %>
+	<% flash.each do |type, message|
+    message = [ message ] if message.class == String
+    message.each do |m| %>
+      <div class="alert <%= bootstrap_class_for(type) %> fade in">
+        <button class="close" data-dismiss="alert">×</button>
+        <%= m %>
+      </div>
+    <% end %>
+  <% end %>
 </div>
