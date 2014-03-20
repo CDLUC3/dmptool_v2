@@ -44,10 +44,9 @@
 
     @resource_templates_id = ResourceContext.where(resource_id: @resource.id).pluck(:requirements_template_id)
 
-    @resource_contexts_templates = ResourceContext.where(resource_id: @resource.id).
-                                        template_level. #template_id is not nil
-                                        includes(:requirements_template).
-                                        group(:requirements_template_id)
+    @resource_contexts_templates = ResourceContext.
+                                    where(resource_id: @resource.id, requirement_id: nil).
+                                      template_level#template_id is not nil
 
     @templates_count = ResourceContext.where(resource_id: @resource.id).
                                         template_level. #template_id is not nil
