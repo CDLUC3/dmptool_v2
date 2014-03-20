@@ -122,38 +122,14 @@ class ResourceContextsController < ApplicationController
     @template_id = params[:template_id]
     @custom_origin = params[:custom_origin]
     @tab_number = params[:tab_number]
-    @requirement_id = params[:requirement_id]
+
+    #@institution_customization = ResourceContext.find(@customization_id).pluck(:institution_id) 
     
-    if params[:requirement_id] && !params[:template_id].nil? && params[:unlink_from_customization].nil?
-
-      @requirement_id = params[:requirement_id]
-      @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
-                                                requirement_id: @requirement_id, 
-                                                requirements_template_id: @template_id)
-
-    elsif params[:template_id]  && params[:unlink_from_customization].nil?
-      @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
-                                                requirements_template_id: @template_id).
-                                            requirement_level
-    
-    elsif params[:unlink_from_customization] && !params[:template_id].nil? && !params[:resource_id].nil?
-
-      @resource_context = ResourceContext.find(params[:customization_id])
-      @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
-                                              requirements_template_id: @template_id,
-                                              requirement_id: nil,
-                                              institution_id: @resource_context.institution_id)
-    else
-
-      respond_to do |format|
-        format.html { redirect_to edit_resource_context_path(@customization_id), 
-                        notice: "A problem prevented this resource to be unlinked." }
-        format.json { head :no_content }
-        return
-      end
-
-    end
-
+    @resource_contexts = ResourceContext.
+                            where(resource_id:              @resource_id, 
+                                  requirements_template_id: @template_id,
+                                  requirement_id:           nil)
+                                            
     @resource_contexts.each do |resource_context|
         resource_context.destroy
     end
