@@ -46,5 +46,5 @@
 	<%= paginate @resource_contexts %>
 </div>
 <div class="buttons">
-	<%= button_to 'Create New Resource', new_resource_path, :method => :get, :class => "btn btn-green" %>
+	<%= link_to 'Create New Resource', new_resource_path(origin_url: request.original_url, tab_number: 'tab_tab2'), :class => "btn btn-green" %>
 </div>

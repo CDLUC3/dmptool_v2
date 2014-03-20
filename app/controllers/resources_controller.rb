@@ -124,11 +124,11 @@
         @resource_id = @resource.id
         @resource_context = ResourceContext.new(resource_id: @resource_id, institution_id: @current_institution.id)
         if @resource_context.save
-          format.html { redirect_to redirect_to params[:origin_url] + "##{@tab_number}", notice: "Resource was successfully created." }
+          format.html { redirect_to params[:origin_url] + "##{@tab_number}", notice: "Resource was successfully created."}
         end
          
       else
-        format.html { redirect_to redirect_to params[:origin_url] + "##{@tab_number}", notice: "A problem prevented this resource to be created. " }
+        format.html { redirect_to params[:origin_url] + "##{@tab_number}", notice: "A problem prevented this resource to be created. " }
       end
     end
   end
