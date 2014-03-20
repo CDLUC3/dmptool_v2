@@ -32,7 +32,7 @@
 					<div class="control-group" >
 						<%= f.label :institution, :class => "control-label" %>
 						<div class="controls" >
-							<%= collection_select(:requirements_template, :institution_id, Institution.all, :id, :full_name, { prompt: "-Select a Institution"} ) %>
+							<%= collection_select(:requirements_template, :institution_id, Institution.all, :id, :full_name, { selected:  current_user.institution.root_id} ) %>
 						</div>
 					</div>
 				
@@ -41,7 +41,9 @@
 					<div class="control-group" >
 						<%= f.label :institution, :class => "control-label" %>
 						<div class="controls" >
-							<%= f.select(:institution_id, current_user.institution.subtree_ids.map {|r| [r.full_name,r.id] }, { prompt: '-Select a Institution'} ) %>
+							<%= f.select(:institution_id, 
+											current_user.institution.subtree.map {|r| [r.full_name,r.id] }, 
+											{ selected:  current_user.institution.root_id} ) %>
 						</div>
 					</div>
 				<% else %>
