@@ -35,11 +35,13 @@
 							<%= collection_select(:requirements_template, :institution_id, Institution.all, :id, :full_name, { prompt: "-Select a Institution"} ) %>
 						</div>
 					</div>
+				
 				<% elsif user_role_in?(:institutional_admin)%>
+				
 					<div class="control-group" >
 						<%= f.label :institution, :class => "control-label" %>
 						<div class="controls" >
-							<%= f.select(:institution_id, current_user.institution.subtree.map {|r| [r.full_name,r.id] }, { prompt: '-Select a Institution'} ) %>
+							<%= f.select(:institution_id, current_user.institution.subtree_ids.map {|r| [r.full_name,r.id] }, { prompt: '-Select a Institution'} ) %>
 						</div>
 					</div>
 				<% else %>
