@@ -29,7 +29,7 @@
 				</div>
 			</td>
 			<td><%= link_to 'Unlink from Customization', 
-						unlink_resource_path(resource_id: resource_context.resource.id, 
+						unlink_resource_path(resource_id: resource_context.resource.id,
                             				template_id: @customization.requirements_template_id, 
                                             customization_id: @customization.id,
                                             institution_id: @customization.institution_id,
@@ -37,7 +37,14 @@
                                             custom_origin: "Overview"),  
                                   			method: :post %>  
             </td>
-			<td class="span1"><%= link_to raw(''), edit_customization_resource_path(id: resource_context.resource_id, customization_id: @customization.id, custom_origin: "Overview"), :class => 'icon edit-user' %></td>
+			<td class="span1">
+        <%= link_to raw(''),
+              edit_customization_resource_path(id: resource_context.resource_id,
+                                               customization_id: @customization.id,
+                                               custom_origin: "Overview",
+                                               origin_url: smart_origin_url),
+              :class => 'icon edit-user' %>
+      </td>
 			<td><%= resource_context.institution.nil? ? " " :  resource_context.institution.nickname %></td>
 			<td><%= resource_context.created_at.nil? ? " " :  resource_context.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 			<td><%= resource_context.updated_at.nil? ? " " :  resource_context.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
@@ -54,7 +61,9 @@
 	<%= button_to 'Add another Resource', 
 								select_resource_path(template_id: @template.id, 
 								customization_overview_id: @resource_context.id,
-								custom_origin: "Overview"), 
-								:method => :post, 
-								:class => "btn btn-green" %>
+								custom_origin: "Overview",
+                origin_url: smart_origin_url,
+                tab_number: params[:tab_number],
+								:method => :post,
+								:class => "btn btn-green") %>
 </div>

@@ -23,6 +23,9 @@ class Requirement < ActiveRecord::Base
   after_save :add_high_position
   after_destroy :close_gap_in_position
 
+  SELECT_FOR_CONTEXT =  'resources.*, resource_contexts.id AS resource_context_id, resource_contexts.institution_id, ' +
+                        'resource_contexts.requirements_template_id, resource_contexts.requirement_id'
+
   def is_group?
     self.group == true
   end
@@ -65,6 +68,7 @@ class Requirement < ActiveRecord::Base
   def resources(viewing_institution_id)
     template_id = self.requirements_template.id
     Resource.joins(:resource_contexts).
+        select(SELECT_FOR_CONTEXT).
         where("resource_contexts.resource_id IS NOT NULL").
         where("resource_contexts.institution_id IS NULL OR resource_contexts.institution_id = ?", viewing_institution_id).
         where("resource_contexts.requirements_template_id IS NULL OR resource_contexts.requirements_template_id = ?", template_id ).
@@ -75,6 +79,7 @@ class Requirement < ActiveRecord::Base
   def non_customized_resources
     template_id = self.requirements_template.id
     Resource.joins(:resource_contexts).
+        select(SELECT_FOR_CONTEXT).
         where("resource_contexts.resource_id IS NOT NULL").
         where("resource_contexts.institution_id IS NULL").
         where("resource_contexts.requirements_template_id IS NULL OR resource_contexts.requirements_template_id = ?", template_id ).
@@ -84,6 +89,7 @@ class Requirement < ActiveRecord::Base
   # global resources for this requirement, Stephen's case #1
   def global_resources
     Resource.joins(:resource_contexts).
+        select(SELECT_FOR_CONTEXT).
         where("resource_contexts.institution_id IS NULL").
         where("resource_contexts.requirements_template_id IS NULL").
         where("resource_contexts.requirement_id IS NULL").
@@ -94,6 +100,7 @@ class Requirement < ActiveRecord::Base
   def template_resources
     template_id = self.requirements_template.id
     Resource.joins(:resource_contexts).
+        select(SELECT_FOR_CONTEXT).
         where("resource_contexts.institution_id IS NULL").
         where("resource_contexts.requirements_template_id = ?", template_id).
         where("resource_contexts.requirement_id IS NULL").
@@ -104,6 +111,7 @@ class Requirement < ActiveRecord::Base
   def requirement_resources
     template_id = self.requirements_template.id
     Resource.joins(:resource_contexts).
+        select(SELECT_FOR_CONTEXT).
         where("resource_contexts.institution_id IS NULL").
         where("resource_contexts.requirements_template_id = ?", template_id).
         where("resource_contexts.requirement_id = ?", self.id).
@@ -113,6 +121,7 @@ class Requirement < ActiveRecord::Base
   # institution global resources, Stephen's case #4
   def institution_customization_resources(viewing_institution_id)
     Resource.joins(:resource_contexts).
+        select(SELECT_FOR_CONTEXT).
         where("resource_contexts.institution_id = ?", viewing_institution_id).
         where("resource_contexts.requirements_template_id IS NULL").
         where("resource_contexts.requirement_id IS NULL").
@@ -123,6 +132,7 @@ class Requirement < ActiveRecord::Base
   def template_customization_resources(viewing_institution_id)
     template_id = self.requirements_template.id
     Resource.joins(:resource_contexts).
+        select(SELECT_FOR_CONTEXT).
         where("resource_contexts.institution_id = ?", viewing_institution_id).
         where("resource_contexts.requirements_template_id = ?", template_id).
         where("resource_contexts.requirement_id IS NULL").
@@ -133,6 +143,7 @@ class Requirement < ActiveRecord::Base
   def requirement_customization_resources(viewing_institution_id)
     template_id = self.requirements_template.id
     Resource.joins(:resource_contexts).
+        select(SELECT_FOR_CONTEXT).
         where("resource_contexts.institution_id = ?", viewing_institution_id).
         where("resource_contexts.requirements_template_id = ?", template_id).
         where("resource_contexts.requirement_id = ?", self.id).

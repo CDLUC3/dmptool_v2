@@ -20,10 +20,12 @@
         
         <% if  @resource_level=="requirement" %>
           <%= f.select :resource_type,
-              options_for_select([:actionable_url, :help_text, :example_response, :suggested_response], @resource.resource_type) %>
+              options_for_select([:actionable_url, :help_text, :example_response, :suggested_response], 
+                selected: @resource.resource_type) %>
         <% else %>
           <%= f.select :resource_type,
-              options_for_select([:actionable_url, :help_text], @resource.resource_type) %>
+              options_for_select([:actionable_url, :help_text], 
+                selected: @resource.resource_type) %>
         <% end %>    
         
       </div>
@@ -52,10 +54,7 @@
     </div>
 
     <div class="actions pull-left">
-        <%= link_to '<< Back', :back,
-                #template_id: @template_id,
-                #customization_overview_id: @customization_id,
-                :class => "btn" %>
+        <%= link_to '<< Back', request.env["HTTP_REFERER"] + '#' + @tab_number, :class => "btn" %>
     </div>
 
     <div class="actions pull-right">
@@ -69,7 +68,8 @@
                                       customization_overview_id: @customization_id,
                                       custom_origin: @custom_origin,
                                       requirement_id: @requirement_id,
-                                      tab_number: @tab_number), 
+                                      tab_number: @tab_number,
+                                      tab: @tab), 
                                       :method => :delete,
                                     data: { confirm: 'Are you sure? This resource will be deleted from all templates!' }, 
                                     :class => "btn" %>

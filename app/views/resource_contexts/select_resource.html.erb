@@ -14,58 +14,29 @@
 			<tr>
 				<th>Select</th>
 
-				<th><%= link_to "Resource Id", 
-											{scope: "Resource_id",
-											 tab: @tab, 
-											customization_overview_id: @customization_overview_id,
-											template_id: @template_id,
-											resource_level: @resource_level,
-											tab_number: 		@tab_number,
-											requirement_id: @requirement_id}%></th>		
+				<th><%= link_to "Resource Id",
+											params.merge({scope: "Resource_id", authenticity_token: nil })%>
+				</th>		
 				
-				<th class="span4"><%= link_to "Details", 
-											{scope: "Details", 
-												 tab: @tab,
-											customization_overview_id: @customization_overview_id,
-											template_id: @template_id,
-											resource_level: @resource_level,
-											tab_number: 		@tab_number,
-											requirement_id: @requirement_id}%></th>	
-				<th><%= link_to "Type", 
-							{scope: "Type", 
-								 tab: @tab,
-							customization_overview_id: @customization_overview_id,
-							template_id: @template_id,
-							resource_level: @resource_level,
-							tab_number: 		@tab_number,
-							requirement_id: @requirement_id} %></th>	
+				<th class="span4"><%= link_to "Details",
+                      params.merge({scope: "Details", authenticity_token: nil})%>
+				</th>	
+				
+				<th><%= link_to "Type",
+                      params.merge({scope: "Type", authenticity_token: nil}) %>
+				</th>	
 
-				<th><%= link_to "Institution", 
-							{scope: "Institution", 
-								 tab: @tab,
-							customization_overview_id: @customization_overview_id,
-							template_id: @template_id,
-							resource_level: @resource_level,
-							tab_number: 		@tab_number,
-							requirement_id: @requirement_id} %></th>	
+				<th><%= link_to "Institution",
+                      params.merge({scope: "Institution", authenticity_token: nil}) %>
+				</th>	
 
-				<th><%= link_to "Creation Date", 
-							{scope: "Creation_Date", 
-							 tab: @tab,
-							customization_overview_id: @customization_overview_id,
-							template_id: @template_id,
-							resource_level: @resource_level,
-							tab_number: 		@tab_number,
-							requirement_id: @requirement_id} %></th>	
+				<th><%= link_to "Creation Date",
+                      params.merge({scope: "Creation_Date", authenticity_token: nil}) %>
+				</th>	
 
-				<th><%= link_to "Last Modification Date", 
-							{scope: "Last_Modification_Date",
-							 tab: @tab, 
-							customization_overview_id: @customization_overview_id,
-							template_id: @template_id,
-							resource_level: @resource_level,
-							tab_number: 		@tab_number,
-							requirement_id: @requirement_id} %></th>
+				<th><%= link_to "Last Modification Date",
+                      params.merge({scope: "Last_Modification_Date", authenticity_token: nil}) %>
+				</th>
 								
 				<th>Level</th>
 				<th width="span1">Edit</th>
@@ -94,14 +65,13 @@
 														resource_level: @resource_level,
 														requirement_id: @requirement_id,
 														tab_number: 		@tab_number,
-														custom_origin: @custom_origin),
+														tab: 						@tab,
+														custom_origin: @custom_origin,
+                            origin_url:     request.original_url),
 						 			:class => 'icon edit-user' %>
 					</td>
 				</tr>
 			<% end %>
-
-			
-
 
 		<tbody>
 	</table>
@@ -116,17 +86,21 @@
 	<%= hidden_field_tag :requirement_id, @requirement_id  %>
 	<%= hidden_field_tag :customization_overview_id, @customization_overview_id %>
 	<%= hidden_field_tag :tab, @tab %>
+	<%= hidden_field_tag :tab_number, @tab_number %>
+	<%= hidden_field_tag :custom_origin, @custom_origin %>
+
 
 
 	<div class="actions pull-right">
 		
-		<%= link_to 'Add another Resource', 
+		<%= link_to 'Add another Resource',
 							new_customization_resource_path(template_id: @template_id, 
 							customization_overview_id: @customization_overview_id,
 							resource_level: @resource_level,
 							requirement_id: @requirement_id,
-							tab_number: 		@tab_number,
-							custom_origin: @custom_origin), 
+							tab_number: 		params[:tab_number],
+							tab:  					params[:tab],
+							custom_origin: 	@custom_origin),
 							:method => :post, 
 							:class => "btn btn-green" %>	
 
