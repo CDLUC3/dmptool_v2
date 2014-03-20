@@ -68,7 +68,7 @@ Dmptool2::Application.routes.draw do
 
   #this routes needs to stay above the other user ones to take priority
   get 'users/autocomplate_users', to: 'users#autocomplete_users', as: 'users_autocomplete'
-
+  get 'users/autocomplate_users_plans', to: 'users#autocomplate_users_plans', as: 'autocomplate_users_plans'
   resources :users do
     resources :plan_states
     member do
@@ -108,12 +108,15 @@ Dmptool2::Application.routes.draw do
   match 'user_sessions/complete_password_reset', to: 'user_sessions#complete_password_reset', as: 'complete_password_reset', :via => [:get, :post]
   get 'requirements_template_information', to: 'requirements_templates#template_information'
   get 'copy_existing_requirements_template', to: 'requirements_templates#copy_existing_template'
+
   get 'plan_template_information', to: 'plans#template_information'
   get 'copy_existing_plans_template', to: 'plans#copy_existing_template'
   get 'select_dmp_template', to: 'plans#select_dmp_template'
   get 'review_dmps', to: 'plans#review_dmps'
   post 'change_visibility', to: 'plans#change_visibility'
   get 'public_dmps', to: 'plans#public'
+  post 'add_coowner_autocomplete', to: 'plans#add_coowner_autocomplete'
+
   get  'remove_resource_editor_role', to: 'resource_templates#remove_resource_editor_role'
   get  'remove_requirements_editor_role', to: 'requirements_templates#remove_requirements_editor_role'
   post 'add_role', to: 'resource_templates#add_role'

@@ -35,7 +35,7 @@
     <div class="control-group">
       <%= f.label :date_value, :class => "control-label" %>
       <div class="controls">
-        <%= f.text_field :date_value, value: @response.date_value.blank? ? " " : @response.date_value.strftime('%m/%d/%Y'), :class => 'datepicker' %>
+        <%= f.text_field :date_value, value: @response.date_value.blank? ? " " : @response.date_value.strftime('%m/%d/%Y'), :class => 'datepicker', id:'response_date_value' %>
       </div>
     </div>
   <% end %>

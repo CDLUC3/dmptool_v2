@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
 
   has_many :coowned_plans, -> { where user_plans: { owner: false} }, through: :user_plans,
   source: :plan, class_name: 'Plan'
-  
+
   scope :active, -> { where(active: true, deleted_at: nil) }
 
   accepts_nested_attributes_for :user_plans
@@ -115,8 +115,8 @@ class User < ActiveRecord::Base
   def full_name_last_first
     [last_name, first_name].join(" ")
   end
- 
-  
+
+
   #label for dropdown for autocomplete
   def label
     "#{self.full_name} <#{self.email}>"
@@ -144,12 +144,12 @@ class User < ActiveRecord::Base
   def has_any_role?
     self.authorizations.count > 0
   end
-  
+
   def role_names
     @role_names ||= self.roles.pluck(:name)
   end
 
-  
+
 
   def has_role?(role_id)
     role_ids.include?(role_id)
