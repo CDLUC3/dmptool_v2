@@ -48,7 +48,7 @@
                                     where(resource_id: @resource.id, requirement_id: nil).
                                       template_level#template_id is not nil
 
-    @templates_count = ResourceContext.where(resource_id: @resource.id).
+    @templates_count = ResourceContext.where(resource_id: @resource.id, requirement_id: nil).
                                         template_level. #template_id is not nil
                                         select(:requirements_template_id).count
 
