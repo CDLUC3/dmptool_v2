@@ -74,6 +74,20 @@
               <%= label_tag :private, 'private', :class => 'radio-label'%>
             </div>
           </div>
+          <%= render partial: '/users/plan_autocomplete_widget',
+              :locals =>
+             {  user_role: 'coowner',
+                submit_url: add_coowner_autocomplete_path,
+                item_description: 'Co-Owner'
+             } %>
+            <div class="controls">
+              <% if @owner.id != current_user.id %>
+                <span> Owner: </span>
+                <strong class= 'blue'><%= @owner.full_name %>, </strong>
+              <% end %>
+              <span> Existing Coowners: </span>
+              <strong class= 'blue'><%= @coowners.map { |i| i.to_s }.join(", ") %></strong>
+            </div>
         <% end %>
 
         <% unless @plan.new_record? %>

@@ -11,7 +11,6 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
 
-
   def index
 
     @users = User.page(params[:page]).order(last_name: :asc).per(50)
@@ -19,7 +18,7 @@ class UsersController < ApplicationController
     if !params[:q].blank?
       @users = @users.search_terms(params[:q])
     end
-   
+
     case params[:scope]
       when "all_institutions"
         @institutions = Institution.page(params[:page])
@@ -184,8 +183,20 @@ class UsersController < ApplicationController
     end
 
   end
-  
-  
+
+  def autocomplate_users_plans
+    if !params[:name_term].blank?
+      like = params[:name_term].concat("%")
+      if current_user.has_role?(Role::DMP_ADMIN)
+        u = User
+      elsif current_user.has_role?(Role::INSTITUTIONAL_ADMIN) || current_user
+        u = current_user.institution.users_deep
+      end
+      @users = u.where("CONCAT(first_name, ' ', last_name) LIKE ? ", like).active
+    end
+    list = map_users_for_autocomplete(@users)
+    render json: list
+  end
 
   def autocomplete_users
     role_number = params[:role_number].to_i
@@ -206,12 +217,10 @@ class UsersController < ApplicationController
 
 
   private
-  
+
   def map_users_for_autocomplete(users)
     @users.map {|u| Hash[ id: u.id, full_name: u.full_name, label: u.label]}
   end
-
-
 
   def remove_all_user_authorizations(user_id)
     @authorization = Authorization.where(user_id: user_id)

@@ -54,7 +54,7 @@
     </div>
 
     <div class="actions pull-left">
-        <%= link_to '<< Back', request.env["HTTP_REFERER"] + '#' + @tab_number, :class => "btn" %>
+        <%= link_to '<< Back', request.env["HTTP_REFERER"] + "##{@tab_number}", :class => "btn" %>
     </div>
 
     <div class="actions pull-right">
@@ -69,7 +69,8 @@
                                       custom_origin: @custom_origin,
                                       requirement_id: @requirement_id,
                                       tab_number: @tab_number,
-                                      tab: @tab), 
+                                      tab: @tab,
+                                      origin_url: smart_origin_url),
                                       :method => :delete,
                                     data: { confirm: 'Are you sure? This resource will be deleted from all templates!' }, 
                                     :class => "btn" %>
@@ -109,9 +110,12 @@
   
           <td colspan="2" ><%= resource_contexts_template.requirements_template.name %></td>
           <td> 
-            <%= link_to 'Unlink from Template', unlink_resource_path(resource_id: @resource.id, 
-                                                      template_id: resource_contexts_template.requirements_template_id, 
-                                                      customization_id: @customization_id),  
+            <%= link_to 'Unlink from Template', 
+                    unlink_resource_from_template_path(resource_id: @resource.id, 
+                                        template_id: resource_contexts_template.requirements_template_id, 
+                                        customization_id: @customization_id,
+                                        custom_origin: @custom_origin,
+                                        tab_number: @tab_number),  
                                   method: :post %>  
           </td> 
         </tr>
@@ -140,10 +144,13 @@
          <td><%= resource_contexts_requirement.requirement.text_brief%></td>
           <td><%= resource_contexts_requirement.requirements_template.name%></td> 
            <td> 
-            <%= link_to 'Unlink from Requirement', unlink_resource_path(resource_id: @resource.id,
-                                                      template_id: resource_contexts_requirement.requirements_template_id, 
-                                                      requirement_id: resource_contexts_requirement.requirement_id,  
-                                                      customization_id: @customization_id),  
+            <%= link_to 'Unlink from Requirement', 
+                    unlink_resource_from_requirement_path(resource_id: @resource.id,
+                                        template_id: resource_contexts_requirement.requirements_template_id, 
+                                        requirement_id: resource_contexts_requirement.requirement_id,  
+                                        customization_id: @customization_id,
+                                        custom_origin: @custom_origin,
+                                        tab_number: @tab_number),   
                                   method: :post %>  
           </td> 
         </tr>

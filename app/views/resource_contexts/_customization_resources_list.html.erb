@@ -29,8 +29,8 @@
 				</div>
 			</td>
 			<td><%= link_to 'Unlink from Customization', 
-						unlink_resource_path(resource_id: resource_context.resource.id,
-                            				template_id: @customization.requirements_template_id, 
+						unlink_resource_from_customization_path(resource_id: resource_context.resource.id,
+                            								template_id: @customization.requirements_template_id, 
                                             customization_id: @customization.id,
                                             institution_id: @customization.institution_id,
                                             unlink_from_customization: true,

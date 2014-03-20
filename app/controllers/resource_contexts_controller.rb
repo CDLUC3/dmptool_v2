@@ -115,40 +115,90 @@ class ResourceContextsController < ApplicationController
   end
 
 
-  def unlink_resource
+  def unlink_resource_from_template
+    
     @customization_id = params[:customization_id]
     @resource_id = params[:resource_id]
     @template_id = params[:template_id]
-    
-    if params[:requirement_id] && !params[:template_id].nil? && params[:unlink_from_customization].nil?
+    @custom_origin = params[:custom_origin]
+    @tab_number = params[:tab_number]
 
-      @requirement_id = params[:requirement_id]
-      @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
+    @institution_customization = ResourceContext.find(@customization_id).pluck(:institution_id) 
+    
+    @resource_contexts = ResourceContext.
+                            where(resource_id:              @resource_id, 
+                                  requirements_template_id: @template_id,
+                                  requirement_id:           nil,
+                                  institution_id:           @institution_customization)
+                                            
+    @resource_contexts.each do |resource_context|
+        resource_context.destroy
+    end
+    
+    if @custom_origin == 'Overview'
+      respond_to do |format|
+        format.html { redirect_to edit_resource_context_path(@customization_id) }
+        format.json { head :no_content }
+      end
+    else #details
+      respond_to do |format|
+        format.html { redirect_to customization_requirement_path(id: @customization_id, 
+                      requirement_id:  @requirement_id,
+                      anchor: @tab_number) }
+        format.json { head :no_content }
+      end
+    end
+  end
+
+
+
+  def unlink_resource_from_requirement
+
+    @customization_id = params[:customization_id]
+    @resource_id = params[:resource_id]
+    @template_id = params[:template_id]
+    @custom_origin = params[:custom_origin]
+    @tab_number = params[:tab_number]
+    @requirement_id = params[:requirement_id]   
+
+    @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
                                                 requirement_id: @requirement_id, 
                                                 requirements_template_id: @template_id)
 
-    elsif params[:template_id]  && params[:unlink_from_customization].nil?
-      @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
-                                                requirements_template_id: @template_id).
-                                            requirement_level
+    @resource_contexts.each do |resource_context|
+        resource_context.destroy
+    end
     
-    elsif params[:unlink_from_customization] && !params[:template_id].nil? && !params[:resource_id].nil?
+    if @custom_origin == 'Overview'
+      respond_to do |format|
+        format.html { redirect_to edit_resource_context_path(@customization_id) }
+        format.json { head :no_content }
+      end
+    else #details
+      respond_to do |format|
+        format.html { redirect_to customization_requirement_path(id: @customization_id, 
+                      requirement_id:  @requirement_id,
+                      anchor: @tab_number) }
+        format.json { head :no_content }
+      end
+    end
 
-      @resource_context = ResourceContext.find(params[:customization_id])
-      @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
+  end
+
+
+
+
+  def unlink_resource_from_customization
+
+    @customization_id = params[:customization_id]
+    @resource_id = params[:resource_id]
+    @template_id = params[:template_id]
+    @resource_context = ResourceContext.find(params[:customization_id])
+
+    @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
                                               requirements_template_id: @template_id,
                                               requirement_id: nil,
                                               institution_id: @resource_context.institution_id)
-    else
-
-      respond_to do |format|
-        format.html { redirect_to edit_resource_context_path(@customization_id), 
-                        notice: "A problem prevented this resource to be unlinked." }
-        format.json { head :no_content }
-        return
-      end
-
-    end
 
     @resource_contexts.each do |resource_context|
         resource_context.destroy
@@ -159,6 +209,8 @@ class ResourceContextsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
 
   def unlink_institutional_resource
     @resource_context = ResourceContext.find(params[:resource_context_id])

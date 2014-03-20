@@ -2,7 +2,7 @@ class PlansController < ApplicationController
 
   before_action :require_login, except: [:public, :show]
   #note show will need to be protected from logins in some cases, but only from non-public plan viewing
-  before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details, :preview, :perform_review]
+  before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details, :preview, :perform_review, :coowners, :add_coowner_autocomplete]
   #before_action :select_requirements_template, only: [:select_dmp_template]
 
   # GET /plans
@@ -47,15 +47,20 @@ class PlansController < ApplicationController
 
   # POST /plans
   # POST /plans.json
-  def create
+def create
+    flash[:notice] = []
     @plan = Plan.new(plan_params)
     respond_to do |format|
       if @plan.save
         UserPlan.create!(user_id: current_user.id, plan_id: @plan.id, owner: true)
         PlanState.create!(plan_id: @plan.id, state: :new, user_id: current_user.id )
-        format.html { redirect_to edit_plan_path(@plan), notice: 'Plan was successfully created.' }
+        add_coowner_autocomplete
+        flash[:notice]
+        format.html { flash[:notice] << "Plan was successfully updated."
+                  redirect_to edit_plan_path(@plan)}
         format.json { render action: 'show', status: :created, location: @plan }
       else
+        add_coowner_autocomplete
         format.html { render action: 'new' }
         format.json { render json: @plan.errors, status: :unprocessable_entity }
       end
@@ -65,20 +70,27 @@ class PlansController < ApplicationController
   # GET /plans/1/edit
   def edit
     set_comments
+    coowners
   end
 
   # PATCH/PUT /plans/1
   # PATCH/PUT /plans/1.json
   def update
+    flash[:notice] = []
     set_comments
+    coowners
     respond_to do |format|
-      if @plan.update(plan_params)
-        format.html { redirect_to edit_plan_path(@plan), notice: 'Plan was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @plan.errors, status: :unprocessable_entity }
-      end
+        if @plan.update(plan_params)
+          add_coowner_autocomplete
+          flash[:notice]
+          format.html { flash[:notice] << "Plan was successfully updated."
+                  redirect_to edit_plan_path(@plan)}
+          format.json { head :no_content }
+        else
+          add_coowner_autocomplete
+          format.html { render action: 'edit' }
+          format.json { render json: @plan.errors, status: :unprocessable_entity }
+        end
     end
   end
 
@@ -111,21 +123,10 @@ class PlansController < ApplicationController
     render action: "copy_existing_template"
   end
 
-# To be completed
-  # def add_coowner
-
-  # end
-
-  def export
-
-  end
-
-  def publish
-
-  end
-
   def perform_review
     set_comments
+    @reviewer_comments = @reviewer_comments.page(params[:page]).per(5)
+    @owner_comments = @owner_comments.page(params[:page]).per(5)
   end
 
   def review_dmps
@@ -150,9 +151,9 @@ class PlansController < ApplicationController
 
     req_temp = RequirementsTemplate.
                   includes(:institution).
-                  where(active: true). 
+                  where(active: true).
                   any_of(visibility: :public, institution_id: [current_user.institution.subtree_ids])
-                    
+
     if !params[:q].blank?
       req_temp = req_temp.name_search_terms(params[:q])
     end
@@ -166,39 +167,41 @@ class PlansController < ApplicationController
     @back_text = "<< Create New DMP"
     @submit_to = new_plan_path
     @submit_text = "DMP Overview Page >>"
-    
+
   end
 
   def details
     template_id = @plan.requirements_template_id
     @requirements_template = RequirementsTemplate.find(template_id)
-    @requirements = @requirements_template.requirements
-    if params[:requirement_id].blank?
-      requirement = @requirements_template.first_question
-      if requirement.nil?
-        redirect_to(resource_contexts_path, :notice =>
-            "The DMP template you are attempting to customize has no requirements. A template must contain at least one requirement. \"#{@requirements_template.name}\" needs to be fixed before you may continue customizing it.") and return
+    unless @requirements_template.nil?
+      @requirements = @requirements_template.requirements
+      if params[:requirement_id].blank?
+        requirement = @requirements_template.first_question
+        if requirement.nil?
+          redirect_to(resource_contexts_path, :notice =>
+              "The DMP template you are attempting to customize has no requirements. A template must contain at least one requirement. \"#{@requirements_template.name}\" needs to be fixed before you may continue customizing it.") and return
+        end
+        params[:requirement_id] = requirement.id.to_s
       end
-      params[:requirement_id] = requirement.id.to_s
-    end
-    @requirement = Requirement.find(params[:requirement_id]) unless params[:requirement_id].blank?
-    @resource_contexts = ResourceContext.where(requirement_id: @requirement.id, institution_id: current_user.institution_id, requirements_template_id: @requirements_template.id)
-    @guidance_resources = display_text(@resource_contexts)
-    @url_resources = display_value(@resource_contexts)
-    @suggested_resources = display_suggested(@resource_contexts)
-    @example_resources = display_example(@resource_contexts)
-    @response = Response.where(plan_id: @plan.id, requirement_id: @requirement.id).first
-    if @response.nil?
-      @response = Response.new
-    end
+      @requirement = Requirement.find(params[:requirement_id]) unless params[:requirement_id].blank?
+      @resource_contexts = ResourceContext.where(requirement_id: @requirement.id, institution_id: current_user.institution_id, requirements_template_id: @requirements_template.id)
+      @guidance_resources = display_text(@resource_contexts)
+      @url_resources = display_value(@resource_contexts)
+      @suggested_resources = display_suggested(@resource_contexts)
+      @example_resources = display_example(@resource_contexts)
+      @response = Response.where(plan_id: @plan.id, requirement_id: @requirement.id).first
+      if @response.nil?
+        @response = Response.new
+      end
 
-    @next_requirement = @requirements[@requirements.index(@requirement) + 1]
-    if @next_requirement.nil?
-      ## would go back to the 1st Requirement in the list
-      @next_requirement_id = @requirements_template.first_question.id
-    else
-      ## traverse through the next requirement in the list
-      @next_requirement_id = @next_requirement.id
+      @next_requirement = @requirements[@requirements.index(@requirement) + 1]
+      if @next_requirement.nil?
+        ## would go back to the 1st Requirement in the list
+        @next_requirement_id = @requirements_template.first_question.id
+      else
+        ## traverse through the next requirement in the list
+        @next_requirement_id = @next_requirement.id
+      end
     end
   end
 
@@ -230,6 +233,31 @@ class PlansController < ApplicationController
       @plans = @plans.page(params[:page]).per(10)
     else
       @plans = @plans.page(0).per(9999)
+    end
+  end
+
+  def add_coowner_autocomplete
+    u_name, = nil
+    params.each do |k,v|
+      u_name = v if k.end_with?('_name')
+    end
+    item_description = params[:item_description]
+    unless u_name.blank?
+      u_name.split(',').each do |n|
+        unless n.blank?
+          user, email = nil, nil
+          email = n[/\<.*\>/].gsub(/\<(.*)\>/, '\1') unless n[/\<.*\>/].nil?
+          user = User.find_by(email: email)
+          if user.nil?
+            flash[:notice] << "The user you entered was not found"
+          elsif user.user_plans.where(plan_id: @plan.id, owner: false).count > 0
+            flash[:notice] << "The user you chose is already a #{item_description}"
+          else
+            userplan = UserPlan.create(owner: false, user_id: user.id, plan_id: @plan.id)
+            userplan.save!
+          end
+        end
+      end
     end
   end
 
@@ -304,8 +332,18 @@ class PlansController < ApplicationController
     def set_comments
       @comment = Comment.new
       comments = Comment.where(plan_id: @plan.id, user_id: current_user.id)
-      @reviewer_comments = comments.reviewer_comments.page(params[:page]).per(5)
-      @owner_comments = comments.owner_comments.page(params[:page]).per(5)
+      @reviewer_comments = comments.reviewer_comments.order('created_at DESC')
+      @owner_comments = comments.owner_comments.order('created_at DESC')
       @plan_states = @plan.plan_states
+    end
+
+    def coowners
+      @coowners = Array.new
+      user_plans = @plan.user_plans.where(owner: false)
+      user_plans.each do |user_plan|
+        id = user_plan.user_id
+        coowner = User.find(id).full_name
+        @coowners<< coowner
+      end
     end
 end

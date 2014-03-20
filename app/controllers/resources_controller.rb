@@ -44,12 +44,11 @@
 
     @resource_templates_id = ResourceContext.where(resource_id: @resource.id).pluck(:requirements_template_id)
 
-    @resource_contexts_templates = ResourceContext.where(resource_id: @resource.id).
-                                        template_level. #template_id is not nil
-                                        includes(:requirements_template).
-                                        group(:requirements_template_id)
+    @resource_contexts_templates = ResourceContext.
+                                    where(resource_id: @resource.id, requirement_id: nil).
+                                      template_level#template_id is not nil
 
-    @templates_count = ResourceContext.where(resource_id: @resource.id).
+    @templates_count = ResourceContext.where(resource_id: @resource.id, requirement_id: nil).
                                         template_level. #template_id is not nil
                                         select(:requirements_template_id).count
 
@@ -125,11 +124,11 @@
         @resource_id = @resource.id
         @resource_context = ResourceContext.new(resource_id: @resource_id, institution_id: @current_institution.id)
         if @resource_context.save
-          format.html { redirect_to redirect_to params[:origin_url] + "#" + @tab_number, notice: "Resource was successfully created." }
+          format.html { redirect_to params[:origin_url] + "##{@tab_number}", notice: "Resource was successfully created."}
         end
          
       else
-        format.html { redirect_to redirect_to params[:origin_url] + "#" + @tab_number, notice: "A problem prevented this resource to be created. " }
+        format.html { redirect_to params[:origin_url] + "##{@tab_number}", notice: "A problem prevented this resource to be created. " }
       end
     end
   end
@@ -139,10 +138,10 @@
     respond_to do |format|
       @tab_number = (params[:tab_number].blank? ? 'tab_tab2' : params[:tab_number])
       if @resource.update(resource_params)
-        format.html { redirect_to params[:origin_url] + "#" + @tab_number, notice: 'Resource was successfully updated.' }
+        format.html { redirect_to params[:origin_url] + "##{@tab_number}", notice: 'Resource was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { redirect_to params[:origin_url] + "#" + @tab_number, notice: "A problem prevented this resource to be updated. " }
+        format.html { redirect_to params[:origin_url] + "##{@tab_number}", notice: "A problem prevented this resource to be updated. " }
         format.json { render json: @resource.errors, status: :unprocessable_entity }
       end
     end
@@ -165,7 +164,12 @@
       end
       respond_to do |format|
         #if @customization_id #customization resource
-        if @custom_origin == "Overview" #customization resource
+        if !request[:origin_url].blank?
+          format.html {
+            redirect_to request[:origin_url] + "##{@tab_number}",
+                      notice: 'Resource was successfully eliminated.'
+          }
+        elsif @custom_origin == "Overview" #customization resource
           format.html { 
             redirect_to edit_resource_context_path(params[:customization_overview_id]), 
               notice: 'Resource was successfully eliminated.' 

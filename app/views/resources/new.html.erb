@@ -47,6 +47,9 @@
         <%= f.submit 'Save Changes', :class => "btn" %>
       </div>
 
+      <%= hidden_field_tag :origin_url, smart_origin_url %>
+      <%= hidden_field_tag :tab_number, params[:tab_number] %>
+
 
     </fieldset>
   <% end %>
