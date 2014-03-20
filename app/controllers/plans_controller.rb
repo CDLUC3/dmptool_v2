@@ -8,8 +8,10 @@ class PlansController < ApplicationController
   # GET /plans
   # GET /plans.json
   def index
-   user_id = current_user.id
-   plan_ids = UserPlan.where(user_id: user_id).pluck(:plan_id) unless user_id.nil?
+   user = User.find(current_user.id)
+   @owned_plans = user.owned_plans
+   @coowned_plans = user.coowned_plans
+   plan_ids = UserPlan.where(user_id: user.id).pluck(:plan_id) unless user.id.nil?
    @plans = Plan.where(id: plan_ids)
 
     case params[:scope]
@@ -17,8 +19,10 @@ class PlansController < ApplicationController
         @plans = @plans.page(params[:page]).per(9999)
       when "all_limited"
         @plans = @plans.page(params[:page]).per(5)
+      when "owned"
+        @plans = @owned_plans.page(params[:page]).per(5)
       when "coowned"
-        @plans = @plans.coowned.page(params[:page]).per(5)
+        @plans = @coowned_plans.page(params[:page]).per(5)
       when "approved"
         @plans = @plans.approved.page(params[:page]).per(5)
       when "submitted"
@@ -274,8 +278,8 @@ def create
 
     def count
       @all = @plans.count
-      @owned = @plans.owned.count
-      @coowned = @plans.coowned.count
+      @owned = @owned_plans.count
+      @coowned = @coowned_plans.count
       @approved = @plans.approved.count
       @submitted = @plans.submitted.count
       @rejected = @plans.rejected.count
@@ -338,6 +342,8 @@ def create
     end
 
     def coowners
+      id = @plan.user_plans.where(owner: true).pluck(:user_id).first
+      @owner = User.find(id)
       @coowners = Array.new
       user_plans = @plan.user_plans.where(owner: false)
       user_plans.each do |user_plan|

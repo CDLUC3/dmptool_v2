@@ -3,6 +3,8 @@
 <div class="table-scope">
   <%= link_to "All (#{@all}) ", {scope: "all_limited"}, :class => "all_limited" %>
   |
+  <%= link_to "Owned (#{@owned}) ", {scope: "owned"}, :class => "owned" %>
+  |
   <%= link_to "Coowned (#{@coowned}) ", {scope: "coowned"}, :class => "coowned" %>
   |
   <%= link_to "Approved (#{@approved}) ", {scope: "approved"}, :class => "approved" %>

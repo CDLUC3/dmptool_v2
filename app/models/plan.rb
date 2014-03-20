@@ -22,8 +22,6 @@ class Plan < ActiveRecord::Base
   scope :private_visibility, -> { where(visibility: :private) }
 
   # scopes for plan's states
-  scope :owned, -> { joins(:user_plans).where('user_plans.owner =?', true).distinct }
-  scope :coowned, -> {  joins(:user_plans).where('user_plans.owner =?', false).distinct }
   scope :submitted, -> { joins(:current_state).where('plan_states.state =?', :submitted) }
   scope :approved, -> { joins(:current_state).where('plan_states.state =?', :approved) }
   scope :rejected, -> { joins(:current_state).where('plan_states.state =?', :rejected) }
@@ -41,5 +39,11 @@ class Plan < ActiveRecord::Base
 
   def plans_count_for_institution(institution)
     Plan.where(:requirements_templates => { :institution_id => institution.subtree_ids }).count
+  end
+
+  def current_plan_state
+    id  = self.current_plan_state_id
+    state = PlanState.find(id).state
+    return state
   end
 end
