@@ -145,7 +145,11 @@ Dmptool2::Application.routes.draw do
 
   post 'copy_selected_customization_resource', to: 'resources#copy_selected_customization_resource'
 
-  post 'unlink_resource', to: 'resource_contexts#unlink_resource'
+  post 'unlink_resource_from_template', to: 'resource_contexts#unlink_resource_from_template'
+  post 'unlink_resource_from_requirement', to: 'resource_contexts#unlink_resource_from_requirement'
+  post 'unlink_resource_from_customization', to: 'resource_contexts#unlink_resource_from_customization'
+
+
   post 'unlink_institutional_resource', to: 'resource_contexts#unlink_institutional_resource'
   
 
