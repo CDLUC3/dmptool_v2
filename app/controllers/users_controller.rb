@@ -19,6 +19,7 @@ class UsersController < ApplicationController
       @users = @users.search_terms(params[:q])
     end
 
+
     case params[:scope]
       when "all_institutions"
         @institutions = Institution.page(params[:page])
@@ -178,7 +179,7 @@ class UsersController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully updated.'}
+      format.html { redirect_to users_url(q: params[:q]), notice: 'User was successfully updated.'}
       format.json { head :no_content }
     end
 

@@ -83,7 +83,11 @@ Dmptool2::Application.routes.draw do
   # end
 
   resources :plans do
-    resources :plan_states
+    get "plan_states/accept"
+    get "plan_states/reject"
+    get "plan_states/submit"
+    post "plan_states/committed"
+    post "plan_states/finish"
     member do
       post :add_coowner
       get :publish
@@ -154,7 +158,7 @@ Dmptool2::Application.routes.draw do
 
 
   post 'unlink_institutional_resource', to: 'resource_contexts#unlink_institutional_resource'
-  
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.

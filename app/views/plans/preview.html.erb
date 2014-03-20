@@ -7,9 +7,9 @@
                     plan_path(@plan, :format=>"html"),
                     :class => "btn pull-left")  %>
  	<% if (@plan.requirements_template.review_type == :formal_review) || (@plan.requirements_template.review_type == :informal_review) %>
-    <%= link_to "Submit", "#", :class => "btn btn-green pull-right" %>
+    <%= button_to "Submit", plan_plan_states_submit_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
   <% else %>
-		<%= link_to "Finish", "#", :class => "btn btn-green pull-right" %>
+		<%= button_to "Finish", plan_plan_states_finish_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
 	<% end %>
 </div>
 <br/>
