@@ -48,15 +48,19 @@ class PlansController < ApplicationController
   # POST /plans
   # POST /plans.json
 def create
+    flash[:notice] = []
     @plan = Plan.new(plan_params)
     respond_to do |format|
       if @plan.save
         UserPlan.create!(user_id: current_user.id, plan_id: @plan.id, owner: true)
         PlanState.create!(plan_id: @plan.id, state: :new, user_id: current_user.id )
         add_coowner_autocomplete
-        format.html { redirect_to edit_plan_path(@plan), notice: 'Plan was successfully created.' }
+        flash[:notice]
+        format.html { flash[:notice] << "Plan was successfully updated."
+                  redirect_to edit_plan_path(@plan)}
         format.json { render action: 'show', status: :created, location: @plan }
       else
+        add_coowner_autocomplete
         format.html { render action: 'new' }
         format.json { render json: @plan.errors, status: :unprocessable_entity }
       end
@@ -331,12 +335,6 @@ def create
       @reviewer_comments = comments.reviewer_comments.order('created_at DESC')
       @owner_comments = comments.owner_comments.order('created_at DESC')
       @plan_states = @plan.plan_states
-    end
-
-    def check_permissions(user_id)
-      user = User.find(user_id)
-      UserPlan.where(user_id: user_id, owner: true) &&
-        current_user.institution.subtree_ids.include?(user.institution_id)
     end
 
     def coowners
