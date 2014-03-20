@@ -48,15 +48,19 @@ class PlansController < ApplicationController
   # POST /plans
   # POST /plans.json
 def create
+    flash[:notice] = []
     @plan = Plan.new(plan_params)
     respond_to do |format|
       if @plan.save
         UserPlan.create!(user_id: current_user.id, plan_id: @plan.id, owner: true)
         PlanState.create!(plan_id: @plan.id, state: :new, user_id: current_user.id )
         add_coowner_autocomplete
-        format.html { redirect_to edit_plan_path(@plan), notice: 'Plan was successfully created.' }
+        flash[:notice]
+        format.html { flash[:notice] << "Plan was successfully updated."
+                  redirect_to edit_plan_path(@plan)}
         format.json { render action: 'show', status: :created, location: @plan }
       else
+        add_coowner_autocomplete
         format.html { render action: 'new' }
         format.json { render json: @plan.errors, status: :unprocessable_entity }
       end
@@ -72,17 +76,21 @@ def create
   # PATCH/PUT /plans/1
   # PATCH/PUT /plans/1.json
   def update
+    flash[:notice] = []
     set_comments
     coowners
     respond_to do |format|
-      if @plan.update(plan_params)
-        add_coowner_autocomplete
-        format.html { redirect_to edit_plan_path(@plan), notice: 'Plan was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @plan.errors, status: :unprocessable_entity }
-      end
+        if @plan.update(plan_params)
+          add_coowner_autocomplete
+          flash[:notice]
+          format.html { flash[:notice] << "Plan was successfully updated."
+                  redirect_to edit_plan_path(@plan)}
+          format.json { head :no_content }
+        else
+          add_coowner_autocomplete
+          format.html { render action: 'edit' }
+          format.json { render json: @plan.errors, status: :unprocessable_entity }
+        end
     end
   end
 
@@ -236,15 +244,18 @@ def create
     item_description = params[:item_description]
     unless u_name.blank?
       u_name.split(',').each do |n|
-        @email = n[/\<.*\>/].gsub(/\<(.*)\>/, '\1') unless n[/\<.*\>/].nil?
-        @user = User.find_by(email: @email)
-        if @user.nil?
-          redirect_to :back, notice: "The user you entered was not found" and return
-        elsif @user.user_plans.where(plan_id: @plan.id, owner: false)
-          redirect_to :back, notice: "The user you chose is already a #{item_description}" and return
-        else
-          userplan = UserPlan.create(owner: false, user_id: @user.id, plan_id: @plan.id)
-          userplan.save!
+        unless n.blank?
+          user, email = nil, nil
+          email = n[/\<.*\>/].gsub(/\<(.*)\>/, '\1') unless n[/\<.*\>/].nil?
+          user = User.find_by(email: email)
+          if user.nil?
+            flash[:notice] << "The user you entered was not found"
+          elsif user.user_plans.where(plan_id: @plan.id, owner: false).count > 0
+            flash[:notice] << "The user you chose is already a #{item_description}"
+          else
+            userplan = UserPlan.create(owner: false, user_id: user.id, plan_id: @plan.id)
+            userplan.save!
+          end
         end
       end
     end
@@ -324,12 +335,6 @@ def create
       @reviewer_comments = comments.reviewer_comments.order('created_at DESC')
       @owner_comments = comments.owner_comments.order('created_at DESC')
       @plan_states = @plan.plan_states
-    end
-
-    def check_permissions(user_id)
-      user = User.find(user_id)
-      UserPlan.where(user_id: user_id, owner: true) &&
-        current_user.institution.subtree_ids.include?(user.institution_id)
     end
 
     def coowners
