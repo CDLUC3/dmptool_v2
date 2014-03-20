@@ -18,6 +18,7 @@ class CustomizationsController < ApplicationController
           ]  #right now all but links are displayed with the guidance partial since they're the same
 
   def show
+    @tabs = TABS.clone
     # :id is customization id and :requirement_id
     @customization = ResourceContext.find(params[:id])
     @resource_context = @customization
@@ -42,11 +43,10 @@ class CustomizationsController < ApplicationController
 
     #can only show suggested responses or example responses when one has an item and the other doesn't
     if suggested_responses > 0
-      TABS.delete_at(3)
+      @tabs.delete_at(3)
     elsif example_responses > 0
-      TABS.delete_at(2)
+      @tabs.delete_at(2)
     end
-
 
     ###############################################
     #params for adding another resource
@@ -55,7 +55,6 @@ class CustomizationsController < ApplicationController
     @customization_id = @customization.id
     @resource_level = "requirement"
     ##############################################
-    
 
   end
 
