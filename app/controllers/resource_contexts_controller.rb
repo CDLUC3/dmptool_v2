@@ -123,7 +123,7 @@ class ResourceContextsController < ApplicationController
     @custom_origin = params[:custom_origin]
     @tab_number = params[:tab_number]
 
-    @institution_customization = ResourceContext.find(@customization_id).pluck(:institution_id) 
+    @institution_customization = ResourceContext.find(@customization_id).institution_id
     
     @resource_contexts = ResourceContext.
                             where(resource_id:              @resource_id, 

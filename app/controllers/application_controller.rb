@@ -1,11 +1,11 @@
 class ApplicationController < ActionController::Base
 
   ROLES =
-      {	  :dmp_admin              => 1,
-          :resource_editor        => 2,
-          :template_editor        => 3,
-          :institutional_reviewer => 4,
-          :institutional_admin    => 5}
+      {	  :dmp_admin              => Role::DMP_ADMIN,
+          :resource_editor        => Role::RESOURCE_EDITOR,
+          :template_editor        => Role::TEMPLATE_EDITOR,
+          :institutional_reviewer => Role::INSTITUTIONAL_REVIEWER,
+          :institutional_admin    => Role::INSTITUTIONAL_ADMIN}
 
 
   # Prevent CSRF attacks by raising an exception.
