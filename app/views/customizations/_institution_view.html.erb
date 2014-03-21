@@ -2,7 +2,7 @@
 
   <% template_cust = (@customization.resource_level == "Container - Template") %>
 
-  <% CustomizationsController::TABS.each_with_index do |tab, index| %>
+  <% @tabs.each_with_index do |tab, index| %>
     <div class="tab-pane<%= (index==0 ? ' active' : '') %>" id="tab<%= (index+1) %>">
 
       <% if tab[:requirement_only] %>

@@ -28,6 +28,8 @@ class InstitutionsController < ApplicationController
 
     institutional_resources
 
+    @tab_number = 'tab_tab2' #the tab number for the maze of editing resources from everywhere
+
   end
 
 
