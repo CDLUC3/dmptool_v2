@@ -83,11 +83,10 @@ Dmptool2::Application.routes.draw do
   # end
 
   resources :plans do
-    get "plan_states/accept"
-    get "plan_states/reject"
-    get "plan_states/submit"
+    post "plan_states/approved"
+    post "plan_states/rejected"
+    post "plan_states/submitted"
     post "plan_states/committed"
-    post "plan_states/finish"
     member do
       post :add_coowner
       get :publish
