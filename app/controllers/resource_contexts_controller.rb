@@ -21,6 +21,7 @@ class ResourceContextsController < ApplicationController
     redirect_to :back and return if @req_temp.nil?
     @resource_context = ResourceContext.new
     @resource_context.requirements_template_id = @req_temp.id
+    @resource_context.review_type = @req_temp.review_type
 
     #if it is for the template or for a a different institution
     if user_role_in?(:dmp_admin)
@@ -33,8 +34,6 @@ class ResourceContextsController < ApplicationController
     else
       @resource_context.name = "#{@req_temp.name} for #{current_user.institution.name}"
     end
-
-    @resource_context.review_type = "formal_review"
 
     #the institution_id should be nil if it's none, otherwise set it
     if user_role_in?(:dmp_admin)
