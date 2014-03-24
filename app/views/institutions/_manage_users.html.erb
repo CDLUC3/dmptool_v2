@@ -6,9 +6,9 @@
 		| 
 		<%= link_to "Template Editor(#{@template_editor})", institutions_path(anchor: 'tab_tab4', scope: "template_editor"), :class => "template_editor" %> 
 		| 
-		<%= link_to "Institutional Administrator(#{@institutional_administrator})" , institutions_path(anchor: 'tab_tab4', scope: "inst_administrator"), :class => "inst_administrator" %> 
+		<%= link_to "Institutional Administrator(#{@institutional_administrator})" , institutions_path(anchor: 'tab_tab4', scope: "institutional_administrator"), :class => "inst_administrator" %> 
 		| 
-		<%= link_to "Institutional Reviewers(#{@institutional_reviewer})",  institutions_path(anchor: 'tab_tab4', scope: "inst_reviewer"), :class => "inst_reviewer" %>
+		<%= link_to "Institutional Reviewers(#{@institutional_reviewer})",  institutions_path(anchor: 'tab_tab4', scope: "institutional_reviewer"), :class => "inst_reviewer" %>
 		|
 		<%= link_to "DMP Administrators(#{@dmp_administrator})",  institutions_path(anchor: 'tab_tab4', scope: "dmp_administrator"), :class => "dmp_administrator" %>
 	</div>
