@@ -25,12 +25,14 @@
   <div class="control-group">
     <%= f.label :parent_id , "Parent Institution", :class => "control-label"%>
     <div class="controls">
+
       <%= f.select :parent_id, 
-          current_user.institution.ancestors.map {|r| [r.full_name,r.id] },
+          options_for_select(@categories), 
           :include_blank => 'none',
           :selected => current_user.institution.parent_id,
           :disabled => !@current_institution.is_shibboleth? 
-      %>
+         %>
+         
     </div>
   </div>
 

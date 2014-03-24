@@ -22,14 +22,16 @@ class InstitutionsController < ApplicationController
 
     @institution_users = institutional_admins
 
-    @categories.delete_if {|i| i[1] == @institution.id}
+    @categories.delete_if {|i| i[1] == current_user.institution.id}
 
     manage_users
 
     institutional_resources
 
     @tab_number = 'tab_tab2' #the tab number for the maze of editing resources from everywhere
-
+ 
+    
+      
   end
 
 
