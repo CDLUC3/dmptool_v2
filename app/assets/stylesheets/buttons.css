@@ -249,6 +249,10 @@ a .icon {
 	background-position: -120px -130px; width: 20px; height: 15px; }
 .folder-closed.icon {
 	background-position: -140px -130px; width: 20px; height: 15px; }
+/* seventh row */
+.unlink.icon {
+	background-position: 0 -145px; width: 25px; height: 25px;
+}
 
 /* Tree View Icons */
 a.icon.print {
