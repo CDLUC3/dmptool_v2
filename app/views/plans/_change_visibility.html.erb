@@ -3,7 +3,7 @@
   <div class="control-group">
     <div class="controls checkbox-controls">
       <%= radio_button_tag :visibility, :institutional, :class => 'radio inline', :id => 'institutional' %>
-      <%= label_tag :institutional, "With others from #{institution_name(plan_id)}", :class => 'radio-label' %><br/>
+      <%= label_tag :institutional, "With others from #{current_user.institution.full_name}", :class => 'radio-label' %><br/>
       <%= radio_button_tag :visibility, :public, :class => 'radio inline', :id => 'public' %>
       <%= label_tag :public, 'Publicly on the web', :class => 'radio-label' %><br/>
       <%= radio_button_tag :visibility, :private, :class => 'radio inline', :id => 'private', checked: true  %>
@@ -13,7 +13,7 @@
   <br/>
   <div>
   <%= submit_tag "Share", :class => 'btn btn-success', method: 'post' %>
-    
+
   <%= button_tag 'Cancel', type: :reset, :class => 'btn btn-success', id: "cancel_action" %>
   </div>
 <% end %>
