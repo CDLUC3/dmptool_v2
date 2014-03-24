@@ -74,6 +74,7 @@ class InstitutionsController < ApplicationController
     @template_editor = @current_institution.users_in_role("Template Editor").count
     @institutional_administrator =@current_institution.users_in_role("Institutional Administrator").count
     @dmp_administrator = @current_institution.users_in_role("DMP Administrator").count
+    @institutional_reviewer = @current_institution.users_in_role("Institutional Reviewer").count
   end
 
   #every roles except DMP Admin
