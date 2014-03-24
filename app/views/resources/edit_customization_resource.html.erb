@@ -110,13 +110,14 @@
   
           <td colspan="2" ><%= resource_contexts_template.requirements_template.name %></td>
           <td> 
-            <%= link_to 'Unlink from Template', 
+            <%= link_to raw(''), 
                     unlink_resource_from_template_path(resource_id: @resource.id, 
                                         template_id: resource_contexts_template.requirements_template_id, 
                                         customization_id: @customization_id,
                                         custom_origin: @custom_origin,
                                         tab_number: @tab_number),  
-                                  method: :post %>  
+                                        method: :post,
+                                        :class => 'icon unlink' %> 
           </td> 
         </tr>
       <% end %>
@@ -144,14 +145,15 @@
          <td><%= resource_contexts_requirement.requirement.text_brief%></td>
           <td><%= resource_contexts_requirement.requirements_template.name%></td> 
            <td> 
-            <%= link_to 'Unlink from Requirement', 
+            <%= link_to raw(''), 
                     unlink_resource_from_requirement_path(resource_id: @resource.id,
                                         template_id: resource_contexts_requirement.requirements_template_id, 
                                         requirement_id: resource_contexts_requirement.requirement_id,  
                                         customization_id: @customization_id,
                                         custom_origin: @custom_origin,
                                         tab_number: @tab_number),   
-                                  method: :post %>  
+                                        method: :post,
+                                        :class => 'icon unlink' %>  
           </td> 
         </tr>
       <% end %>
