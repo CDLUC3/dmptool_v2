@@ -75,8 +75,8 @@
 </div>
 
 <%unless @user.new_record?%>
-<p><strong>Contact Information</strong></p>
-<hr/>
+  <p><strong>Contact Information</strong></p>
+  <hr/>
 <%end%>
 
 <% errors = @user.errors[:email] %>
@@ -115,7 +115,6 @@
   <div class="control-group">
     <%= label_tag :my_roles, 'My Roles', :class => 'control-label' %>
     <div class="controls">
-      <%#= text_field_tag(:my_roles, "My Roles", value: @roles, disabled: true, :class => "input-xxlarge") %>
       <p><%= @user.role_names.join(' | ') %></p>
     </div>
   </div>
