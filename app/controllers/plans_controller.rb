@@ -27,6 +27,8 @@ class PlansController < ApplicationController
         @plans = @plans.approved.page(params[:page]).per(5)
       when "submitted"
         @plans = @plans.submitted.page(params[:page]).per(5)
+      when "committed"
+        @plans = @plans.committed.page(params[:page]).per(5)
       when "rejected"
         @plans = @plans.rejected.page(params[:page]).per(5)
       else
@@ -73,6 +75,7 @@ def create
 
   # GET /plans/1/edit
   def edit
+    @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: current_user.institution_id)
     set_comments
     coowners
   end
@@ -81,6 +84,7 @@ def create
   # PATCH/PUT /plans/1.json
   def update
     flash[:notice] = []
+    @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: current_user.institution_id)
     set_comments
     coowners
     respond_to do |format|
@@ -134,15 +138,13 @@ def create
   end
 
   def review_dmps
-    if user_role_in?(:institutional_reviewer)
-      user_id = current_user.id
-      user_plans = UserPlan.where(user_id: user_id).pluck(:id)
-      @plans = Plan.where(id: user_plans)
+    if user_role_in?(:institutional_reviewer, :institutional_admin)
+      institutions = Institution.find(current_user.institution_id).subtree_ids
+      @plans = Plan.plans_to_be_reviewed(institutions)
+    else
+      user_role_in?(:dmp_admin)
+      @plans = Plan.plans_to_be_reviewed(Institution.all.ids)
     end
-    if user_role_in?(:dmp_admin)
-      @plans = Plan.all
-    end
-
     case params[:scope]
       when "all"
         @plans = @plans.page(params[:page])
@@ -152,7 +154,6 @@ def create
   end
 
   def select_dmp_template
-
     req_temp = RequirementsTemplate.
                   includes(:institution).
                   where(active: true).
@@ -282,6 +283,7 @@ def create
       @coowned = @coowned_plans.count
       @approved = @plans.approved.count
       @submitted = @plans.submitted.count
+      @committed = @plans.committed.count
       @rejected = @plans.rejected.count
     end
 
