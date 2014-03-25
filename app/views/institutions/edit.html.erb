@@ -35,14 +35,11 @@
     <%= f.label :parent_id , "Parent Institution", :class => "control-label"%>
     <div class="controls">
 
-
 			<%= f.select :parent_id, 
           @institution_pool.map{|p| [ p.full_name, p.id ] },
           	{ selected:  @current_institution.parent_id, :include_blank => 'none'}, 
           	{:disabled => !@current_institution.is_shibboleth?}
       %>
-      
-
          
     </div>
   </div>

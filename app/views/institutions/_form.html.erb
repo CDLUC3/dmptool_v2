@@ -27,16 +27,12 @@
     <%= f.label :parent_id , "Parent Institution", :class => "control-label"%>
     <div class="controls">
 
+
       <%= f.select :parent_id, 
-          options_for_select(@categories),
-
-          :include_blank => 'none',
-          :selected => @current_institution.parent_id,
-          #selected: :parent_id,
-          :disabled => !@current_institution.is_shibboleth? 
+          @categories,
+            { selected:  @current_institution.parent_id, :include_blank => 'none'}, 
+            {:disabled => !@current_institution.is_shibboleth?}
       %>
-
-      
 
          
     </div>
