@@ -6,6 +6,8 @@ class InstitutionsController < ApplicationController
   before_filter :populate_institution_select_list, only: [:index, :new]
   before_action :check_institution_admin_access, :except=>[:partners_list]
 
+  include InstitutionsHelper
+
   # GET /institutions
   # GET /institutions.json
   def index
@@ -120,10 +122,16 @@ class InstitutionsController < ApplicationController
   def edit
 
     @current_institution = Institution.find(params[:id])
-    @institution_pool = Institution.order(full_name: :asc).where("id != ?", @current_institution.id)
     
+    if user_role_in?(:dmp_admin) 
+      @institution_pool = Institution.order(full_name: :asc).where("id != ?", @current_institution.id)
+    else
+      @institution_pool = @current_institution.root.subtree.collect { |i| [i.full_name, i.id] }
+      @institution_pool.delete_if {|i| i[1] == @current_institution.id}
+    end
 
   end
+
 
   # POST /institutions
   # POST /institutions.json
