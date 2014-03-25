@@ -3,7 +3,7 @@ class InstitutionsController < ApplicationController
   before_action :require_login, :except=>[:partners_list]
   before_action :set_institution, only: [:show, :destroy]
   before_action :check_for_cancel, :update => [:create, :update, :destroy]
-  before_filter :populate_institution_select_list
+  before_filter :populate_institution_select_list, only: [:index]
   before_action :check_institution_admin_access, :except=>[:partners_list]
 
   # GET /institutions
@@ -120,6 +120,8 @@ class InstitutionsController < ApplicationController
   def edit
 
     @current_institution = Institution.find(params[:id])
+    @institution_pool = Institution.order(full_name: :asc).where("id != ?", @current_institution.id)
+    
 
   end
 

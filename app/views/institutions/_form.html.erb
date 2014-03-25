@@ -28,12 +28,16 @@
     <div class="controls">
 
       <%= f.select :parent_id, 
-          options_for_select(@categories), 
+          options_for_select(@categories),
+
           :include_blank => 'none',
-         # :selected => @current_institution.parent_id,
-          selected: :parent_id,
+          :selected => @current_institution.parent_id,
+          #selected: :parent_id,
           :disabled => !@current_institution.is_shibboleth? 
       %>
+
+      
+
          
     </div>
   </div>
