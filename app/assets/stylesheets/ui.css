@@ -153,6 +153,14 @@ li.nested_requirements ul {
   padding: 2px 0 0 10px;
 	position: relative; }
 
+.highlight {
+  background-color: yellow;
+}
+
+.nested_institutions_highlight {
+	margin-left: 25px;
+  background-color: yellow;
+}
 
 /* choose DMP template from tree view by institution */
 div.template-list li {
