@@ -38,6 +38,7 @@ Dmptool2::Application.routes.draw do
   get 'dashboard/test', to: 'dashboard#test'
   get 'dm_guidance', to: 'static_pages#data_management_guidance'
   get 'guidance', to: 'static_pages#guidance'
+  get 'orcid', to: 'static_pages#orcid'
   get 'help', to: 'static_pages#help'
   get 'logout', to: 'user_sessions#destroy'
   get 'partners', to: 'static_pages#partners'
