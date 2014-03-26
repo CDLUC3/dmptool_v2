@@ -199,8 +199,6 @@ a .icon {
 .approve-template.icon {
 	background-position: -175px -40px; width: 25px; height: 25px; }
 /* fourth row */
-.edit-user.icon {
-	/* background-position: 0 -65px; width: 32px; height: 25px; */ }
 .remove-user.icon {
 	background-position: -35px -65px; width: 32px; height: 25px; }
 .administrator.icon {
