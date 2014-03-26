@@ -1,2 +1,37 @@
 <h1 class="row-fluid"><span class="icon profile"></span>My Profile</h1>
 <%= render 'form'  %>
+
+
+
+<!-- <p><strong>ORCID Widget</strong></p>
+<hr/>
+
+<div class="orcid_wrapper">
+  Enter Here:
+  <div class="controls">
+    <input class="orcid_widget" type="text" size="40" value="" name="name" ></input>
+    <button class="orcid_lookup btn btn-default btn-small" >Look up</button>
+    <button class="orcid_search btn btn-default btn-small" >Search</button>
+  </div>
+</div>
+ -->
+
+
+<p><strong>ORCID Widget</strong></p>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="orcid_widget.min.js"></script>
+
+<div class="orcid_wrapper">
+
+	<span class="orcid_before_html">http://orcid.org/</span>
+	
+
+	<input type="text" class="orcid_widget" ></input>
+
+	<button class="orcid_lookup btn btn-default btn-small" >Look up</button>
+  <button class="orcid_search btn btn-default btn-small" >Search</button>
+
+	
+
+</div>

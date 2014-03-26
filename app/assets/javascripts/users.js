@@ -19,3 +19,14 @@ $(document).ready(function() {
 	return false
 	});
 });
+
+
+$('#custom_settings_orcid').orcid_widget({
+	pre_lookup: true,
+	pre_open_search:true,
+	lookup_text: 'Custom Lookup',
+	search_text: 'Custom Search',
+	before_html: 'Enter Here: '
+});
+
+$('input').orcid_widget();

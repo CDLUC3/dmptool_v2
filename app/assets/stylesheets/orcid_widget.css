@@ -1,0 +1,29 @@
+.orcid_search, .orcid_lookup, .select_orcid_search_result, .close_search, .search_orcid{
+	cursor:pointer;
+	margin: 0px 0px 0px 5px;
+	float:none !important;
+}
+.orcid_before_html{
+	margin-right:5px;
+}
+.orcid_success_div, .orcid_search_div{
+	background:white;
+	width:auto;
+	border:1px solid #ccc;
+	margin:10px;
+	padding:10px;
+	position:relative;
+}
+.orcid_error_div{
+	padding:10px;
+	color:red;
+}
+.orcid_success_div a{
+	float:none !important;
+}
+
+.close_search{
+	position:absolute;
+	top:4px;
+	right:5px;
+}
