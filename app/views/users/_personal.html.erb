@@ -100,12 +100,12 @@
     <% if @user.new_record? %>
       <%= f.select( :institution_id, 
           @institution_list, 
-          {prompt: "-Select an Institution-", selected:  current_user.institution.id},
+          {prompt: "-Select an Institution-"},
           :class => "input-xxlarge") %>
     <% else %>
       <%= f.select( :institution_id, 
         @institution_list, 
-        {prompt: 'Select Institution', selected:  current_user.institution.id}, 
+        {prompt: 'Select Institution'}, 
         :class => "input-xxlarge")%>
     <% end %>
 
