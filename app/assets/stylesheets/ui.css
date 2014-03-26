@@ -157,6 +157,10 @@ li.nested_requirements ul {
   background-color: yellow;
 }
 
+.bold {
+	font-weight:bold;
+}
+
 .nested_institutions_highlight {
 	margin-left: 25px;
   background-color: yellow;
