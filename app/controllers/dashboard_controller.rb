@@ -4,7 +4,7 @@ class DashboardController < ApplicationController
 
   #show the default dashboard with get request
   def show
-    if user_role_in?(:institutional_reviewer, :dmp_admin)
+    if user_role_in?(:institutional_reviewer, :institutional_admin, :dmp_admin)
       @pending_review = current_user.institution.plans_by_state(PlanState::PENDING_REVIEW_STATES).count
       @finished_review = current_user.institution.plans_by_state(PlanState::FINISHED_REVIEW_STATES).count
     end
@@ -16,7 +16,7 @@ class DashboardController < ApplicationController
       #@resource_templates = current_user.institution.resource_templates_deep.count
     end
   end
-  
+
   def test
     @rt = RequirementsTemplate.find(1)
     @root_requirements = @rt.requirements.where("ancestry IS NULL")
