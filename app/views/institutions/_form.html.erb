@@ -12,14 +12,14 @@
   <div class="control-group">
     <%= f.label :shib_entity_id, "Entity_id", :class => "control-label " %>
     <div class="controls">
-      <%= f.text_field :shib_entity_id, readonly: @current_institution.is_shibboleth? %>
+      <%= f.text_field :shib_entity_id, readonly: @current_institution.is_shibboleth?, disabled: @disabled %>
     </div>
   </div>
 
   <div class="control-group">
     <%= f.label :shib_domain , "Shibboleth Domain", :class => "control-label "%>
     <div class="controls">
-      <%= f.text_field :shib_domain, readonly: @current_institution.is_shibboleth? %>
+      <%= f.text_field :shib_domain, readonly: @current_institution.is_shibboleth? , disabled: @disabled %>
     </div>
   </div>
 
