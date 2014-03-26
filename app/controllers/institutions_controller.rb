@@ -14,8 +14,10 @@ class InstitutionsController < ApplicationController
 
     if user_role_in?(:dmp_admin)
       @institutions = Institution.all
+      @disabled = false 
     else
-      @institutions = Institution.where(id: [current_user.institution.subtree_ids])
+      @institutions = Institution.where(id: [current_user.institution.root.subtree_ids])
+      @disabled = true
     end
 
     @institution = Institution.new(:parent_id => params[:parent_id])
