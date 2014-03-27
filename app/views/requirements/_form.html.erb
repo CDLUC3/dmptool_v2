@@ -26,8 +26,13 @@
         <%= label_tag :mandatory_applicable, "Mandatory If Applicable", :class => "radio-label" %><br/>
         <%= f.radio_button :obligation, :recommended, :class => 'radio inline' %>
         <%= label_tag :recommended, "Recommended", :class => "radio-label" %><br/>
-        <%= f.radio_button :obligation, :optional, checked: true , :class => 'radio inline' %>
-        <%= label_tag :optional, "Optional", :class => "radio-label" %>
+        <% if @requirement.new_record? %>
+          <%= f.radio_button :obligation, :optional, checked: true , :class => 'radio inline' %>
+          <%= label_tag :optional, "Optional", :class => "radio-label" %>
+        <% else %>
+          <%= f.radio_button :obligation, :optional, :class => 'radio inline' %>
+          <%= label_tag :optional, "Optional", :class => "radio-label" %>
+        <% end %>
       </div>
     </div>
     <div class="control-group">
