@@ -3,17 +3,21 @@ before_action :require_login
 before_action :set_plan, only: [:approved, :rejected, :submitted, :committed]
 
   def approved
-    # plan_state = PlanState.find(@plan.current_plan_state_id).state
-    # if plan_state == :submitted && user_role_in?(:institutional_reviewer)
-    #   debugger
-    #   create_plan_state(:approved)
-    # else
-    #   redirect_to preview_plan_path(@plan), notice: "You dont have permission to Approve this plan."
-    # end
+    plan_state = PlanState.find(@plan.current_plan_state_id).state
+    if user_role_in?(:institutional_reviewer, :institutional_admin, :dmp_admin)
+      review_plan_state(:approved) if (plan_state == :submitted || plan_state == :approved)
+    else
+      redirect_to perform_review_plan_path(@plan), notice: "You dont have permission to Approve this plan."
+    end
   end
 
   def rejected
-
+    plan_state = PlanState.find(@plan.current_plan_state_id).state
+    if user_role_in?(:institutional_reviewer, :institutional_admin, :dmp_admin)
+      review_plan_state(:rejected) if (plan_state == :submitted || plan_state == :rejected)
+    else
+      redirect_to perform_review_plan_path(@plan), notice: "You dont have permission to Approve this plan."
+    end
   end
 
   def submitted
@@ -76,7 +80,7 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed]
       unless @plan.current_plan_state == state
         plan_state = PlanState.create( plan_id: @plan.id, state: state, user_id: current_user.id)
         @plan.current_plan_state_id = plan_state.id
-        redirect_to perform_preview_plan_path(@plan), notice: "The Plan is set to #{state}."
+        redirect_to perform_review_plan_path(@plan), notice: "The Plan is set to #{state}."
       else
         redirect_to perform_review_plan_path(@plan), notice: "The Plan is already set to #{state}."
       end

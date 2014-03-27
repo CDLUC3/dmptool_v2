@@ -98,9 +98,15 @@
   <div class="controls">
     <% # filter institution list in my profile page only %>
     <% if @user.new_record? %>
-      <%= f.select( :institution_id, @institution_list, {prompt: "-Select an Institution-"}, :class => "input-xxlarge") %>
+      <%= f.select( :institution_id, 
+          @institution_list, 
+          {prompt: "-Select an Institution-"},
+          :class => "input-xxlarge") %>
     <% else %>
-      <%= f.select( :institution_id, @institution_list, {prompt: 'Select Institution'}, :class => "input-xxlarge")%>
+      <%= f.select( :institution_id, 
+        @institution_list, 
+        {prompt: 'Select Institution'}, 
+        :class => "input-xxlarge")%>
     <% end %>
 
     <span class="help-in-line">

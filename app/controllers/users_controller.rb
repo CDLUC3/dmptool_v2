@@ -44,8 +44,11 @@ class UsersController < ApplicationController
 
     @user = User.find(params[:id])
     @my_institution = @user.institution
-
-    @institution_list = my_profile_institution_list(@my_institution)
+    if user_role_in?(:dmp_admin)
+      @institution_list = Institution.order(full_name: :asc).collect { |i| [i.full_name, i.id] }
+    else
+      @institution_list = @my_institution.root.subtree.collect { |i| [i.full_name, i.id] }
+    end
 
     @roles = @user.roles.map {|r| r.name}.join(' | ')
 

@@ -3,8 +3,10 @@ class InstitutionsController < ApplicationController
   before_action :require_login, :except=>[:partners_list]
   before_action :set_institution, only: [:show, :destroy]
   before_action :check_for_cancel, :update => [:create, :update, :destroy]
-  before_filter :populate_institution_select_list
+  before_filter :populate_institution_select_list, only: [:index, :new]
   before_action :check_institution_admin_access, :except=>[:partners_list]
+
+  include InstitutionsHelper
 
   # GET /institutions
   # GET /institutions.json
@@ -12,8 +14,10 @@ class InstitutionsController < ApplicationController
 
     if user_role_in?(:dmp_admin)
       @institutions = Institution.all
+      @disabled = false 
     else
-      @institutions = Institution.where(id: [current_user.institution.subtree_ids])
+      @institutions = Institution.where(id: [current_user.institution.root.subtree_ids])
+      @disabled = true
     end
 
     @institution = Institution.new(:parent_id => params[:parent_id])
@@ -22,14 +26,16 @@ class InstitutionsController < ApplicationController
 
     @institution_users = institutional_admins
 
-    @categories.delete_if {|i| i[1] == @institution.id}
+    @categories.delete_if {|i| i[1] == current_user.institution.id}
 
     manage_users
 
     institutional_resources
 
     @tab_number = 'tab_tab2' #the tab number for the maze of editing resources from everywhere
-
+ 
+    
+      
   end
 
 
@@ -72,6 +78,7 @@ class InstitutionsController < ApplicationController
     @template_editor = @current_institution.users_in_role("Template Editor").count
     @institutional_administrator =@current_institution.users_in_role("Institutional Administrator").count
     @dmp_administrator = @current_institution.users_in_role("DMP Administrator").count
+    @institutional_reviewer = @current_institution.users_in_role("Institutional Reviewer").count
   end
 
   #every roles except DMP Admin
@@ -115,9 +122,18 @@ class InstitutionsController < ApplicationController
 
   # GET /institutions/1/edit
   def edit
+
     @current_institution = Institution.find(params[:id])
-    #@institution = Institution.find(params[:id])
+    
+    if user_role_in?(:dmp_admin) 
+      @institution_pool = Institution.order(full_name: :asc).where("id != ?", @current_institution.id)
+    else
+      @institution_pool = @current_institution.root.subtree.collect { |i| [i.full_name, i.id] }
+      @institution_pool.delete_if {|i| i[1] == @current_institution.id}
+    end
+
   end
+
 
   # POST /institutions
   # POST /institutions.json
