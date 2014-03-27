@@ -64,7 +64,8 @@
       <%= f.submit 'Save Changes', :class => "btn" %>
       
 
-      <%= link_to 'Delete Resource', delete_resource_path(resource_id: @resource.id, 
+      <%= link_to(content_tag(:span, "", :class => "icon remove") + "Delete Resource",
+                                      delete_resource_path(resource_id: @resource.id, 
                                       customization_overview_id: @customization_id,
                                       custom_origin: @custom_origin,
                                       requirement_id: @requirement_id,
@@ -73,7 +74,7 @@
                                       origin_url: smart_origin_url),
                                       :method => :delete,
                                     data: { confirm: 'Are you sure? This resource will be deleted from all templates!' }, 
-                                    :class => "btn" %>
+                                    :class => "red remove_fields") %>
     </div>
   </fieldset>
 <% end %>
