@@ -312,7 +312,8 @@ class ResourceContextsController < ApplicationController
     @customization_institution = @resource_context.institution
     @template= @customization.requirements_template
     @customization_institution_name = (@customization_institution.nil? ? nil : @customization_institution.full_name)
-    @template_name = @customization.requirements_template.name
+
+    @template_name = (@customization.requirements_template.nil? ? nil : @customization.requirements_template.name)
       
     @resource_contexts = ResourceContext.includes(:resource).
                           per_template(@template).
@@ -320,7 +321,11 @@ class ResourceContextsController < ApplicationController
                           help_text_and_url_resources.
                           resource_level.
                           where(institution_id:
-                                  (@customization_institution.nil? ? nil : [@customization_institution.subtree_ids]))                                                
+                                  (@customization_institution.nil? ? nil : [@customization_institution.subtree_ids])) 
+
+    
+    @all_institutions = "all Institutions"
+                                             
   end
 
 
