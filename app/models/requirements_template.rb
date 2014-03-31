@@ -17,6 +17,7 @@ class RequirementsTemplate < ActiveRecord::Base
   validates :institution_id, presence: true, numericality: true
   validates :visibility, presence: true
   validates :name, presence: true
+  validates :name, uniqueness: { scope: :institution_id, message: "already present for this institution."}
 
   validates :start_date, date: true, unless: "start_date.nil?"
   validates :end_date, date: true, unless: "end_date.nil?"
