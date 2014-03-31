@@ -70,6 +70,8 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 /* Log In */
 .login.row-fluid, .contact.row-fluid {
 	margin: 20px 35px; }
+.login.terms {
+	margin: 20px 0; }	
 .login p {
 	font-size: 1.167em; }
 .control-group.select_institution select {
