@@ -196,6 +196,7 @@ def create
       end
       @requirement = Requirement.find(params[:requirement_id]) unless params[:requirement_id].blank?
       @resource_contexts = ResourceContext.where(requirement_id: @requirement.id, institution_id: current_user.institution_id, requirements_template_id: @requirements_template.id)
+      
       @guidance_resources = display_text(@resource_contexts)
       @url_resources = display_value(@resource_contexts)
       @suggested_resources = display_suggested(@resource_contexts)
@@ -214,6 +215,9 @@ def create
         @next_requirement_id = @next_requirement.id
       end
     end
+
+
+
   end
 
   def change_visibility
