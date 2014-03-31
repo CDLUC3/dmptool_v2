@@ -195,12 +195,11 @@ class UsersController < ApplicationController
   def autocomplate_users_plans
     if !params[:name_term].blank?
       like = params[:name_term].concat("%")
-      if current_user.has_role?(Role::DMP_ADMIN)
-        u = User
-      elsif current_user.has_role?(Role::INSTITUTIONAL_ADMIN) || current_user
-        u = current_user.institution.users_deep
+      if user_role_in?(:dmp_admin)
+        @users = User.where("CONCAT(first_name, ' ', last_name) LIKE ? ", like).active
+      else
+        @users = current_user.institution.users_deep.where("CONCAT(first_name, ' ', last_name) LIKE ? ", like).active
       end
-      @users = u.where("CONCAT(first_name, ' ', last_name) LIKE ? ", like).active
     end
     list = map_users_for_autocomplete(@users)
     render json: list
