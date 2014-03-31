@@ -13,6 +13,7 @@ class PlansController < ApplicationController
    @coowned_plans = user.coowned_plans
    plan_ids = UserPlan.where(user_id: user.id).pluck(:plan_id) unless user.id.nil?
    @plans = Plan.where(id: plan_ids)
+   count
 
     case params[:scope]
       when "all"
@@ -36,7 +37,7 @@ class PlansController < ApplicationController
     end
 
     @planstates = PlanState.page(params[:page]).per(5)
-    count
+    
   end
 
   # GET /plans/1
