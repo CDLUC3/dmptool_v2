@@ -16,9 +16,7 @@
       <%# global resources for this requirement, Stephen's case #1 %>
       <% (@requirement.global_resources.guidance).each do |resource| %>
       <li>
-        <!-- <p class="cust_label">
-          <%#= strip_tags(resource.label) %>
-        </p> -->
+        
         <p class="cust_text">
           <%= sanitize(resource.text) %>
         </p>
@@ -84,14 +82,12 @@
 
   <div class= 'institution_customization_resources'>
     <% unless @requirement.institution_customization_resources(current_user.institution_id).guidance.empty? %>
-    <h3> <%= current_user.institution.name %> Resources </h3>
+    <!-- <h3> <%#= current_user.institution.name %> Resources </h3> -->
     <ul>
       <%# institution customization resources for this requirement, Stephen's case #4 %>
       <% (@requirement.institution_customization_resources(current_user.institution_id).guidance).each do |resource| %>
         <li>
-          <!-- <p class="cust_label">
-            <%#= strip_tags(resource.label) %>
-          </p> -->
+          
           <p class="cust_text">
             <%= sanitize(resource.text) %>
           </p>
@@ -103,14 +99,11 @@
 
   <div class= 'template_customization_resources'>
     <% unless @requirement.template_customization_resources(current_user.institution_id).guidance.empty? %>
-    <h3> <%= @requirements_template.name %> for <%= current_user.institution.name %> Resources"</h3>
+    <!-- <h3> <%#= @requirements_template.name %> for <%= current_user.institution.name %> Resources"</h3> -->
     <ul>
       <%# template customization resources for this requirement, Stephen's case #5 %>
       <% (@requirement.template_customization_resources(current_user.institution_id).guidance).each do |resource| %>
         <li>
-          <!-- <p class="cust_label">
-            <%#= strip_tags(resource.label) %>
-          </p> -->
           <p class="cust_text">
             <%= sanitize(resource.text) %>
           </p>
@@ -127,9 +120,6 @@
       <ul>
         <% @guidance_resources.each do |resource| %>
           <li>
-            <!-- <p class="cust_label">
-              <%#= strip_tags(resource.label) %>
-            </p> -->
             <p class="cust_text">
               <%= sanitize(resource.text) %>
             </p>
