@@ -144,6 +144,7 @@ class ResourceContext < ActiveRecord::Base
     where("resource_id IS NOT NULL") 
   end
 
+  
 
   #see context level variables at top for information
   def resource_level
