@@ -39,15 +39,19 @@ class UsersController < ApplicationController
     @institution_list = InstitutionsController.institution_select_list
   end
 
+
   # GET /users/1/edit
   def edit
 
     @user = User.find(params[:id])
     @my_institution = @user.institution
     if user_role_in?(:dmp_admin)
-      @institution_list = Institution.order(full_name: :asc).collect { |i| [i.full_name, i.id] }
+      #@institution_list = Institution.order(full_name: :asc).collect { |i| [i.full_name, i.id] }
+      @institution_list = InstitutionsController.institution_select_list
     else
-      @institution_list = @my_institution.root.subtree.collect { |i| [i.full_name, i.id] }
+      #@institution_list = @my_institution.root.subtree.collect { |i| [i.full_name, i.id] }
+      @institution_list = @my_institution.root.subtree.collect {|i| ["#{'-' * i.depth} #{i.full_name}", i.id] }
+
     end
 
     @roles = @user.roles.map {|r| r.name}.join(' | ')
