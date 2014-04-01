@@ -49,7 +49,7 @@
         </td>
         <td><%= owner_name(plan) %></td>
         <td><strong><%= state(plan) %></strong></td>
-        <%if plan.visibility == :private %><
+        <%if plan.visibility == :private %>
           <td>Private</td>
         <% elsif plan.visibility == :public %>
           <td>Public</td>
