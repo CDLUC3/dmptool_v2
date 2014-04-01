@@ -1,12 +1,15 @@
-<h2> <%= @template_name %>  
-	<% unless user_role_in?(:dmp_admin) %>
-		
-		for <%= @customization_institution_name %> 
-
+<br />
+<h2 class="row-fluid">Template Resources for <%= @template_name %>  - Customized for 
+	<% if @customization_institution_name %>
+			<%= @customization_institution_name %>
+	<% else %>	
+			<%= @all_institutions %>
 	<% end %>
-	
-	Resources 
 </h2>
+<div>
+	<p>These resources will be displayed for all requirements defined for this template.</p>
+</div>
+
 	
 <table class="table table-striped">
 

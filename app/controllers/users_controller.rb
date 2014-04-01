@@ -39,15 +39,19 @@ class UsersController < ApplicationController
     @institution_list = InstitutionsController.institution_select_list
   end
 
+
   # GET /users/1/edit
   def edit
 
     @user = User.find(params[:id])
     @my_institution = @user.institution
     if user_role_in?(:dmp_admin)
-      @institution_list = Institution.order(full_name: :asc).collect { |i| [i.full_name, i.id] }
+      #@institution_list = Institution.order(full_name: :asc).collect { |i| [i.full_name, i.id] }
+      @institution_list = InstitutionsController.institution_select_list
     else
-      @institution_list = @my_institution.root.subtree.collect { |i| [i.full_name, i.id] }
+      #@institution_list = @my_institution.root.subtree.collect { |i| [i.full_name, i.id] }
+      @institution_list = @my_institution.root.subtree.collect {|i| ["#{'-' * i.depth} #{i.full_name}", i.id] }
+
     end
 
     @roles = @user.roles.map {|r| r.name}.join(' | ')
@@ -191,12 +195,11 @@ class UsersController < ApplicationController
   def autocomplate_users_plans
     if !params[:name_term].blank?
       like = params[:name_term].concat("%")
-      if current_user.has_role?(Role::DMP_ADMIN)
-        u = User
-      elsif current_user.has_role?(Role::INSTITUTIONAL_ADMIN) || current_user
-        u = current_user.institution.users_deep
+      if user_role_in?(:dmp_admin)
+        @users = User.where("CONCAT(first_name, ' ', last_name) LIKE ? ", like).active
+      else
+        @users = current_user.institution.users_deep.where("CONCAT(first_name, ' ', last_name) LIKE ? ", like).active
       end
-      @users = u.where("CONCAT(first_name, ' ', last_name) LIKE ? ", like).active
     end
     list = map_users_for_autocomplete(@users)
     render json: list

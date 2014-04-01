@@ -26,7 +26,7 @@
           <%= plan.owner.full_name %>
         </td>
         <td class="nowrap">
-          <%= link_to("PDF icon here", plan_path(plan, format: "pdf")) %>
+          <%= link_to('', plan_path(plan, format: "pdf"), :class => 'icon pdf') %>
         </td>
       </tr>
     <% end %>

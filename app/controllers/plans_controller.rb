@@ -13,6 +13,7 @@ class PlansController < ApplicationController
    @coowned_plans = user.coowned_plans
    plan_ids = UserPlan.where(user_id: user.id).pluck(:plan_id) unless user.id.nil?
    @plans = Plan.where(id: plan_ids)
+   count
 
     case params[:scope]
       when "all"
@@ -36,7 +37,7 @@ class PlansController < ApplicationController
     end
 
     @planstates = PlanState.page(params[:page]).per(5)
-    count
+    
   end
 
   # GET /plans/1
@@ -61,7 +62,7 @@ def create
         UserPlan.create!(user_id: current_user.id, plan_id: @plan.id, owner: true)
         PlanState.create!(plan_id: @plan.id, state: :new, user_id: current_user.id )
         add_coowner_autocomplete
-        flash[:notice]
+        flash[:alert]
         format.html { flash[:notice] << "Plan was successfully updated."
                   redirect_to edit_plan_path(@plan)}
         format.json { render action: 'show', status: :created, location: @plan }
@@ -87,10 +88,16 @@ def create
     @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: current_user.institution_id)
     set_comments
     coowners
+    add_coowner_autocomplete
     respond_to do |format|
+      if flash[:alert] == ["The user you entered was not found"]
+        format.html { flash[:alert]
+              redirect_to edit_plan_path(@plan)}
+      elsif flash[:alert] == ["The user you chose is already a Coowner"]
+        format.html { flash[:alert]
+              redirect_to edit_plan_path(@plan)}
+      else
         if @plan.update(plan_params)
-          add_coowner_autocomplete
-          flash[:notice]
           format.html { flash[:notice] << "Plan was successfully updated."
                   redirect_to edit_plan_path(@plan)}
           format.json { head :no_content }
@@ -99,9 +106,9 @@ def create
           format.html { render action: 'edit' }
           format.json { render json: @plan.errors, status: :unprocessable_entity }
         end
+      end
     end
   end
-
   # DELETE /plans/1
   # DELETE /plans/1.json
   def destroy
@@ -190,6 +197,7 @@ def create
       end
       @requirement = Requirement.find(params[:requirement_id]) unless params[:requirement_id].blank?
       @resource_contexts = ResourceContext.where(requirement_id: @requirement.id, institution_id: current_user.institution_id, requirements_template_id: @requirements_template.id)
+      
       @guidance_resources = display_text(@resource_contexts)
       @url_resources = display_value(@resource_contexts)
       @suggested_resources = display_suggested(@resource_contexts)
@@ -208,6 +216,9 @@ def create
         @next_requirement_id = @next_requirement.id
       end
     end
+
+
+
   end
 
   def change_visibility
@@ -254,9 +265,9 @@ def create
           email = n[/\<.*\>/].gsub(/\<(.*)\>/, '\1') unless n[/\<.*\>/].nil?
           user = User.find_by(email: email)
           if user.nil?
-            flash[:notice] << "The user you entered was not found"
+            flash[:alert] = "The user you entered was not found"
           elsif user.user_plans.where(plan_id: @plan.id, owner: false).count > 0
-            flash[:notice] << "The user you chose is already a #{item_description}"
+            flash[:alert] = "The user you chose is already a #{item_description}"
           else
             userplan = UserPlan.create(owner: false, user_id: user.id, plan_id: @plan.id)
             userplan.save!
@@ -278,9 +289,10 @@ def create
     end
 
     def count
-      @all = @plans.count
+      
       @owned = @owned_plans.count
       @coowned = @coowned_plans.count
+      @all = @owned + @coowned
       @approved = @plans.approved.count
       @submitted = @plans.submitted.count
       @committed = @plans.committed.count

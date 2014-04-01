@@ -18,7 +18,7 @@
            col1[0] = link_to "#{current_user.owned_plans.count} plans I own", plans_path(:scope => "all_limited")
            col1[1] = link_to "#{current_user.coowned_plans.count} plans i co-own", plans_path(:scope => "coowned")
            col2 = (current_user.unique_plan_states & PlanState::REVIEW_STATES).map do |state|
-             link_to "#{current_user.plans_by_state(state).count} #{state.capitalize}"
+             link_to "#{current_user.plans_by_state(state).count} #{state.capitalize}", review_dmps_path
            end
            if col2.length < 1
              col2[0] = "No DMPs are under review."
@@ -79,7 +79,7 @@
 	<div class="buttons">
 
 		<!--The following id is used for testing purposes, please do not remove-->
-		<%= link_to "Create New DMP Template", requirements_template_information_path, :method => :get, :class => "btn btn-green", :id => "create_new_DMP_template" %>
+		<%= link_to "Create New DMP Template", new_requirements_template_path, :method => :get, :class => "btn btn-green", :id => "create_new_DMP_template" %>
 
 	</div>
 	<% end %>
