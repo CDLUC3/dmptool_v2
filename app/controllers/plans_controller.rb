@@ -54,7 +54,7 @@ class PlansController < ApplicationController
 
   # POST /plans
   # POST /plans.json
-def create
+  def create
     flash[:notice] = []
     @plan = Plan.new(plan_params)
     respond_to do |format|
@@ -125,7 +125,8 @@ def create
       current_user_plan_ids = UserPlan.where(user_id: current_user.id).pluck(:plan_id)
       user_plans = Plan.find(current_user_plan_ids)
       @plans = user_plans + public_plans
-      @plans = @plans.page(params[:page]).per(5)
+      debugger
+      @plans = Kaminari.paginate_array(@plans).page(params[:page]).per(5)
   end
 
   def copy_existing_template
