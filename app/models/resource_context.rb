@@ -10,6 +10,10 @@ class ResourceContext < ActiveRecord::Base
   validates :institution_id, uniqueness: { scope: [:institution_id, :requirements_template_id, :requirement_id, :resource_id],
             message: "You are attempting to insert a duplicate of a customization that already exists." }
 
+  validates :contact_email, format: { with: /.+\@.+\..+/,
+            message: "%{value} address must be valid" }, if: "resource_id.blank? && !institution_id.blank?"
+
+
   #these are the context levels, their names, descriptions and which items they must have set of
   # institution_id, requirements_template_id, requirement_id, resource_id
   CONTEXT_LEVELS = {
