@@ -51,7 +51,7 @@ class CommentsController < ApplicationController
     plan_id = @comment.plan_id
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to edit_plan_path(plan_id) }
+      format.html { redirect_to :back }
       format.json { head :no_content }
     end
   end
