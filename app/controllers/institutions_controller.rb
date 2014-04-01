@@ -131,9 +131,9 @@ class InstitutionsController < ApplicationController
     @current_institution = Institution.find(params[:id])
     
     if user_role_in?(:dmp_admin) 
-      @institution_pool = Institution.order(full_name: :asc).where("id != ?", @current_institution.id)
+      @institution_pool = Institution.order(full_name: :asc).where("id != ?", @current_institution.id).collect {|i| ["#{'-' * i.depth} #{i.full_name}", i.id] } 
     else
-      @institution_pool = @current_institution.root.subtree.collect { |i| [i.full_name, i.id] }
+      @institution_pool = @current_institution.root.subtree.collect {|i| ["#{'-' * i.depth} #{i.full_name}", i.id] } 
       @institution_pool.delete_if {|i| i[1] == @current_institution.id}
     end
 
