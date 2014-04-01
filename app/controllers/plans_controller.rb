@@ -119,13 +119,11 @@ def create
   end
 
   def template_information
-    if !user_role_in?(:dmp_admin)
-      user_plans = UserPlan.where(user_id: current_user.id)
-      plan_ids=user_plans.pluck(:plan_id)
-      @plans = Plan.page(params[:page]).per(5)
-    else
-      @plans = Plan.page(params[:page]).per(5)
-    end
+      public_plans = Plan.public_visibility
+      current_user_plan_ids = UserPlan.where(user_id: current_user.id).pluck(:plan_id)
+      user_plans = Plan.find(current_user_plan_ids)
+      @plans = user_plans + public_plans
+      @plans = @plans.page(params[:page]).per(5)
   end
 
   def copy_existing_template
@@ -196,7 +194,6 @@ def create
       end
       @requirement = Requirement.find(params[:requirement_id]) unless params[:requirement_id].blank?
       @resource_contexts = ResourceContext.where(requirement_id: @requirement.id, institution_id: current_user.institution_id, requirements_template_id: @requirements_template.id)
-      
       @guidance_resources = display_text(@resource_contexts)
       @url_resources = display_value(@resource_contexts)
       @suggested_resources = display_suggested(@resource_contexts)
@@ -215,9 +212,6 @@ def create
         @next_requirement_id = @next_requirement.id
       end
     end
-
-
-
   end
 
   def change_visibility
@@ -260,15 +254,20 @@ def create
     unless u_name.blank?
       u_name.split(',').each do |n|
         unless n.blank?
-          user, email = nil, nil
-          email = n[/\<.*\>/].gsub(/\<(.*)\>/, '\1') unless n[/\<.*\>/].nil?
-          user = User.find_by(email: email)
-          if user.nil?
+          @user, email = nil, nil
+          if n.match(/((?>\w+\s*(?=@))+)/).nil? && n.match(/((?>\w+\s*(?=<))+)/).nil?
+            email = n[/\<.*\>/].gsub(/\<(.*)\>/, '\1') unless n[/\<.*\>/].nil?
+            @user = User.find_by(email: email)
+          else
+            debugger
+            @user = User.find_by(email: n)
+          end
+          if @user.nil?
             flash[:alert] = "The user you entered was not found"
-          elsif user.user_plans.where(plan_id: @plan.id, owner: false).count > 0
+          elsif @user.user_plans.where(plan_id: @plan.id, owner: false).count > 0
             flash[:alert] = "The user you chose is already a #{item_description}"
           else
-            userplan = UserPlan.create(owner: false, user_id: user.id, plan_id: @plan.id)
+            userplan = UserPlan.create(owner: false, user_id: @user.id, plan_id: @plan.id)
             userplan.save!
           end
         end
