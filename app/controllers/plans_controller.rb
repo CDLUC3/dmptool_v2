@@ -289,9 +289,10 @@ def create
     end
 
     def count
-      @all = @plans.count
+      
       @owned = @owned_plans.count
       @coowned = @coowned_plans.count
+      @all = @owned + @coowned
       @approved = @plans.approved.count
       @submitted = @plans.submitted.count
       @committed = @plans.committed.count
