@@ -22,7 +22,7 @@
 	    </div>
 	  </div>
 	  <div class="template-status border-box">
-	    <p><strong>DMP Template Status:</strong> 
+	    <p><strong>DMP Template Status:</strong>
 	     <span id="status_<%= @requirements_template.id %>">
 	      <%= @requirements_template.active ? 'Active' : 'Inactive' %>
 		    </span>
@@ -35,7 +35,11 @@
 	</div>
 	<div class="tabbable span8">
 		<ul class="nav nav-tabs">
-	  	<li class="active"><%= link_to 'Requirements', '#tab1', :data => {:toggle => 'tab'} %></li>
+      <% if params[:node_type] == 'group'%>
+	  		<li class="active"><%= link_to 'Group', '#tab1', :data => {:toggle => 'tab'} %></li>
+	  	<% else %>
+	  		<li class="active"><%= link_to 'Requirements', '#tab1', :data => {:toggle => 'tab'} %></li>
+	  	<% end %>
 		</ul>
 	 	<div class="tab-content">
 	  	<div class="tab-pane active" id="tab1">
