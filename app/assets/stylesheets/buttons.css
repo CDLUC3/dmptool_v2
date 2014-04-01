@@ -52,6 +52,7 @@ a.btn, button.btn, input[type=submit], input[type=submit].btn, .ui-datepicker-tr
 	line-height: 34px;
 	width: auto;
 	height: 30px;
+	margin-left: 5px;
 	margin-right: 5px;
 	padding: 0 20px; }
 .ui-datepicker-trigger {
