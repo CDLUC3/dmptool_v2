@@ -37,7 +37,7 @@ class PlansController < ApplicationController
     end
 
     @planstates = PlanState.page(params[:page]).per(5)
-    
+
   end
 
   # GET /plans/1
@@ -85,15 +85,16 @@ def create
   # PATCH/PUT /plans/1.json
   def update
     flash[:notice] = []
+    flash[:alert] = []
     @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: current_user.institution_id)
     set_comments
     coowners
     add_coowner_autocomplete
     respond_to do |format|
-      if flash[:alert] == ["The user you entered was not found"]
+      if flash[:alert].include?("The user you entered was not found")
         format.html { flash[:alert]
               redirect_to edit_plan_path(@plan)}
-      elsif flash[:alert] == ["The user you chose is already a Coowner"]
+      elsif flash[:alert].include?("The user you entered was not found")
         format.html { flash[:alert]
               redirect_to edit_plan_path(@plan)}
       else
@@ -256,13 +257,8 @@ def create
       u_name.split(',').each do |n|
         unless n.blank?
           @user, email = nil, nil
-          if n.match(/((?>\w+\s*(?=@))+)/).nil? && n.match(/((?>\w+\s*(?=<))+)/).nil?
-            email = n[/\<.*\>/].gsub(/\<(.*)\>/, '\1') unless n[/\<.*\>/].nil?
-            @user = User.find_by(email: email)
-          else
-            debugger
-            @user = User.find_by(email: n)
-          end
+          email = n[/\<.*\>/].gsub(/\<(.*)\>/, '\1') unless n[/\<.*\>/].nil?
+          @user = User.find_by(email: email)
           if @user.nil?
             flash[:alert] = "The user you entered was not found"
           elsif @user.user_plans.where(plan_id: @plan.id, owner: false).count > 0
@@ -288,7 +284,7 @@ def create
     end
 
     def count
-      
+
       @owned = @owned_plans.count
       @coowned = @coowned_plans.count
       @all = @owned + @coowned
