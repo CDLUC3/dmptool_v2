@@ -132,6 +132,8 @@ a.icon {
 	text-decoration: none !important;
 	vertical-align: middle;
 	position: relative; }
+a.icon + a.icon {
+	margin-left: 10px; }
 h1 .icon {
 	position: absolute;
 	top: 7px;
