@@ -25,14 +25,22 @@
 
   <div class="control-group">
     <%= f.label :parent_id , "Parent Institution", :class => "control-label"%>
-    <div class="controls">
+    <div class="controls">    
 
+      <% if user_role_in?(:dmp_admin) %>
+        <%= f.select :parent_id, 
+              @categories,
+              { selected:  @current_institution.parent_id, :include_blank => 'none'}
+        %>
+      <% else %>
 
-      <%= f.select :parent_id, 
-          @categories,
+        <%= f.select :parent_id, 
+            @sub_institutions,
             { selected:  @current_institution.parent_id, :include_blank => 'none'}, 
-            {:disabled => ( !@current_institution.is_shibboleth? && !user_role_in?(:dmp_admin) )}
-      %>
+            {:disabled => !@current_institution.is_shibboleth?}
+        %>
+    
+      <% end %>
 
          
     </div>
