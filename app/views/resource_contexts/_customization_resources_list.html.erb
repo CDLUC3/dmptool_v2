@@ -16,8 +16,7 @@
 	<thead>
 		<tr>
 			<th class="span4">Details</th>
-			<th>Unlink from customization</th>
-			<th width="span1">Edit</th>
+			<th>Action</th>
 			<th>Institution</th>
 			<th>Creation Date</th>
 			<th>Last Modification Date</th>
@@ -31,7 +30,15 @@
 					<%= resource_context.resource.nil? ? " " :  resource_context.resource.label %>
 				</div>
 			</td>
-			<td><%= link_to raw(''), 
+			<td>
+            <%= link_to raw(''),
+              edit_customization_resource_path(id: resource_context.resource_id,
+                                               customization_id: @customization.id,
+                                               custom_origin: "Overview",
+                                               origin_url: smart_origin_url),
+                                               :class => 'icon edit-user',
+                                               :title => 'Edit' %>
+            <%= link_to raw(''), 
 						unlink_resource_from_customization_path(resource_id: resource_context.resource.id,
                             								template_id: @customization.requirements_template_id, 
                                             customization_id: @customization.id,
@@ -39,16 +46,9 @@
                                             unlink_from_customization: true,
                                             custom_origin: "Overview"),  
                                   			method: :post,
-                                  			:class => 'icon unlink' %>  
+                                  			:class => 'icon unlink',
+                                  			:title => 'Unlink from customization' %>
             </td>
-			<td class="span1">
-        <%= link_to raw(''),
-              edit_customization_resource_path(id: resource_context.resource_id,
-                                               customization_id: @customization.id,
-                                               custom_origin: "Overview",
-                                               origin_url: smart_origin_url),
-              :class => 'icon edit-user' %>
-      </td>
 			<td><%= resource_context.institution.nil? ? " " :  resource_context.institution.nickname %></td>
 			<td><%= resource_context.created_at.nil? ? " " :  resource_context.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 			<td><%= resource_context.updated_at.nil? ? " " :  resource_context.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
