@@ -17,8 +17,29 @@ class RequirementsTemplatesController < ApplicationController
       @requirements_templates = RequirementsTemplate.all
     end
 
-    @requirements_templates = @requirements_templates.order(name: :asc)
-    case params[:scope]
+    #@requirements_templates = @requirements_templates.order(name: :asc)
+
+    @order_scope = params[:order_scope]
+    @scope = params[:scope]
+
+    case @order_scope    
+      when "Name"
+        @requirements_templates = @requirements_templates.order(name: :asc)
+      when "Institution"
+        @requirements_templates = @requirements_templates.order_by_institution_name
+      when "Status"
+        @requirements_templates = @requirements_templates.order(active: :desc)
+      when "Visibility"
+        @requirements_templates = @requirements_templates.order(visibility: :asc)  
+      when "Creation_Date"
+        @requirements_templates = @requirements_templates.order(created_at: :desc)
+      when "Last_Modification_Date"
+        @requirements_templates = @requirements_templates.order(updated_at: :desc)
+      else
+        @requirements_templates = @requirements_templates.order(name: :asc)
+    end
+
+    case @scope
       when "all"
         @requirements_templates = @requirements_templates.page(params[:page]).per(100)
       when "all_limited"

@@ -1,26 +1,40 @@
 <h1 class="row-fluid"><span class="icon dmp-template"></span>DMP Templates</h1>
 
 <div class="table-scope">
-	<%= link_to "All (#{@all})", {scope: "all_limited"}, :class => "all_limited" %>
+	<%= link_to "All (#{@all})", {scope: "all_limited", order_scope: @order_scope}, :class => "all_limited" %>
 	|
-	<%= link_to "Active  (#{@active})", {scope: "active"}, :class => "active" %>
+	<%= link_to "Active  (#{@active})", {scope: "active", order_scope: @order_scope}, :class => "active" %>
 	|
-	<%= link_to "Inactive (#{@inactive})", {scope: "inactive"}, :class => "inactive" %>
+	<%= link_to "Inactive (#{@inactive})", {scope: "inactive", order_scope: @order_scope}, :class => "inactive" %>
 	|
-	<%= link_to "Institutional-Only (#{@institutional})", {scope: "institutional"}, :class => "institutional" %>
+	<%= link_to "Institutional-Only (#{@institutional})", {scope: "institutional", order_scope: @order_scope}, :class => "institutional" %>
 	|
-	<%= link_to "Public (#{@public})", {scope: "public"}, :class => "public" %>
+	<%= link_to "Public (#{@public})", {scope: "public", order_scope: @order_scope}, :class => "public" %>
 </div>
 <table class="table table-striped" id="dmp_templates">
 	<thead>
 		<tr>
-			<th class="span4">Name</th>
-			<th class="span3">Institution</th>
-			<th>Status</th>
-			<th>Visibility</th>
-			<th>Creation Date</th>
-			<th>Last Modification Date</th>
-		</tr>
+      <th class="span4">
+      	<%= link_to "Name", {order_scope: "Name", scope: @scope}%>
+      </th>
+      <th class="span3">
+      	<%= link_to "Institution", {order_scope: "Institution", scope: @scope}%>
+      </th>
+      <th>
+      	<%= link_to "Status", {order_scope: "Status", scope: @scope}%>
+      </th>
+      <th>
+      	<%= link_to "Visibility", {order_scope: "Visibility", scope: @scope}%>
+      </th>
+      <th>
+      	<%= link_to "Creation Date", 
+      				{order_scope: "Creation_Date", scope: @scope}%>
+      </th>
+      <th>
+      	<%= link_to "Last Modification Date", 
+      				{order_scope: "Last_Modification_Date", scope: @scope}%>
+      </th>
+    </tr>
 	</thead>
 	<tbody>
 	<% @requirements_templates.each do |requirements_template| %>
@@ -44,7 +58,7 @@
 	<tbody>
 </table>
 <div class="buttons pagination">
-	<%= link_to "View All", requirements_templates_path(:scope => "all"), :method => :get, :class => "btn", :id => "view_all_templates" %>
+	<%= link_to "View All", requirements_templates_path(:scope => "all", order_scope: @order_scope), :method => :get, :class => "btn", :id => "view_all_templates" %>
 	<%= paginate @requirements_templates %>
 </div>
 <%= button_to "Create New Template >>", new_requirements_template_path, :method => :get, :class => "btn"  %>
