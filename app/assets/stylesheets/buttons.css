@@ -257,6 +257,15 @@ a .icon {
 .edit-user.icon {
 	background-position: -20px -145px; width: 18px; height: 20px;
 }
+.public-visibility.icon {
+	background-position: -38px -145px; width: 29px; height: 20px;
+}
+.private-visibility.icon {
+	background-position: -98px -145px; width: 18px; height: 20px;
+}
+.institutional-visibility.icon {
+	background-position: -67px -145px; width: 11px; height: 20px;
+}
 
 /* Tree View Icons */
 a.icon.print {
