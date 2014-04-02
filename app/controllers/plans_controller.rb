@@ -122,7 +122,6 @@ class PlansController < ApplicationController
       current_user_plan_ids = UserPlan.where(user_id: current_user.id).pluck(:plan_id)
       user_plans = Plan.where(id: current_user_plan_ids)
       @plans = user_plans + public_plans
-      debugger
       @plans = Kaminari.paginate_array(@plans).page(params[:page]).per(5)
   end
 

@@ -24,7 +24,8 @@ $(document).ready(function() {
 
 
 
-//automaticcaly checks Institutional reviewer role when Institutional Administrator role gets checked
+
+//automatically checks Institutional reviewer role when Institutional Administrator role gets checked
 $(function() {
 
 	$('#5').change(function(){
@@ -57,3 +58,4 @@ $(function() {
 
 
 
+>>>>>>> development

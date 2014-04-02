@@ -1,7 +1,7 @@
 <%unless @user.new_record?%>
-<p>Please update any info regarding your account.</p>
-<p><strong>Name</strong></p>
-<hr/>
+  <p>Please update any info regarding your account.</p>
+  <p><strong>Name</strong></p>
+  <hr/>
 <%end%>
 
 <% errors = @user.errors[:login_id] %>
@@ -125,4 +125,37 @@
     </div>
   </div>
 <% end %>
+
+
+<p><strong>Orcid Id</strong></p>
+<hr/>
+
+<input type="text" class="orcid_widget">
+
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript" src="//researchdata.ands.org.au/apps/assets/orcid_widget/js/orcid_widget.js"></script>
+  <script src="orcid_widget.min.js"></script>
+
+
+</input>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

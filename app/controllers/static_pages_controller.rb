@@ -4,6 +4,10 @@ class StaticPagesController < ApplicationController
   
   layout 'application', only: [:guidance]
   
+  def orcid
+    render(layout: nil)
+  end
+
   def home
     @rss = Rails.cache.read('rss')
     @public_dmps = Plan.public_visibility.order("RAND()")[0..4]
