@@ -20,7 +20,7 @@
       <% end %>
 
       <!-- Review DMPs -->
-      <% if user_role_in?(:institutional_reviewer, :dmp_admin, :institutional_admin) %>
+      <% if user_role_in?(:institutional_reviewer, :dmp_admin) %>
         <li <%= "class=current" if current_page?(review_dmps_path) %>><%= link_to(content_tag(:span, 'Review DMPs'), review_dmps_path) %></li>
       <% end %>
 

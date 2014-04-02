@@ -191,7 +191,7 @@ class InstitutionsController < ApplicationController
     if non_partner
       item = insts.delete_at(non_partner)
       item = ["None of the above", 0] # This institution is always renamed because we like it that way in the list
-      insts.push(item) #put it at the end of the list cause we like it that way
+      insts.insert(0, item) #put it at the beginning of the list cause we like it that way
     end
     insts
   end

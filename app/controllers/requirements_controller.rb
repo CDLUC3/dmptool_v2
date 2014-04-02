@@ -56,7 +56,7 @@ class RequirementsController < ApplicationController
     @requirements = @requirements_template.requirements
     respond_to do |format|
       if @requirement.update(requirement_params)
-        format.html { redirect_to requirements_template_requirements_path(@requirements_template), notice: 'Requirement was successfully updated.' }
+        format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement), notice: 'Requirement was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'index' }

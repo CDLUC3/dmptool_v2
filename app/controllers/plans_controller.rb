@@ -14,7 +14,6 @@ class PlansController < ApplicationController
    plan_ids = UserPlan.where(user_id: user.id).pluck(:plan_id) unless user.id.nil?
    @plans = Plan.where(id: plan_ids)
    count
-
     case params[:scope]
       when "all"
         @plans = @plans.page(params[:page]).per(9999)
@@ -35,9 +34,7 @@ class PlansController < ApplicationController
       else
         @plans = @plans.order(created_at: :asc).page(params[:page]).per(5)
     end
-
     @planstates = PlanState.page(params[:page]).per(5)
-    
   end
 
   # GET /plans/1
@@ -54,7 +51,7 @@ class PlansController < ApplicationController
 
   # POST /plans
   # POST /plans.json
-def create
+  def create
     flash[:notice] = []
     @plan = Plan.new(plan_params)
     respond_to do |format|
@@ -85,15 +82,16 @@ def create
   # PATCH/PUT /plans/1.json
   def update
     flash[:notice] = []
+    flash[:alert] = []
     @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: current_user.institution_id)
     set_comments
     coowners
     add_coowner_autocomplete
     respond_to do |format|
-      if flash[:alert] == ["The user you entered was not found"]
+      if flash[:alert].include?("The user you entered was not found")
         format.html { flash[:alert]
               redirect_to edit_plan_path(@plan)}
-      elsif flash[:alert] == ["The user you chose is already a Coowner"]
+      elsif flash[:alert].include?("The user you entered was not found")
         format.html { flash[:alert]
               redirect_to edit_plan_path(@plan)}
       else
@@ -122,9 +120,9 @@ def create
   def template_information
       public_plans = Plan.public_visibility
       current_user_plan_ids = UserPlan.where(user_id: current_user.id).pluck(:plan_id)
-      user_plans = Plan.find(current_user_plan_ids)
+      user_plans = Plan.where(id: current_user_plan_ids)
       @plans = user_plans + public_plans
-      @plans = @plans.page(params[:page]).per(5)
+      @plans = Kaminari.paginate_array(@plans).page(params[:page]).per(5)
   end
 
   def copy_existing_template
@@ -145,17 +143,30 @@ def create
   def review_dmps
     if user_role_in?(:institutional_reviewer, :institutional_admin)
       institutions = Institution.find(current_user.institution_id).subtree_ids
-      @plans = Plan.plans_to_be_reviewed(institutions)
+      @submitted_plans = Plan.plans_to_be_reviewed(institutions)
+      @approved_plans = Plan.plans_approved(institutions)
+      @rejected_plans = Plan.plans_rejected(institutions)
+      @plans = @submitted_plans + @approved_plans + @rejected_plans
     else
       user_role_in?(:dmp_admin)
-      @plans = Plan.plans_to_be_reviewed(Institution.all.ids)
+      @submitted_plans = Plan.plans_to_be_reviewed(Institution.all.ids)
+      @approved_plans = Plan.plans_approved(Institution.all.ids)
+      @rejected_plans = Plan.plans_rejected(Institution.all.ids)
+      @plans = @submitted_plans + @approved_plans + @rejected_plans
     end
     case params[:scope]
-      when "all"
-        @plans = @plans.page(params[:page])
+      when "submitted"
+        @plans = @submitted_plans.page(params[:page]).per(5)
+      when "approved"
+        @plans = @approved_plans.page(params[:page]).per(5)
+      when "rejected"
+        @plans = @rejected_plans.page(params[:page]).per(5)
+      when "all_limited"
+        @plans = Kaminari.paginate_array(@plans).page(params[:page]).per(5)
       else
-        @plans = @plans.order(created_at: :asc).page(params[:page]).per(5)
+        @plans = Kaminari.paginate_array(@plans).page(params[:page])
     end
+    review_count
   end
 
   def select_dmp_template
@@ -256,13 +267,8 @@ def create
       u_name.split(',').each do |n|
         unless n.blank?
           @user, email = nil, nil
-          if n.match(/((?>\w+\s*(?=@))+)/).nil? && n.match(/((?>\w+\s*(?=<))+)/).nil?
-            email = n[/\<.*\>/].gsub(/\<(.*)\>/, '\1') unless n[/\<.*\>/].nil?
-            @user = User.find_by(email: email)
-          else
-            debugger
-            @user = User.find_by(email: n)
-          end
+          email = n[/\<.*\>/].gsub(/\<(.*)\>/, '\1') unless n[/\<.*\>/].nil?
+          @user = User.find_by(email: email)
           if @user.nil?
             flash[:alert] = "The user you entered was not found"
           elsif @user.user_plans.where(plan_id: @plan.id, owner: false).count > 0
@@ -288,7 +294,6 @@ def create
     end
 
     def count
-      
       @owned = @owned_plans.count
       @coowned = @coowned_plans.count
       @all = @owned + @coowned
@@ -298,6 +303,12 @@ def create
       @rejected = @plans.rejected.count
     end
 
+    def review_count
+      @submitted = @submitted_plans.count
+      @approved = @approved_plans.approved.count
+      @rejected = @rejected_plans.rejected.count
+      @all = @submitted + @approved + @rejected
+    end
     def display_text(resource_contexts)
       resources = Array.new
       @resource_contexts.each do |resource_context|
@@ -361,8 +372,8 @@ def create
       user_plans = @plan.user_plans.where(owner: false)
       user_plans.each do |user_plan|
         id = user_plan.user_id
-        coowner = User.find(id).full_name
-        @coowners<< coowner
+        @coowner = User.find(id).full_name
+        @coowners<< @coowner
       end
     end
 end

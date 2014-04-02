@@ -1,6 +1,15 @@
 <h1 class="row-fluid"><span class="icon review"></span>Review DMPs</h1>
 <div class="dmptool-page">
 	<h2>DMPs Pending My Review</h2>
+	<div class="table-scope">
+	<%= link_to "All (#{@all}) ", {scope: "all_limited"}, :class => "all_limited" %>
+  |
+  <%= link_to "Pending My Review (#{@submitted}) ", {scope: "submitted"}, :class => "submitted" %>
+  |
+  <%= link_to "Approved (#{@approved}) ", {scope: "approved"}, :class => "approved" %>
+  |
+  <%= link_to "Rejected (#{@rejected}) ", {scope: "rejected"}, :class => "rejected" %>
+  </div>
 	<table class="table table-striped" id="review_dmps">
 	  <thead>
 	    <tr>
@@ -14,7 +23,7 @@
 	  <tbody>
 	    <% @plans.each do |plan| %>
 	      <tr>
-					<td class="span7"><%=link_to (content_tag(:strong, plan.name)), '#', :id => "#{plan.name}" %></td>
+					<td class="span7", id="#{plan.name}"><strong><%= plan.name %></strong></td>
 	        <td><%= owner_name(plan) %></td>
 	        <td><%= plan.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 	        <td class="span1"><strong><%= state(plan) %></strong></td>
@@ -29,7 +38,7 @@
 	</table>
 	    <div class="buttons pagination">
 	      <%= link_to "View All", review_dmps_path(:scope => "all"), :method => :get, :class => "btn" %>
-	      <%= paginate @plans %>
+ 	      <%= paginate @plans %>
 	    </div>
 	    </tr>
 	  </tbody>
