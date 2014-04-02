@@ -46,12 +46,9 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @my_institution = @user.institution
     if user_role_in?(:dmp_admin)
-      #@institution_list = Institution.order(full_name: :asc).collect { |i| [i.full_name, i.id] }
       @institution_list = InstitutionsController.institution_select_list
     else
-      #@institution_list = @my_institution.root.subtree.collect { |i| [i.full_name, i.id] }
       @institution_list = @my_institution.root.subtree.collect {|i| ["#{'-' * i.depth} #{i.full_name}", i.id] }
-
     end
 
     @roles = @user.roles.map {|r| r.name}.join(' | ')
@@ -111,7 +108,7 @@ class UsersController < ApplicationController
         begin
           reset_ldap_password(@user, password)
         rescue
-          flash[:notice] = "Problem updating password in LDAP. Please retry."
+          flash[:error] = "Problem updating password in LDAP. Please retry."
           render :edit and return
         end
       else
@@ -136,11 +133,11 @@ class UsersController < ApplicationController
       end
     end
   rescue LdapMixin::LdapException
-    flash[:notice] = 'Error updating LDAP. Local update canceled.'
+    flash[:error] = 'Error updating LDAP. Local update canceled.'
     redirect_to edit_user_path(@user)
   rescue Exception => e
     puts e.to_s
-    flash[:notice] = 'Unknown error updating user information.'
+    flash[:error] = 'Unknown error updating user information.'
     redirect_to edit_user_path(@user)
   end
 
