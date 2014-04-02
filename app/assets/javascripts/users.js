@@ -40,7 +40,11 @@ $(function() {
 
 
 
+(function() {
 
+	$('.orcid_widget')[0].value
+
+});
 
 
 

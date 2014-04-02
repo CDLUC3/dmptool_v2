@@ -103,6 +103,9 @@ class UsersController < ApplicationController
     password = user_params[:password]
     password_confirmation = user_params[:password_confirmation]
 
+    orcid_id = user_params[:orcid_id]
+
+
     if password && !password.empty?
       if valid_password(password, password_confirmation)
         begin
@@ -250,7 +253,7 @@ class UsersController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
     params.require(:user).permit(:institution_id, :email, :first_name, :last_name,
-                                 :password, :password_confirmation, :prefs, :login_id, role_ids: [])
+                                 :password, :password_confirmation,:orcid_id, :prefs, :login_id, role_ids: [] )
   end
 
   def update_ldap_if_necessary(user, params)
