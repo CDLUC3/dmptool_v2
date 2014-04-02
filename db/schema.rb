@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140312212258) do
+ActiveRecord::Schema.define(version: 20140402224254) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -257,6 +257,7 @@ ActiveRecord::Schema.define(version: 20140312212258) do
     t.string   "login_id"
     t.boolean  "active",           default: true
     t.datetime "deleted_at"
+    t.string   "orcid_id"
   end
 
 end
