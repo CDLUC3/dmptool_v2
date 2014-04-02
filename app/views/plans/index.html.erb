@@ -50,11 +50,11 @@
         <td><%= owner_name(plan) %></td>
         <td><strong><%= state(plan) %></strong></td>
         <%if plan.visibility == :private %>
-          <td>Private</td>
+          <td class="span1"><span class="private-visibility icon" title="Private"></span></td>
         <% elsif plan.visibility == :public %>
-          <td>Public</td>
+          <td class="span1"><span class="public-visibility icon" title="Public"></span></td>
         <% else %>
-          <td>Institutional</td>
+          <td class="span1"><span class="institutional-visibility icon" title="Institutional"></span></td>
         <% end %>
         <td><%= plan.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
       </tr>
