@@ -1,6 +1,15 @@
 <h1 class="row-fluid"><span class="icon review"></span>Review DMPs</h1>
 <div class="dmptool-page">
 	<h2>DMPs Pending My Review</h2>
+	<div class="table-scope">
+	<%= link_to "All (#{@all}) ", {scope: "all_limited"}, :class => "all_limited" %>
+  |
+  <%= link_to "Pending My Review (#{@submitted}) ", {scope: "submitted"}, :class => "submitted" %>
+  |
+  <%= link_to "Approved (#{@approved}) ", {scope: "approved"}, :class => "approved" %>
+  |
+  <%= link_to "Rejected (#{@rejected}) ", {scope: "rejected"}, :class => "rejected" %>
+  </div>
 	<table class="table table-striped" id="review_dmps">
 	  <thead>
 	    <tr>
