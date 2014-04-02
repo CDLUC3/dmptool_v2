@@ -131,7 +131,7 @@ class PlansController < ApplicationController
     comments = Comment.all
     id = params[:plan].to_i unless params[:plan].blank?
     plan = Plan.where(id: id).first
-    @plan = plan.dup
+    @plan = plan.dup include: [:responses]
     render action: "copy_existing_template"
   end
 
