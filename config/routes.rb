@@ -119,6 +119,7 @@ Dmptool2::Application.routes.draw do
   post 'change_visibility', to: 'plans#change_visibility'
   get 'public_dmps', to: 'plans#public'
   post 'add_coowner_autocomplete', to: 'plans#add_coowner_autocomplete'
+  delete 'delete_coowner', to: 'plans#delete_coowner'
 
   get  'remove_resource_editor_role', to: 'resource_templates#remove_resource_editor_role'
   get  'remove_requirements_editor_role', to: 'requirements_templates#remove_requirements_editor_role'

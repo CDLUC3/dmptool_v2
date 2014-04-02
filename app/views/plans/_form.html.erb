@@ -63,7 +63,7 @@
 
         <% else %>
 
-          
+
           <%= render partial: '/users/plan_autocomplete_widget',
               :locals =>
              {  user_role: 'coowner',
@@ -76,7 +76,7 @@
                 <strong class= 'blue'><%= @owner.full_name %>, </strong>
               <% end %>
               <span> Existing Coowners: </span>
-              <strong class= 'blue'><%= @coowners.map { |i| i.to_s }.join(", ") %></strong>
+              <strong class= 'blue'><%= @coowners.map { |coowner| coowner.full_name.to_s + raw(link_to "", delete_coowner_path(coowner_id: coowner.id, plan_id: @plan.id), :method => :delete, :data => { :confirm => "Are you sure?"}, :class => "icon trash") }.join(", ").html_safe %></strong>
             </div>
         <% end %>
 
