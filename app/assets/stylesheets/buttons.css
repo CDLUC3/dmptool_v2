@@ -133,7 +133,7 @@ a.icon {
 	vertical-align: middle;
 	position: relative; }
 a.icon + a.icon {
-	margin-left: 10px; }
+	margin-left: 3px; }
 h1 .icon {
 	position: absolute;
 	top: 7px;
