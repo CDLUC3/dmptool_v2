@@ -130,7 +130,7 @@ class PlansController < ApplicationController
     comments = Comment.all
     id = params[:plan].to_i unless params[:plan].blank?
     plan = Plan.where(id: id).first
-    @plan = plan.dup
+    @plan = plan.dup include: [:responses]
     render action: "copy_existing_template"
   end
 
@@ -282,6 +282,19 @@ class PlansController < ApplicationController
     end
   end
 
+  def delete_coowner
+    @coowner = User.find(params[:coowner_id]) unless params[:coowner_id].nil?
+    @plan = Plan.find(params[:plan_id]) unless params[:plan_id].nil?
+    unless @coowner.nil?
+      user_plan = UserPlan.where(user_id: @coowner.id, plan_id: @plan.id, owner: false).last
+      user_plan.destroy
+      respond_to do |format|
+        format.html { redirect_to edit_plan_path(@plan), notice: "The selected Coowner associated with the Plan has been deleted successfully" }
+        format.json { head :no_content }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_plan
@@ -372,7 +385,7 @@ class PlansController < ApplicationController
       user_plans = @plan.user_plans.where(owner: false)
       user_plans.each do |user_plan|
         id = user_plan.user_id
-        @coowner = User.find(id).full_name
+        @coowner = User.find(id)
         @coowners<< @coowner
       end
     end
