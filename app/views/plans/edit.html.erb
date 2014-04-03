@@ -1,7 +1,7 @@
 <%= render 'form' %>
 
 <div id = 'visibility_dialog_form'>
-<%= render partial: 'change_visibility', locals: {:plan_id => params[:id]} %>
+<%= render partial: 'change_visibility', locals: {:plan_id => @plan.id} %>
 </div>
 
 <div id = "comment_dialog_form">

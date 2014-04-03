@@ -35,7 +35,7 @@
             <div class="template-links">
                 <%= link_to('Overview', edit_plan_path(plan)) %>
               | <%= link_to('Details', details_plan_path(plan)) %>
-              | <%= link_to('Share', '#', remote: true, :class => 'change_visibility_link') %>
+              | <%= link_to('Share', '#', {:class => 'change_visibility_link', :'data-planid' => plan.id }) %>
               <% @plan_id = plan.id %>
               <% if ( plan.requirements_template.try(:review_type) && plan.requirements_template.review_type != :no_review) %>
                 | <%= link_to('Submit', preview_plan_path(plan)) %>
