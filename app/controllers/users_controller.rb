@@ -103,6 +103,9 @@ class UsersController < ApplicationController
     password = user_params[:password]
     password_confirmation = user_params[:password_confirmation]
 
+    orcid_id = user_params[:orcid_id]
+
+
     if password && !password.empty?
       if valid_password(password, password_confirmation)
         begin
@@ -211,12 +214,20 @@ class UsersController < ApplicationController
       elsif user_role_in?(:institutional_admin) || current_user.has_role?(role_number)
         u = current_user.institution.users_deep
       end
-      @users = u.where("CONCAT(first_name, ' ', last_name) LIKE ? ", like).active
-
+      #@users = u.where("CONCAT(first_name, ' ', last_name) LIKE ? ", like).active
+      items = params[:name_term].split
+      conditions1 = items.map{|item| "CONCAT(first_name, ' ', last_name) LIKE ?" }
+      conditions2 = items.map{|item| "email LIKE ?" }
+      conditions = "( (#{conditions1.join(' AND ')})" + ' OR ' + "(#{conditions2.join(' AND ')}) )"
+      values = items.map{|item| "%#{item}%" }
+      @users = u.where(conditions, *(values * 2) )
     end
     list = map_users_for_autocomplete(@users)
     render json: list
   end
+
+
+  
 
 
 
@@ -242,7 +253,7 @@ class UsersController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
     params.require(:user).permit(:institution_id, :email, :first_name, :last_name,
-                                 :password, :password_confirmation, :prefs, :login_id, role_ids: [])
+                                 :password, :password_confirmation,:orcid_id, :prefs, :login_id, role_ids: [] )
   end
 
   def update_ldap_if_necessary(user, params)
