@@ -40,12 +40,6 @@ $(function() {
 
 
 
-(function() {
-	$('.orcid_widget').change(function(){
-		//alert($('.orcid_widget')[0].value);
-		alert('bla');
-	});
-});
 
 
 
