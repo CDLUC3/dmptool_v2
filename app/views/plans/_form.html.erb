@@ -76,7 +76,7 @@
                 <strong class= 'blue'><%= @owner.full_name %>, </strong>
               <% end %>
               <span> Existing Coowners: </span>
-              <strong class= 'blue'><%= @coowners.map { |coowner| coowner.full_name.to_s + raw(link_to "", delete_coowner_path(coowner_id: coowner.id, plan_id: @plan.id), :method => :delete, :data => { :confirm => "Are you sure?"}, :class => "icon trash") }.join(", ").html_safe %></strong>
+              <strong class= 'blue'><%= @coowners.map { |coowner| coowner.full_name.to_s + raw(link_to "", delete_coowner_path(coowner_id: coowner.id, plan_id: @plan.id), :method => :delete, :data => { :confirm => "Are you sure?"}, :class => "remove icon", :title => "Remove coowner") }.join(", ").html_safe %></strong>
             </div>
         <% end %>
 
@@ -164,7 +164,7 @@
           <%= f.submit 'Save', :class => 'btn' %>
           <%= button_tag 'Cancel', type: :reset, :class => 'btn btn-success'%>
           <% unless @plan.new_record? %>
-            <%= link_to 'Plan Details >>', details_plan_path(@plan), method: 'get', :class => 'btn btn-green pull-right' %>
+            <%= link_to 'Save & Next >>', details_plan_path(@plan), method: 'get', :class => 'btn btn-green pull-right' %>
           <% end %>
         </div>
       <% end %>
