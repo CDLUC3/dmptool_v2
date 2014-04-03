@@ -151,3 +151,11 @@ $(function() {
 		$("#visibility_dialog_form").reset();
 	});
 });
+
+
+$(function() {
+	$(".change_visibility_link").bind("click",function() {
+		var id= $(this).data('planid');
+		$("#shared_plan_id").val(id);
+	});
+});
