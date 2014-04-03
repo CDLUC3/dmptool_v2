@@ -107,7 +107,7 @@ class AuthorizationsController < ApplicationController
     else
       first, last = u_name.split(" ", 2)
       if first.nil? || last.nil?
-        flash[:error] =  "Please type or select the full name of a user"
+        flash[:error] =  "Please type and select the full name or email of a user"
         redirect_to :back and return 
       end
       users = User.where("first_name = ? and last_name = ?", first, last)
@@ -153,7 +153,7 @@ class AuthorizationsController < ApplicationController
     else
       first, last = u_name.split(" ", 2)
       if first.nil? || last.nil?
-        flash[:error] =  "Please type or select the full name of a user"
+        flash[:error] =  "Please type and select the full name or email of a user."
         redirect_to :back and return 
       end
       users = User.where("first_name = ? and last_name = ?", first, last)
