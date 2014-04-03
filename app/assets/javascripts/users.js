@@ -41,18 +41,6 @@ $(function() {
 
 
 
-// $('.orcid_lookup').click(function() {
-    //   $(document).ready(function(){
-    //     if $( "div:contains('Family')" ){
-    //       $("input.orcid_widget").attr('name', 'user[orcid_id]');
-    //     } else {
-    //       $("input.orcid_widget").attr('name', 'bla');
-    //     }
-    //   });
-
-    // }); 
-
-
 
 
 
