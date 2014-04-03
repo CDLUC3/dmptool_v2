@@ -88,10 +88,10 @@ class PlansController < ApplicationController
     coowners
     add_coowner_autocomplete
     respond_to do |format|
-      if flash[:alert].include?("The user you entered was not found")
+      if flash[:alert].include?("The user you entered with email #{@email} was not found")
         format.html { flash[:alert]
               redirect_to edit_plan_path(@plan)}
-      elsif flash[:alert].include?("The user you entered was not found")
+      elsif flash[:alert].include?("The user you chose is already a #{@item_description}")
         format.html { flash[:alert]
               redirect_to edit_plan_path(@plan)}
       else
@@ -262,17 +262,18 @@ class PlansController < ApplicationController
     params.each do |k,v|
       u_name = v if k.end_with?('_name')
     end
-    item_description = params[:item_description]
+    @item_description = params[:item_description]
     unless u_name.blank?
       u_name.split(',').each do |n|
         unless n.blank?
-          @user, email = nil, nil
-          email = n[/\<.*\>/].gsub(/\<(.*)\>/, '\1') unless n[/\<.*\>/].nil?
-          @user = User.find_by(email: email)
+          m = n.match(/<?(\S+\@\S+\.[^ >]+)/)
+          @user, @email = nil, nil
+          @email = m[1] unless m.nil?
+          @user = User.find_by(email: @email)
           if @user.nil?
-            flash[:alert] = "The user you entered was not found"
+            flash[:alert] = "The user you entered with email #{@email} was not found"
           elsif @user.user_plans.where(plan_id: @plan.id, owner: false).count > 0
-            flash[:alert] = "The user you chose is already a #{item_description}"
+            flash[:alert] = "The user you chose is already a #{@item_description}"
           else
             userplan = UserPlan.create(owner: false, user_id: @user.id, plan_id: @plan.id)
             userplan.save!
