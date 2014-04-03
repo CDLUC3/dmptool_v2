@@ -47,25 +47,6 @@ $(function() {
 
 
 
-$('.orcid_lookup').click(function() {
-	if $( "div:contains('Family')" ){
-  	$("input.orcid_widget").attr('name', 'user[orcid_id]');
-  } else {
-  	$("input.orcid_widget").attr('name', '');
-  }
-});
-
-// $(document).ready(function() {
-// 	$('.orcid_lookup').click(function() {
-// 		alert('bla');
-// 	});
-
-// });
-
-
-
-
-
 
 
 
