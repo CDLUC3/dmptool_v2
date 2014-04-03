@@ -9,7 +9,7 @@
         <%= render partial: "shared/errors", locals: {model: @requirements_template } %>
 
 				<div class="control-group">
-					<%= f.label :template_name, :class => 'control-label' %>
+					<%= f.label :name, 'Template name', :class => 'control-label' %>
 					<div class="controls">
 						<%= f.text_field :name %>
 					</div>
@@ -30,7 +30,7 @@
 
 				<% if user_role_in?(:dmp_admin) %>
 					<div class="control-group" >
-						<%= f.label :institution, :class => "control-label" %>
+						<%= f.label :institution_id, :class => "control-label" %>
 						<div class="controls" >
 							<%= collection_select(:requirements_template, :institution_id, Institution.all, :id, :full_name, { selected:  current_user.institution.root_id} ) %>
 						</div>
@@ -39,7 +39,7 @@
 				<% elsif user_role_in?(:institutional_admin)%>
 				
 					<div class="control-group" >
-						<%= f.label :institution, :class => "control-label" %>
+						<%= f.label :institution_id, :class => "control-label" %>
 						<div class="controls" >
 							<%= f.select(:institution_id, 
 											current_user.institution.subtree.map {|r| [r.full_name,r.id] }, 
@@ -48,7 +48,7 @@
 					</div>
 				<% else %>
 					<div class="control-group" >
-						<%= f.label :institution, :class => 'control-label' %>
+						<%= f.label :institution_id, :class => 'control-label' %>
 						<div class="controls" >
 							<%= f.hidden_field :institution_id, value: current_user.institution.id %>
 							<%= text_field_tag :institution_name, current_user.institution.full_name, disabled: true %>
@@ -75,14 +75,14 @@
 				<div class="control-group">
 					<%= f.label :review_requirement, :class => 'control-label' %>
 					<div class="controls checkbox-controls">
-						<%= f.radio_button :review_type, :formal_review, :class => 'radio inline' %>
+						<%= f.radio_button :review_type, :formal_review, :class => 'radio inline', :id => 'formal_review' %>
 						<%= label_tag :formal_review, 'Review Required', :class => 'radio-label' %><br/>
-						<%= f.radio_button :review_type, :informal_review, :class => 'radio inline' %>
+						<%= f.radio_button :review_type, :informal_review, :class => 'radio inline', :id => 'informal_review' %>
 						<%= label_tag :informal_review, 'Informal Review Allowed', :class => 'radio-label' %><br/>
 						<% unless @requirements_template.new_record? %>
-							<%= f.radio_button :review_type, :no_review, :class => 'radio inline' %>
+							<%= f.radio_button :review_type, :no_review, :class => 'radio inline', :id => 'no_review' %>
 						<% else %>
-							<%= f.radio_button :review_type, :no_review, :class => 'radio inline', checked: true %>
+							<%= f.radio_button :review_type, :no_review, :class => 'radio inline', :id => 'no_review', checked: true %>
 						<% end %>
 						<%= label_tag :no_review, 'No Review Needed', :class => 'radio-label' %>
 					</div>
