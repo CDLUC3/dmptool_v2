@@ -1,3 +1,5 @@
+
+
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 $(document).ready(function() {
@@ -25,7 +27,7 @@ $(document).ready(function() {
 
 
 
-//automatically checks Institutional reviewer role when Institutional Administrator role gets checked
+// //automatically checks Institutional reviewer role when Institutional Administrator role gets checked
 $(function() {
 
 	$('#5').change(function(){
@@ -39,12 +41,18 @@ $(function() {
 
 
 
+// $('.orcid_lookup').click(function() {
+    //   $(document).ready(function(){
+    //     if $( "div:contains('Family')" ){
+    //       $("input.orcid_widget").attr('name', 'user[orcid_id]');
+    //     } else {
+    //       $("input.orcid_widget").attr('name', 'bla');
+    //     }
+    //   });
 
-(function() {
+    // }); 
 
-	$('.orcid_widget')[0].value
 
-});
 
 
 
