@@ -41,9 +41,10 @@ $(function() {
 
 
 (function() {
-
-	$('.orcid_widget')[0].value
-
+	$('.orcid_widget').change(function(){
+		//alert($('.orcid_widget')[0].value);
+		alert('bla');
+	});
 });
 
 
