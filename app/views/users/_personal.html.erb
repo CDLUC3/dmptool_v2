@@ -134,6 +134,7 @@
   <div class="control-group">
     <%= label_tag :orcid_id, 'Orcid Id', :class => 'control-label' %>
       <input type="text" class="orcid_widget" name="user[orcid_id]">
+      <input type="text" class="orcid_widget">
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script type="text/javascript" src="//researchdata.ands.org.au/apps/assets/orcid_widget/js/orcid_widget.js"></script>
       </input>
@@ -146,6 +147,24 @@
     </div>
   </div>
 <% end %>
+
+<script type="text/javascript">
+  
+
+    // $('.orcid_lookup').click(function() {
+    //   $(document).ready(function(){
+    //     if $( "div:contains('Family')" ){
+    //       $("input.orcid_widget").attr('name', 'user[orcid_id]');
+    //     } else {
+    //       $("input.orcid_widget").attr('name', 'bla');
+    //     }
+    //   });
+
+    // }); 
+
+  
+  
+</script>
 
 
 
