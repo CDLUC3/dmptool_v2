@@ -7,16 +7,16 @@
     </div>
     <div class="control-group">
       <% if params[:node_type] == 'group'%>
-        <%= f.label :requirement_label, 'Group Label', :class => 'control-label' %>
+        <%= f.label :requirement_label, 'Group Label', :class => 'control-label required' %>
       <% else %>
-        <%= f.label :requirement_label, 'Requirement Label', :class => 'control-label' %>
+        <%= f.label :requirement_label, 'Requirement Label', :class => 'control-label required' %>
       <% end %>
       <div class="controls">
         <%= f.text_field(:text_brief, :class => 'input-block-level') %>
       </div>
     </div>
     <div class="control-group">
-      <%= f.label :detailed_question, 'Detailed Question', :class => 'control-label' %>
+      <%= f.label :detailed_question, 'Detailed Question', :class => 'control-label required' %>
       <div class="controls">
         <%= f.text_area(:text_full, rows: 5, :class => 'input-block-level') %>
       </div>
