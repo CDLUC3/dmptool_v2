@@ -10,7 +10,7 @@ class RequirementsTemplatesController < ApplicationController
   # GET /requirements_templates.json
   def index
     if !user_role_in?(:dmp_admin)
-      
+
       @requirements_templates = RequirementsTemplate.where.
                                 any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public)
     else
@@ -22,7 +22,7 @@ class RequirementsTemplatesController < ApplicationController
     @order_scope = params[:order_scope]
     @scope = params[:scope]
 
-    case @order_scope    
+    case @order_scope
       when "Name"
         @requirements_templates = @requirements_templates.order(name: :asc)
       when "Institution"
@@ -30,7 +30,7 @@ class RequirementsTemplatesController < ApplicationController
       when "Status"
         @requirements_templates = @requirements_templates.order(active: :desc)
       when "Visibility"
-        @requirements_templates = @requirements_templates.order(visibility: :asc)  
+        @requirements_templates = @requirements_templates.order(visibility: :asc)
       when "Creation_Date"
         @requirements_templates = @requirements_templates.order(created_at: :desc)
       when "Last_Modification_Date"
@@ -55,7 +55,7 @@ class RequirementsTemplatesController < ApplicationController
       else
         @requirements_templates = @requirements_templates.page(params[:page]).per(10)
     end
-    
+
     template_editors
     count
   end
@@ -83,7 +83,7 @@ class RequirementsTemplatesController < ApplicationController
   # GET /requirements_templates/new
   def new
     @requirements_template = RequirementsTemplate.new
-    @requirements_template.tags.build
+    # @requirements_template.tags.build
     @requirements_template.additional_informations.build
     @requirements_template.sample_plans.build
   end
@@ -97,7 +97,7 @@ class RequirementsTemplatesController < ApplicationController
     else
       @requirements_templates = RequirementsTemplate.
                                 where(active: true).
-                                any_of(visibility: :public, institution_id: [current_user.institution.subtree_ids]).   
+                                any_of(visibility: :public, institution_id: [current_user.institution.subtree_ids]).
                                 page(params[:page]).per(5)
     end
 
@@ -107,7 +107,7 @@ class RequirementsTemplatesController < ApplicationController
   def edit
     @sample_plans = @requirements_template.sample_plans
     @additional_informations = @requirements_template.additional_informations
-    @tags = @requirements_template.tags
+    # @tags = @requirements_template.tags
   end
 
   # POST /requirements_templates
@@ -151,15 +151,15 @@ class RequirementsTemplatesController < ApplicationController
   end
 
   def copy_existing_template
-    
+
     id = params[:requirements_template].to_i unless params[:requirements_template].blank?
 
     if user_role_in?(:dmp_admin)
       requirements_template = RequirementsTemplate.where(id: id).first
-    else 
+    else
       requirements_template = RequirementsTemplate.
                                 where(id: id, institution_id: [current_user.institution.subtree_ids]).
-                                first 
+                                first
     end
 
     @requirements_template = requirements_template.dup include: [:sample_plans, :additional_informations, :requirements], validate: false

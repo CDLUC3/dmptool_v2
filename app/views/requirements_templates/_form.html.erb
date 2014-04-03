@@ -35,14 +35,14 @@
 							<%= collection_select(:requirements_template, :institution_id, Institution.all, :id, :full_name, { selected:  current_user.institution.root_id} ) %>
 						</div>
 					</div>
-				
+
 				<% elsif user_role_in?(:institutional_admin)%>
-				
+
 					<div class="control-group" >
 						<%= f.label :institution_id, :class => "control-label" %>
 						<div class="controls" >
-							<%= f.select(:institution_id, 
-											current_user.institution.subtree.map {|r| [r.full_name,r.id] }, 
+							<%= f.select(:institution_id,
+											current_user.institution.subtree.map {|r| [r.full_name,r.id] },
 											{ selected:  current_user.institution.root_id} ) %>
 						</div>
 					</div>
@@ -86,13 +86,6 @@
 						<% end %>
 						<%= label_tag :no_review, 'No Review Needed', :class => 'radio-label' %>
 					</div>
-				</div>
-
-				<div class="control-group" >
-					<%= f.fields_for :tags do |builder| %>
-						<%= render 'tag_fields', f: builder %>
-					<% end %>
-					<%= link_to_add_fields 'Add Tags', f, :tags %>
 				</div>
 
 				<div class="control-group">
