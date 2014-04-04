@@ -20,7 +20,8 @@ class AuthorizationsController < ApplicationController
         @invalid_emails << email
       else 
 
-        if check_correct_permissions(@user.id, @role_id) 
+        if (check_correct_permissions(@user.id, @role_id) ||  user_role_in?(:dmp_admin))
+        
           @user_saved = true
                 
           begin
@@ -99,7 +100,7 @@ class AuthorizationsController < ApplicationController
     item_description = params[:item_description]
     
     if u_name.blank?
-      flash[:error] =  "Please select a person to add as a #{item_description}"
+      flash[:error] =  "Please select a person to add as a #{item_description}."
       redirect_to :back and return 
     end
     if !u_id.blank?
@@ -107,7 +108,7 @@ class AuthorizationsController < ApplicationController
     else
       first, last = u_name.split(" ", 2)
       if first.nil? || last.nil?
-        flash[:error] =  "Please type or select the full name of a user"
+        flash[:error] =  "Please type and select the full name or email of a user."
         redirect_to :back and return 
       end
       users = User.where("first_name = ? and last_name = ?", first, last)
@@ -126,12 +127,12 @@ class AuthorizationsController < ApplicationController
       redirect_to :back and return
     end
     if !check_correct_permissions(user.id, role_number)
-      flash[:error] =  "You do not have permission to assign this role"
+      flash[:error] =  "You do not have permission to assign this role."
       redirect_to :back  and return 
     end
     authorization = Authorization.create(role_id: role_number, user_id: user.id)
     authorization.save!
-    redirect_to :back, notice: "#{user.full_name} has been added as a #{item_description}"
+    redirect_to :back, notice: "#{user.full_name} has been added as a #{item_description}."
   end
 
   def add_authorization_manage_users
@@ -153,7 +154,7 @@ class AuthorizationsController < ApplicationController
     else
       first, last = u_name.split(" ", 2)
       if first.nil? || last.nil?
-        flash[:error] =  "Please type or select the full name of a user"
+        flash[:error] =  "Please type and select the full name or email of a user."
         redirect_to :back and return 
       end
       users = User.where("first_name = ? and last_name = ?", first, last)
@@ -167,7 +168,7 @@ class AuthorizationsController < ApplicationController
       end
       user = users.first
     end
-     if (user.institution != current_user.institution)
+     if (user.institution != current_user.institution && !user_role_in?(:dmp_admin))
       flash[:error] = "The user you chose belongs to a different institution."
       redirect_to :back and return
     end

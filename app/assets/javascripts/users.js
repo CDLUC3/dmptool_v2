@@ -29,28 +29,14 @@ $(document).ready(function() {
 
 // //automatically checks Institutional reviewer role when Institutional Administrator role gets checked
 $(function() {
-
 	$('#5').change(function(){
 		if ($('#5').is(':checked')) { 
 			$('#4').prop('checked', true);
 		}
 	});
-
 });
 
 
-
-
-// $('.orcid_lookup').click(function() {
-    //   $(document).ready(function(){
-    //     if $( "div:contains('Family')" ){
-    //       $("input.orcid_widget").attr('name', 'user[orcid_id]');
-    //     } else {
-    //       $("input.orcid_widget").attr('name', 'bla');
-    //     }
-    //   });
-
-    // }); 
 
 
 

@@ -209,12 +209,8 @@ class UsersController < ApplicationController
     role_number = params[:role_number].to_i
     if !params[:name_term].blank?
       like = params[:name_term].concat("%")
-      if user_role_in?(:dmp_admin)
-        u = User
-      elsif user_role_in?(:institutional_admin) || current_user.has_role?(role_number)
-        u = current_user.institution.users_deep
-      end
-      #@users = u.where("CONCAT(first_name, ' ', last_name) LIKE ? ", like).active
+      u = User
+      # u = current_user.institution.users_deep
       items = params[:name_term].split
       conditions1 = items.map{|item| "CONCAT(first_name, ' ', last_name) LIKE ?" }
       conditions2 = items.map{|item| "email LIKE ?" }
@@ -228,8 +224,6 @@ class UsersController < ApplicationController
 
 
   
-
-
 
   private
 

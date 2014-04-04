@@ -28,7 +28,7 @@
   </fieldset>
 <% elsif @plan.requirements_template.review_type == :informal_review %>
   <fieldset class="spaced_below">
-  <%= link_to "Plan Reviewed", "#", method: :get, :class => 'btn btn-success' %>
+    <%= link_to "Plan Reviewed", plan_plan_states_reviewed_path(@plan), method: :post, :class => "btn btn-green" %>
   </fieldset>
 <% end %>
 <div id = "comment_dialog_form">

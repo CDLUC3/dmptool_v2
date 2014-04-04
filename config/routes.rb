@@ -87,6 +87,7 @@ Dmptool2::Application.routes.draw do
     post "plan_states/rejected"
     post "plan_states/submitted"
     post "plan_states/committed"
+    post "plan_states/reviewed"
     member do
       post :add_coowner
       get :publish

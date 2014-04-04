@@ -1,6 +1,6 @@
 class PlanStatesController < ApplicationController
 before_action :require_login
-before_action :set_plan, only: [:approved, :rejected, :submitted, :committed]
+before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :reviewed]
 
   def approved
     plan_state = PlanState.find(@plan.current_plan_state_id).state
@@ -8,6 +8,16 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed]
       review_plan_state(:approved) if (plan_state == :submitted || plan_state == :approved)
     else
       redirect_to perform_review_plan_path(@plan), notice: "You dont have permission to Approve this plan."
+    end
+  end
+
+  #for informal review
+  def reviewed
+    plan_state = PlanState.find(@plan.current_plan_state_id).state
+    if user_role_in?(:institutional_reviewer, :institutional_admin, :dmp_admin)
+      review_plan_state(:reviewed) if (plan_state == :submitted || plan_state == :approved)
+    else
+      redirect_to perform_review_plan_path(@plan), notice: "You dont have permission to Review this plan."
     end
   end
 

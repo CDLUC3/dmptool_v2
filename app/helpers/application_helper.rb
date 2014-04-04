@@ -60,4 +60,13 @@ module ApplicationHelper
       params[:origin_url]
     end
   end
+
+  #returns true or false for customization section
+  def customization_section?
+    current_page_includes?(edit_resource_context_path(@resource_context),
+                           new_resource_context_path,
+                           customization_requirement_path(@resource_context)) ||
+        ( params[:controller] == 'customizations' && params[:requirement_id] &&
+            current_page?(customization_requirement_path(@resource_context, requirement_id: params[:requirement_id])))
+  end
 end

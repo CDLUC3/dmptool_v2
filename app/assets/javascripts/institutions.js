@@ -32,14 +32,27 @@ $(function() {
 	});
 });
 
+
 $(function() {
 	$("#cancel_action").bind("click",function() {
 		$("#flash_notice").remove();
 	});
 });
 
+
 $(function() {
 	$(".tip").tooltip();
 });
+
+
+// //automatically checks Institutional reviewer role when Institutional Administrator role gets checked
+$(function() {
+	$('#5').change(function(){
+		if ($('#5').is(':checked')) { 
+			$('#4').prop('checked', true);
+		}
+	});
+});
+
 
 
