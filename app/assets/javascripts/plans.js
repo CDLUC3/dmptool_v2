@@ -152,10 +152,22 @@ $(function() {
 	});
 });
 
-
 $(function() {
 	$(".change_visibility_link").bind("click",function() {
 		var id= $(this).data('planid');
+		var visibility = $(this).data('visibility');
 		$("#shared_plan_id").val(id);
+		if (visibility  == "institutional")
+		{
+			$("#visibility_institutional").attr('checked', true);
+		}
+		else if (visibility  == "public")
+	  {
+	  	$("#visibility_public").attr('checked', true);
+	  }
+		else
+	  {
+	  	$("#visibility_private").attr('checked', true);
+	  }
 	});
 });
