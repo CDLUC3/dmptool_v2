@@ -20,8 +20,8 @@ class AuthorizationsController < ApplicationController
         @invalid_emails << email
       else 
 
-        #if (check_correct_permissions(@user.id, @role_id) ||  user_role_in?(:dmp_admin))
-        if (check_correct_permissions(@user.id, @role_id))
+        if (check_correct_permissions(@user.id, @role_id) ||  user_role_in?(:dmp_admin))
+        
           @user_saved = true
                 
           begin
@@ -168,8 +168,7 @@ class AuthorizationsController < ApplicationController
       end
       user = users.first
     end
-     #if (user.institution != current_user.institution && !user_role_in?(:dmp_admin))
-     if (user.institution != current_user.institution )
+     if (user.institution != current_user.institution && !user_role_in?(:dmp_admin))
       flash[:error] = "The user you chose belongs to a different institution."
       redirect_to :back and return
     end
