@@ -139,10 +139,11 @@
       </input>
   </div>
 <% else %>
+  <% @sub_orcid_id = @user.orcid_id.gsub("http://", "")%>
   <div class="control-group">
     <%= label_tag :orcid_id, 'Orcid Id', :class => 'control-label' %>
     <div class="controls">
-      <p><%= @user.orcid_id %></p>
+      <p><%= link_to @sub_orcid_id, @user.orcid_id %></p>
     </div>
   </div>
 <% end %>

@@ -6,7 +6,8 @@
       <%= f.hidden_field :plan_id, value: plan_id %>
   </div>
   <div class="control-group">
-  		<%= f.text_area :value, placeholder: 'Comment', :class => "input-block-level", rows: "8"%>
+  		<%= label_tag :comment_value, 'Comment', :class => 'hide' %>
+      <%= f.text_area :value, placeholder: 'Comment', :class => "input-block-level", rows: "8"%>
   </div>
   <div class="control-group">
     <% if user_role_in?(:institutional_reviewer) %>
