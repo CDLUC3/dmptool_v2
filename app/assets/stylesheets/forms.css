@@ -25,6 +25,9 @@ label.control-label, .form-horizontal label.control-label {
 label.required:before {
 	content: "\002A\0020";
 	color: #DA0049; }
+label.hide {
+	display: none;
+}
 	
 input[type=text], input[type=password], input[type=email], input[type=search], textarea, select {
 	border-color: #B6B6B7;

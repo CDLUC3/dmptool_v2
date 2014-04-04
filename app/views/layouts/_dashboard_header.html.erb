@@ -25,11 +25,19 @@
       <% end %>
 
       <!-- DMP Templates -->
-      <% if user_role_in?(:dmp_admin, :institutional_admin, :template_editor) %>
+      <% if user_role_in?(:dmp_admin, :institutional_admin, :template_editor, :resource_editor) %>
         <% if current_page_includes?({controller: 'requirements_templates', action: 'new'},
                                      edit_requirements_template_path(@requirements_template),
-                                     requirements_template_requirements_path(@requirements_template)) %>
-          <%= render partial: 'layouts/dashboard_requirements_template_submenu' %>
+                                     requirements_template_requirements_path(@requirements_template)) ||
+            ((user_role_in?(:institutional_admin, :template_editor, :resource_editor) && !user_role_in?(:dmp_admin)) &&
+            customization_section? )
+
+        %>
+          <% if customization_section? %>
+            <%= render partial: 'layouts/dashboard_customizations_under_dmp_submenu' %>
+          <% else %>
+            <%= render partial: 'layouts/dashboard_requirements_template_submenu' %>
+          <% end %>
         <% else %>
           <li <%= 'class=current' if current_page?(requirements_templates_path) %>>
             <%= link_to(content_tag(:span, 'DMP Templates'), requirements_templates_path) %>
@@ -38,12 +46,8 @@
       <% end %>
 
       <!-- Customizations -->
-      <% if user_role_in?(:resource_editor, :dmp_admin, :institutional_admin) %>
-        <% if current_page_includes?(edit_resource_context_path(@resource_context),
-                                     new_resource_context_path,
-                                     customization_requirement_path(@resource_context)) ||
-            ( params[:controller] == 'customizations' && params[:requirement_id] &&
-                current_page?(customization_requirement_path(@resource_context, requirement_id: params[:requirement_id]))) %>
+      <% if user_role_in?(:dmp_admin) %>
+        <% if customization_section? %>
           <%= render partial: 'layouts/dashboard_customizations_submenu' %>
         <% else %>
           <li <%= 'class=current' if current_page_includes?(resource_contexts_path, dmp_for_customization_path) %> >
