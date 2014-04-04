@@ -1,0 +1,19 @@
+<li class='current-parent'>
+  <%= link_to(content_tag(:span, 'DMP Templates'), requirements_templates_path) %>
+  <ul class="children dmp-templates">
+    <!-- The following adds "current" class when on Customization Overview page -->
+    <% if current_page_includes?(edit_resource_context_path(@resource_context), new_resource_context_path) %>
+      <li class="current"><%= link_to(content_tag(:span, 'Customization Overview'), '#') %></li>
+      <li><%= link_to(content_tag(:span, 'Customization Details'), customization_requirement_path(@resource_context)) %></li>
+      <li class="last"></li>
+    <% end %>
+    <!-- The following adds "current" class when on Customization Details page -->
+    <% if current_page_includes?(customization_requirement_path(@resource_context)) ||
+              (params[:controller] == 'customizations' &&
+               current_page?(customization_requirement_path(@resource_context, requirement_id: params[:requirement_id])))                                 %>
+      <li><%= link_to(content_tag(:span, 'Customization Overview'), edit_resource_context_path(@resource_context)) %></li>
+      <li class="current"><%= link_to(content_tag(:span, 'Customization Details'), '#') %></li>
+      <li class="last"></li>
+    <% end %>
+  </ul>
+</li>

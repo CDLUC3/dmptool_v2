@@ -1,6 +1,8 @@
 <li <%= 'class=current-parent' if current_page_includes?({controller: 'requirements_templates', action: 'new'},
                                                          edit_requirements_template_path(@requirements_template),
-                                                         requirements_template_requirements_path(@requirements_template)) %>>
+                                                         requirements_template_requirements_path(@requirements_template)) ||
+                                                         customization_section?
+    %>>
   <%= link_to(content_tag(:span, 'DMP Templates'), requirements_templates_path) %>
   <ul class="children dmp-templates">
     <!-- The following adds "current" class when on DMP Template Overview page -->
