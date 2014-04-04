@@ -143,7 +143,7 @@
             <label class ="control-label">Visibility</label>
             <div class="controls">
               <p> This DMP is <strong class="blue"><%=@plan.visibility.capitalize %></strong><br/>
-              <%= link_to "Change Settings", "#", :class => "btn change_visibility_link", :'data-planid' => @plan.id %></p>
+              <%= link_to "Change Settings", "#", :class => "btn change_visibility_link", :'data-planid' => @plan.id, :'data-visibility' => @plan.visibility %></p>
             </div>
           </div>
           <hr/>
