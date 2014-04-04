@@ -24,17 +24,17 @@
     <div class="control-group" id="obligation">
       <%= f.label :obligation, :class => 'control-label' %>
       <div class="controls checkbox-controls">
-        <%= f.radio_button :obligation, :mandatory, :class => 'radio inline' %>
+        <%= f.radio_button :obligation, :mandatory, :class => 'radio inline', :id => 'mandatory'%>
         <%= label_tag :mandatory, "Mandatory", :class => "radio-label" %><br/>
-        <%= f.radio_button :obligation, :mandatory_applicable, :class => 'radio inline' %>
+        <%= f.radio_button :obligation, :mandatory_applicable, :class => 'radio inline', :id => 'mandatory_applicable'%>
         <%= label_tag :mandatory_applicable, "Mandatory If Applicable", :class => "radio-label" %><br/>
-        <%= f.radio_button :obligation, :recommended, :class => 'radio inline' %>
+        <%= f.radio_button :obligation, :recommended, :class => 'radio inline', :id => 'recommended' %>
         <%= label_tag :recommended, "Recommended", :class => "radio-label" %><br/>
         <% if @requirement.new_record? %>
-          <%= f.radio_button :obligation, :optional, checked: true , :class => 'radio inline' %>
+          <%= f.radio_button :obligation, :optional, checked: true, :class => 'radio inline', :id => 'optional' %>
           <%= label_tag :optional, "Optional", :class => "radio-label" %>
         <% else %>
-          <%= f.radio_button :obligation, :optional, :class => 'radio inline' %>
+          <%= f.radio_button :obligation, :optional, :class => 'radio inline', :id => 'optional' %>
           <%= label_tag :optional, "Optional", :class => "radio-label" %>
         <% end %>
       </div>
