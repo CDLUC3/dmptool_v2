@@ -10,7 +10,7 @@
 			  <%= render partial: "shared/errors", locals: {model: @resource_context } %>
 			
 			  <div class="control-group" id="inst_text">
-			    <label class ="control-label">Customized for</label>
+			    <p class ="control-label">Customized for</p>
 			    <div class="controls">
 			      <p>
 			        <%= @resource_context.institution_id.nil? ? "Original funder / template creator" :  @resource_context.institution.name %>
@@ -29,14 +29,14 @@
 			  </div>
 			
 			  <div class="control-group">
-			    <label class ="control-label">Associated DMP template</label>
+			    <p class ="control-label">Associated DMP template</p>
 			    <div class="controls">
 			      <p><%= link_to @req_temp.name, edit_requirements_template_path(@req_temp) %></p>
 			    </div>
 			  </div>
 			
 			  <div class="control-group">
-			    <%= f.label :review_type, :class => 'control-label' %>
+			    <p class ="control-label">Review type</p>
 			    <div class="controls checkbox-controls">
 			      <%= f.radio_button :review_type, :formal_review, :class => 'radio inline', :id => 'formal_review'  %>
 			      <%= label_tag :formal_review, 'Formal review required', :class => 'checkbox-label'%><br/>
@@ -62,14 +62,14 @@
 			  </div>
 			
 			  <div class="control-group">
-			    <label class ="control-label">Creation Date</label>
+			    <p class ="control-label">Creation Date</p>
 			    <div class="controls">
 			      <p><%= (@resource_context.created_at.nil? ? 'none' : @resource_context.created_at) %></p>
 			    </div>
 			  </div>
 			
 			  <div class="control-group">
-			    <label class ="control-label">Last Modification Date</label>
+			    <p class ="control-label">Last Modification Date</p>
 			    <div class="controls">
 			      <p><%= (@resource_context.updated_at.nil? ? 'none' : @resource_context.updated_at) %></p>
 			    </div>
