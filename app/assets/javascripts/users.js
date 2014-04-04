@@ -29,13 +29,11 @@ $(document).ready(function() {
 
 // //automatically checks Institutional reviewer role when Institutional Administrator role gets checked
 $(function() {
-
 	$('#5').change(function(){
 		if ($('#5').is(':checked')) { 
 			$('#4').prop('checked', true);
 		}
 	});
-
 });
 
 

@@ -53,7 +53,7 @@
 			<div class="control-group row-fluid">
 						<% @roles.each do |role| %>
 						  <div class="controls span6">
-						  	<%= check_box_tag "role_ids[]", role.id %>
+						  	<%= check_box_tag "role_ids[]", role.id , checked = false, id: role.id%>
 						    <%= label_tag role.name, role.name, :class => 'checkbox-label' %>
 						  </div>
 						<% end %>
