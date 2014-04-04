@@ -138,9 +138,9 @@ class PlansController < ApplicationController
   end
 
   def perform_review
-    set_comments
-    @reviewer_comments = @reviewer_comments.page(params[:page]).per(5)
-    @owner_comments = @owner_comments.page(params[:page]).per(5)
+    @comment = Comment.new
+    comments = Comment.where(plan_id: @plan.id)
+    @reviewer_comments = comments.reviewer_comments.page(params[:page]).per(5)
   end
 
   def review_dmps
@@ -328,6 +328,7 @@ class PlansController < ApplicationController
       @rejected = @rejected_plans.rejected.count
       @all = @submitted + @approved + @rejected
     end
+
     def display_text(resource_contexts)
       resources = Array.new
       @resource_contexts.each do |resource_context|
@@ -378,7 +379,7 @@ class PlansController < ApplicationController
 
     def set_comments
       @comment = Comment.new
-      comments = Comment.where(plan_id: @plan.id, user_id: current_user.id)
+      comments = Comment.where(plan_id: @plan.id)
       @reviewer_comments = comments.reviewer_comments.order('created_at DESC')
       @owner_comments = comments.owner_comments.order('created_at DESC')
       @plan_states = @plan.plan_states
