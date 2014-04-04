@@ -51,6 +51,15 @@ class Institution < ActiveRecord::Base
     User.where(id: @user_ids, institution_id: self.subtree_ids)
   end
 
+  def users_in_role_any_institution(role_name)
+    User.joins({:authorizations => :role}).where("roles.name = ?", role_name)
+  end
+
+  def users_deep_in_any_role_any_institution
+    @user_ids = Authorization.pluck(:user_id) 
+    User.where(id: @user_ids)
+  end
+
   def name #alias name to full name for ease of use, but don't change to alias command because it breaks activerecord
     full_name
   end
