@@ -1,5 +1,5 @@
 <% if @resource_context.new_record? %>
-  <%= link_to('<< Choose DMP Template', dmp_for_customization_path, method: :get, :class => "btn pull-left") %>
+  	<%= link_to('<< Choose DMP Template', requirements_templates_path, method: :get, :class => "btn pull-left") %>
 <% else %>
 	<% if user_role_in?(:dmp_admin) %>
   	<%= link_to('<< Customizations', resource_contexts_path, method: :get, :class => "btn pull-left") %>
