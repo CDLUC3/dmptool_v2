@@ -9,7 +9,7 @@
         <%= render partial: "shared/errors", locals: {model: @plan } %>
 
         <div class="control-group">
-          <%= label_tag :selected_requirement_template, 'DMP Template', :class => 'control-label' %>
+          <%= label_tag :selected_requirement_template_name, 'DMP Template', :class => 'control-label' %>
           <div class="controls">
             <% if @plan.new_record? && current_page?(controller: 'plans', action: 'new') %>
               <%= f.hidden_field :requirements_template_id, value: params[:requirements_template_id], id: 'dmp_template_id' %>
@@ -36,7 +36,7 @@
           </div>
         </div>
         <div class="control-group">
-          <%= f.label :submission_deadline, 'Submission Deadline',:class => "control-label" %>
+          <%= label_tag(:submission_deadline, "Submission Deadline", :class => "control-label") %>
           <div class="controls">
             <%= f.text_field :submission_deadline, value: @plan.submission_deadline.blank? ? " " : @plan.submission_deadline.strftime('%m/%d/%Y'), :class => 'datepicker', id:'submission_deadline' %>
           </div>
@@ -82,7 +82,7 @@
 
         <% unless @plan.new_record? %>
           <div class="control-group">
-            <label class="control-label">Current Status</label>
+            <p class="control-label">Current Status</p>
             <div class="controls">
               <p><strong class="blue"><%= state(@plan) %></strong> <%= link_to(content_tag(:span, "", :class => "icon-chevron-down") + "Show History", "#", :class => "view-plan-history") %><%= link_to(content_tag(:span, "", :class => "icon-chevron-up") + "Hide History", "#", :class => "hide-plan-history") %></p>
               <div id="plan_history" class="history">
@@ -93,7 +93,7 @@
           <% if (@plan.requirements_template.review_type == :formal_review) || (@plan.requirements_template.review_type == :informal_review) %>
             <hr/>
             <div class="control-group">
-              <label class ="control-label">Reviewer Comments</label>
+              <p class ="control-label">Reviewer Comments</p>
               <div class="controls">
                 <p><%= link_to(content_tag(:span, "", :class => "icon-chevron-down") + "View", "#", :class => "view-reviewer-comments") %><%= link_to(content_tag(:span, "", :class => "icon-chevron-up") + "Hide", "#", :class => "hide-reviewer-comments") %></p>
                 <div id="reviewer_comments" class="comments">
@@ -117,7 +117,7 @@
           <% end %>
 					<hr/>
           <div class="control-group">
-            <label class ="control-label">Owner Comments</label>
+            <p class ="control-label">Owner Comments</p>
             <div class="controls">
               <p><%= link_to(content_tag(:span, "", :class => "icon-chevron-down") + "View", "#", :class => "view-owner-comments") %><%= link_to(content_tag(:span, "", :class => "icon-chevron-up") + "Hide", "#", :class => "hide-owner-comments") %></p>
               <div id="owner_comments" class="comments">
@@ -140,7 +140,7 @@
           </div>
           <hr/>
           <div class="control-group">
-            <label class ="control-label">Visibility</label>
+            <p class ="control-label">Visibility</p>
             <div class="controls">
               <p> This DMP is <strong class="blue"><%=@plan.visibility.capitalize %></strong><br/>
               <%= link_to "Change Settings", "#", :class => "btn change_visibility_link", :'data-planid' => @plan.id %></p>
@@ -148,7 +148,7 @@
           </div>
           <hr/>
           <div class="control-group">
-            <label class ="control-label">Available Actions</label>
+            <p class ="control-label">Available Actions</p>
               <div class="controls">
               <p><%= link_to "Preview DMP", preview_plan_path(@plan) %> |
                 <% if (@plan.requirements_template.review_type == :formal_review) || (@plan.requirements_template.review_type == :informal_review) %>

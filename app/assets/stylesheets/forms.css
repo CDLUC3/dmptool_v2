@@ -16,7 +16,7 @@ label {
 	display: block; }
 .table .control-group label {
 	display: inline-block; }
-label.control-label, .form-horizontal label.control-label {
+.control-label, .form-horizontal .control-label {
 	font-weight: bold;
 	line-height: 30px;
 	margin-right: 10px; }
@@ -61,7 +61,7 @@ textarea {
 	margin: 10px 0; }
 .table .control-group {
 	margin: 0 8px; }
-.form-horizontal label.control-label {
+.form-horizontal .control-label {
 	width: 210px;
 	padding: 0; }
 .table .controls[class*="span"] {
