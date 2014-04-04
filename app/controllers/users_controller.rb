@@ -103,8 +103,7 @@ class UsersController < ApplicationController
     password = user_params[:password]
     password_confirmation = user_params[:password_confirmation]
 
-    orcid_id = user_params[:orcid_id]
-
+    @orcid_id = params[:user][:orcid_id]
 
     if password && !password.empty?
       if valid_password(password, password_confirmation)
@@ -119,10 +118,23 @@ class UsersController < ApplicationController
       end
     end
 
+    if valid_orcid?(@orcid_id)
+      @orcid_id = "http://orcid.org/" + "#{@orcid_id}"
+    else
+      
+      flash[:error] = "The orcid id: #{@orcid_id} is a not valid orcid id."
+      @orcid_id = ""
+      redirect_to edit_user_path(@user)
+      return
+    end
+
+    
+#0000-0003-1367-3100
+
 
     User.transaction do
       @user.institution_id = params[:user].delete(:institution_id)
-      if @user.update_attributes(user_params)
+      if (@user.update_attributes(user_params) && @user.update_attribute(:orcid_id, @orcid_id))
 
         update_notifications(params[:prefs])
         # LDAP will not except for these two fields to be empty.
@@ -223,9 +235,17 @@ class UsersController < ApplicationController
   end
 
 
-  
+  def valid_orcid?(orcid_id)
+    #!orcid_id.match(/[A-Za-z]/) && 
+    #orcid_id.length == 19 && 
+    #orcid_id.match(/\d/) && 
+    #!orcid_id.match(/\s/) &&
+    orcid_id.match(/[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}/)
+  end
 
   private
+
+  
 
   def map_users_for_autocomplete(users)
     @users.map {|u| Hash[ id: u.id, full_name: u.full_name, label: u.label]}
@@ -247,7 +267,7 @@ class UsersController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
     params.require(:user).permit(:institution_id, :email, :first_name, :last_name,
-                                 :password, :password_confirmation,:orcid_id, :prefs, :login_id, role_ids: [] )
+                                 :password, :password_confirmation, :prefs, :login_id, role_ids: [] )
   end
 
   def update_ldap_if_necessary(user, params)

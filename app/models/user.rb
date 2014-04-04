@@ -209,6 +209,8 @@ class User < ActiveRecord::Base
 
   public
 
+  
+
   #sets a new token if it's not set or is expired
   def ensure_token
     if self.token_expiration and Time.now > self.token_expiration
