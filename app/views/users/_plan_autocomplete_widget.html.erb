@@ -84,7 +84,7 @@
 <div class="control-group">
     <%= label_tag "#{user_role}_name", "Add Coowners:", :class => "control-label" %>
     <div class="controls">
-  		<%= text_field_tag("#{user_role}_name", nil, placeholder: 'Add Co-owners, multiple emails divided by comma', :class => 'input-xxlarge') %>
+  		<%= text_field_tag("#{user_role}_name", nil, placeholder: "Add co-owners; search by name or email address", :class => 'input-xxlarge') %>
 			<%= hidden_field_tag "item_description", item_description %>
 		</div>
 </div>

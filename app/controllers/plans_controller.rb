@@ -94,6 +94,9 @@ class PlansController < ApplicationController
       elsif flash[:alert].include?("The user you chose is already a #{@item_description}")
         format.html { flash[:alert]
               redirect_to edit_plan_path(@plan)}
+      elsif flash[:alert].include?(flash[:alert] = "The user chosen is the Owner of the Plan. An owner cannot be #{@item_description} for the same plan")
+        format.html { flash[:alert]
+              redirect_to edit_plan_path(@plan)}
       else
         if @plan.update(plan_params)
           format.html { flash[:notice] << "Plan was successfully updated."
@@ -272,6 +275,8 @@ class PlansController < ApplicationController
           @user = User.find_by(email: @email)
           if @user.nil?
             flash[:alert] = "The user you entered with email #{@email} was not found"
+          elsif @user.user_plans.where(plan_id: @plan.id, owner: true).count > 0
+            flash[:alert] = "The user chosen is the Owner of the Plan. An owner cannot be #{@item_description} for the same plan"
           elsif @user.user_plans.where(plan_id: @plan.id, owner: false).count > 0
             flash[:alert] = "The user you chose is already a #{@item_description}"
           else
