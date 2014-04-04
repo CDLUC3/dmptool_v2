@@ -117,30 +117,45 @@ class UsersController < ApplicationController
         render :edit and return
       end
     end
-
-    if valid_orcid?(@orcid_id)
-      @orcid_id = "http://orcid.org/" + "#{@orcid_id}"
-    else     
-      flash[:error] = "The orcid id: #{@orcid_id} is a not valid orcid id."
-      @orcid_id = ""
-      redirect_to edit_user_path(@user)
-      return
+    if !@orcid_id.blank?
+      if valid_orcid?(@orcid_id)
+        @orcid_id = "http://orcid.org/" + "#{@orcid_id}"
+      else     
+        flash[:error] = "The orcid id: #{@orcid_id} is a not valid orcid id."
+        @orcid_id = ""
+        redirect_to edit_user_path(@user)
+        return
+      end
     end
 
 #0000-0003-1367-3100
 
     User.transaction do
       @user.institution_id = params[:user].delete(:institution_id)
-      if (@user.update_attributes(user_params) && @user.update_attribute(:orcid_id, @orcid_id))
-        update_notifications(params[:prefs])
-        # LDAP will not except for these two fields to be empty.
-        user_params[:first_name] = " " if user_params[:first_name].empty?
-        user_params[:last_name] = " " if user_params[:last_name].empty?
-        update_ldap_if_necessary(@user, user_params)
-        flash[:notice] = 'User information updated.'
-        redirect_to edit_user_path(@user)
+      if @orcid_id.blank?
+        if (@user.update_attributes(user_params))
+          update_notifications(params[:prefs])
+          # LDAP will not except for these two fields to be empty.
+          user_params[:first_name] = " " if user_params[:first_name].empty?
+          user_params[:last_name] = " " if user_params[:last_name].empty?
+          update_ldap_if_necessary(@user, user_params)
+          flash[:notice] = 'User information updated.'
+          redirect_to edit_user_path(@user)
+        else
+          render 'edit'
+        end
       else
-        render 'edit'
+        if (@user.update_attributes(user_params) && @user.update_attribute(:orcid_id, @orcid_id))
+          update_notifications(params[:prefs])
+          # LDAP will not except for these two fields to be empty.
+          user_params[:first_name] = " " if user_params[:first_name].empty?
+          user_params[:last_name] = " " if user_params[:last_name].empty?
+          update_ldap_if_necessary(@user, user_params)
+          flash[:notice] = 'User information updated.'
+          redirect_to edit_user_path(@user)
+        else
+          render 'edit'
+        end
       end
     end
   rescue LdapMixin::LdapException
@@ -180,6 +195,7 @@ class UsersController < ApplicationController
     end
   end
 
+
   def update_user_roles
 
     @user_id = params[:user_id]
@@ -200,6 +216,7 @@ class UsersController < ApplicationController
 
   end
 
+
   def autocomplate_users_plans
     if !params[:name_term].blank?
       like = params[:name_term].concat("%")
@@ -212,6 +229,7 @@ class UsersController < ApplicationController
     list = map_users_for_autocomplete(@users)
     render json: list
   end
+
 
   def autocomplete_users
     role_number = params[:role_number].to_i
@@ -232,7 +250,7 @@ class UsersController < ApplicationController
 
 
   def valid_orcid?(orcid_id)
-    orcid_id.match(/[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}/)
+    orcid_id.match(/[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}/) 
   end
 
   private
