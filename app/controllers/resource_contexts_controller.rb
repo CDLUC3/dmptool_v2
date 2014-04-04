@@ -12,6 +12,7 @@ class ResourceContextsController < ApplicationController
 
   # GET /resource_templates/new
   def new
+    
     redirect_to :back and return if params[:requirements_template_id].blank?
     #institution_id, requirements_template_id, resource_id is NULL
     if user_role_in?(:dmp_admin) && params[:institution_id].blank?

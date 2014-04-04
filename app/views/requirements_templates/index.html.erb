@@ -52,12 +52,12 @@
 									(link_to activate_link_text(requirements_template), 
 										toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", 
 										:class => "ajax")+" | "+
-									(link_to "Customize", "#")%>
+									(link_to "Customize", new_resource_context_path(requirements_template_id: requirements_template, institution_id: requirements_template.institution_id))%>
 						</div>
 
 						<%else%>
 							<div class="template-links">
-								<%= (link_to "Customize", "#")%>
+								<%= (link_to "Customize", new_resource_context_path(requirements_template_id: requirements_template, institution_id: requirements_template.institution_id))%>
 							</div>
 					<%end%>
 
