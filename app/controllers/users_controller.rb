@@ -120,22 +120,18 @@ class UsersController < ApplicationController
 
     if valid_orcid?(@orcid_id)
       @orcid_id = "http://orcid.org/" + "#{@orcid_id}"
-    else
-      
+    else     
       flash[:error] = "The orcid id: #{@orcid_id} is a not valid orcid id."
       @orcid_id = ""
       redirect_to edit_user_path(@user)
       return
     end
 
-    
 #0000-0003-1367-3100
-
 
     User.transaction do
       @user.institution_id = params[:user].delete(:institution_id)
       if (@user.update_attributes(user_params) && @user.update_attribute(:orcid_id, @orcid_id))
-
         update_notifications(params[:prefs])
         # LDAP will not except for these two fields to be empty.
         user_params[:first_name] = " " if user_params[:first_name].empty?
@@ -236,10 +232,6 @@ class UsersController < ApplicationController
 
 
   def valid_orcid?(orcid_id)
-    #!orcid_id.match(/[A-Za-z]/) && 
-    #orcid_id.length == 19 && 
-    #orcid_id.match(/\d/) && 
-    #!orcid_id.match(/\s/) &&
     orcid_id.match(/[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}/)
   end
 
