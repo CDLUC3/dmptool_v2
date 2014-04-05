@@ -119,7 +119,8 @@
   <p><strong>DMP Options</strong></p>
 	<hr/>
   <div class="control-group">
-    <%= label_tag :my_roles, 'My Roles', :class => 'control-label' %>
+    <%#= label_tag :my_roles, 'My Roles', :class => 'control-label' %>
+    <p class="control-label">My Roles</p>
     <div class="controls">
       <p><%= @user.role_names.join(' | ') %></p>
     </div>
@@ -133,7 +134,7 @@
 <% if @user.orcid_id.nil? || @user.orcid_id.blank? %>
   <div class="control-group">
     <%= label_tag :orcid_id, 'Orcid Id', :class => 'control-label' %>
-      <input type="text" class="orcid_widget" name="user[orcid_id]" placeholder="xxxx-xxxx-xxxx-xxxx">
+      <input type="text" id="orcid_id" class="orcid_widget" name="user[orcid_id]" placeholder="xxxx-xxxx-xxxx-xxxx">
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script type="text/javascript" src="//researchdata.ands.org.au/apps/assets/orcid_widget/js/orcid_widget.js"></script>
       </input>
