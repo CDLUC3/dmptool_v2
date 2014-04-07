@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
 
+  include UserEmail
+
   acts_as_paranoid
 
   serialize :prefs, Hash
@@ -161,6 +163,7 @@ class User < ActiveRecord::Base
 
   #this takes an array of numeric role ids and will update that user to have those role ids by deleting and adding as needed
   def update_authorizations(role_ids)
+    role_ids = role_ids.map {|i| i.to_i }
     roles = self.roles.collect(&:id) # get current role ids
     roles_to_remove = roles - role_ids
     roles_to_add = role_ids - roles
@@ -173,6 +176,7 @@ class User < ActiveRecord::Base
       roles_to_add.each do |r|
         self.authorizations.create({:role_id => r})
       end
+      email_roles_granted(roles_to_add)
     end
     return {:roles_added => roles_to_add, :roles_removed => roles_to_remove}
   end
