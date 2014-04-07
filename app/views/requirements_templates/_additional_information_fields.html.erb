@@ -1,5 +1,6 @@
 <div class="control-group">
-	<%= f.label :funder_links, :class => 'control-label' %>
+	<%= f.label :label, 'Funder links', :class => 'control-label' %>
+	<%= f.label :url, 'Link Url', :class => 'hide' %>
 	<div class="controls">
 		<%= f.text_field :label, placeholder: 'Link Label' %>
 		<%= f.text_field :url, placeholder: 'Link Url' %>

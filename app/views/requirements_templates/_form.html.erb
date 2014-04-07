@@ -16,7 +16,7 @@
 				</div>
 
 				<div class="control-group">
-					<%= f.label :visibility, :class => 'control-label' %>
+					<p class="control-label">Visibility</p>
 					<div class="controls checkbox-controls">
 						<%= f.radio_button :visibility, :public, :class => 'radio inline', :id => 'public'  %>
 						<%= label_tag :public, 'public', :class => 'radio-label'%><br/>
@@ -73,7 +73,7 @@
 				</div>
 
 				<div class="control-group">
-					<%= f.label :review_requirement, :class => 'control-label' %>
+					<p class="control-label">Review requirement</p>
 					<div class="controls checkbox-controls">
 						<%= f.radio_button :review_type, :formal_review, :class => 'radio inline', :id => 'formal_review' %>
 						<%= label_tag :formal_review, 'Review Required', :class => 'radio-label' %><br/>
