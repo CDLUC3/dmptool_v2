@@ -57,8 +57,8 @@
       <%= f.fields_for :labels do |builder| %>
         <%= render 'label_fields', f: builder %>
       <% end %>
-      <%= link_to_add_fields 'Click to Add Unit', f, :labels %>
     </fieldset>
+
   </fieldset>
   <div class="buttons">
 	  <%= f.submit 'Save', :class => 'btn' %>

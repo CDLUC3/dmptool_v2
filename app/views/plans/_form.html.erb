@@ -84,7 +84,7 @@
           <div class="control-group">
             <p class="control-label">Current Status</p>
             <div class="controls">
-              <p><strong class="blue"><%= state(@plan) %></strong> <%= link_to(content_tag(:span, "", :class => "icon-chevron-down") + "Show History", "#", :class => "view-plan-history") %><%= link_to(content_tag(:span, "", :class => "icon-chevron-up") + "Hide History", "#", :class => "hide-plan-history") %></p>
+              <p><strong class="blue"><%= state(@plan).capitalize %></strong> <%= link_to(content_tag(:span, "", :class => "icon-chevron-down") + "Show History", "#", :class => "view-plan-history") %><%= link_to(content_tag(:span, "", :class => "icon-chevron-up") + "Hide History", "#", :class => "hide-plan-history") %></p>
               <div id="plan_history" class="history">
                 <%= render partial: 'plan_states_history' %>
               </div>

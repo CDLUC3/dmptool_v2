@@ -108,6 +108,8 @@
 					<%= button_tag 'Cancel', type: :reset, :class => 'btn'%>
 					<% unless @requirements_template.new_record? %>
 						<%= link_to 'Template Details >>', requirements_template_requirements_path(@requirements_template), method: :get, :class => 'btn btn-green pull-right' %>
+					<% else %>
+						<%= button_tag 'Template Details >>', disabled: true,  :class => 'btn pull-right' %>
 	         <% end %>
 				</div>
 			<% end %>

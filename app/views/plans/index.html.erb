@@ -48,7 +48,7 @@
           </div>
         </td>
         <td><%= owner_name(plan) %></td>
-        <td><strong><%= state(plan) %></strong></td>
+        <td><strong><%= state(plan).capitalize %></strong></td>
         <%if plan.visibility == :private %>
           <td class="span1"><span class="private-visibility icon" title="Private"></span></td>
         <% elsif plan.visibility == :public %>

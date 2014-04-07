@@ -26,7 +26,7 @@
 					<td class="span7", id="#{plan.name}"><strong><%= plan.name %></strong></td>
 	        <td><%= owner_name(plan) %></td>
 	        <td><%= plan.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
-	        <td class="span1"><strong><%= state(plan) %></strong></td>
+	        <td class="span1"><strong><%= state(plan).capitalize %></strong></td>
 	        <td class="span1">
 	        	<div class="actions">
 		        	<%= link_to "", perform_review_plan_path(plan), :class => "icon approve-template" %>

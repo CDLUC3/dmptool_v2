@@ -17,4 +17,18 @@ class UsersMailer < ActionMailer::Base
          :from => APP_CONFIG['feedback_email_from']
   end
 
+  #pass in the email addresses, the email subject and the template name that has the text
+
+  #an example call:
+  # UsersMailer.notification(['catdog@mailinator.com', 'dogdog@mailinator.com'],
+  #                           'that frosty mug taste', 'test_mail').deliver
+  def notification(email_address_array, subject, message_template)
+    mail( :to             => email_address_array.join(','),
+          :subject        => subject,
+          :from           => APP_CONFIG['feedback_email_from'],
+          :reply_to       => APP_CONFIG['feedback_email_from'],
+          :template_name  => message_template
+    )
+  end
+
 end
