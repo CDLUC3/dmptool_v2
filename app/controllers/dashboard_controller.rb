@@ -5,8 +5,11 @@ class DashboardController < ApplicationController
   #show the default dashboard with get request
   def show
     if user_role_in?(:institutional_reviewer, :institutional_admin, :dmp_admin)
-      @pending_review = current_user.institution.plans_by_state(PlanState::PENDING_REVIEW_STATES).count
-      @finished_review = current_user.institution.plans_by_state(PlanState::FINISHED_REVIEW_STATES).count
+      institutions = Institution.find(current_user.institution_id).subtree_ids
+      @approved_plans = Plan.plans_approved(institutions).count
+      @rejected_plans = Plan.plans_rejected(institutions).count
+      @pending_review = Plan.plans_to_be_reviewed(institutions).count
+      @finished_review = @approved_plans + @rejected_plans
     end
     if user_role_in?(:template_editor, :dmp_admin, :institutional_admin)
       @requirements_templates = current_user.institution.requirements_templates_deep.where(visibility: 'institutional').count

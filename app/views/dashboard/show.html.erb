@@ -46,10 +46,10 @@
 		<table class="table table-striped">
 			<tbody>
 				<tr>
-					<td><%= link_to "#{@pending_review} DMPs pending review" %></td>
+					<td><%= link_to "#{@pending_review} DMPs pending review", review_dmps_path(scope: "submitted") %></td>
 				</tr>
 				<tr>
-					<td><%= link_to "#{@finished_review} DMPs finished review" %></td>
+					<td><%= link_to "#{@finished_review} DMPs finished review", review_dmps_path(scope: "all_limited") %></td>
 				</tr>
 			</tbody>
 		</table>
