@@ -1,4 +1,7 @@
 class Authorization < ActiveRecord::Base
+
+  include AuthorizationEmail
+
   belongs_to :user
   belongs_to :role
   validates :role_id, presence: true
