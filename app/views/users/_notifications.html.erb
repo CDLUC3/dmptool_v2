@@ -32,7 +32,7 @@
 	<p><strong>Resources editors:</strong></p>
 	<div class="control-group">
 		<%=  check_box_tag 'prefs[resource_editors][deactived]', true, @user.prefs[:resource_editors][:deactived] %>
-		<%= label_tag 'prefs[resource_editors][deactived]', 'A Customization is activated/deactivated', :class => 'checkbox-label' %>
+		<%= label_tag 'prefs[resource_editors][deactived]', 'A customization is activated/deactivated', :class => 'checkbox-label' %>
 		<br/>
 		<%=  check_box_tag 'prefs[resource_editors][deleted]', true, @user.prefs[:resource_editors][:deleted] %>
 		<%= label_tag 'prefs[resource_editors][deleted]', 'A customization is deleted', :class => 'checkbox-label' %>
