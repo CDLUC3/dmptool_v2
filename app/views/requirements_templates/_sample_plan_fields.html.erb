@@ -1,5 +1,6 @@
 <div class="control-group">
-	<%= f.label :sample_plans, :class => 'control-label' %>
+	<%= f.label :label, 'Sample plans', :class => 'control-label' %>
+	<%= f.label :url, 'Plan Url', :class => 'hide' %>
 	<div class="controls">
 		<%= f.text_field :label, placeholder: 'Plan Name' %>
 		<%= f.text_field :url, placeholder: 'Plan Url' %>
