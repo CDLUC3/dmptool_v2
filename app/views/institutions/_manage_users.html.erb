@@ -26,7 +26,7 @@
 		  		<td><%= link_to user.full_name_last_first, edit_user_path(user) %></td>
 		    	<td><%= link_to user.institution.full_name, edit_institution_path(user.institution) %></td>
 		    	<td><%= user.role_names.join(' | ') %></td>
-		     	<td class="span1"><%=link_to raw(''), edit_user_roles_inst_admin_path(user_id: user), :class => 'icon edit-user', :id => "edit_#{user.id}"%></td>           
+		     	<td class="span1"><%=link_to raw(''), edit_user_roles_inst_admin_path(user_id: user), :title => 'Edit user role', :class => 'icon edit-user', :id => "edit_#{user.id}"%></td>           
 		      </tr>       
 		  <% end %>
 		</tbody>
@@ -54,7 +54,7 @@
 						<% @roles.each do |role| %>
 						  <div class="controls span6">
 						  	<%= check_box_tag "role_ids[]", role.id , checked = false, id: role.id%>
-						    <%= label_tag role.name, role.name, :class => 'checkbox-label' %>
+						    <%= label_tag role.id, role.name, :class => 'checkbox-label' %>
 						  </div>
 						<% end %>
 				</div>
