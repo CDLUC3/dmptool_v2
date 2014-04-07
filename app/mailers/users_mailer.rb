@@ -23,7 +23,7 @@ class UsersMailer < ActionMailer::Base
   # UsersMailer.notification(['catdog@mailinator.com', 'dogdog@mailinator.com'],
   #                           'that frosty mug taste', 'test_mail').deliver
   def notification(email_address_array, subject, message_template, locals)
-    @locals = locals
+    @vars = locals
     mail( :to             => email_address_array.join(','),
           :subject        => subject,
           :from           => APP_CONFIG['feedback_email_from'],

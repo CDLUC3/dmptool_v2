@@ -180,3 +180,9 @@ div.field_with_errors input {
   border: 2px solid #FF0000;
   background: #F0F0F0;
   padding: 5px 5px 0; }
+
+/* Custom Form Element Sizes */
+input[type=text].longfield, select.longfield {
+	width: 412px !important; }
+input[type=text].shortfield {
+	width: 103px; }
