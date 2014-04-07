@@ -159,6 +159,24 @@ class User < ActiveRecord::Base
     role_names.include?(role_name)
   end
 
+  #this takes an array of numeric role ids and will update that user to have those role ids by deleting and adding as needed
+  def update_authorizations(role_ids)
+    roles = self.roles.collect(&:id) # get current role ids
+    roles_to_remove = roles - role_ids
+    roles_to_add = role_ids - roles
+
+    unless roles_to_remove.blank?
+      self.authorizations.where(role_id: roles_to_remove).destroy_all
+    end
+
+    unless roles_to_add.blank?
+      roles_to_add.each do |r|
+        self.authorizations.create({:role_id => r})
+      end
+    end
+    return {:roles_added => roles_to_add, :roles_removed => roles_to_remove}
+  end
+
   private
 
   def add_default_institution

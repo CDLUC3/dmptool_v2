@@ -123,23 +123,15 @@ class InstitutionsController < ApplicationController
     @user_id = params[:user_id]
     @role_ids = params[:role_ids] ||= []  #"role_ids"=>["1", "2", "3"]
 
-    remove_user_authorizations_not_dmp_admin(@user_id)
+    @role_ids = @role_ids & [2, 3, 4, 5] #can only update these roles, not #1
 
-    @role_ids.each do |role_id|
-      role_id = role_id.to_i
-      authorization = Authorization.create(role_id: role_id, user_id: @user_id)
-      authorization.save!
-    end
+    @user = User.find(@user_id)
+    @user.update_authorizations(@role_ids)
 
     respond_to do |format|
       format.html { redirect_to institutions_url, notice: 'User was successfully updated.'}
       format.json { head :no_content }
     end
-  end
-
-  def remove_user_authorizations_not_dmp_admin(user_id)
-    @authorization = Authorization.where(user_id: user_id)
-    @authorization.delete_all(['role_id NOT IN (?)', 1])  
   end
 
   # GET /institutions/1
