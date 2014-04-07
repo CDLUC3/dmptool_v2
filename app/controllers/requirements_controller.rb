@@ -10,6 +10,8 @@ class RequirementsController < ApplicationController
     @requirement = @requirements_template.requirements.build
     @requirement.requirements_template.ensure_requirements_position # be sure that position is set for these items, if not, set defaults
     @requirements = @requirements_template.requirements
+    @requirement.enumerations.build
+    @requirement.labels.build
   end
 
   # GET /requirements/1
