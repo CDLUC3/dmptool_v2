@@ -108,6 +108,8 @@ $(function() {
 	});
 });
 
+
+// share my dmp popup window
 $(function() {
 	$('#visibility_dialog_form').hide();
 	$('.change_visibility_link').click(function(event) {
@@ -129,13 +131,18 @@ $(function() {
 				duration: 1000
 			},
 		 	buttons: {
-				Cancel: function()
-				{
+				Cancel: function(){
 					$(this).dialog( "close" );
+				},
+				Submit: function() {
+          $("#visibility_form").submit();
+          $(this).dialog( "close" );
 				}
 			},
 			open: function()
 			{
+				$(this).parent().find('button:contains("Cancel")').addClass('btn');
+				$(this).parent().find('button:contains("Submit")').addClass('btn btn-green confirm');
 				$("#visibility_dialog_form").dialog("open");
 			},
       close: function() {
@@ -145,6 +152,32 @@ $(function() {
 		return false
 	});
 });
+
+// $(function() {
+// 	$('#visibility_dialog_form').hide();
+// 	$('.change_visibility_link').click(function(event) {
+// 		$('#visibility_dialog_form').dialog( {
+// 			var message = "Share my DMP";
+// 			var  html = "<div class=\"modal\" id=\"visibility_dialog_form\">\n" +
+// 						      "<div class=\"modal-header\">\n" +
+// 						      "<a class=\"close\" data-dismiss=\"modal\">×</a>\n" +
+// 						      "<h3><strong>" + message + "</strong></h3>\n" +
+// 						      "</div>\n" +
+// 						      "<div class=\"modal-footer\">\n" +
+// 						      "<a data-dismiss=\"modal\" class=\"btn\">" + "Cancel" + "</a>\n" +
+// 						      "<a data-dismiss=\"modal\" class=\"btn btn-green confirm\">" + "Submit" + "</a>\n" +
+// 						      "</div>\n" +
+// 						      "</div>";
+// 			$(html).modal();
+// 		}).prev ().find(".ui-dialog-titlebar-close").show();
+// 			return false
+//    	 //return $('#visibility_dialog_form .dialog').on('click', function() {
+    	
+// 	});
+// });
+
+
+
 
 $(function() {
 	$("#cancel_action").bind("click",function() {

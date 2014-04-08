@@ -1,4 +1,4 @@
-<%= form_tag(change_visibility_path, method: :post, html: { :class => "form-horizontal"}) do %>
+<%= form_tag(change_visibility_path, id: "visibility_form", method: :post, html: { :class => "form-horizontal"}) do %>
   <%= hidden_field_tag(:plan_id, plan_id, id: 'shared_plan_id') %>
   <div class="control-group">
     <div class="controls checkbox-controls">
@@ -11,7 +11,9 @@
     </div>
   </div>
   <br/>
-  <div>
-  <%= submit_tag "Share", :class => 'btn btn-success', method: 'post' %>
+  <div class="actions pull-right">
+   <%#= button_to "Cancel", :class => 'btn '%>
+    <%#= submit_tag "Submit", :class => 'btn btn-green confirm', method: 'post' %>
+
   </div>
 <% end %>
