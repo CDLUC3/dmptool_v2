@@ -123,9 +123,11 @@ class InstitutionsController < ApplicationController
     @user_id = params[:user_id]
     @role_ids = params[:role_ids] ||= []  #"role_ids"=>["1", "2", "3"]
 
-    @role_ids = @role_ids & [2, 3, 4, 5] #can only update these roles, not #1
+    @role_ids = (@role_ids.map{|i| i.to_i }) & [2, 3, 4, 5] # selected from normal roles
 
     @user = User.find(@user_id)
+    @role_ids += [1] if @user.roles.pluck(:id).include?(1) #can't change role #1, but need to keep it in array
+
     @user.update_authorizations(@role_ids)
 
     respond_to do |format|
