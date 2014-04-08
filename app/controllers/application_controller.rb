@@ -129,6 +129,17 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def view_DMP_index_permission
+      unless user_role_in?(:dmp_admin, :institutional_admin, :template_editor, :resource_editor)
+        if current_user
+          flash[:error] = "You don't have access to this content."
+        else
+          flash[:error] = "You need to be logged in."
+        end
+        redirect_to root_url # halts request cycle
+      end
+    end
+
     def check_resource_editor_access
       unless user_role_in?(:dmp_admin, :institutional_admin, :resource_editor)
         if current_user

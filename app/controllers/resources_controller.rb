@@ -259,47 +259,43 @@
     
         @resource = Resource.new(resource_params)
 
-        respond_to do |format|
-          if @resource.save 
-            @resource_id = @resource.id
-            @resource_context = ResourceContext.new(resource_id: @resource_id, 
-                                      institution_id: @current_institution_id, 
-                                      requirements_template_id: @template_id,
-                                      requirement_id:  @requirement_id)
-            if @resource_context.save
-              format.html { 
-                redirect_to customization_requirement_path(id: @customization_overview_id, 
-                      requirement_id:  @requirement_id,
-                      anchor: @tab_number), 
-                      notice: "Resource was successfully created." }
-            end
-             
-          else
-            format.html { 
-              redirect_to customization_requirement_path(id: @customization_overview_id, 
-                      requirement_id:  @requirement_id,
-                      anchor: @tab_number), 
-                      notice: "A problem prevented this resource to be created. " }
+        if @resource.save 
+          @resource_id = @resource.id
+          @resource_context = ResourceContext.new(resource_id: @resource_id, 
+                                    institution_id: @current_institution_id, 
+                                    requirements_template_id: @template_id,
+                                    requirement_id:  @requirement_id)
+          if @resource_context.save
+            redirect_to customization_requirement_path(id: @customization_overview_id, 
+                  requirement_id:  @requirement_id,
+                  anchor: @tab_number), 
+                  notice: "Resource was successfully created." 
           end
+           
+        else
+          flash[:error] = "A problem prevented this resource to be created."
+          redirect_to customization_requirement_path(id: @customization_overview_id, 
+                  requirement_id:  @requirement_id,
+                  anchor: @tab_number)
         end
 
       else #customization resource
           
           @resource = Resource.new(resource_params)
             
-          respond_to do |format|
-            if @resource.save 
-              @resource_id = @resource.id
-              @resource_context = ResourceContext.new(resource_id: @resource_id, institution_id: @current_institution_id, 
-                                                      requirements_template_id: @template_id)
-              if @resource_context.save
-                format.html { redirect_to edit_resource_context_path(@customization_overview_id), notice: "Resource was successfully created." }
-              end
-               
-            else
-              format.html { redirect_to edit_resource_context_path(@customization_overview_id), notice: "A problem prevented this resource to be created. " }
+          if @resource.save 
+            @resource_id = @resource.id
+            @resource_context = ResourceContext.new(resource_id: @resource_id, institution_id: @current_institution_id, 
+                                                    requirements_template_id: @template_id)
+            if @resource_context.save
+              redirect_to edit_resource_context_path(@customization_overview_id), notice: "Resource was successfully created." 
             end
+             
+          else
+            flash[:error] = "A problem prevented this resource to be created."
+            redirect_to edit_resource_context_path(@customization_overview_id)
           end
+          
       end
   end
 
@@ -317,8 +313,6 @@
     @customization_overview_id = params[:customization_overview_id]
     @customization_overview = ResourceContext.find(@customization_overview_id) 
 
-
-
     if user_role_in?(:dmp_admin)
       @current_institution_id = @customization_overview.institution_id
     else 
@@ -327,88 +321,48 @@
          
     if @custom_origin == "Details" 
 
-      if requirement_customization_present?(@resource_id, @template_id, @current_institution_id, @requirement_id)     
-        respond_to do |format|
-          format.html { 
-              redirect_to customization_requirement_path(id: @customization_overview_id, 
-                requirement_id:  @requirement_id,
-                anchor: @tab_number), 
-              notice: "The resource you selected is already in your context." }
-        end
+      if requirement_customization_present?(@resource_id, @template_id, @current_institution_id, @requirement_id)  
+        flash[:error] = "The resource you selected is already in your context."   
+        redirect_to customization_requirement_path(id: @customization_overview_id, 
+          requirement_id:  @requirement_id,
+          anchor: @tab_number)
         return
-      
       else 
-     
         @resource_context = ResourceContext.new(resource_id: @resource_id, 
                                                 institution_id: @current_institution_id, 
                                                 requirements_template_id: @template_id,
                                                 requirement_id: @requirement_id) 
-        respond_to do |format| 
-          if @resource_context.save
-            format.html { redirect_to customization_requirement_path(id: @customization_overview_id, 
-              requirement_id:  @requirement_id,
-                      anchor: @tab_number), 
-                notice: "Resource was successfully added." }        
-          else
-            format.html { redirect_to customization_requirement_path(id: @customization_overview_id, 
-              requirement_id:  @requirement_id,
-                      anchor: @tab_number), 
-                notice: "A problem prevented this resource to be added. " }
-          end
-        end    
- 
-      end #if params[:resource_level] == "requirement" 
-
-
-    elsif  @custom_origin == "Overview"
- 
-      if template_customization_present?(@resource_id, @template_id, @current_institution_id)
-        
-        respond_to do |format|
-                format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
-                          notice: "The resource you selected is already in your context." }
+        if @resource_context.save
+          redirect_to customization_requirement_path(id: @customization_overview_id, 
+                                                    requirement_id:  @requirement_id,
+                                                    anchor: @tab_number), 
+                                                    notice: "Resource was successfully added."        
+        else
+          flash[:error] = "A problem prevented this resource to be added."
+          redirect_to customization_requirement_path(id: @customization_overview_id, 
+                                                    requirement_id:  @requirement_id,
+                                                    anchor: @tab_number)
         end
-              
+      end 
+
+    else #@custom_origin == "Overview"
+ 
+      if template_customization_present?(@resource_id, @template_id, @current_institution_id)  
+        flash[:error] = "The resource you selected is already in your context."
+        redirect_to edit_resource_context_path(@customization_overview_id)        
       else
-     
         @resource_context = ResourceContext.new(resource_id: @resource_id, 
                                                 institution_id: @current_institution_id, 
-                                                requirements_template_id: @template_id) 
-        respond_to do |format| 
-              if @resource_context.save
-                format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
-                              notice: "Resource was successfully added." }        
-              else
-                format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
-                              notice: "A problem prevented this resource to be added. " }
-              end
+                                                requirements_template_id: @template_id)  
+        if @resource_context.save
+          redirect_to edit_resource_context_path(@customization_overview_id), notice: "Resource was successfully added."        
+        else
+          flash[:error] = "A problem prevented this resource to be added."
+          redirect_to edit_resource_context_path(@customization_overview_id) 
         end    
       end 
-
-    else
-      if template_customization_present?(@resource_id, @template_id, @current_institution_id)
-        
-        respond_to do |format|
-                format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
-                          notice: "The resource you selected is already in your context." }
-        end
-              
-      else  
-        @resource_context = ResourceContext.new(resource_id: @resource_id, 
-                                                institution_id: @current_institution_id, 
-                                                requirements_template_id: @template_id) 
-        respond_to do |format| 
-              if @resource_context.save
-                format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
-                              notice: "Resource was successfully added." }        
-              else
-                format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
-                              notice: "A problem prevented this resource to be added. " }
-              end
-        end    
-      end 
-    end
-        
+ 
+    end    
   end
 
 

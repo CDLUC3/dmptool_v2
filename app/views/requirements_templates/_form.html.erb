@@ -11,12 +11,12 @@
 				<div class="control-group">
 					<%= f.label :name, 'Template name', :class => 'control-label' %>
 					<div class="controls">
-						<%= f.text_field :name %>
+						<%= f.text_field :name, :class => 'longfield' %>
 					</div>
 				</div>
 
 				<div class="control-group">
-					<%= f.label :visibility, :class => 'control-label' %>
+					<p class="control-label">Visibility</p>
 					<div class="controls checkbox-controls">
 						<%= f.radio_button :visibility, :public, :class => 'radio inline', :id => 'public'  %>
 						<%= label_tag :public, 'public', :class => 'radio-label'%><br/>
@@ -32,7 +32,7 @@
 					<div class="control-group" >
 						<%= f.label :institution_id, :class => "control-label" %>
 						<div class="controls" >
-							<%= collection_select(:requirements_template, :institution_id, Institution.all, :id, :full_name, { selected:  current_user.institution.root_id} ) %>
+							<%= collection_select(:requirements_template, :institution_id, Institution.all, :id, :full_name, { selected:  current_user.institution.root_id}, :class => 'longfield') %>
 						</div>
 					</div>
 
@@ -43,7 +43,7 @@
 						<div class="controls" >
 							<%= f.select(:institution_id,
 											current_user.institution.subtree.map {|r| [r.full_name,r.id] },
-											{ selected:  current_user.institution.root_id} ) %>
+											{ selected:  current_user.institution.root_id}, :class => 'longfield') %>
 						</div>
 					</div>
 				<% else %>
@@ -51,7 +51,7 @@
 						<%= f.label :institution_id, :class => 'control-label' %>
 						<div class="controls" >
 							<%= f.hidden_field :institution_id, value: current_user.institution.id %>
-							<%= text_field_tag :institution_name, current_user.institution.full_name, disabled: true %>
+							<%= text_field_tag :institution_name, current_user.institution.full_name, disabled: true, :class => 'longfield' %>
 						</div>
 					</div>
 				<% end %>
@@ -61,19 +61,19 @@
 				<div class="control-group">
 					<%= label_tag :start_date, "Start Date", :class => "control-label" %>
 					<div class="controls">
-						<%= f.text_field :start_date, value: @requirements_template.start_date.blank? ? " " : @requirements_template.start_date.strftime('%m/%d/%Y'), id: 'start_date', :class => 'datepicker' %>
+						<%= f.text_field :start_date, value: @requirements_template.start_date.blank? ? " " : @requirements_template.start_date.strftime('%m/%d/%Y'), id: 'start_date', :class => 'datepicker shortfield' %>
 					</div>
 				</div>
 
 				<div class="control-group">
 					<%= label_tag :end_date, "End Date", :class => 'control-label' %>
 					<div class="controls">
-						<%= f.text_field :end_date, value: @requirements_template.end_date.blank? ? " " : @requirements_template.end_date.strftime('%m/%d/%Y'), id: 'end_date', :class => 'datepicker' %>
+						<%= f.text_field :end_date, value: @requirements_template.end_date.blank? ? " " : @requirements_template.end_date.strftime('%m/%d/%Y'), id: 'end_date', :class => 'datepicker shortfield' %>
 					</div>
 				</div>
 
 				<div class="control-group">
-					<%= f.label :review_requirement, :class => 'control-label' %>
+					<p class="control-label">Review requirement</p>
 					<div class="controls checkbox-controls">
 						<%= f.radio_button :review_type, :formal_review, :class => 'radio inline', :id => 'formal_review' %>
 						<%= label_tag :formal_review, 'Review Required', :class => 'radio-label' %><br/>

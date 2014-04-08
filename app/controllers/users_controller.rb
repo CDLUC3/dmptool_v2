@@ -201,13 +201,9 @@ class UsersController < ApplicationController
     @user_id = params[:user_id]
     @role_ids = params[:role_ids] ||= []  #"role_ids"=>["1", "2", "3"]
 
-    remove_all_user_authorizations(@user_id)
+    u = User.find(@user_id)
 
-    @role_ids.each do |role_id|
-      role_id = role_id.to_i
-      authorization = Authorization.create(role_id: role_id, user_id: @user_id)
-      authorization.save!
-    end
+    u.update_authorizations(@role_ids)
 
     respond_to do |format|
       format.html { redirect_to users_url(q: params[:q]), notice: 'User was successfully updated.'}
@@ -259,11 +255,6 @@ class UsersController < ApplicationController
 
   def map_users_for_autocomplete(users)
     @users.map {|u| Hash[ id: u.id, full_name: u.full_name, label: u.label]}
-  end
-
-  def remove_all_user_authorizations(user_id)
-    @authorization = Authorization.where(user_id: user_id)
-    @authorization.delete_all
   end
 
   def reset_ldap_password(user, password)
