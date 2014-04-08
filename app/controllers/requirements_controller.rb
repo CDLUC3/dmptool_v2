@@ -43,7 +43,7 @@ class RequirementsController < ApplicationController
     @requirements = @requirements_template.requirements
     respond_to do |format|
       if @requirement.save
-        format.html { redirect_to requirements_template_requirements_path(@requirements_template), notice: 'Requirement was successfully created.' }
+        format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement), notice: 'Requirement was successfully created.' }
         format.json { render action: 'show', status: :created, location: @requirement }
       else
         format.html { render action: 'index' }
