@@ -122,14 +122,7 @@ $(function() {
 			draggable: true,
 			resizable: false,
 			title: "Share my DMP",
-			show: {
-				effect: "blind",
-				duration: 1000
-			},
-			hide: {
-				effect: "toggle",
-				duration: 1000
-			},
+			
 		 	buttons: {
 				Cancel: function(){
 					$(this).dialog( "close" );
@@ -141,9 +134,28 @@ $(function() {
 			},
 			open: function()
 			{
+				
+        //$('.ui-widget-header').addClass('override');
+        //$('.ui-widget').addClass('override');
+        //$('.ui-widget-overlay .ui-front .override').addClass('override');
+       
+    		$(this).parent().find('button:contains("Cancel")').removeClass('ui-corner-all');
+    		$(this).parent().find('button:contains("Cancel")').removeClass('ui-widget');
+    		$(this).parent().find('button:contains("Cancel")').removeClass('ui-button');
+    		$(this).parent().find('button:contains("Cancel")').removeClass('ui-state-default');
+    		$(this).parent().find('button:contains("Cancel")').removeClass('ui-button-text-only');
 				$(this).parent().find('button:contains("Cancel")').addClass('btn');
+
+				
+    		$(this).parent().find('button:contains("Submit")').removeClass('ui-corner-all');
+    		$(this).parent().find('button:contains("Submit")').removeClass('ui-widget');
+    		$(this).parent().find('button:contains("Submit")').removeClass('ui-button');
+    		$(this).parent().find('button:contains("Submit")').removeClass('ui-state-default');
+    		$(this).parent().find('button:contains("Submit")').removeClass('ui-button-text-only');
+				$(this).parent().find('button:contains("Submit")').removeClass('ui-button-text');
 				$(this).parent().find('button:contains("Submit")').addClass('btn btn-green confirm');
 				$("#visibility_dialog_form").dialog("open");
+				$(".copyright span7").hide();
 			},
       close: function() {
         $('#visibility_dialog_form').dialog("close");
@@ -153,28 +165,7 @@ $(function() {
 	});
 });
 
-// $(function() {
-// 	$('#visibility_dialog_form').hide();
-// 	$('.change_visibility_link').click(function(event) {
-// 		$('#visibility_dialog_form').dialog( {
-// 			var message = "Share my DMP";
-// 			var  html = "<div class=\"modal\" id=\"visibility_dialog_form\">\n" +
-// 						      "<div class=\"modal-header\">\n" +
-// 						      "<a class=\"close\" data-dismiss=\"modal\">×</a>\n" +
-// 						      "<h3><strong>" + message + "</strong></h3>\n" +
-// 						      "</div>\n" +
-// 						      "<div class=\"modal-footer\">\n" +
-// 						      "<a data-dismiss=\"modal\" class=\"btn\">" + "Cancel" + "</a>\n" +
-// 						      "<a data-dismiss=\"modal\" class=\"btn btn-green confirm\">" + "Submit" + "</a>\n" +
-// 						      "</div>\n" +
-// 						      "</div>";
-// 			$(html).modal();
-// 		}).prev ().find(".ui-dialog-titlebar-close").show();
-// 			return false
-//    	 //return $('#visibility_dialog_form .dialog').on('click', function() {
-    	
-// 	});
-// });
+
 
 
 
