@@ -77,22 +77,44 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
     end
 
     def create_plan_state(state)
+      
+      if state == :submitted
+        @notice_1 = "This plan has been submitted for review."
+        @notice_2 = "This Plan has been already submitted for review."
+      else
+        @notice_1 = "The Plan is set to #{state}."
+        @notice_2 = "The Plan is already set to #{state}."
+      end
       unless @plan.current_plan_state == state
         plan_state = PlanState.create( plan_id: @plan.id, state: state, user_id: current_user.id)
         @plan.current_plan_state_id = plan_state.id
-        redirect_to preview_plan_path(@plan), notice: "The Plan is set to #{state}."
+  
+        redirect_to preview_plan_path(@plan), notice: @notice_1
+       
       else
-        redirect_to preview_plan_path(@plan), notice: "The Plan is already set to #{state}."
+       
+        redirect_to preview_plan_path(@plan), alert: @notice_2
+        
       end
     end
 
     def review_plan_state(state)
+
+      if state == :submitted
+        @notice_1 = "This plan has been submitted for review."
+        @notice_2 = "This Plan has been already submitted for review."
+      else
+        @notice_1 = "The Plan is set to #{state}."
+        @notice_2 = "The Plan is already set to #{state}."
+      end
       unless @plan.current_plan_state == state
         plan_state = PlanState.create( plan_id: @plan.id, state: state, user_id: current_user.id)
         @plan.current_plan_state_id = plan_state.id
-        redirect_to perform_review_plan_path(@plan), notice: "The Plan is set to #{state}."
+        
+        redirect_to perform_review_plan_path(@plan), notice: @notice_1
+        
       else
-        redirect_to perform_review_plan_path(@plan), notice: "The Plan is already set to #{state}."
+        redirect_to perform_review_plan_path(@plan), alert: @notice_2
       end
     end
 end

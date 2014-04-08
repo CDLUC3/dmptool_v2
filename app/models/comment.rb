@@ -1,5 +1,7 @@
 class Comment < ActiveRecord::Base
 
+  include CommentEmail
+
   belongs_to :user
   belongs_to :plan
 

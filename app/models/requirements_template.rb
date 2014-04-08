@@ -1,5 +1,7 @@
 class RequirementsTemplate < ActiveRecord::Base
 
+  include RequirementsTemplateEmail
+
   belongs_to :institution
   has_many :resource_templates
   has_many :requirements

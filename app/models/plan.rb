@@ -1,5 +1,7 @@
 class Plan < ActiveRecord::Base
 
+  include PlanEmail
+
   has_many :user_plans
   has_many :users, through: :user_plans
   has_many :plan_states
