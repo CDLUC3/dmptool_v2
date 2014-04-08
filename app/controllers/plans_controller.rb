@@ -15,7 +15,26 @@ class PlansController < ApplicationController
    plan_ids = UserPlan.where(user_id: user.id).pluck(:plan_id) unless user.id.nil?
    @plans = Plan.where(id: plan_ids)
    count
-    case params[:scope]
+
+    @order_scope = params[:order_scope]
+    @scope = params[:scope]
+
+    case @order_scope
+      when "Name"
+        @plans = @plans.order(name: :asc)
+      when "Owner"
+        @plans = @plans.joins(:current_state, :users).order('users.login_id ASC')
+      when "Status"
+        @plans = @plans.joins(:current_state).order("plan_states.state ASC")
+      when "Visibility"
+        @plans = @plans.order(visibility: :asc)
+      when "Last_Modification_Date"
+        @plans = @plans.order(updated_at: :desc)
+      else
+        @plans = @plans.order(name: :asc)
+    end
+
+    case @scope
       when "all"
         @plans = @plans.page(params[:page]).per(9999)
       when "all_limited"
@@ -33,7 +52,7 @@ class PlansController < ApplicationController
       when "rejected"
         @plans = @plans.rejected.page(params[:page]).per(5)
       else
-        @plans = @plans.order(created_at: :asc).page(params[:page]).per(5)
+        @plans = @plans.page(params[:page]).per(5)
     end
     @planstates = PlanState.page(params[:page]).per(5)
   end
