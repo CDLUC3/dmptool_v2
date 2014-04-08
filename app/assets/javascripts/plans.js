@@ -113,7 +113,7 @@ $(function() {
 	$('.change_visibility_link').click(function(event) {
 		event.preventDefault();
 		$('#visibility_dialog_form').dialog( {
-			width: 400,
+			width: 600,
 			height: 250,
 			modal: true,
 			closeOnEscape: true,
