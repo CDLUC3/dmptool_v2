@@ -31,8 +31,8 @@
 
 		var defaults = {
 		    //location (absolute URL) of the jsonp proxy
-		    search_endpoint: 'http://pub.orcid.org/v1.1/search/orcid-bio?q=',
-		   	lookup_endpoint: 'http://pub.orcid.org/v1.1/',
+		    search_endpoint: 'https://pub.orcid.org/v1.1/search/orcid-bio?q=',
+		   	lookup_endpoint: 'https://pub.orcid.org/v1.1/',
 
 		    //auto _lookup once init
 		    pre_lookup: false,

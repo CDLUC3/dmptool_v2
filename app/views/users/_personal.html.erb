@@ -140,7 +140,7 @@
     <%= label_tag :orcid_id, 'Orcid Id', :class => 'control-label' %>
     
       <input type="text" id="orcid_id" class="orcid_widget" name="user[orcid_id]" placeholder="xxxx-xxxx-xxxx-xxxx">
-        <script type="text/javascript" src="//researchdata.ands.org.au/apps/assets/orcid_widget/js/orcid_widget.js"></script>
+       <%= javascript_include_tag "orcid_widget" %>
       </input>
       
   </div>
