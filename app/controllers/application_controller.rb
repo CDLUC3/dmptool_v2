@@ -118,8 +118,10 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    
+
     def check_DMPTemplate_editor_access
-      unless user_role_in?(:dmp_admin, :institutional_admin, :template_editor)
+      unless user_role_in?(:dmp_admin, :institutional_admin, :template_editor, :resource_editor)
         if current_user
           flash[:error] = "You don't have access to this content."
         else

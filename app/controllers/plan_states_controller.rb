@@ -21,13 +21,21 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
     end
   end
 
-  def rejected
+  def rejected(plan_id)
+    @plan = Plan.find(@plan_id)
     plan_state = PlanState.find(@plan.current_plan_state_id).state
     if user_role_in?(:institutional_reviewer, :institutional_admin, :dmp_admin)
       review_plan_state(:rejected) if (plan_state == :submitted || plan_state == :rejected)
     else
       redirect_to perform_review_plan_path(@plan), notice: "You dont have permission to Approve this plan."
     end
+  end
+
+  def reject_with_comments
+    @plan_id = params[:comment][:plan_id]
+    @comment = Comment.new(comment_params)
+    @comment.save
+    rejected(@plan_id)
   end
 
   def submitted
@@ -77,24 +85,24 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
     end
 
     def create_plan_state(state)
-      
+
       if state == :submitted
         @notice_1 = "This plan has been submitted for review."
         @notice_2 = "This Plan has been already submitted for review."
       else
-        @notice_1 = "The Plan is set to #{state}."
-        @notice_2 = "The Plan is already set to #{state}."
+        @notice_1 = "The Plan has been #{state}."
+        @notice_2 = "The Plan has already been #{state}."
       end
       unless @plan.current_plan_state == state
         plan_state = PlanState.create( plan_id: @plan.id, state: state, user_id: current_user.id)
         @plan.current_plan_state_id = plan_state.id
-  
+
         redirect_to preview_plan_path(@plan), notice: @notice_1
-       
+
       else
-       
+
         redirect_to preview_plan_path(@plan), alert: @notice_2
-        
+
       end
     end
 
@@ -104,17 +112,22 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
         @notice_1 = "This plan has been submitted for review."
         @notice_2 = "This Plan has been already submitted for review."
       else
-        @notice_1 = "The Plan is set to #{state}."
-        @notice_2 = "The Plan is already set to #{state}."
+        @notice_1 = "The Plan has been #{state}."
+        @notice_2 = "The Plan has already been #{state}."
       end
       unless @plan.current_plan_state == state
         plan_state = PlanState.create( plan_id: @plan.id, state: state, user_id: current_user.id)
         @plan.current_plan_state_id = plan_state.id
-        
+
         redirect_to perform_review_plan_path(@plan), notice: @notice_1
-        
+
       else
         redirect_to perform_review_plan_path(@plan), alert: @notice_2
       end
     end
+
+    def comment_params
+      params.require(:comment).permit(:user_id, :plan_id, :value, :visibility, :comment_type)
+    end
+
 end
