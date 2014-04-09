@@ -125,10 +125,11 @@ $(function() {
 			
 		 	buttons: {
 				Cancel: function(){
-					$('#ui-id-1').first().unwrap();
+					//$('#ui-id-1').first().unwrap();
 					$(this).dialog( "close" );
 				},
 				Submit: function() {
+
           $("#visibility_form").submit();
           $(this).dialog( "close" );
 				}
@@ -176,7 +177,7 @@ $(function() {
 				$('#ui-id-1').parent().removeClass('ui-dialog-title');
 				$('#ui-id-1').parent().addClass('modal-header');
 				
-				$('#ui-id-1').wrap("<h3 id=\"new_h3\"><strong id=\"new_strong\"></strong></h3>");
+				$('#ui-id-1').css('font-weight','bold');
 				$('#visibility_dialog_form').next().removeClass('ui-dialog-buttonpane ui-widget-content ui-helper-clearfix');
 				$('#visibility_dialog_form').next().addClass('modal-footer');	
 
@@ -184,8 +185,9 @@ $(function() {
 				$(".copyright span7").hide();
 			},
       close: function() {
-      	$('#ui-id-1').first().unwrap();
+      	//$('#ui-id-1').first().unwrap();
         $('#visibility_dialog_form').dialog("close");
+
       }
 		}).prev ().find(".ui-dialog-titlebar-close").show();
 		return false
@@ -200,7 +202,9 @@ $(function() {
 });
 
 $(function() {
-	$('#visibility_dialog_form').parent().find('button:contains("close")').bind("click",function() {
+	//$('#visibility_dialog_form').prev().find("button[title="close"]"").bind("click",function() {
+		$("button[title='close']").bind("click",function() {
+		//$('#ui-id-1').first().unwrap();
 		$("#visibility_dialog_form").reset();
 	});
 });
