@@ -134,13 +134,7 @@ $(function() {
 				}
 			},
 			open: function()
-			{
-				
-        //$('.ui-widget-header').addClass('override');
-        //$('.ui-widget').addClass('override');
-        //$('.ui-widget-overlay .ui-front .override').addClass('override');
-        //$('.ui-widget-overlay').remove();
-        //$('#visibility_dialog_form').parent().prev().wrap("<div></div>");
+			{   
 
         $('.ui-widget-overlay').addClass('custom-overlay');
         
@@ -167,6 +161,7 @@ $(function() {
     		$(this).parent().find('button:contains("Cancel")').removeClass('ui-state-default');
     		$(this).parent().find('button:contains("Cancel")').removeClass('ui-button-text-only');
 				$(this).parent().find('button:contains("Cancel")').addClass('btn');
+				
 
     		$(this).parent().find('button:contains("Submit")').removeClass('ui-corner-all');
     		$(this).parent().find('button:contains("Submit")').removeClass('ui-widget');
@@ -199,10 +194,17 @@ $(function() {
 
 
 $(function() {
-	$("#cancel_action").bind("click",function() {
+	$('#visibility_dialog_form').parent().find('button:contains("Cancel")').bind("click",function() {
 		$("#visibility_dialog_form").reset();
 	});
 });
+
+$(function() {
+	$('#visibility_dialog_form').parent().find('button:contains("close")').bind("click",function() {
+		$("#visibility_dialog_form").reset();
+	});
+});
+
 
 $(function() {
 	$(".change_visibility_link").bind("click",function() {
@@ -218,7 +220,7 @@ $(function() {
 	  {
 	  	$("#visibility_public").attr('checked', true);
 	  }
-		else
+		else if (visibility  == "private")
 	  {
 	  	$("#visibility_private").attr('checked', true);
 	  }
