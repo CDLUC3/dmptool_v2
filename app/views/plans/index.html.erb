@@ -73,7 +73,7 @@
   <tbody>
 </table>
     <div class="buttons pagination">
-      <%= link_to "View All", plans_path(:scope => "all"), :method => :get, :class => "btn", :id => 'view_all_plans'%>
+      <%= link_to "View All", plans_path(:scope => "all", order_scope: @order_scope), :method => :get, :class => "btn", :id => 'view_all_plans'%>
       <%= paginate @plans %>
     </div>
     </tr>

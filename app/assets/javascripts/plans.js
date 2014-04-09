@@ -160,9 +160,7 @@ $(function() {
         $('#visibility_dialog_form').prev().find('button').css('font-size','20');
         $('#visibility_dialog_form').prev().find('button').css('font-color','black');
         $('#visibility_dialog_form').prev().find('button').css('opacity','0.2');
-        
-
-       
+               
     		$(this).parent().find('button:contains("Cancel")').removeClass('ui-corner-all');
     		$(this).parent().find('button:contains("Cancel")').removeClass('ui-widget');
     		$(this).parent().find('button:contains("Cancel")').removeClass('ui-button');
@@ -170,34 +168,22 @@ $(function() {
     		$(this).parent().find('button:contains("Cancel")').removeClass('ui-button-text-only');
 				$(this).parent().find('button:contains("Cancel")').addClass('btn');
 
-
     		$(this).parent().find('button:contains("Submit")').removeClass('ui-corner-all');
     		$(this).parent().find('button:contains("Submit")').removeClass('ui-widget');
     		$(this).parent().find('button:contains("Submit")').removeClass('ui-button');
     		$(this).parent().find('button:contains("Submit")').removeClass('ui-state-default');
     		$(this).parent().find('button:contains("Submit")').removeClass('ui-button-text-only');
 				$(this).parent().find('button:contains("Submit")').removeClass('ui-button-text');
-				$(this).parent().find('button:contains("Submit")').addClass('btn btn-green confirm');
-
-				
-				// $('#visibility_dialog_form').parent().removeClass('ui-widget-overlay');
-				// $('#visibility_dialog_form').parent().addClass('ui-widget-content');
-				
-				
+				$(this).parent().find('button:contains("Submit")').addClass('btn btn-green confirm');			
 
 				$('#ui-id-1').parent().removeClass('ui-widget-overlay');
 				$('#ui-id-1').parent().removeClass('ui-widget-header');
 				$('#ui-id-1').parent().removeClass('ui-dialog-title');
 				$('#ui-id-1').parent().addClass('modal-header');
-				//$('#new_strong').unwrap();
-				//$('#new_h3').unwrap();
-
+				
 				$('#ui-id-1').wrap("<h3 id=\"new_h3\"><strong id=\"new_strong\"></strong></h3>");
 				$('#visibility_dialog_form').next().removeClass('ui-dialog-buttonpane ui-widget-content ui-helper-clearfix');
-				$('#visibility_dialog_form').next().addClass('modal-footer');
-				
-
-				
+				$('#visibility_dialog_form').next().addClass('modal-footer');	
 
 				$("#visibility_dialog_form").dialog("open");
 				$(".copyright span7").hide();
@@ -212,10 +198,6 @@ $(function() {
 });
 
 
-
-
-
-
 $(function() {
 	$("#cancel_action").bind("click",function() {
 		$("#visibility_dialog_form").reset();
@@ -226,6 +208,7 @@ $(function() {
 	$(".change_visibility_link").bind("click",function() {
 		var id= $(this).data('planid');
 		var visibility = $(this).data('visibility');
+
 		$("#shared_plan_id").val(id);
 		if (visibility  == "institutional")
 		{
