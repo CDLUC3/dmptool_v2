@@ -14,7 +14,7 @@ module RequirementsTemplateEmail
   def email_template_saved
 
     # [:requirement_editors][:deactived] - An institutional DMP template is deactivated
-    if self.active == false && !self.changes["active"].nil? && self.changes["active"][1] == false
+    if self.active == false && !self.changes["active"].nil? && self.changes["active"][0] == true
       institution = self.institution
       users = institution.users_in_and_above_inst_in_role(Role::TEMPLATE_EDITOR)
       users.delete_if {|u| !u[:prefs][:requirement_editors][:deactived] }
@@ -25,6 +25,21 @@ module RequirementsTemplateEmail
             "requirement_editors_deactived",
             {} ).deliver
       end
+
+    # [:requirement_editors][:commited] - An institutional DMP template is committed (activated)
+    elsif self.active == true && !self.changes["active"].nil? && self.changes["active"][0] == false
+      institution = self.institution
+      users = institution.users_in_and_above_inst_in_role(Role::TEMPLATE_EDITOR)
+      users.delete_if {|u| !u[:prefs][:requirement_editors][:commited] }
+      if users.length > 0
+        UsersMailer.notification(
+            users.collect(&:email),
+            "An institutional DMP template is committed",
+            "requirement_editors_commited",
+            {} ).deliver
+      end
+    else
+
     end
   end
 
