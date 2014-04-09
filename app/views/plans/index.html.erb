@@ -54,7 +54,7 @@
               | <%= link_to('Copy', copy_existing_plans_template_path(:plan => plan)) %>
               | Export as <%= link_to('PDF', plan_path(plan, :format => "pdf")) %>
               | <%= link_to('RTF', plan_path(plan, :format => "rtf")) %>
-              | <%= link_to('Delete', plan, :class => "delete", :id => "delete_#{plan.name}", method: :delete, data: { confirm: 'Are you sure?' }) %>
+              | <%= link_to 'Delete', plan, method: :delete, data: { confirm: 'Are you sure?' },:class => "delete" %>
             </div>
           </div>
         </td>
