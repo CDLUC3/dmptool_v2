@@ -125,6 +125,7 @@ $(function() {
 			
 		 	buttons: {
 				Cancel: function(){
+					$('#ui-id-1').first().unwrap();
 					$(this).dialog( "close" );
 				},
 				Submit: function() {
@@ -188,17 +189,21 @@ $(function() {
 				$('#ui-id-1').parent().removeClass('ui-widget-header');
 				$('#ui-id-1').parent().removeClass('ui-dialog-title');
 				$('#ui-id-1').parent().addClass('modal-header');
-				$('#ui-id-1').wrap("<h3><strong></strong></h3>");
+				//$('#new_strong').unwrap();
+				//$('#new_h3').unwrap();
+
+				$('#ui-id-1').wrap("<h3 id=\"new_h3\"><strong id=\"new_strong\"></strong></h3>");
 				$('#visibility_dialog_form').next().removeClass('ui-dialog-buttonpane ui-widget-content ui-helper-clearfix');
 				$('#visibility_dialog_form').next().addClass('modal-footer');
 				
 
-				//$('#ui-id-1').parent().css('font-weight', 'bold');
+				
 
 				$("#visibility_dialog_form").dialog("open");
 				$(".copyright span7").hide();
 			},
       close: function() {
+      	$('#ui-id-1').first().unwrap();
         $('#visibility_dialog_form').dialog("close");
       }
 		}).prev ().find(".ui-dialog-titlebar-close").show();
