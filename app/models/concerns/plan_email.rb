@@ -40,7 +40,7 @@ module PlanEmail
 
 
     # [:dmp_owners_and_co][:commited]  -- A DMP is committed -- josh misspelled commited
-    if current_state.state == 'committed'
+    if current_state.state == :committed
       users = self.users
       users.delete_if {|u| !u[:prefs][:dmp_owners_and_co][:commited]} #Josh misspelled, I may need to change later
       if users.length > 0
@@ -53,7 +53,7 @@ module PlanEmail
 
     # [:dmp_owners_and_co][:submitted] -- A submitted DMP is approved or rejected
     # [:institutional_reviewers][:approved_rejected] -- An Institutional DMP is approved or rejected
-    elsif current_state.state == 'approved' || current_state.state == 'rejected'
+    elsif current_state.state == :approved || current_state.state == :rejected
       users = self.users
       users.delete_if {|u| !u[:prefs][:dmp_owners_and_co][:submitted]}
       if users.length > 0
@@ -76,7 +76,7 @@ module PlanEmail
       end
 
     # [:institutional_reviewers][:submitted] -- An Institutional DMP is submitted for review
-    elsif current_state.state == 'submitted'
+    elsif current_state.state == :submitted
       institution = self.owner.institution
       users = institution.users_in_and_above_inst_in_role(Role::INSTITUTIONAL_REVIEWER)
       users.delete_if {|u| !u[:prefs][:institutional_reviewers][:submitted] }
