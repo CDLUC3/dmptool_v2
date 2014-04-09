@@ -25,7 +25,7 @@ module CommentEmail
 
     #mail All institutional reviewers for plan's institution
     institution = self.user.institution
-    users = institution.users_deep_in_role(Role::INSTITUTIONAL_REVIEWER)
+    users = institution.users_in_and_above_inst_in_role(Role::INSTITUTIONAL_REVIEWER)
     users.delete_if {|u| !u[:prefs][:institutional_reviewers][:new_comment] }
     if users.length > 0
       UsersMailer.notification(
