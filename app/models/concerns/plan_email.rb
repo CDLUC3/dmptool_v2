@@ -17,7 +17,7 @@ module PlanEmail
     #[:dmp_owners_and_co][:published] -- A DMP is shared
     if !self.changes["visibility"].nil?
       if self.changes["visibility"][0] != self.changes["visibility"][1] &&
-          (self.visibility == 'institutional' || self.visibility == 'public')
+          (self.visibility == :institutional || self.visibility == :public)
         # mail all owners and co-owners
         users = self.users
         users.delete_if {|u| !u[:prefs][:dmp_owners_and_co][:published]}
