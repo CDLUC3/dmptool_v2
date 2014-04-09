@@ -146,7 +146,7 @@ $(function() {
     		$(this).parent().find('button:contains("Cancel")').removeClass('ui-button-text-only');
 				$(this).parent().find('button:contains("Cancel")').addClass('btn');
 
-				
+
     		$(this).parent().find('button:contains("Submit")').removeClass('ui-corner-all');
     		$(this).parent().find('button:contains("Submit")').removeClass('ui-widget');
     		$(this).parent().find('button:contains("Submit")').removeClass('ui-button');
@@ -154,6 +154,17 @@ $(function() {
     		$(this).parent().find('button:contains("Submit")').removeClass('ui-button-text-only');
 				$(this).parent().find('button:contains("Submit")').removeClass('ui-button-text');
 				$(this).parent().find('button:contains("Submit")').addClass('btn btn-green confirm');
+
+				$('#ui-id-1').parent().removeClass('ui-widget-header');
+				$('#ui-id-1').parent().removeClass('ui-dialog-title');
+				$('#ui-id-1').parent().addClass('modal-header').css("line-height", '30px').css("font-size","1.3em");
+				$('#ui-id-1').wrap("<h3><strong></strong></h3>");
+				$('#visibility_dialog_form').next().removeClass('ui-dialog-buttonpane ui-widget-content ui-helper-clearfix');
+				$('#visibility_dialog_form').next().addClass('modal-footer');
+				
+
+				//$('#ui-id-1').parent().css('font-weight', 'bold');
+
 				$("#visibility_dialog_form").dialog("open");
 				$(".copyright span7").hide();
 			},
