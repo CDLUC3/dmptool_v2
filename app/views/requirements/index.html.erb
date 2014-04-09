@@ -12,7 +12,7 @@
 	  	<div class="actions">
 		    <%= link_to(content_tag(:span, '', :class => 'icon add-group') + 'Add Group', new_requirements_template_requirement_path(@requirements_template, node_type: 'group') + '#jump') %>
 		    <%=  raw('&nbsp;') %>
-		    <%= link_to(content_tag(:span, '', :class => 'icon add-requirement') + 'Add Requirement', new_requirements_template_requirement_path(@requirements_template) + '#jump') %>
+		    <%= link_to(content_tag(:span, '', :class => 'icon add-requirement') + 'Add Requirement' + content_tag(:span, '', :title => 'Requirements are questions for the plan author that have a response. Use requirements to make sure the DMP has all the necessary information.', :class => 'icon questionmark'), new_requirements_template_requirement_path(@requirements_template) + '#jump') %>
 		  </div>
 			<div id="drop_before_first">
 	    	<hr/>

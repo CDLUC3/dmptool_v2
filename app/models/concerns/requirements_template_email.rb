@@ -8,17 +8,31 @@ module RequirementsTemplateEmail
   end
 
   # for these notifications:
-  # [:requirement_editors][:commited] - An institutional DMP template is committed
   # [:requirement_editors][:deactived] - An institutional DMP template is deactivated
+  # [:requirement_editors][:commited] - An institutional DMP template is committed
   # [:resource_editors][:associated_commited] - A DMP Template associated with a customization is activated
   def email_template_saved
 
+    changed_fields = self.changes
 
-
+    # [:requirement_editors][:deactived] - An institutional DMP template is deactivated
+    if self.active == false && !changed_fields["active"].nil? && changed_fields["active"][1] == false
+      institution = self.institution
+      users = institution.users_in_and_above_inst_in_role(Role::TEMPLATE_EDITOR)
+      users.delete_if {|u| !u[:prefs][:requirement_editors][:deactived] }
+      if users.length > 0
+        UsersMailer.notification(
+            users.collect(&:email),
+            "An institutional DMP template is deactivated",
+            "requirement_editors_deactived",
+            {} ).deliver
+      end
+    end
   end
 
   # for these notifications:
   # [:requirement_editors][:deleted] - An institutional DMP template is deleted
+  # -- THIS SHOULD NEVER TRIGGER SINCE IT SEEMS DELETION HAS BEEN REMOVED
   def email_template_destroyed
     institution = self.institution
     users = institution.users_in_and_above_inst_in_role(Role::TEMPLATE_EDITOR)
