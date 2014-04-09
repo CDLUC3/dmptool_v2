@@ -16,16 +16,16 @@
             <strong><%= plan.name %></strong>
           </div>
         </td>
-        <td class="nowrap">
+        <td>
           <%= (plan.requirements_template && plan.requirements_template.name) || 'seriously, more junk data?' %>
         </td>
-        <td class="nowrap">
+        <td>
           <%= plan.owner.institution.name %>
         </td>
-        <td class="nowrap">
+        <td>
           <%= plan.owner.full_name %>
         </td>
-        <td class="nowrap">
+        <td>
           <%= link_to('', plan_path(plan, format: "pdf"), :class => 'icon pdf') %>
         </td>
       </tr>

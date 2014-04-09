@@ -1,6 +1,7 @@
 class PlansController < ApplicationController
 
   before_action :require_login, except: [:public, :show]
+  before_action :set_user
   #note show will need to be protected from logins in some cases, but only from non-public plan viewing
   before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details, :preview, :perform_review, :coowners, :add_coowner_autocomplete]
   #before_action :select_requirements_template, only: [:select_dmp_template]
@@ -75,8 +76,8 @@ class PlansController < ApplicationController
     @plan = Plan.new(plan_params)
     respond_to do |format|
       if @plan.save
-        UserPlan.create!(user_id: current_user.id, plan_id: @plan.id, owner: true)
-        PlanState.create!(plan_id: @plan.id, state: :new, user_id: current_user.id )
+        UserPlan.create!(user_id: @user.id, plan_id: @plan.id, owner: true)
+        PlanState.create!(plan_id: @plan.id, state: :new, user_id: @user.id )
         add_coowner_autocomplete
         flash[:alert]
         format.html { flash[:notice] << "Plan was successfully updated."
@@ -92,7 +93,7 @@ class PlansController < ApplicationController
 
   # GET /plans/1/edit
   def edit
-    @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: current_user.institution_id)
+    @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: @user.institution_id)
     set_comments
     coowners
   end
@@ -102,7 +103,7 @@ class PlansController < ApplicationController
   def update
     flash[:notice] = []
     flash[:alert] = []
-    @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: current_user.institution_id)
+    @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: @user.institution_id)
     set_comments
     coowners
     add_coowner_autocomplete
@@ -132,19 +133,21 @@ class PlansController < ApplicationController
   # DELETE /plans/1
   # DELETE /plans/1.json
   def destroy
-    @plan.destroy
-    respond_to do |format|
-      format.html { redirect_to plans_url }
-      format.json { head :no_content }
+    user_plan_ids  = UserPlan.where(plan_id: @plan.id, owner: false).pluck(:user_id)
+    if user_plan_ids.include?(@user.id) && !user_role_in?(:dmp_admin, :institutional_admin)
+      redirect_to :back, notice: "A Co-Owner cannot delete a Plan."
+    else
+      @plan.destroy
+      redirect_to plans_url, notice: "Plan has been deleted."
     end
   end
 
   def template_information
-      public_plans = Plan.public_visibility
-      current_user_plan_ids = UserPlan.where(user_id: current_user.id).pluck(:plan_id)
-      user_plans = Plan.where(id: current_user_plan_ids)
-      @plans = user_plans + public_plans
-      @plans = Kaminari.paginate_array(@plans).page(params[:page]).per(5)
+    public_plans = Plan.public_visibility
+    current_user_plan_ids = UserPlan.where(user_id: @user.id).pluck(:plan_id)
+    user_plans = Plan.where(id: current_user_plan_ids)
+    @plans = user_plans + public_plans
+    @plans = Kaminari.paginate_array(@plans).page(params[:page]).per(5)
   end
 
   def copy_existing_template
@@ -164,7 +167,7 @@ class PlansController < ApplicationController
 
   def review_dmps
     if user_role_in?(:institutional_reviewer, :institutional_admin)
-      institutions = Institution.find(current_user.institution_id).subtree_ids
+      institutions = Institution.find(@user.institution_id).subtree_ids
       @submitted_plans = Plan.plans_to_be_reviewed(institutions)
       @approved_plans = Plan.plans_approved(institutions)
       @rejected_plans = Plan.plans_rejected(institutions)
@@ -195,7 +198,7 @@ class PlansController < ApplicationController
     req_temp = RequirementsTemplate.
                   includes(:institution).
                   where(active: true).
-                  any_of(visibility: :public, institution_id: [current_user.institution.subtree_ids])
+                  any_of(visibility: :public, institution_id: [@user.institution.subtree_ids])
 
     if !params[:q].blank?
       req_temp = req_temp.name_search_terms(params[:q])
@@ -227,7 +230,7 @@ class PlansController < ApplicationController
         params[:requirement_id] = requirement.id.to_s
       end
       @requirement = Requirement.find(params[:requirement_id]) unless params[:requirement_id].blank?
-      @resource_contexts = ResourceContext.where(requirement_id: @requirement.id, institution_id: current_user.institution_id, requirements_template_id: @requirements_template.id)
+      @resource_contexts = ResourceContext.where(requirement_id: @requirement.id, institution_id: @user.institution_id, requirements_template_id: @requirements_template.id)
       @guidance_resources = display_text(@resource_contexts)
       @url_resources = display_value(@resource_contexts)
       @suggested_resources = display_suggested(@resource_contexts)
@@ -414,5 +417,9 @@ class PlansController < ApplicationController
         @coowner = User.find(id)
         @coowners<< @coowner
       end
+    end
+
+    def set_user
+      @user = current_user
     end
 end

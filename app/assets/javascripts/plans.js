@@ -108,6 +108,8 @@ $(function() {
 	});
 });
 
+
+// share my dmp popup window
 $(function() {
 	$('#visibility_dialog_form').hide();
 	$('.change_visibility_link').click(function(event) {
@@ -120,23 +122,51 @@ $(function() {
 			draggable: true,
 			resizable: false,
 			title: "Share my DMP",
-			show: {
-				effect: "blind",
-				duration: 1000
-			},
-			hide: {
-				effect: "toggle",
-				duration: 1000
-			},
+			
 		 	buttons: {
-				Cancel: function()
-				{
+				Cancel: function(){
 					$(this).dialog( "close" );
+				},
+				Submit: function() {
+          $("#visibility_form").submit();
+          $(this).dialog( "close" );
 				}
 			},
 			open: function()
 			{
+				
+        //$('.ui-widget-header').addClass('override');
+        //$('.ui-widget').addClass('override');
+        //$('.ui-widget-overlay .ui-front .override').addClass('override');
+       
+    		$(this).parent().find('button:contains("Cancel")').removeClass('ui-corner-all');
+    		$(this).parent().find('button:contains("Cancel")').removeClass('ui-widget');
+    		$(this).parent().find('button:contains("Cancel")').removeClass('ui-button');
+    		$(this).parent().find('button:contains("Cancel")').removeClass('ui-state-default');
+    		$(this).parent().find('button:contains("Cancel")').removeClass('ui-button-text-only');
+				$(this).parent().find('button:contains("Cancel")').addClass('btn');
+
+
+    		$(this).parent().find('button:contains("Submit")').removeClass('ui-corner-all');
+    		$(this).parent().find('button:contains("Submit")').removeClass('ui-widget');
+    		$(this).parent().find('button:contains("Submit")').removeClass('ui-button');
+    		$(this).parent().find('button:contains("Submit")').removeClass('ui-state-default');
+    		$(this).parent().find('button:contains("Submit")').removeClass('ui-button-text-only');
+				$(this).parent().find('button:contains("Submit")').removeClass('ui-button-text');
+				$(this).parent().find('button:contains("Submit")').addClass('btn btn-green confirm');
+
+				$('#ui-id-1').parent().removeClass('ui-widget-header');
+				$('#ui-id-1').parent().removeClass('ui-dialog-title');
+				$('#ui-id-1').parent().addClass('modal-header').css("line-height", '30px').css("font-size","1.3em");
+				$('#ui-id-1').wrap("<h3><strong></strong></h3>");
+				$('#visibility_dialog_form').next().removeClass('ui-dialog-buttonpane ui-widget-content ui-helper-clearfix');
+				$('#visibility_dialog_form').next().addClass('modal-footer');
+				
+
+				//$('#ui-id-1').parent().css('font-weight', 'bold');
+
 				$("#visibility_dialog_form").dialog("open");
+				$(".copyright span7").hide();
 			},
       close: function() {
         $('#visibility_dialog_form').dialog("close");
@@ -145,6 +175,11 @@ $(function() {
 		return false
 	});
 });
+
+
+
+
+
 
 $(function() {
 	$("#cancel_action").bind("click",function() {
