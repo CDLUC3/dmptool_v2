@@ -182,13 +182,17 @@
 	height: 100px;
 	margin: 0; }
 .dashboard-header .inst-logo {
-	border-right: 1px solid #B6B6B7;
+	position: relative;
+	height: auto !important;
+	top: 50%;
+	transform: translateY(-50%);
 	font-size: 1.25em;
 	text-transform: capitalize;
 	text-align: center;
 	width: 230px;
 	padding: 0 25px; }
 .dashboard-header .inst-title {
+	border-left: 1px solid #B6B6B7;
 	border-right: 1px solid #B6B6B7;
 	text-align: center;
 	padding: 20px 25px 0; }
