@@ -186,6 +186,7 @@
 	height: auto !important;
 	top: 50%;
 	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
 	font-size: 1.25em;
 	text-transform: capitalize;
 	text-align: center;
