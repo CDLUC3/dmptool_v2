@@ -21,13 +21,21 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
     end
   end
 
-  def rejected
+  def rejected(plan_id)
+    @plan = Plan.find(@plan_id)
     plan_state = PlanState.find(@plan.current_plan_state_id).state
     if user_role_in?(:institutional_reviewer, :institutional_admin, :dmp_admin)
       review_plan_state(:rejected) if (plan_state == :submitted || plan_state == :rejected)
     else
       redirect_to perform_review_plan_path(@plan), notice: "You dont have permission to Approve this plan."
     end
+  end
+
+  def reject_with_comments
+    @plan_id = params[:comment][:plan_id]
+    @comment = Comment.new(comment_params)
+    @comment.save
+    rejected(@plan_id)
   end
 
   def submitted
@@ -117,4 +125,9 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
         redirect_to perform_review_plan_path(@plan), alert: @notice_2
       end
     end
+
+    def comment_params
+      params.require(:comment).permit(:user_id, :plan_id, :value, :visibility, :comment_type)
+    end
+
 end
