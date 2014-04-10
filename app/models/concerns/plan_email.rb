@@ -7,7 +7,7 @@ module PlanEmail
   end
 
   # for these notifications:
-  # [:dmp_owners_and_co][:commited] -- A DMP is committed
+  # [:dmp_owners_and_co][:committed] -- A DMP is committed
   # [:dmp_owners_and_co][:published] -- A DMP is shared
   # [:dmp_owners_and_co][:submitted] -- A submitted DMP is approved or rejected
   # [:institutional_reviewers][:submitted] -- An Institutional DMP is approved or rejected
@@ -39,10 +39,10 @@ module PlanEmail
     return if earlier_state.state == current_state.state
 
 
-    # [:dmp_owners_and_co][:commited]  -- A DMP is committed -- josh misspelled commited
+    # [:dmp_owners_and_co][:committed]  -- A DMP is committed
     if current_state.state == :committed
       users = self.users
-      users.delete_if {|u| !u[:prefs][:dmp_owners_and_co][:commited]} #Josh misspelled, I may need to change later
+      users.delete_if {|u| !u[:prefs][:dmp_owners_and_co][:committed]}
       users.each do |user|
         UsersMailer.notification(
             user.email,
