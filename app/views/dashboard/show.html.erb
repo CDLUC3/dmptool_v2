@@ -49,7 +49,10 @@
 					<td><%= link_to "#{@pending_review} DMPs pending review", review_dmps_path(scope: "submitted") %></td>
 				</tr>
 				<tr>
-					<td><%= link_to "#{@finished_review} DMPs finished review", review_dmps_path(scope: "all_limited") %></td>
+					<td><%= link_to "#{@approved_plans} Approved DMPs", review_dmps_path(scope: "approved") %></td>
+				</tr>
+				<tr>
+					<td><%= link_to "#{@rejected_plans} Rejected DMPs", review_dmps_path(scope: "rejected") %></td>
 				</tr>
 			</tbody>
 		</table>

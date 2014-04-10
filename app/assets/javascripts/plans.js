@@ -125,22 +125,17 @@ $(function() {
 			
 		 	buttons: {
 				Cancel: function(){
-					$('#ui-id-1').first().unwrap();
+					//$('#ui-id-1').first().unwrap();
 					$(this).dialog( "close" );
 				},
 				Submit: function() {
+
           $("#visibility_form").submit();
           $(this).dialog( "close" );
 				}
 			},
 			open: function()
-			{
-				
-        //$('.ui-widget-header').addClass('override');
-        //$('.ui-widget').addClass('override');
-        //$('.ui-widget-overlay .ui-front .override').addClass('override');
-        //$('.ui-widget-overlay').remove();
-        //$('#visibility_dialog_form').parent().prev().wrap("<div></div>");
+			{   
 
         $('.ui-widget-overlay').addClass('custom-overlay');
         
@@ -167,6 +162,7 @@ $(function() {
     		$(this).parent().find('button:contains("Cancel")').removeClass('ui-state-default');
     		$(this).parent().find('button:contains("Cancel")').removeClass('ui-button-text-only');
 				$(this).parent().find('button:contains("Cancel")').addClass('btn');
+				
 
     		$(this).parent().find('button:contains("Submit")').removeClass('ui-corner-all');
     		$(this).parent().find('button:contains("Submit")').removeClass('ui-widget');
@@ -181,7 +177,7 @@ $(function() {
 				$('#ui-id-1').parent().removeClass('ui-dialog-title');
 				$('#ui-id-1').parent().addClass('modal-header');
 				
-				$('#ui-id-1').wrap("<h3 id=\"new_h3\"><strong id=\"new_strong\"></strong></h3>");
+				$('#ui-id-1').css('font-weight','bold');
 				$('#visibility_dialog_form').next().removeClass('ui-dialog-buttonpane ui-widget-content ui-helper-clearfix');
 				$('#visibility_dialog_form').next().addClass('modal-footer');	
 
@@ -189,8 +185,9 @@ $(function() {
 				$(".copyright span7").hide();
 			},
       close: function() {
-      	$('#ui-id-1').first().unwrap();
+      	//$('#ui-id-1').first().unwrap();
         $('#visibility_dialog_form').dialog("close");
+
       }
 		}).prev ().find(".ui-dialog-titlebar-close").show();
 		return false
@@ -199,10 +196,19 @@ $(function() {
 
 
 $(function() {
-	$("#cancel_action").bind("click",function() {
+	$('#visibility_dialog_form').parent().find('button:contains("Cancel")').bind("click",function() {
 		$("#visibility_dialog_form").reset();
 	});
 });
+
+$(function() {
+	//$('#visibility_dialog_form').prev().find("button[title="close"]"").bind("click",function() {
+		$("button[title='close']").bind("click",function() {
+		//$('#ui-id-1').first().unwrap();
+		$("#visibility_dialog_form").reset();
+	});
+});
+
 
 $(function() {
 	$(".change_visibility_link").bind("click",function() {
@@ -218,7 +224,7 @@ $(function() {
 	  {
 	  	$("#visibility_public").attr('checked', true);
 	  }
-		else
+		else if (visibility  == "private")
 	  {
 	  	$("#visibility_private").attr('checked', true);
 	  }

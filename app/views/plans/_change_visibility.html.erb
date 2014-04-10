@@ -1,10 +1,12 @@
 <%= form_tag(change_visibility_path, id: "visibility_form", method: :post, html: { :class => "form-horizontal"}) do %>
   <%= hidden_field_tag(:plan_id, plan_id, id: 'shared_plan_id') %>
+  <%= hidden_field_tag(@vis, 'institutional') %>
+  <% @vis = 'institutional' %>
   <div class="control-group">
     <div class="controls checkbox-controls">
-      <%= radio_button_tag :visibility, :institutional %>
+      <%= radio_button_tag :visibility, :institutional  %>
       <%= label_tag :visibility_institutional, "With others from #{current_user.institution.full_name}", :class => 'radio-label' %><br/>
-      <%= radio_button_tag :visibility, :public %>
+      <%= radio_button_tag :visibility, :public%>
       <%= label_tag :visibility_public, 'Publicly on the web', :class => 'radio-label' %><br/>
       <%= radio_button_tag :visibility, :private %>
       <%= label_tag :visibility_private, '...Or keep it Private', :class => 'radio-label'%>
@@ -12,8 +14,6 @@
   </div>
   <br/>
 
-  <!-- <div class="actions pull-right">
-    <%#= submit_tag "Share", :class => 'btn btn-success', method: 'post' %>
-  </div> -->
+ 
   
 <% end %>
