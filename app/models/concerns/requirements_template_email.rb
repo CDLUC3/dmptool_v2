@@ -62,9 +62,6 @@ module RequirementsTemplateEmail
 
       end
 
-
-
-
     end
   end
 
