@@ -46,13 +46,13 @@
 		<table class="table table-striped">
 			<tbody>
 				<tr>
-					<td><%= link_to "#{@pending_review} DMPs pending review", review_dmps_path(scope: "submitted") %></td>
+					<td><%= link_to "#{pluralize(@pending_review, 'DMP')} pending review", review_dmps_path(scope: "submitted") %></td>
 				</tr>
 				<tr>
-					<td><%= link_to "#{@approved_plans} Approved DMPs", review_dmps_path(scope: "approved") %></td>
+					<td><%= link_to "#{pluralize(@approved_plans, 'DMP')} Approved", review_dmps_path(scope: "approved") %></td>
 				</tr>
 				<tr>
-					<td><%= link_to "#{@rejected_plans} Rejected DMPs", review_dmps_path(scope: "rejected") %></td>
+					<td><%= link_to "#{pluralize(@rejected_plans, 'DMP')} Rejected", review_dmps_path(scope: "rejected") %></td>
 				</tr>
 			</tbody>
 		</table>
