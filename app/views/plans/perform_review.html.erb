@@ -27,7 +27,7 @@
       <strong>The Plan is set to <span class ="blue"><%= state(@plan).capitalize %></span> state.</strong>
     <% else %>
       <%= link_to "Approve", plan_plan_states_approved_path(@plan), method: :post, :class => "btn btn-green" %>
-      <%= link_to "Reject", plan_plan_states_rejected_path(@plan), method: :post, data: {:comment_type => :reviewer}, :class => "btn add_comments_link"  %>
+      <%= link_to "Reject", '#', :id => "reject_with_comments_link" , class: "btn" %>
     <% end %>
   </fieldset>
 <% elsif @plan.requirements_template.review_type == :informal_review %>
@@ -36,7 +36,10 @@
   </fieldset>
 <% end %>
 <div id = "comment_dialog_form">
-	<%= render partial: 'comments/form', locals: {:plan_id => params[:id]} %>
+	<%= render partial: 'comments/form', locals: {:plan_id => params[:id] } %>
+</div>
+<div id = "reject_dialog_form">
+  <%= render partial: 'reject_with_comments', locals: {:plan_id => params[:id] } %>
 </div>
 <hr/>
 <%= link_to 'Back', review_dmps_path(@plan), method: :get, :class => 'btn btn-green pull-left' %>

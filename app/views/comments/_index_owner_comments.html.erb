@@ -5,9 +5,9 @@
 		<p class="cust_text" id="comment_value_trunc_<%= comment.id %>">
 		  <% trunc_text = truncate(strip_tags(comment.value), length: 150, separator: ' ') %>
 		  <%= trunc_text %>
-		  <% if trunc_text != comment.value %>
-		    &nbsp;&nbsp;&nbsp;<a href="#" class="show_full">More</a>
-		  <% end %>
+		  <% if trunc_text.length < strip_tags(comment.value).length %>
+   			&nbsp;&nbsp;&nbsp;<a href="#" class="show_full">More</a>
+ 			<% end %>
 		</p>
 		<div class="cust_text_full" id="comment_value_full_<%= comment.id %>">
 		  <div>

@@ -260,11 +260,14 @@ a .icon {
 .public-visibility.icon {
 	background-position: -38px -145px; width: 29px; height: 20px;
 }
-.private-visibility.icon {
-	background-position: -98px -145px; width: 18px; height: 20px;
-}
 .institutional-visibility.icon {
 	background-position: -67px -145px; width: 11px; height: 20px;
+}
+.private-visibility.icon {
+	background-position: -78px -145px; width: 18px; height: 20px;
+}
+.questionmark.icon {
+	background-position: -96px -145px; width: 15px; height: 15px; margin-left: 5px;
 }
 
 /* Tree View Icons */

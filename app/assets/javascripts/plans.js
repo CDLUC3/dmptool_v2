@@ -108,54 +108,124 @@ $(function() {
 	});
 });
 
+
+
+
+// share my dmp popup window
 $(function() {
+	$.ui.dialog.prototype._focusTabbable = function(){};
 	$('#visibility_dialog_form').hide();
 	$('.change_visibility_link').click(function(event) {
 		event.preventDefault();
 		$('#visibility_dialog_form').dialog( {
 			width: 600,
-			height: 250,
+			height: 200,
 			modal: true,
 			closeOnEscape: true,
 			draggable: true,
 			resizable: false,
 			title: "Share my DMP",
-			show: {
-				effect: "blind",
-				duration: 1000
-			},
-			hide: {
-				effect: "toggle",
-				duration: 1000
-			},
+			
 		 	buttons: {
-				Cancel: function()
-				{
+				Cancel: function(){
+					//$('#ui-id-1').unwrap();
 					$(this).dialog( "close" );
+				},
+				Submit: function() {
+
+          $("#visibility_form").submit();
+          $(this).dialog( "close" );
 				}
 			},
 			open: function()
-			{
+			{   
+
+        $('.ui-widget-overlay').addClass('custom-overlay');
+        
+        $('#visibility_dialog_form').prev().css('color', '#4C4C4E');
+        $('#visibility_dialog_form').prev().css('font-family', 'Helvetica, sans-serif');
+        $('#visibility_dialog_form').prev().css('font-size', '12px');
+        $('#visibility_dialog_form').prev().css('line-height', '1.3');
+
+         $('#visibility_dialog_form').prev().addClass('modal-header');
+
+        $('#visibility_dialog_form').parent().addClass(' in');
+
+        $('#visibility_dialog_form').prev().find('button').addClass('custom-close');
+        $('#visibility_dialog_form').prev().find('button').css('background','none');
+        $('#visibility_dialog_form').prev().find('button').css('border','none');
+        $('#visibility_dialog_form').prev().find('button').css('font-color','black');
+        $('#visibility_dialog_form').prev().find('button').css('font-size','20');
+        $('#visibility_dialog_form').prev().find('button').css('font-color','black');
+        $('#visibility_dialog_form').prev().find('button').css('opacity','0.2');
+               
+    		$(this).parent().find('button:contains("Cancel")').removeClass('ui-corner-all');
+    		$(this).parent().find('button:contains("Cancel")').removeClass('ui-widget');
+    		$(this).parent().find('button:contains("Cancel")').removeClass('ui-button');
+    		$(this).parent().find('button:contains("Cancel")').removeClass('ui-state-default');
+    		$(this).parent().find('button:contains("Cancel")').removeClass('ui-button-text-only');
+				$(this).parent().find('button:contains("Cancel")').addClass('btn');
+				
+
+    		$(this).parent().find('button:contains("Submit")').removeClass('ui-corner-all');
+    		$(this).parent().find('button:contains("Submit")').removeClass('ui-widget');
+    		$(this).parent().find('button:contains("Submit")').removeClass('ui-button');
+    		$(this).parent().find('button:contains("Submit")').removeClass('ui-state-default');
+    		$(this).parent().find('button:contains("Submit")').removeClass('ui-button-text-only');
+				$(this).parent().find('button:contains("Submit")').removeClass('ui-button-text');
+				$(this).parent().find('button:contains("Submit")').addClass('btn btn-green confirm');			
+
+				$('#ui-id-1').parent().removeClass('ui-widget-overlay');
+				$('#ui-id-1').parent().removeClass('ui-widget-header');
+				$('#ui-id-1').parent().removeClass('ui-dialog-title');
+				$('#ui-id-1').parent().addClass('modal-header');
+				
+				// $('#ui-id-1').css('font-weight','bold');
+				// $('#ui-id-1').css('font-family', 'Helvetica, sans-serif');
+				// $('#ui-id-1').css('font-size', '12px');
+
+				
+				$('#ui-id-1').wrap("<h3 id=\"new_h3\"><strong id=\"new_strong\"></strong></h3>");
+
+				$('#visibility_dialog_form').next().removeClass('ui-dialog-buttonpane ui-widget-content ui-helper-clearfix');
+				$('#visibility_dialog_form').next().addClass('modal-footer');	
+
 				$("#visibility_dialog_form").dialog("open");
+				$(".copyright span7").hide();
 			},
       close: function() {
+      	$('#ui-id-1').first().unwrap();
+      	$('#ui-id-1').first().unwrap();
         $('#visibility_dialog_form').dialog("close");
+        //window.location.reload(true);
       }
 		}).prev ().find(".ui-dialog-titlebar-close").show();
 		return false
 	});
 });
 
+
 $(function() {
-	$("#cancel_action").bind("click",function() {
+	$('#visibility_dialog_form').parent().find('button:contains("Cancel")').bind("click",function() {
 		$("#visibility_dialog_form").reset();
 	});
 });
+
+// $(function() {
+// 	$("button[title='close']").bind("click",function() {
+// 		//$('#ui-id-1').first().unwrap();
+// 		$("#visibility_dialog_form").reset();
+		
+// 	});
+// });
+
+
 
 $(function() {
 	$(".change_visibility_link").bind("click",function() {
 		var id= $(this).data('planid');
 		var visibility = $(this).data('visibility');
+
 		$("#shared_plan_id").val(id);
 		if (visibility  == "institutional")
 		{
@@ -165,9 +235,49 @@ $(function() {
 	  {
 	  	$("#visibility_public").attr('checked', true);
 	  }
-		else
+		else if (visibility  == "private")
 	  {
 	  	$("#visibility_private").attr('checked', true);
 	  }
+	});
+});
+
+$(function() {
+	$('#reject_dialog_form').hide();
+	$('#reject_with_comments_link').click(function(event) {
+		event.preventDefault();
+    $('#comment_comment_type').attr('value', $(event.target).attr("data-comment-type"));
+		$('#reject_dialog_form').dialog( {
+			width: 450,
+			height: 270,
+			modal: true,
+			closeOnEscape: true,
+			draggable: true,
+			resizable: false,
+			title: "Reason for rejection (mandatory)",
+			show: {
+				effect: "blind",
+				duration: 1000
+			},
+			hide: {
+				effect: "toggle",
+				duration: 1000
+			},
+			open: function()
+			{
+				$("#reject_dialog_form").dialog("open");
+			},
+      close: function() {
+        $('#reject_dialog-form').dialog("close");
+        $(this).find('form')[0].reset();
+      }
+		}).prev ().find(".ui-dialog-titlebar-close").show();
+		return false
+	});
+});
+
+$(function() {
+	$("#cancel_action").bind("click",function() {
+		$("#reject_dialog_form").reset();
 	});
 });

@@ -34,3 +34,35 @@ div.comment_box{
 .spaced_below{
   margin-top: 3em;
 }
+
+
+
+.ui-widget-overlay.custom-overlay
+{
+    border: 1px solid #aaaaaa;
+    background-color: black;
+    background-image: none;
+    opacity: 0.78;
+    background-position-x: 50%;
+    background-position-y: 50%;
+
+    background-size: initial;
+    background-repeat-x: repeat;
+    background-repeat-y: no-repeat;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    color: #222222;
+
+}
+
+/*.ui-state-default.ui-widget-content.ui-corner-all.ui-button-icon-only.ui-dialog-titlebar-close.custom-close*/
+
+.custom-close{
+    background: none;
+}
+
+
+
+
+

@@ -1,0 +1,8 @@
+<%- if @comment.errors.any? %>
+  console.log('Error');
+  $('#reject_dialog_form').html('<%= escape_javascript(render('form')) %>');
+<%- else %>
+  console.log('Created');
+  $('#reject_dialog_form').dialog('close');
+  location.reload(true);
+<%- end %>

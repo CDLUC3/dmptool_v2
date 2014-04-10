@@ -54,6 +54,34 @@ $.rails.showConfirmDialog = function(link){
   });
 };
 
+// $.rails.showConfirmDialog = function(link){
+//   var message = "Share my dmp";
+
+//   var  html = "<div class=\"modal\" id=\"confirmationDialog\">\n" +
+//       "<div class=\"modal-header\">\n" +
+//       "<a class=\"close\" data-dismiss=\"modal\">×</a>\n" +
+//       "<h3><strong>" + message + "</strong></h3>\n" +
+//       "</div>\n" +
+//       "<form action=\"/change_visibility\" method=\"post\">\n" +
+      
+//       "<input type=\"radio\" name=\"sex\" value=\"male\">Male<br>\n" +
+//       "<input id=\"visibility_institutional\" name=\"visibility\" type=\"radio\" value=\"institutional\">\n" +
+//       "<input type=\"radio\" name=\"sex\" value=\"female\">Female\n" +
+//       "<input type=\"radio\" name=\"sex\" value=\"female\">Female\n" +
+//       "</form>\n" +
+
+//       "<div class=\"modal-footer\">\n" +
+//       "<a data-dismiss=\"modal\" class=\"btn\">" + "Cancel" + "</a>\n" +
+//       "<a data-dismiss=\"modal\" class=\"btn btn-green confirm\">" + "Submit" + "</a>\n" +
+//       "</div>\n" +
+//       "</div>";
+
+//   $(html).modal();
+//   return $('#confirmationDialog .confirm').on('click', function() {
+//     return $.rails.confirmed(link);
+//   });
+// };
+
 //THIS DOESN'T WORK
 // $.rails.showConfirmDialog = function(link) {
 //   var html, message, yesVal, noVal;

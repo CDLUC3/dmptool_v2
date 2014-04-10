@@ -45,6 +45,11 @@ class Institution < ActiveRecord::Base
     User.joins({:authorizations => :role}).where("roles.name = ?", role_name).where(institution_id: self.id)
   end
 
+  def users_in_and_above_inst_in_role(role_number)
+    insts = [self.id] + self.ancestor_ids
+    User.joins({:authorizations => :role}).where("roles.id = ?", role_number).where(institution_id: insts)
+  end
+
   def users_deep_in_any_role
     #users that have any kind of role
     @user_ids = Authorization.pluck(:user_id) 
@@ -88,7 +93,5 @@ class Institution < ActiveRecord::Base
     where(:requirements_templates => { :institution_id => self.subtree_ids }).
     group(:plan_id)
   end
-
-
 
 end
