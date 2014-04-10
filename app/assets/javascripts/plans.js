@@ -109,8 +109,11 @@ $(function() {
 });
 
 
+
+
 // share my dmp popup window
 $(function() {
+	$.ui.dialog.prototype._focusTabbable = function(){};
 	$('#visibility_dialog_form').hide();
 	$('.change_visibility_link').click(function(event) {
 		event.preventDefault();
@@ -204,7 +207,6 @@ $(function() {
 
 $(function() {
 	$('#visibility_dialog_form').parent().find('button:contains("Cancel")').bind("click",function() {
-
 		$("#visibility_dialog_form").reset();
 	});
 });
