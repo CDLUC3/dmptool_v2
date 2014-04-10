@@ -1,9 +1,12 @@
-	<p><strong>Users</strong></p>
+
+  <p><strong>Users</strong></p>
 	<hr/>
 	<div class="control-group">
 		<%=  check_box_tag 'prefs[users][role_granted]', true, @user.prefs[:users][:role_granted] %>
 		<%= label_tag 'prefs[users][role_granted]', 'A new user role is granted', :class => 'checkbox-label' %>
 	</div>
+
+
 	<p><strong>DMP owners and co-owners:</strong></p>
 	<div class="control-group">
 		<%=  check_box_tag 'prefs[dmp_owners_and_co][new_comment]', true, @user.prefs[:dmp_owners_and_co][:new_comment] %>
@@ -18,6 +21,8 @@
 		<%=  check_box_tag 'prefs[dmp_owners_and_co][submitted]', true, @user.prefs[:dmp_owners_and_co][:submitted] %>
 		<%= label_tag 'prefs[dmp_owners_and_co][submitted]', 'A submitted DMP is approved or rejected', :class => 'checkbox-label' %>
 	</div>
+
+
 	<p><strong>DMP Template editors:</strong></p>
 	<div class="control-group">
 		<%=  check_box_tag 'prefs[requirement_editors][committed]', true, @user.prefs[:requirement_editors][:committed] %>
@@ -29,6 +34,8 @@
 		<%=  check_box_tag 'prefs[requirement_editors][deleted]', true, @user.prefs[:requirement_editors][:deleted] %>
 		<%= label_tag 'prefs[requirement_editors][deleted]', 'An institutional DMP template is deleted', :class => 'checkbox-label' %>
 	</div>
+
+
 	<p><strong>Resources editors:</strong></p>
 	<div class="control-group">
 		<%=  check_box_tag 'prefs[resource_editors][deleted]', true, @user.prefs[:resource_editors][:deleted] %>
@@ -37,6 +44,8 @@
 		<%=  check_box_tag 'prefs[resource_editors][associated_committed]', true, @user.prefs[:resource_editors][:associated_committed] %>
 		<%= label_tag 'prefs[resource_editors][associated_committed]', 'A DMP Template associated with a customization is activated', :class => 'checkbox-label' %>
 	</div>
+
+
 	<p><strong>Institutional Reviewers:</strong></p>
 	<div class="control-group">
 		<%= check_box_tag 'prefs[institutional_reviewers][submitted]', true, @user.prefs[:institutional_reviewers][:submitted] %>
