@@ -21,9 +21,9 @@ module PlanEmail
         # mail all owners and co-owners
         users = self.users
         users.delete_if {|u| !u[:prefs][:dmp_owners_and_co][:published]}
-        if users.length > 0
+        users.each do |user|
           UsersMailer.notification(
-              users.collect(&:email),
+              user.email,
               "A DMP is shared",
               "dmp_owners_and_co_published",
               { } ).deliver
@@ -43,9 +43,9 @@ module PlanEmail
     if current_state.state == :committed
       users = self.users
       users.delete_if {|u| !u[:prefs][:dmp_owners_and_co][:commited]} #Josh misspelled, I may need to change later
-      if users.length > 0
+      users.each do |user|
         UsersMailer.notification(
-            users.collect(&:email),
+            user.email,
             "A DMP is committed",
             "dmp_owners_and_co_committed",
             { } ).deliver
@@ -56,9 +56,9 @@ module PlanEmail
     elsif current_state.state == :approved || current_state.state == :rejected
       users = self.users
       users.delete_if {|u| !u[:prefs][:dmp_owners_and_co][:submitted]}
-      if users.length > 0
+      users.each do |user|
         UsersMailer.notification(
-            users.collect(&:email),
+            user.email,
             "A submitted DMP is approved or rejected",
             "dmp_owners_and_co_submitted",
             { } ).deliver
@@ -67,9 +67,9 @@ module PlanEmail
       institution = self.owner.institution
       users = institution.users_in_and_above_inst_in_role(Role::INSTITUTIONAL_REVIEWER)
       users.delete_if {|u| !u[:prefs][:institutional_reviewers][:approved_rejected] }
-      if users.length > 0
+      users.each do |user|
         UsersMailer.notification(
-            users.collect(&:email),
+            user.email,
             "A new comment was added",
             "institutional_reviewers_approved_rejected",
             {} ).deliver
@@ -80,9 +80,9 @@ module PlanEmail
       institution = self.owner.institution
       users = institution.users_in_and_above_inst_in_role(Role::INSTITUTIONAL_REVIEWER)
       users.delete_if {|u| !u[:prefs][:institutional_reviewers][:submitted] }
-      if users.length > 0
+      users.each do |user|
         UsersMailer.notification(
-            users.collect(&:email),
+            user.email,
             "An institutional DMP is submitted for review",
             "institutional_reviewers_submitted",
             {} ).deliver

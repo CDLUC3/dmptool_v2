@@ -18,9 +18,9 @@ module RequirementsTemplateEmail
       institution = self.institution
       users = institution.users_in_and_above_inst_in_role(Role::TEMPLATE_EDITOR)
       users.delete_if {|u| !u[:prefs][:requirement_editors][:deactived] }
-      if users.length > 0
+      users.each do |user|
         UsersMailer.notification(
-            users.collect(&:email),
+            user.email,
             "An institutional DMP template is deactivated",
             "requirement_editors_deactived",
             {} ).deliver
@@ -31,9 +31,9 @@ module RequirementsTemplateEmail
       institution = self.institution
       users = institution.users_in_and_above_inst_in_role(Role::TEMPLATE_EDITOR)
       users.delete_if {|u| !u[:prefs][:requirement_editors][:commited] }
-      if users.length > 0
+      users.each do |user|
         UsersMailer.notification(
-            users.collect(&:email),
+            user.email,
             "An institutional DMP template is committed",
             "requirement_editors_commited",
             {} ).deliver
@@ -50,9 +50,9 @@ module RequirementsTemplateEmail
     institution = self.institution
     users = institution.users_in_and_above_inst_in_role(Role::TEMPLATE_EDITOR)
     users.delete_if {|u| !u[:prefs][:requirement_editors][:deleted] }
-    if users.length > 0
+    users.each do |user|
       UsersMailer.notification(
-          users.collect(&:email),
+          user.email,
           "An institutional DMP template is deleted",
           "requirement_editors_deleted",
           {} ).deliver

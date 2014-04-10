@@ -22,7 +22,12 @@ class UsersMailer < ActionMailer::Base
   #an example call:
   # UsersMailer.notification(['catdog@mailinator.com', 'dogdog@mailinator.com'],
   #                           'that frosty mug taste', 'test_mail').deliver
-  def notification(email_address_array, subject, message_template, locals)
+  def notification(email_address, subject, message_template, locals)
+    if email_address.class == Array
+      email_address_array = email_address
+    else
+      email_address_array = [email_address]
+    end
     @vars = locals
     mail( :to             => email_address_array.join(','),
           :subject        => subject,
