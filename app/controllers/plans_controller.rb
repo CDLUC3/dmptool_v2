@@ -137,6 +137,10 @@ class PlansController < ApplicationController
     if user_plan_ids.include?(@user.id) && !user_role_in?(:dmp_admin, :institutional_admin)
       redirect_to :back, notice: "A Co-Owner cannot delete a Plan."
     else
+      user_plans = UserPlan.where(plan_id: @plan.id)
+      plan_states = PlanState.where(@plan.id)
+      user_plans.delete_all
+      plan_states.delete_all
       @plan.destroy
       redirect_to plans_url, notice: "Plan has been deleted."
     end

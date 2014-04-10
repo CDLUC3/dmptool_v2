@@ -19,7 +19,6 @@ class UsersController < ApplicationController
       @users = @users.search_terms(params[:q])
     end
 
-
     case params[:scope]
       when "all_institutions"
         @institutions = Institution.page(params[:page])

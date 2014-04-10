@@ -37,6 +37,21 @@ $(function() {
 });
 
 
+//orcid id change link
+$(function() {
+	$("#orcid_input_box").hide();
+	$('#change_orcid').click(function(event){
+			event.preventDefault();
+	    $('#orcid_input_box').toggle();
+	});
+});
+
+
+
+
+
+
+
 
 
 
