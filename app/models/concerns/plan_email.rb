@@ -34,7 +34,11 @@ module PlanEmail
 
     # if the current_plan_state hasn't changed value then return now and don't mess with any of the rest
     return if self.changes["current_plan_state_id"].nil?
-    earlier_state = PlanState.find(self.changes["current_plan_state_id"][0])
+    if self.changes["current_plan_state_id"][0].nil?
+      earlier_state = PlanState.new
+    else
+      earlier_state = PlanState.find(self.changes["current_plan_state_id"][0])
+    end
     current_state = self.current_state
     return if earlier_state.state == current_state.state
 
