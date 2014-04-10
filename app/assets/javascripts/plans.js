@@ -197,6 +197,7 @@ $(function() {
       	$('#ui-id-1').first().unwrap();
       	$('#ui-id-1').first().unwrap();
         $('#visibility_dialog_form').dialog("close");
+        
         //window.location.reload(true);
       }
 		}).prev ().find(".ui-dialog-titlebar-close").show();
@@ -211,15 +212,6 @@ $(function() {
 	});
 });
 
-// $(function() {
-// 	$("button[title='close']").bind("click",function() {
-// 		//$('#ui-id-1').first().unwrap();
-// 		$("#visibility_dialog_form").reset();
-		
-// 	});
-// });
-
-
 
 $(function() {
 	$(".change_visibility_link").bind("click",function() {
@@ -227,6 +219,8 @@ $(function() {
 		var visibility = $(this).data('visibility');
 
 		$("#shared_plan_id").val(id);
+		//$("#shared_visibility").val(visibility);
+
 		if (visibility  == "institutional")
 		{
 			$("#visibility_institutional").attr('checked', true);
