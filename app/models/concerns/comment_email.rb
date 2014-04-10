@@ -17,7 +17,7 @@ module CommentEmail
     users.each do |user|
       UsersMailer.notification(
           user.email,
-          "A new comment was added for your plan",
+          "[DMPTool] A new comment was added for your plan",
           "dmp_owners_and_co_new_comment",
           {:comment => self.value, :user_name => self.user.full_name } ).deliver
     end
@@ -30,7 +30,7 @@ module CommentEmail
     users.each do |user|
       UsersMailer.notification(
           user.email,
-          "A new comment was added",
+          "[DMPTool] A new comment was added",
           "institutional_reviewers_new_comment",
           {:comment => self.value, :user_name => self.user.full_name } ).deliver
     end
