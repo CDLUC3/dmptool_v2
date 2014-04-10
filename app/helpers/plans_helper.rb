@@ -15,6 +15,8 @@ module PlansHelper
 		unless plan_state_id.nil?
 			state = PlanState.find(plan_state_id).state
 			return state
+		else
+			return ""
 		end
 	end
 
