@@ -131,39 +131,38 @@
   </div>
 <% end %>
 
+<% unless @user.new_record? %>
+    <p><strong>Other Info</strong></p>
+    <hr/>
 
-<p><strong>Other Info</strong></p>
-<hr/>
+    <% if @user.orcid_id.nil? || @user.orcid_id.blank? %>
+      <div class="control-group">
+        <%= label_tag :orcid_id, 'Orcid Id', :class => 'control-label' %>
+        <input type="text" id="orcid_id" class="orcid_widget" name="user[orcid_id]" placeholder="xxxx-xxxx-xxxx-xxxx">
+         <%= javascript_include_tag "orcid_widget" %>
+        </input>
+      </div>
 
-<% if @user.orcid_id.nil? || @user.orcid_id.blank? %>
-  <div class="control-group">
-    <%= label_tag :orcid_id, 'Orcid Id', :class => 'control-label' %>
-      <input type="text" id="orcid_id" class="orcid_widget" name="user[orcid_id]" placeholder="xxxx-xxxx-xxxx-xxxx">
-       <%= javascript_include_tag "orcid_widget" %>
-      </input>
-  </div>
+    <% else %>
+      
+      <% @sub_orcid_id = @user.orcid_id.gsub("http://", "")%>
+      <div class="control-group">
+        <%= label_tag :orcid_id, 'Orcid Id', :class => 'control-label' %>
+        <div class="controls everythingOnOneLine">
+          <p><%= link_to @sub_orcid_id, @user.orcid_id %></p>
+          &nbsp;&nbsp;&nbsp;
+          <p><%= link_to 'Edit', '#', id: 'change_orcid' %></p>
+        </div>
+      </div>
 
-<% else %>
-  <% @sub_orcid_id = @user.orcid_id.gsub("http://", "")%>
-  <div class="control-group">
-    <%= label_tag :orcid_id, 'Orcid Id', :class => 'control-label' %>
-    <div class="controls">
-      <p><%= link_to @sub_orcid_id, @user.orcid_id %></p>
-    </div>
+      <div class="control-group" id="orcid_input_box">
+        <%= label_tag :orcid_id, 'Orcid Id', :class => 'control-label' %>
+          <input type="text" id="orcid_id" class="orcid_widget" name="user[orcid_id]" placeholder="xxxx-xxxx-xxxx-xxxx">
+           <%= javascript_include_tag "orcid_widget" %>
+          </input>
+      </div>
 
-    <div>
-      <p><%= link_to 'Change Orcid Id', '#', id: 'change_orcid' %></p>
-    </div>
-  </div>
-
-
-  <div class="control-group" id="orcid_input_box">
-    <%= label_tag :orcid_id, 'Orcid Id', :class => 'control-label' %>
-      <input type="text" id="orcid_id" class="orcid_widget" name="user[orcid_id]" placeholder="xxxx-xxxx-xxxx-xxxx">
-       <%= javascript_include_tag "orcid_widget" %>
-      </input>
-  </div>
-
+    <% end %>
 <% end %>
 
 
