@@ -40,41 +40,45 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
 
   def submitted
     @responses = Array.new
-    requirements_template = RequirementsTemplate.find(@plan.requirements_template_id)
-    requirements = requirements_template.requirements
-    count = requirements.where(obligation: :mandatory).count
+    unless @plan.nil?
+      requirements_template = RequirementsTemplate.find(@plan.requirements_template_id)
+      requirements = requirements_template.requirements
+      count = requirements.where(obligation: :mandatory).count
 
-    requirements.each do |r|
-      response = nil
-      if r.obligation == :mandatory
-        response = Response.where(plan_id: @plan.id, requirement_id: @requirement.id).first
-        return @responses << response
+      requirements.each do |r|
+        response = nil
+        if r.obligation == :mandatory
+          response = Response.where(plan_id: @plan.id, requirement_id: @requirement.id).first
+          return @responses << response
+        end
       end
-    end
-    if @responses.count == count
-      create_plan_state(:submitted)
-    else
-      redirect_to preview_plan_path(@plan), notice: "Please complete all the mandatory Responses for the Plan to be Submitted."
+      if @responses.count == count
+        create_plan_state(:submitted)
+      else
+        redirect_to preview_plan_path(@plan), notice: "Please complete all the mandatory Responses for the Plan to be Submitted."
+      end
     end
   end
 
   def committed
     @responses = Array.new
-    requirements_template = RequirementsTemplate.find(@plan.requirements_template_id)
-    requirements = requirements_template.requirements
-    count = requirements.where(obligation: :mandatory).count
+    unless @plan.nil?
+      requirements_template = RequirementsTemplate.find(@plan.requirements_template_id)
+      requirements = requirements_template.requirements
+      count = requirements.where(obligation: :mandatory).count
 
-    requirements.each do |r|
-      response = nil
-      if r.obligation == :mandatory
-        response = Response.where(plan_id: @plan.id, requirement_id: @requirement.id).first
-        return @responses << response
+      requirements.each do |r|
+        response = nil
+        if r.obligation == :mandatory
+          response = Response.where(plan_id: @plan.id, requirement_id: @requirement.id).first
+          return @responses << response
+        end
       end
-    end
-    if @responses.count == count
-      create_plan_state(:committed)
-    else
-      redirect_to preview_plan_path(@plan), notice: "Please complete all the mandatory Responses for the Plan to be Finished."
+      if @responses.count == count
+        create_plan_state(:committed)
+      else
+        redirect_to preview_plan_path(@plan), notice: "Please complete all the mandatory Responses for the Plan to be Finished."
+      end
     end
   end
 
