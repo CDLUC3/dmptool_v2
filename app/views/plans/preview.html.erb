@@ -6,11 +6,6 @@
         <%= link_to(content_tag(:span, "", :class => "icon print") + "Print",
                     plan_path(@plan, :format=>"html"),
                     :class => "btn pull-left")  %>
- 	<% if (@plan.requirements_template.review_type == :formal_review) || (@plan.requirements_template.review_type == :informal_review) %>
-    <%= button_to "Submit", plan_plan_states_submitted_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
-  <% else %>
-		<%= button_to "Finish", plan_plan_states_committed_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
-	<% end %>
 </div>
 <br/>
 
@@ -24,7 +19,11 @@
 </div>
 <div class="row-fluid">
 	<%= link_to "<< DMP Details", details_plan_path(@plan), :class => "btn btn-green pull-left" %>
-	<%= link_to "My Dashboard >>", dashboard_path, :class => "btn btn-green pull-right" %>
+	<% if (@plan.requirements_template.review_type == :formal_review) || (@plan.requirements_template.review_type == :informal_review) %>
+    <%= button_to "Submit", plan_plan_states_submitted_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
+  	<% else %>
+		<%= button_to "Finish", plan_plan_states_committed_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
+	<% end %>
 </div>
 <div id = 'visibility_dialog_form'>
 	<%= render partial: 'change_visibility', locals: {:plan_id => params[:id]} %>
