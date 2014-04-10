@@ -44,10 +44,11 @@
           <div class="toggle-links">
             <strong id ="#{plan.name}"><%= plan.name %></strong>
             <div class="template-links">
+              <% @plan_id = plan.id %>
                 <%= link_to('Overview', edit_plan_path(plan)) %>
               | <%= link_to('Details', details_plan_path(plan)) %>
-              | <%= link_to('Share', '#', {:class => 'change_visibility_link', :'data-planid' => plan.id }) %>
-              <% @plan_id = plan.id %>
+              | <%= link_to('Share', '#', {:class => 'change_visibility_link', :'data-planid' => plan.id, :'data-visibility' => plan.visibility }) %>
+              
               <% if ( plan.requirements_template.try(:review_type) && plan.requirements_template.review_type != :no_review) %>
                 | <%= link_to('Submit', preview_plan_path(plan)) %>
               <% end %>
@@ -73,7 +74,7 @@
   <tbody>
 </table>
     <div class="buttons pagination">
-      <%= link_to "View All", plans_path(:scope => "all"), :method => :get, :class => "btn", :id => 'view_all_plans'%>
+      <%= link_to "View All", plans_path(:scope => "all", order_scope: @order_scope), :method => :get, :class => "btn", :id => 'view_all_plans'%>
       <%= paginate @plans %>
     </div>
     </tr>

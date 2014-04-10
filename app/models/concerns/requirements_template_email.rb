@@ -13,10 +13,8 @@ module RequirementsTemplateEmail
   # [:resource_editors][:associated_commited] - A DMP Template associated with a customization is activated
   def email_template_saved
 
-    changed_fields = self.changes
-
     # [:requirement_editors][:deactived] - An institutional DMP template is deactivated
-    if self.active == false && !changed_fields["active"].nil? && changed_fields["active"][1] == false
+    if self.active == false && !self.changes["active"].nil? && self.changes["active"][1] == false
       institution = self.institution
       users = institution.users_in_and_above_inst_in_role(Role::TEMPLATE_EDITOR)
       users.delete_if {|u| !u[:prefs][:requirement_editors][:deactived] }
