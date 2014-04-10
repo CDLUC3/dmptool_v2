@@ -24,3 +24,11 @@
 .orcid_success_div a{float:none!important}
 
 .close_search{position:absolute;top:4px;right:5px}
+
+.everythingOnOneLine {
+ white-space: nowrap;
+}
+
+.everythingOnOneLine * {
+ display: inline;
+}
