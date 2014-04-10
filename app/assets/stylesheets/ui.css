@@ -115,6 +115,7 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	right: 0; }
 .requirements-tree-view .current {
     font-weight: bold;
+    color: #000;
 }
 .requirements-tree-view {
 	margin-top: 0; }
