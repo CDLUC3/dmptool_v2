@@ -223,15 +223,15 @@ $(function() {
 
 		if (visibility  == "institutional")
 		{
-			$("#visibility_institutional").attr('checked', true);
+			$("#visibility_institutional").click();
 		}
 		else if (visibility  == "public")
 	  {
-	  	$("#visibility_public").attr('checked', true);
+	  	$("#visibility_public").click();
 	  }
 		else if (visibility  == "private")
 	  {
-	  	$("#visibility_private").attr('checked', true);
+	  	$("#visibility_private").click();
 	  }
 	});
 });

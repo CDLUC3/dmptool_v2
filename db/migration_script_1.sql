@@ -122,7 +122,7 @@ INSERT INTO `dmp2`.`requirements_templates` (
        `end_date`,   `visibility`,     `review_type`, `created_at`, `updated_at`,
        `old_funder_id`)
 SELECT `id`,          NULL,            `name`,        `active`,     `start_date`,
-       `end_date`,   'public',          NULL,         `created_at`, `updated_at`,
+       `end_date`,   'public',         'no_review',   `created_at`, `updated_at`,
        `t`.`funder_id`
 FROM `dmp`.`funder_templates` AS `t`;
 
@@ -135,7 +135,7 @@ SET `t`.`institution_id` = `i`.`id`;
 # requirements: copy DMP1 questions, with some information from question_templates
 TRUNCATE TABLE `dmp2`.`requirements`;
 INSERT INTO `dmp2`.`requirements` (
-       `id`,            `position`,                    `text_brief`,
+       `id`,            `position`,                 `text_brief`,
        `text_full`,     `requirement_type`,         `obligation`,
        `default`,       `requirements_template_id`, `created_at`,
        `updated_at`,    `ancestry`,                 `group`)
@@ -150,10 +150,10 @@ JOIN `dmp`.`question_templates` AS `t` ON `t`.`question_id` = `q`.`id`;
 # responses: copy the DMP1 answers
 TRUNCATE TABLE `dmp2`.`responses`;
 INSERT INTO `dmp2`.`responses` (
-       `id`,        `plan_id`, `requirement_id`, `label_id`, `value`, `created_at`,
-       `updated_at`)
-SELECT `id`,        `plan_id`, `question_id`,     NULL,      `text`,  `created_at`,
-       `updated_at`
+       `id`,         `plan_id`, `requirement_id`, `label_id`, `text_value`,
+             `created_at`, `updated_at`)
+SELECT `id`,         `plan_id`, `question_id`,     NULL,      `text`,
+       `created_at`, `updated_at`
 FROM `dmp`.`answers`;
 
 
@@ -161,7 +161,7 @@ FROM `dmp`.`answers`;
 TRUNCATE TABLE `dmp2`.`user_plans`;
 INSERT INTO `dmp2`.`user_plans` (
        `id`, `user_id`, `plan_id`, `owner`, `created_at`, `updated_at`)
-SELECT `id`, `user_id`, `plan_id`,  NULL,   `created_at`, `updated_at`
+SELECT `id`, `user_id`, `plan_id`,  1,      `created_at`, `updated_at`
 FROM `dmp`.`user_plans`;
 
 
@@ -199,7 +199,7 @@ TRUNCATE TABLE `dmp2`.`resources`;
 INSERT INTO `dmp2`.`resources` (
        `id`,         `resource_type`,  `value`, `label`,      `created_at`,
        `updated_at`, `text`)
-SELECT `id`,      'actionable_url',   `url`, dmp2.fnStripTags(LEFT(`desc`,50)),
+SELECT `id`,          'actionable_url',   `url`, dmp2.fnStripTags(LEFT(`desc`,50)),
                                                               `created_at`,
        `updated_at`,  NULL
 FROM `dmp`.`resources`;
@@ -348,10 +348,48 @@ JOIN `dmp2`.`resources`         AS `r` ON (`r`.`text`               =
 WHERE `r`.`resource_type`      = 'suggested_response'
 AND   `r`.`old_institution_id` IS NOT NULL;
 
-# now map old DMP1 funder IDs to new DMP2 institution IDs
-UPDATE `dmp2`.`resource_contexts` AS `c`
-JOIN `dmp2`.`institutions` AS `i` ON `i`.`old_funder_id` = `c`.`old_funder_id`
-SET `c`.`institution_id` = `i`.`id`;
+
+# customization level 6: container for levels 5 and 7
+INSERT INTO `dmp2`.`resource_contexts` (
+       `institution_id`,     `requirements_template_id`,    `requirement_id`,
+       `created_at`,         `updated_at`,                  `resource_id`,
+       `name`,               `contact_info`,                `contact_email`,
+       `review_type`)
+SELECT `c`.`institution_id`, `c`.`requirements_template_id`, NULL,
+       `c`.`created_at`,     `c`.`updated_at`,               NULL,
+CONCAT(`t`.`name`, ' – ',
+       `i`.`nickname`),      `i`.`contact_info`,            `i`.`contact_email`,
+       'no_review'
+FROM `dmp2`.`resource_contexts`      AS `c`
+JOIN `dmp2`.`requirements_templates` AS `t` ON `t`.`id` =
+                                               `c`.`requirements_template_id`
+JOIN `dmp2`.`institutions`           AS `i` ON `i`.`id` = `c`.`institution_id`
+WHERE `c`.`institution_id`           IS NOT NULL
+AND   `c`.`requirements_template_id` IS NOT NULL
+AND  (`c`.`requirement_id`           IS NOT NULL
+OR    `c`.`resource_id`              IS NOT NULL)
+GROUP BY `c`.`institution_id`, `c`.`requirements_template_id`;
+
+
+# customization level 8: container for levels 2 and 3
+INSERT INTO `dmp2`.`resource_contexts` (
+       `institution_id`,     `requirements_template_id`,    `requirement_id`,
+       `created_at`,         `updated_at`,                  `resource_id`,
+       `name`,               `contact_info`,                `contact_email`,
+       `review_type`)
+SELECT  NULL,                `c`.`requirements_template_id`, NULL,
+       `c`.`created_at`,     `c`.`updated_at`,               NULL,
+       `t`.`name`,           `i`.`contact_info`,            `i`.`contact_email`,
+       'no_review'
+FROM `dmp2`.`resource_contexts`      AS `c`
+JOIN `dmp2`.`requirements_templates` AS `t` ON `t`.`id` =
+                                               `c`.`requirements_template_id`
+JOIN `dmp2`.`institutions`           AS `i` ON `i`.`id` = `t`.`institution_id`
+WHERE `c`.`institution_id`           IS     NULL
+AND   `c`.`requirements_template_id` IS NOT NULL
+AND  (`c`.`requirement_id`           IS NOT NULL
+OR    `c`.`resource_id`              IS NOT NULL)
+GROUP BY `c`.`institution_id`, `c`.`requirements_template_id`;
 
 
 # additional_informations: copy DMP1 resources for question_id = -1
@@ -378,28 +416,6 @@ JOIN `dmp`.`resources` AS `r` ON `r`.`id` = `c`.`resource_id`
 WHERE `c`.`question_id` = -2;
 
 
-# naming customization level 6
-UPDATE `dmp2`.`resource_contexts`    AS `c`
-JOIN `dmp2`.`requirements_templates` AS `t` ON `t`.`id` =
-                                               `c`.`requirements_template_id`
-JOIN `dmp2`.`institutions`           AS `i` ON `i`.`id` = `c`.`institution_id`
-SET   `c`.`name` = CONCAT(`t`.`name`, ' - ', `i`.`nickname`)
-WHERE `c`.`requirement_id`           IS     NULL
-AND   `c`.`resource_id`              IS     NULL
-AND   `c`.`institution_id`           IS NOT NULL
-AND   `c`.`requirements_template_id` IS NOT NULL;
-
-
-# naming customization for DMP2 template resources across institutions
-UPDATE `dmp2`.`resource_contexts`    AS `c`
-JOIN `dmp2`.`requirements_templates` AS `t` ON `t`.`id` =
-                                               `c`.`requirements_template_id`
-SET   `c`.`name` = `t`.`name`
-WHERE `c`.`requirement_id`           IS     NULL
-AND   `c`.`resource_id`              IS     NULL
-AND   `c`.`institution_id`           IS     NULL
-AND   `c`.`requirements_template_id` IS NOT NULL;
-
 
 # remove the old DMP1 keys needed only during the migration
 ALTER TABLE `dmp2`.`institutions`           DROP COLUMN `old_funder_id`;
@@ -410,3 +426,5 @@ ALTER TABLE `dmp2`.`resources`              DROP COLUMN `old_institution_id`;
 ALTER TABLE `dmp2`.`resources`              DROP COLUMN `old_suggested_answer_id`;
 ALTER TABLE `dmp2`.`resource_contexts`      DROP COLUMN `old_funder_id`;
 ALTER TABLE `dmp2`.`users`                  DROP COLUMN `old_user_id`;
+
+
