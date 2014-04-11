@@ -103,6 +103,7 @@ class UsersController < ApplicationController
     password_confirmation = user_params[:password_confirmation]
 
     @orcid_id = params[:user][:orcid_id]
+    @update_orcid_id = params[:user][:update_orcid_id]
 
     if password && !password.empty?
       if valid_password(password, password_confirmation)
@@ -121,6 +122,16 @@ class UsersController < ApplicationController
         @orcid_id = "http://orcid.org/" + "#{@orcid_id}"
       else     
         flash[:error] = "The orcid id: #{@orcid_id} is a not valid orcid id."
+        @orcid_id = ""
+        redirect_to edit_user_path(@user)
+        return
+      end
+    end
+    if !@update_orcid_id.blank?
+      if valid_orcid?(@update_orcid_id)
+        @orcid_id = "http://orcid.org/" + "#{@orcid_id}"
+      else     
+        flash[:error] = "The orcid id: #{@update_orcid_id} is a not valid orcid id."
         @orcid_id = ""
         redirect_to edit_user_path(@user)
         return
