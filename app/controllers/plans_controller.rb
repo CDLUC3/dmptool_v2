@@ -268,7 +268,7 @@ class PlansController < ApplicationController
   end
 
   def public
-    @plans = Plan.public_visibility
+    @plans = Plan.public_visibility.order(name: :asc)
     if params[:page] != 'all' then
       unless params[:s].blank? || params[:e].blank?
         @plans = @plans.letter_range(params[:s], params[:e])
