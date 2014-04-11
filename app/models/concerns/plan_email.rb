@@ -24,7 +24,7 @@ module PlanEmail
         users.each do |user|
           UsersMailer.notification(
               user.email,
-              "A DMP is shared",
+              "[DMPTool] A DMP is shared",
               "dmp_owners_and_co_published",
               { } ).deliver
         end
@@ -34,7 +34,11 @@ module PlanEmail
 
     # if the current_plan_state hasn't changed value then return now and don't mess with any of the rest
     return if self.changes["current_plan_state_id"].nil?
-    earlier_state = PlanState.find(self.changes["current_plan_state_id"][0])
+    if self.changes["current_plan_state_id"][0].nil?
+      earlier_state = PlanState.new
+    else
+      earlier_state = PlanState.find(self.changes["current_plan_state_id"][0])
+    end
     current_state = self.current_state
     return if earlier_state.state == current_state.state
 
@@ -46,7 +50,7 @@ module PlanEmail
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            "A DMP is committed",
+            "[DMPTool] A DMP is committed",
             "dmp_owners_and_co_committed",
             { } ).deliver
       end
@@ -59,7 +63,7 @@ module PlanEmail
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            "A submitted DMP is approved or rejected",
+            "[DMPTool] A submitted DMP is approved or rejected",
             "dmp_owners_and_co_submitted",
             { } ).deliver
       end
@@ -70,7 +74,7 @@ module PlanEmail
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            "A new comment was added",
+            "[DMPTool] A new comment was added",
             "institutional_reviewers_approved_rejected",
             {} ).deliver
       end
@@ -83,7 +87,7 @@ module PlanEmail
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            "An institutional DMP is submitted for review",
+            "[DMPTool] An institutional DMP is submitted for review",
             "institutional_reviewers_submitted",
             {} ).deliver
       end

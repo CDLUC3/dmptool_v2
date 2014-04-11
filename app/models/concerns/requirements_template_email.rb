@@ -21,7 +21,7 @@ module RequirementsTemplateEmail
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            "An institutional DMP template is deactivated",
+            "[DMPTool] An institutional DMP template is deactivated",
             "requirement_editors_deactived",
             {} ).deliver
       end
@@ -36,7 +36,7 @@ module RequirementsTemplateEmail
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            "An institutional DMP template is committed",
+            "[DMPTool] An institutional DMP template is committed",
             "requirement_editors_committed",
             {} ).deliver
       end
@@ -55,15 +55,12 @@ module RequirementsTemplateEmail
         users.each do |user|
           UsersMailer.notification(
               user.email,
-              "A DMP Template associated with a customization is activated",
+              "[DMPTool] A DMP Template associated with a customization is activated",
               "resource_editors_associated_committed",
               {} ).deliver
         end
 
       end
-
-
-
 
     end
   end
@@ -78,7 +75,7 @@ module RequirementsTemplateEmail
     users.each do |user|
       UsersMailer.notification(
           user.email,
-          "An institutional DMP template is deleted",
+          "[DMPTool] An institutional DMP template is deleted",
           "requirement_editors_deleted",
           {} ).deliver
     end

@@ -11,10 +11,12 @@ module PlansHelper
 	end
 
 	def state(plan)
-		plan_state_id = plan.current_plan_state_id
+		plan_state_id = plan.try(:current_plan_state_id)
 		unless plan_state_id.nil?
 			state = PlanState.find(plan_state_id).state
 			return state
+		else
+			return ""
 		end
 	end
 

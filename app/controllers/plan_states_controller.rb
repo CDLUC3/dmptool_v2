@@ -46,10 +46,9 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
       count = requirements.where(obligation: :mandatory).count
 
       requirements.each do |r|
-        response = nil
         if r.obligation == :mandatory
-          response = Response.where(plan_id: @plan.id, requirement_id: @requirement.id).first
-          return @responses << response
+          response = Response.where(plan_id: @plan.id, requirement_id: r.id).first
+          return @responses << response unless response.nil?
         end
       end
       if @responses.count == count
@@ -70,7 +69,7 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
       requirements.each do |r|
         response = nil
         if r.obligation == :mandatory
-          response = Response.where(plan_id: @plan.id, requirement_id: @requirement.id).first
+          response = Response.where(plan_id: @plan.id, requirement_id: r.id).first
           return @responses << response
         end
       end
