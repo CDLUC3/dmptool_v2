@@ -126,8 +126,13 @@ class UsersController < ApplicationController
         return
       end
     end
+    if user_params[:first_name].blank? || user_params[:first_name].nil? || user_params[:last_name].blank? || user_params[:last_name].nil?
+      flash[:error] = "Please enter first name and last name."
+      redirect_to edit_user_path(@user)
+      return
+    end
 
-#0000-0003-1367-3100
+
 
     User.transaction do
       @user.institution_id = params[:user].delete(:institution_id)
