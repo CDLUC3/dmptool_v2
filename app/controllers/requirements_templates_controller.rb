@@ -115,7 +115,6 @@ class RequirementsTemplatesController < ApplicationController
   # POST /requirements_templates.json
   def create
     @requirements_template = RequirementsTemplate.new(requirements_template_params)
-
     respond_to do |format|
       if @requirements_template.save
         format.html { redirect_to edit_requirements_template_path(@requirements_template), notice: 'Requirements template was successfully created.' }
@@ -131,12 +130,22 @@ class RequirementsTemplatesController < ApplicationController
   # PATCH/PUT /requirements_templates/1.json
   def update
     respond_to do |format|
-      if @requirements_template.update(requirements_template_params)
-        format.html { redirect_to edit_requirements_template_path(@requirements_template), notice: 'Requirements template was successfully updated.' }
-        format.json { head :no_content }
+      if params[:save_changes] || !params[:save_and_template_details]
+        if @requirements_template.update(requirements_template_params)
+          format.html { redirect_to edit_requirements_template_path(@requirements_template), notice: 'Requirements template was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: 'edit' }
+          format.json { render json: @requirements_template.errors, status: :unprocessable_entity }
+        end
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @requirements_template.errors, status: :unprocessable_entity }
+        if @requirements_template.update(requirements_template_params)
+          format.html { redirect_to requirements_template_requirements_path(@requirements_template) }
+          format.json { head :no_content }
+        else
+          format.html { render action: 'edit' }
+          format.json { render json: @requirements_template.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
