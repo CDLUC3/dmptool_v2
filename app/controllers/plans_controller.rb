@@ -118,9 +118,15 @@ class PlansController < ApplicationController
         format.html { flash[:alert]
               redirect_to edit_plan_path(@plan)}
       else
-        if @plan.update(plan_params)
+        if params[:save_changes] || !params[:save_and_dmp_details]
+          @plan.update(plan_params)
           format.html { flash[:notice] << "Plan was successfully updated."
                   redirect_to edit_plan_path(@plan)}
+          format.json { head :no_content }
+        elsif !params[:save_changes] || params[:save_and_dmp_details]
+          @plan.update(plan_params)
+          format.html { flash[:notice]
+                  redirect_to details_plan_path(@plan)}
           format.json { head :no_content }
         else
           add_coowner_autocomplete

@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="control-group">
-          <%= f.label :name , 'DMP Title', :class => 'control-label' %>
+          <%= f.label :name , 'DMP Title', :class => 'control-label required' %>
           <div class="controls">
             <% unless @plan.new_record? && current_page?(controller: 'plans', action: 'copy_existing_template') %>
               <%= f.text_area :name , :class => 'input-xxlarge' %>
@@ -165,11 +165,13 @@
         <% end %>
 
         <div class="buttons">
-          <%= f.submit 'Save', :class => 'btn' %>
+          <%= f.submit 'Save', name: 'save_changes', :class => 'btn' %>
           <%= button_tag 'Cancel', type: :reset, :class => 'btn btn-success'%>
           <% unless @plan.new_record? %>
-            <%= link_to 'Save & Next >>', details_plan_path(@plan), method: 'get', :class => 'btn btn-green pull-right' %>
-          <% end %>
+            <%= f.submit "DMP Details >>", name: 'save_and_dmp_details', :class => 'btn btn-success pull-right' %>
+          <% else %>
+            <%= button_tag "DMP Details >>", disabled: true,  :class => 'btn pull-right' %>
+           <% end %>
         </div>
       <% end %>
     </div>
