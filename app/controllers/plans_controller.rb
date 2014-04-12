@@ -119,19 +119,26 @@ class PlansController < ApplicationController
               redirect_to edit_plan_path(@plan)}
       else
         if params[:save_changes] || !params[:save_and_dmp_details]
-          @plan.update(plan_params)
-          format.html { flash[:notice] << "Plan was successfully updated."
-                  redirect_to edit_plan_path(@plan)}
-          format.json { head :no_content }
-        elsif !params[:save_changes] || params[:save_and_dmp_details]
-          @plan.update(plan_params)
+          if @plan.update(plan_params)
+            format.html { flash[:notice] << "Plan was successfully updated."
+                    redirect_to edit_plan_path(@plan)}
+            format.json { head :no_content }
+          else
+            add_coowner_autocomplete
+            format.html { render action: 'edit' }
+            format.json { render json: @plan.errors, status: :unprocessable_entity }
+          end
+        end
+        if !params[:save_changes] || params[:save_and_dmp_details]
+          if @plan.update(plan_params)
           format.html { flash[:notice]
                   redirect_to details_plan_path(@plan)}
           format.json { head :no_content }
-        else
-          add_coowner_autocomplete
-          format.html { render action: 'edit' }
-          format.json { render json: @plan.errors, status: :unprocessable_entity }
+          else
+            add_coowner_autocomplete
+            format.html { render action: 'edit' }
+            format.json { render json: @plan.errors, status: :unprocessable_entity }
+          end
         end
       end
     end
@@ -305,7 +312,7 @@ class PlansController < ApplicationController
           @user, @email = nil, nil
           @email = m[1] unless m.nil?
           @user = User.find_by(email: @email)
-          @owner = UserPlan.where(plan_id: @plan.id, user_id: @user.id, owner: true).first
+          @owner = UserPlan.where(plan_id: @plan.id, user_id: @user.id, owner: true).first unless @user.nil?
           if @user.nil?
             flash[:alert] = "The user you entered with email #{@email} was not found"
           elsif !@owner.nil?
