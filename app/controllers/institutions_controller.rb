@@ -167,30 +167,38 @@ class InstitutionsController < ApplicationController
   # POST /institutions.json
   def create
     @current_institution = Institution.new(institution_params)
-
-    respond_to do |format|
-      if @current_institution.save
-        format.html { redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @current_institution }
+  
+    if @current_institution.save
+      redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully created.' 
+    else
+      if params[:full_name].blank? || params[:full_name].nil?
+        msg = "Please enter a name for the Institution."
       else
-        format.html { render action: 'new' }
-        format.json { render json: @current_institution.errors, status: :unprocessable_entity }
+        msg = "An error has occured and the institution cannot be created."
       end
+      flash[:error] = msg
+      redirect_to new_institution_path
     end
+    
   end
 
   # PATCH/PUT /institutions/1
   # PATCH/PUT /institutions/1.json
   def update
     @current_institution = Institution.find(params[:id])
-    respond_to do |format|
-      if @current_institution.update(institution_params)
-        format.html { redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully updated.' }
+    
+    if @current_institution.update(institution_params)
+      redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully updated.' 
+    else
+      if params[:full_name].blank? || params[:full_name].nil?
+        msg = "Please enter a name for the Institution."
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @current_institution.errors, status: :unprocessable_entity }
+        msg = "An error has occured and the institution cannot be updated."
       end
+      flash[:error] = msg
+      redirect_to edit_institution_path(@current_institution)
     end
+
   end
 
   # DELETE /institutions/1
