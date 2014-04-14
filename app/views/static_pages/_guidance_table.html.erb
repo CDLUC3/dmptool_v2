@@ -6,7 +6,7 @@
 
 <table class="table table-striped">
 	<thead>
-		<tr>
+		<tr>			
 			<th class="span5"><%= (public ? 'Funder' : 'Institution') %></th>
 			<th>Template</th>
 			<th><%= (public ? 'Funder Links' : 'Institution Links') %></th>
@@ -15,7 +15,7 @@
 	</thead>
 	<tbody>
 		<% templates.each do |t| %>
-			<tr>
+			<tr>	
 				<td><strong><%= (t.institution ? t.institution.full_name: '') %></strong></td>
 				<td><%= link_to t.name,	basic_requirements_template_path(t, format: :rtf ), :target => '_blank' %>
 						<%= link_to '', basic_requirements_template_path(t, format: :rtf), :class => 'icon rtf', :target => '_blank' %>
