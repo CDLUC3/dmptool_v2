@@ -213,7 +213,7 @@ class InstitutionsController < ApplicationController
     non_partner = insts.map{|i| i[1]}.index(0) #find non-partner institution, ie none of the above, always index 0
     if non_partner
       item = insts.delete_at(non_partner)
-      item = ["None of the above", 0] # This institution is always renamed because we like it that way in the list
+      item = ["Not in List", 0] # This institution is always renamed because we like it that way in the list
       insts.insert(0, item) #put it at the beginning of the list cause we like it that way
     end
     insts
