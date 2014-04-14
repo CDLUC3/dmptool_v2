@@ -186,7 +186,6 @@ class InstitutionsController < ApplicationController
     respond_to do |format|
       if @current_institution.update(institution_params)
         format.html { redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully updated.' }
-        format.json { head :no_content }
       else
         format.html { render action: 'edit' }
         format.json { render json: @current_institution.errors, status: :unprocessable_entity }
