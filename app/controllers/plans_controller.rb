@@ -240,13 +240,16 @@ class PlansController < ApplicationController
       @requirements = @requirements_template.requirements
       if params[:requirement_id].blank?
         requirement = @requirements_template.first_question
+        last_requirement = @requirements_template.last_question
         if requirement.nil?
           redirect_to(resource_contexts_path, :notice =>
               "The DMP template you are attempting to customize has no requirements. A template must contain at least one requirement. \"#{@requirements_template.name}\" needs to be fixed before you may continue customizing it.") and return
         end
         params[:requirement_id] = requirement.id.to_s
+        params[:last_requirement_id] = last_requirement.id.to_s
       end
       @requirement = Requirement.find(params[:requirement_id]) unless params[:requirement_id].blank?
+      @last_requirement = Requirement.find(params[:last_requirement_id]) unless params[:last_requirement_id].blank?
       @resource_contexts = ResourceContext.where(requirement_id: @requirement.id, institution_id: @user.institution_id, requirements_template_id: @requirements_template.id)
       @guidance_resources = display_text(@resource_contexts)
       @url_resources = display_value(@resource_contexts)
@@ -260,7 +263,7 @@ class PlansController < ApplicationController
       @next_requirement = @requirements[@requirements.index(@requirement) + 1]
       if @next_requirement.nil?
         ## would go back to the 1st Requirement in the list
-        @next_requirement_id = @requirements_template.first_question.id
+        @next_requirement_id = @requirements_template.last_question.id
       else
         ## traverse through the next requirement in the list
         @next_requirement_id = @next_requirement.id
@@ -427,7 +430,7 @@ class PlansController < ApplicationController
 
     def coowners
       id = @plan.user_plans.where(owner: true).pluck(:user_id).first
-      @owner = User.find(id)
+      @owner = User.find(id) unless id.nil?
       @coowners = Array.new
       user_plans = @plan.user_plans.where(owner: false)
       user_plans.each do |user_plan|

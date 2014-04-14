@@ -90,7 +90,6 @@ class RequirementsTemplatesController < ApplicationController
   end
 
   def template_information
-
     if user_role_in?(:dmp_admin)
       @requirements_templates = RequirementsTemplate.
                                   where(active: true).
@@ -101,7 +100,6 @@ class RequirementsTemplatesController < ApplicationController
                                 any_of(visibility: :public, institution_id: [current_user.institution.subtree_ids]).
                                 page(params[:page]).per(5)
     end
-
   end
 
   # GET /requirements_templates/1/edit
@@ -161,7 +159,6 @@ class RequirementsTemplatesController < ApplicationController
   end
 
   def copy_existing_template
-
     id = params[:requirements_template].to_i unless params[:requirements_template].blank?
 
     if user_role_in?(:dmp_admin)
