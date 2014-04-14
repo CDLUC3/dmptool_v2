@@ -68,7 +68,7 @@ class StaticPagesController < ApplicationController
   end
   
   def guidance
-    @public_templates = RequirementsTemplate.public_visibility.includes(:institution, :sample_plans)
+    @public_templates = RequirementsTemplate.public_visibility.includes(:institution, :sample_plans).order('institutions.full_name ASC')
     
     unless params[:s].blank? || params[:e].blank?
       @public_templates = @public_templates.letter_range_by_institution(params[:s], params[:e])
