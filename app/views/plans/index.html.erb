@@ -32,7 +32,7 @@
         <%= link_to "Visibility", {order_scope: "Visibility", scope: @scope}%>
       </th>
       <th>
-        <%= link_to "Last Modification Date", 
+        <%= link_to "Last Modification Date",
               {order_scope: "Last_Modification_Date", scope: @scope}%>
       </th>
     </tr>
@@ -48,14 +48,16 @@
                 <%= link_to('Overview', edit_plan_path(plan)) %>
               | <%= link_to('Details', details_plan_path(plan)) %>
               | <%= link_to('Share', '#', {:class => 'change_visibility_link', :'data-planid' => plan.id, :'data-visibility' => plan.visibility }) %>
-              
+
               <% if ( plan.requirements_template.try(:review_type) && plan.requirements_template.review_type != :no_review) %>
                 | <%= link_to('Submit', preview_plan_path(plan)) %>
               <% end %>
               | <%= link_to('Copy', copy_existing_plans_template_path(:plan => plan)) %>
               | Export as <%= link_to('PDF', plan_path(plan, :format => "pdf")) %>
               | <%= link_to('RTF', plan_path(plan, :format => "rtf")) %>
+              <% unless coowner(plan) == true %>
               | <%= link_to 'Delete', plan, method: :delete, data: { confirm: 'Are you sure?' },:class => "delete" %>
+              <% end %>
             </div>
           </div>
         </td>

@@ -43,4 +43,14 @@ module PlansHelper
 			return institution_name
 		end
 	end
+
+	def coowner(plan)
+		coowner_ids = plan.user_plans.where(owner: false).pluck(:user_id)
+		if coowner_ids.include?(@user.id)
+			return true
+		else
+			return false
+		end
+	end
+
 end

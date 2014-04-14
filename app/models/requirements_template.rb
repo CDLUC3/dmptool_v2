@@ -82,6 +82,11 @@ class RequirementsTemplate < ActiveRecord::Base
     find_question_node(requirements)
   end
 
+  def last_question
+    requirements = self.requirements.roots.order("position DESC")
+    find_last_question_node(requirements)
+  end
+
   #this adds the requirements position if they are not set correctly, but if set, leaves them alone
   def ensure_requirements_position
     reqs = self.requirements.where(position: nil)
@@ -98,11 +103,25 @@ class RequirementsTemplate < ActiveRecord::Base
   end
 
   private
+
   #helper method for recursion of first_question
   def find_question_node(reqs)
     reqs.each do |r|
       if r.is_group?
         children = r.children.order(:position)
+        return find_question_node(children) unless children.nil? || children.length < 1
+      else
+        return r
+      end
+    end
+    nil
+  end
+
+  #helper method for recursion of first_question
+  def find_last_question_node(reqs)
+    reqs.each do |r|
+      if r.is_group?
+        children = r.children.order("position DESC")
         return find_question_node(children) unless children.nil? || children.length < 1
       else
         return r

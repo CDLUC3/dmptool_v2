@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="control-group">
-          <%= f.label :name , 'DMP Title', :class => 'control-label' %>
+          <%= f.label :name , 'DMP Title', :class => 'control-label required' %>
           <div class="controls">
             <% unless @plan.new_record? && current_page?(controller: 'plans', action: 'copy_existing_template') %>
               <%= f.text_area :name , :class => 'input-xxlarge' %>
@@ -66,8 +66,6 @@
              } %>
 
         <% else %>
-
-
           <%= render partial: '/users/plan_autocomplete_widget',
               :locals =>
              {  user_role: 'coowner',
@@ -156,20 +154,24 @@
               <div class="controls">
               <p><%= link_to "Preview DMP", preview_plan_path(@plan) %> |
                 <% if (@plan.requirements_template.review_type == :formal_review) || (@plan.requirements_template.review_type == :informal_review) %>
-                  <%= link_to "Submit DMP", preview_plan_path(@plan) %> |
+                  <%= link_to "Submit DMP", preview_plan_path(@plan) %>
                 <% end %>
-                <%= link_to "Delete DMP",@plan, method: :delete,  style: 'color:red;', data: { confirm: 'Are you sure?', :id => 'delete_template'} %>
+                <% unless @coowners.include?(@user) %>
+                  | <%= link_to "Delete DMP",@plan, method: :delete,  style: 'color:red;', data: { confirm: 'Are you sure?', :id => 'delete_template'} %>
+                <% end %>
               </p>
             </div>
           </div>
         <% end %>
 
         <div class="buttons">
-          <%= f.submit 'Save', :class => 'btn' %>
+          <%= f.submit 'Save', name: 'save_changes', :class => 'btn' %>
           <%= button_tag 'Cancel', type: :reset, :class => 'btn btn-success'%>
           <% unless @plan.new_record? %>
-            <%= link_to 'Save & Next >>', details_plan_path(@plan), method: 'get', :class => 'btn btn-green pull-right' %>
-          <% end %>
+            <%= f.submit "DMP Details >>", name: 'save_and_dmp_details', :class => 'btn btn-success pull-right' %>
+          <% else %>
+            <%= button_tag "DMP Details >>", disabled: true,  :class => 'btn pull-right' %>
+           <% end %>
         </div>
       <% end %>
     </div>
