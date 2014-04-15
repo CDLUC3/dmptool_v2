@@ -40,7 +40,8 @@ class ApplicationController < ActionController::Base
     #checks you're an editor for customizations in general
     def check_customization_editor
       unless user_role_in?(:dmp_admin, :resource_editor, :institutional_admin)
-        redirect_to dashboard_path, :notice => 'You do not have permission to view this page.' and return
+        flash[:error] = "You do not have permission to view this page."
+        redirect_to dashboard_path and return
       end
     end
 
@@ -48,15 +49,20 @@ class ApplicationController < ActionController::Base
     #in this case a customization must be a container for other customizations (#6 and #8)
     #and params[:id] is the number of the container customization.
     def check_editor_for_this_customization
-      redirect_to resource_contexts_path, :notice => 'A customization id is missing' and return if params[:id].blank?
+      if params[:id].blank?
+        flash[:error] = 'A customization id is missing'
+        redirect_to resource_contexts_path and return 
+      end
       cust = ResourceContext.find_by_id(params[:id])
       level = cust.resource_level unless cust.nil?
       if cust.nil? || !level['Container'] #this isn't a container customization
-        redirect_to resource_contexts_path, :notice => "You've selected an incorrect customization" and return
+        flash[:error] = "You've selected an incorrect customization"
+        redirect_to resource_contexts_path and return
       end
       # the user doesn't have permissions on this institution and isn't a DMP admin
       if !current_user.institution.subtree_ids.include?(cust.institution_id) && !user_role_in?(:dmp_admin)
-        redirect_to dashboard_path, :notice => 'You do not have permission to view this page.' and return
+        flash[:error] = "You do not have permission to view this page."
+        redirect_to dashboard_path and return
       end
     end
 

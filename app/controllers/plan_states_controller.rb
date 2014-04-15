@@ -7,7 +7,8 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
     if user_role_in?(:institutional_reviewer, :institutional_admin, :dmp_admin)
       review_plan_state(:approved) if (plan_state == :submitted || plan_state == :approved)
     else
-      redirect_to perform_review_plan_path(@plan), notice: "You dont have permission to Approve this plan."
+      flash[:error] =  "You dont have permission to Approve this plan."
+      redirect_to perform_review_plan_path(@plan)
     end
   end
 
@@ -17,7 +18,8 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
     if user_role_in?(:institutional_reviewer, :institutional_admin, :dmp_admin)
       review_plan_state(:reviewed) if (plan_state == :submitted || plan_state == :approved)
     else
-      redirect_to perform_review_plan_path(@plan), notice: "You dont have permission to Review this plan."
+      flash[:error] =  "You dont have permission to Review this plan."
+      redirect_to perform_review_plan_path(@plan)
     end
   end
 
@@ -27,7 +29,8 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
     if user_role_in?(:institutional_reviewer, :institutional_admin, :dmp_admin)
       review_plan_state(:rejected) if (plan_state == :submitted || plan_state == :rejected)
     else
-      redirect_to perform_review_plan_path(@plan), notice: "You dont have permission to Approve this plan."
+      flash[:error] =  "You dont have permission to Approve this plan."
+      redirect_to perform_review_plan_path(@plan)
     end
   end
 
@@ -54,7 +57,8 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
       if @responses.count == count
         create_plan_state(:submitted)
       else
-        redirect_to preview_plan_path(@plan), notice: "Please complete all the mandatory Responses for the Plan to be Submitted."
+        flash[:error] =  "Please complete all the mandatory Responses for the Plan to be Submitted."
+        redirect_to preview_plan_path(@plan)
       end
     end
   end
@@ -76,7 +80,8 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
       if @responses.count == count
         create_plan_state(:committed)
       else
-        redirect_to preview_plan_path(@plan), notice: "Please complete all the mandatory Responses for the Plan to be Finished."
+        flash[:error] =  "Please complete all the mandatory Responses for the Plan to be Finished."
+        redirect_to preview_plan_path(@plan)
       end
     end
   end
