@@ -100,18 +100,16 @@ class ResourceContextsController < ApplicationController
     make_institution_dropdown_list
     customization_resources_list
     @req_temp = @resource_context.requirements_template
-
-    respond_to do |format|
-      if @resource_context.update(to_save)
-        go_to = (params[:after_save] == 'next_page' ? customization_requirement_path(@resource_context.id) :
-                  edit_resource_context_path(@resource_context.id) )
-        format.html { redirect_to go_to, notice: message }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @resource_context.errors, status: :unprocessable_entity }
-      end
+    
+    if @resource_context.update(to_save)
+      go_to = (params[:after_save] == 'next_page' ? customization_requirement_path(@resource_context.id) :
+                edit_resource_context_path(@resource_context.id) )
+      redirect_to go_to, notice: message 
+    else
+      flash[:error] = "An unknown error has occured."
+      redirect_to edit_resource_context_path(@resource_context.id)
     end
+    
   end
 
 
@@ -137,15 +135,15 @@ class ResourceContextsController < ApplicationController
     
     if @custom_origin == 'Overview'
       respond_to do |format|
-        format.html { redirect_to edit_resource_context_path(@customization_id) }
-        format.json { head :no_content }
+        format.html { redirect_to edit_resource_context_path(@customization_id), 
+                        notice: "The resource was successfully unlinked." }
       end
     else #details
       respond_to do |format|
         format.html { redirect_to customization_requirement_path(id: @customization_id, 
                       requirement_id:  @requirement_id,
-                      anchor: @tab_number) }
-        format.json { head :no_content }
+                      anchor: @tab_number), 
+                        notice: "The resource was successfully unlinked." }
       end
     end
   end
@@ -171,15 +169,16 @@ class ResourceContextsController < ApplicationController
     
     if @custom_origin == 'Overview'
       respond_to do |format|
-        format.html { redirect_to edit_resource_context_path(@customization_id) }
-        format.json { head :no_content }
+        format.html { redirect_to edit_resource_context_path(@customization_id), 
+                        notice: "The resource was successfully unlinked." }
       end
     else #details
       respond_to do |format|
         format.html { redirect_to customization_requirement_path(id: @customization_id, 
                       requirement_id:  @requirement_id,
-                      anchor: @tab_number) }
-        format.json { head :no_content }
+                      anchor: @tab_number), 
+                        notice: "The resource was successfully unlinked." }
+        
       end
     end
 
@@ -205,8 +204,8 @@ class ResourceContextsController < ApplicationController
     end
     
     respond_to do |format|
-      format.html { redirect_to edit_resource_context_path(@customization_id) }
-      format.json { head :no_content }
+      format.html { redirect_to edit_resource_context_path(@customization_id), 
+                        notice: "The resource was successfully unlinked." }
     end
   end
 
@@ -220,10 +219,12 @@ class ResourceContextsController < ApplicationController
                         notice: "The resource was successfully unlinked." }
       end
     else
-      respond_to do |format|
-        format.html { redirect_to institutions_path(anchor: 'tab_tab2'), 
-                        notice: "A problem prevented this resource to be unlinked." }
-      end
+      flash[:error] = "A problem prevented this resource to be unlinked."
+          redirect_to institutions_path(anchor: 'tab_tab2')
+      # respond_to do |format|
+      #   format.html { redirect_to institutions_path(anchor: 'tab_tab2'), 
+      #                   notice: "A problem prevented this resource to be unlinked." }
+      # end
     end
   end
 

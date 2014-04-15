@@ -167,31 +167,38 @@ class InstitutionsController < ApplicationController
   # POST /institutions.json
   def create
     @current_institution = Institution.new(institution_params)
-
-    respond_to do |format|
-      if @current_institution.save
-        format.html { redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @current_institution }
+  
+    if @current_institution.save
+      redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully created.' 
+    else
+      if params[:full_name].blank? || params[:full_name].nil?
+        msg = "Please enter a name for the Institution."
       else
-        format.html { render action: 'new' }
-        format.json { render json: @current_institution.errors, status: :unprocessable_entity }
+        msg = "An error has occured and the institution cannot be created."
       end
+      flash[:error] = msg
+      redirect_to new_institution_path
     end
+    
   end
 
   # PATCH/PUT /institutions/1
   # PATCH/PUT /institutions/1.json
   def update
     @current_institution = Institution.find(params[:id])
-    respond_to do |format|
-      if @current_institution.update(institution_params)
-        format.html { redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully updated.' }
-        format.json { head :no_content }
+    
+    if @current_institution.update(institution_params)
+      redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully updated.' 
+    else
+      if params[:full_name].blank? || params[:full_name].nil?
+        msg = "Please enter a name for the Institution."
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @current_institution.errors, status: :unprocessable_entity }
+        msg = "An error has occured and the institution cannot be updated."
       end
+      flash[:error] = msg
+      redirect_to edit_institution_path(@current_institution)
     end
+
   end
 
   # DELETE /institutions/1
@@ -213,7 +220,7 @@ class InstitutionsController < ApplicationController
     non_partner = insts.map{|i| i[1]}.index(0) #find non-partner institution, ie none of the above, always index 0
     if non_partner
       item = insts.delete_at(non_partner)
-      item = ["None of the above", 0] # This institution is always renamed because we like it that way in the list
+      item = ["Not in List", 0] # This institution is always renamed because we like it that way in the list
       insts.insert(0, item) #put it at the beginning of the list cause we like it that way
     end
     insts
