@@ -56,7 +56,7 @@
               | Export as <%= link_to('PDF', plan_path(plan, :format => "pdf")) %>
               | <%= link_to('RTF', plan_path(plan, :format => "rtf")) %>
               <% unless coowner(plan) == true %>
-              | <%#= link_to 'Delete', plan, method: :delete, data: { confirm: 'Are you sure?' },:class => "delete" %>
+              | <%= link_to 'Delete', plan, method: :delete, data: { confirm: 'Are you sure?' },:class => "delete" %>
               <% end %>
             </div>
           </div>
