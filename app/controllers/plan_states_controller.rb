@@ -7,7 +7,8 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
     if user_role_in?(:institutional_reviewer, :institutional_admin, :dmp_admin)
       review_plan_state(:approved) if (plan_state == :submitted || plan_state == :approved)
     else
-      redirect_to perform_review_plan_path(@plan), notice: "You dont have permission to Approve this plan."
+      flash[:error] =  "You dont have permission to Approve this plan."
+      redirect_to perform_review_plan_path(@plan)
     end
   end
 

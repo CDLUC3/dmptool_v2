@@ -22,14 +22,17 @@ class CustomizationsController < ApplicationController
     # :id is customization id and :requirement_id
     @customization = ResourceContext.find(params[:id])
     @resource_context = @customization
-    redirect_to(resource_contexts_path, :notice => "This isn't a valid customization") and return unless @customization.resource_id.blank?
+    unless @customization.resource_id.blank?
+      flash[:error] =  "This isn't a valid customization"
+      redirect_to resource_contexts_path and return 
+    end
     @requirements_template = @customization.requirements_template
     @requirements = @requirements_template.requirements
     if params[:requirement_id].blank?
       requirement = @requirements_template.first_question
       if requirement.nil?
-        redirect_to(resource_contexts_path, :notice =>
-            "The DMP template you are attempting to customize has no requirements. A template must contain at least one requirement. \"#{@requirements_template.name}\" needs to be fixed before you may continue customizing it.") and return
+        flash[:error] =  "The DMP template you are attempting to customize has no requirements. A template must contain at least one requirement."
+        redirect_to(resource_contexts_path and return
       end
       params[:requirement_id] = requirement.id.to_s
     end
