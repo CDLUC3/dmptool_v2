@@ -32,6 +32,8 @@ module PlansHelper
 		unless !Plan.exists?(plan_id)
 			user_id = UserPlan.where(plan_id: plan_id).first.user_id
 			User.find(user_id).full_name
+		else
+			return false
 		end
 	end
 
@@ -53,4 +55,14 @@ module PlansHelper
 		end
 	end
 
+	def review_type(plan)
+		customization = ResourceContext.where(requirements_template_id: plan.requirements_template_id, institution_id: @user.institution_id).first
+    if customization.nil?
+      return nil
+    elsif (customization.review_type == :informal_review || customization.review_type == :formal_review)
+      return true
+    else
+      return false
+    end
+	end
 end

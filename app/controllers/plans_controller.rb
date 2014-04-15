@@ -15,7 +15,6 @@ class PlansController < ApplicationController
     plan_ids = UserPlan.where(user_id: user.id).pluck(:plan_id) unless user.id.nil?
     @plans = Plan.where(id: plan_ids)
     count
-
     @order_scope = params[:order_scope]
     @scope = params[:scope]
 
@@ -93,7 +92,8 @@ class PlansController < ApplicationController
 
   # GET /plans/1/edit
   def edit
-    @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: @user.institution_id)
+    @customization_review  = precendence_review_type
+    @template_review = precendence_template_review_type
     set_comments
     coowners
   end
@@ -103,7 +103,8 @@ class PlansController < ApplicationController
   def update
     flash[:notice] = []
     flash[:alert] = []
-    @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: @user.institution_id)
+    @customization_review  = precendence_review_type
+    @template_review = precendence_template_review_type
     set_comments
     coowners
     add_coowner_autocomplete
@@ -180,6 +181,7 @@ class PlansController < ApplicationController
     @comment = Comment.new
     comments = Comment.where(plan_id: @plan.id)
     @reviewer_comments = comments.reviewer_comments.page(params[:page]).per(5)
+    @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: @user.institution_id).first
   end
 
   def review_dmps
@@ -281,6 +283,11 @@ class PlansController < ApplicationController
         format.js
       end
     end
+  end
+
+  def preview
+    @customization_review  = precendence_review_type
+    @template_review = precendence_template_review_type
   end
 
   def public
@@ -442,5 +449,24 @@ class PlansController < ApplicationController
 
     def set_user
       @user = current_user
+    end
+
+    def precendence_review_type
+      @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: @user.institution_id).first
+      if @customization.nil?
+        return nil
+      elsif @customization.review_type == :formal_review || @customization.review_type == :informal_review
+        return true
+      else
+        return false
+      end
+    end
+
+    def precendence_template_review_type
+      if (@plan.requirements_template.review_type == :formal_review) || (@plan.requirements_template.review_type == :informal_review)
+        return true
+      else
+        return false
+      end
     end
 end

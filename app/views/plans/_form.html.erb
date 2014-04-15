@@ -92,7 +92,7 @@
               </div>
             </div>
           </div>
-          <% if (@plan.requirements_template.review_type == :formal_review) || (@plan.requirements_template.review_type == :informal_review) %>
+          <% if @customization_review == true || (@customization_review == nil && @template_review == true) %>
             <hr/>
             <div class="control-group">
               <p class ="control-label">Reviewer Comments</p>
@@ -153,7 +153,7 @@
             <p class ="control-label">Available Actions</p>
               <div class="controls">
               <p><%= link_to "Preview DMP", preview_plan_path(@plan) %> |
-                <% if (@plan.requirements_template.review_type == :formal_review) || (@plan.requirements_template.review_type == :informal_review) %>
+                <% if @customization_review == true || (@customization_review == nil && @template_review == true) %>
                   <%= link_to "Submit DMP", preview_plan_path(@plan) %>
                 <% end %>
                 <% unless @coowners.include?(@user) %>
