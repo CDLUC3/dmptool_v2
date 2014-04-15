@@ -13,7 +13,7 @@
   <% if requirement(requirement_id).requirement_type == :text %>
     <div class="control-group">
     		<%= f.label :text_value, 'Your Response', :class => 'hide' %>
-        <%= f.cktext_area :text_value, placeholder: 'response', :class => "input-block-level" %>
+        <%= f.cktext_area :text_value, :class => "input-block-level", :placeholder => "Your Response" %>
     </div>
   <% end %>
 
