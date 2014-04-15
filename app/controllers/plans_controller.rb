@@ -149,14 +149,15 @@ class PlansController < ApplicationController
   def destroy
     user_plan_ids  = UserPlan.where(plan_id: @plan.id, owner: false).pluck(:user_id)
     if user_plan_ids.include?(@user.id) && !user_role_in?(:dmp_admin, :institutional_admin)
-      redirect_to :back, notice: "A Co-Owner cannot delete a Plan."
+      flash[:error] =  "A Co-Owner cannot delete a Plan."
+      redirect_to :back
     else
       user_plans = UserPlan.where(plan_id: @plan.id)
       plan_states = PlanState.where(plan_id: @plan.id)
       user_plans.delete_all
       plan_states.delete_all
       @plan.destroy
-      redirect_to plans_url, notice: "Plan has been deleted."
+      redirect_to plans_url, notice: "The plan has been successfully deleted."
     end
   end
 
@@ -244,8 +245,8 @@ class PlansController < ApplicationController
         requirement = @requirements_template.first_question
         last_requirement = @requirements_template.last_question
         if requirement.nil?
-          redirect_to(resource_contexts_path, :notice =>
-              "The DMP template you are attempting to customize has no requirements. A template must contain at least one requirement. \"#{@requirements_template.name}\" needs to be fixed before you may continue customizing it.") and return
+          flash[:error] =  "The DMP template you are attempting to customize has no requirements. A template must contain at least one requirement. \"#{@requirements_template.name}\" needs to be fixed before you may continue customizing it." 
+          redirect_to resource_contexts_path  and return
         end
         params[:requirement_id] = requirement.id.to_s
         params[:last_requirement_id] = last_requirement.id.to_s

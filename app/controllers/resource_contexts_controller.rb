@@ -106,7 +106,7 @@ class ResourceContextsController < ApplicationController
                 edit_resource_context_path(@resource_context.id) )
       redirect_to go_to, notice: message 
     else
-      flash[:error] = "An unknown error has occured."
+      flash[:error] = "An error has occured."
       redirect_to edit_resource_context_path(@resource_context.id)
     end
     
@@ -220,11 +220,7 @@ class ResourceContextsController < ApplicationController
       end
     else
       flash[:error] = "A problem prevented this resource to be unlinked."
-          redirect_to institutions_path(anchor: 'tab_tab2')
-      # respond_to do |format|
-      #   format.html { redirect_to institutions_path(anchor: 'tab_tab2'), 
-      #                   notice: "A problem prevented this resource to be unlinked." }
-      # end
+      redirect_to institutions_path(anchor: 'tab_tab2')
     end
   end
 
