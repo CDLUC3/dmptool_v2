@@ -152,7 +152,7 @@ class PlansController < ApplicationController
       redirect_to :back, notice: "A Co-Owner cannot delete a Plan."
     else
       user_plans = UserPlan.where(plan_id: @plan.id)
-      plan_states = PlanState.where(@plan.id)
+      plan_states = PlanState.where(plan_id: @plan.id)
       user_plans.delete_all
       plan_states.delete_all
       @plan.destroy
