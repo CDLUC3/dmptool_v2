@@ -1,7 +1,11 @@
 <% @reviewer_comments.each do |comment| %>
 	<div class="comment">
 		<span class="date-created"><%= comment.created_at.strftime("%m/%d/%Y %I:%M %p") %></span>
-		<strong><%= user_name(comment) %>:</strong>
+		<% unless !User.exists?(comment.user_id)%>
+			<strong><%= User.find(comment.user_id).full_name %>:</strong>
+		<% else %>
+			Anonymous User
+		<% end %>
 		<p class="cust_text" id="comment_value_trunc_<%= comment.id %>">
 		  <% trunc_text = truncate(strip_tags(comment.value), length: 150, separator: ' ') %>
 		  <%= trunc_text %>
