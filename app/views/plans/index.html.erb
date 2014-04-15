@@ -53,7 +53,7 @@
                 | <%= link_to('Submit', preview_plan_path(plan)) %>
               <% end %>
               | <%= link_to('Copy', copy_existing_plans_template_path(:plan => plan)) %>
-              | Export as <%= link_to('PDF', plan_path(plan, :format => "pdf")) %>
+              |  <%= link_to('Export as PDF', plan_path(plan, :format => "pdf")) %>
               | <%= link_to('RTF', plan_path(plan, :format => "rtf")) %>
               <% unless coowner(plan) == true %>
               | <%= link_to 'Delete', plan, method: :delete, data: { confirm: 'Are you sure?' },:class => "delete" %>

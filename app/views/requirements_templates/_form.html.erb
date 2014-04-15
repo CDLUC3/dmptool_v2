@@ -109,7 +109,7 @@
 					<% unless @requirements_template.new_record? %>
 					  <%= f.submit "Template Details >>", name: 'save_and_template_details', :class => 'btn btn-success pull-right' %>
 					<% else %>
-						<%= button_tag 'Template Details >>', disabled: true,  :class => 'btn pull-right' %>
+						<%= link_to 'Template Details >>', disabled: true,  :class => 'btn pull-right' %>
 	         <% end %>
 				</div>
 			<% end %>
