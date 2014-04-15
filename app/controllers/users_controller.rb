@@ -334,7 +334,7 @@ class UsersController < ApplicationController
   def require_current_user
     @user = User.find(params[:id])
     unless @user == current_user
-      flash[:notice] = "User information may only be edited by that user"
+      flash[:error] = "User information may only be edited by that user"
       redirect_to root_path
     end
   end

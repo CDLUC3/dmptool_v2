@@ -68,11 +68,11 @@ class UserSessionsController < ApplicationController
           flash[:notice] = "Your username has been emailed to #{email}."
           redirect_to login_path
         else
-          flash[:notice] = "No user found with email address #{email}."
+          flash[:error] = "No user found with email address #{email}."
           redirect_to(:action => 'username_reminder', email: email) and return
         end
       else
-        flash[:notice] = "You must supply a valid email to obtain a username reminder."
+        flash[:error] = "You must supply a valid email to obtain a username reminder."
         redirect_to(:action => 'username_reminder', email: email) and return
       end
     end
@@ -98,11 +98,11 @@ class UserSessionsController < ApplicationController
           flash[:notice] = "An email has been sent to #{email} with instructions for resetting your password."
           redirect_to login_path and return
         else
-          flash[:notice] = "No user found with email or username #{email}."
+          flash[:error] = "No user found with email or username #{email}."
           redirect_to(:action => 'password_reset', email: email) and return
         end
       else
-        flash[:notice] = "You must supply an email or username to request a password reset."
+        flash[:error] = "You must supply an email or username to request a password reset."
         redirect_to(:action => 'password_reset', email: email) and return
       end
     end
@@ -113,15 +113,15 @@ class UserSessionsController < ApplicationController
     token = params[:token]
     @user = User.find_by_id(user_id)
     unless @user && @user.token && @user.token_expiration
-      flash[:notice] = 'User not found or password reset not requested'
+      flash[:error] = 'User not found or password reset not requested'
       redirect_to(root_path) and return
     end
     if @user.token_expiration < Time.now
-      flash[:notice] = 'Password reset token has expired. Please request a reset again.'
+      flash[:error] = 'Password reset token has expired. Please request a reset again.'
       redirect_to(:action => 'password_reset') and return
     end
     unless @user.token == token
-      flash[:notice] = 'Invalid password reset token. Please request a reset again.'
+      flash[:error] = 'Invalid password reset token. Please request a reset again.'
       redirect_to(:action => 'password_reset') and return
     end
     
@@ -131,19 +131,19 @@ class UserSessionsController < ApplicationController
       password_confirmation = params[:password_confirmation]
   
       unless legal_password(password)
-        flash[:notice] = 'Your password must be at least eight characters long and have at least one letter and at least one number.'
+        flash[:error] = 'Your password must be at least eight characters long and have at least one letter and at least one number.'
         redirect_to(complete_password_reset_path(:id => @user.id, :token => @user.token)) and return
       end
       
       unless password == password_confirmation
-        flash[:notice] = 'Password and confirmation do no match. Please try again.'
+        flash[:error] = 'Password and confirmation do no match. Please try again.'
         redirect_to(complete_password_reset_path(:id => @user.id, :token => @user.token)) and return
       end
   
       begin
         Ldap_User.find_by_email(@user.email).change_password(password)
       rescue
-        flash[:notice] = "Problem updating password in LDAP. Please retry."
+        flash[:error] = "Problem updating password in LDAP. Please retry."
         redirect_to(complete_password_reset_path(:id => @user.id, :token => @user.token)) and return
       end
   
