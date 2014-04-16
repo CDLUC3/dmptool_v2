@@ -299,12 +299,16 @@ class PlansController < ApplicationController
     end
     unless params[:q].blank? then
       terms = params[:q].split.map {|t| "%#{t}%"}
-      #@plans = @plans.joins(:institution).joins(:users).where.
+      
+      #@plans = @plans.joins(:users, {:requirements_template => :institution}).where.
       @plans = @plans.joins(:users).where.
         any_of(["plans.name LIKE ?", terms],
                #["institutions.full_name LIKE ?", terms],
                ["users.last_name LIKE ? OR users.first_name LIKE ?", terms, terms])
+    
+
     end
+
     if params[:page] != 'all'
       @plans = @plans.page(params[:page]).per(10)
     else
