@@ -264,9 +264,17 @@ class UsersController < ApplicationController
     orcid_id.match(/[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}/) 
   end
 
+  def remove_orcid
+    @user = User.find(params[:user_id])
+    @user.update_attribute(:orcid_id, nil)
+    flash[:notice] = 'The orcid id has been successfully removed from your profile.'
+    redirect_to edit_user_path(@user.id)
+  end
+
+
+
   private
 
-  
 
   def map_users_for_autocomplete(users)
     @users.map {|u| Hash[ id: u.id, full_name: u.full_name, label: u.label]}
@@ -283,7 +291,7 @@ class UsersController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
     params.require(:user).permit(:institution_id, :email, :first_name, :last_name,
-                                 :password, :password_confirmation, :prefs, :login_id, role_ids: [] )
+                                 :password, :password_confirmation, :prefs,:user_id, :login_id, role_ids: [] )
   end
 
   def update_ldap_if_necessary(user, params)
