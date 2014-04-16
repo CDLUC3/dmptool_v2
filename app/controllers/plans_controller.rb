@@ -293,17 +293,19 @@ class PlansController < ApplicationController
 
   def public
     @plans = Plan.public_visibility.order(name: :asc)
-    if params[:page] != 'all' then
-      unless params[:s].blank? || params[:e].blank?
-        @plans = @plans.letter_range(params[:s], params[:e])
-      end
-      unless params[:q].blank? then
-        terms = params[:q].split.map {|t| "%#{t}%"}
-        @plans = @plans.joins(:institution).joins(:users).where.
-          any_of(["plans.name LIKE ?", terms],
-                 ["institutions.full_name LIKE ?", terms],
-                 ["users.last_name LIKE ? OR users.first_name LIKE ?", terms, terms])
-      end
+    
+    unless params[:s].blank? || params[:e].blank?
+      @plans = @plans.letter_range(params[:s], params[:e])
+    end
+    unless params[:q].blank? then
+      terms = params[:q].split.map {|t| "%#{t}%"}
+      #@plans = @plans.joins(:institution).joins(:users).where.
+      @plans = @plans.joins(:users).where.
+        any_of(["plans.name LIKE ?", terms],
+               #["institutions.full_name LIKE ?", terms],
+               ["users.last_name LIKE ? OR users.first_name LIKE ?", terms, terms])
+    end
+    if params[:page] != 'all'
       @plans = @plans.page(params[:page]).per(10)
     else
       @plans = @plans.page(0).per(9999)
