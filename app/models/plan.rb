@@ -44,6 +44,10 @@ class Plan < ActiveRecord::Base
     joins({:users  => :institution}).where(user_plans: {owner: true}).order('institutions.full_name ASC')
   end
 
+  def self.order_by_owner
+    joins(:users).where(user_plans: {owner: true}).order('users.last_name ASC')
+  end
+
   def owner
     @owner ||= users.where('user_plans.owner' => true).first
   end

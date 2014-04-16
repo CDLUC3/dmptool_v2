@@ -300,11 +300,11 @@ class PlansController < ApplicationController
       when "PlanTitle"
         @plans = @plans.order(name: :asc)
       when "FunderTemplate"
-        @plans = @plans.joins(:requirements_template).order('requirements_templates.name ASC') #plan.requirements_template.name
+        @plans = @plans.joins(:requirements_template).order('requirements_templates.name ASC') 
       when "OwnerInstitution"
         @plans = @plans.order_by_institution #plan.owner.institution.name
       when "Owner"
-        @plans = @plans.order(name: :asc) #plan.owner.full_name
+        @plans = @plans.order_by_owner #plan.owner.full_name
       else
         @plans = @plans.order(name: :asc)
     end
