@@ -40,6 +40,10 @@ class Plan < ActiveRecord::Base
     where("name REGEXP ?", "^[#{s}-#{e}]")
   end
 
+  def self.order_by_institution
+    joins({:users  => :institution}).where(user_plans: {owner: true}).order('institutions.full_name ASC')
+  end
+
   def owner
     @owner ||= users.where('user_plans.owner' => true).first
   end

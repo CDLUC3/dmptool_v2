@@ -292,7 +292,22 @@ class PlansController < ApplicationController
   end
 
   def public
-    @plans = Plan.public_visibility.order(name: :asc)
+    @plans = Plan.public_visibility
+
+    @order_scope = params[:order_scope]
+    
+    case @order_scope
+      when "PlanTitle"
+        @plans = @plans.order(name: :asc)
+      when "FunderTemplate"
+        @plans = @plans.joins(:requirements_template).order('requirements_templates.name ASC') #plan.requirements_template.name
+      when "OwnerInstitution"
+        @plans = @plans.order_by_institution #plan.owner.institution.name
+      when "Owner"
+        @plans = @plans.order(name: :asc) #plan.owner.full_name
+      else
+        @plans = @plans.order(name: :asc)
+    end
     
     unless params[:s].blank? || params[:e].blank?
       @plans = @plans.letter_range(params[:s], params[:e])
@@ -300,12 +315,13 @@ class PlansController < ApplicationController
     unless params[:q].blank? then
       terms = params[:q].split.map {|t| "%#{t}%"}
       
-      #SEARCH FOR USER, TEMPLATE AND PLAN NAME
-      #@plans = @plans.joins(:users, {:requirements_template => :institution}).where.
-      @plans = @plans.joins(:users, :requirements_template).where.
+      #SEARCH FOR USER, FUNDER TEMPLATE, INSTITUTION AND PLAN NAME
+    
+      @plans = @plans.joins({:users  => :institution}, :requirements_template).where(user_plans: {owner: true}).where.
+    
         any_of(["plans.name LIKE ?", terms],
                ["requirements_templates.name LIKE ?", terms],
-               #["institutions.full_name LIKE ?", terms],
+               ["institutions.full_name LIKE ?", terms],
                ["users.last_name LIKE ? OR users.first_name LIKE ?", terms, terms])
     
 

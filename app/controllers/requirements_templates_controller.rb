@@ -18,8 +18,6 @@ class RequirementsTemplatesController < ApplicationController
       @requirements_templates = RequirementsTemplate.all
     end
 
-    #@requirements_templates = @requirements_templates.order(name: :asc)
-
     @order_scope = params[:order_scope]
     @scope = params[:scope]
 
