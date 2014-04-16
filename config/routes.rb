@@ -161,6 +161,8 @@ Dmptool2::Application.routes.draw do
 
   post 'unlink_institutional_resource', to: 'resource_contexts#unlink_institutional_resource'
 
+  match 'remove_orcid', to: 'users#remove_orcid', :via => [:get, :post]
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.

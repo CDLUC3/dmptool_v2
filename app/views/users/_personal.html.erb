@@ -152,6 +152,8 @@
           <p><%= link_to @sub_orcid_id, @user.orcid_id %></p>
           &nbsp;&nbsp;&nbsp;
           <p><%= link_to 'Edit', '#', id: 'change_orcid' %></p>
+          &nbsp;&nbsp;&nbsp;
+          <p><%= link_to 'Delete', remove_orcid_path(user_id: @user), id: 'remove_orcid' %></p>
         </div>
       </div>
 
