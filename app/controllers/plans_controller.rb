@@ -300,9 +300,11 @@ class PlansController < ApplicationController
     unless params[:q].blank? then
       terms = params[:q].split.map {|t| "%#{t}%"}
       
+      #SEARCH FOR USER, TEMPLATE AND PLAN NAME
       #@plans = @plans.joins(:users, {:requirements_template => :institution}).where.
-      @plans = @plans.joins(:users).where.
+      @plans = @plans.joins(:users, :requirements_template).where.
         any_of(["plans.name LIKE ?", terms],
+               ["requirements_templates.name LIKE ?", terms],
                #["institutions.full_name LIKE ?", terms],
                ["users.last_name LIKE ? OR users.first_name LIKE ?", terms, terms])
     
