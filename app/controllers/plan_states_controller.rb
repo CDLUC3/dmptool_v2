@@ -42,18 +42,11 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
   end
 
   def submitted
-    @responses = Array.new
     unless @plan.nil?
       requirements_template = RequirementsTemplate.find(@plan.requirements_template_id)
       requirements = requirements_template.requirements
       count = requirements.where(obligation: :mandatory).count
-
-      requirements.each do |r|
-        if r.obligation == :mandatory
-          response = Response.where(plan_id: @plan.id, requirement_id: r.id).first
-          return @responses << response unless response.nil?
-        end
-      end
+      @responses = Requirement.requirements_with_mandatory_obligation(@plan.id, requirements_template.id)
       if @responses.count == count
         create_plan_state(:submitted)
       else
@@ -69,14 +62,7 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
       requirements_template = RequirementsTemplate.find(@plan.requirements_template_id)
       requirements = requirements_template.requirements
       count = requirements.where(obligation: :mandatory).count
-
-      requirements.each do |r|
-        response = nil
-        if r.obligation == :mandatory
-          response = Response.where(plan_id: @plan.id, requirement_id: r.id).first
-          return @responses << response
-        end
-      end
+      @responses = Requirement.requirements_with_mandatory_obligation(@plan.id, requirements_template.id)
       if @responses.count == count
         create_plan_state(:committed)
       else
@@ -104,13 +90,9 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
       unless @plan.current_plan_state == state
         plan_state = PlanState.create( plan_id: @plan.id, state: state, user_id: current_user.id)
         @plan.current_plan_state_id = plan_state.id
-
         redirect_to preview_plan_path(@plan), notice: @notice_1
-
       else
-
         redirect_to preview_plan_path(@plan), alert: @notice_2
-
       end
     end
 
@@ -126,9 +108,7 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
       unless @plan.current_plan_state == state
         plan_state = PlanState.create( plan_id: @plan.id, state: state, user_id: current_user.id)
         @plan.current_plan_state_id = plan_state.id
-
         redirect_to perform_review_plan_path(@plan), notice: @notice_1
-
       else
         redirect_to perform_review_plan_path(@plan), alert: @notice_2
       end

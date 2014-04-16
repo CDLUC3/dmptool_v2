@@ -211,4 +211,10 @@ class Requirement < ActiveRecord::Base
         update_all("position = position - 1")
   end
 
+  def self.requirements_with_mandatory_obligation(plan_id, requirements_template_id)
+    joins(:responses).
+    where("requirements.obligation = ?", :mandatory).
+    where("requirements.requirements_template_id = ?", requirements_template_id).
+    where("responses.plan_id = ?", plan_id)
+  end
 end
