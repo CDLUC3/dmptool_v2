@@ -71,7 +71,7 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 .login.row-fluid, .contact.row-fluid {
 	margin: 20px 35px; }
 .login.terms {
-	margin: 20px 0; }	
+	margin: 20px 0; }
 .login p {
 	font-size: 1.167em; }
 .control-group.select_institution select {
@@ -84,10 +84,10 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	margin-top: 10px; }
 .dmptool-page > .span6 {
 	margin: 0; }
-.dmptool-page > .span6:first-child {
-	border-right: 1px solid #B6B6B7;
-	margin-right: 10px;
-	padding-right: 10px; }
+.dmptool-page > .span6:last-child {
+	border-left: 1px solid #B6B6B7;
+	margin-left: 15px;
+	padding-left: 15px; }
 .dmptool-page > .span6 h2 {
 	margin-top: 0; }
 .dmptool-page p {

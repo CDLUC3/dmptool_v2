@@ -1,6 +1,11 @@
 <h1 class="row-fluid"><span class="icon new-template"></span>Create New DMP</h1>
 <div class="dmptool-page row-fluid">
 	<div class="span6">
+		<h2>Start from a DMP Template</h2>
+		<p>Select a template based on funder guidances and provide resonses to those requirements.</p>
+		<%= button_to "Select Template >>", select_dmp_template_path, :method => :get, :class => "btn" %>
+	</div>
+	<div class="span6">
 		<h2>Copy an Existing DMP</h2>
 		<p>Select an existing DMP below and amend the requirement responses.</p>
 		<%= form_tag copy_existing_plans_template_path, method: :get do %>
@@ -27,10 +32,5 @@
 			</div>
 			<%= submit_tag "Copy this DMP >>", :class => "btn" %>
 		<% end %>
-	</div>
-	<div class="span6">
-		<h2>Start from a DMP Template</h2>
-		<p>Select a template based on funder guidances and provide resonses to those requirements.</p>
-		<%= button_to "Select Template >>", select_dmp_template_path, :method => :get, :class => "btn" %>
 	</div>
 </div>
