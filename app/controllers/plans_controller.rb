@@ -313,18 +313,42 @@ class PlansController < ApplicationController
   end
 
   def public
-    @plans = Plan.public_visibility.order(name: :asc)
-    if params[:page] != 'all' then
-      unless params[:s].blank? || params[:e].blank?
-        @plans = @plans.letter_range(params[:s], params[:e])
-      end
-      unless params[:q].blank? then
-        terms = params[:q].split.map {|t| "%#{t}%"}
-        @plans = @plans.joins(:institution).joins(:users).where.
-          any_of(["plans.name LIKE ?", terms],
-                 ["institutions.full_name LIKE ?", terms],
-                 ["users.last_name LIKE ? OR users.first_name LIKE ?", terms, terms])
-      end
+    @plans = Plan.public_visibility
+
+    @order_scope = params[:order_scope]
+    
+    case @order_scope
+      when "PlanTitle"
+        @plans = @plans.order(name: :asc)
+      when "FunderTemplate"
+        @plans = @plans.joins(:requirements_template).order('requirements_templates.name ASC') 
+      when "OwnerInstitution"
+        @plans = @plans.order_by_institution #plan.owner.institution.name
+      when "Owner"
+        @plans = @plans.order_by_owner #plan.owner.full_name
+      else
+        @plans = @plans.order(name: :asc)
+    end
+    
+    unless params[:s].blank? || params[:e].blank?
+      @plans = @plans.letter_range(params[:s], params[:e])
+    end
+    unless params[:q].blank? then
+      terms = params[:q].split.map {|t| "%#{t}%"}
+      
+      #SEARCH FOR USER, FUNDER TEMPLATE, INSTITUTION AND PLAN NAME
+    
+      @plans = @plans.joins({:users  => :institution}, :requirements_template).where(user_plans: {owner: true}).where.
+    
+        any_of(["plans.name LIKE ?", terms],
+               ["requirements_templates.name LIKE ?", terms],
+               ["institutions.full_name LIKE ?", terms],
+               ["users.last_name LIKE ? OR users.first_name LIKE ?", terms, terms])
+    
+
+    end
+
+    if params[:page] != 'all'
       @plans = @plans.page(params[:page]).per(10)
     else
       @plans = @plans.page(0).per(9999)

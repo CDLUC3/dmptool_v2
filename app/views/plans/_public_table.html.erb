@@ -1,10 +1,10 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th class="span5">Plan Title</th>
-      <th>Funder Template</th>
-      <th>Institution</th>
-      <th>Owner</th>
+      <th class="span5"><%= link_to "Plan Title", {order_scope: "PlanTitle"}%></th>
+      <th class="span5"><%= link_to "Funder Template", {order_scope: "FunderTemplate"}%></th>
+      <th class="span5"><%= link_to "Institution", {order_scope: "OwnerInstitution"}%></th>
+      <th class="span5"><%= link_to "Owner", {order_scope: "Owner"}%></th>
       <th>Download</th>
     </tr>
   </thead>
@@ -34,6 +34,6 @@
 </table>
 
 <div class="buttons pagination">
-  <%= link_to "View All", { :action => "public", :page => "all" }, { :class => "btn", :id => 'view_all_plans' } %>
+  <%= link_to "View All", { :action => "public", :page => "all", order_scope: @order_scope}, { :class => "btn", :id => 'view_all_plans' } %>
   <%= paginate @plans %>
 </div>
