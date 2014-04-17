@@ -17,18 +17,20 @@ th, td {
 	border-left: 1px solid #B6B6B7;
 	line-height: 1.167;
 	padding: 7px; }
-.table th {
+.table thead th {
 	background: #DAE4C5;
 	white-space: nowrap; }
+.table tbody th {
+	border-top: none; }
 .table tr:first-child td {
 	border-top: none; }
 .table th:first-child, .table td:first-child {
 	border-left: none; }
 .table-stirped th, .table-striped td {
 	border-top: none; }
-.table-striped tbody > tr:nth-child(2n+1) > td {
+.table-striped tbody > tr:nth-child(2n+1) > td, .table-striped tbody > tr:nth-child(2n+1) > th {
 	background-color: #FFFFFF; }
-.table-striped tbody > tr:nth-child(2n+2) > td {
+.table-striped tbody > tr:nth-child(2n+2) > td, .table-striped tbody > tr:nth-child(2n+2) > th {
 	background-color: #F0F0F0; }
 .table th.span1, .table td.span1 {
 	text-align: center; }
