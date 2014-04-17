@@ -1,12 +1,6 @@
 dmptool
 =======
 
-Repository for the DMPTool Project. The project is collaborative with many parnters; more information is available at [About the DMPTool](http://dmptool.org/about)
-
-
-![logo with banner](https://bitbucket.org/repo/gnK4E/images/430387608-DMPTool_new_withBanner.png)
-
-
 **The DMPTool [dmptool.org](https://dmptool.org) helps researchers...**
 * Create ready-to-use data management plans for specific funding agencies
 * Meet requirements for data management plans
