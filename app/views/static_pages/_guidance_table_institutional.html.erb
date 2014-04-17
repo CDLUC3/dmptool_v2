@@ -1,16 +1,10 @@
-<%
- # This partial takes locals variables for guidance collection called "templates"
-  # it also takes a variable called public with values true or false since
-  # the layout differs for public items from the institution-only guidance
-%>
-
 <table class="table table-striped">
 	<thead>
 		<tr>			
-      <th><%= link_to "Template", {order_scope1: "Template", scope1: @scope1}%></th>
-      <th class="span5"><%= link_to (public ? 'Funder' : 'Institution'), {order_scope1: "Institution", scope1: @scope1}%></th>
-      <th><%= link_to (public ? 'Funder Links' : 'Institution Links'), {order_scope1: "InstitutionLink", scope1: @scope1}%></th>
-      <th><%= link_to "Sample Plans", {order_scope1: "SamplePlans", scope1: @scope1}%></th>
+      <th><%= link_to "Template", {order_scope2: "Template", scope2: @scope2}%></th>
+      <th class="span5"><%= link_to (public ? 'Funder' : 'Institution'), {order_scope2: "Institution", scope2: @scope2}%></th>
+      <th><%= link_to (public ? 'Funder Links' : 'Institution Links'), {order_scope2: "InstitutionLink", scope2: @scope2}%></th>
+      <th><%= link_to "Sample Plans", {order_scope2: "SamplePlans", scope2: @scope2}%></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -41,13 +35,6 @@
 	</tbody>
 </table>
 <div class="buttons pagination">
-	<%= link_to "View All", {:method => :get, order_scope1: @order_scope1, scope1: "all"}, {:class => "btn"}%>
-
-	<%= paginate @public_templates, {:param_name => 'public_guidance_page', order_scope1: @order_scope1} %>
-
+	<%= link_to "View All", {:method => :get, order_scope2: @order_scope2, scope2: "all"}, {:class => "btn"}%>
+	<%= paginate @institution_templates, {:param_name => 'institutional_guidance_page', order_scope2: @order_scope2} %>
 </div>
-
-
-
-
-

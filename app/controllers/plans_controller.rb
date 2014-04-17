@@ -334,20 +334,7 @@ class PlansController < ApplicationController
       @plans = @plans.letter_range(params[:s], params[:e])
     end
     unless params[:q].blank? then
-      # terms = params[:q].split.map {|t| "%#{t}%"}
-      
-      # #SEARCH FOR USER, FUNDER TEMPLATE, INSTITUTION AND PLAN NAME
-    
-      # @plans = @plans.joins({:users  => :institution}, :requirements_template).where(user_plans: {owner: true}).where.
-    
-      #   any_of(["plans.name LIKE ?", terms],
-      #          ["requirements_templates.name LIKE ?", terms],
-      #          ["institutions.full_name LIKE ?", terms],
-      #          ["users.last_name LIKE ? OR users.first_name LIKE ?", terms, terms])
-
       @plans = @plans.search_terms(params[:q])
-    
-
     end
 
     if params[:page] != 'all'
@@ -356,8 +343,6 @@ class PlansController < ApplicationController
       @plans = @plans.page(0).per(9999)
     end
   end
-
-
 
 
   def add_coowner_autocomplete

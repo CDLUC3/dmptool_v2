@@ -68,7 +68,32 @@ class StaticPagesController < ApplicationController
   end
   
   def guidance
-    @public_templates = RequirementsTemplate.public_visibility.includes(:institution, :sample_plans).order('institutions.full_name ASC')
+    @public_templates = RequirementsTemplate.public_visibility.includes(:institution, :sample_plans)
+    
+
+    @scope1 = params[:scope1]
+    @order_scope1 = params[:order_scope1]   
+
+
+    case @order_scope1
+      when "Template"
+        @public_templates = @public_templates.order(name: :asc)
+      when "Institution"
+        @public_templates = @public_templates.order('institutions.full_name ASC')
+      when "InstitutionLink"
+        @public_templates = @public_templates.order(name: :asc)
+      when "SamplePlans"
+        @public_templates = @public_templates.order(name: :asc)
+      else
+        @public_templates = @public_templates.order(name: :asc)
+    end
+
+    case @scope1
+      when "all"
+        @public_templates = @public_templates.page(params[:public_guidance_page]).per(1000)
+      else
+        @public_templates = @public_templates.page(params[:public_guidance_page]).per(5)
+    end
     
     unless params[:s].blank? || params[:e].blank?
       @public_templates = @public_templates.letter_range_by_institution(params[:s], params[:e])
@@ -77,14 +102,37 @@ class StaticPagesController < ApplicationController
     if !params[:q].blank?
       @public_templates = @public_templates.search_terms(params[:q])
     end
-    page_size = (params[:all_records_public] == 'true'? 999999 : 10)
-    @public_templates = @public_templates.page(params[:public_page]).per(page_size)
-    
+
     if current_user
-      inst = current_user.institution
-      page_size = (params[:all_records_institution] == 'true'? 999999 : 10)
-      @institution_templates = inst.requirements_templates_deep.institutional_visibility.
-              includes(:institution, :sample_plans).page(params[:institution_page]).per(page_size)
+
+      @scope2 = params[:scope2]
+      @order_scope2 = params[:order_scope2]
+
+      @institution_templates = current_user.institution.requirements_templates_deep.institutional_visibility.
+              includes(:institution, :sample_plans)
+    
+
+      case @order_scope2
+        when "Template"
+          @institution_templates = @institution_templates.order(name: :asc)
+        when "Institution"
+          @institution_templates = @institution_templates.order('institutions.full_name ASC')
+        when "InstitutionLink"
+          @institution_templates = @institution_templates.order(name: :asc)
+        when "SamplePlans"
+          @institution_templates = @institution_templates.order(name: :asc)
+        else
+          @institution_templates = @institution_templates.order(name: :asc)
+      end
+
+      case @scope2
+        when "all"
+          @institution_templates = @institution_templates.page(params[:institutional_guidance_page]).per(1000)
+        else
+          @institution_templates = @institution_templates.page(params[:institutional_guidance_page]).per(5)
+      end
+
     end
+    
   end
 end
