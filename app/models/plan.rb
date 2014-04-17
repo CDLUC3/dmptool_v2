@@ -43,19 +43,21 @@ class Plan < ActiveRecord::Base
   def self.search_terms(terms)  
     items = terms.split
     conditions1 = items.map{|item| "plans.name LIKE ?" }
-    conditions2 = items.map{|item| "plans.name LIKE ?" }
-    conditions3 = items.map{|item| "plans.name LIKE ?" }
-    conditions4 = items.map{|item| "plans.name LIKE ?" }
+    conditions2 = items.map{|item| "requirements_templates.name LIKE ?" }
+    conditions3 = items.map{|item| "institutions.full_name LIKE ?" }
+    conditions4 = items.map{|item| "users.last_name LIKE ?" }
+    conditions5 = items.map{|item| "users.first_name LIKE ?" }
     conditions = "(    
                       (#{conditions1.join(' AND ')})" + ' OR ' +
                       "(#{conditions2.join(' AND ')})" + ' OR ' +
                       "(#{conditions3.join(' AND ')})" + ' OR ' +
-                      "(#{conditions4.join(' AND ')})
+                      "(#{conditions4.join(' OR ')})" + ' OR ' +
+                      "(#{conditions5.join(' OR ')})
                   )" 
     values = items.map{|item| "%#{item}%" }
     joins({:users  => :institution}, :requirements_template).
         where(user_plans: {owner: true}).
-        where(conditions, *(values * 4) )
+        where(conditions, *(values * 5) )
   end
 
   def self.order_by_institution
