@@ -42,9 +42,7 @@
 </table>
 <div class="buttons pagination">
 	<%= link_to "View All", {:method => :get, order_scope1: @order_scope1, scope1: "all"}, {:class => "btn"}%>
-
 	<%= paginate @public_templates, {:param_name => 'public_guidance_page', order_scope1: @order_scope1} %>
-
 </div>
 
 

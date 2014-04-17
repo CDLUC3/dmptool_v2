@@ -68,12 +68,10 @@ class StaticPagesController < ApplicationController
   end
   
   def guidance
-    @public_templates = RequirementsTemplate.public_visibility.includes(:institution, :sample_plans)
+    @public_templates = RequirementsTemplate.public_visibility.includes(:institution, :sample_plans, :additional_informations)
     
-
     @scope1 = params[:scope1]
     @order_scope1 = params[:order_scope1]   
-
 
     case @order_scope1
       when "Template"
@@ -81,9 +79,9 @@ class StaticPagesController < ApplicationController
       when "Institution"
         @public_templates = @public_templates.order('institutions.full_name ASC')
       when "InstitutionLink"
-        @public_templates = @public_templates.order(name: :asc)
+        @public_templates = @public_templates.order('additional_informations.label ASC')
       when "SamplePlans"
-        @public_templates = @public_templates.order(name: :asc)
+        @public_templates = @public_templates.order('sample_plans.label ASC')
       else
         @public_templates = @public_templates.order(name: :asc)
     end
@@ -92,7 +90,7 @@ class StaticPagesController < ApplicationController
       when "all"
         @public_templates = @public_templates.page(params[:public_guidance_page]).per(1000)
       else
-        @public_templates = @public_templates.page(params[:public_guidance_page]).per(5)
+        @public_templates = @public_templates.page(params[:public_guidance_page]).per(10)
     end
     
     unless params[:s].blank? || params[:e].blank?
@@ -109,7 +107,7 @@ class StaticPagesController < ApplicationController
       @order_scope2 = params[:order_scope2]
 
       @institution_templates = current_user.institution.requirements_templates_deep.institutional_visibility.
-              includes(:institution, :sample_plans)
+              includes(:institution, :sample_plans, :additional_informations)
     
 
       case @order_scope2
@@ -118,9 +116,9 @@ class StaticPagesController < ApplicationController
         when "Institution"
           @institution_templates = @institution_templates.order('institutions.full_name ASC')
         when "InstitutionLink"
-          @institution_templates = @institution_templates.order(name: :asc)
+          @institution_templates = @institution_templates.order('additional_informations.label ASC')
         when "SamplePlans"
-          @institution_templates = @institution_templates.order(name: :asc)
+          @institution_templates = @institution_templates.order('sample_plans.label ASC')
         else
           @institution_templates = @institution_templates.order(name: :asc)
       end
@@ -129,7 +127,7 @@ class StaticPagesController < ApplicationController
         when "all"
           @institution_templates = @institution_templates.page(params[:institutional_guidance_page]).per(1000)
         else
-          @institution_templates = @institution_templates.page(params[:institutional_guidance_page]).per(5)
+          @institution_templates = @institution_templates.page(params[:institutional_guidance_page]).per(10)
       end
 
     end
