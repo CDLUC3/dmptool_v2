@@ -34,6 +34,7 @@
 		<% end %>
 	</tbody>
 </table>
+
 <div class="buttons pagination">
 	<%= link_to "View All", {:method => :get, order_scope2: @order_scope2, scope2: "all"}, {:class => "btn"}%>
 	<%= paginate @institution_templates, {:param_name => 'institutional_guidance_page', order_scope2: @order_scope2} %>
