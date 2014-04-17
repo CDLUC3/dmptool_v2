@@ -245,7 +245,7 @@ class PlansController < ApplicationController
         requirement = @requirements_template.first_question
         last_requirement = @requirements_template.last_question
         if requirement.nil?
-          flash[:error] =  "The DMP template you are attempting to customize has no requirements. A template must contain at least one requirement. \"#{@requirements_template.name}\" needs to be fixed before you may continue customizing it." 
+          flash[:error] =  "The DMP template you are attempting to customize has no requirements. A template must contain at least one requirement. \"#{@requirements_template.name}\" needs to be fixed before you may continue customizing it."
           redirect_to resource_contexts_path  and return
         end
         params[:requirement_id] = requirement.id.to_s
@@ -254,10 +254,31 @@ class PlansController < ApplicationController
       @requirement = Requirement.find(params[:requirement_id]) unless params[:requirement_id].blank?
       @last_requirement = Requirement.find(params[:last_requirement_id]) unless params[:last_requirement_id].blank?
       @resource_contexts = ResourceContext.where(requirement_id: @requirement.id, institution_id: @user.institution_id, requirements_template_id: @requirements_template.id)
-      @guidance_resources = display_text(@resource_contexts)
-      @url_resources = display_value(@resource_contexts)
-      @suggested_resources = display_suggested(@resource_contexts)
-      @example_resources = display_example(@resource_contexts)
+
+      @guidance_resources = Resource.joins(:resource_contexts).
+      where("resources.resource_type = ?", :help_text).
+      where("resource_contexts.requirement_id=?", @requirement.id).
+      where("resource_contexts.institution_id =?", @user.institution_id).
+      where("resource_contexts.requirements_template_id=?", @requirements_template.id)
+
+      @url_resources = Resource.joins(:resource_contexts).
+      where("resources.resource_type = ?", :actionable_url).
+      where("resource_contexts.requirement_id=?", @requirement.id).
+      where("resource_contexts.institution_id =?", @user.institution_id).
+      where("resource_contexts.requirements_template_id=?", @requirements_template.id)
+
+      @suggested_resources = Resource.joins(:resource_contexts).
+      where("resources.resource_type = ?", :suggested_response).
+      where("resource_contexts.requirement_id=?", @requirement.id).
+      where("resource_contexts.institution_id =?", @user.institution_id).
+      where("resource_contexts.requirements_template_id=?", @requirements_template.id)
+
+      @example_resources = Resource.joins(:resource_contexts).
+      where("resources.resource_type = ?", :example_response).
+      where("resource_contexts.requirement_id=?", @requirement.id).
+      where("resource_contexts.institution_id =?", @user.institution_id).
+      where("resource_contexts.requirements_template_id=?", @requirements_template.id)
+
       @response = Response.where(plan_id: @plan.id, requirement_id: @requirement.id).first
       if @response.nil?
         @response = Response.new
@@ -389,7 +410,7 @@ class PlansController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def plan_params
-      params.require(:plan).permit(:name, :requirements_template_id, :solicitation_identifier, :submission_deadline, :visibility, :current_plan_state_id)
+      params.require(:plan).permit(:name, :requirements_template_id, :solicitation_identifier, :submission_deadline, :visibility, :current_plan_state_id, responses_attributes: [:id, :plan_id, :requirement_id, :text_value, :numeric_value, :date_value, :enumeration_id, :lock_version, :label_id])
     end
 
     def count
@@ -407,54 +428,6 @@ class PlansController < ApplicationController
       @approved = @approved_plans.approved.count
       @rejected = @rejected_plans.rejected.count
       @all = @submitted + @approved + @rejected
-    end
-
-    def display_text(resource_contexts)
-      resources = Array.new
-      @resource_contexts.each do |resource_context|
-        id  = resource_context.resource_id
-        resource = Resource.find(id)
-        if resource.resource_type == :help_text
-          resources << resource
-        end
-      end
-      return resources
-    end
-
-    def display_value(resource_contexts)
-      resources = Array.new
-      @resource_contexts.each do |resource_context|
-        id  = resource_context.resource_id
-        resource = Resource.find(id)
-        if resource.resource_type == :actionable_url
-          resources << resource
-        end
-      end
-      return resources
-    end
-
-    def display_suggested(resource_contexts)
-      resources = Array.new
-      @resource_contexts.each do |resource_context|
-        id  = resource_context.resource_id
-        resource = Resource.find(id)
-        if resource.resource_type == :suggested_response
-          resources << resource
-        end
-      end
-      return resources
-    end
-
-    def display_example(resource_contexts)
-      resources = Array.new
-      @resource_contexts.each do |resource_context|
-        id  = resource_context.resource_id
-        resource = Resource.find(id)
-        if resource.resource_type == :example_response
-          resources << resource
-        end
-      end
-      return resources
     end
 
     def set_comments

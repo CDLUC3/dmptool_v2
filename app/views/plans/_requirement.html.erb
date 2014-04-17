@@ -1,7 +1,7 @@
 <h2><%= heading %><%= requirement_counter + 1 %>. <strong><%= requirement.text_brief %></strong><h2>
   <%- if requirement.children.size > 0 then -%>
     <div>
-      <%= render(partial: "requirement", 
+      <%= render(partial: "requirement",
                  collection: requirement.children.order(:position),
                  locals: { heading: "#{heading}#{requirement_counter + 1}."}) %>
     </div>

@@ -35,12 +35,11 @@ module ApplicationHelper
   def response_value_s(response)
     if response.nil? then
       return "[No response]"
-    elsif !response.numeric_value.blank? then
+    elsif !response.numeric_value.nil? then
       return response.numeric_value.to_s
-    elsif !response.date_value.blank? then
-      # TODO - format ?
+    elsif !response.date_value.nil? then
       return response.date_value.to_s
-    else
+    elsif !response.text_value.nil?
       return response.text_value.html_safe
     end
   end
