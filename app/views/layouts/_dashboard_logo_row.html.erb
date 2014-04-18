@@ -7,7 +7,7 @@
       <%= current_user.institution.full_name %>
     </div>
     <div class="inst-info span4">
-      <%= link_to "http://#{current_user.institution.url}", :id => 'inst-domain' do %>
+      <%= link_to current_user.institution.url, :id => 'inst-domain' do %>
         <span class="icon institution-domain"></span><%= current_user.institution.url %>
       <% end %>
       <%= mail_to current_user.institution.contact_email, :id => "inst-contact" do %>
