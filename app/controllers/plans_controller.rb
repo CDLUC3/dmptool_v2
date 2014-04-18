@@ -116,14 +116,14 @@ class PlansController < ApplicationController
     coowners
     add_coowner_autocomplete
     respond_to do |format|
-      if flash[:alert].include?("The user you entered with email #{@email} was not found")
-        format.html { flash[:alert]
+      if flash[:error].include?("The user you entered with email #{@email} was not found")
+        format.html { flash[:error]
               redirect_to edit_plan_path(@plan)}
       elsif flash[:alert].include?("The user you chose is already a #{@item_description}")
         format.html { flash[:alert]
               redirect_to edit_plan_path(@plan)}
-      elsif flash[:alert].include?("The user chosen is the Owner of the Plan. An owner cannot be #{@item_description} for the same plan.")
-        format.html { flash[:alert]
+      elsif flash[:error].include?("The user chosen is the Owner of the Plan. An owner cannot be #{@item_description} for the same plan.")
+        format.html { flash[:error]
               redirect_to edit_plan_path(@plan)}
       else
         if params[:save_changes] || !params[:save_and_dmp_details]
