@@ -36,7 +36,6 @@
 	<div class="table-scope">
 		<p>Below is a list of DMP templates available in your institution</p>
 	</div>
-	<%#= render partial: 'guidance_table', :locals => {templates: @institution_templates, public: false} %>
 	<%= render partial: 'guidance_table_institutional', :locals => {templates: @institution_templates, public: false} %>
 <% end %>
 

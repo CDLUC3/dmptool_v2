@@ -251,24 +251,6 @@ class ResourceContextsController < ApplicationController
                             where(institution_id: [current_user.institution.subtree_ids])
     end
 
-    # case params[:scope]
-    #   when "all"
-    #     @resource_contexts.order_by_name 
-    #   when "Name"
-    #     @resource_contexts = @resource_contexts.order_by_name.per(10)
-    #   when "Template"
-    #     @resource_contexts = @resource_contexts.order_by_template_name.per(10)
-    #   when "Institution"
-    #     @resource_contexts = @resource_contexts.order_by_institution_name.per(10)
-    #   when "Creation_Date"
-    #     @resource_contexts = @resource_contexts.order_by_created_at.per(10)
-    #   when "Last_Modification_Date"
-    #     @resource_contexts = @resource_contexts.order_by_updated_at.per(10) 
-    #   else
-    #     @resource_contexts = @resource_contexts.order_by_name.per(10)
-    # end
-
-
     @scope = params[:scope]
     @order_scope = params[:order_scope]   
 
@@ -294,11 +276,8 @@ class ResourceContextsController < ApplicationController
         @resource_contexts = @resource_contexts.page(params[:page]).per(10)
     end
     
-
-
-
-    
   end
+
 
   def dmp_for_customization
     
