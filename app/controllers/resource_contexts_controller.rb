@@ -94,6 +94,11 @@ class ResourceContextsController < ApplicationController
     @resource_context = ResourceContext.find(params[:id])
     pare_to = ['institution_id', 'requirements_template_id', 'requirement_id', 'resource_id',
                'name', 'contact_info', 'contact_email', 'review_type']
+    if params[:contact_email].blank? || params[:contact_email].nil?
+      flash[:error] = "Contact email cannot be blank."
+      redirect_to edit_resource_context_path(@resource_context.id) and return
+    end
+
     to_save = params['resource_context'].selected_items(pare_to)
     message = @resource_context.changed ? 'Customization was successfully updated.' : ''
 
