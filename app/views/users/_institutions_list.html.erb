@@ -9,7 +9,7 @@
   <tbody>
   <% @institutions.each do |institution| %>
     <tr class='user_row'>
-      <td><%= link_to institution.full_name, edit_institution_path(institution) %></td>
+      <td><%= link_to institution.full_name, edit_institution_path(institution, admin_acr: "tab_tab2") %></td>
 			<td>
 				<%= institution.contact_email %><br/>
       </td>
