@@ -94,10 +94,7 @@ class ResourceContextsController < ApplicationController
     @resource_context = ResourceContext.find(params[:id])
     pare_to = ['institution_id', 'requirements_template_id', 'requirement_id', 'resource_id',
                'name', 'contact_info', 'contact_email', 'review_type']
-    if params[:contact_email].blank? || params[:contact_email].nil?
-      flash[:error] = "Contact email cannot be blank."
-      redirect_to edit_resource_context_path(@resource_context.id) and return
-    end
+    
 
     to_save = params['resource_context'].selected_items(pare_to)
     message = @resource_context.changed ? 'Customization was successfully updated.' : ''
@@ -105,14 +102,22 @@ class ResourceContextsController < ApplicationController
     make_institution_dropdown_list
     customization_resources_list
     @req_temp = @resource_context.requirements_template
-    
-    if @resource_context.update(to_save)
-      go_to = (params[:after_save] == 'next_page' ? customization_requirement_path(@resource_context.id) :
-                edit_resource_context_path(@resource_context.id) )
-      redirect_to go_to, notice: message 
+
+
+    if params[:resource_context][:contact_email].nil? || params[:resource_context][:contact_email].blank?
+      flash[:error] = "Contact email cannot be blank."
+      redirect_to edit_resource_context_path(@resource_context.id) and return
     else
-      flash[:error] = "An error has occured."
-      redirect_to edit_resource_context_path(@resource_context.id)
+    
+      if @resource_context.update(to_save)
+        go_to = (params[:after_save] == 'next_page' ? customization_requirement_path(@resource_context.id) :
+                  edit_resource_context_path(@resource_context.id) )
+        redirect_to go_to, notice: message 
+      else
+        flash[:error] = "An error has occured."
+        redirect_to edit_resource_context_path(@resource_context.id)
+      end
+
     end
     
   end
