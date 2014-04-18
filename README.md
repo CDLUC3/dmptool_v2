@@ -1,7 +1,7 @@
 dmptool
 =======
 
-**The DMPTool [dmptool.org](https://dmptool.org) helps researchers...**
+**The DMPTool, available at [dmptool.org](https://dmptool.org), helps researchers...**
 * Create ready-to-use data management plans for specific funding agencies
 * Meet requirements for data management plans
 * Get step-by-step instructions and guidance for data management plan
