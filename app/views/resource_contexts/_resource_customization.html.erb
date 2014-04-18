@@ -3,20 +3,22 @@
   <thead>
     <tr>
       <th class="span4">
-      	<%= link_to "Name", {scope: "Name"}%>
+      	<%= link_to "Name", {scope: @scope, order_scope: "Name"}%>
       </th>
       <th>
-      	<%= link_to "Associated DMP Template", {scope: "Template"}%>
+      	<%= link_to "Associated DMP Template", {scope: @scope, order_scope: "Template"}%>
       </th>
       <th>
-      	<%= link_to "Institution", {scope: "Institution"}%>
+      	<%= link_to "Institution", {scope: @scope, order_scope: "Institution"}%>
       </th>
       <th>
-      	<%= link_to "Creation Date", {scope: "Creation_Date"}%>
+      	<%= link_to "Creation Date", {scope: @scope, order_scope: "Creation_Date"}%>
       </th>
       <th>
       	<%= link_to "Last Modification Date", 
-      				{scope: "Last_Modification_Date"}%>
+      				{scope: @scope, 
+              order_scope: "Last_Modification_Date"}
+        %>
       </th>
     </tr>
   </thead>
@@ -61,11 +63,31 @@
   </tbody>
 </table>
 
-<div class="buttons pagination">
-	<%= link_to "View All", resource_contexts_path(:scope => "all"), :method => :get, :class => "btn"%>
-  <%= paginate @resource_contexts %>
-</div>
+
+<% if @scope == "all" %>
+  <div class="buttons pagination">
+    <%= link_to "View Less", resource_contexts_path(scope: "", order_scope: @order_scope ), :method => :get, :class => "btn"%>
+    <%= paginate @resource_contexts %>
+  </div>
+<% else %>
+  <div class="buttons pagination">
+    <%= link_to "View All", resource_contexts_path(scope: "all", order_scope: @order_scope ), :method => :get, :class => "btn"%>
+    <%= paginate @resource_contexts %>
+  </div>
+<%end%>
+
 <%= link_to 'Create New Customization', dmp_for_customization_path, :class => "btn btn-green" %>
+
+
+
+
+
+
+
+
+
+
+
 
 
 

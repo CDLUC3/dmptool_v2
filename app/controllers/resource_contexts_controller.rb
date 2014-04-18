@@ -244,30 +244,59 @@ class ResourceContextsController < ApplicationController
 
 
   def resource_customizations
-    @resource_contexts = ResourceContext.template_level.no_resource_no_requirement.order_by_name.page(params[:page])
+    @resource_contexts = ResourceContext.template_level.no_resource_no_requirement.order_by_name
 
     unless user_role_in?(:dmp_admin)
       @resource_contexts = @resource_contexts.
-                            where(institution_id: [current_user.institution.subtree_ids]).
-                            order('name ASC')
+                            where(institution_id: [current_user.institution.subtree_ids])
     end
 
-    case params[:scope]
-      when "all"
-        @resource_contexts.order_by_name 
+    # case params[:scope]
+    #   when "all"
+    #     @resource_contexts.order_by_name 
+    #   when "Name"
+    #     @resource_contexts = @resource_contexts.order_by_name.per(10)
+    #   when "Template"
+    #     @resource_contexts = @resource_contexts.order_by_template_name.per(10)
+    #   when "Institution"
+    #     @resource_contexts = @resource_contexts.order_by_institution_name.per(10)
+    #   when "Creation_Date"
+    #     @resource_contexts = @resource_contexts.order_by_created_at.per(10)
+    #   when "Last_Modification_Date"
+    #     @resource_contexts = @resource_contexts.order_by_updated_at.per(10) 
+    #   else
+    #     @resource_contexts = @resource_contexts.order_by_name.per(10)
+    # end
+
+
+    @scope = params[:scope]
+    @order_scope = params[:order_scope]   
+
+    case @order_scope
       when "Name"
-        @resource_contexts = @resource_contexts.order_by_name.per(10)
+        @resource_contexts = @resource_contexts.order_by_name
       when "Template"
-        @resource_contexts = @resource_contexts.order_by_template_name.per(10)
+        @resource_contexts = @resource_contexts.order_by_template_name
       when "Institution"
-        @resource_contexts = @resource_contexts.order_by_institution_name.per(10)
+        @resource_contexts = @resource_contexts.order_by_institution_name
       when "Creation_Date"
-        @resource_contexts = @resource_contexts.order_by_created_at.per(10)
+        @resource_contexts = @resource_contexts.order_by_created_at
       when "Last_Modification_Date"
-        @resource_contexts = @resource_contexts.order_by_updated_at.per(10) 
+        @resource_contexts = @resource_contexts.order_by_updated_at 
       else
-        @resource_contexts = @resource_contexts.order_by_name.per(10)
+        @resource_contexts = @resource_contexts.order_by_name
     end
+
+    case @scope
+      when "all"
+        @resource_contexts = @resource_contexts.page(params[:page]).per(1000)
+      else
+        @resource_contexts = @resource_contexts.page(params[:page]).per(10)
+    end
+    
+
+
+
     
   end
 
