@@ -36,6 +36,7 @@ class InstitutionsController < ApplicationController
     institutional_resources
 
     @tab_number = 'tab_tab2' #the tab number for the maze of editing resources from everywhere
+    #@anchor = params[:anchor]
  
     
       
@@ -150,6 +151,8 @@ class InstitutionsController < ApplicationController
 
   # GET /institutions/1/edit
   def edit
+    @acr = params[:acr]
+    @admin_acr = params[:admin_acr]
 
     @current_institution = Institution.find(params[:id])
     

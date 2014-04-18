@@ -1,8 +1,8 @@
 <div class="institution">
   <span class="icon institution"></span>
   <% if institution.id == current_user.institution.id %>
-  	<%= link_to(institution.full_name, edit_institution_path(institution), :class => "bold")%>
+  	<%= link_to(institution.full_name, edit_institution_path(institution, acr: "tab3"), :class => "bold")%>
   <%else%>
-  	<%= link_to(institution.full_name, edit_institution_path(institution))%>
+  	<%= link_to(institution.full_name, edit_institution_path(institution, acr: "tab3"))%>
   <%end%>
 </div>

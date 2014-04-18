@@ -24,7 +24,7 @@
 			<% @users.each do |user| %>     
 		  	<tr class='user_row' id=<%="user_#{user.id}"%>>        
 		  		<td><%= link_to user.full_name_last_first, edit_user_path(user) %></td>
-		    	<td><%= link_to user.institution.full_name, edit_institution_path(user.institution) %></td>
+		    	<td><%= link_to user.institution.full_name, edit_institution_path(user.institution, acr: "tab4") %></td>
 		    	<td><%= user.role_names.join(' | ') %></td>
 		     	<td class="span1"><%=link_to raw(''), edit_user_roles_inst_admin_path(user_id: user), :title => 'Edit user role', :class => 'icon edit-user', :id => "edit_#{user.id}"%></td>           
 		      </tr>       
