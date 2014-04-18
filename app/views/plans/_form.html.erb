@@ -77,8 +77,8 @@
                 <span> Owner: </span>
                 <strong class= 'blue'><%= @owner.full_name %>, </strong>
               <% end %>
-              <span> Existing Coowners: </span>
-              <strong class= 'blue'><%= @coowners.map { |coowner| coowner.full_name.to_s + raw(link_to "", delete_coowner_path(coowner_id: coowner.id, plan_id: @plan.id), :method => :delete, :data => { :confirm => "Are you sure?"}, :class => "remove icon", :title => "Remove coowner") }.join(", ").html_safe %></strong>
+              <span> Existing Co-owners: </span>
+              <strong class= 'blue'><%= @coowners.map { |coowner| coowner.full_name.to_s + raw(link_to "", delete_coowner_path(coowner_id: coowner.id, plan_id: @plan.id), :method => :delete, :data => { :confirm => "Are you sure?"}, :class => "remove icon", :title => "Remove Co-owner") }.join(", ").html_safe %></strong>
             </div>
         <% end %>
 
