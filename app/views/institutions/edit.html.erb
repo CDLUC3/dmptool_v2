@@ -111,7 +111,10 @@
 		</div>
 	</div>
 	<br/>
-	<%= link_to '<< Back', institutions_path, :class => 'btn' %>
-
+  <% if @acr.blank? ||  @acr.nil? || !@acr %>
+	 <%= link_to '<< Back', :back, :class => 'btn' %>
+  <%else%>
+    <%= link_to '<< Back', institutions_path(anchor: @acr), :class => 'btn' %>
+  <%end%>
 
 
