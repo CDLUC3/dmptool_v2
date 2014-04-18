@@ -21,6 +21,7 @@
 				<% @plans.each do |plan| %>
 					<tr>
 						<td class="span1"><%= radio_button_tag :plan,  plan.id, checked: false %></td>
+						<!-- <th> tag below added in place of <td> for accessibility -->
 						<th scope="row"><%= label_tag "plan_#{plan.id}", plan.name %></th>
 						<td><%= owner_name(plan)%></td>
 					</tr>
