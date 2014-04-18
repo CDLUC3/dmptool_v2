@@ -81,18 +81,34 @@ class PlansController < ApplicationController
     flash[:notice] = []
     @plan = Plan.new(plan_params)
     respond_to do |format|
-      if @plan.save
-        UserPlan.create!(user_id: @user.id, plan_id: @plan.id, owner: true)
-        PlanState.create!(plan_id: @plan.id, state: :new, user_id: @user.id )
-        add_coowner_autocomplete
-        flash[:alert]
-        format.html { flash[:notice] << "Plan was successfully updated."
-                  redirect_to edit_plan_path(@plan)}
-        format.json { render action: 'show', status: :created, location: @plan }
+      if params[:save_and_dmp_details]
+        if @plan.save
+          UserPlan.create!(user_id: @user.id, plan_id: @plan.id, owner: true)
+          PlanState.create!(plan_id: @plan.id, state: :new, user_id: @user.id )
+          add_coowner_autocomplete
+          flash[:alert]
+          format.html { flash[:notice] << "Plan was successfully created."
+                  redirect_to details_plan_path(@plan)}
+          format.json { head :no_content }
+        else
+          add_coowner_autocomplete
+          format.html { render action: 'new' }
+          format.json { render json: @plan.errors, status: :unprocessable_entity }
+        end
       else
-        add_coowner_autocomplete
-        format.html { render action: 'new' }
-        format.json { render json: @plan.errors, status: :unprocessable_entity }
+        if @plan.save
+          UserPlan.create!(user_id: @user.id, plan_id: @plan.id, owner: true)
+          PlanState.create!(plan_id: @plan.id, state: :new, user_id: @user.id )
+          add_coowner_autocomplete
+          flash[:alert]
+          format.html { flash[:notice] << "Plan was successfully created."
+                    redirect_to edit_plan_path(@plan)}
+          format.json { render action: 'show', status: :created, location: @plan }
+        else
+          add_coowner_autocomplete
+          format.html { render action: 'new' }
+          format.json { render json: @plan.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
