@@ -19,21 +19,21 @@
 <table class="table table-striped" id="dmp_plans">
   <thead>
     <tr>
-      <th class="span4">
-        <%= link_to "Name", {order_scope: "Name", scope: @scope}%>
+      <th>
+        <%= link_to "Name", {order_scope: "Name", scope: @scope, all_scope: @all_scope}%>
       </th>
       <th class="span3">
-        <%= link_to "Owner", {order_scope: "Owner", scope: @scope}%>
+        <%= link_to "Owner", {order_scope: "Owner", scope: @scope, all_scope: @all_scope}%>
       </th>
       <th>
-        <%= link_to "Status", {order_scope: "Status", scope: @scope}%>
+        <%= link_to "Status", {order_scope: "Status", scope: @scope, all_scope: @all_scope}%>
       </th>
       <th>
-        <%= link_to "Visibility", {order_scope: "Visibility", scope: @scope}%>
+        <%= link_to "Visibility", {order_scope: "Visibility", scope: @scope, all_scope: @all_scope}%>
       </th>
       <th>
         <%= link_to "Last Modification Date",
-              {order_scope: "Last_Modification_Date", scope: @scope}%>
+              {order_scope: "Last_Modification_Date", scope: @scope, all_scope: @all_scope}%>
       </th>
     </tr>
   </thead>
@@ -76,7 +76,7 @@
   <tbody>
 </table>
     <div class="buttons pagination">
-      <%= link_to "View All", plans_path(:scope => "all", order_scope: @order_scope), :method => :get, :class => "btn", :id => 'view_all_plans'%>
+      <%= link_to "View All", plans_path(all_scope: "all", order_scope: @order_scope), :method => :get, :class => "btn", :id => 'view_all_plans'%>
       <%= paginate @plans %>
     </div>
     </tr>
