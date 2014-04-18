@@ -15,8 +15,10 @@ class PlansController < ApplicationController
     plan_ids = UserPlan.where(user_id: user.id).pluck(:plan_id) unless user.id.nil?
     @plans = Plan.where(id: plan_ids)
     count
+
     @order_scope = params[:order_scope]
     @scope = params[:scope]
+    @all_scope = params[:all_scope]
 
     case @order_scope
       when "Name"
@@ -34,26 +36,31 @@ class PlansController < ApplicationController
     end
 
     case @scope
+      when "all_limited"
+        @plans = @plans
+      when "owned"
+        @plans = @owned_plans
+      when "coowned"
+        @plans = @coowned_plans
+      when "approved"
+        @plans = @plans.approved
+      when "submitted"
+        @plans = @plans.submitted
+      when "committed"
+        @plans = @plans.committed
+      when "rejected"
+        @plans = @plans.rejected
+      else
+        @plans = @plans
+    end
+
+    case @all_scope
       when "all"
         @plans = @plans.page(params[:page]).per(9999)
-      when "all_limited"
-        @plans = @plans.page(params[:page]).per(5)
-      when "owned"
-        @plans = @owned_plans.page(params[:page]).per(5)
-      when "coowned"
-        @plans = @coowned_plans.page(params[:page]).per(5)
-      when "approved"
-        @plans = @plans.approved.page(params[:page]).per(5)
-      when "submitted"
-        @plans = @plans.submitted.page(params[:page]).per(5)
-      when "committed"
-        @plans = @plans.committed.page(params[:page]).per(5)
-      when "rejected"
-        @plans = @plans.rejected.page(params[:page]).per(5)
       else
         @plans = @plans.page(params[:page]).per(5)
     end
-    @planstates = PlanState.page(params[:page]).per(5)
+
   end
 
   # GET /plans/1
