@@ -105,18 +105,24 @@ class UsersController < ApplicationController
     @orcid_id = params[:user][:orcid_id]
     @update_orcid_id = params[:user][:update_orcid_id]
 
-    if password && !password.empty?
+    if !password.empty? || !password_confirmation.empty?
       if valid_password(password, password_confirmation)
-        begin
           reset_ldap_password(@user, password)
-        rescue
-          flash[:error] = "Problem updating password in LDAP. Please retry."
-          render :edit and return
-        end
       else
-        render :edit and return
+        @msg = ""
+        @msg << "Password is required.\n" if password.blank?
+        @msg << "Password confirmation is required.\n" if password_confirmation.blank?
+        @msg << "Your password and repeated password do not match.\n" if password != password_confirmation
+        @msg << "Your password must be 8 to 30 characters long.\n" unless (8..30).include?(password.length)
+        unless password.match(/\d/) and password.match(/[A-Za-z]/)
+           @msg << "Your password must contain at least one number and at least one letter.\n"
+        end
+        flash[:error] = @msg
+        redirect_to edit_user_path(@user)
+        return
       end
     end
+
     if !@orcid_id.blank?
       if valid_orcid?(@orcid_id)
         @orcid_id = "http://orcid.org/" + "#{@orcid_id}"
@@ -176,10 +182,10 @@ class UsersController < ApplicationController
   rescue LdapMixin::LdapException
     flash[:error] = 'Error updating LDAP. Local update canceled.'
     redirect_to edit_user_path(@user)
-  rescue Exception => e
-    puts e.to_s
-    flash[:error] = 'Unknown error updating user information.'
-    redirect_to edit_user_path(@user)
+  # rescue Exception => e
+  #   puts e.to_s
+  #   flash[:error] = 'Unknown error updating user information.'
+  #   redirect_to edit_user_path(@user)
   end
 
   # DELETE /users/1
@@ -271,7 +277,14 @@ class UsersController < ApplicationController
     redirect_to edit_user_path(@user.id)
   end
 
-
+  def valid_password (password, confirmation)
+    !password.blank? && 
+    !confirmation.blank? && 
+    password == confirmation &&
+    (8..30).include?(password.length) &&   
+    password.match(/\d/) && 
+    password.match(/[A-Za-z]/)  
+  end
 
   private
 
@@ -327,18 +340,7 @@ class UsersController < ApplicationController
     @user.save
   end
 
-  def valid_password (password, confirmation)
-    @user.errors.add(:password, " is required.") if password.blank?
-    @user.errors.add(:password_confirmation, " is required.") if confirmation.blank?
-    @user.errors.add(:base, "Your password and repeated password do not match.") if password != confirmation
-    @user.errors.add(:base, "Your password must be 8 to 30 characters long.") unless (8..30).include?(password.length)
-    unless password.match(/\d/) and password.match(/[A-Za-z]/)
-      @user.errors.add(:base, "Your password must contain at least one number and at least one letter.")
-    end
-
-    !@user.errors.any?
-  end
-
+  
   def require_current_user
     @user = User.find(params[:id])
     unless @user == current_user
