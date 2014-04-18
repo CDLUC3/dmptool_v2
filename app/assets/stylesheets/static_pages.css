@@ -97,6 +97,8 @@
 /* Static Pages */
 .static-page {
 	margin: 20px 35px; }
+.static-page a {
+	text-decoration: underline; }
 .static-page ul, .static-page ol {
 	margin-top: 20px;
 	margin-bottom: 20px; }
