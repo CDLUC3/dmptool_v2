@@ -152,6 +152,7 @@ class InstitutionsController < ApplicationController
   # GET /institutions/1/edit
   def edit
     @acr = params[:acr]
+    @admin_acr = params[:admin_acr]
 
     @current_institution = Institution.find(params[:id])
     

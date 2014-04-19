@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   # GET /users.json
 
   def index
-
+    @admin_acr = params[:admin_acr]
     @users = User.page(params[:page]).order(last_name: :asc).per(50)
 
     if !params[:q].blank?

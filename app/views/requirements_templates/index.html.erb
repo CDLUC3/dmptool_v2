@@ -1,38 +1,38 @@
 <h1 class="row-fluid"><span class="icon dmp-template"></span>DMP Templates</h1>
 
 <div class="table-scope">
-	<%= link_to "All (#{@all})", {scope: "all_limited", order_scope: @order_scope}, :class => "all_limited" %>
+	<%= link_to "All (#{@all})", {scope: "all_limited", order_scope: @order_scope, all_scope: @all_scope}, :class => "all_limited" %>
 	|
-	<%= link_to "Active  (#{@active})", {scope: "active", order_scope: @order_scope}, :class => "active" %>
+	<%= link_to "Active  (#{@active})", {scope: "active", order_scope: @order_scope, all_scope: @all_scope}, :class => "active" %>
 	|
-	<%= link_to "Inactive (#{@inactive})", {scope: "inactive", order_scope: @order_scope}, :class => "inactive" %>
+	<%= link_to "Inactive (#{@inactive})", {scope: "inactive", order_scope: @order_scope, all_scope: @all_scope}, :class => "inactive" %>
 	|
-	<%= link_to "Institutional-Only (#{@institutional})", {scope: "institutional", order_scope: @order_scope}, :class => "institutional" %>
+	<%= link_to "Institutional-Only (#{@institutional})", {scope: "institutional", order_scope: @order_scope, all_scope: @all_scope}, :class => "institutional" %>
 	|
-	<%= link_to "Public (#{@public})", {scope: "public", order_scope: @order_scope}, :class => "public" %>
+	<%= link_to "Public (#{@public})", {scope: "public", order_scope: @order_scope, all_scope: @all_scope}, :class => "public" %>
 </div>
 <table class="table table-striped" id="dmp_templates">
 	<thead>
 		<tr>
       <th class="span4">
-      	<%= link_to "Name", {order_scope: "Name", scope: @scope}%>
+      	<%= link_to "Name", {order_scope: "Name", scope: @scope, all_scope: @all_scope}%>
       </th>
       <th class="span3">
-      	<%= link_to "Institution", {order_scope: "Institution", scope: @scope}%>
+      	<%= link_to "Institution", {order_scope: "Institution", scope: @scope, all_scope: @all_scope}%>
       </th>
       <th>
-      	<%= link_to "Status", {order_scope: "Status", scope: @scope}%>
+      	<%= link_to "Status", {order_scope: "Status", scope: @scope, all_scope: @all_scope}%>
       </th>
       <th>
-      	<%= link_to "Visibility", {order_scope: "Visibility", scope: @scope}%>
+      	<%= link_to "Visibility", {order_scope: "Visibility", scope: @scope, all_scope: @all_scope}%>
       </th>
       <th>
       	<%= link_to "Creation Date", 
-      				{order_scope: "Creation_Date", scope: @scope}%>
+      				{order_scope: "Creation_Date", scope: @scope, all_scope: @all_scope}%>
       </th>
       <th>
       	<%= link_to "Last Modification Date", 
-      				{order_scope: "Last_Modification_Date", scope: @scope}%>
+      				{order_scope: "Last_Modification_Date", scope: @scope, all_scope: @all_scope}%>
       </th>
     </tr>
 	</thead>
@@ -86,8 +86,26 @@
 	<% end %>
 	<tbody>
 </table>
-<div class="buttons pagination">
-	<%= link_to "View All", requirements_templates_path(:scope => "all", order_scope: @order_scope), :method => :get, :class => "btn", :id => "view_all_templates" %>
-	<%= paginate @requirements_templates %>
-</div>
+
+
+<% if @all_scope == "all" %>
+	<div class="buttons pagination">
+		<%= link_to "View Less", requirements_templates_path(:all_scope => "", order_scope: @order_scope, scope: @scope), :method => :get, :class => "btn" %>
+		<%= paginate @requirements_templates %>
+	</div>
+<% else %>
+	<div class="buttons pagination">
+		<%= link_to "View All", requirements_templates_path(:all_scope => "all", order_scope: @order_scope, scope: @scope), :method => :get, :class => "btn", :id => "view_all_templates" %>
+		<%= paginate @requirements_templates %>
+	</div>
+<%end%>
+
 <%= button_to "Create New Template >>", new_requirements_template_path, :method => :get, :class => "btn"  %>
+
+
+
+
+
+
+
+

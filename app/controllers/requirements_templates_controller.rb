@@ -20,6 +20,7 @@ class RequirementsTemplatesController < ApplicationController
 
     @order_scope = params[:order_scope]
     @scope = params[:scope]
+    @all_scope = params[:all_scope]
 
     case @order_scope
       when "Name"
@@ -40,17 +41,24 @@ class RequirementsTemplatesController < ApplicationController
 
     case @scope
       when "all"
-        @requirements_templates = @requirements_templates.page(params[:page]).per(100)
+        @requirements_templates = @requirements_templates
       when "all_limited"
-        @requirements_templates = @requirements_templates.page(params[:page]).per(10)
+        @requirements_templates = @requirements_templates
       when "active"
-        @requirements_templates = @requirements_templates.active.page(params[:page]).per(10)
+        @requirements_templates = @requirements_templates.active
       when "inactive"
-        @requirements_templates = @requirements_templates.inactive.page(params[:page]).per(10)
+        @requirements_templates = @requirements_templates.inactive
       when "public"
-        @requirements_templates = @requirements_templates.public_visibility.page(params[:page]).per(10)
+        @requirements_templates = @requirements_templates.public_visibility
       when "institutional"
-        @requirements_templates = @requirements_templates.institutional_visibility.page(params[:page]).per(10)
+        @requirements_templates = @requirements_templates.institutional_visibility
+      else
+        @requirements_templates = @requirements_templates
+    end
+
+    case @all_scope
+      when "all"
+        @requirements_templates = @requirements_templates.page(params[:page]).per(9999)
       else
         @requirements_templates = @requirements_templates.page(params[:page]).per(10)
     end
