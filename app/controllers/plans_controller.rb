@@ -208,34 +208,65 @@ class PlansController < ApplicationController
     @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: @user.institution_id).first
   end
 
+
   def review_dmps
     if user_role_in?(:institutional_reviewer, :institutional_admin)
       institutions = Institution.find(@user.institution_id).subtree_ids
       @submitted_plans = Plan.plans_to_be_reviewed(institutions)
       @approved_plans = Plan.plans_approved(institutions)
       @rejected_plans = Plan.plans_rejected(institutions)
-      @plans = @submitted_plans + @approved_plans + @rejected_plans
+      #@plans = @submitted_plans + @approved_plans + @rejected_plans
+      @plans = Plan.plans_per_institution(institutions)
+
     else
       user_role_in?(:dmp_admin)
       @submitted_plans = Plan.plans_to_be_reviewed(Institution.all.ids)
       @approved_plans = Plan.plans_approved(Institution.all.ids)
       @rejected_plans = Plan.plans_rejected(Institution.all.ids)
-      @plans = @submitted_plans + @approved_plans + @rejected_plans
+      #@plans = @submitted_plans + @approved_plans + @rejected_plans
+      @plans = Plan.plans_per_institution(Institution.all.ids)  
+
     end
-    case params[:scope]
-      when "submitted"
-        @plans = @submitted_plans.page(params[:page]).per(5)
-      when "approved"
-        @plans = @approved_plans.page(params[:page]).per(5)
-      when "rejected"
-        @plans = @rejected_plans.page(params[:page]).per(5)
-      when "all_limited"
-        @plans = Kaminari.paginate_array(@plans).page(params[:page]).per(5)
-      else
-        @plans = Kaminari.paginate_array(@plans).page(params[:page])
-    end
+
     review_count
+
+    @order_scope = params[:order_scope]
+    @scope = params[:scope]
+    @all_scope = params[:all_scope]
+
+    case @scope
+      when "submitted"
+        @plans = @submitted_plans
+      when "approved"
+        @plans = @approved_plans
+      when "rejected"
+        @plans = @rejected_plans
+      else
+        @plans
+    end
+
+    case @order_scope
+      when "DMPName"
+        @plans = @plans.order(name: :asc)
+      when "Owner"
+        @plans = @plans.order_by_owner
+      when "SubmissionDate"
+        @plans = @plans.order(updated_at: :desc)
+      when "Status"
+        @plans = @plans.order_by_current_state
+      else
+        @plans = @plans.order(name: :asc)
+    end
+
+    case @all_scope
+      when "all"
+        @plans = @plans.page(params[:page]).per(9999)
+      else
+        @plans = @plans.page(params[:page]).per(5)
+    end
+    
   end
+
 
   def select_dmp_template
     req_temp = RequirementsTemplate.

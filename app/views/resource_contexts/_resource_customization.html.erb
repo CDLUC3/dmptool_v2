@@ -66,7 +66,7 @@
 
 <% if @scope == "all" %>
   <div class="buttons pagination">
-    <%= link_to "View Less", resource_contexts_path(scope: "", order_scope: @order_scope ), :method => :get, :class => "btn"%>
+    <%= link_to "View Less", resource_contexts_path(scope: "less", order_scope: @order_scope ), :method => :get, :class => "btn"%>
     <%= paginate @resource_contexts %>
   </div>
 <% else %>
