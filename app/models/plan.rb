@@ -71,6 +71,7 @@ class Plan < ActiveRecord::Base
 
   def self.order_by_current_state
     joins(:current_state).order('plan_states.state ASC')
+    #House.order("FIELD(state, 'Building', 'Dreaming', 'Living', ...)")
   end
 
   def owner
