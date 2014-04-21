@@ -124,27 +124,41 @@ class PlansController < ApplicationController
   # PATCH/PUT /plans/1
   # PATCH/PUT /plans/1.json
   def update
-    flash[:notice] = []
-    flash[:alert] = []
+    flash[:error] = []
     @customization_review  = precendence_review_type
     @template_review = precendence_template_review_type
     set_comments
     coowners
     add_coowner_autocomplete
+    @notice_1 = "Could not find the following User(s) #{@invalid_users.join(', ')}."
+    @notice_2 = "The User(s) chosen #{@existing_coowners.join(', ')} are already #{@item_description}(s) of this Plan."
+    @notice_3 = "The User chosen #{@owner[0].to_s} is the Owner of the Plan. An owner cannot be #{@item_description} for the same plan."
     respond_to do |format|
-      if flash[:alert].include?("The user you entered with email #{@email} was not found")
-        format.html { flash[:alert]
+      if !@invalid_users.empty? && !@existing_coowners.empty? && !@owner.empty?
+        format.html { flash[:error] << @notice_1 << @notice_2 << @notice_3
               redirect_to edit_plan_path(@plan)}
-      elsif flash[:alert].include?("The user you chose is already a #{@item_description}")
-        format.html { flash[:alert]
+      elsif !@invalid_users.empty? && !@existing_coowners.empty?
+        format.html { flash[:error] << @notice_1 << notice_2
               redirect_to edit_plan_path(@plan)}
-      elsif flash[:alert].include?("The user chosen is the Owner of the Plan. An owner cannot be #{@item_description} for the same plan.")
-        format.html { flash[:alert]
+      elsif !@existing_coowners.empty? && !@owner.empty?
+        format.html { flash[:error] << @notice_2 << @notice_3
+              redirect_to edit_plan_path(@plan)}
+      elsif !@invalid_users.empty? && !@owner.empty?
+        format.html { flash[:error] << @notice_1 << @notice_3
+              redirect_to edit_plan_path(@plan)}
+      elsif !@invalid_users.empty?
+        format.html { flash[:error] << @notice_1
+              redirect_to edit_plan_path(@plan)}
+      elsif !@existing_coowners.empty?
+        format.html { flash[:error] << @notice_2
+              redirect_to edit_plan_path(@plan)}
+      elsif !@owner.empty?
+        format.html { flash[:error] << @notice_3
               redirect_to edit_plan_path(@plan)}
       else
         if params[:save_changes] || !params[:save_and_dmp_details]
           if @plan.update(plan_params)
-            format.html { flash[:notice] << "Plan was successfully updated."
+            format.html { flash[:notice] = "Plan was successfully updated."
                     redirect_to edit_plan_path(@plan)}
             format.json { head :no_content }
           else
@@ -369,6 +383,9 @@ class PlansController < ApplicationController
 
 
   def add_coowner_autocomplete
+    @invalid_users = Array.new
+    @existing_coowners  = Array.new
+    @owner = Array.new
     u_name, = nil
     params.each do |k,v|
       u_name = v if k.end_with?('_name')
@@ -377,17 +394,18 @@ class PlansController < ApplicationController
     unless u_name.blank?
       u_name.split(',').each do |n|
         unless n.blank?
-          m = n.match(/<?(\S+\@\S+\.[^ >]+)/)
+          @m = n.match(/<?(\S+\@\S+\.[^ >]+)/)
+          @term = n
           @user, @email = nil, nil
-          @email = m[1] unless m.nil?
+          @email = @m[1] unless @m.nil?
           @user = User.find_by(email: @email)
-          @owner = UserPlan.where(plan_id: @plan.id, user_id: @user.id, owner: true).first unless @user.nil?
+          owner = UserPlan.where(plan_id: @plan.id, user_id: @user.id, owner: true).first unless @user.nil?
           if @user.nil?
-            flash[:alert] = "The user you entered with email #{@email} was not found"
-          elsif !@owner.nil?
-            flash[:alert] = "The user chosen is the Owner of the Plan. An owner cannot be #{@item_description} for the same plan."
+            @invalid_users << @term
           elsif @user.user_plans.where(plan_id: @plan.id, owner: false).count > 0
-            flash[:alert] = "The user you chose is already a #{@item_description}"
+            @existing_coowners << @user.full_name
+           elsif !owner.nil?
+            @owner << User.find(owner.user_id).full_name
           else
             userplan = UserPlan.create(owner: false, user_id: @user.id, plan_id: @plan.id)
             userplan.save!
@@ -395,6 +413,9 @@ class PlansController < ApplicationController
         end
       end
     end
+      return @invalid_users
+      return @existing_coowners
+      return @owner
   end
 
   def delete_coowner
