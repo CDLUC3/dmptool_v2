@@ -1,6 +1,11 @@
 <div class="tab-content">
 
   <% template_cust = (@customization.resource_level == "Container - Template") %>
+  <% if user_role_in?(:dmp_admin) %>
+    <% editable = true%>
+  <%else%>
+    <% editable = template_cust%>
+  <%end%>
 
   <% @tabs.each_with_index do |tab, index| %>
     <div class="tab-pane<%= (index==0 ? ' active' : '') %>" id="tab<%= (index+1) %>">
@@ -11,7 +16,7 @@
                    :locals => {:section_name  => 'DMP Resources',
                                :partial_name  => tab[:partial],
                                :collection    => @requirement.requirement_resources.send(tab[:scope]),
-                               :editable      => template_cust, #editable if this is a template customization
+                               :editable      => editable, #editable if this is a template customization or if user: dmp_admin
                                :cust_level    => '3',
                                :tab_name      => tab[:name],
                                :tab_number    => index+1 }
@@ -23,7 +28,7 @@
                    :locals => {:section_name  => 'Global Resources',
                                :partial_name  => tab[:partial],
                                :collection    => @requirement.global_resources.send(tab[:scope]),
-                               :editable      => template_cust,
+                               :editable      => editable,
                                :cust_level    => '1',
                                :tab_name      => tab[:name],
                                :tab_number    => index+1 }
@@ -34,7 +39,7 @@
                                :partial_name  => tab[:partial],
                                :collection    => @requirement.template_resources.send(tab[:scope]) +
                                    @requirement.requirement_resources.send(tab[:scope]),
-                               :editable      => template_cust, #editable if this is a template customization
+                               :editable      => editable, #editable if this is a template customization or if user: dmp_admin
                                :cust_level    => '2+3',
                                :tab_name      => tab[:name],
                                :tab_number    => index+1 }
@@ -47,7 +52,8 @@
                      :locals => {:section_name => "#{@institution.name} Resources",
                                  :partial_name => tab[:partial],
                                  :collection => @requirement.institution_customization_resources(@institution).send(tab[:scope]),
-                                 :editable => !template_cust,
+                                 #:editable => !template_cust,
+                                 :editable      => true,
                                  :cust_level    => '4',
                                  :tab_name      => tab[:name],
                                  :tab_number    => index+1 }
@@ -57,7 +63,8 @@
                      :locals => {:section_name => "#{@requirements_template.name} for #{@institution.name} Resources",
                                  :partial_name => tab[:partial],
                                  :collection => @requirement.template_customization_resources(@institution).send(tab[:scope]),
-                                 :editable => !template_cust,
+                                 #:editable => !template_cust,
+                                 :editable      => true,
                                  :cust_level    => '5',
                                  :tab_name      => tab[:name],
                                  :tab_number    => index+1 }
@@ -69,7 +76,8 @@
                    :locals => {:section_name => 'Requirement Resources',
                                :partial_name => tab[:partial],
                                :collection => @requirement.requirement_customization_resources(@institution).send(tab[:scope]),
-                               :editable => !template_cust,
+                               #:editable      => !template_cust,
+                               :editable      => true,
                                :cust_level    => '7',
                                :tab_name      => tab[:name],
                                :tab_number    => index+1 }
