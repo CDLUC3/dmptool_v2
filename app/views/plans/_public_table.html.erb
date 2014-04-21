@@ -1,10 +1,10 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th class="span5"><%= link_to "Plan Title", {order_scope: "PlanTitle"}%></th>
-      <th class="span5"><%= link_to "Funder Template", {order_scope: "FunderTemplate"}%></th>
-      <th class="span5"><%= link_to "Institution", {order_scope: "OwnerInstitution"}%></th>
-      <th class="span5"><%= link_to "Owner", {order_scope: "Owner"}%></th>
+      <th class="span5"><%= link_to "Plan Title", {order_scope: "PlanTitle", all_scope: @all_scope}%></th>
+      <th class="span5"><%= link_to "Funder Template", {order_scope: "FunderTemplate", all_scope: @all_scope}%></th>
+      <th class="span5"><%= link_to "Institution", {order_scope: "OwnerInstitution", all_scope: @all_scope}%></th>
+      <th class="span5"><%= link_to "Owner", {order_scope: "Owner", all_scope: @all_scope}%></th>
       <th>Download</th>
     </tr>
   </thead>
@@ -33,7 +33,37 @@
   </tbody>
 </table>
 
-<div class="buttons pagination">
-  <%= link_to "View All", { :action => "public", :page => "all", order_scope: @order_scope}, { :class => "btn", :id => 'view_all_plans' } %>
-  <%= paginate @plans %>
-</div>
+
+<% if @all_scope == "all" %>
+  <div class="buttons pagination">
+    <%= link_to "View Less", { :action => "public", :all_scope => "less", order_scope: @order_scope}, { :class => "btn" } %>
+    <%= paginate @plans %>
+  </div>
+<% else %>
+  <div class="buttons pagination">
+    <%= link_to "View All", { :action => "public", :all_scope => "all", order_scope: @order_scope}, { :class => "btn", :id => 'view_all_plans' } %>
+    <%= paginate @plans %>
+  </div>
+<%end%>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
