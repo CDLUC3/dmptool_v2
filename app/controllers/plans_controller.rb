@@ -337,7 +337,8 @@ class PlansController < ApplicationController
 
   def public
     @plans = Plan.public_visibility
-
+    
+    @all_scope = params[:all_scope]
     @order_scope = params[:order_scope]
 
     case @order_scope
@@ -346,9 +347,9 @@ class PlansController < ApplicationController
       when "FunderTemplate"
         @plans = @plans.joins(:requirements_template).order('requirements_templates.name ASC')
       when "OwnerInstitution"
-        @plans = @plans.order_by_institution #plan.owner.institution.name
+        @plans = @plans.order_by_institution 
       when "Owner"
-        @plans = @plans.order_by_owner #plan.owner.full_name
+        @plans = @plans.order_by_owner 
       else
         @plans = @plans.order(name: :asc)
     end
@@ -360,7 +361,7 @@ class PlansController < ApplicationController
       @plans = @plans.search_terms(params[:q])
     end
 
-    if params[:page] != 'all'
+    if @all_scope != 'all'
       @plans = @plans.page(params[:page]).per(10)
     else
       @plans = @plans.page(0).per(9999)
