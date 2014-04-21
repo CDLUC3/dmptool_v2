@@ -13,7 +13,7 @@
   <div class="control-group">
     <%= f.label :full_name , "Institution Full Name", :class => "control-label required" %>
     <div class="controls">
-	    <%= f.text_field :full_name, :class => "input-xxlarge" %>
+	    <%= f.text_field :full_name, :class => "input-xxlarge", required: true %>
 	  </div>
   </div>
 
@@ -63,6 +63,7 @@
   </div>
 
   <div class="control-group">
+    <%= f.label :url_text, "Institution URL Text", :class => "control-label hide" %>
     <%= f.label :url, "Institution URL", :class => "control-label" %>
     <div class="controls">
       <%= f.text_field :url_text, placeholder: "URL Text" %>
@@ -72,6 +73,7 @@
 
   <div class="control-group">
     <%= f.label :contact_info, "Administrator Contact", :class => "control-label" %>
+    <%= f.label :contact_email, "Administrator Contact Email", :class => "control-label hide" %>
     <div class="controls">
       <%= f.text_field :contact_info, placeholder: "Name" %>
       <%= f.text_field :contact_email, placeholder: "Email" %>
@@ -79,8 +81,7 @@
   </div>
 
   <div class="control-group">
-
-    <%= f.label 'Institutional Logo', :class => " control-label tip", 'data-toggle' => "tooltip", 'data-placement' => "left",  'title' => "Suggested Logo Size 170x60"  %>
+    <%= f.label :logo, "Institutional Logo", :class => "control-label tip", 'data-toggle' => "tooltip", 'data-placement' => "left",  'title' => "Suggested Logo Size 170x60" %>
 
     <div class="controls">
       <%= image_tag @current_institution.logo.url if @current_institution.logo? %>
