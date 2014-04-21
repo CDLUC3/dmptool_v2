@@ -24,7 +24,7 @@
 			  <div class="control-group">
 			    <%= f.label :name , "Customization Name", :class=> "control-label required" %>
 			    <div class="controls">
-			      <%= f.text_field :name, :class => "input-xxlarge required" %>
+			      <%= f.text_field :name, :class => "input-xxlarge required", required: true %>
 			    </div>
 			  </div>
 			
@@ -57,7 +57,7 @@
 			  <div class="control-group">
 			    <%= f.label :contact_email, 'Contact Email', :class => "control-label required" %>
 			    <div class="controls">
-			      <%= f.text_field :contact_email, :class => "input-xlarge" %>
+			      <%= f.text_field :contact_email, :class => "input-xlarge", required: true %>
 			    </div>
 			  </div>
 			
