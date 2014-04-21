@@ -64,6 +64,11 @@
 									(link_to "Customize", new_resource_context_path(requirements_template_id: requirements_template, institution_id: requirements_template.institution_id))%>
 						</div>
 
+					<% elsif user_role_in?(:institutional_admin) && (!current_user.institution.subtree_ids.include?(requirements_template.institution_id))%>
+						<div class="template-links">
+							<%= (link_to "Customize", new_resource_context_path(requirements_template_id: requirements_template, institution_id: requirements_template.institution_id))%>
+						</div>
+
 					<%elsif user_role_in?(:template_editor) && user_role_in?(:resource_editor) && (current_user.institution.subtree_ids.include?(requirements_template.institution_id))%>
 						<div class="template-links">
 							<%= (link_to "Overview", edit_requirements_template_path(requirements_template))+" | "+
