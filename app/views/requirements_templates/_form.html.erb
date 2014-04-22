@@ -11,16 +11,16 @@
 				<div class="control-group">
 					<%= f.label :name, 'Template name', :class => 'control-label required' %>
 					<div class="controls">
-						<%= f.text_field :name, :class => 'longfield' %>
+						<%= f.text_field :name, :class => 'longfield', required: true %>
 					</div>
 				</div>
 
 				<div class="control-group">
 					<label class="control-label required">Visibility</label>
 					<div class="controls checkbox-controls">
-						<%= f.radio_button :visibility, :public, :class => 'radio inline', :id => 'public'  %>
+						<%= f.radio_button :visibility, :public, :class => 'radio inline', :id => 'public', required: true  %>
 						<%= label_tag :public, 'public', :class => 'radio-label'%><br/>
-						<%= f.radio_button :visibility, :institutional, :class => 'radio inline', :id => 'institutional'  %>
+						<%= f.radio_button :visibility, :institutional, :class => 'radio inline', :id => 'institutional', required: true  %>
 						<%= label_tag :institutional, 'institutional', :class => 'radio-label'%>
 					</div>
 				</div>

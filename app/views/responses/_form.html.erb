@@ -43,9 +43,9 @@
 
   <% if requirement(requirement_id).requirement_type == :enum %>
     <div class="control-group">
-      <%= f.label :enumeration_id, 'Please Select One', :class => 'control-label' %>
-      <div class="controls">
-        <%= f.select(:enumeration_id, requirement(requirement_id).enumerations.collect {|e| [ e.value, e.id ]} ) %>
+      <%= f.label :enumeration_id, 'Please Select One', :class => 'control-label', :style => 'margin-left: 10px; width: auto' %>
+      <div class="controls" style="margin-left: 100px">
+        <%= f.select(:enumeration_id, requirement(requirement_id).enumerations.collect {|e| [ e.value, e.id ]}, prompt: "Select a value" ) %>
       </div>
     </div>
   <% end %>

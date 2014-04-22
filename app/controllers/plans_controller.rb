@@ -130,9 +130,9 @@ class PlansController < ApplicationController
     set_comments
     coowners
     add_coowner_autocomplete
-    @notice_1 = "Could not find the following User(s) #{@invalid_users.join(', ')}."
-    @notice_2 = "The User(s) chosen #{@existing_coowners.join(', ')} are already #{@item_description}(s) of this Plan."
-    @notice_3 = "The User chosen #{@owner[0].to_s} is the Owner of the Plan. An owner cannot be #{@item_description} for the same plan."
+    @invalid_users.count > 1 ? @notice_1 = "Could not find the following users #{@invalid_users.join(', ')}." : @notice_1 = "Could not find the following user #{@invalid_users.join(', ')}."
+    @existing_coowners.count > 1 ? @notice_2 = "The users chosen #{@existing_coowners.join(', ')} are already #{@item_description}s of this Plan." : @notice_2 = "The user chosen #{@existing_coowners.join(', ')} is already a #{@item_description} of this Plan."
+    @notice_3 = "The user chosen #{@owner[0].to_s} is the owner of the Plan. An owner cannot be #{@item_description} for the same plan."
     respond_to do |format|
       if !@invalid_users.empty? && !@existing_coowners.empty? && !@owner.empty?
         format.html { flash[:error] << @notice_1 << @notice_2 << @notice_3
@@ -238,7 +238,7 @@ class PlansController < ApplicationController
       @approved_plans = Plan.plans_approved(Institution.all.ids)
       @rejected_plans = Plan.plans_rejected(Institution.all.ids)
       #@plans = @submitted_plans + @approved_plans + @rejected_plans
-      @plans = Plan.plans_per_institution(Institution.all.ids)  
+      @plans = Plan.plans_per_institution(Institution.all.ids)
 
     end
 
@@ -278,7 +278,7 @@ class PlansController < ApplicationController
       else
         @plans = @plans.page(params[:page]).per(5)
     end
-    
+
   end
 
 
@@ -351,7 +351,6 @@ class PlansController < ApplicationController
       if @response.nil?
         @response = Response.new
       end
-
       @next_requirement = @requirements[@requirements.index(@requirement) + 1]
       if @next_requirement.nil?
         ## would go back to the 1st Requirement in the list
@@ -382,7 +381,7 @@ class PlansController < ApplicationController
 
   def public
     @plans = Plan.public_visibility
-    
+
     @all_scope = params[:all_scope]
     @order_scope = params[:order_scope]
 
@@ -392,9 +391,9 @@ class PlansController < ApplicationController
       when "FunderTemplate"
         @plans = @plans.joins(:requirements_template).order('requirements_templates.name ASC')
       when "OwnerInstitution"
-        @plans = @plans.order_by_institution 
+        @plans = @plans.order_by_institution
       when "Owner"
-        @plans = @plans.order_by_owner 
+        @plans = @plans.order_by_owner
       else
         @plans = @plans.order(name: :asc)
     end

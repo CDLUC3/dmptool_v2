@@ -11,7 +11,7 @@
   |
   <%= link_to "Submitted (#{@submitted}) ", { order_scope: @order_scope, scope: "submitted", all_scope: @all_scope}, :class => "submitted" %>
   |
-  <%= link_to "Committed (#{@committed}) ", {order_scope: @order_scope, scope: "committed",  all_scope: @all_scope}, :class => "committed" %>
+  <%= link_to "Completed (#{@committed}) ", {order_scope: @order_scope, scope: "committed",  all_scope: @all_scope}, :class => "committed" %>
   |
   <%= link_to "Rejected (#{@rejected}) ", {order_scope: @order_scope, scope: "rejected",  all_scope: @all_scope}, :class => "rejected" %>
 </div>
@@ -62,7 +62,7 @@
           </div>
         </td>
         <td><%= owner_name(plan) %></td>
-        <td><strong><%= state(plan).capitalize %></strong></td>
+        <td><strong><%= state(plan) == :committed ? "Completed" : state(plan).capitalize %></strong></td>
         <%if plan.visibility == :private %>
           <td class="span1"><span class="private-visibility icon" title="Private"></span></td>
         <% elsif plan.visibility == :public %>

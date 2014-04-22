@@ -3,7 +3,8 @@
 <div class="row-fluid">
   <div class="details span4">
     <p>Click on a section below to edit it at any time.</p>
-    <p><span class="icon confirm"></span> = complete</p>
+    <p><span class="icon confirm"></span> = Complete</p>
+    <p><span class="required"> &nbsp;* </span>  &nbsp;&nbsp;= Mandatory</p>
     <div class="border-box">
       <p><strong>Template Outline</strong></p>
       <hr/>
@@ -14,7 +15,7 @@
   </div>
   <div class="tabbable span8">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#tab1" data-toggle="tab">Instruction</a></li>
+      <li class="active"><a href="#tab1" data-toggle="tab">Instructions</a></li>
 
       <% unless @url_resources.empty? && @requirement.global_resources.actionable_url.empty? && @requirement.template_resources.actionable_url.empty? && @requirement.requirement_resources.actionable_url.empty? && @requirement.template_customization_resources(current_user.institution_id).actionable_url.empty? && @requirement.institution_customization_resources(current_user.institution_id).actionable_url.empty? %>
           <li><a href="#tab2" data-toggle="tab">Links</a></li>
@@ -47,7 +48,7 @@
       <fieldset>
         <!-- <strong style="color:#516935; margin-left: 1em;"> Your Response </strong> -->
         <% if @requirement.obligation == :mandatory %>
-          <strong>(Mandatory)</strong>
+          <strong style="margin-left: 10px;">(Mandatory)</strong>
         <% end %>
         <%= render partial: 'responses/form', locals: { requirement_id: params[:requirement_id], plan_id: @plan.id } %>
       </fieldset>
