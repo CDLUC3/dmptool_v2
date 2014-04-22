@@ -115,26 +115,111 @@
     closeOnEscape: true,
     draggable: true,
     resizable: false,
-    title: "Please Select a Template ",
-    show: {
-      effect: "blind",
-      duration: 1000
-    },
-    hide: {
-      effect: "toggle",
-      duration: 1000
-    },
+    title: "Please Select a Template",
+    
     open: function () {
-      $('#ui-id-1').parent().css('font-family', 'Helvetica, sans-serif');
+
+       $('#ui-id-1').wrap("<h3 id=\"new_h3\"><strong id=\"new_strong\"></strong></h3>");
+
+      $('.ui-widget-overlay').addClass('custom-overlay');
+
+      $('.ui-dialog').css('padding','0');
+      //$('.ui-dialog').css('top','10%');
+      //$('.ui-dialog').css('left','50%');
+      $('.ui-dialog').css('background-color','white');
+      $('.ui-dialog').css('padding','0');
+      $('.ui-dialog').css('padding','0');
+      $('.ui-dialog').css('padding','0');
+
+
+      $('.ui-dialog-titlebar').css('color', '#4C4C4E');
+      $('.ui-dialog-titlebar').css('font-family', 'Helvetica, sans-serif');
+      $('.ui-dialog-titlebar').css('font-size', '12px');
+      $('.ui-dialog-titlebar').css('line-height', '1.3');
+
+      $('.ui-dialog-titlebar').addClass('modal-header');
+
+
+     
       $("#dialog").dialog("open");
     },
     close: function () {
+      $('#ui-id-1').first().unwrap();
+      $('#ui-id-1').first().unwrap();
       $('#dialog').dialog("close");
     }
   });
 
 </script>
 
+<!-- 
+      open: function()
+      {   
+
+        $('.ui-widget-overlay').addClass('custom-overlay');
+        
+        $('#visibility_dialog_form').prev().css('color', '#4C4C4E');
+        $('#visibility_dialog_form').prev().css('font-family', 'Helvetica, sans-serif');
+        $('#visibility_dialog_form').prev().css('font-size', '12px');
+        $('#visibility_dialog_form').prev().css('line-height', '1.3');
+
+         $('#visibility_dialog_form').prev().addClass('modal-header');
+
+        $('#visibility_dialog_form').parent().addClass(' in');
+
+        $('#visibility_dialog_form').prev().find('button').addClass('custom-close');
+        $('#visibility_dialog_form').prev().find('button').css('background','none');
+        $('#visibility_dialog_form').prev().find('button').css('border','none');
+        $('#visibility_dialog_form').prev().find('button').css('font-color','black');
+        $('#visibility_dialog_form').prev().find('button').css('font-size','20');
+        $('#visibility_dialog_form').prev().find('button').css('font-color','black');
+        $('#visibility_dialog_form').prev().find('button').css('opacity','0.2');
+               
+        $(this).parent().find('button:contains("Cancel")').removeClass('ui-corner-all');
+        $(this).parent().find('button:contains("Cancel")').removeClass('ui-widget');
+        $(this).parent().find('button:contains("Cancel")').removeClass('ui-button');
+        $(this).parent().find('button:contains("Cancel")').removeClass('ui-state-default');
+        $(this).parent().find('button:contains("Cancel")').removeClass('ui-button-text-only');
+        $(this).parent().find('button:contains("Cancel")').addClass('btn');
+        
+
+        $(this).parent().find('button:contains("Submit")').removeClass('ui-corner-all');
+        $(this).parent().find('button:contains("Submit")').removeClass('ui-widget');
+        $(this).parent().find('button:contains("Submit")').removeClass('ui-button');
+        $(this).parent().find('button:contains("Submit")').removeClass('ui-state-default');
+        $(this).parent().find('button:contains("Submit")').removeClass('ui-button-text-only');
+        $(this).parent().find('button:contains("Submit")').removeClass('ui-button-text');
+        $(this).parent().find('button:contains("Submit")').addClass('btn btn-green confirm');     
+
+        $('#ui-id-1').parent().removeClass('ui-widget-overlay');
+        $('#ui-id-1').parent().removeClass('ui-widget-header');
+        $('#ui-id-1').parent().removeClass('ui-dialog-title');
+        $('#ui-id-1').parent().addClass('modal-header');
+        
+        // $('#ui-id-1').css('font-weight','bold');
+        // $('#ui-id-1').css('font-family', 'Helvetica, sans-serif');
+        // $('#ui-id-1').css('font-size', '12px');
+
+        
+        $('#ui-id-1').wrap("<h3 id=\"new_h3\"><strong id=\"new_strong\"></strong></h3>");
+
+        $('#visibility_dialog_form').next().removeClass('ui-dialog-buttonpane ui-widget-content ui-helper-clearfix');
+        $('#visibility_dialog_form').next().addClass('modal-footer'); 
+
+        $("#visibility_dialog_form").dialog("open");
+        $(".copyright span7").hide();
+      },
+      close: function() {
+        $('#ui-id-1').first().unwrap();
+        $('#ui-id-1').first().unwrap();
+        $('#visibility_dialog_form').dialog("close");
+        
+        //window.location.reload(true);
+      }
+    }).prev ().find(".ui-dialog-titlebar-close").show();
+    return false
+  });
+}); -->
 
 
 
