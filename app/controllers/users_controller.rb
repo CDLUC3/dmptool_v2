@@ -126,7 +126,7 @@ class UsersController < ApplicationController
     if !@orcid_id.blank?
       if valid_orcid?(@orcid_id)
         @orcid_id = "http://orcid.org/" + "#{@orcid_id}"
-      else     
+      else
         flash[:error] = "The orcid id: #{@orcid_id} is a not valid orcid id."
         @orcid_id = ""
         redirect_to edit_user_path(@user)
@@ -136,7 +136,7 @@ class UsersController < ApplicationController
     if !@update_orcid_id.blank?
       if valid_orcid?(@update_orcid_id)
         @orcid_id = "http://orcid.org/" + "#{@orcid_id}"
-      else     
+      else
         flash[:error] = "The orcid id: #{@update_orcid_id} is a not valid orcid id."
         @orcid_id = ""
         redirect_to edit_user_path(@user)
@@ -237,11 +237,7 @@ class UsersController < ApplicationController
   def autocomplate_users_plans
     if !params[:name_term].blank?
       like = params[:name_term].concat("%")
-      if user_role_in?(:dmp_admin)
-        @users = User.where("CONCAT(first_name, ' ', last_name) LIKE ? ", like).active
-      else
-        @users = current_user.institution.users_deep.where("CONCAT(first_name, ' ', last_name) LIKE ? ", like).active
-      end
+      @users = User.where("CONCAT(first_name, ' ', last_name) LIKE ? ", like).active
     end
     list = map_users_for_autocomplete(@users)
     render json: list
@@ -267,7 +263,7 @@ class UsersController < ApplicationController
 
 
   def valid_orcid?(orcid_id)
-    orcid_id.match(/[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}/) 
+    orcid_id.match(/[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}/)
   end
 
   def remove_orcid
@@ -278,12 +274,12 @@ class UsersController < ApplicationController
   end
 
   def valid_password (password, confirmation)
-    !password.blank? && 
-    !confirmation.blank? && 
+    !password.blank? &&
+    !confirmation.blank? &&
     password == confirmation &&
-    (8..30).include?(password.length) &&   
-    password.match(/\d/) && 
-    password.match(/[A-Za-z]/)  
+    (8..30).include?(password.length) &&
+    password.match(/\d/) &&
+    password.match(/[A-Za-z]/)
   end
 
   private
@@ -340,7 +336,7 @@ class UsersController < ApplicationController
     @user.save
   end
 
-  
+
   def require_current_user
     @user = User.find(params[:id])
     unless @user == current_user

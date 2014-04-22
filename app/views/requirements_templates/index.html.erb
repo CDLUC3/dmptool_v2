@@ -44,22 +44,7 @@
 					
 					<%=content_tag(:strong, requirements_template.name)%>
 
-					<%if user_role_in?(:template_editor) && (current_user.institution.subtree_ids.include?(requirements_template.institution_id))%>
-						<div class="template-links">
-							<%= (link_to "Overview", edit_requirements_template_path(requirements_template))+" | "+
-									(link_to "Details",requirements_template_requirements_path(requirements_template), :class => "details")+" | "+
-									(link_to activate_link_text(requirements_template), 
-										toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", 
-										:class => "ajax")%>
-						</div>
-
-					<%elsif user_role_in?(:template_editor) && (!current_user.institution.subtree_ids.include?(requirements_template.institution_id))%>
-						<div class="template-links">
-							<br />
-						</div>
-				
-					<%elsif (user_role_in?(:dmp_admin) ||
-						 ((current_user.institution.subtree_ids.include?(requirements_template.institution_id))) )%>
+					<% if user_role_in?(:dmp_admin) %>
 						<div class="template-links">
 							<%= (link_to "Overview", edit_requirements_template_path(requirements_template))+" | "+
 									(link_to "Details",requirements_template_requirements_path(requirements_template), :class => "details")+" | "+
@@ -68,10 +53,60 @@
 										:class => "ajax")+" | "+
 									(link_to "Customize", new_resource_context_path(requirements_template_id: requirements_template, institution_id: requirements_template.institution_id))%>
 						</div>
+					
+					<% elsif user_role_in?(:institutional_admin) && (current_user.institution.subtree_ids.include?(requirements_template.institution_id))%>
+						<div class="template-links">
+							<%= (link_to "Overview", edit_requirements_template_path(requirements_template))+" | "+
+									(link_to "Details",requirements_template_requirements_path(requirements_template), :class => "details")+" | "+
+									(link_to activate_link_text(requirements_template), 
+										toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", 
+										:class => "ajax")+" | "+
+									(link_to "Customize", new_resource_context_path(requirements_template_id: requirements_template, institution_id: requirements_template.institution_id))%>
+						</div>
+
+					<% elsif user_role_in?(:institutional_admin) && (!current_user.institution.subtree_ids.include?(requirements_template.institution_id))%>
+						<div class="template-links">
+							<%= (link_to "Customize", new_resource_context_path(requirements_template_id: requirements_template, institution_id: requirements_template.institution_id))%>
+						</div>
+
+					<%elsif user_role_in?(:template_editor) && user_role_in?(:resource_editor) && (current_user.institution.subtree_ids.include?(requirements_template.institution_id))%>
+						<div class="template-links">
+							<%= (link_to "Overview", edit_requirements_template_path(requirements_template))+" | "+
+									(link_to "Details",requirements_template_requirements_path(requirements_template), :class => "details")+" | "+
+									(link_to activate_link_text(requirements_template), 
+										toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", 
+										:class => "ajax")+" | "+
+									(link_to "Customize", new_resource_context_path(requirements_template_id: requirements_template, institution_id: requirements_template.institution_id))%>
+						</div>
+
+					<%elsif user_role_in?(:template_editor) && user_role_in?(:resource_editor) && (!current_user.institution.subtree_ids.include?(requirements_template.institution_id))%>
+						<div class="template-links">
+							<%= (link_to "Customize", new_resource_context_path(requirements_template_id: requirements_template, institution_id: requirements_template.institution_id))%>
+						</div>
+
+					<%elsif user_role_in?(:template_editor) && !user_role_in?(:resource_editor) && (!current_user.institution.subtree_ids.include?(requirements_template.institution_id))%>
+					<div class="template-links">
+						<br>
+					</div>
+
+					<%elsif user_role_in?(:template_editor) && !user_role_in?(:resource_editor) && (current_user.institution.subtree_ids.include?(requirements_template.institution_id))%>
+					<div class="template-links">
+						<div class="template-links">
+							<%= (link_to "Overview", edit_requirements_template_path(requirements_template))+" | "+
+									(link_to "Details",requirements_template_requirements_path(requirements_template), :class => "details")+" | "+
+									(link_to activate_link_text(requirements_template), 
+										toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", 
+										:class => "ajax")%>
+					</div>
+				
+					<%elsif (user_role_in?(:resource_editor))%>
+						<div class="template-links">
+							<%= (link_to "Customize", new_resource_context_path(requirements_template_id: requirements_template, institution_id: requirements_template.institution_id))%>
+						</div>
 						
 					<%else%>
 						<div class="template-links">
-							<%= (link_to "Customize", new_resource_context_path(requirements_template_id: requirements_template, institution_id: requirements_template.institution_id))%>
+							<br>
 						</div>
 					<%end%>
 

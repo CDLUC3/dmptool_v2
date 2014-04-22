@@ -124,27 +124,41 @@ class PlansController < ApplicationController
   # PATCH/PUT /plans/1
   # PATCH/PUT /plans/1.json
   def update
-    flash[:notice] = []
-    flash[:alert] = []
+    flash[:error] = []
     @customization_review  = precendence_review_type
     @template_review = precendence_template_review_type
     set_comments
     coowners
     add_coowner_autocomplete
+    @notice_1 = "Could not find the following User(s) #{@invalid_users.join(', ')}."
+    @notice_2 = "The User(s) chosen #{@existing_coowners.join(', ')} are already #{@item_description}(s) of this Plan."
+    @notice_3 = "The User chosen #{@owner[0].to_s} is the Owner of the Plan. An owner cannot be #{@item_description} for the same plan."
     respond_to do |format|
-      if flash[:alert].include?("The user you entered with email #{@email} was not found")
-        format.html { flash[:alert]
+      if !@invalid_users.empty? && !@existing_coowners.empty? && !@owner.empty?
+        format.html { flash[:error] << @notice_1 << @notice_2 << @notice_3
               redirect_to edit_plan_path(@plan)}
-      elsif flash[:alert].include?("The user you chose is already a #{@item_description}")
-        format.html { flash[:alert]
+      elsif !@invalid_users.empty? && !@existing_coowners.empty?
+        format.html { flash[:error] << @notice_1 << notice_2
               redirect_to edit_plan_path(@plan)}
-      elsif flash[:alert].include?("The user chosen is the Owner of the Plan. An owner cannot be #{@item_description} for the same plan.")
-        format.html { flash[:alert]
+      elsif !@existing_coowners.empty? && !@owner.empty?
+        format.html { flash[:error] << @notice_2 << @notice_3
+              redirect_to edit_plan_path(@plan)}
+      elsif !@invalid_users.empty? && !@owner.empty?
+        format.html { flash[:error] << @notice_1 << @notice_3
+              redirect_to edit_plan_path(@plan)}
+      elsif !@invalid_users.empty?
+        format.html { flash[:error] << @notice_1
+              redirect_to edit_plan_path(@plan)}
+      elsif !@existing_coowners.empty?
+        format.html { flash[:error] << @notice_2
+              redirect_to edit_plan_path(@plan)}
+      elsif !@owner.empty?
+        format.html { flash[:error] << @notice_3
               redirect_to edit_plan_path(@plan)}
       else
         if params[:save_changes] || !params[:save_and_dmp_details]
           if @plan.update(plan_params)
-            format.html { flash[:notice] << "Plan was successfully updated."
+            format.html { flash[:notice] = "Plan was successfully updated."
                     redirect_to edit_plan_path(@plan)}
             format.json { head :no_content }
           else
@@ -208,34 +222,65 @@ class PlansController < ApplicationController
     @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: @user.institution_id).first
   end
 
+
   def review_dmps
     if user_role_in?(:institutional_reviewer, :institutional_admin)
       institutions = Institution.find(@user.institution_id).subtree_ids
       @submitted_plans = Plan.plans_to_be_reviewed(institutions)
       @approved_plans = Plan.plans_approved(institutions)
       @rejected_plans = Plan.plans_rejected(institutions)
-      @plans = @submitted_plans + @approved_plans + @rejected_plans
+      #@plans = @submitted_plans + @approved_plans + @rejected_plans
+      @plans = Plan.plans_per_institution(institutions)
+
     else
       user_role_in?(:dmp_admin)
       @submitted_plans = Plan.plans_to_be_reviewed(Institution.all.ids)
       @approved_plans = Plan.plans_approved(Institution.all.ids)
       @rejected_plans = Plan.plans_rejected(Institution.all.ids)
-      @plans = @submitted_plans + @approved_plans + @rejected_plans
+      #@plans = @submitted_plans + @approved_plans + @rejected_plans
+      @plans = Plan.plans_per_institution(Institution.all.ids)  
+
     end
-    case params[:scope]
-      when "submitted"
-        @plans = @submitted_plans.page(params[:page]).per(5)
-      when "approved"
-        @plans = @approved_plans.page(params[:page]).per(5)
-      when "rejected"
-        @plans = @rejected_plans.page(params[:page]).per(5)
-      when "all_limited"
-        @plans = Kaminari.paginate_array(@plans).page(params[:page]).per(5)
-      else
-        @plans = Kaminari.paginate_array(@plans).page(params[:page])
-    end
+
     review_count
+
+    @order_scope = params[:order_scope]
+    @scope = params[:scope]
+    @all_scope = params[:all_scope]
+
+    case @scope
+      when "submitted"
+        @plans = @submitted_plans
+      when "approved"
+        @plans = @approved_plans
+      when "rejected"
+        @plans = @rejected_plans
+      else
+        @plans
+    end
+
+    case @order_scope
+      when "DMPName"
+        @plans = @plans.order(name: :asc)
+      when "Owner"
+        @plans = @plans.order_by_owner
+      when "SubmissionDate"
+        @plans = @plans.order(updated_at: :desc)
+      when "Status"
+        @plans = @plans.order_by_current_state
+      else
+        @plans = @plans.order(name: :asc)
+    end
+
+    case @all_scope
+      when "all"
+        @plans = @plans.page(params[:page]).per(9999)
+      else
+        @plans = @plans.page(params[:page]).per(5)
+    end
+    
   end
+
 
   def select_dmp_template
     req_temp = RequirementsTemplate.
@@ -370,6 +415,9 @@ class PlansController < ApplicationController
 
 
   def add_coowner_autocomplete
+    @invalid_users = Array.new
+    @existing_coowners  = Array.new
+    @owner = Array.new
     u_name, = nil
     params.each do |k,v|
       u_name = v if k.end_with?('_name')
@@ -378,17 +426,18 @@ class PlansController < ApplicationController
     unless u_name.blank?
       u_name.split(',').each do |n|
         unless n.blank?
-          m = n.match(/<?(\S+\@\S+\.[^ >]+)/)
+          @m = n.match(/<?(\S+\@\S+\.[^ >]+)/)
+          @term = n
           @user, @email = nil, nil
-          @email = m[1] unless m.nil?
+          @email = @m[1] unless @m.nil?
           @user = User.find_by(email: @email)
-          @owner = UserPlan.where(plan_id: @plan.id, user_id: @user.id, owner: true).first unless @user.nil?
+          owner = UserPlan.where(plan_id: @plan.id, user_id: @user.id, owner: true).first unless @user.nil?
           if @user.nil?
-            flash[:alert] = "The user you entered with email #{@email} was not found"
-          elsif !@owner.nil?
-            flash[:alert] = "The user chosen is the Owner of the Plan. An owner cannot be #{@item_description} for the same plan."
+            @invalid_users << @term
           elsif @user.user_plans.where(plan_id: @plan.id, owner: false).count > 0
-            flash[:alert] = "The user you chose is already a #{@item_description}"
+            @existing_coowners << @user.full_name
+           elsif !owner.nil?
+            @owner << User.find(owner.user_id).full_name
           else
             userplan = UserPlan.create(owner: false, user_id: @user.id, plan_id: @plan.id)
             userplan.save!
@@ -396,6 +445,9 @@ class PlansController < ApplicationController
         end
       end
     end
+      return @invalid_users
+      return @existing_coowners
+      return @owner
   end
 
   def delete_coowner
