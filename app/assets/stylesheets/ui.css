@@ -126,8 +126,9 @@ ul.nav-tabs li.active > a:hover, .tabs ul.nav-tabs li.active a:focus {
 	margin: 0; }
 .requirements-tree-view ul > li {
 	position: relative;
+	margin-top: 10px;
 	margin-bottom: 10px;
-	padding-right: 65px; }
+	/* padding-right: 65px; */ }
 .requirements_group {
   margin-bottom: 10px; }
 div.nested_requirements {
