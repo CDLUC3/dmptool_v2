@@ -119,11 +119,10 @@
   </div>
 </div>
 
-<% unless @user.new_record? %>
+<% unless @user.new_record? || !@user.role_names.any?%>
   <p><strong>DMP Options</strong></p>
 	<hr/>
   <div class="control-group">
-    <%#= label_tag :my_roles, 'My Roles', :class => 'control-label' %>
     <p class="control-label">My Roles</p>
     <div class="controls">
       <p><%= @user.role_names.join(' | ') %></p>
