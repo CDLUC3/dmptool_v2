@@ -24,7 +24,7 @@ class PlansController < ApplicationController
       when "Name"
         @plans = @plans.order(name: :asc)
       when "Owner"
-        @plans = @plans.joins(:current_state, :users).order('users.login_id ASC')
+        @plans = @plans.joins(:current_state, :users).order('users.first_name ASC', 'users.last_name ASC')
       when "Status"
         @plans = @plans.joins(:current_state).order("plan_states.state ASC")
       when "Visibility"
