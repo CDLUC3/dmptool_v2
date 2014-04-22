@@ -223,6 +223,9 @@ ul.closed_list {
 ul.opened_list {
   display: block;
 }
+div.hidden {
+  display: none;
+}
 
 
 
