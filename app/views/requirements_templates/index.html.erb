@@ -7,7 +7,7 @@
 	|
 	<%= link_to "Inactive (#{@inactive})", {scope: "inactive", order_scope: @order_scope, all_scope: @all_scope}, :class => "inactive" %>
 	|
-	<%= link_to "Institutional-Only (#{@institutional})", {scope: "institutional", order_scope: @order_scope, all_scope: @all_scope}, :class => "institutional" %>
+	<%= link_to "Institution only (#{@institutional})", {scope: "institutional", order_scope: @order_scope, all_scope: @all_scope}, :class => "institutional" %>
 	|
 	<%= link_to "Public (#{@public})", {scope: "public", order_scope: @order_scope, all_scope: @all_scope}, :class => "public" %>
 </div>
@@ -15,7 +15,7 @@
 	<thead>
 		<tr>
       <th class="span4">
-      	<%= link_to "Name", {order_scope: "Name", scope: @scope, all_scope: @all_scope}%>
+      	<%= link_to "Template Name", {order_scope: "Name", scope: @scope, all_scope: @all_scope}%>
       </th>
       <th class="span3">
       	<%= link_to "Institution", {order_scope: "Institution", scope: @scope, all_scope: @all_scope}%>

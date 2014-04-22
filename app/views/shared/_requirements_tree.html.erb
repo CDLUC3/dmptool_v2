@@ -10,7 +10,9 @@
   <% else %>
     <li class="li_requirement<%= (requirement.id.to_s == params[:requirement_id] ? ' current' : '') %>" id="requirement_<%= requirement.id %>">
       	<% unless Response.where(requirement_id: requirement.id, plan_id: @plan.id).count < 1 %>
-        	<span class="icon confirm" id="complete_icon"></span>
+        	<div class="actions">
+            <span class="icon confirm" id="complete_icon"></span>
+          </div>
      		<% end %>
       	<span class="icon requirement"></span>
       	<% if requirement.id.to_s == params[:requirement_id] %>

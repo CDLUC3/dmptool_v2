@@ -34,13 +34,13 @@
           </div>
         </div>
         <div class="control-group">
-          <%= f.label :solicitation_identifier , 'Solicitation Identifier ', :class => 'control-label' %>
+          <%= f.label :solicitation_identifier , 'Proposal Solicitation Number', :class => 'control-label' %>
           <div class="controls">
             <%= f.text_field :solicitation_identifier  , :class => 'input-xxlarge'%>
           </div>
         </div>
         <div class="control-group">
-          <%= label_tag(:submission_deadline, "Submission Deadline", :class => "control-label") %>
+          <%= label_tag(:submission_deadline, "Proposal Submission Deadline", :class => "control-label") %>
           <div class="controls">
             <%= f.text_field :submission_deadline, value: @plan.submission_deadline.blank? ? " " : @plan.submission_deadline.strftime('%m/%d/%Y'), :class => 'datepicker', id:'submission_deadline' %>
           </div>
@@ -165,11 +165,12 @@
         <% end %>
 
         <div class="buttons">
-          <%= f.submit "Save and Next >>", name: 'save_and_dmp_details', :class => 'btn btn-green pull-right' %>
           <% unless @plan.new_record? %>
             <%= f.submit 'Save', name: 'save_changes', :class => 'btn' %>
+            <%= f.submit "Save and Next >>", name: 'save_and_dmp_details', :class => 'btn btn-green pull-right' %>
             <%= button_tag 'Cancel', type: :reset, :class => 'btn btn-success'%>
           <% else %>
+            <%= f.submit "Save and Next >>", name: 'save_and_dmp_details', :class => 'btn btn-green pull-right' %>
             <%= link_to '<< Back', plan_template_information_path, :class => 'btn btn-green pull-left' %>
             <%= button_tag 'Cancel', type: :reset, :class => 'btn btn-success'%>
            <% end %>
