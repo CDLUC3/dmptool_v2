@@ -48,14 +48,14 @@
       <fieldset>
         <!-- <strong style="color:#516935; margin-left: 1em;"> Your Response </strong> -->
         <% if @requirement.obligation == :mandatory %>
-          <strong>(Mandatory)</strong>
+          <strong style="margin-left: 10px;">(Mandatory)</strong>
         <% end %>
         <%= render partial: 'responses/form', locals: { requirement_id: params[:requirement_id], plan_id: @plan.id } %>
       </fieldset>
     </div>
   </div>
   <div>
-  	<%= link_to '<< Back', edit_plan_path(@plan),  method: 'get', :class => 'btn btn-green pull-left'  %>
+  	<%= link_to '<< Back', :back,  method: 'get', :class => 'btn btn-green pull-left'  %>
     <%= link_to 'DMP Preview >>', preview_plan_path(@plan),  method: 'get', :class => 'btn btn-green pull-right'  %>
   </div>
 </div>
