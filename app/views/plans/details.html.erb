@@ -14,7 +14,7 @@
   </div>
   <div class="tabbable span8">
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#tab1" data-toggle="tab">Instruction</a></li>
+      <li class="active"><a href="#tab1" data-toggle="tab">Instructions</a></li>
 
       <% unless @url_resources.empty? && @requirement.global_resources.actionable_url.empty? && @requirement.template_resources.actionable_url.empty? && @requirement.requirement_resources.actionable_url.empty? && @requirement.template_customization_resources(current_user.institution_id).actionable_url.empty? && @requirement.institution_customization_resources(current_user.institution_id).actionable_url.empty? %>
           <li><a href="#tab2" data-toggle="tab">Links</a></li>
