@@ -130,9 +130,9 @@ class PlansController < ApplicationController
     set_comments
     coowners
     add_coowner_autocomplete
-    @invalid_users.count > 1 ? @notice_1 = "Could not find the following Users #{@invalid_users.join(', ')}." : @notice_1 = "Could not find the following User #{@invalid_users.join(', ')}."
-    @existing_coowners.count > 1 ? @notice_2 = "The Users chosen #{@existing_coowners.join(', ')} are already #{@item_description}s of this Plan." : @notice_2 = "The User chosen #{@existing_coowners.join(', ')} is already a #{@item_description} of this Plan."
-    @notice_3 = "The User chosen #{@owner[0].to_s} is the Owner of the Plan. An owner cannot be #{@item_description} for the same plan."
+    @invalid_users.count > 1 ? @notice_1 = "Could not find the following users #{@invalid_users.join(', ')}." : @notice_1 = "Could not find the following user #{@invalid_users.join(', ')}."
+    @existing_coowners.count > 1 ? @notice_2 = "The users chosen #{@existing_coowners.join(', ')} are already #{@item_description}s of this Plan." : @notice_2 = "The user chosen #{@existing_coowners.join(', ')} is already a #{@item_description} of this Plan."
+    @notice_3 = "The user chosen #{@owner[0].to_s} is the owner of the Plan. An owner cannot be #{@item_description} for the same plan."
     respond_to do |format|
       if !@invalid_users.empty? && !@existing_coowners.empty? && !@owner.empty?
         format.html { flash[:error] << @notice_1 << @notice_2 << @notice_3
@@ -351,7 +351,6 @@ class PlansController < ApplicationController
       if @response.nil?
         @response = Response.new
       end
-
       @next_requirement = @requirements[@requirements.index(@requirement) + 1]
       if @next_requirement.nil?
         ## would go back to the 1st Requirement in the list
