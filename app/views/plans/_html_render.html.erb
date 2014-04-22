@@ -3,13 +3,21 @@
 <table>
   <tr>
     <td><strong>DMP Template:</strong></td>
-    <td><%= plan.requirements_template.name %></td>
+    <% unless plan.requirements_template.nil? %>
+      <td><%= plan.requirements_template.name %></td>
+    <% else %>
+       <td></td>
+    <% end %>
     <td><strong>Solicitation Number:</strong></td>
-    <td><%= plan.solicitation_identifier %></td>
+    <td><%= plan.solicitation_identifier || "[not specified]" %></td>
   </tr>
   <tr>
     <td><strong>Institution:</strong></td>
-    <td><%= plan.owner.institution.name %></td>
+    <% unless plan.owner.nil? %>
+      <td><%= plan.owner.institution.name %></td>
+    <% else %>
+       <td></td>
+    <% end %>
     <td><strong>Submission Deadline:</strong></td>
     <td><%= plan.submission_deadline || "[not specified]" %></td>
   </tr>
