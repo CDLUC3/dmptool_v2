@@ -5,9 +5,11 @@
 	<br/>
 	<h2><a title="I want to see frequently asked questions and answers." href="http://dmptool.askbot.com" target="_blank">I want to see frequently asked questions and answers.</a></h2>
 	<br/>
-	<h2><%= link_to raw("I want to <strong>create</strong> a data management plan."), plan_template_information_path, :title => "I want to create a data management plan." %></h2>
+	<h2>I want to <strong>create</strong> a data management plan.
+		<%# link_to raw("I want to <strong>create</strong> a data management plan."), plan_template_information_path, :title => "I want to create a data management plan." %></h2>
 	<br/>
-	<h2><%= link_to raw("I want to <strong>administer</strong> the DMPTool."), users_path, :title => "I want to administer the DMPTool." if current_user %>
+	<h2>I want to <strong>administer</strong> the DMPTool.
+		<%# link_to raw("I want to <strong>administer</strong> the DMPTool."), users_path, :title => "I want to administer the DMPTool." if current_user %>
 		<%= link_to raw("I want to <strong>administer</strong> the DMPTool."), choose_institution_path, :title => "I want to administer the DMPTool." if !current_user %>
 	</h2>
 	<br/>

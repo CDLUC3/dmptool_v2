@@ -70,8 +70,7 @@ class Plan < ActiveRecord::Base
   end
 
   def self.order_by_current_state
-    joins(:current_state).order('plan_states.state ASC')
-    #House.order("FIELD(state, 'Building', 'Dreaming', 'Living', ...)")
+    joins(:current_state).order('CONVERT(plan_states.state USING utf8)')
   end
 
   def owner
