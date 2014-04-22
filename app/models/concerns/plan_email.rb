@@ -24,7 +24,7 @@ module PlanEmail
         users.each do |user|
           UsersMailer.notification(
               user.email,
-              "[DMPTool] A DMP is shared",
+              "A DMP is shared",
               "dmp_owners_and_co_published",
               { } ).deliver
         end
@@ -50,7 +50,7 @@ module PlanEmail
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            "[DMPTool] A DMP is committed",
+            "A DMP is committed",
             "dmp_owners_and_co_committed",
             { } ).deliver
       end
@@ -63,7 +63,7 @@ module PlanEmail
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            "[DMPTool] A submitted DMP is approved or rejected",
+            "A submitted DMP is approved or rejected",
             "dmp_owners_and_co_submitted",
             { } ).deliver
       end
@@ -74,7 +74,7 @@ module PlanEmail
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            "[DMPTool] A new comment was added",
+            "A new comment was added",
             "institutional_reviewers_approved_rejected",
             {} ).deliver
       end
@@ -87,7 +87,7 @@ module PlanEmail
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            "[DMPTool] An institutional DMP is submitted for review",
+            "An institutional DMP is submitted for review",
             "institutional_reviewers_submitted",
             {} ).deliver
       end
