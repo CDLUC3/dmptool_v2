@@ -33,9 +33,9 @@
     <% end %>
   <% else %>
   	<% if state(@plan) == :committed %>
-			<%= button_to "Finish", plan_plan_states_committed_path(@plan), disabled: true,  :class => "btn btn-green pull-right" %>
+			<%= button_to "Done", plan_plan_states_committed_path(@plan), disabled: true,  :class => "btn btn-green pull-right" %>
 			<% else %>
-				<%= button_to "Finish", plan_plan_states_committed_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
+				<%= button_to "Done", plan_plan_states_committed_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
 			<% end %>
 	<% end %>
 </div>
