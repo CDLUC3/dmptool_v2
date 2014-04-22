@@ -34,13 +34,13 @@
           </div>
         </div>
         <div class="control-group">
-          <%= f.label :solicitation_identifier , 'Solicitation Identifier ', :class => 'control-label' %>
+          <%= f.label :solicitation_identifier , 'Proposal Solicitation Number', :class => 'control-label' %>
           <div class="controls">
             <%= f.text_field :solicitation_identifier  , :class => 'input-xxlarge'%>
           </div>
         </div>
         <div class="control-group">
-          <%= label_tag(:submission_deadline, "Submission Deadline", :class => "control-label") %>
+          <%= label_tag(:submission_deadline, "Proposal Submission Deadline", :class => "control-label") %>
           <div class="controls">
             <%= f.text_field :submission_deadline, value: @plan.submission_deadline.blank? ? " " : @plan.submission_deadline.strftime('%m/%d/%Y'), :class => 'datepicker', id:'submission_deadline' %>
           </div>
