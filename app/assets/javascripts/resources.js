@@ -13,7 +13,7 @@ $(function() {
 			if (type == "actionable_url")
 			{
 
-				$("#value_label").show();
+				$('#value_label').text("URL").show();
 				$("#resource_value").show();
 
 				$("#label_label").show();
