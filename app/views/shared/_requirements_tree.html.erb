@@ -14,9 +14,17 @@
      		<% end %>
       	<span class="icon requirement"></span>
       	<% if requirement.id.to_s == params[:requirement_id] %>
-       		<%= requirement.text_brief %>
+          <% if requirement.obligation == :mandatory %>
+       		 <%= requirement.text_brief %><span class="required"> * </span>
+          <% else %>
+            <%= requirement.text_brief %>
+          <% end %>
       	<% else %>
-        	<%= link_to requirement.text_brief, details_plan_path(@plan, requirement_id: requirement.id, node_type: 'requirement'), {class: 'requirement_direct_link'} %>
+          <% if requirement.obligation == :mandatory %>
+            <%= link_to requirement.text_brief, details_plan_path(@plan, requirement_id: requirement.id, node_type: 'requirement'), {class: 'requirement_direct_link'} %><span class="required"> * </span>
+          <% else %>
+            <%= link_to requirement.text_brief, details_plan_path(@plan, requirement_id: requirement.id, node_type: 'requirement'), {class: 'requirement_direct_link'} %>
+          <% end %>
 				<% end %>
 		</li>
   <% end %>
