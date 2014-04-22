@@ -217,4 +217,31 @@ class Requirement < ActiveRecord::Base
     where("requirements.requirements_template_id = ?", requirements_template_id).
     where("responses.plan_id = ?", plan_id)
   end
+
+  def next_requirement_id
+    #first child
+    unless self.children.order(:position).blank?
+      return self.children.order(:position).first.id
+    end
+
+    #or next sibling
+    siblings = self.siblings.order(:position).where(requirements_template_id: self.requirements_template_id).pluck(:id)
+    next_sib = siblings.index(self.id) + 1
+    unless next_sib == siblings.length #unless last sibling
+      return siblings[next_sib]
+    end
+
+    #for parent's siblings
+    item = self.parent
+    while !item.nil?
+      siblings = item.siblings.order(:position).where(requirements_template_id: item.requirements_template_id).pluck(:id)
+      next_sib = siblings.index(item.id) + 1
+      unless next_sib == siblings.length #unless last sibling
+        return siblings[next_sib]
+      end
+      item = item.parent
+    end
+
+    return self.id
+  end
 end
