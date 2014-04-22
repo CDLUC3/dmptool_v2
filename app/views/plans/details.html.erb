@@ -48,7 +48,7 @@
       <fieldset>
         <!-- <strong style="color:#516935; margin-left: 1em;"> Your Response </strong> -->
         <% if @requirement.obligation == :mandatory %>
-          <strong>(Mandatory)</strong>
+          <strong style="margin-left: 10px;">(Mandatory)</strong>
         <% end %>
         <%= render partial: 'responses/form', locals: { requirement_id: params[:requirement_id], plan_id: @plan.id } %>
       </fieldset>
