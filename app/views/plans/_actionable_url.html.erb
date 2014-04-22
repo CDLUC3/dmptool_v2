@@ -1,6 +1,6 @@
 <div class= 'global_resources'>
-  <h3> General </h3>
 	<% unless @requirement.global_resources.actionable_url.empty? %>
+    <h3> General </h3>
   <ul>
     <%# global resources for this requirement, Stephen's case #1 %>
     <% (@requirement.global_resources.actionable_url).each do |resource| %>
@@ -11,8 +11,8 @@
 </div>
 
 <div class= 'template_resources'>
-  <h3> General </h3>
 	<% unless @requirement.template_resources.actionable_url.empty? %>
+  <h3> General </h3>
   <ul>
     <%# template resources for this requirement, Stephen's case #2 %>
     <% (@requirement.template_resources.actionable_url).each do |resource| %>
@@ -23,8 +23,8 @@
 </div>
 
 <div class= 'requirement_resources'>
-  <h3> General </h3>
 	<% unless @requirement.requirement_resources.actionable_url.empty? %>
+  <h3> General </h3>
   <ul>
     <%# requirement resources for this requirement, Stephen's case #3 %>
     <% (@requirement.requirement_resources.actionable_url).each do |resource| %>
