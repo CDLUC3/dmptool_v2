@@ -32,6 +32,8 @@ class Requirement < ActiveRecord::Base
 
   before_save :validating_to_set_either_subgroup_or_requirement
   before_save :validating_not_to_add_a_child_under_a_leaf
+  validate :has_alteast_one_enumeration, on: :create
+
 
   def validating_to_set_either_subgroup_or_requirement
     parent_id = self.parent_id
@@ -60,6 +62,12 @@ class Requirement < ActiveRecord::Base
       return false
     else
       return true
+    end
+  end
+
+  def has_alteast_one_enumeration
+    if self.requirement_type == :enum && self.enumerations.blank?
+      errors[:base] << 'Must add at least one Enumeration value'
     end
   end
 
