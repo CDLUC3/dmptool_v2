@@ -78,12 +78,12 @@
 
   <% if @all_scope == "all" %>
     <div class="buttons pagination">
-      <%= link_to "View Less", plans_path(order_scope: @order_scope, scope: @scope, all_scope: ""), :method => :get, :class => "btn", :id => 'view_all_plans'%>
+      <%= link_to "View Less", plans_path(order_scope: @order_scope, scope: @scope, all_scope: ""), :method => :get, :class => "btn", :id => 'view_all_plans', role: "button" %>
       <%= paginate @plans %>
     </div>
   <% else %>
     <div class="buttons pagination">
-      <%= link_to "View All", plans_path(order_scope: @order_scope, scope: @scope, all_scope: "all"), :method => :get, :class => "btn", :id => 'view_all_plans'%>
+      <%= link_to "View All", plans_path(order_scope: @order_scope, scope: @scope, all_scope: "all"), :method => :get, :class => "btn", :id => 'view_all_plans', role: "button" %>
       <%= paginate @plans %>
     </div>
   <%end%>
