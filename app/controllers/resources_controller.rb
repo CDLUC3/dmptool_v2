@@ -155,39 +155,40 @@
       if @customization_ids
         ResourceContext.destroy(@customization_ids)
       end
-      respond_to do |format|
+      
         #if @customization_id #customization resource
         if !request[:origin_url].blank?
-          format.html {
+          
             redirect_to request[:origin_url] + "##{@tab_number}",
                       notice: 'Resource was successfully eliminated.'
-          }
+          
         elsif @custom_origin == "Overview" #customization resource
-          format.html { 
+          
             redirect_to edit_resource_context_path(params[:customization_overview_id]), 
               notice: 'Resource was successfully eliminated.' 
-          }
+          
         elsif @custom_origin == "Details"
-          format.html { 
-            redirect_to customization_requirement_path(id: @customization_id, 
+          
+          flash[:notice] = 'Resource was successfully eliminated.'
+          redirect_to customization_requirement_path(id: @customization_id, 
                       requirement_id:  @requirement_id), 
-                      anchor: '#'+@tab_number,
-                      notice: "A problem prevented this resource to be created. " 
-          }
+                      anchor: '#'+@tab_number 
+          
         elsif !@customization_id #institutional resource
-          format.html { 
+          
             redirect_to institutions_path(anchor: 'tab_tab2'), 
               notice: 'Resource was successfully eliminated.' 
-          }
+          
         else 
-          format.html { 
+           
             redirect_to edit_resource_context_path(params[:customization_overview_id]), 
               notice: 'Resource was successfully eliminated.' 
-          }
+          
         end
-      end
+      
     else
-      format.html { redirect_to edit_resource_context_path(params[:customization_overview_id]), notice: "A problem prevented this resource to be eliminated. " }
+      flash[:error] = "A problem prevented this resource to be eliminated."
+      redirect_to edit_resource_context_path(params[:customization_overview_id])
     end
   end
 
