@@ -80,35 +80,31 @@
     @requirement_id = params[:requirement_id]
 
     if @resource_level == 'requirement' #customization details
-
-      respond_to do |format|
-        if @resource.update(resource_params)
+     
+      if @resource.update(resource_params)
+        
+        redirect_to customization_requirement_path(id: @customization_id, 
+                      requirement_id:  @requirement_id, 
+                      anchor: @tab_number),
+                      notice: 'Resource was successfully updated.' 
+      else
+        flash[:error] = "A problem prevented this resource to be updated. "
+        redirect_to customization_requirement_path(id: @customization_id, 
+                      requirement_id:  @requirement_id,
+                      anchor: @tab_number)                      
           
-          format.html { redirect_to customization_requirement_path(id: @customization_id, 
-                        requirement_id:  @requirement_id, 
-                        anchor: @tab_number),
-                        notice: 'Resource was successfully updated.' }
-        else
-          format.html { redirect_to customization_requirement_path(id: @customization_id, 
-                        requirement_id:  @requirement_id,
-                        anchor: @tab_number),
-                        notice: "A problem prevented this resource to be updated. " }
-          format.json { render json: @resource.errors, status: :unprocessable_entity }
         end
-      end
-
+      
     else #customization overview
 
-      respond_to do |format|
-        if @resource.update(resource_params)        
-          format.html { redirect_to edit_resource_context_path(@customization_id),
-                        notice: 'Resource was successfully updated.' }
-        else
-          format.html { redirect_to edit_resource_context_path(@customization_id), 
-                          notice: "A problem prevented this resource to be updated. " }
-          format.json { render json: @resource.errors, status: :unprocessable_entity }
-        end
+      if @resource.update(resource_params)        
+        redirect_to edit_resource_context_path(@customization_id),
+                      notice: 'Resource was successfully updated.' 
+      else
+        flash[:error] = "A problem prevented this resource to be updated. "
+        redirect_to edit_resource_context_path(@customization_id)
       end
+      
     end
 
   end

@@ -63,7 +63,7 @@
       </div>
     </div>
     <%= link_to(@back_text, @back_to, method: :get, :class => "btn pull-left") %>
-    <%= submit_tag(@submit_text, id: 'next', method: :get, :class => "btn pull-right") %>
+    <%= submit_tag("Next >>", id: 'next', method: :get , :class => "btn pull-right") %>
   <% end %>
 
 <% else %>
@@ -74,6 +74,7 @@
 <div id="dialog" title="Please select a DMP Template">
   You must select a DMP template before continuing.
 </div>
+
 
 <script type="text/javascript">
   $('.accordioner').click(function (event) {
