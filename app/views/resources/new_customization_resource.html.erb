@@ -1,13 +1,13 @@
 <h2> New Resource for <%= @template_name %> </h2>
 
 
-  <%= form_for @resource, url: create_customization_resource_path(template_id: @template_id, 
+  <%= form_for @resource, url: create_customization_resource_path(template_id: @template_id,
                           current_institution_id: @current_institution_id,
                           customization_overview_id: @customization_overview_id,
                           resource_level: @resource_level,
                           tab_number: @tab_number,
                           requirement_id: @requirement_id,
-                          custom_origin: @custom_origin), 
+                          custom_origin: @custom_origin),
                           html: { :class => 'form-horizontal' } do |f| %>
 
     <%= render partial: "shared/errors", locals: {model: @resource } %>
@@ -18,11 +18,11 @@
         <div class="controls">
           <% if  @resource_level=="requirement" %>
             <%= f.select :resource_type,
-            		options_for_select([:actionable_url, :help_text, :example_response, :suggested_response],
-                    selected: @selected)%> 
+            		options_for_select([['Links', :actionable_url], ['Guidance', :help_text], ['Example Response', :example_response], ['Suggested Response', :suggested_response]],
+                    selected: @selected)%>
           <% else %>
             <%= f.select :resource_type,
-                options_for_select([:actionable_url, :help_text], 
+                options_for_select([['Links', :actionable_url], ['Guidance', :help_text]],
                   selected: @selected)%>
           <% end %>
         </div>
@@ -41,7 +41,7 @@
           <%= f.text_area :text, size: "20x10",placeholder: "Enter the text", :class => "input-xlarge" %>
         </div>
       </div>
-      
+
 
       <div class="control-group">
          <%= f.label :value, "Value", :class => "control-label", id: "value_label" %>

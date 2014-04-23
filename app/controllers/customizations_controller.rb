@@ -12,7 +12,7 @@ class CustomizationsController < ApplicationController
   # specific requirement -- it shouldn't be displayed if erroneously attached as global or template-level resource
   # the suggested responses and example responses can only be displayed for a specific requirement
   TABS = [  {name: 'Guidance', button_text: "Add guidance", partial: 'guidance_item', scope: :guidance, requirement_only: false},
-            {name: 'Actionable Links', button_text: "Add Actionable Links", partial: 'actionable_url_item', scope: :actionable_url, requirement_only: false},
+            {name: 'Links', button_text: "Add Links", partial: 'actionable_url_item', scope: :actionable_url, requirement_only: false},
             {name: 'Suggested Response', button_text: "Add Suggested Response", partial: 'guidance_item', scope: :suggested_response, requirement_only: true},
             {name: 'Example Response', button_text: "Add Example Response", partial: 'guidance_item', scope: :example_response, requirement_only: true }
           ]  #right now all but links are displayed with the guidance partial since they're the same

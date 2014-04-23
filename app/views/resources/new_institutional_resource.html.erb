@@ -10,7 +10,7 @@
         <%= f.label :resource_type, "Resource Type", :class => "control-label" %>
         <div class="controls">
           <%= f.select :resource_type,
-          		options_for_select([ :actionable_url, :help_text], @resource.resource_type) %>
+          		options_for_select([['Links', :actionable_url], ['Guidance', :help_text]], @resource.resource_type) %>
         </div>
       </div>
 
@@ -27,7 +27,7 @@
           <%= f.text_area :text, size: "20x10",placeholder: "Enter the text", :class => "input-xlarge" %>
         </div>
       </div>
-      
+
 
       <div class="control-group">
          <%= f.label :value_label, "Value", :class => "control-label", id: "value_label" %>

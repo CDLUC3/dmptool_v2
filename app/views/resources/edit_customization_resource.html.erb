@@ -2,13 +2,13 @@
 
 
 <%= form_for @resource ,
-        url: update_customization_resource_path(customization_id: @customization_id, 
-                  id: @resource.id, 
-                  template_id: @template_id, 
+        url: update_customization_resource_path(customization_id: @customization_id,
+                  id: @resource.id,
+                  template_id: @template_id,
                   resource_level: @resource_level,
                   tab_number: @tab_number,
                   requirement_id: @requirement_id,
-                  custom_origin: @custom_origin),  
+                  custom_origin: @custom_origin),
         html: { :class => 'form-horizontal' } do |f| %>
 
   <%= render partial: "shared/errors", locals: {model: @resource } %>
@@ -17,17 +17,17 @@
     <div class="control-group">
       <%= f.label :resource_type, "Resource Type", :class => "control-label" %>
       <div class="controls">
-        
+
         <% if  @resource_level=="requirement" %>
           <%= f.select :resource_type,
-              options_for_select([:actionable_url, :help_text, :example_response, :suggested_response], 
+              options_for_select([['Links', :actionable_url], ['Guidance', :help_text], ['Example Response', :example_response], ['Suggested Response', :suggested_response]],
                 selected: @resource.resource_type) %>
         <% else %>
           <%= f.select :resource_type,
-              options_for_select([:actionable_url, :help_text], 
+              options_for_select([:actionable_url, :help_text],
                 selected: @resource.resource_type) %>
-        <% end %>    
-        
+        <% end %>
+
       </div>
     </div>
 
@@ -44,7 +44,7 @@
         <%= f.text_area :text, size: "20x10",placeholder: "Enter the text", :class => "input-xlarge" %>
       </div>
     </div>
-    
+
 
     <div class="control-group">
        <%= f.label :value, "Value", :class => "control-label", id: "value_label" %>
@@ -62,10 +62,10 @@
       <%= button_tag 'Undo Changes', type: :reset, :class => "btn" %>
 
       <%= f.submit 'Save Changes', :class => "btn" %>
-      
+
 
       <%= link_to(content_tag(:span, "", :class => "icon remove") + "Delete Resource",
-                                      delete_resource_path(resource_id: @resource.id, 
+                                      delete_resource_path(resource_id: @resource.id,
                                       customization_overview_id: @customization_id,
                                       custom_origin: @custom_origin,
                                       requirement_id: @requirement_id,
@@ -73,7 +73,7 @@
                                       tab: @tab,
                                       origin_url: smart_origin_url),
                                       :method => :delete,
-                                    data: { confirm: 'Are you sure? This resource will be deleted from all templates!' }, 
+                                    data: { confirm: 'Are you sure? This resource will be deleted from all templates!' },
                                     :class => "red remove_fields") %>
     </div>
   </fieldset>
@@ -93,12 +93,12 @@
       <th colspan="3"> This Resource is Global.</th>
     </tr>
   <%end%>
-  
+
 
     <% if @any_templates %>
 
       <tr>
-        <th colspan="3">The following Templates:</th>   
+        <th colspan="3">The following Templates:</th>
       </tr>
 
       <tr>
@@ -108,18 +108,18 @@
 
       <% @resource_contexts_templates.each do |resource_contexts_template| %>
         <tr>
-  
+
           <td colspan="2" ><%= resource_contexts_template.requirements_template.name %></td>
-          <td> 
-            <%= link_to raw(''), 
-                    unlink_resource_from_template_path(resource_id: @resource.id, 
-                                        template_id: resource_contexts_template.requirements_template_id, 
+          <td>
+            <%= link_to raw(''),
+                    unlink_resource_from_template_path(resource_id: @resource.id,
+                                        template_id: resource_contexts_template.requirements_template_id,
                                         customization_id: @customization_id,
                                         custom_origin: @custom_origin,
-                                        tab_number: @tab_number),  
+                                        tab_number: @tab_number),
                                         method: :post,
-                                        :class => 'icon unlink' %> 
-          </td> 
+                                        :class => 'icon unlink' %>
+          </td>
         </tr>
       <% end %>
 
@@ -144,26 +144,26 @@
       <% @resource_contexts_requirements.each do |resource_contexts_requirement| %>
         <tr>
          <td><%= resource_contexts_requirement.requirement.text_brief%></td>
-          <td><%= resource_contexts_requirement.requirements_template.name%></td> 
-           <td> 
-            <%= link_to raw(''), 
+          <td><%= resource_contexts_requirement.requirements_template.name%></td>
+           <td>
+            <%= link_to raw(''),
                     unlink_resource_from_requirement_path(resource_id: @resource.id,
-                                        template_id: resource_contexts_requirement.requirements_template_id, 
-                                        requirement_id: resource_contexts_requirement.requirement_id,  
+                                        template_id: resource_contexts_requirement.requirements_template_id,
+                                        requirement_id: resource_contexts_requirement.requirement_id,
                                         customization_id: @customization_id,
                                         custom_origin: @custom_origin,
-                                        tab_number: @tab_number),   
+                                        tab_number: @tab_number),
                                         method: :post,
-                                        :class => 'icon unlink' %>  
-          </td> 
+                                        :class => 'icon unlink' %>
+          </td>
         </tr>
       <% end %>
 
     <% end %>
-    
+
 </table>
 
-  
+
 
 
 
