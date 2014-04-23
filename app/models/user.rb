@@ -196,7 +196,8 @@ class User < ActiveRecord::Base
             new_comment: true,
             committed:    true,
             published:   true,
-            submitted:   true
+            submitted:   true,
+            user_added:  true
         },
         dmp_co:                  {
             submitted:    true,
