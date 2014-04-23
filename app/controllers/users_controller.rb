@@ -148,6 +148,11 @@ class UsersController < ApplicationController
       redirect_to edit_user_path(@user)
       return
     end
+    if !valid_email?(user_params[:email])
+      flash[:error] = "The email you just entered is not valid."
+      redirect_to edit_user_path(@user)
+      return
+    end
 
 
 
@@ -264,6 +269,10 @@ class UsersController < ApplicationController
 
   def valid_orcid?(orcid_id)
     orcid_id.match(/[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}/)
+  end
+
+  def valid_email?(email)
+    email.match(/\A[^@]+@[^@]+\.[^@]+\z/i)
   end
 
   def remove_orcid
