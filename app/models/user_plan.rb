@@ -1,5 +1,7 @@
 class UserPlan < ActiveRecord::Base
 
+  include UserPlanEmail
+
   belongs_to :user
   belongs_to :plan
 

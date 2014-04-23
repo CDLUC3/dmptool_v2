@@ -14,7 +14,7 @@ module UserEmail
     if users.length > 0
       UsersMailer.notification(
           users.collect(&:email),
-          "[DMPTool] You have new roles",
+          "You have new roles",
           "users_role_granted",
           {:granted_roles => Role.where(id: granted_roles).map(&:name) } ).deliver
     end

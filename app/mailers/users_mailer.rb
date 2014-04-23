@@ -30,7 +30,7 @@ class UsersMailer < ActionMailer::Base
     end
     @vars = locals
     mail( :to             => email_address_array.join(','),
-          :subject        => subject,
+          :subject        => "[DMPTool] #{subject}",
           :from           => APP_CONFIG['feedback_email_from'],
           :reply_to       => APP_CONFIG['feedback_email_from'],
           :template_name  => message_template
