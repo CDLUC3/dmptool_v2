@@ -24,7 +24,7 @@
                 selected: @resource.resource_type) %>
         <% else %>
           <%= f.select :resource_type,
-              options_for_select([:actionable_url, :help_text],
+              options_for_select([['Links', :actionable_url], ['Guidance', :help_text]],
                 selected: @resource.resource_type) %>
         <% end %>
 
