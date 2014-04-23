@@ -9,7 +9,7 @@
 <div class="control-group <%= validation_class %>">
   <%= f.label :login_id, 'Username', :class => 'control-label required' %>
   <div class="controls">
-    <%= f.text_field :login_id, readonly: !@user.new_record?, :class => "required", required: true %>
+    <%= f.text_field :login_id, readonly: !@user.new_record?, :class => "required", 'aria-required' => 'true' %>
     <span class="help-inline" style="display:block;height:0;">
       <%= errors.join (', ') %>
     </span>
@@ -22,7 +22,7 @@
   <div class="control-group <%= validation_class %>">
     <%= f.label :first_name, :class => 'control-label required' %>
     <div class="controls">
-      <%= f.text_field :first_name, :class => "required", required: true %>
+      <%= f.text_field :first_name, :class => "required", 'aria-required' => 'true' %>
       <span class="help-inline">
         <%= errors.join (', ') %>
       </span>
@@ -34,7 +34,7 @@
   <div class="control-group <%= validation_class %>">
     <%= f.label :last_name, :class => 'control-label required' %>
     <div class="controls">
-      <%= f.text_field :last_name, :class => "required", required: true %>
+      <%= f.text_field :last_name, :class => "required", 'aria-required' => 'true' %>
         <span class="help-in-line">
           <%=errors.join (', ')%>
       </span>
@@ -88,7 +88,7 @@
 <div class="control-group <%= validation_class%>">
   <%= f.label :email, :class => 'control-label required' %>
   <div class="controls">
-    <%= f.text_field :email, :class => 'input-xxlarge required', required: true %>
+    <%= f.text_field :email, :class => 'input-xxlarge required', 'aria-required' => 'true' %>
       <span class="help-in-line">
         <%=errors.join (', ')%>
       </span>
