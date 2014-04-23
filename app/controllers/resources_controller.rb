@@ -114,37 +114,34 @@
   def create
     @resource = Resource.new(resource_params)
     @current_institution = current_user.institution
-    respond_to do |format|
+    
       @tab_number = (params[:tab_number].blank? ? 'tab_tab2' : params[:tab_number] )
       if @resource.save
         @resource_id = @resource.id
         @resource_context = ResourceContext.new(resource_id: @resource_id, institution_id: @current_institution.id)
         if @resource_context.save
-          format.html { redirect_to params[:origin_url] + "##{@tab_number}", notice: "Resource was successfully created."}
+          redirect_to params[:origin_url] + "##{@tab_number}", notice: "Resource was successfully created."
         end
          
       else
-        format.html { redirect_to params[:origin_url] + "##{@tab_number}", notice: "A problem prevented this resource to be created. " }
+        flash[:error] = "A problem prevented this resource to be created."
+        redirect_to params[:origin_url] + "##{@tab_number}" 
       end
-    end
+    
   end
 
   #update institutional resource
   def update
-    respond_to do |format|
-      @tab_number = (params[:tab_number].blank? ? 'tab_tab2' : params[:tab_number])
-      if @resource.update(resource_params)
-        format.html { redirect_to params[:origin_url] + "##{@tab_number}", notice: 'Resource was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { redirect_to params[:origin_url] + "##{@tab_number}", notice: "A problem prevented this resource to be updated. " }
-        format.json { render json: @resource.errors, status: :unprocessable_entity }
-      end
+    @tab_number = (params[:tab_number].blank? ? 'tab_tab2' : params[:tab_number])
+    if @resource.update(resource_params)
+      redirect_to params[:origin_url] + "##{@tab_number}", notice: 'Resource was successfully updated.' 
+    else
+      flash[:error] = "A problem prevented this resource to be updated."
+      redirect_to params[:origin_url] + "##{@tab_number}"
     end
   end
 
   # DELETE /resources/1
-  # DELETE /resources/1.json
   def destroy
     @resource_id = params[:resource_id]
     @resource = Resource.find(@resource_id)

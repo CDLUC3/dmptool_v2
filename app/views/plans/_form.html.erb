@@ -27,9 +27,9 @@
           <%= f.label :name , 'DMP Title', :class => 'control-label required' %>
           <div class="controls">
             <% unless @plan.new_record? && current_page?(controller: 'plans', action: 'copy_existing_template') %>
-              <%= f.text_area :name , :class => 'input-xxlarge', required: true %>
+              <%= f.text_area :name , :class => 'input-xxlarge' %>
             <% else %>
-              <%= f.text_area :name , value: "Copy of " + @plan.name, :class => 'input-xxlarge', required: true %>
+              <%= f.text_area :name , value: "Copy of " + @plan.name, :class => 'input-xxlarge'%>
             <% end %>
           </div>
         </div>
