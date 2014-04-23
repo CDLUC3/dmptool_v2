@@ -119,15 +119,17 @@
   </div>
 </div>
 
-<% unless @user.new_record? || !@user.role_names.any?%>
-  <p><strong>DMP Options</strong></p>
-	<hr/>
-  <div class="control-group">
-    <p class="control-label">My Roles</p>
-    <div class="controls">
-      <p><%= @user.role_names.join(' | ') %></p>
+<% unless @user.new_record? %>
+  <%if @user.role_names.any?%>
+    <p><strong>DMP Options</strong></p>
+	   <hr/>
+    <div class="control-group">
+      <p class="control-label">My Roles</p>
+      <div class="controls">
+        <p><%= @user.role_names.join(' | ') %></p>
+      </div>
     </div>
-  </div>
+  <%end%>
 <% end %>
 
 <% unless @user.new_record? %>
