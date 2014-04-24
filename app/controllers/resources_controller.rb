@@ -271,6 +271,15 @@
           redirect_to customization_requirement_path(id: @customization_overview_id, 
                   requirement_id:  @requirement_id,
                   anchor: @tab_number)
+ 
+          # redirect_to new_customization_resource_path(template_id: @template_id,
+          #     customization_overview_id: @customization_overview_id,
+          #     resource_level: 'requirement',
+          #     requirement_id: @requirement_id,
+          #     tab_number:     params[:tab_number],
+          #     tab:            params[:tab],
+          #     custom_origin:  @custom_origin)
+
         end
 
       else #customization resource
