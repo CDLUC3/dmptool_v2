@@ -19,7 +19,7 @@
 
 </div>
 <div class="row-fluid">
-	<%= link_to "<< Back", details_plan_path(@plan), :class => "btn btn-green pull-left" %>
+	<%= link_to "<< Back", details_plan_path(@plan), :class => "btn btn-green pull-left", role: "button" %>
 	<% if @customization_review == true %>
 	  <% if state(@plan) == :submitted %>
     	<%= button_to "Submit for Review", plan_plan_states_submitted_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
