@@ -216,9 +216,7 @@ class PlansController < ApplicationController
   end
 
   def perform_review
-    @comment = Comment.new
-    comments = Comment.where(plan_id: @plan.id)
-    @reviewer_comments = comments.reviewer_comments.page(params[:page]).per(5)
+    set_comments
     @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: @user.institution_id).first
   end
 

@@ -9,18 +9,27 @@
 </div>
 
 <br/>
-<fieldset class="comment_box">
-	<h3><strong>Comments </strong></h3>
-  <div class="comments">
-	 <%= render partial: "comments/index_reviewer_comments" %>
-  </div>
-  <p><%= link_to "Add Comments", "#", data: {:comment_type => :reviewer}, :class => "btn add_comments_link" %></p>
-  <div>
-    <%= paginate @reviewer_comments %>
-  </div>
-</fieldset>
-<% unless @customization.nil? %>
 
+<h3><strong>Comments </strong></h3>
+<br/>
+<div class="comments">
+  <% if @reviewer_comments.empty? %>
+    <strong>There are currently no comments.</strong>
+    <br/>
+  <% else %>
+    <div class="scrollable-container">
+      <div class="scrollable-content">
+        <br/>
+        <%= render partial: 'comments/index_reviewer_comments' %>
+      </div>
+    <div class="scrollable-bottom-handle ui-resizable-handle ui-resizable-s"></div>
+  </div>
+  <% end %>
+  <br/>
+  <p><%= link_to "Add Comments", "#", data: {:comment_type => :reviewer}, :class => "btn add_comments_link" %></p>
+</div>
+
+<% unless @customization.nil? %>
   <% if @customization.review_type == :formal_review || (@customization.review_type == nil && @plan.requirements_template.review_type == :formal_review) %>
     <fieldset class="spaced_below">
       <label class ="control-label">Review Decision:</label>
@@ -56,7 +65,6 @@
   <% end %>
 
 <% end %>
-
 <div id = "comment_dialog_form">
 	<%= render partial: 'comments/form', locals: {:plan_id => params[:id] } %>
 </div>
