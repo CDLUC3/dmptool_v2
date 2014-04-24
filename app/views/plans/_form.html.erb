@@ -27,9 +27,9 @@
           <%= f.label :name , 'DMP Title', :class => 'control-label required' %>
           <div class="controls">
             <% unless @plan.new_record? && current_page?(controller: 'plans', action: 'copy_existing_template') %>
-              <%= f.text_area :name , :class => 'input-xxlarge' %>
+              <%= f.text_area :name , :class => 'input-xxlarge', 'aria-required' => 'true' %>
             <% else %>
-              <%= f.text_area :name , value: "Copy of " + @plan.name, :class => 'input-xxlarge'%>
+              <%= f.text_area :name , value: "Copy of " + @plan.name, :class => 'input-xxlarge', 'aria-required' => 'true' %>
             <% end %>
           </div>
         </div>
@@ -171,7 +171,7 @@
             <%= button_tag 'Cancel', type: :reset, :class => 'btn btn-success'%>
           <% else %>
             <%= f.submit "Save and Next >>", name: 'save_and_dmp_details', :class => 'btn btn-green pull-right' %>
-            <%= link_to '<< Back', :back, method: :get, :class => 'btn btn-green pull-left' %>
+            <%= link_to '<< Back', :back, method: :get, :class => 'btn btn-green pull-left', role: "button" %>
             <%= button_tag 'Cancel', type: :reset, :class => 'btn btn-success'%>
            <% end %>
         </div>

@@ -37,12 +37,12 @@
 
 <% if @all_scope == "all" %>
 <div class="buttons pagination">
-  <%= link_to "View Less", review_dmps_path(all_scope: "less", order_scope: @order_scope, scope: @scope), :method => :get, :class => "btn"%>
+  <%= link_to "View Less", review_dmps_path(all_scope: "less", order_scope: @order_scope, scope: @scope), :method => :get, :class => "btn", role: "button" %>
   <%= paginate @plans %>
 </div>
 <% else %>
   <div class="buttons pagination">
-    <%= link_to "View All", review_dmps_path(all_scope: "all", order_scope: @order_scope, scope: @scope), :method => :get, :class => "btn" %>
+    <%= link_to "View All", review_dmps_path(all_scope: "all", order_scope: @order_scope, scope: @scope), :method => :get, :class => "btn", role: "button" %>
     <%= paginate @plans %>
   </div>
 <%end%>
