@@ -125,12 +125,12 @@
 
 <% if @all_scope == "all" %>
 	<div class="buttons pagination">
-		<%= link_to "View Less", requirements_templates_path(:all_scope => "", order_scope: @order_scope, scope: @scope), :method => :get, :class => "btn" %>
+		<%= link_to "View Less", requirements_templates_path(:all_scope => "", order_scope: @order_scope, scope: @scope), :method => :get, :class => "btn", role: "button" %>
 		<%= paginate @requirements_templates %>
 	</div>
 <% else %>
 	<div class="buttons pagination">
-		<%= link_to "View All", requirements_templates_path(:all_scope => "all", order_scope: @order_scope, scope: @scope), :method => :get, :class => "btn", :id => "view_all_templates" %>
+		<%= link_to "View All", requirements_templates_path(:all_scope => "all", order_scope: @order_scope, scope: @scope), :method => :get, :class => "btn", role: "button", :id => "view_all_templates" %>
 		<%= paginate @requirements_templates %>
 	</div>
 <%end%>
