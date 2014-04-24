@@ -171,7 +171,7 @@
             <%= button_tag 'Cancel', type: :reset, :class => 'btn btn-success'%>
           <% else %>
             <%= f.submit "Save and Next >>", name: 'save_and_dmp_details', :class => 'btn btn-green pull-right' %>
-            <%= link_to '<< Back', plan_template_information_path, :class => 'btn btn-green pull-left' %>
+            <%= link_to '<< Back', :back, method: :get, :class => 'btn btn-green pull-left' %>
             <%= button_tag 'Cancel', type: :reset, :class => 'btn btn-success'%>
            <% end %>
         </div>
