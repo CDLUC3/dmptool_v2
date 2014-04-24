@@ -38,6 +38,10 @@ input[type=text], input[type=password], input[type=email], input[type=search], t
 	
 input.input-large {
 	width: 200px; }
+
+textarea.full-length {
+	width: 98%; 
+}
 	
 input[type=radio], input[type=checkbox] {
 	border: none;
