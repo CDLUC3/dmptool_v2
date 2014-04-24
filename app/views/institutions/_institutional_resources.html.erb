@@ -35,7 +35,7 @@
 </table>
 
 <div class="buttons pagination">	
-	<%= link_to "View All", institutions_path(anchor: 'tab_tab2', scope: "all"), :method => :get, :class => "btn" %>	
+	<%= link_to "View All", institutions_path(anchor: 'tab_tab2', scope: "all"), :method => :get, :class => "btn", role: "button" %>	
 	<%= paginate @resource_contexts %>
 </div>
 <div class="buttons">
