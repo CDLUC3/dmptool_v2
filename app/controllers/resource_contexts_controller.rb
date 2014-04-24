@@ -67,6 +67,7 @@ class ResourceContextsController < ApplicationController
 
 
   def create
+    
     pare_to = ['institution_id', 'requirements_template_id', 'requirement_id', 'resource_id',
               'name', 'contact_info', 'contact_email', 'review_type']
     @resource_context = ResourceContext.new(params['resource_context'].selected_items(pare_to))
@@ -75,22 +76,23 @@ class ResourceContextsController < ApplicationController
     @req_temp = @resource_context.requirements_template
     message = @resource_context.changed ? 'Customization was successfully created.' : ''
 
-    respond_to do |format|
-      if @resource_context.save
+    
+      if @resource_context.save!
         customization_resources_list
         go_to = (params[:after_save] == 'next_page' ? customization_requirement_path(@resource_context.id) :
                         edit_resource_context_path(@resource_context.id))
-        format.html { redirect_to go_to, notice: message}
-        #format.json { render action: 'edit', status: :created, location: @resource_context }
+        redirect_to go_to, notice: message
       else
-        format.html { render action: 'new' }
-        #format.json { render json: @resource_context.errors, status: :unprocessable_entity }
+        render action: 'new'
+        #flash[:error] = "An error has occurred"
+        #redirect_to go_to 
       end
-    end
+    
   end
 
 
   def update
+
     @resource_context = ResourceContext.find(params[:id])
     pare_to = ['institution_id', 'requirements_template_id', 'requirement_id', 'resource_id',
                'name', 'contact_info', 'contact_email', 'review_type']
