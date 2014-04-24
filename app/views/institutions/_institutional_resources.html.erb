@@ -5,13 +5,10 @@
 	<thead>
 		<tr>
 			<th class="span4">Details</th>
-			<th>Unlink Resource from Institution</th>
-			<th width="span1">Edit</th>
+			<th>Action</th>
 			<th>Institution</th>
 			<th>Creation Date</th>
 			<th>Last Modification Date</th>
-			<th>Delete Resource</th>
-			
 		</tr>
 	</thead>
 	<tbody>
@@ -22,23 +19,16 @@
 					<%= resource_context.resource.nil? ? " " :  resource_context.resource.label %>
 				</div>
 			</td>
-			<td><%= link_to raw(''), 
+			<td><%= link_to raw(''), edit_resource_path(resource_context.resource_id, origin_url: smart_origin_url,
+                    tab_number: (defined?(@tab_number) ? @tab_number: nil)), :class => 'icon edit-user', :title => 'Edit' %>
+				<%= link_to raw(''), 
 						unlink_institutional_resource_path(resource_context_id: resource_context.id, origin_url: smart_origin_url,
                                                tab_number: (defined?(@tab_number) ? @tab_number: nil)),
-            method: :post, :class => 'icon unlink' %>  
-
-			</td> 
-			<td class="span1"><%= link_to raw(''), edit_resource_path(resource_context.resource_id, origin_url: smart_origin_url,
-                    tab_number: (defined?(@tab_number) ? @tab_number: nil)), :class => 'icon edit-user' %></td>
+            method: :post, :class => 'icon unlink', :title => 'Unlink from customization' %>
+			</td>
 			<td><%= resource_context.institution.nil? ? " " :  resource_context.institution.nickname %></td>
 			<td><%= resource_context.resource.nil? ? " " :  resource_context.resource.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
-			<td><%= resource_context.resource.nil? ? " " :  resource_context.resource.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
-			<td class="span1"><%= link_to raw(''), delete_resource_path(resource_id: resource_context.resource_id, origin_url: smart_origin_url,
-                                                                  tab_number: (defined?(@tab_number) ? @tab_number: nil)),
-																						:method => :delete, 
-																						:data => { :confirm => 'Are you sure?' }, 
-																						:class => 'icon remove-user' %></td> 
-			
+			<td><%= resource_context.resource.nil? ? " " :  resource_context.resource.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>		
 		</tr>
 	<% end %>
 	<tbody>
