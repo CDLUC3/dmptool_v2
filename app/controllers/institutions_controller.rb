@@ -181,20 +181,27 @@ class InstitutionsController < ApplicationController
   # PATCH/PUT /institutions/1.json
   def update
     @current_institution = Institution.find(params[:id])
-    
-    if @current_institution.update(institution_params)
-      redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully updated.' 
-    else
-      if params[:full_name].blank? || params[:full_name].nil?
-        msg = "Please enter a name for the Institution."
+    respond_to do |format|  
+      if @current_institution.update(institution_params)
+        format.html { redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully updated.' }
       else
-        msg = "An error has occured and the institution cannot be updated."
-      end
-      flash[:error] = msg
-      redirect_to edit_institution_path(@current_institution)
+        format.html { render edit_institution_path(@current_institution)}     
+      end 
     end
-
   end
+
+  # if @current_institution.update(institution_params)
+    #   redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully updated.' 
+    # else
+    #   render edit_institution_path(@current_institution)
+    #   # if params[:full_name].blank? || params[:full_name].nil?
+    #   #   msg = "Please enter a name for the Institution."
+    #   # else
+    #   #   msg = "An error has occured and the institution cannot be updated."
+    #   # end
+    #   # flash[:error] = msg
+    #   # redirect_to edit_institution_path(@current_institution)
+    # end
 
   # DELETE /institutions/1
   # DELETE /institutions/1.json
