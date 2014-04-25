@@ -110,24 +110,23 @@
   end
 
   
-  #create new institutional resource
+
   def create
+    @tab_number = (params[:tab_number].blank? ? 'tab_tab2' : params[:tab_number] )
     @resource = Resource.new(resource_params)
     @current_institution = current_user.institution
-    
-      @tab_number = (params[:tab_number].blank? ? 'tab_tab2' : params[:tab_number] )
+    respond_to do |format|
       if @resource.save
-        @resource_id = @resource.id
-        @resource_context = ResourceContext.new(resource_id: @resource_id, institution_id: @current_institution.id)
+        @resource_context = ResourceContext.new(resource_id: @resource.id, institution_id: @current_institution.id)
         if @resource_context.save
-          redirect_to params[:origin_url] + "##{@tab_number}", notice: "Resource was successfully created."
+          format.html { redirect_to params[:origin_url] + "##{@tab_number}", notice: "Resource was successfully created."}
+          format.json { head :no_content }
         end
-         
       else
-        flash[:error] = "A problem prevented this resource to be created."
-        redirect_to params[:origin_url] + "##{@tab_number}" 
+        format.html { render action: 'new' }
+        format.json { render json: @resource.errors, status: :unprocessable_entity }
       end
-    
+    end
   end
 
   #update institutional resource
@@ -272,13 +271,7 @@
                   requirement_id:  @requirement_id,
                   anchor: @tab_number)
  
-          # redirect_to new_customization_resource_path(template_id: @template_id,
-          #     customization_overview_id: @customization_overview_id,
-          #     resource_level: 'requirement',
-          #     requirement_id: @requirement_id,
-          #     tab_number:     params[:tab_number],
-          #     tab:            params[:tab],
-          #     custom_origin:  @custom_origin)
+          
 
         end
 
