@@ -3,7 +3,7 @@ class InstitutionsController < ApplicationController
   before_action :require_login, :except=>[:partners_list]
   before_action :set_institution, only: [:show, :destroy]
   before_action :check_for_cancel, :update => [:create, :update, :destroy]
-  before_filter :populate_institution_select_list, only: [:index, :new]
+  before_filter :populate_institution_select_list, only: [:index, :new, :create]
   before_action :check_institution_admin_access, :except=>[:partners_list]
 
   include InstitutionsHelper
@@ -166,23 +166,15 @@ class InstitutionsController < ApplicationController
   end
 
 
-  # POST /institutions
-  # POST /institutions.json
   def create
     @current_institution = Institution.new(institution_params)
-  
-    if @current_institution.save
-      redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully created.' 
-    else
-      if params[:full_name].blank? || params[:full_name].nil?
-        msg = "Please enter a name for the Institution."
+    respond_to do |format|  
+      if @current_institution.save
+        format.html { redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully created.' }
       else
-        msg = "An error has occured and the institution cannot be created."
-      end
-      flash[:error] = msg
-      redirect_to new_institution_path
+        format.html { render new_institution_path}     
+      end 
     end
-    
   end
 
   # PATCH/PUT /institutions/1
