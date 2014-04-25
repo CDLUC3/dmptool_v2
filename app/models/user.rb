@@ -195,15 +195,9 @@ class User < ActiveRecord::Base
         dmp_owners_and_co:       {
             new_comment: true,
             committed:    true,
-            published:   true,
+            vis_change:   true,
             submitted:   true,
             user_added:  true
-        },
-        dmp_co:                  {
-            submitted:    true,
-            deactivated:  true,
-            deleted:      true,
-            new_co_owner: true
         },
         requirement_editors:     {
             committed:  true,
@@ -211,8 +205,6 @@ class User < ActiveRecord::Base
             deleted:   true
         },
         resource_editors:        {
-            committed:            true,
-            deactived:           true,
             deleted:             true,
             associated_committed: true
         },

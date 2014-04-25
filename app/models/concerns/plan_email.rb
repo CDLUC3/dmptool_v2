@@ -8,24 +8,24 @@ module PlanEmail
 
   # for these notifications:
   # [:dmp_owners_and_co][:committed] -- A DMP is committed
-  # [:dmp_owners_and_co][:published] -- A DMP is shared
+  # [:dmp_owners_and_co][:vis_change] -- A DMP's visibility has changed
   # [:dmp_owners_and_co][:submitted] -- A submitted DMP is approved or rejected
   # [:institutional_reviewers][:submitted] -- An Institutional DMP is approved or rejected
   # [:institutional_reviewers][:approved_rejected] -- An Institutional DMP is submitted for review
   def email_dmp_saved
 
-    #[:dmp_owners_and_co][:published] -- A DMP is shared
+    #[:dmp_owners_and_co][:vis_change] -- A DMP is shared
     if !self.changes["visibility"].nil?
       if self.changes["visibility"][0] != self.changes["visibility"][1] &&
           (self.visibility == :institutional || self.visibility == :public)
         # mail all owners and co-owners
         users = self.users
-        users.delete_if {|u| !u[:prefs][:dmp_owners_and_co][:published]}
+        users.delete_if {|u| !u[:prefs][:dmp_owners_and_co][:vis_change]}
         users.each do |user|
           UsersMailer.notification(
               user.email,
               "A DMP is shared",
-              "dmp_owners_and_co_published",
+              "dmp_owners_and_co_vis_change",
               { } ).deliver
         end
       end
