@@ -150,6 +150,8 @@ class ResourceContext < ActiveRecord::Base
 
   
 
+  
+
   #see context level variables at top for information
   def resource_level
     CONTEXT_LEVELS.each do |k,v|
