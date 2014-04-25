@@ -130,7 +130,7 @@ class RequirementsTemplatesController < ApplicationController
         end
       else
         if @requirements_template.save
-          format.html { redirect_to redirect_to edit_requirements_template_path(@requirements_template), notice: 'DMP Template was successfully created.' }
+          format.html { redirect_to edit_requirements_template_path(@requirements_template), notice: 'DMP Template was successfully created.' }
           format.json { head :no_content }
         else
           format.html { render action: 'new' }
