@@ -6,19 +6,18 @@ module UserPlanEmail
     after_create :email_coowner_added
   end
 
-  # [:dmp_owners_and_co][:user_added]
+  # [:dmp_owners_and_co][:user_added] -- I have been made a co-owner of a DMP
   def email_coowner_added
     # mail all owners and co-owners
     if self.owner == false
-      users = self.users
-      users.delete_if {|u| !u[:prefs][:dmp_owners_and_co][:user_added] || u.id = self.user_id }
+      coowner = User.find(self.user_id)
 
-      users.each do |user|
+      if coowner.prefs[:dmp_owners_and_co][:user_added] == true
         UsersMailer.notification(
-            user.email,
-            "A co-owner has been added",
-            "dmp_owners_and_co_user_added",
-            { } ).deliver
+              coowner.email,
+              "You've been added as a coowner",
+              "dmp_owners_and_co_user_added",
+              { } ).deliver
       end
     end
   end
