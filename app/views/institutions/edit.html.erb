@@ -116,11 +116,11 @@
 
 
   <% if !(@acr.nil?) %>
-   <%= link_to '<< Back', institutions_path(anchor: @acr), :class => 'btn' %>
+   <%= link_to '<< Back', institutions_path(anchor: @acr), :class => 'btn', role: "button" %>
   <%elsif !@admin_acr.nil?  %>
-    <%= link_to '<< Back', users_path(anchor: @admin_acr), :class => 'btn' %>
+    <%= link_to '<< Back', users_path(anchor: @admin_acr), :class => 'btn', role: "button" %>
   <%else%>
-    <%= link_to '<< Back', :back, :class => 'btn' %>
+    <%= link_to '<< Back', :back, :class => 'btn', role: "button" %>
   <%end%>
 
 

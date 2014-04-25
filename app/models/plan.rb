@@ -1,7 +1,7 @@
 class Plan < ActiveRecord::Base
 
   include PlanEmail
-
+  attr_accessor :current_user_id
   has_many :user_plans
   has_many :users, through: :user_plans
   has_many :plan_states
@@ -17,6 +17,7 @@ class Plan < ActiveRecord::Base
   validates :name, presence: true
   validates :visibility, presence: true
   validates :requirements_template_id, presence: true
+  validate :unique_plan_name_per_owner, on: :create
 
   # scopes for plan's visibility
   scope :institutional_visibility, -> { where(visibility: :institutional) }
@@ -41,24 +42,32 @@ class Plan < ActiveRecord::Base
     where("name REGEXP ?", "^[#{s}-#{e}]")
   end
 
-  def self.search_terms(terms)  
+  def self.search_terms(terms)
     items = terms.split
     conditions1 = items.map{|item| "plans.name LIKE ?" }
     conditions2 = items.map{|item| "requirements_templates.name LIKE ?" }
     conditions3 = items.map{|item| "institutions.full_name LIKE ?" }
     conditions4 = items.map{|item| "users.last_name LIKE ?" }
     conditions5 = items.map{|item| "users.first_name LIKE ?" }
-    conditions = "(    
+    conditions = "(
                       (#{conditions1.join(' AND ')})" + ' OR ' +
                       "(#{conditions2.join(' AND ')})" + ' OR ' +
                       "(#{conditions3.join(' AND ')})" + ' OR ' +
                       "(#{conditions4.join(' OR ')})" + ' OR ' +
                       "(#{conditions5.join(' OR ')})
-                  )" 
+                  )"
     values = items.map{|item| "%#{item}%" }
     joins({:users  => :institution}, :requirements_template).
         where(user_plans: {owner: true}).
         where(conditions, *(values * 5) )
+  end
+
+  def unique_plan_name_per_owner
+    user_id = self.current_user_id
+    plan_names = Plan.joins(:users).where(user_plans: {owner: true}).where('users.id =?', user_id).pluck('plans.name')
+    if plan_names.include?(self.name)
+      errors[:base] << "A Plan with this name already exists in the list of Plans you own."
+    end
   end
 
   def self.order_by_institution
