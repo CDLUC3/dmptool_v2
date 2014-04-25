@@ -123,10 +123,13 @@
   <%if @user.role_names.any?%>
     <p><strong>DMP Options</strong></p>
 	   <hr/>
+     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <div class="control-group">
       <p class="control-label">My Roles</p>
       <div class="controls">
-        <p><%= @user.role_names.join(' | ') %></p>
+        <p><%= @user.role_names.join(' | ') %>
+           <%= content_tag(:span, '', :title => '<ul><li>Template editor: create local, institutional, DMP templates</li><li>Resources editor: add/modify DMP template customizations, which include links to resources, local help text, suggested text, and example responses</li><li>Institutional reviewer: review, informally or formally, data management plans</li><li>Institutional administrator: assign additional DMPTool institutional administrators; performs all above administrative roles</li></ul>', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
+        </p>
       </div>
     </div>
   <%end%>

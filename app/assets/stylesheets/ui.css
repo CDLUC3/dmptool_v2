@@ -338,3 +338,33 @@ div.scrollable-bottom-handle {
   background : #dedede;
   bottom:0;
 }
+
+/* Bootstrap Tooltip styling */
+
+.tooltip.in {
+  opacity: 1;
+}
+
+.tooltip-inner {
+  max-width: 300px;
+  padding: 12px;
+  color: #000;
+  background-color: #fff;
+  text-align: left;
+  border: 2px solid #999;
+  font-size: 1.2em;
+  box-shadow: 0 0 5px #999;
+}
+
+.tooltip p {
+  line-height: normal;
+}
+
+.tooltip-inner li {
+  list-style-type: disc;
+}
+
+.tooltip-inner ul {
+  margin: 10px;
+  padding: 0;
+}
