@@ -131,12 +131,18 @@
 
   #update institutional resource
   def update
+    @current_institution = current_user.institution
+    @resource = Resource.find(params[:id])
     @tab_number = (params[:tab_number].blank? ? 'tab_tab2' : params[:tab_number])
-    if @resource.update(resource_params)
-      redirect_to params[:origin_url] + "##{@tab_number}", notice: 'Resource was successfully updated.' 
-    else
-      flash[:error] = "A problem prevented this resource to be updated."
-      redirect_to params[:origin_url] + "##{@tab_number}"
+    respond_to do |format|
+      if @resource.update(resource_params)
+        format.html { redirect_to params[:origin_url] + "##{@tab_number}", notice: 'Resource was successfully updated.'}
+        format.json { head :no_content }
+      else
+        format.html { render 'edit'}
+        format.json { head :no_content }
+        
+      end
     end
   end
 
