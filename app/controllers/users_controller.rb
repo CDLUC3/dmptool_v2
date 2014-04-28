@@ -114,23 +114,23 @@ class UsersController < ApplicationController
     @orcid_id = params[:user][:orcid_id]
     @update_orcid_id = params[:user][:update_orcid_id]
 
-    if !password.empty? || !password_confirmation.empty?
-      if valid_password(password, password_confirmation)
-          reset_ldap_password(@user, password)
-      else
-        @msg = ""
-        @msg << "Password is required.\n" if password.blank?
-        @msg << "Password confirmation is required.\n" if password_confirmation.blank?
-        @msg << "Your password and repeated password do not match.\n" if password != password_confirmation
-        @msg << "Your password must be 8 to 30 characters long.\n" unless (8..30).include?(password.length)
-        unless password.match(/\d/) and password.match(/[A-Za-z]/)
-           @msg << "Your password must contain at least one number and at least one letter.\n"
-        end
-        flash[:error] = @msg
-        redirect_to edit_user_path(@user)
-        return
-      end
-    end
+    # if !password.empty? || !password_confirmation.empty?
+    #   if valid_password(password, password_confirmation)
+    #       reset_ldap_password(@user, password)
+    #   else
+    #     @msg = ""
+    #     @msg << "Password is required.\n" if password.blank?
+    #     @msg << "Password confirmation is required.\n" if password_confirmation.blank?
+    #     @msg << "Your password and repeated password do not match.\n" if password != password_confirmation
+    #     @msg << "Your password must be 8 to 30 characters long.\n" unless (8..30).include?(password.length)
+    #     unless password.match(/\d/) and password.match(/[A-Za-z]/)
+    #        @msg << "Your password must contain at least one number and at least one letter.\n"
+    #     end
+    #     flash[:error] = @msg
+    #     redirect_to edit_user_path(@user)
+    #     return
+    #   end
+    # end
 
     if !@orcid_id.blank?
       if valid_orcid?(@orcid_id)
