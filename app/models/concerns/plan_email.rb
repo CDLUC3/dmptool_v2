@@ -23,9 +23,9 @@ module PlanEmail
         users.each do |user|
           UsersMailer.notification(
               user.email,
-              "A DMP's visibility has changed",
+              "DMP Visibility Changed: #{self.name}",
               "dmp_owners_and_co_vis_change",
-              { } ).deliver
+              { :user => user, :plan => self } ).deliver
         end
       end
     end
