@@ -12,7 +12,7 @@ module CommentEmail
   def email_new_comment
 
     #mail all owners and co-owners for a plan that has a new comment
-    if self.comment_type == :owner
+    #if self.comment_type == :owner
       users = self.plan.users
       plan = self.plan
       commenter = self.user
@@ -24,7 +24,7 @@ module CommentEmail
             "dmp_owners_and_co_new_comment",
             {:comment => self.value, :user => user, :commenter => commenter, :plan => plan } ).deliver
       end
-    end
+    #end
 
     #mail All institutional reviewers for plan's institution
     if self.comment_type == :reviewer
