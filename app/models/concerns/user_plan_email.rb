@@ -10,14 +10,15 @@ module UserPlanEmail
   def email_coowner_added
     # mail all owners and co-owners
     if self.owner == false
-      coowner = User.find(self.user_id)
+      coowner = self.user
+      plan = self.plan
 
       if coowner.prefs[:dmp_owners_and_co][:user_added] == true
         UsersMailer.notification(
               coowner.email,
-              "You've been added as a coowner",
+              "New Co-owner of #{}",
               "dmp_owners_and_co_user_added",
-              { } ).deliver
+              {:user => coowner, :plan => plan } ).deliver
       end
     end
   end
