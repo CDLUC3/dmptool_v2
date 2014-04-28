@@ -21,9 +21,9 @@ module RequirementsTemplateEmail
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            "An institutional DMP template is deactivated",
+            "DMP Template Deactivated: #{self.name}",
             "requirement_editors_deactived",
-            {} ).deliver
+            {:user => user, :template => self} ).deliver
       end
 
     # [:requirement_editors][:committed] - An institutional DMP template is committed (activated)
@@ -36,9 +36,9 @@ module RequirementsTemplateEmail
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            "An institutional DMP template is committed",
+            "DMP Template Activated: #{self.name}",
             "requirement_editors_committed",
-            {} ).deliver
+            {:user => user, :template => self} ).deliver
       end
 
       #this is for customizations and resource editors associated them that use this template
