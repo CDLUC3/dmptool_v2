@@ -4,7 +4,6 @@ module RequirementsTemplateEmail
 
   included do
     after_save :email_template_saved
-    after_destroy :email_template_destroyed
   end
 
   # for these notifications:
