@@ -13,7 +13,7 @@
 .tab-pane .buttons {
 	border: none;
 	border-top: 1px solid #B6B6B7;
-	margin: 0 -10px 0;
+	margin: 10px -10px 0;
 	padding-bottom: 0; }
 .tab-pane .buttons.pagination {
 	border: 1px solid #B6B6B7;
