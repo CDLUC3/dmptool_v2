@@ -3,7 +3,7 @@ class Resource < ActiveRecord::Base
 
   #validates_columns :resource_type
   validates :resource_type, presence: true
-  validates :value, presence: true, if: Proc.new{|r| r.resource_type == 'actionable_url' }
+  validates :value, presence: true, if: "resource_type == 'actionable_url'"
   validates :label, presence: true
   
 
