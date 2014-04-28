@@ -243,6 +243,7 @@
     @requirement_id = params[:requirement_id]
     @resource_level = params[:resource_level]
     @template_id = params[:template_id]
+    @template_name = RequirementsTemplate.find(@template_id).name
     @customization_overview_id = params[:customization_overview_id]
     @customization_overview = ResourceContext.find(@customization_overview_id)
 
@@ -258,46 +259,49 @@
     
         @resource = Resource.new(resource_params)
 
-        if @resource.save 
-          @resource_id = @resource.id
-          @resource_context = ResourceContext.new(resource_id: @resource_id, 
+        respond_to do |format|
+          if @resource.save
+            @resource_id = @resource.id
+            @resource_context = ResourceContext.new(resource_id: @resource_id, 
                                     institution_id: @current_institution_id, 
                                     requirements_template_id: @template_id,
                                     requirement_id:  @requirement_id)
-          if @resource_context.save
-            redirect_to customization_requirement_path(id: @customization_overview_id, 
+            if @resource_context.save
+              format.html { redirect_to customization_requirement_path(id: @customization_overview_id, 
                   requirement_id:  @requirement_id,
                   anchor: @tab_number), 
-                  notice: "Resource was successfully created." 
-          end
-           
-        else
-          flash[:error] = "A problem prevented this resource to be created."
-          redirect_to customization_requirement_path(id: @customization_overview_id, 
-                  requirement_id:  @requirement_id,
-                  anchor: @tab_number)
- 
-          
+                  notice: "Resource was successfully created."}
+            else
+              format.html { render 'new_customization_resource'}
+            end
 
+          else
+            format.html { render 'new_customization_resource'}
+          end
         end
 
       else #customization resource
           
           @resource = Resource.new(resource_params)
             
-          if @resource.save 
-            @resource_id = @resource.id
-            @resource_context = ResourceContext.new(resource_id: @resource_id, institution_id: @current_institution_id, 
-                                                    requirements_template_id: @template_id)
-            if @resource_context.save
-              redirect_to edit_resource_context_path(@customization_overview_id), notice: "Resource was successfully created." 
+         
+          respond_to do |format|
+            if @resource.save
+              @resource_id = @resource.id
+              @resource_context = ResourceContext.new(resource_id: @resource_id, 
+                                                      institution_id: @current_institution_id, 
+                                                      requirements_template_id: @template_id)
+              if @resource_context.save
+                format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
+                                          notice: "Resource was successfully created."}
+              else
+                format.html { render 'new_customization_resource'}
+              end
+
+            else
+              format.html { render 'new_customization_resource'}
             end
-             
-          else
-            flash[:error] = "A problem prevented this resource to be created."
-            redirect_to edit_resource_context_path(@customization_overview_id)
           end
-          
       end
   end
 
