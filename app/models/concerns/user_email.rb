@@ -11,12 +11,15 @@ module UserEmail
     # I believe this should notify the user who is granted the role
     users = [self]
     users.delete_if {|u| !u[:prefs][:users][:role_granted] } #deletes from array if not set
-    if users.length > 0
+    users.each do |user|
+      friendly_roles = Role.where(id: granted_roles).map(&:name)
       UsersMailer.notification(
-          users.collect(&:email),
-          "You have new roles",
+          user.email,
+          "#{friendly_roles.join(', ')} Activated",
           "users_role_granted",
-          {:granted_roles => Role.where(id: granted_roles).map(&:name) } ).deliver
+          { :granted_roles => friendly_roles,
+            :user => user
+          } ).deliver
     end
   end
 end
