@@ -23,9 +23,9 @@ module PlanEmail
         users.each do |user|
           UsersMailer.notification(
               user.email,
-              "A DMP's visibility has changed",
+              "DMP Visibility Changed: #{self.name}",
               "dmp_owners_and_co_vis_change",
-              { } ).deliver
+              { :user => user, :plan => self } ).deliver
         end
       end
     end
@@ -49,9 +49,9 @@ module PlanEmail
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            "A DMP is committed",
+            "PLAN COMPLETED: #{self.name}",
             "dmp_owners_and_co_committed",
-            { } ).deliver
+            {:user => user, :plan => self } ).deliver
       end
 
     # [:dmp_owners_and_co][:submitted] -- A submitted DMP is approved or rejected
@@ -62,9 +62,9 @@ module PlanEmail
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            "A submitted DMP is approved or rejected",
+            "DMP #{current_state.state}: #{self.name}",
             "dmp_owners_and_co_submitted",
-            { } ).deliver
+            { :user => user, :plan => self, :state => current_state } ).deliver
       end
 
       institution = self.owner.institution
@@ -73,9 +73,9 @@ module PlanEmail
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            "A new comment was added",
+            "DMP #{current_state.state}: #{self.name}",
             "institutional_reviewers_approved_rejected",
-            {} ).deliver
+            { :user => user, :plan => self, :state => current_state } ).deliver
       end
 
     # [:institutional_reviewers][:submitted] -- An Institutional DMP is submitted for review
@@ -86,7 +86,7 @@ module PlanEmail
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            "An institutional DMP is submitted for review",
+            "#{self.name} has been submitted for institutional review",
             "institutional_reviewers_submitted",
             {} ).deliver
       end
