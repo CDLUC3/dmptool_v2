@@ -1,5 +1,7 @@
-A new comment has been added to your DMP.
+Hello <%= @vars[:user].full_name %>,
+
+<%= @vars[:commenter].full_name %> has commented on the plan "<%= @vars[:plan].name %>" :
 
 <%= @vars[:comment] %>
 
-<%= @vars[:user_name] %>
+If you have questions pertaining to this action, please contact the DMP Administrator at uc3@ucop.edu
