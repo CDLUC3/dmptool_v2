@@ -64,7 +64,6 @@
                                         requirement_level. #requirement_id is not nil
                                         select(:requirement_id).count
 
-
     @any_requirements = ( @requirements_count > 0 )
 
   end
@@ -78,38 +77,40 @@
     @customization_id = params[:customization_id]
     @resource_level = params[:resource_level]
     @requirement_id = params[:requirement_id]
+    @template_id = params[:template_id]
 
     if @resource_level == 'requirement' #customization details
-     
-      if @resource.update(resource_params)
-        
-        redirect_to customization_requirement_path(id: @customization_id, 
+
+      respond_to do |format|
+        if @resource.update(resource_params)
+          format.html { redirect_to customization_requirement_path(id: @customization_id, 
                       requirement_id:  @requirement_id, 
                       anchor: @tab_number),
-                      notice: 'Resource was successfully updated.' 
-      else
-        flash[:error] = "A problem prevented this resource to be updated. "
-        redirect_to customization_requirement_path(id: @customization_id, 
-                      requirement_id:  @requirement_id,
-                      anchor: @tab_number)                      
-          
+                      notice: 'Resource was successfully updated.'  }
+          format.json { head :no_content }
+        else
+          format.html { render 'edit_customization_resource'}
+          format.json { head :no_content }    
         end
+      end
       
     else #customization overview
 
-      if @resource.update(resource_params)        
-        redirect_to edit_resource_context_path(@customization_id),
-                      notice: 'Resource was successfully updated.' 
-      else
-        flash[:error] = "A problem prevented this resource to be updated. "
-        redirect_to edit_resource_context_path(@customization_id)
+      respond_to do |format|
+        if @resource.update(resource_params)
+          format.html { redirect_to edit_resource_context_path(@customization_id),
+                      notice: 'Resource was successfully updated.'  }
+          format.json { head :no_content }
+        else
+          format.html { render 'edit_customization_resource'}
+          format.json { head :no_content }    
+        end
       end
       
     end
 
   end
-
-  
+ 
 
   def create
     @tab_number = (params[:tab_number].blank? ? 'tab_tab2' : params[:tab_number] )
@@ -231,7 +232,6 @@
        @selected = "help_text"
     end
       
-
   end
 
 

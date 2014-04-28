@@ -180,15 +180,37 @@ class InstitutionsController < ApplicationController
   # PATCH/PUT /institutions/1
   # PATCH/PUT /institutions/1.json
   def update
+    @acr = params[:acr]
+    @admin_acr = params[:admin_acr]
     @current_institution = Institution.find(params[:id])
+    if user_role_in?(:dmp_admin) 
+      @institution_pool = Institution.order(full_name: :asc).where("id != ?", @current_institution.id).collect {|i| ["#{'-' * i.depth} #{i.full_name}", i.id] } 
+    else
+      @institution_pool = @current_institution.root.subtree.collect {|i| ["#{'-' * i.depth} #{i.full_name}", i.id] } 
+      @institution_pool.delete_if {|i| i[1] == @current_institution.id}
+    end
+    
     respond_to do |format|  
       if @current_institution.update(institution_params)
         format.html { redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully updated.' }
       else
-        format.html { render edit_institution_path(@current_institution)}     
+        format.html { render 'edit'}     
       end 
     end
+  
   end
+
+
+  respond_to do |format|
+      if @resource_context.update(to_save)
+        format.html { redirect_to go_to, notice: message }
+        format.json { head :no_content }
+      else
+        format.html { render 'edit'}
+        format.json { head :no_content }
+        
+      end
+    end
 
   # if @current_institution.update(institution_params)
     #   redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully updated.' 

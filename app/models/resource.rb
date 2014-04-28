@@ -3,7 +3,7 @@ class Resource < ActiveRecord::Base
 
   #validates_columns :resource_type
   validates :resource_type, presence: true
-  validates :value, presence: true, if: "resource_type == 'actionable_url'"
+  validates_presence_of :value, if: :actionable_url_resource
   validates :label, presence: true
   
 
@@ -16,7 +16,7 @@ class Resource < ActiveRecord::Base
   scope :suggested_response, -> { where(resource_type: 'suggested_response') }
   scope :example_response, -> { where(resource_type: 'example_response') }
 
-  def actionable_url
+  def actionable_url_resource
   	resource_type == "actionable_url"
   end
 

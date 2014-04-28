@@ -76,17 +76,21 @@ class ResourceContextsController < ApplicationController
     @req_temp = @resource_context.requirements_template
     message = @resource_context.changed ? 'Customization was successfully created.' : ''
 
-    
-      if @resource_context.save!
+   
+
+    respond_to do |format|
+      if @resource_context.save
         customization_resources_list
         go_to = (params[:after_save] == 'next_page' ? customization_requirement_path(@resource_context.id) :
                         edit_resource_context_path(@resource_context.id))
-        redirect_to go_to, notice: message
+        format.html { redirect_to go_to, notice: message }
+        format.json { head :no_content }
       else
-        render action: 'new'
-        #flash[:error] = "An error has occurred"
-        #redirect_to go_to 
+        format.html { render 'new'}
+        format.json { head :no_content }
+        
       end
+    end
     
   end
 
@@ -105,11 +109,6 @@ class ResourceContextsController < ApplicationController
     customization_resources_list
     @req_temp = @resource_context.requirements_template
 
-
-    # if params[:resource_context][:contact_email].nil? || params[:resource_context][:contact_email].blank?
-    #   flash[:error] = "Contact email cannot be blank."
-    #   redirect_to edit_resource_context_path(@resource_context.id) and return
-    # else
     go_to = (params[:after_save] == 'next_page' ? customization_requirement_path(@resource_context.id) :
                   edit_resource_context_path(@resource_context.id) )
     respond_to do |format|
@@ -122,18 +121,6 @@ class ResourceContextsController < ApplicationController
         
       end
     end
-    
-      # if @resource_context.update(to_save)
-      #   go_to = (params[:after_save] == 'next_page' ? customization_requirement_path(@resource_context.id) :
-      #             edit_resource_context_path(@resource_context.id) )
-      #   redirect_to go_to, notice: message 
-      # else
-      #   #flash[:error] = "An error has occured."
-      #   # redirect_to edit_resource_context_path(@resource_context.id)
-      #   format.html { render 'edit'}
-      # end
-
-    # end
     
   end
 
