@@ -76,15 +76,21 @@ class ResourceContextsController < ApplicationController
     @req_temp = @resource_context.requirements_template
     message = @resource_context.changed ? 'Customization was successfully created.' : ''
 
-    
-      if @resource_context.save!
+   
+
+    respond_to do |format|
+      if @resource_context.save
         customization_resources_list
         go_to = (params[:after_save] == 'next_page' ? customization_requirement_path(@resource_context.id) :
                         edit_resource_context_path(@resource_context.id))
-        redirect_to go_to, notice: message
+        format.html { redirect_to go_to, notice: message }
+        format.json { head :no_content }
       else
-        render action: 'new'
+        format.html { render 'new'}
+        format.json { head :no_content }
+        
       end
+    end
     
   end
 
