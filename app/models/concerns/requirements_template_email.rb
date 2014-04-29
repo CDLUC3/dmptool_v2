@@ -4,7 +4,6 @@ module RequirementsTemplateEmail
 
   included do
     after_save :email_template_saved
-    after_destroy :email_template_destroyed
   end
 
   # for these notifications:
@@ -55,29 +54,13 @@ module RequirementsTemplateEmail
         users.each do |user|
           UsersMailer.notification(
               user.email,
-              "A DMP Template associated with a customization is activated",
+              "DMP Template Activated: #{self.name}",
               "resource_editors_associated_committed",
-              {} ).deliver
+              {:user => user, :template => self, :customization => customization} ).deliver
         end
 
       end
 
-    end
-  end
-
-  # for these notifications:
-  # [:requirement_editors][:deleted] - An institutional DMP template is deleted
-  # -- THIS SHOULD NEVER TRIGGER SINCE IT SEEMS DELETION HAS BEEN REMOVED
-  def email_template_destroyed
-    institution = self.institution
-    users = institution.users_in_and_above_inst_in_role(Role::TEMPLATE_EDITOR)
-    users.delete_if {|u| !u[:prefs][:requirement_editors][:deleted] }
-    users.each do |user|
-      UsersMailer.notification(
-          user.email,
-          "An institutional DMP template is deleted",
-          "requirement_editors_deleted",
-          {} ).deliver
     end
   end
 end

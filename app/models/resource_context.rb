@@ -1,4 +1,7 @@
 class ResourceContext < ActiveRecord::Base
+
+  include ResourceContextEmail
+
   belongs_to :institution
   belongs_to :requirements_template
   belongs_to :requirement

@@ -205,8 +205,7 @@ class User < ActiveRecord::Base
         },
         requirement_editors:     {
             committed:  true,
-            deactived: true,
-            deleted:   true
+            deactived: true
         },
         resource_editors:        {
             deleted:             true,
