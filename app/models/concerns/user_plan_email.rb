@@ -16,7 +16,7 @@ module UserPlanEmail
       if coowner.prefs[:dmp_owners_and_co][:user_added] == true
         UsersMailer.notification(
               coowner.email,
-              "New Co-owner of #{}",
+              "New Co-owner of #{plan.name}",
               "dmp_owners_and_co_user_added",
               {:user => coowner, :plan => plan } ).deliver
       end
