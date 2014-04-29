@@ -15,7 +15,7 @@
 		<%= label_tag 'prefs[dmp_owners_and_co][new_comment]', 'A new comment has been added to my DMP', :class => 'checkbox-label' %>
     <br/>
     <%=  check_box_tag 'prefs[dmp_owners_and_co][submitted]', true, @user.prefs[:dmp_owners_and_co][:submitted] %>
-    <%= label_tag 'prefs[dmp_owners_and_co][submitted]', 'A submitted DMP is approved or rejected', :class => 'checkbox-label' %>
+    <%= label_tag 'prefs[dmp_owners_and_co][submitted]', 'A submitted DMP is approved, rejected or finished informal review', :class => 'checkbox-label' %>
 		<br/>
     <%=  check_box_tag 'prefs[dmp_owners_and_co][vis_change]', true, @user.prefs[:dmp_owners_and_co][:vis_change] %>
     <%= label_tag 'prefs[dmp_owners_and_co][vis_change]', "My DMP's visibility has changed", :class => 'checkbox-label' %>
