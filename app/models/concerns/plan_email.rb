@@ -7,7 +7,7 @@ module PlanEmail
   end
 
   # for these notifications:
-  # [:dmp_owners_and_co][:committed] -- A DMP is committed
+  # [:dmp_owners_and_co][:committed] -- A DMP is completed (committed)
   # [:dmp_owners_and_co][:vis_change] -- A DMP's visibility has changed
   # [:dmp_owners_and_co][:submitted] -- A submitted DMP is approved or rejected
   # [:institutional_reviewers][:submitted] -- An Institutional DMP is approved or rejected
@@ -42,7 +42,7 @@ module PlanEmail
     return if earlier_state.state == current_state.state
 
 
-    # [:dmp_owners_and_co][:committed]  -- A DMP is committed
+    # [:dmp_owners_and_co][:committed]  -- A DMP is completed (activated)
     if current_state.state == :committed
       users = self.users
       users.delete_if {|u| !u[:prefs][:dmp_owners_and_co][:committed]}
