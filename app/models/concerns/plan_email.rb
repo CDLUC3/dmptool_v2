@@ -88,7 +88,7 @@ module PlanEmail
             user.email,
             "#{self.name} has been submitted for institutional review",
             "institutional_reviewers_submitted",
-            {} ).deliver
+            {:user => user, :plan => self} ).deliver
       end
     end
   end
