@@ -32,11 +32,10 @@ class User < ActiveRecord::Base
   validates :prefs, presence: true
   validates :login_id, presence: true, uniqueness: { case_sensitive: false }, :if => :ldap_create
   validates_confirmation_of :password
-  validates_format_of :password, with: /([A-Za-z])/
-  validates_format_of :password, with: /([0-9])/
-  validates_length_of :password, within: 8..30
+  validates_format_of :password, with: /([A-Za-z])/, :allow_blank => true
+  validates_format_of :password, with: /([0-9])/, :allow_blank => true
+  validates_length_of :password, within: 8..30, :allow_blank => true
  
-
   before_validation :create_default_preferences, if: Proc.new { |x| x.prefs.empty? }
   before_validation :add_default_institution, if: Proc.new { |x| x.institution_id.nil? }
 

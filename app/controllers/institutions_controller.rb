@@ -37,9 +37,7 @@ class InstitutionsController < ApplicationController
 
     @tab_number = 'tab_tab2' #the tab number for the maze of editing resources from everywhere
     #@anchor = params[:anchor]
- 
-    
-      
+   
   end
 
 
@@ -47,6 +45,7 @@ class InstitutionsController < ApplicationController
     @resource_contexts = ResourceContext.includes(:resource).
                           where(requirements_template_id: nil, requirement_id: nil, institution_id: [current_user.institution.subtree_ids]).
                           where("resource_id IS NOT NULL")
+    @resources_count = @resource_contexts.count
     case params[:scope]
       when "all"
         @resource_contexts = @resource_contexts.page(params[:page]).per(100)

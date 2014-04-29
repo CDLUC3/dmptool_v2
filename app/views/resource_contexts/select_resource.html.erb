@@ -13,10 +13,11 @@
 		<thead>
 			<tr>
 				<th>Select</th>
-
-				<th><%= link_to "Resource Id",
+				
+				<th hidden><%= link_to "Resource Id",
 											params.merge({scope: "Resource_id", authenticity_token: nil })%>
 				</th>
+				
 
 				<th class="span4"><%= link_to "Details",
                       params.merge({scope: "Details", authenticity_token: nil})%>
@@ -38,7 +39,7 @@
                       params.merge({scope: "Last_Modification_Date", authenticity_token: nil}) %>
 				</th>
 
-				<th>Level</th>
+				<th hidden>Level</th>
 				<th width="span1">Edit</th>
 			</tr>
 		</thead>
@@ -48,7 +49,9 @@
 				<%unless resource_context.resource_level == 'Institution'%>
 					<tr>
 						<td class="span1"><%= radio_button_tag :resource, resource_context.resource_id, checked: false %></td>
-						<td><%= resource_context.resource_id %></td>
+						
+						<td hidden><%= resource_context.resource_id %></td>
+						
 						<td>
 							<div class="toggle-links">
 								<%= resource_context.resource.nil? ? " " : resource_context.resource.label %>
@@ -58,7 +61,7 @@
 						<td><%= resource_context.institution.nil? ? " " :  resource_context.institution.nickname %></td>
 						<td><%= resource_context.resource.created_at.nil? ? " " :  resource_context.resource.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
 						<td><%= resource_context.resource.updated_at.nil? ? " " :  resource_context.resource.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
-						<td><%= resource_context.resource_level %></td>
+						<td hidden><%= resource_context.resource_level %></td>
 						<td class="span1"><%= link_to raw(''),
 										edit_customization_resource_path(id: resource_context.resource_id,
 															customization_id: @customization_overview_id,
@@ -95,7 +98,7 @@
 
 	<div class="actions pull-right">
 
-		<%= link_to 'Add another Resource',
+		<%= link_to 'Add a new resource',
 							new_customization_resource_path(template_id: @template_id,
 							customization_overview_id: @customization_overview_id,
 							resource_level: @resource_level,
