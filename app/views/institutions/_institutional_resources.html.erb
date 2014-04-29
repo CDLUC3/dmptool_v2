@@ -1,43 +1,49 @@
-<h2> Resources Available at <%= @current_institution.full_name %> </h2>
-	
-<table class="table table-striped">
+<%if @resources_count > 0%>
 
-	<thead>
-		<tr>
-			<th class="span4">Details</th>
-			<th>Action</th>
-			<th>Institution</th>
-			<th>Creation Date</th>
-			<th>Last Modification Date</th>
-		</tr>
-	</thead>
-	<tbody>
-	<% @resource_contexts.each do |resource_context| %>
-		<tr>
-			<td>
-				<div class="toggle-links">
-					<%= resource_context.resource.nil? ? " " :  resource_context.resource.label %>
-				</div>
-			</td>
-			<td><%= link_to raw(''), edit_resource_path(resource_context.resource_id, origin_url: smart_origin_url,
-                    tab_number: (defined?(@tab_number) ? @tab_number: nil)), :class => 'icon edit-user', :title => 'Edit' %>
-				<%= link_to raw(''), 
-						unlink_institutional_resource_path(resource_context_id: resource_context.id, origin_url: smart_origin_url,
-                                               tab_number: (defined?(@tab_number) ? @tab_number: nil)),
-            method: :post, :class => 'icon unlink', :title => 'Unlink from customization' %>
-			</td>
-			<td><%= resource_context.institution.nil? ? " " :  resource_context.institution.nickname %></td>
-			<td><%= resource_context.resource.nil? ? " " :  resource_context.resource.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
-			<td><%= resource_context.resource.nil? ? " " :  resource_context.resource.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>		
-		</tr>
-	<% end %>
-	<tbody>
-</table>
+	<h2> Resources Available at <%= @current_institution.full_name %> </h2>
+		
+	<table class="table table-striped">
 
-<div class="buttons pagination">	
-	<%= link_to "View All", institutions_path(anchor: 'tab_tab2', scope: "all"), :method => :get, :class => "btn", role: "button" %>	
-	<%= paginate @resource_contexts %>
-</div>
+		<thead>
+			<tr>
+				<th class="span4">Details</th>
+				<th>Action</th>
+				<th>Institution</th>
+				<th>Creation Date</th>
+				<th>Last Modification Date</th>
+			</tr>
+		</thead>
+		<tbody>
+		<% @resource_contexts.each do |resource_context| %>
+			<tr>
+				<td>
+					<div class="toggle-links">
+						<%= resource_context.resource.nil? ? " " :  resource_context.resource.label %>
+					</div>
+				</td>
+				<td><%= link_to raw(''), edit_resource_path(resource_context.resource_id, origin_url: smart_origin_url,
+	                    tab_number: (defined?(@tab_number) ? @tab_number: nil)), :class => 'icon edit-user', :title => 'Edit' %>
+					<%= link_to raw(''), 
+							unlink_institutional_resource_path(resource_context_id: resource_context.id, origin_url: smart_origin_url,
+	                                               tab_number: (defined?(@tab_number) ? @tab_number: nil)),
+	            method: :post, :class => 'icon unlink', :title => 'Unlink from customization' %>
+				</td>
+				<td><%= resource_context.institution.nil? ? " " :  resource_context.institution.nickname %></td>
+				<td><%= resource_context.resource.nil? ? " " :  resource_context.resource.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
+				<td><%= resource_context.resource.nil? ? " " :  resource_context.resource.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>		
+			</tr>
+		<% end %>
+		<tbody>
+	</table>
+
+
+	<div class="buttons pagination">	
+		<%= link_to "View All", institutions_path(anchor: 'tab_tab2', scope: "all"), :method => :get, :class => "btn", role: "button" %>	
+		<%= paginate @resource_contexts %>
+	</div>
+<%else%>
+ <h2> There are currently no resources available at <%= @current_institution.full_name %>. </h2>
+<%end%>
 <div class="buttons">
 	<%= link_to 'Create New Resource', new_resource_path(origin_url: request.original_url, tab_number: 'tab_tab2'), :class => "btn btn-green" %>
 </div>
