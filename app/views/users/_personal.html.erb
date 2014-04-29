@@ -56,7 +56,7 @@
     
     <%= f.label :password, password_label(@user), :class => 'control-label' +@required %>
     <div class="controls">
-      <%= f.password_field :password, :class => "" +@required %>Must be 8 to 30 characters long and contain at least 1 number and 1 letter.
+      <%= f.password_field :password, :title => 'Must be 8 to 30 characters long and contain at least 1 number and 1 letter.', :class => 'tip' +@required %>
         <span class="help-in-line">
           <%=errors.join (', ')%>
       </span>
