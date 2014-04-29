@@ -34,7 +34,7 @@
 	<p><strong>DMP Template editors:</strong></p>
 	<div class="control-group">
 		<%=  check_box_tag 'prefs[requirement_editors][committed]', true, @user.prefs[:requirement_editors][:committed] %>
-		<%= label_tag 'prefs[requirement_editors][committed]', 'An institutional DMP template is committed', :class => 'checkbox-label' %>
+		<%= label_tag 'prefs[requirement_editors][committed]', 'An institutional DMP template is activated', :class => 'checkbox-label' %>
 		<br/>
 		<%=  check_box_tag 'prefs[requirement_editors][deactived]', true, @user.prefs[:requirement_editors][:deactived] %>
 		<%= label_tag 'prefs[requirement_editors][deactived]', 'An institutional DMP template is deactivated', :class => 'checkbox-label' %>

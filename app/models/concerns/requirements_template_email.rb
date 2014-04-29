@@ -8,7 +8,7 @@ module RequirementsTemplateEmail
 
   # for these notifications:
   # [:requirement_editors][:deactived] - An institutional DMP template is deactivated
-  # [:requirement_editors][:committed] - An institutional DMP template is committed
+  # [:requirement_editors][:committed] - An institutional DMP template is activated
   # [:resource_editors][:associated_committed] - A DMP Template associated with a customization is activated
   def email_template_saved
 
@@ -25,7 +25,7 @@ module RequirementsTemplateEmail
             {:user => user, :template => self} ).deliver
       end
 
-    # [:requirement_editors][:committed] - An institutional DMP template is committed (activated)
+    # [:requirement_editors][:committed] - An institutional DMP template is activated (committed)
     # [:resource_editors][:associated_committed] - A DMP Template associated with a customization is activated
     elsif self.active == true && !self.changes["active"].nil? && self.changes["active"][0] == false
       # this is for requirement editors
