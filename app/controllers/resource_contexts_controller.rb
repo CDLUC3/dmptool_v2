@@ -126,7 +126,6 @@ class ResourceContextsController < ApplicationController
 
 
   def unlink_resource_from_template
-    
     @customization_id = params[:customization_id]
     @resource_id = params[:resource_id]
     @template_id = params[:template_id]
@@ -161,9 +160,7 @@ class ResourceContextsController < ApplicationController
   end
 
 
-
   def unlink_resource_from_requirement
-
     @customization_id = params[:customization_id]
     @resource_id = params[:resource_id]
     @template_id = params[:template_id]
@@ -193,10 +190,7 @@ class ResourceContextsController < ApplicationController
         
       end
     end
-
   end
-
-
 
 
   def unlink_resource_from_customization
@@ -222,7 +216,6 @@ class ResourceContextsController < ApplicationController
   end
 
 
-
   def unlink_institutional_resource
     @resource_context = ResourceContext.find(params[:resource_context_id])
     if @resource_context.destroy
@@ -236,8 +229,8 @@ class ResourceContextsController < ApplicationController
     end
   end
 
+
   def destroy
-    
     @resource_context = ResourceContext.find(params[:resource_context])
     
     @resource_contexts = ResourceContext.
@@ -324,6 +317,7 @@ class ResourceContextsController < ApplicationController
     @submit_text = "Next page"
   end
 
+
   def customization_resources_list
 
     @customization = @resource_context
@@ -388,14 +382,22 @@ class ResourceContextsController < ApplicationController
                               where(institution_id:
                                   (@customization.institution.nil? ? nil : [@customization.institution.subtree_ids])).
                               group(:resource_id) 
-                              
+
+      @any_resource =  ResourceContext.joins(:resource).
+                              where("resource_id IS NOT NULL").
+                              where(institution_id:
+                                  (@customization.institution.nil? ? nil : [@customization.institution.subtree_ids]))
+
     else
 
       @resource_contexts = ResourceContext.joins(:resource).
                               where("resource_id IS NOT NULL").
                               where(institution_id: [current_user.institution.subtree_ids]).
-                              group(:resource_id)
-                               
+                              group(:resource_id) 
+
+      @any_resource =  ResourceContext.joins(:resource).
+                              where("resource_id IS NOT NULL").
+                              where(institution_id: [current_user.institution.subtree_ids])
     end
 
     if @resource_level != "requirement"
@@ -405,15 +407,20 @@ class ResourceContextsController < ApplicationController
     case @tab
       when "Guidance"
         @resource_contexts = @resource_contexts.help_text
+        @any_resource = @any_resource.help_text
       when "Actionable Links"
         @resource_contexts = @resource_contexts.actionable_url
+        @any_resource = @any_resource.actionable_url
       when "Suggested Response"
         @resource_contexts = @resource_contexts.suggested_response
+        @any_resource = @any_resource.suggested_response
       when "Example Response"
         @resource_contexts = @resource_contexts.example_response
+        @any_resource = @any_resource.example_response
       else
        @resource_contexts = @resource_contexts
     end
+    
 
     if !params[:q].blank?
        @resource_contexts = @resource_contexts.search_terms(params[:q])
@@ -439,5 +446,7 @@ class ResourceContextsController < ApplicationController
     @resource_contexts = @resource_contexts.page(params[:page]).per(20)
 
   end
+
+  #@resources_count = @resource_contexts.count
 
 end
