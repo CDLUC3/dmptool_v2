@@ -54,7 +54,7 @@
   <% validation_class = errors.empty? ? {} : 'error' %>
   <div class="control-group <%= validation_class %>">
     
-    <%= f.label :password, password_label(@user), :class => 'control-label' +@required %>
+    <%= f.label :password, password_label(@user), :class => 'control-label '+@required %>
     <div class="controls">
       <%= f.password_field :password, :class => '' +@required %>
       <%= content_tag(:span, '', :title => 'Must be 8 to 30 characters long and contain at least 1 number and 1 letter.', 'data-placement' => 'right', :class => 'icon questionmark tip') %>
