@@ -13,6 +13,8 @@ module UserPlanEmail
       coowner = self.user
       plan = self.plan
 
+      return true if coowner.nil? || plan.nil?
+
       if coowner.prefs[:dmp_owners_and_co][:user_added] == true
         UsersMailer.notification(
               coowner.email,

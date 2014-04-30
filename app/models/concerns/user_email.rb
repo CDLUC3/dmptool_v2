@@ -13,6 +13,7 @@ module UserEmail
     users.delete_if {|u| !u[:prefs][:users][:role_granted] } #deletes from array if not set
     users.each do |user|
       friendly_roles = Role.where(id: granted_roles).map(&:name)
+      return if friendly_roles.blank?
       UsersMailer.notification(
           user.email,
           "#{friendly_roles.join(', ')} Activated",
