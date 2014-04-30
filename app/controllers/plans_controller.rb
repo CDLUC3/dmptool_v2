@@ -79,6 +79,7 @@ class PlansController < ApplicationController
   # POST /plans.json
   def create
     flash[:notice] = []
+
     @plan = Plan.new(plan_params)
     respond_to do |format|
       if params[:save_and_dmp_details]
@@ -216,9 +217,7 @@ class PlansController < ApplicationController
   end
 
   def perform_review
-    @comment = Comment.new
-    comments = Comment.where(plan_id: @plan.id)
-    @reviewer_comments = comments.reviewer_comments.page(params[:page]).per(5)
+    set_comments
     @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: @user.institution_id).first
   end
 
@@ -470,7 +469,7 @@ class PlansController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def plan_params
-      params.require(:plan).permit(:name, :requirements_template_id, :solicitation_identifier, :submission_deadline, :visibility, :current_plan_state_id, responses_attributes: [:id, :plan_id, :requirement_id, :text_value, :numeric_value, :date_value, :enumeration_id, :lock_version, :label_id])
+      params.require(:plan).permit(:name, :requirements_template_id, :solicitation_identifier, :submission_deadline, :visibility, :current_plan_state_id, :current_user_id, responses_attributes: [:id, :plan_id, :requirement_id, :text_value, :numeric_value, :date_value, :enumeration_id, :lock_version, :label_id])
     end
 
     def count
@@ -500,7 +499,7 @@ class PlansController < ApplicationController
 
     def coowners
       id = @plan.user_plans.where(owner: true).pluck(:user_id).first
-      @owner = User.find(id) unless id.nil?
+      @planowner = User.find(id) unless id.nil?
       @coowners = Array.new
       user_plans = @plan.user_plans.where(owner: false)
       user_plans.each do |user_plan|

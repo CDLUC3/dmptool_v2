@@ -7,26 +7,25 @@ module PlanEmail
   end
 
   # for these notifications:
-  # [:dmp_owners_and_co][:committed] -- A DMP is committed
-  # [:dmp_owners_and_co][:published] -- A DMP is shared
+  # [:dmp_owners_and_co][:committed] -- A DMP is completed (committed)
+  # [:dmp_owners_and_co][:vis_change] -- A DMP's visibility has changed
   # [:dmp_owners_and_co][:submitted] -- A submitted DMP is approved or rejected
   # [:institutional_reviewers][:submitted] -- An Institutional DMP is approved or rejected
   # [:institutional_reviewers][:approved_rejected] -- An Institutional DMP is submitted for review
   def email_dmp_saved
 
-    #[:dmp_owners_and_co][:published] -- A DMP is shared
+    #[:dmp_owners_and_co][:vis_change] -- A DMP's visibility has changed
     if !self.changes["visibility"].nil?
-      if self.changes["visibility"][0] != self.changes["visibility"][1] &&
-          (self.visibility == :institutional || self.visibility == :public)
+      if self.changes["visibility"][0] != self.changes["visibility"][1]
         # mail all owners and co-owners
         users = self.users
-        users.delete_if {|u| !u[:prefs][:dmp_owners_and_co][:published]}
+        users.delete_if {|u| !u[:prefs][:dmp_owners_and_co][:vis_change]}
         users.each do |user|
           UsersMailer.notification(
               user.email,
-              "A DMP is shared",
-              "dmp_owners_and_co_published",
-              { } ).deliver
+              "DMP Visibility Changed: #{self.name}",
+              "dmp_owners_and_co_vis_change",
+              { :user => user, :plan => self } ).deliver
         end
       end
     end
@@ -43,29 +42,29 @@ module PlanEmail
     return if earlier_state.state == current_state.state
 
 
-    # [:dmp_owners_and_co][:committed]  -- A DMP is committed
+    # [:dmp_owners_and_co][:committed]  -- A DMP is completed (activated)
     if current_state.state == :committed
       users = self.users
       users.delete_if {|u| !u[:prefs][:dmp_owners_and_co][:committed]}
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            "A DMP is committed",
+            "PLAN COMPLETED: #{self.name}",
             "dmp_owners_and_co_committed",
-            { } ).deliver
+            {:user => user, :plan => self } ).deliver
       end
 
     # [:dmp_owners_and_co][:submitted] -- A submitted DMP is approved or rejected
     # [:institutional_reviewers][:approved_rejected] -- An Institutional DMP is approved or rejected
-    elsif current_state.state == :approved || current_state.state == :rejected
+    elsif current_state.state == :approved || current_state.state == :rejected || current_state.state = :reviewed
       users = self.users
       users.delete_if {|u| !u[:prefs][:dmp_owners_and_co][:submitted]}
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            "A submitted DMP is approved or rejected",
+            "DMP #{current_state.state}: #{self.name}",
             "dmp_owners_and_co_submitted",
-            { } ).deliver
+            { :user => user, :plan => self, :state => current_state } ).deliver
       end
 
       institution = self.owner.institution
@@ -74,9 +73,9 @@ module PlanEmail
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            "A new comment was added",
+            "DMP #{current_state.state}: #{self.name}",
             "institutional_reviewers_approved_rejected",
-            {} ).deliver
+            { :user => user, :plan => self, :state => current_state } ).deliver
       end
 
     # [:institutional_reviewers][:submitted] -- An Institutional DMP is submitted for review
@@ -87,9 +86,9 @@ module PlanEmail
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            "An institutional DMP is submitted for review",
+            "#{self.name} has been submitted for institutional review",
             "institutional_reviewers_submitted",
-            {} ).deliver
+            {:user => user, :plan => self} ).deliver
       end
     end
   end

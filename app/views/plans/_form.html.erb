@@ -7,7 +7,7 @@
     <div class="tab-pane active" id="tab1">
       <%= form_for @plan, html:{ :class => 'form-horizontal' }  do |f| %>
         <%= render partial: "shared/errors", locals: {model: @plan } %>
-
+        <%= f.hidden_field :current_user_id, value: @user.id %>
         <div class="control-group">
           <%= label_tag :selected_requirement_template_name, 'DMP Template', :class => 'control-label' %>
           <div class="controls">
@@ -73,9 +73,9 @@
                 item_description: 'co-owner'
              } %>
             <div class="controls">
-              <% if @owner.id != current_user.id %>
+              <% if @planowner.id != current_user.id %>
                 <span> Owner: </span>
-                <strong class= 'blue'><%= @owner.full_name %>, </strong>
+                <strong class= 'blue'><%= @planowner.full_name %>, </strong>
               <% end %>
               <span> Existing Co-owners: </span>
               <strong class= 'blue'><%= @coowners.map { |coowner| coowner.full_name.to_s + raw(link_to "", delete_coowner_path(coowner_id: coowner.id, plan_id: @plan.id), :method => :delete, :data => { :confirm => "Are you sure?"}, :class => "remove icon", :title => "Remove Co-owner") }.join(", ").html_safe %></strong>
@@ -171,7 +171,7 @@
             <%= button_tag 'Cancel', type: :reset, :class => 'btn btn-success'%>
           <% else %>
             <%= f.submit "Save and Next >>", name: 'save_and_dmp_details', :class => 'btn btn-green pull-right' %>
-            <%= link_to '<< Back', plan_template_information_path, :class => 'btn btn-green pull-left', role: "button" %>
+            <%= link_to '<< Back', :back, method: :get, :class => 'btn btn-green pull-left', role: "button" %>
             <%= button_tag 'Cancel', type: :reset, :class => 'btn btn-success'%>
            <% end %>
         </div>

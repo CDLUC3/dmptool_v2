@@ -3,7 +3,7 @@ class InstitutionsController < ApplicationController
   before_action :require_login, :except=>[:partners_list]
   before_action :set_institution, only: [:show, :destroy]
   before_action :check_for_cancel, :update => [:create, :update, :destroy]
-  before_filter :populate_institution_select_list, only: [:index, :new]
+  before_filter :populate_institution_select_list, only: [:index, :new, :create]
   before_action :check_institution_admin_access, :except=>[:partners_list]
 
   include InstitutionsHelper
@@ -37,9 +37,7 @@ class InstitutionsController < ApplicationController
 
     @tab_number = 'tab_tab2' #the tab number for the maze of editing resources from everywhere
     #@anchor = params[:anchor]
- 
-    
-      
+   
   end
 
 
@@ -47,6 +45,7 @@ class InstitutionsController < ApplicationController
     @resource_contexts = ResourceContext.includes(:resource).
                           where(requirements_template_id: nil, requirement_id: nil, institution_id: [current_user.institution.subtree_ids]).
                           where("resource_id IS NOT NULL")
+    @resources_count = @resource_contexts.count
     case params[:scope]
       when "all"
         @resource_contexts = @resource_contexts.page(params[:page]).per(100)
@@ -166,43 +165,64 @@ class InstitutionsController < ApplicationController
   end
 
 
-  # POST /institutions
-  # POST /institutions.json
   def create
     @current_institution = Institution.new(institution_params)
-  
-    if @current_institution.save
-      redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully created.' 
-    else
-      if params[:full_name].blank? || params[:full_name].nil?
-        msg = "Please enter a name for the Institution."
+    respond_to do |format|  
+      if @current_institution.save
+        format.html { redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully created.' }
       else
-        msg = "An error has occured and the institution cannot be created."
-      end
-      flash[:error] = msg
-      redirect_to new_institution_path
+        format.html { render new_institution_path}     
+      end 
     end
-    
   end
 
   # PATCH/PUT /institutions/1
   # PATCH/PUT /institutions/1.json
   def update
+    @acr = params[:acr]
+    @admin_acr = params[:admin_acr]
     @current_institution = Institution.find(params[:id])
-    
-    if @current_institution.update(institution_params)
-      redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully updated.' 
+    if user_role_in?(:dmp_admin) 
+      @institution_pool = Institution.order(full_name: :asc).where("id != ?", @current_institution.id).collect {|i| ["#{'-' * i.depth} #{i.full_name}", i.id] } 
     else
-      if params[:full_name].blank? || params[:full_name].nil?
-        msg = "Please enter a name for the Institution."
+      @institution_pool = @current_institution.root.subtree.collect {|i| ["#{'-' * i.depth} #{i.full_name}", i.id] } 
+      @institution_pool.delete_if {|i| i[1] == @current_institution.id}
+    end
+    
+    respond_to do |format|  
+      if @current_institution.update(institution_params)
+        format.html { redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully updated.' }
       else
-        msg = "An error has occured and the institution cannot be updated."
+        format.html { render 'edit'}     
+      end 
+    end
+  
+  end
+
+
+  respond_to do |format|
+      if @resource_context.update(to_save)
+        format.html { redirect_to go_to, notice: message }
+        format.json { head :no_content }
+      else
+        format.html { render 'edit'}
+        format.json { head :no_content }
+        
       end
-      flash[:error] = msg
-      redirect_to edit_institution_path(@current_institution)
     end
 
-  end
+  # if @current_institution.update(institution_params)
+    #   redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully updated.' 
+    # else
+    #   render edit_institution_path(@current_institution)
+    #   # if params[:full_name].blank? || params[:full_name].nil?
+    #   #   msg = "Please enter a name for the Institution."
+    #   # else
+    #   #   msg = "An error has occured and the institution cannot be updated."
+    #   # end
+    #   # flash[:error] = msg
+    #   # redirect_to edit_institution_path(@current_institution)
+    # end
 
   # DELETE /institutions/1
   # DELETE /institutions/1.json

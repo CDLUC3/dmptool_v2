@@ -67,6 +67,7 @@ class ResourceContextsController < ApplicationController
 
 
   def create
+    
     pare_to = ['institution_id', 'requirements_template_id', 'requirement_id', 'resource_id',
               'name', 'contact_info', 'contact_email', 'review_type']
     @resource_context = ResourceContext.new(params['resource_context'].selected_items(pare_to))
@@ -75,22 +76,27 @@ class ResourceContextsController < ApplicationController
     @req_temp = @resource_context.requirements_template
     message = @resource_context.changed ? 'Customization was successfully created.' : ''
 
+   
+
     respond_to do |format|
       if @resource_context.save
         customization_resources_list
         go_to = (params[:after_save] == 'next_page' ? customization_requirement_path(@resource_context.id) :
                         edit_resource_context_path(@resource_context.id))
-        format.html { redirect_to go_to, notice: message}
-        #format.json { render action: 'edit', status: :created, location: @resource_context }
+        format.html { redirect_to go_to, notice: message }
+        format.json { head :no_content }
       else
-        format.html { render action: 'new' }
-        #format.json { render json: @resource_context.errors, status: :unprocessable_entity }
+        format.html { render 'new'}
+        format.json { head :no_content }
+        
       end
     end
+    
   end
 
 
   def update
+
     @resource_context = ResourceContext.find(params[:id])
     pare_to = ['institution_id', 'requirements_template_id', 'requirement_id', 'resource_id',
                'name', 'contact_info', 'contact_email', 'review_type']
@@ -103,28 +109,23 @@ class ResourceContextsController < ApplicationController
     customization_resources_list
     @req_temp = @resource_context.requirements_template
 
-
-    if params[:resource_context][:contact_email].nil? || params[:resource_context][:contact_email].blank?
-      flash[:error] = "Contact email cannot be blank."
-      redirect_to edit_resource_context_path(@resource_context.id) and return
-    else
-    
-      if @resource_context.update(to_save)
-        go_to = (params[:after_save] == 'next_page' ? customization_requirement_path(@resource_context.id) :
+    go_to = (params[:after_save] == 'next_page' ? customization_requirement_path(@resource_context.id) :
                   edit_resource_context_path(@resource_context.id) )
-        redirect_to go_to, notice: message 
+    respond_to do |format|
+      if @resource_context.update(to_save)
+        format.html { redirect_to go_to, notice: message }
+        format.json { head :no_content }
       else
-        flash[:error] = "An error has occured."
-        redirect_to edit_resource_context_path(@resource_context.id)
+        format.html { render 'edit'}
+        format.json { head :no_content }
+        
       end
-
     end
     
   end
 
 
   def unlink_resource_from_template
-    
     @customization_id = params[:customization_id]
     @resource_id = params[:resource_id]
     @template_id = params[:template_id]
@@ -159,9 +160,7 @@ class ResourceContextsController < ApplicationController
   end
 
 
-
   def unlink_resource_from_requirement
-
     @customization_id = params[:customization_id]
     @resource_id = params[:resource_id]
     @template_id = params[:template_id]
@@ -191,10 +190,7 @@ class ResourceContextsController < ApplicationController
         
       end
     end
-
   end
-
-
 
 
   def unlink_resource_from_customization
@@ -220,7 +216,6 @@ class ResourceContextsController < ApplicationController
   end
 
 
-
   def unlink_institutional_resource
     @resource_context = ResourceContext.find(params[:resource_context_id])
     if @resource_context.destroy
@@ -234,8 +229,8 @@ class ResourceContextsController < ApplicationController
     end
   end
 
+
   def destroy
-    
     @resource_context = ResourceContext.find(params[:resource_context])
     
     @resource_contexts = ResourceContext.
@@ -322,6 +317,7 @@ class ResourceContextsController < ApplicationController
     @submit_text = "Next page"
   end
 
+
   def customization_resources_list
 
     @customization = @resource_context
@@ -386,14 +382,22 @@ class ResourceContextsController < ApplicationController
                               where(institution_id:
                                   (@customization.institution.nil? ? nil : [@customization.institution.subtree_ids])).
                               group(:resource_id) 
-                              
+
+      @any_resource =  ResourceContext.joins(:resource).
+                              where("resource_id IS NOT NULL").
+                              where(institution_id:
+                                  (@customization.institution.nil? ? nil : [@customization.institution.subtree_ids]))
+
     else
 
       @resource_contexts = ResourceContext.joins(:resource).
                               where("resource_id IS NOT NULL").
                               where(institution_id: [current_user.institution.subtree_ids]).
-                              group(:resource_id)
-                               
+                              group(:resource_id) 
+
+      @any_resource =  ResourceContext.joins(:resource).
+                              where("resource_id IS NOT NULL").
+                              where(institution_id: [current_user.institution.subtree_ids])
     end
 
     if @resource_level != "requirement"
@@ -403,15 +407,20 @@ class ResourceContextsController < ApplicationController
     case @tab
       when "Guidance"
         @resource_contexts = @resource_contexts.help_text
+        @any_resource = @any_resource.help_text
       when "Actionable Links"
         @resource_contexts = @resource_contexts.actionable_url
+        @any_resource = @any_resource.actionable_url
       when "Suggested Response"
         @resource_contexts = @resource_contexts.suggested_response
+        @any_resource = @any_resource.suggested_response
       when "Example Response"
         @resource_contexts = @resource_contexts.example_response
+        @any_resource = @any_resource.example_response
       else
        @resource_contexts = @resource_contexts
     end
+    
 
     if !params[:q].blank?
        @resource_contexts = @resource_contexts.search_terms(params[:q])
@@ -437,5 +446,7 @@ class ResourceContextsController < ApplicationController
     @resource_contexts = @resource_contexts.page(params[:page]).per(20)
 
   end
+
+  #@resources_count = @resource_contexts.count
 
 end

@@ -4,7 +4,9 @@
     <!-- The following adds "current" class when on Customization Overview page -->
     <% if current_page_includes?(edit_resource_context_path(@resource_context), new_resource_context_path) %>
       <li class="current"><%= link_to(content_tag(:span, 'Customization Overview'), '#') %></li>
-      <li><%= link_to(content_tag(:span, 'Customization Details'), customization_requirement_path(@resource_context)) %></li>
+      <% unless @resource_context.new_record? %>
+        <li><%= link_to(content_tag(:span, 'Customization Details'), customization_requirement_path(@resource_context)) %></li>
+      <%end%>
       <li class="last"></li>
     <% end %>
     <!-- The following adds "current" class when on Customization Details page -->

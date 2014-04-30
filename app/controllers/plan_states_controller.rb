@@ -16,10 +16,15 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
   def reviewed
     plan_state = PlanState.find(@plan.current_plan_state_id).state
     if user_role_in?(:institutional_reviewer, :institutional_admin, :dmp_admin)
-      review_plan_state(:reviewed) if (plan_state == :submitted || plan_state == :approved)
+      if (plan_state == :submitted || plan_state == :approved || plan_state == :reviewed)
+        review_plan_state(:reviewed) and return
+      else
+        flash[:error] =  "You can't review the plan from it's current state."
+        redirect_to perform_review_plan_path(@plan) and return
+      end
     else
-      flash[:error] =  "You dont have permission to Review this plan."
-      redirect_to perform_review_plan_path(@plan)
+      flash[:error] =  "You don'ct have permission to Review this plan."
+      redirect_to perform_review_plan_path(@plan) and return
     end
   end
 

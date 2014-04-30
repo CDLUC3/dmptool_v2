@@ -1,4 +1,7 @@
 class ResourceContext < ActiveRecord::Base
+
+  include ResourceContextEmail
+
   belongs_to :institution
   belongs_to :requirements_template
   belongs_to :requirement
@@ -10,8 +13,10 @@ class ResourceContext < ActiveRecord::Base
   validates :institution_id, uniqueness: { scope: [:institution_id, :requirements_template_id, :requirement_id, :resource_id],
             message: "You are attempting to insert a duplicate of a customization that already exists." }
 
-  validates :contact_email, format: { with: /.+\@.+\..+/,
-            message: "%{value} address must be valid" }, if: "resource_id.blank? && !institution_id.blank?"
+  validates :contact_email, presence: true, 
+                            format: { with: /.+\@.+\..+/,
+                                message: "%{value} address must be valid" }, if: "resource_id.blank? && !institution_id.blank?"
+  
 
 
   #these are the context levels, their names, descriptions and which items they must have set of
@@ -147,6 +152,8 @@ class ResourceContext < ActiveRecord::Base
   def self.resource_not_null
     where("resource_id IS NOT NULL") 
   end
+
+  
 
   
 

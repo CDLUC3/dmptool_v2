@@ -64,7 +64,6 @@
                                         requirement_level. #requirement_id is not nil
                                         select(:requirement_id).count
 
-
     @any_requirements = ( @requirements_count > 0 )
 
   end
@@ -78,66 +77,73 @@
     @customization_id = params[:customization_id]
     @resource_level = params[:resource_level]
     @requirement_id = params[:requirement_id]
+    @template_id = params[:template_id]
 
     if @resource_level == 'requirement' #customization details
-     
-      if @resource.update(resource_params)
-        
-        redirect_to customization_requirement_path(id: @customization_id, 
+
+      respond_to do |format|
+        if @resource.update(resource_params)
+          format.html { redirect_to customization_requirement_path(id: @customization_id, 
                       requirement_id:  @requirement_id, 
                       anchor: @tab_number),
-                      notice: 'Resource was successfully updated.' 
-      else
-        flash[:error] = "A problem prevented this resource to be updated. "
-        redirect_to customization_requirement_path(id: @customization_id, 
-                      requirement_id:  @requirement_id,
-                      anchor: @tab_number)                      
-          
+                      notice: 'Resource was successfully updated.'  }
+          format.json { head :no_content }
+        else
+          format.html { render 'edit_customization_resource'}
+          format.json { head :no_content }    
         end
+      end
       
     else #customization overview
 
-      if @resource.update(resource_params)        
-        redirect_to edit_resource_context_path(@customization_id),
-                      notice: 'Resource was successfully updated.' 
-      else
-        flash[:error] = "A problem prevented this resource to be updated. "
-        redirect_to edit_resource_context_path(@customization_id)
+      respond_to do |format|
+        if @resource.update(resource_params)
+          format.html { redirect_to edit_resource_context_path(@customization_id),
+                      notice: 'Resource was successfully updated.'  }
+          format.json { head :no_content }
+        else
+          format.html { render 'edit_customization_resource'}
+          format.json { head :no_content }    
+        end
       end
       
     end
 
   end
+ 
 
-  
-  #create new institutional resource
   def create
+    @tab_number = (params[:tab_number].blank? ? 'tab_tab2' : params[:tab_number] )
     @resource = Resource.new(resource_params)
     @current_institution = current_user.institution
-    
-      @tab_number = (params[:tab_number].blank? ? 'tab_tab2' : params[:tab_number] )
+    respond_to do |format|
       if @resource.save
-        @resource_id = @resource.id
-        @resource_context = ResourceContext.new(resource_id: @resource_id, institution_id: @current_institution.id)
+        @resource_context = ResourceContext.new(resource_id: @resource.id, institution_id: @current_institution.id)
         if @resource_context.save
-          redirect_to params[:origin_url] + "##{@tab_number}", notice: "Resource was successfully created."
+          format.html { redirect_to params[:origin_url] + "##{@tab_number}", notice: "Resource was successfully created."}
+          format.json { head :no_content }
         end
-         
       else
-        flash[:error] = "A problem prevented this resource to be created."
-        redirect_to params[:origin_url] + "##{@tab_number}" 
+        format.html { render action: 'new' }
+        format.json { render json: @resource.errors, status: :unprocessable_entity }
       end
-    
+    end
   end
 
   #update institutional resource
   def update
+    @current_institution = current_user.institution
+    @resource = Resource.find(params[:id])
     @tab_number = (params[:tab_number].blank? ? 'tab_tab2' : params[:tab_number])
-    if @resource.update(resource_params)
-      redirect_to params[:origin_url] + "##{@tab_number}", notice: 'Resource was successfully updated.' 
-    else
-      flash[:error] = "A problem prevented this resource to be updated."
-      redirect_to params[:origin_url] + "##{@tab_number}"
+    respond_to do |format|
+      if @resource.update(resource_params)
+        format.html { redirect_to params[:origin_url] + "##{@tab_number}", notice: 'Resource was successfully updated.'}
+        format.json { head :no_content }
+      else
+        format.html { render 'edit'}
+        format.json { head :no_content }
+        
+      end
     end
   end
 
@@ -226,7 +232,6 @@
        @selected = "help_text"
     end
       
-
   end
 
 
@@ -238,6 +243,7 @@
     @requirement_id = params[:requirement_id]
     @resource_level = params[:resource_level]
     @template_id = params[:template_id]
+    @template_name = RequirementsTemplate.find(@template_id).name
     @customization_overview_id = params[:customization_overview_id]
     @customization_overview = ResourceContext.find(@customization_overview_id)
 
@@ -253,52 +259,49 @@
     
         @resource = Resource.new(resource_params)
 
-        if @resource.save 
-          @resource_id = @resource.id
-          @resource_context = ResourceContext.new(resource_id: @resource_id, 
+        respond_to do |format|
+          if @resource.save
+            @resource_id = @resource.id
+            @resource_context = ResourceContext.new(resource_id: @resource_id, 
                                     institution_id: @current_institution_id, 
                                     requirements_template_id: @template_id,
                                     requirement_id:  @requirement_id)
-          if @resource_context.save
-            redirect_to customization_requirement_path(id: @customization_overview_id, 
+            if @resource_context.save
+              format.html { redirect_to customization_requirement_path(id: @customization_overview_id, 
                   requirement_id:  @requirement_id,
                   anchor: @tab_number), 
-                  notice: "Resource was successfully created." 
-          end
-           
-        else
-          flash[:error] = "A problem prevented this resource to be created."
-          redirect_to customization_requirement_path(id: @customization_overview_id, 
-                  requirement_id:  @requirement_id,
-                  anchor: @tab_number)
- 
-          # redirect_to new_customization_resource_path(template_id: @template_id,
-          #     customization_overview_id: @customization_overview_id,
-          #     resource_level: 'requirement',
-          #     requirement_id: @requirement_id,
-          #     tab_number:     params[:tab_number],
-          #     tab:            params[:tab],
-          #     custom_origin:  @custom_origin)
+                  notice: "Resource was successfully created."}
+            else
+              format.html { render 'new_customization_resource'}
+            end
 
+          else
+            format.html { render 'new_customization_resource'}
+          end
         end
 
       else #customization resource
           
           @resource = Resource.new(resource_params)
             
-          if @resource.save 
-            @resource_id = @resource.id
-            @resource_context = ResourceContext.new(resource_id: @resource_id, institution_id: @current_institution_id, 
-                                                    requirements_template_id: @template_id)
-            if @resource_context.save
-              redirect_to edit_resource_context_path(@customization_overview_id), notice: "Resource was successfully created." 
+         
+          respond_to do |format|
+            if @resource.save
+              @resource_id = @resource.id
+              @resource_context = ResourceContext.new(resource_id: @resource_id, 
+                                                      institution_id: @current_institution_id, 
+                                                      requirements_template_id: @template_id)
+              if @resource_context.save
+                format.html { redirect_to edit_resource_context_path(@customization_overview_id), 
+                                          notice: "Resource was successfully created."}
+              else
+                format.html { render 'new_customization_resource'}
+              end
+
+            else
+              format.html { render 'new_customization_resource'}
             end
-             
-          else
-            flash[:error] = "A problem prevented this resource to be created."
-            redirect_to edit_resource_context_path(@customization_overview_id)
           end
-          
       end
   end
 
