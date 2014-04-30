@@ -9,6 +9,12 @@ def mk_formatted_text(n)
   when "i", "em"
     {:text => n.text,
       :styles => [:italic]}
+  when "u"
+    {:text => n.text,
+      :styles => [:underline]}
+  when "s"
+    {:text => n.text,
+      :styles => [:strikethrough]}
   when "sup"
     {:text => n.text,
       :styles => [:superscript]}
@@ -17,6 +23,8 @@ def mk_formatted_text(n)
       :styles => [:subscript]}
   when "text"
     {:text => n.text}
+  when "br"
+    {:text => ''}
   else
     raise Exception.new("Unexpected tag: #{n.name}.")
   end
