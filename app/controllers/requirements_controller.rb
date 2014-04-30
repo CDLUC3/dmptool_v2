@@ -41,13 +41,24 @@ class RequirementsController < ApplicationController
   def create
     @requirement =  @requirements_template.requirements.build(requirement_params)
     @requirements = @requirements_template.requirements
+    group = requirement_params[:group].to_i
     respond_to do |format|
-      if @requirement.save
-        format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement), notice: 'Requirement was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @requirement }
+      if !group.nil? && group == 1
+        if @requirement.save
+          format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement, node_type: 'group'), notice: 'Requirement was successfully created.' }
+          format.json { render action: 'show', status: :created, location: @requirement }
+        else
+          format.html { render action: 'index' }
+          format.json { render json: @requirement.errors, status: :unprocessable_entity }
+        end
       else
-        format.html { render action: 'index' }
-        format.json { render json: @requirement.errors, status: :unprocessable_entity }
+        if @requirement.save
+          format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement), notice: 'Requirement was successfully created.' }
+          format.json { render action: 'show', status: :created, location: @requirement }
+        else
+          format.html { render action: 'index' }
+          format.json { render json: @requirement.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -56,8 +67,11 @@ class RequirementsController < ApplicationController
   # PATCH/PUT /requirements/1.json
   def update
     @requirements = @requirements_template.requirements
+    @enumerations = @requirement.enumerations
+    @labels = @requirement.labels
+    debugger
     respond_to do |format|
-      if @requirement.update(requirement_params)
+      if @requirement.update!(requirement_params)
         format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement), notice: 'Requirement was successfully updated.' }
         format.json { head :no_content }
       else
