@@ -28,7 +28,8 @@
       <% if user_role_in?(:dmp_admin, :institutional_admin, :template_editor, :resource_editor) %>
         <% if current_page_includes?({controller: 'requirements_templates', action: 'new'},
                                      edit_requirements_template_path(@requirements_template),
-                                     requirements_template_requirements_path(@requirements_template)) ||
+                                     requirements_template_requirements_path(@requirements_template),
+                                     edit_requirements_template_requirement_path(@requirements_template, @requirement)) ||
             ((user_role_in?(:institutional_admin, :template_editor, :resource_editor) && !user_role_in?(:dmp_admin)) &&
             customization_section? )
 
