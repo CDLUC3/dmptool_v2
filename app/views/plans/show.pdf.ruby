@@ -29,7 +29,8 @@ def mk_formatted_text(n)
     {:text => "#{n.text} (link: #{n['href']})",
       :styles => [:underline]}
   else
-    raise Exception.new("Unexpected tag: #{n.name}.")
+    #raise Exception.new("Unexpected tag: #{n.name}.")
+    {:text => "" }
   end
 end
 
