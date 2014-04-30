@@ -16,6 +16,7 @@ module CommentEmail
       users = self.plan.users
       plan = self.plan
       commenter = self.user
+      return true if users.nil? || plan.nil? || commenter.nil?
       users.delete_if {|u| !u[:prefs][:dmp_owners_and_co][:new_comment] }
       users.each do |user|
         UsersMailer.notification(
@@ -33,6 +34,7 @@ module CommentEmail
       users.delete_if {|u| !u[:prefs][:institutional_reviewers][:new_comment] }
       plan = self.plan
       commenter = self.user
+      return true if institution.nil? || plan.nil? || commenter.nil?
       users.each do |user|
         UsersMailer.notification(
             user.email,
