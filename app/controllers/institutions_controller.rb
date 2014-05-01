@@ -189,27 +189,40 @@ class InstitutionsController < ApplicationController
       @institution_pool.delete_if {|i| i[1] == @current_institution.id}
     end
     
-    respond_to do |format|  
-      if @current_institution.update(institution_params)
-        format.html { redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully updated.' }
-      else
-        format.html { render 'edit'}     
-      end 
+    if (current_user.institution == @current_institution)
+      respond_to do |format|  
+        if @current_institution.update(institution_params)
+          #format.html { redirect_to edit_institution_path(@current_institution), 
+                        #notice: 'Institution was successfully updated.' }
+          format.html { redirect_to institutions_path(@current_institution), 
+                        notice: 'Institution was successfully updated.' }
+        else
+          format.html { render 'index'}     
+        end 
+      end
+    else
+      respond_to do |format|  
+        if @current_institution.update(institution_params)
+          format.html { redirect_to edit_institution_path(@current_institution), 
+                        notice: 'Institution was successfully updated.' }
+        else
+          format.html { render 'edit'}     
+        end 
+      end
     end
-  
   end
 
 
-  respond_to do |format|
-      if @resource_context.update(to_save)
-        format.html { redirect_to go_to, notice: message }
-        format.json { head :no_content }
-      else
-        format.html { render 'edit'}
-        format.json { head :no_content }
+  # respond_to do |format|
+  #     if @resource_context.update(to_save)
+  #       format.html { redirect_to go_to, notice: message }
+  #       format.json { head :no_content }
+  #     else
+  #       format.html { render 'edit'}
+  #       format.json { head :no_content }
         
-      end
-    end
+  #     end
+  #   end
 
   # if @current_institution.update(institution_params)
     #   redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully updated.' 
