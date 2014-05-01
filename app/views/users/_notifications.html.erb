@@ -30,7 +30,7 @@
 	</div>
 </div>
 
-<div class="<%= user_role_in?(:dmp_admin, :institutional_admin, :template_editor) ? '': 'hidden' %>">
+<div class="<%= user_role_in?(:template_editor) ? '': 'hidden' %>">
 	<p><strong>DMP Template editors:</strong></p>
 	<div class="control-group">
 		<%=  check_box_tag 'prefs[requirement_editors][committed]', true, @user.prefs[:requirement_editors][:committed] %>
@@ -41,7 +41,7 @@
 	</div>
 </div>
 
-<div class="<%= user_role_in?(:dmp_admin, :institutional_admin, :resource_editor) ? '': 'hidden' %>">
+<div class="<%= user_role_in?(:resource_editor) ? '': 'hidden' %>">
 	<p><strong>Resources editors:</strong></p>
 	<div class="control-group">
 		<%=  check_box_tag 'prefs[resource_editors][deleted]', true, @user.prefs[:resource_editors][:deleted] %>
@@ -52,7 +52,7 @@
 	</div>
 </div>
 
-<div class="<%= user_role_in?(:dmp_admin, :institutional_admin, :institutional_reviewer) ? '': 'hidden' %>">
+<div class="<%= user_role_in?(:institutional_reviewer) ? '': 'hidden' %>">
 	<p><strong>Institutional Reviewers:</strong></p>
 	<div class="control-group">
 		<%= check_box_tag 'prefs[institutional_reviewers][submitted]', true, @user.prefs[:institutional_reviewers][:submitted] %>
