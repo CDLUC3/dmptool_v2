@@ -34,6 +34,28 @@ $(function() {
   }
 });
 
+$(function() {
+  $("#cancel_button").click(function() {
+  var value = $("#requirement_requirement_type").val();
+  switch (value) {
+  case "enum":
+    $("fieldset.requirement_type_enum").hide();
+    break;
+  case "numeric":
+    $("fieldset.requirement_type_numeric").hide();
+    break;
+  default:
+    break;
+  }
+  });
+});
+
+$(function() {
+  $("#cancel_button").click(function() {
+
+  });
+});
+
 // from http://nack.co/get-url-parameters-using-jquery/ to check parameters.
 $.urlParam = function(name){
     var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -44,7 +66,7 @@ $(document).ready(function() {
 	if($.urlParam('node_type') == 'group') {
 		$("#optional").prop('checked', false);
   	$("#requirement_text_full, #requirement_requirement_type, #mandatory, #mandatory_applicable, #recommended, #optional").prop("disabled", true);
-  	$("#if_group").prop('checked', true);
+    $("#if_group").prop('checked', true);
   	$("#requirement_requirement_type option:selected").remove();
   	$("#requirement_requirement_type option:selected").remove();
   	$("#requirement_requirement_type option:selected").remove();

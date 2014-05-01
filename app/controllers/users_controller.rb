@@ -60,7 +60,7 @@ class UsersController < ApplicationController
     @institution_list = InstitutionsController.institution_select_list
     @user = User.new(user_params)
     @user.ldap_create = true
-    if [@user.valid?, valid_password(user_params[:password], user_params[:password_confirmation])].all?
+    if [@user.valid?].all?
       begin
         results = Ldap_User::LDAP.fetch(@user.login_id)
         if results['objectclass'].include?('dmpUser')

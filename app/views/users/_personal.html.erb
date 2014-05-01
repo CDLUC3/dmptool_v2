@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<% unless @user.new_record? %>
+<%# unless @user.new_record? %>
   <% errors = @user.errors[:first_name] %>
   <% validation_class = errors.empty? ? {} : 'error' %>
   <div class="control-group <%= validation_class %>">
@@ -40,7 +40,7 @@
       </span>
     </div>
   </div>
-<%end%>
+<%#end%>
 
 <% if @user.new_record? %>
   <% @required = 'required' %>
@@ -89,7 +89,7 @@
 <div class="control-group <%= validation_class%>">
   <%= f.label :email, :class => 'control-label required' %>
   <div class="controls">
-    <%= f.text_field :email, :class => 'input-xxlarge required', 'aria-required' => 'true' %>
+    <%= f.text_field :email, :class => '', 'aria-required' => 'true' %>
       <span class="help-in-line">
         <%=errors.join (', ')%>
       </span>

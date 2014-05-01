@@ -360,7 +360,7 @@ class ResourceContextsController < ApplicationController
     case @tab
       when "Guidance"
         @tab_number = 'tab_tab1'
-      when "Actionable Links"
+      when "Links"
         @tab_number = 'tab_tab2'
       when "Example Response" 
         @tab_number = 'tab_tab3'
@@ -408,7 +408,7 @@ class ResourceContextsController < ApplicationController
       when "Guidance"
         @resource_contexts = @resource_contexts.help_text
         @any_resource = @any_resource.help_text
-      when "Actionable Links"
+      when "Links"
         @resource_contexts = @resource_contexts.actionable_url
         @any_resource = @any_resource.actionable_url
       when "Suggested Response"
