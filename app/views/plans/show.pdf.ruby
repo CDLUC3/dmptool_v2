@@ -24,9 +24,13 @@ def mk_formatted_text(n)
   when "text"
     {:text => n.text}
   when "br"
-    {:text => ''}
+    {:text => "\n" }
+  when "a"
+    {:text => "#{n.text} (link: #{n['href']})",
+      :styles => [:underline]}
   else
-    raise Exception.new("Unexpected tag: #{n.name}.")
+    #raise Exception.new("Unexpected tag: #{n.name}.")
+    {:text => "" }
   end
 end
 
@@ -62,7 +66,9 @@ def render_html(pdf, n, state={})
     else # :ol
       pdf.formatted_text([{:text=>"#{state[:index]}. "}] + mk_formatted_texts(n.children))
       state[:index] = state[:index] + 1
-    end 
+    end
+  when "hr"
+    pdf.stroke_horizontal_rule
   else
     if !n.text.blank? then
       pdf.formatted_text([mk_formatted_text(n)])
