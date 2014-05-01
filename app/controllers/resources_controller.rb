@@ -222,7 +222,7 @@
     case @tab
       when "Guidance"
         @selected = "help_text"
-      when "Actionable Links"
+      when "Links"
         @selected = "actionable_url"
       when "Suggested Response"
         @selected = "suggested_response"
