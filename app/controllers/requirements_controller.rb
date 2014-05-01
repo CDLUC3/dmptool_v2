@@ -69,9 +69,8 @@ class RequirementsController < ApplicationController
     @requirements = @requirements_template.requirements
     @enumerations = @requirement.enumerations
     @labels = @requirement.labels
-    debugger
     respond_to do |format|
-      if @requirement.update!(requirement_params)
+      if @requirement.update(requirement_params)
         format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement), notice: 'Requirement was successfully updated.' }
         format.json { head :no_content }
       else
