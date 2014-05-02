@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
   validates_presence_of :first_name
   validates_presence_of :last_name
   validates_confirmation_of :password
+  validates_format_of :orcid_id, with: /[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}/, :allow_blank => true
   validates_format_of :password, with: /([A-Za-z])/, :allow_blank => true
   validates_format_of :password, with: /([0-9])/, :allow_blank => true
   validates_length_of :password, within: 8..30, :allow_blank => true
