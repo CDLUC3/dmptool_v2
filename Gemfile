@@ -49,6 +49,6 @@ gem 'american_date'
 gem 'ifad-rtf', :git => 'https://github.com/clbustos/rtf.git'
 gem "recaptcha", :require => "recaptcha/rails"
 gem 'activerecord_any_of'
-gem 'prawn'
+gem 'prawn', '~> 1.0.0'
 gem 'exception_notification'
 gem 'rabl' # for rendering views in the api
