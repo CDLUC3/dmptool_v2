@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
   validates_format_of :email, with: VALID_EMAIL_REGEX, :allow_blank => true
   validates :prefs, presence: true
   validates :login_id, presence: true, uniqueness: { case_sensitive: false }, :if => :ldap_create
+  validates_presence_of :password, :password_confirmation,  on: :create
   validates_presence_of :first_name
   validates_presence_of :last_name
   validates_confirmation_of :password
@@ -42,6 +43,7 @@ class User < ActiveRecord::Base
  
   before_validation :create_default_preferences, if: Proc.new { |x| x.prefs.empty? }
   before_validation :add_default_institution, if: Proc.new { |x| x.institution_id.nil? }
+
 
   def ensure_ldap_authentication(uid)
     unless Authentication.find_by_user_id_and_provider(self.id, 'ldap')
