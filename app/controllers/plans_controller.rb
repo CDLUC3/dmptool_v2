@@ -78,8 +78,7 @@ class PlansController < ApplicationController
   # POST /plans
   # POST /plans.json
   def create
-    flash[:notice] = []
-
+    flash[:error] = []
     @plan = Plan.new(plan_params)
     respond_to do |format|
       if params[:save_and_dmp_details]
@@ -87,24 +86,35 @@ class PlansController < ApplicationController
           UserPlan.create!(user_id: @user.id, plan_id: @plan.id, owner: true)
           PlanState.create!(plan_id: @plan.id, state: :new, user_id: @user.id )
           add_coowner_autocomplete
-          flash[:alert]
-          format.html { flash[:notice] << "Plan was successfully created."
+          @invalid_users.count > 1 ? @notice_1 = "Could not find the following users #{@invalid_users.join(', ')}." : @notice_1 = "Could not find the following user #{@invalid_users.join(', ')}."
+          @existing_coowners.count > 1 ? @notice_2 = "The users chosen #{@existing_coowners.join(', ')} are already #{@item_description}s of this Plan." : @notice_2 = "The user chosen #{@existing_coowners.join(', ')} is already a #{@item_description} of this Plan."
+          @notice_3 = "The user chosen #{@owner[0].to_s} is the owner of the Plan. An owner cannot be #{@item_description} for the same plan."
+          if !@invalid_users.empty? && !@existing_coowners.empty? && !@owner.empty?
+            format.html { flash[:error] << @notice_1 << @notice_2 << @notice_3
+                  redirect_to details_plan_path(@plan)}
+          elsif !@invalid_users.empty? && !@existing_coowners.empty?
+            format.html { flash[:error] << @notice_1 << @notice_2
+                  redirect_to details_plan_path(@plan)}
+          elsif !@existing_coowners.empty? && !@owner.empty?
+            format.html { flash[:error] << @notice_2 << @notice_3
+                  redirect_to details_plan_path(@plan)}
+          elsif !@invalid_users.empty? && !@owner.empty?
+            format.html { flash[:error] << @notice_1 << @notice_3
+                  redirect_to details_plan_path(@plan)}
+          elsif !@invalid_users.empty?
+            format.html { flash[:error] << @notice_1
+                  redirect_to details_plan_path(@plan)}
+          elsif !@existing_coowners.empty?
+            format.html { flash[:error] << @notice_2
+                  redirect_to details_plan_path(@plan)}
+          elsif !@owner.empty?
+            format.html { flash[:error] << @notice_3
+                  redirect_to details_plan_path(@plan)}
+          else
+          format.html { flash[:notice] = "Plan was successfully created."
                   redirect_to details_plan_path(@plan)}
           format.json { head :no_content }
-        else
-          add_coowner_autocomplete
-          format.html { render action: 'new' }
-          format.json { render json: @plan.errors, status: :unprocessable_entity }
-        end
-      else
-        if @plan.save
-          UserPlan.create!(user_id: @user.id, plan_id: @plan.id, owner: true)
-          PlanState.create!(plan_id: @plan.id, state: :new, user_id: @user.id )
-          add_coowner_autocomplete
-          flash[:alert]
-          format.html { flash[:notice] << "Plan was successfully created."
-                    redirect_to edit_plan_path(@plan)}
-          format.json { render action: 'show', status: :created, location: @plan }
+          end
         else
           add_coowner_autocomplete
           format.html { render action: 'new' }
@@ -139,7 +149,7 @@ class PlansController < ApplicationController
         format.html { flash[:error] << @notice_1 << @notice_2 << @notice_3
               redirect_to edit_plan_path(@plan)}
       elsif !@invalid_users.empty? && !@existing_coowners.empty?
-        format.html { flash[:error] << @notice_1 << notice_2
+        format.html { flash[:error] << @notice_1 << @notice_2
               redirect_to edit_plan_path(@plan)}
       elsif !@existing_coowners.empty? && !@owner.empty?
         format.html { flash[:error] << @notice_2 << @notice_3
