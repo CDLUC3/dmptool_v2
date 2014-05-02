@@ -8,7 +8,7 @@ class Requirement < ActiveRecord::Base
   belongs_to :requirements_template
 
   accepts_nested_attributes_for :enumerations, allow_destroy: true, reject_if: proc { |attributes| attributes['value'].blank? }
-  accepts_nested_attributes_for :labels, allow_destroy: true, reject_if: proc { |attributes| attributes['value'].blank? }
+  accepts_nested_attributes_for :labels, allow_destroy: true, reject_if: proc { |attributes| attributes['desc'].blank? }
   default_scope { order('position ASC') }  # requirements should be ordered by position by default, rather than by the id or date
 
   validates_columns :requirement_type, :obligation
