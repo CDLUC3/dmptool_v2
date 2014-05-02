@@ -354,6 +354,8 @@ div.scrollable-bottom-handle {
   border: 2px solid #999;
   font-size: 1.2em;
   box-shadow: 0 0 5px #999;
+  white-space: normal;
+  font-weight: normal;
 }
 
 .tooltip p {

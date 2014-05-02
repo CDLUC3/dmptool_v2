@@ -15,6 +15,7 @@
   <%= link_to "Completed (#{@committed}) ", {order_scope: @order_scope, scope: "committed",  all_scope: @all_scope}, :class => "committed" %>
   |
   <%= link_to "Rejected (#{@rejected}) ", {order_scope: @order_scope, scope: "rejected",  all_scope: @all_scope}, :class => "rejected" %>
+  <%= content_tag(:span, '', :title => '<ul><li>All: All DMPs for which you are an owner or co-owner.</li><li>Owned: DMPs that you have created.</li><li>Co-owned: DMPs for which others have designated you as a co-owner.</li><li>Approved: Your DMP has been approved by your institutional administrator (only applies if your institution has enabled the &#8220;Review&#8221; functionality.)</li><li>Submitted: Your DMP has been submitted for review to your institutional administrator (only applies if your institution has enabled the &#8220;Review&#8221; functionality.)</li><li>Completed: After clicking Done on the DMP Preview screen, your plan will marked Completed.</li><li>Rejected. Your DMP has been rejected by your institutional administrator (only applies if your institution has enabled the “Review” functionality.)</li></ul>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
 </div>
 
 <table class="table table-striped" id="dmp_plans">
@@ -25,6 +26,7 @@
       </th>
       <th class="span3">
         <%= link_to "Owner", {order_scope: "Owner", scope: @scope, all_scope: @all_scope}%>
+        <%= content_tag(:span, '', :title => 'Three possible states:<ul><li>Private (red lock): only owners and co-owners can view the plan</li><li>Shared with institution (yellow lock): anyone logged in from your institution can view the plan.</li><li>hared publicly (green lock): anyone can view the plan.</li></ul>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
       </th>
       <th>
         <%= link_to "Status", {order_scope: "Status", scope: @scope, all_scope: @all_scope}%>

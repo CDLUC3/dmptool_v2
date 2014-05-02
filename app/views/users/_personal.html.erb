@@ -10,37 +10,36 @@
   <%= f.label :login_id, 'Username', :class => 'control-label required' %>
   <div class="controls">
     <%= f.text_field :login_id, readonly: !@user.new_record?, :class => "required", 'aria-required' => 'true' %>
-    <span class="help-inline" style="display:block;height:0;">
-      <%= errors.join (', ') %>
+    <span class="help-inline">
+      <%#= errors.join (', ') %>
     </span>
   </div>
 </div>
 
-<%# unless @user.new_record? %>
-  <% errors = @user.errors[:first_name] %>
-  <% validation_class = errors.empty? ? {} : 'error' %>
-  <div class="control-group <%= validation_class %>">
-    <%= f.label :first_name, :class => 'control-label required' %>
-    <div class="controls">
-      <%= f.text_field :first_name, :class => "required", 'aria-required' => 'true' %>
-      <span class="help-inline">
-        <%= errors.join (', ') %>
-      </span>
-    </div>
+<% errors = @user.errors[:first_name] %>
+<% validation_class = errors.empty? ? {} : 'error' %>
+<div class="control-group <%= validation_class %>">
+  <%= f.label :first_name, :class => 'control-label required' %>
+  <div class="controls">
+    <%= f.text_field :first_name, :class => "required", 'aria-required' => 'true' %>
+    <span class="help-inline">
+      <%#= errors.join (', ') %>
+    </span>
   </div>
+</div>
 
-  <% errors = @user.errors[:last_name] %>
-  <% validation_class = errors.empty? ? {} : 'error' %>
-  <div class="control-group <%= validation_class %>">
-    <%= f.label :last_name, :class => 'control-label required' %>
-    <div class="controls">
-      <%= f.text_field :last_name, :class => "required", 'aria-required' => 'true' %>
-        <span class="help-in-line">
-          <%=errors.join (', ')%>
-      </span>
-    </div>
+<% errors = @user.errors[:last_name] %>
+<% validation_class = errors.empty? ? {} : 'error' %>
+<div class="control-group <%= validation_class %>">
+  <%= f.label :last_name, :class => 'control-label required' %>
+  <div class="controls">
+    <%= f.text_field :last_name, :class => "required", 'aria-required' => 'true' %>
+      <span class="help-inline">
+        <%#=errors.join (', ')%>
+    </span>
   </div>
-<%#end%>
+</div>
+
 
 <% if @user.new_record? %>
   <% @required = 'required' %>
@@ -53,16 +52,16 @@
   <% errors = @user.errors[:password] %>
   <% validation_class = errors.empty? ? {} : 'error' %>
   <div class="control-group <%= validation_class %>">
-    
     <%= f.label :password, password_label(@user), :class => 'control-label '+@required %>
     <div class="controls">
       <%= f.password_field :password, :class => '' +@required %>
-      <%= content_tag(:span, '', :title => 'The password must be 8 to 30 characters long. It must contain at least one number and one letter.', 'data-placement' => 'right', :class => 'icon questionmark tip') %>
-        <span class="help-in-line">
-          <%=errors.join (', ')%>
+
+      <%= content_tag(:span, '', :title => 'The password must be 8 to 30 characters long. It must contain at least one number and one letter.',
+                     'data-placement' => 'right', :class => 'icon questionmark tip') %>
+        <span class="help-inline">
+          <%#=errors.join (', ')%>
       </span>
     </div>
-
   </div>
 
   <% errors = @user.errors[:password_confirmation] %>
@@ -71,8 +70,8 @@
     <%= f.label :password_confirmation, :class => 'control-label '+@required %>
     <div class="controls">
       <%= f.password_field :password_confirmation, :class => "" +@required %>
-        <span class="help-in-line">
-          <%=errors.join (', ')%>
+        <span class="help-inline">
+          <%#=errors.join (', ')%>
       </span>
     </div>
   </div>
@@ -90,8 +89,8 @@
   <%= f.label :email, :class => 'control-label required' %>
   <div class="controls">
     <%= f.text_field :email, :class => '', 'aria-required' => 'true' %>
-      <span class="help-in-line">
-        <%=errors.join (', ')%>
+      <span class="help-inline">
+        <%#=errors.join (', ')%>
       </span>
   </div>
 </div>
@@ -115,7 +114,7 @@
     <% end %>
 
     <span class="help-in-line">
-      <%=errors.join (', ')%>
+      <%#=errors.join (', ')%>
     </span>
   </div>
 </div>

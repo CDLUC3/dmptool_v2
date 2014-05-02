@@ -13,6 +13,7 @@
     <%= f.label :shib_entity_id, "Entity_id", :class => "control-label " %>
     <div class="controls">
       <%= f.text_field :shib_entity_id, readonly: @current_institution.is_shibboleth?, disabled: @disabled %>
+      <%= content_tag(:span, '', :title => 'Shibboleth endpoint registered with the Incommon Federation. This can only be edited by the DMPTool Administrator. Contact uc3@ucop.edu with any questions.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
     </div>
   </div>
 
@@ -20,6 +21,7 @@
     <%= f.label :shib_domain , "Shibboleth Domain", :class => "control-label "%>
     <div class="controls">
       <%= f.text_field :shib_domain, readonly: @current_institution.is_shibboleth? , disabled: @disabled %>
+      <%= content_tag(:span, '', :title => 'This can only be edited by the DMPTool Administrator. Contact uc3@ucop.edu with any questions.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
     </div>
   </div>
 
@@ -41,7 +43,8 @@
         %>
     
       <% end %>
-
+      
+      <%= content_tag(:span, '', :title => 'If you do not see your institution listed in the dropdown list, contact uc3@ucop.edu.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
          
     </div>
   </div>
@@ -59,6 +62,7 @@
     <div class="controls">
       <%= f.text_field :url_text, placeholder: "URL Text" %>
       <%= f.text_field :url, placeholder: "URL" %>
+      <%= content_tag(:span, '', :title => 'This URL will appear at the top of the DMPTool, to the right of your institution name.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
     </div>
   </div>
 
@@ -68,17 +72,19 @@
     <div class="controls">
       <%= f.text_field :contact_info, placeholder: "Name" %>
       <%= f.text_field :contact_email, placeholder: "Email" %>
+      <%= content_tag(:span, '', :title => 'Person or organization that plan creators can contact in case of questions. This will appear at the top of the DMPTool, under the Institution’s URL.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
     </div>
   </div>
 
   <div class="control-group">
 
-    <%= f.label :logo, 'Institutional Logo', :class => " control-label tip", 'data-toggle' => "tooltip", 'data-placement' => "left",  'title' => "Suggested Logo Size 170x60"  %>
+    <%= f.label :logo, 'Institutional Logo', :class => "control-label"  %>
 
     <div class="controls">
       <%= image_tag @current_institution.logo.url if @current_institution.logo? %>
       <%= f.file_field :logo %>
       <%= f.hidden_field :logo_cache %>
+      <%= content_tag(:span, '', :title => 'Logos can be in .jpeg, .png, .jpg, or .gif format. They should be approximately 170 by 60, but will be re-sized on upload.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
     </div>
   </div>
 

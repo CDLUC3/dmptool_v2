@@ -28,18 +28,22 @@ class User < ActiveRecord::Base
 
   VALID_EMAIL_REGEX = /\A[^@]+@[^@]+\.[^@]+\z/i #very simple, but requires basic format and emails are nearly impossible to validate anyway
   validates :institution_id, presence: true, numericality: true
-  validates :email, presence: true, uniqueness: true ,format: { with: VALID_EMAIL_REGEX }
+  validates :email, presence: true, uniqueness: true 
+  validates_format_of :email, with: VALID_EMAIL_REGEX, :allow_blank => true
   validates :prefs, presence: true
   validates :login_id, presence: true, uniqueness: { case_sensitive: false }, :if => :ldap_create
+  validates_presence_of :password, :password_confirmation,  on: :create
   validates_presence_of :first_name
   validates_presence_of :last_name
   validates_confirmation_of :password
+  validates_format_of :orcid_id, with: /[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}/, :allow_blank => true
   validates_format_of :password, with: /([A-Za-z])/, :allow_blank => true
   validates_format_of :password, with: /([0-9])/, :allow_blank => true
   validates_length_of :password, within: 8..30, :allow_blank => true
  
   before_validation :create_default_preferences, if: Proc.new { |x| x.prefs.empty? }
   before_validation :add_default_institution, if: Proc.new { |x| x.institution_id.nil? }
+
 
   def ensure_ldap_authentication(uid)
     unless Authentication.find_by_user_id_and_provider(self.id, 'ldap')
