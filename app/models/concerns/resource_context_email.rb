@@ -14,6 +14,8 @@ module ResourceContextEmail
       institution = self.institution
       template = self.requirements_template
       users = institution.users_in_and_above_inst_in_role(Role::RESOURCE_EDITOR)
+      users += institution.users_in_and_above_inst_in_role(Role::INSTITUTIONAL_ADMIN)
+      users.uniq! #only the unique users, so each user is only listed once
       users.delete_if {|u| !u[:prefs][:resource_editors][:deleted] }
       users.each do |user|
         UsersMailer.notification(
