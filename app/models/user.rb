@@ -28,7 +28,8 @@ class User < ActiveRecord::Base
 
   VALID_EMAIL_REGEX = /\A[^@]+@[^@]+\.[^@]+\z/i #very simple, but requires basic format and emails are nearly impossible to validate anyway
   validates :institution_id, presence: true, numericality: true
-  validates :email, presence: true, uniqueness: true ,format: { with: VALID_EMAIL_REGEX }
+  validates :email, presence: true, uniqueness: true 
+  validates_format_of :email, with: VALID_EMAIL_REGEX, :allow_blank => true
   validates :prefs, presence: true
   validates :login_id, presence: true, uniqueness: { case_sensitive: false }, :if => :ldap_create
   validates_presence_of :first_name
