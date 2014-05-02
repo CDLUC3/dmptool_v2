@@ -11,7 +11,7 @@
   <div class="controls">
     <%= f.text_field :login_id, readonly: !@user.new_record?, :class => "required", 'aria-required' => 'true' %>
     <span class="help-inline">
-      <%= errors.join (', ') %>
+      <%#= errors.join (', ') %>
     </span>
   </div>
 </div>
@@ -23,7 +23,7 @@
   <div class="controls">
     <%= f.text_field :first_name, :class => "required", 'aria-required' => 'true' %>
     <span class="help-inline">
-      <%= errors.join (', ') %>
+      <%#= errors.join (', ') %>
     </span>
   </div>
 </div>
@@ -35,7 +35,7 @@
   <div class="controls">
     <%= f.text_field :last_name, :class => "required", 'aria-required' => 'true' %>
       <span class="help-inline">
-        <%=errors.join (', ')%>
+        <%#=errors.join (', ')%>
     </span>
   </div>
 </div>
@@ -55,10 +55,11 @@
     <%= f.label :password, password_label(@user), :class => 'control-label '+@required %>
     <div class="controls">
       <%= f.password_field :password, :class => '' +@required %>
+
       <%= content_tag(:span, '', :title => 'The password must be 8 to 30 characters long. It must contain at least one number and one letter.',
                      'data-placement' => 'right', :class => 'icon questionmark tip') %>
-      <span class="help-inline">
-        <%=errors.join (', ')%>
+        <span class="help-inline">
+          <%#=errors.join (', ')%>
       </span>
     </div>
   </div>
@@ -70,7 +71,7 @@
     <div class="controls">
       <%= f.password_field :password_confirmation, :class => "" +@required %>
         <span class="help-inline">
-          <%=errors.join (', ')%>
+          <%#=errors.join (', ')%>
       </span>
     </div>
   </div>
@@ -89,7 +90,7 @@
   <div class="controls">
     <%= f.text_field :email, :class => '', 'aria-required' => 'true' %>
       <span class="help-inline">
-        <%=errors.join (', ')%>
+        <%#=errors.join (', ')%>
       </span>
   </div>
 </div>
@@ -113,7 +114,7 @@
     <% end %>
 
     <span class="help-in-line">
-      <%=errors.join (', ')%>
+      <%#=errors.join (', ')%>
     </span>
   </div>
 </div>
