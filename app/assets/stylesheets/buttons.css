@@ -269,7 +269,7 @@ a .icon {
 .questionmark.icon {
 	background-position: -96px -145px; width: 15px; height: 15px; margin-left: 5px;
 }
-input + .questionmark.icon {
+input + .questionmark.icon, select + .questionmark.icon {
 	margin-left: -5px;
 }
 
