@@ -108,8 +108,6 @@ class UsersController < ApplicationController
     end
 
     @roles = @user.roles.map {|r| r.name}.join(' | ')
-    password = user_params[:password]
-    password_confirmation = user_params[:password_confirmation]
 
     @orcid_id = params[:user][:orcid_id]
     @update_orcid_id = params[:user][:update_orcid_id]
@@ -135,17 +133,15 @@ class UsersController < ApplicationController
       end
     end
     
-
-
     User.transaction do
-      @user.institution_id = params[:user].delete(:institution_id)
+      #@user.institution_id = params[:user].delete(:institution_id)
       respond_to do |format|
         if @orcid_id.blank?     
           if @user.update_attributes(user_params)
             update_notifications(params[:prefs])
             # LDAP will not except for these two fields to be empty.
-            user_params[:first_name] = " " if user_params[:first_name].empty?
-            user_params[:last_name] = " " if user_params[:last_name].empty?
+            #user_params[:first_name] = " " if user_params[:first_name].empty?
+            #user_params[:last_name] = " " if user_params[:last_name].empty?
             update_ldap_if_necessary(@user, user_params)
             format.html { redirect_to edit_user_path(@user),
                         notice: 'User information updated.'  }
@@ -159,8 +155,8 @@ class UsersController < ApplicationController
           if (@user.update_attributes(user_params) && @user.update_attribute(:orcid_id, @orcid_id))
             update_notifications(params[:prefs])
             # LDAP will not except for these two fields to be empty.
-            user_params[:first_name] = " " if user_params[:first_name].empty?
-            user_params[:last_name] = " " if user_params[:last_name].empty?
+            #user_params[:first_name] = " " if user_params[:first_name].empty?
+            #user_params[:last_name] = " " if user_params[:last_name].empty?
             update_ldap_if_necessary(@user, user_params)
             format.html { redirect_to edit_user_path(@user),
                         notice: 'User information updated.'  }
@@ -255,9 +251,9 @@ class UsersController < ApplicationController
     orcid_id.match(/[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}/)
   end
 
-  def valid_email?(email)
-    email.match(/\A[^@]+@[^@]+\.[^@]+\z/i)
-  end
+  # def valid_email?(email)
+  #   email.match(/\A[^@]+@[^@]+\.[^@]+\z/i)
+  # end
 
   def remove_orcid
     @user = User.find(params[:user_id])
@@ -266,14 +262,14 @@ class UsersController < ApplicationController
     redirect_to edit_user_path(@user.id)
   end
 
-  def valid_password (password, confirmation)
-    !password.blank? &&
-    !confirmation.blank? &&
-    password == confirmation &&
-    (8..30).include?(password.length) &&
-    password.match(/\d/) &&
-    password.match(/[A-Za-z]/)
-  end
+  # def valid_password (password, confirmation)
+  #   !password.blank? &&
+  #   !confirmation.blank? &&
+  #   password == confirmation &&
+  #   (8..30).include?(password.length) &&
+  #   password.match(/\d/) &&
+  #   password.match(/[A-Za-z]/)
+  # end
 
   private
 

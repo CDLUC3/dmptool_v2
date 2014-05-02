@@ -39,8 +39,8 @@ module PlanEmail
       earlier_state = PlanState.find(self.changes["current_plan_state_id"][0])
     end
     current_state = self.current_state
-    return if earlier_state.state == current_state.state
 
+    return if earlier_state.state == current_state.state
 
     # [:dmp_owners_and_co][:committed]  -- A DMP is completed (activated)
     if current_state.state == :committed
@@ -56,7 +56,8 @@ module PlanEmail
 
     # [:dmp_owners_and_co][:submitted] -- A submitted DMP is approved or rejected
     # [:institutional_reviewers][:approved_rejected] -- An Institutional DMP is approved or rejected
-    elsif current_state.state == :approved || current_state.state == :rejected || current_state.state = :reviewed
+    elsif current_state.state == :approved || current_state.state == :rejected || current_state.state == :reviewed
+      debugger
       users = self.users
       users.delete_if {|u| !u[:prefs][:dmp_owners_and_co][:submitted]}
       users.each do |user|

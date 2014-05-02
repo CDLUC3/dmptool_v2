@@ -16,7 +16,9 @@
 		  <tr>
 		    <th>User Name</th>
 		    <th>Institution</th>
-		    <th>Current Role</th>
+		    <th>Current Role
+				<%= content_tag(:span, '', :title => 'Possible roles are:<ul><li>Template editor: create local, institutional, DMP templates</li><li>Resources editor: add/modify DMP template customizations, which include links to resources, local help text, suggested text, and example responses</li><li>Institutional reviewer: review, informally or formally, data management plans</li><li>Institutional administrator: assign additional DMPTool institutional administrators; performs all above administrative roles</li></ul>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
+		    </th>
 		    <th width="span1">Edit User Role</th>
 		  </tr>
 		</thead>

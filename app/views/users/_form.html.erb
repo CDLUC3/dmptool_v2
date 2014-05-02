@@ -1,16 +1,6 @@
 <%= form_for @user, html: { :class => 'form-horizontal' } do |f| %>
-  <% if @user.errors[:base].any? %>
-    <div class="alert alert-error form-errors">
-      <% @user.errors[:base].each do |msg| %>
-        <p>
-          <%= msg %>
-        </p>
-      <% end %>
-    </div>
-  <% end %>
-  
-  <% unless @user.new_record? %>
-    
+  <%= render partial: "shared/errors", locals: {model: @user } %>
+      
     <div class="tabbable">
         <ul class="nav nav-tabs">
           <li class="active"><%= link_to 'Personal Information', '#tab1', 'data-toggle' => 'tab' %></li>
@@ -29,18 +19,14 @@
   		<%= f.submit 'Save', :class => 'btn' %>
   		<%= link_to 'Cancel', edit_user_path(@user), :class => 'btn' %>
   	</div>
-  
-  <% end %>
-  
-  <% if @user.new_record? %>
-  	<%= render 'personal', f: f %>
-	  <p><%= f.submit 'Create Account' %></p>
-  <% end %>
 
 <% end %>
-<% if @user.new_record? %>
-<p>By clicking <strong>Create Account</strong>,you agree to our <%= link_to 'Terms of Use', '#', :title => "DMPTool Terms of Use", :target => "_blank" %> and <%= link_to 'Privacy Policy', '#', :title => "DMPTool Privacy Policy", :target => "_blank" %>.</p>
-<% end %>
+
+<script type="text/javascript">
+  tab_jump();
+  add_tab_to_pagination();
+</script>
+
 
 
 

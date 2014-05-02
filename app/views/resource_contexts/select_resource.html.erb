@@ -77,6 +77,7 @@
 				</tbody>
 			</table>
 			<div class="buttons pagination">
+				<%= submit_tag 'Link Selected Resource',  :class => "btn btn-green" %>
 				<%= paginate @resource_contexts %>
 			</div>
 			<%= hidden_field_tag :template_id, @template_id  %>
@@ -86,9 +87,7 @@
 			<%= hidden_field_tag :tab, @tab %>
 			<%= hidden_field_tag :tab_number, @tab_number %>
 			<%= hidden_field_tag :custom_origin, @custom_origin %>
-			<div class="actions pull-right">			
-
-				<%= submit_tag 'Link Existing Resource',  :class => "btn btn-green" %>
+			<div class="actions pull-right">						
 				<%= link_to 'Add a new resource',
 									new_customization_resource_path(template_id: @template_id,
 									customization_overview_id: @customization_overview_id,
@@ -99,7 +98,6 @@
 									custom_origin: 	@custom_origin),
 									:method => :post,
 									:class => "btn btn-green" %>
-
 			</div>
 		<%end%>
 		<div class="actions pull-left">
