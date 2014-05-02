@@ -7,10 +7,6 @@
   # GET /resources.json
   def index
     @resources = Resource.all
-    # @resources = Resource.where(requirement_id: params[:requirement_id])
-    # @requirements_template = @resource_template.requirements_template
-    # requirement_ids = @requirements_template.requirements.pluck(:id)
-    # @requirements = Requirement.where(id: requirement_ids)
   end
 
   # GET /resources/1

@@ -31,6 +31,8 @@ class User < ActiveRecord::Base
   validates :email, presence: true, uniqueness: true ,format: { with: VALID_EMAIL_REGEX }
   validates :prefs, presence: true
   validates :login_id, presence: true, uniqueness: { case_sensitive: false }, :if => :ldap_create
+  validates_presence_of :first_name
+  validates_presence_of :last_name
   validates_confirmation_of :password
   validates_format_of :password, with: /([A-Za-z])/, :allow_blank => true
   validates_format_of :password, with: /([0-9])/, :allow_blank => true

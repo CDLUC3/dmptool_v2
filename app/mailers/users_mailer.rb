@@ -30,11 +30,22 @@ class UsersMailer < ActionMailer::Base
     end
     @vars = locals
     mail( :to             => email_address_array.join(','),
-          :subject        => "[DMPTool] #{subject}",
+          :subject        => "#{dmp_string} #{subject}",
           :from           => APP_CONFIG['feedback_email_from'],
           :reply_to       => APP_CONFIG['feedback_email_from'],
           :template_name  => message_template
     )
+  end
+
+  def dmp_string
+    case ENV["RAILS_ENV"]
+      when 'development'
+        "[DMPTool] (development)"
+      when 'stage'
+        "[DMPTool] (staging)"
+      when 'production'
+        "[DMPTool]"
+    end
   end
 
 end
