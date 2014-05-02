@@ -14,7 +14,9 @@
     <tr>
       <th><%= link_to "DMP Name", {scope: @scope, order_scope: "DMPName", all_scope: @all_scope}%></th>
       <th><%= link_to "Owner", {scope: @scope, order_scope: "Owner", all_scope: @all_scope}%></th>
-      <th><%= link_to "Submission Date", {scope: @scope, order_scope: "SubmissionDate", all_scope: @all_scope}%></th>
+      <th><%= link_to "Submission Date", {scope: @scope, order_scope: "SubmissionDate", all_scope: @all_scope}%>
+        <%= content_tag(:span, '', :title => 'Date the DMP was submitted for review by the plan owner.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
+      </th>
       <th class="span1"><%= link_to "Status", {scope: @scope, order_scope: "Status", all_scope: @all_scope}%></th>
       <th class="span1">Review DMP</th>
     </tr>
