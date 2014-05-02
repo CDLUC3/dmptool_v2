@@ -42,8 +42,11 @@ class ResourceContextsController < ApplicationController
     else
       @resource_context.institution_id = current_user.institution_id
     end
-    @resource_context.contact_email = @req_temp.institution.contact_email
-    @resource_context.contact_info = @req_temp.institution.contact_info
+    if @resource_context.institution_id
+      inst = Institution.find(@resource_context.institution_id)
+      @resource_context.contact_email = inst.contact_email
+      @resource_context.contact_info = inst.contact_info
+    end
 
     existing = ResourceContext.where(institution_id:        @resource_context.institution_id).
                         where(requirements_template_id:     @resource_context.requirements_template_id).
