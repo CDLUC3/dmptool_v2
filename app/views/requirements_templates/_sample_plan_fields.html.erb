@@ -6,5 +6,6 @@
 		<%= f.text_field :url, placeholder: 'Plan Url' %>
 		<%= f.hidden_field :_destroy %>
 		<%= link_to(content_tag(:span, "", :class => "icon remove") + "Remove", '#', :class => "red remove_fields") %>
+		<%= content_tag(:span, '', :title => 'Add example or sample plans for to this template. Provide the plan name (e.g., &#8220;Example plan for UVA researcher submitting NSF-BIO proposal&#8221;). Provide the URL where the sample plan is located.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
 	</div>
 </div>

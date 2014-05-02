@@ -6,5 +6,6 @@
 		<%= f.text_field :url, placeholder: 'Link Url' %>
 		<%= f.hidden_field :_destroy %>
 		<%= link_to(content_tag(:span, '', :class => 'icon remove') + 'Remove', '#', :class => 'red remove_fields') %>
+		<%= content_tag(:span, '', :title => 'Add links to funder websites that may provide additional information about this template’s requirements.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
 	</div>
 </div>
