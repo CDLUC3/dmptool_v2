@@ -5,3 +5,5 @@ The DMP "<%= @vars[:plan].name %>" has a new comment from <%= @vars[:commenter].
 <%= @vars[:comment] %>
 
 If you have questions pertaining to this action, please contact the DMP Administrator at uc3@ucop.edu
+
+<%= render :partial => 'users_mailer/notification_boilerplate.text.erb' %>

@@ -40,6 +40,7 @@ Dmptool2::Application.configure do
     end
   end
 
- 
+  #set server name for mailer
+  config.action_mailer.default_url_options = { :host => "http://dmp2-dev.cdlib.org" }
 
 end
