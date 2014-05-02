@@ -85,6 +85,7 @@
     <%= label_tag "#{user_role}_name", "Add Co-owners:", :class => "control-label" %>
     <div class="controls">
   		<%= text_field_tag("#{user_role}_name", nil, placeholder: "Add co-owners; search by name or email address", :class => 'input-xxlarge') %>
+  		<%= content_tag(:span, '', :title => 'Co-owners you designate will have read/write access to this DMP. Co-owners must have already logged into the DMPTool to be added to a plan.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
 			<%= hidden_field_tag "item_description", item_description %>
 		</div>
 </div>

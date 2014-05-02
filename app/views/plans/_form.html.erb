@@ -38,18 +38,21 @@
           <%= f.label :solicitation_identifier , 'Proposal Solicitation Number', :class => 'control-label' %>
           <div class="controls">
             <%= f.text_field :solicitation_identifier  , :class => 'input-xxlarge'%>
+            <%= content_tag(:span, '', :title => 'Proposal solicitation number or identifier for the call associated with this proposal and DMP.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
           </div>
         </div>
         <div class="control-group">
           <%= label_tag(:submission_deadline, "Proposal Submission Deadline", :class => "control-label") %>
           <div class="controls">
             <%= f.text_field :submission_deadline, value: @plan.submission_deadline.blank? ? " " : @plan.submission_deadline.strftime('%m/%d/%Y'), :class => 'datepicker', id:'submission_deadline' %>
+            <%= content_tag(:span, '', :title => 'Deadline for submitting the proposal associated with this DMP.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
           </div>
         </div>
 
         <% if @plan.new_record? %>
-          <div class="control-group">
-            <%= f.label :visibility, :class => 'control-label' %>
+          <div class="control-group" style="position: relative">
+            <%= content_tag(:span, '', :title => 'Three visibility options: <ul><li>Public: anyone can view the plan.</li><li>Institutional: anyone logged in from your institution can view the plan.</li><li>Private: only owners and co-owners can view the plan.</li></ul>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip', :style => 'position: absolute; top: 7px; left: 135px') %>
+            <p class="control-label">Visibility</p>
             <div class="controls checkbox-controls">
               <%= f.radio_button :visibility, :public, :class => 'radio inline', :id => 'public'  %>
               <%= label_tag :public, 'public', :class => 'radio-label'%><br/>
