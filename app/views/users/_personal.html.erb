@@ -55,9 +55,10 @@
     <%= f.label :password, password_label(@user), :class => 'control-label '+@required %>
     <div class="controls">
       <%= f.password_field :password, :class => '' +@required %>
-      <%= content_tag(:span, '', :title => 'Must be 8 to 30 characters long and contain at least 1 number and 1 letter.', 'data-placement' => 'right', :class => 'icon questionmark tip') %>
-        <span class="help-inline">
-          <%=errors.join (', ')%>
+      <%= content_tag(:span, '', :title => 'The password must be 8 to 30 characters long. It must contain at least one number and one letter.',
+                     'data-placement' => 'right', :class => 'icon questionmark tip') %>
+      <span class="help-inline">
+        <%=errors.join (', ')%>
       </span>
     </div>
   </div>
@@ -121,7 +122,6 @@
   <%if @user.role_names.any?%>
     <p><strong>DMP Options</strong></p>
 	   <hr/>
-    <!-- <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script> -->
     <div class="control-group">
       <p class="control-label">My Roles</p>
       <div class="controls">
@@ -138,7 +138,9 @@
     <hr/>
 
     <% if @user.orcid_id.nil? || @user.orcid_id.blank? %>
-      <div class="control-group">
+      <div class="control-group" style="position: relative">
+         <%= content_tag(:span, '', :title => 'ORCID is an Open Researcher and Contributor ID. See orcid.org for more information.', 'data-placement' => 'right', :class => 'icon questionmark tip', :style => 'position: absolute; top: 7px; left: 142px') %>
+        <%= content_tag(:span, '', :title => 'Look up your ORCID id number, or select “Search” to search by name. We strongly recommend not manually entering your ORCID id.', 'data-placement' => 'right', :class => 'icon questionmark tip', :style => 'position: absolute; top: 12px; left: 755px') %>
         <%= label_tag :orcid_id, 'ORCID', :class => 'control-label' %>
         <input type="text" id="orcid_id" class="orcid_widget" name="user[orcid_id]" placeholder="xxxx-xxxx-xxxx-xxxx">
          <%= javascript_include_tag "orcid_widget" %>

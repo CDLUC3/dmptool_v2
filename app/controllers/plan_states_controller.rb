@@ -23,7 +23,7 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
         redirect_to perform_review_plan_path(@plan) and return
       end
     else
-      flash[:error] =  "You don'ct have permission to Review this plan."
+      flash[:error] =  "You don't have permission to Review this plan."
       redirect_to perform_review_plan_path(@plan) and return
     end
   end
@@ -89,8 +89,8 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
         @notice_1 = "This plan has been submitted for review."
         @notice_2 = "This Plan has been already submitted for review."
       else
-        @notice_1 = "The Plan has been #{state}."
-        @notice_2 = "The Plan has already been #{state}."
+        @notice_1 = "The Plan has been #{state == :committed ? "Completed" : state}."
+        @notice_2 = "The Plan has already been #{state== :committed ? "Completed" : state}."
       end
       unless @plan.current_plan_state == state
         plan_state = PlanState.create( plan_id: @plan.id, state: state, user_id: current_user.id)
@@ -107,8 +107,8 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
         @notice_1 = "This plan has been submitted for review."
         @notice_2 = "This Plan has been already submitted for review."
       else
-        @notice_1 = "The Plan has been #{state}."
-        @notice_2 = "The Plan has already been #{state}."
+        @notice_1 = "The Plan has been #{state== :committed ? "Completed" : state}."
+        @notice_2 = "The Plan has already been #{state== :committed ? "Completed" : state}."
       end
       unless @plan.current_plan_state == state
         plan_state = PlanState.create( plan_id: @plan.id, state: state, user_id: current_user.id)

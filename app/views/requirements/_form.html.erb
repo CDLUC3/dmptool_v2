@@ -41,7 +41,10 @@
         <%= label_tag :mandatory_applicable, "Mandatory If Applicable", :class => "radio-label" %><br/>
         <%= f.radio_button :obligation, :recommended, :class => 'radio inline', :id => 'recommended' %>
         <%= label_tag :recommended, "Recommended", :class => "radio-label" %><br/>
-        <% if @requirement.new_record? %>
+        <% if params[:node_type] == 'group' && @requirement.new_record? %>
+          <%= f.radio_button :obligation, :optional, :class => 'radio inline', :id => 'optional' %>
+          <%= label_tag :optional, "Optional", :class => "radio-label" %>
+        <% elsif @requirement.new_record? %>
           <%= f.radio_button :obligation, :optional, checked: true, :class => 'radio inline', :id => 'optional' %>
           <%= label_tag :optional, "Optional", :class => "radio-label" %>
         <% else %>
