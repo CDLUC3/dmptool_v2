@@ -16,6 +16,8 @@ module RequirementsTemplateEmail
     if self.active == false && !self.changes["active"].nil? && self.changes["active"][0] == true
       institution = self.institution
       users = institution.users_in_and_above_inst_in_role(Role::TEMPLATE_EDITOR)
+      users += institution.users_in_and_above_inst_in_role(Role::INSTITUTIONAL_ADMIN)
+      users.uniq! #only the unique users, so each user is only listed once
       users.delete_if {|u| !u[:prefs][:requirement_editors][:deactived] }
       users.each do |user|
         UsersMailer.notification(
@@ -31,6 +33,8 @@ module RequirementsTemplateEmail
       # this is for requirement editors
       institution = self.institution
       users = institution.users_in_and_above_inst_in_role(Role::TEMPLATE_EDITOR)
+      users += institution.users_in_and_above_inst_in_role(Role::INSTITUTIONAL_ADMIN)
+      users.uniq! #only the unique users, so each user is only listed once
       users.delete_if {|u| !u[:prefs][:requirement_editors][:committed] }
       users.each do |user|
         UsersMailer.notification(
@@ -50,6 +54,8 @@ module RequirementsTemplateEmail
       customizations.each do |customization|
         institution = customization.institution
         users = institution.users_in_and_above_inst_in_role(Role::RESOURCE_EDITOR)
+        users += institution.users_in_and_above_inst_in_role(Role::INSTITUTIONAL_ADMIN)
+        users.uniq! #only the unique users, so each user is only listed once
         users.delete_if {|u| !u[:prefs][:resource_editors][:associated_committed] }
         users.each do |user|
           UsersMailer.notification(
