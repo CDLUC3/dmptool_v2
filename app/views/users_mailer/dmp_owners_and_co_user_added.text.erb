@@ -1,7 +1,7 @@
 Hello <%= @vars[:user].full_name %>,
 
-You've been added to the plan "<%= @vars[:plan].name %>" as a co-owner.
+<%= ( @vars[:user] == @vars[:new_user] ? "You've been" : "#{@vars[:new_user].full_name} has been") %> added to the plan "<%= @vars[:plan].name %>" as a <%= @vars[:new_user_type] %>.
 
-If you have questions pertaining to this action, please contact the DMP Administrator at uc3@ucop.edu
+If you have questions pertaining to this action, please visit the DMP Overview page
 
 <%= render :partial => 'users_mailer/notification_boilerplate.text.erb' %>

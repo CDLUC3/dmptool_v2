@@ -17,7 +17,7 @@
           #to make things pretty within a table
            col1 = []
            col1[0] = link_to "#{current_user.owned_plans.count} plans I own", plans_path(:scope => "owned")
-           col1[1] = link_to "#{current_user.coowned_plans.count} plans i co-own", plans_path(:scope => "coowned")
+           col1[1] = link_to "#{current_user.coowned_plans.count} plans I co-own", plans_path(:scope => "coowned")
            col2 = (current_user.unique_plan_states & PlanState::REVIEW_STATES).map do |state|
              link_to "#{current_user.plans_by_state(state).count} #{state.capitalize}", review_dmps_path
            end
