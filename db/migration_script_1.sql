@@ -193,13 +193,13 @@ SET `p`.`current_plan_state_id` = `s`.`id`;
 
 # resources: first copy DMP1 resources into DMP2 URL resources;
 # then insert DMP1 help and suggested answers,
-# using their first 50 characters as labels
+# using their first 50 characters as labels (the actionable URLs labels will not be truncated)
 # help and suggested answers are de-duplicated within institutions
 TRUNCATE TABLE `dmp2`.`resources`;
 INSERT INTO `dmp2`.`resources` (
        `id`,         `resource_type`,  `value`, `label`,      `created_at`,
        `updated_at`, `text`)
-SELECT `id`,          'actionable_url',   `url`, dmp2.fnStripTags(LEFT(`desc`,50)),
+SELECT `id`,          'actionable_url',   `url`, `desc`,
                                                               `created_at`,
        `updated_at`,  NULL
 FROM `dmp`.`resources`;
@@ -265,6 +265,12 @@ FROM `dmp`.`suggested_answers`
 WHERE `institution_id` IS NOT NULL
 GROUP BY `institution_id` ASC, `suggested_answer_text` ASC;
 
+
+#append ellipsis to all resources labels except the actionable_urls
+UPDATE `dmp2`.`resources` 
+SET `label` = CONCAT(`label`, '...')
+WHERE `resource_type` != 'actionable_url'
+AND (length(`label`) > 49);
 
 # resource_contexts: first copy the DMP1 resource contexts for specific questions
 # (i.e., NULL or > 0); note that these referenced resources are all URLs
