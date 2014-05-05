@@ -10,13 +10,22 @@ class UsersController < ApplicationController
 
   # GET /users
   # GET /users.json
-
   def index
     @admin_acr = params[:admin_acr]
-    @users = User.page(params[:page]).order(last_name: :asc).per(50)
+    @all_scope = params[:all_scope]
+    @q = params[:q]
 
-    if !params[:q].blank?
-      @users = @users.search_terms(params[:q])
+    @users = User.all
+
+    if (!@q.blank? && !@q.nil?)
+      @users = @users.search_terms(@q)
+    end
+
+    case @all_scope
+      when "all"
+        @users = @users.page(params[:page]).per(9999)
+      else
+        @users = @users.page(params[:page]).per(10)
     end
 
     case params[:scope]

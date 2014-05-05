@@ -20,16 +20,27 @@
 				<td><%= link_to user.institution.full_name, edit_institution_path(user.institution) %></td>
 				<td><%= user.role_names.join(' | ') %></td>
 				<td class="span1"><%=link_to raw(''), edit_user_roles_path(user_id: user), :class => 'icon edit-user', :id => "edit_#{user.id}"%></td>
-				<td class="span1"><%= link_to raw(''), user, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'icon remove-user' %></td>           
+				<td class="span1"><%= link_to raw(''), user, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'icon remove-user' %></td>    
 			</tr>       
 		<% end %>
 		
 		</tbody>
 	</table>
-	<div class="buttons pagination">
-		<%= link_to 'View All', users_path(:scope => 'all_users', :anchor => 'tab1'), :method => :get, :class => 'btn' %>
-		<%= paginate @users %>
-	</div>
+
+	
+
+		<% if @all_scope == "all" %>
+			<div class="buttons pagination">
+				<%= link_to "View Less", users_path(:all_scope => "", :anchor => 'tab1', q: @q), :method => :get, :class => "btn", role: "button" %>
+				<%= paginate @users %>
+			</div>
+		<% else %>
+			<div class="buttons pagination">
+				<%= link_to "View All", users_path(:all_scope => "all", :anchor => 'tab1', q: @q), :method => :get, :class => "btn", role: "button"%>
+				<%= paginate @users %>
+			</div>
+		<%end%>
+
 
 <% end %>
 
