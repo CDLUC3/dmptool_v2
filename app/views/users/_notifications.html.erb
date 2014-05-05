@@ -1,5 +1,7 @@
 <p>Check or uncheck boxes for email notifications.</p>
 
+<p><input type="checkbox" id="sel_all" name="select_all"><label for="sel_all">Select / deselect all</label></p>
+
 <div>
   <p><strong>Users</strong></p>
 	<div class="control-group">
@@ -67,4 +69,12 @@
 </div>
 
 
-
+<script type="text/javascript">
+  $('#sel_all').change(function() {
+    if(this.checked) {
+      $('#tab2 input[type=checkbox]').prop('checked', true);
+    }else{
+      $('#tab2 input[type=checkbox]').prop('checked', false);
+    }
+  });
+</script>
