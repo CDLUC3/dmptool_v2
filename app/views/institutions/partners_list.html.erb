@@ -14,11 +14,11 @@
 <br/>
 <div class="row-fluid">
 	<div class="span8">
-		<%= link_to('A - F', { :s => 'a', :e => 'f' }, :class => 'btn viewA-F') %> 
-		<%= link_to('G - L', { :s => 'g', :e => 'l' }, :class => 'btn viewG-L') %> 
-		<%= link_to('M - S', { :s => 'm', :e => 's' }, :class => 'btn viewM-S') %> 
-		<%= link_to('T - Z', { :s => 't', :e => 'z' }, :class => 'btn viewT-Z') %> 
-		<%= link_to('All', { :s => 'a', :e => 'z' }, :class => 'btn viewA-Z') %>
+		<%= link_to('A - F', { :s => 'a', :e => 'f' , :all_scope => @all_scope}, :class => 'btn viewA-F') %> 
+		<%= link_to('G - L', { :s => 'g', :e => 'l' , :all_scope => @all_scope}, :class => 'btn viewG-L') %> 
+		<%= link_to('M - S', { :s => 'm', :e => 's' , :all_scope => @all_scope}, :class => 'btn viewM-S') %> 
+		<%= link_to('T - Z', { :s => 't', :e => 'z' , :all_scope => @all_scope}, :class => 'btn viewT-Z') %> 
+		<%= link_to('All', { :s => 'a', :e => 'z' , :all_scope => @all_scope}, :class => 'btn viewA-Z') %>
 	</div>
 	<div class="search-area span4 pull-right">
 			<%= form_tag('', {:method => :get}) do %>
@@ -57,8 +57,21 @@
   <% end %>
 	</tbody>
 </table>
-<div class="buttons pagination">
-  <%= link_to("View All", {:action=>"partners_list", :all=>"seriously"},
+
+
+<% if @all_scope == "all" %>
+	<div class="buttons pagination">
+		<%= link_to("View Less", {:action => "partners_list", :all_scope => "", :q => @q, :s => @s, :e => @e},
               {:class => "btn"})%>
-  <%= paginate @institutions %>
-</div>
+		<%= paginate @institutions %>
+	</div>
+<% else %>
+	<div class="buttons pagination">
+		<%= link_to("View All", {:action => "partners_list", :all_scope => "all", :q => @q, :s => @s, :e => @e},
+              {:class => "btn"})%>
+		<%= paginate @institutions %>
+	</div>
+<%end%>
+
+
+

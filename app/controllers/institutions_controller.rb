@@ -292,18 +292,39 @@ class InstitutionsController < ApplicationController
   end
 
   def partners_list
+    
+    @all_scope = params[:all_scope]
+    @s = params[:s]
+    @e = params[:e]
+    @q = params[:q]
     @institutions = Institution.order(:full_name)
-    if params[:all].blank? then
-      unless params[:s].blank? || params[:e].blank?
-        @institutions = @institutions.letter_range(params[:s], params[:e])
-      end
-      unless params[:q].blank? then
-        @institutions = @institutions.search_terms(params[:q])
-      end
-      @institutions = @institutions.page(params[:page]).per(10)
-    else
-      @institutions = @institutions.page(0).per(9999)
+
+  #   if params[:all].blank? then
+  #     unless params[:s].blank? || params[:e].blank?
+  #       @institutions = @institutions.letter_range(params[:s], params[:e])
+  #     end
+  #     unless params[:q].blank? then
+  #       @institutions = @institutions.search_terms(params[:q])
+  #     end
+  #     @institutions = @institutions.page(params[:page]).per(10)
+  #   else
+  #     @institutions = @institutions.page(0).per(9999)
+  #   end
+  # end
+    unless @s.blank? || @e.blank?
+      @institutions = @institutions.letter_range(@s, @e)
     end
+    unless @q.blank?
+      @institutions = @institutions.search_terms(@q)
+    end
+
+    case @all_scope
+      when "all"
+        @institutions = @institutions.page(params[:page]).per(9999)
+      else
+        @institutions = @institutions.page(params[:page]).per(10)
+    end
+
   end
   
   private
