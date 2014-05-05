@@ -35,8 +35,6 @@ class PlansController < ApplicationController
     end
 
     case @scope
-      when "all_limited"
-        @plans = @plans
       when "owned"
         @plans = @owned_plans
       when "coowned"

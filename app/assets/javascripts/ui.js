@@ -55,6 +55,9 @@ jQuery(function(){
 	else if(window.location.href.indexOf("scope=submitted") != -1){
 		jQuery(".submitted").addClass("current");
 	}
+	else if(window.location.href.indexOf("scope=committed") != -1){
+		jQuery(".committed").addClass("current");
+	}
 	else if(window.location.href.indexOf("scope=rejected") != -1){
 		jQuery(".rejected").addClass("current");
 	}
