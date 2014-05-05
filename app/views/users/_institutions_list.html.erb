@@ -18,8 +18,33 @@
   <% end %>
   </tbody>
 </table>
-<div class="buttons pagination">
-	<%= link_to "View All", users_path(:scope => "all_institutions", :anchor => 'tab2'), :method => :get, :class => "btn", role: "button" %>
-  <%= paginate @institutions %>
-</div>
+
+
+
+
+
+<% if @all_institutions == "all" %>
+  <div class="buttons pagination">
+    <%= link_to "View Less", users_path(:all_institutions => "", :anchor => 'tab2'), 
+        :method => :get, :class => "btn", role: "button" %>
+    <%= paginate @institutions %>
+  </div>
+<% else %>
+  <div class="buttons pagination">
+    <%= link_to "View All", users_path(:all_institutions => "all", :anchor => 'tab2'), 
+      :method => :get, :class => "btn", role: "button"%>
+    <%= paginate @institutions %>
+  </div>
+<%end%>
+
+
+<!-- <div class="buttons pagination">
+	<%#= link_to "View All", users_path(:scope => "all_institutions", :anchor => 'tab2'), :method => :get, :class => "btn", role: "button" %>
+  <%#= paginate @institutions %>
+</div> -->
+
+
+
+
+
 <%= link_to 'Add New Institution', new_institution_path(5), :class => "btn btn-green" %>

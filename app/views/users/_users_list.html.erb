@@ -29,14 +29,14 @@
 
 	
 
-		<% if @all_scope == "all" %>
+		<% if @all_users == "all" %>
 			<div class="buttons pagination">
-				<%= link_to "View Less", users_path(:all_scope => "", :anchor => 'tab1', q: @q), :method => :get, :class => "btn", role: "button" %>
+				<%= link_to "View Less", users_path(:all_users => "", :anchor => 'tab1', q: @q), :method => :get, :class => "btn", role: "button" %>
 				<%= paginate @users %>
 			</div>
 		<% else %>
 			<div class="buttons pagination">
-				<%= link_to "View All", users_path(:all_scope => "all", :anchor => 'tab1', q: @q), :method => :get, :class => "btn", role: "button"%>
+				<%= link_to "View All", users_path(:all_users => "all", :anchor => 'tab1', q: @q), :method => :get, :class => "btn", role: "button"%>
 				<%= paginate @users %>
 			</div>
 		<%end%>

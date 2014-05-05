@@ -12,28 +12,33 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @admin_acr = params[:admin_acr]
-    @all_scope = params[:all_scope]
+
+    @all_users = params[:all_users]
+    @all_institutions = params[:all_institutions]
+
     @q = params[:q]
 
-    @users = User.all
+    @users = User.order(:first_name, :last_name)
+    @institutions = Institution.order(full_name: :asc)
 
     if (!@q.blank? && !@q.nil?)
       @users = @users.search_terms(@q)
     end
 
-    case @all_scope
+    case @all_users
       when "all"
         @users = @users.page(params[:page]).per(9999)
       else
         @users = @users.page(params[:page]).per(10)
     end
 
-    case params[:scope]
-      when "all_institutions"
-        @institutions = Institution.page(params[:page])
+    case @all_institutions
+      when "all"
+        @institutions = @institutions.page(params[:page]).per(9999)
       else
-        @institutions = Institution.page(params[:page]).per(10)
+        @institutions = @institutions.page(params[:page]).per(10)
     end
+
   end
 
   # GET /users/1
