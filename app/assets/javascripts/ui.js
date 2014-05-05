@@ -38,10 +38,13 @@ jQuery(function(){
 		jQuery(".viewA-Z").addClass("current");
 	}
 });
-/* Add class according to categorical view of tabular data */	
+/* Add class according to categorical view of tabular data */
 jQuery(function(){
 	if(window.location.href.indexOf("scope=all_limited") != -1){
 		jQuery(".all_limited").addClass("current");
+	}
+	else if(window.location.href.indexOf("scope=owned") != -1){
+		jQuery(".owned").addClass("current");
 	}
 	else if(window.location.href.indexOf("scope=coowned") != -1){
 		jQuery(".coowned").addClass("current");
@@ -93,7 +96,7 @@ jQuery(function(){
 		function(){jQuery(this).parent().find(".template-links").css("visibility", "hidden");}
 	);
 });
-/* Required Fields 
+/* Required Fields
 jQuery(function requiredFields(){
 	jQuery("input.required, select.required, textarea.required").each(function(){
 			if(jQuery(this).val().length == 0){
