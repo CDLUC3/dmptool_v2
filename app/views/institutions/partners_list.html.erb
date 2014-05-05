@@ -41,7 +41,8 @@
 	<tbody>
   <% @institutions.each do |institution| %>
     <tr>
-      <td><%= link_to institution.full_name, edit_institution_path(institution) %></td>
+      <!-- <td><%#= link_to institution.full_name, edit_institution_path(institution) %></td> -->
+      <td><%= institution.full_name%></td>
       <td class="span1"><% if institution.is_shibboleth? then %>
         <span class="icon confirm"></span>
       <% else %>

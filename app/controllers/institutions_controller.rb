@@ -292,7 +292,7 @@ class InstitutionsController < ApplicationController
   end
 
   def partners_list
-    @institutions = Institution.all
+    @institutions = Institution.order(:full_name)
     if params[:all].blank? then
       unless params[:s].blank? || params[:e].blank?
         @institutions = @institutions.letter_range(params[:s], params[:e])
