@@ -43,6 +43,9 @@ jQuery(function(){
 	if(window.location.href.indexOf("scope=all_limited") != -1){
 		jQuery(".all_limited").addClass("current");
 	}
+	else if(window.location.href.indexOf("scope=owned") != -1){
+		jQuery(".owned").addClass("current");
+	}
 	else if(window.location.href.indexOf("scope=coowned") != -1){
 		jQuery(".coowned").addClass("current");
 	}
@@ -51,6 +54,9 @@ jQuery(function(){
 	}
 	else if(window.location.href.indexOf("scope=submitted") != -1){
 		jQuery(".submitted").addClass("current");
+	}
+	else if(window.location.href.indexOf("scope=committed") != -1){
+		jQuery(".committed").addClass("current");
 	}
 	else if(window.location.href.indexOf("scope=rejected") != -1){
 		jQuery(".rejected").addClass("current");
