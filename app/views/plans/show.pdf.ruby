@@ -26,11 +26,11 @@ def mk_formatted_text(n)
   when "br"
     {:text => "\n" }
   when "a"
-    {:text => "#{n.text} (link: #{n['href']})",
+    {:text => "#{n.text} (#{n['href']})",
       :styles => [:underline]}
   else
     #raise Exception.new("Unexpected tag: #{n.name}.")
-    {:text => "" }
+    {:text => n.text }
   end
 end
 

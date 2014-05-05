@@ -14,7 +14,7 @@ def render_html(doc, n, styles, state={})
         render_html(p, c, styles)
       end
     end
-  when "sup", "strong", "b", "sub"
+  when "sup", "strong", "b", "sub", "em", "u", "s"
     doc.apply(styles[n.name.intern]) do |c|
       c << n.text
     end
@@ -38,8 +38,34 @@ def render_html(doc, n, styles, state={})
         render_html(i, c, styles)
       end
     end
+  when 'hr'
+    doc.table(1,1) do |t|
+      #style = RTF::CharacterStyle.new
+      #style.font_size = 1
+      style = RTF::ParagraphStyle.new
+      style.space_after = 0
+
+      cell = t.first.first
+      cell.style = style
+      cell.top_border_width = 0
+      cell.left_border_width = 0
+      cell.right_border_width = 0
+      cell.bottom_border_width = 0
+    end
+  when 'br'
+    doc.line_break
+  when 'a'
+    doc.apply(styles['u'.intern]) do |c|
+      c << n.text
+    end
+    doc << " ("
+    doc.apply(styles['u'.intern]) do |c|
+      c << n.attributes['href'].value
+    end
+    doc << ")"
   else
-    raise Exception.new(n.name)
+    doc << n.text
+    #raise Exception.new(n.name)
   end
 end
 
@@ -97,10 +123,19 @@ styles = {
   },
   :strong => mk_character_style {|s|
     s.bold = true
-  }
+  },
+  :em => mk_character_style {|s|
+    s.italic = true
+  },
+  :u => mk_character_style {|s|
+    s.underline = true
+  },
+  :s => mk_character_style {|s|
+    s.strike = true
+  },
 }
 
-puts styles
+#puts styles
 
 doc = RTF::Document.new(RTF::Font.new(RTF::Font::ROMAN, 'Times New Roman'))
 doc.paragraph(styles[:title]) do |p|
