@@ -26,10 +26,10 @@
       </th>
       <th class="span3">
         <%= link_to "Owner", {order_scope: "Owner", scope: @scope, all_scope: @all_scope}%>
-        <%= content_tag(:span, '', :title => 'Three possible states:<ul><li>Private (red lock): only owners and co-owners can view the plan</li><li>Shared with institution (yellow lock): anyone logged in from your institution can view the plan.</li><li>hared publicly (green lock): anyone can view the plan.</li></ul>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
       </th>
       <th>
         <%= link_to "Status", {order_scope: "Status", scope: @scope, all_scope: @all_scope}%>
+        <%= content_tag(:span, '', :title => 'Three possible states:<ul><li>Private (red lock): only owners and co-owners can view the plan</li><li>Shared with institution (yellow lock): anyone logged in from your institution can view the plan.</li><li>hared publicly (green lock): anyone can view the plan.</li></ul>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
       </th>
       <th>
         <%= link_to "Visibility", {order_scope: "Visibility", scope: @scope, all_scope: @all_scope}%>
