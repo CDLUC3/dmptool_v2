@@ -7,7 +7,7 @@
 
 <div class="row-fluid">
 
-	<%if  @any_resource.count >0 %>
+	<%if  (@any_resource.count >0 && @resource_contexts.length > 0)%>
 
 		<%= render 'resource_search' %>
 		<%= form_tag copy_selected_customization_resource_path, :method => :post  do %>
@@ -101,7 +101,9 @@
 			</div>
 		<%end%>
 		<div class="actions pull-left">
-			<%= link_to '<< Back to ' + "#{@custom_origin}", "#{@origin_path}"+'#'+"#{@tab_number}",  :class => "btn" %>
+			<%= link_to '<< Back', 
+									"#{@origin_path}"+'#'+"#{@tab_number}",
+									  :class => "btn" %>
 		</div>
 
 	<%else%>
@@ -170,8 +172,14 @@
 			
 		</div>
 		<div class="actions pull-left">
-			<%= link_to '<< Back to ' +
+			<%#= link_to '<< Back to ' +
 									"#{@custom_origin}", "#{@origin_path}"+
+									'#'+
+									"#{@tab_number}",  
+									:class => "btn" %>
+
+			<%= link_to '<< Back', 
+									"#{@origin_path}"+
 									'#'+
 									"#{@tab_number}",  
 									:class => "btn" %>

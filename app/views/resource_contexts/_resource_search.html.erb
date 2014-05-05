@@ -5,14 +5,13 @@
 		<%= label_tag :q, "Search", :class => "icon search" %>
 		<%= submit_tag('Search') %>
 
-    <%# (params.keys - ['q', 'search', 'controller', 'action']).each do |i| %>
-      <%#= hidden_field_tag(i, params[i]) %>
-    <%# end %>
+	     
+    <%= hidden_field_tag :custom_origin, @custom_origin  %>
+    <%= hidden_field_tag :tab_number, @tab_number  %>
+    <%= hidden_field_tag :template_id, @template_id  %>
+    <%= hidden_field_tag :tab, @tab %>
 
-     
-     <%= hidden_field_tag :template_id, @template_id  %>
-
-	 <%= hidden_field_tag :customization_overview_id, @customization_overview_id %>
+	 	<%= hidden_field_tag :customization_overview_id, @customization_overview_id %>
 
 	</div>
 	<% end %>

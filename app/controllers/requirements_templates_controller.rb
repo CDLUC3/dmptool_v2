@@ -198,9 +198,15 @@ class RequirementsTemplatesController < ApplicationController
   end
 
   def toggle_active
-    @requirements_template.toggle!(:active)
     respond_to do |format|
-      format.js
+      @requirements = @requirements_template.requirements
+      if @requirements.empty?
+        @msg =  "The DMP template \"#{@requirements_template.name}\" you are attempting to activate has no Requirements. A template must contain at least one Requirement before you may activate it."
+        format.js { render 'activate_errors.js.erb' }
+      else
+        @requirements_template.toggle!(:active)
+        format.js { render 'toggle_active.js.erb'}
+      end
     end
   end
 
