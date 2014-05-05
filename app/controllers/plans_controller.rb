@@ -9,10 +9,9 @@ class PlansController < ApplicationController
   # GET /plans
   # GET /plans.json
   def index
-    user = User.find(current_user.id)
-    @owned_plans = user.owned_plans
-    @coowned_plans = user.coowned_plans
-    plan_ids = UserPlan.where(user_id: user.id).pluck(:plan_id) unless user.id.nil?
+    @owned_plans = @user.owned_plans
+    @coowned_plans = @user.coowned_plans
+    plan_ids = UserPlan.where(user_id: @user.id).pluck(:plan_id) unless @user.id.nil?
     @plans = Plan.where(id: plan_ids)
     count
 
