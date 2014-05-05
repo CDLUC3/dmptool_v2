@@ -11,9 +11,9 @@
       </div>
 	  	<p><strong>Template Outline</strong></p>
 	  	<div class="actions">
-		    <%= link_to(content_tag(:span, '', :class => 'icon add-group') + 'Add Group', new_requirements_template_requirement_path(@requirements_template, node_type: 'group') + '#jump') %>
+		    <%= link_to(content_tag(:span, '', :class => 'icon add-group') + 'Add Group' + content_tag(:span, '', :title => 'Similar requirements may be grouped together under a single requirement &#8220;group&#8221;.', 'data-toggle' => "tooltip", 'data-placement' => 'top', 'data-html' => 'true', :class => 'icon questionmark tip'), new_requirements_template_requirement_path(@requirements_template, node_type: 'group') + '#jump') %>
 		    <%=  raw('&nbsp;') %>
-		    <%= link_to(content_tag(:span, '', :class => 'icon add-requirement') + 'Add Requirement' + content_tag(:span, '', :title => 'Requirements are questions for the plan author that have a response. Use requirements to make sure the DMP has all the necessary information.', 'data-toggle' => "tooltip", :class => 'icon questionmark tip'), new_requirements_template_requirement_path(@requirements_template) + '#jump') %>
+		    <%= link_to(content_tag(:span, '', :class => 'icon add-requirement') + 'Add Requirement' + content_tag(:span, '', :title => 'A requirement is the specific question that a researcher is to answer.', 'data-toggle' => "tooltip", 'data-placement' => 'top', 'data-html' => 'true', :class => 'icon questionmark tip'), new_requirements_template_requirement_path(@requirements_template) + '#jump') %>
 		  </div>
 			<div id="drop_before_first">
 	    	<hr/>
@@ -24,9 +24,10 @@
 	  </div>
 	  <div class="template-status border-box">
 	    <p><strong>DMP Template Status:</strong>
-	     <span id="status_<%= @requirements_template.id %>">
-	      <%= @requirements_template.active ? 'Active' : 'Inactive' %>
-		    </span>
+	      <span id="status_<%= @requirements_template.id %>">
+	      	<%= @requirements_template.active ? 'Active' : 'Inactive' %>
+		  </span>
+		  <%= content_tag(:span, '', :title => 'The template status is inactive by default, which means it will not be visible to DMPTool users. When your template is complete, select &#8220;activate&#8221; to make the template available to use.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
 		  </p>
 	  	<div>
 		    <%= link_to activate_link_text(@requirements_template),

@@ -32,7 +32,8 @@
       </div>
     <% end %>
 
-    <div class="control-group" id="obligation">
+    <div class="control-group" id="obligation" style="position: relative">
+      <%= content_tag(:span, '', :title => 'Specify whether an answer to a requirement is mandatory (must be answered to proceed), is recommended, or is optional. Optional is the default.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip', :style => 'position: absolute; top: 7px; left: 120px') %>
       <p class="control-label">Obligation</p>
       <div class="controls checkbox-controls">
         <%= f.radio_button :obligation, :mandatory, :class => 'radio inline', :id => 'mandatory'%>
@@ -58,10 +59,12 @@
       <% if params[:node_type] == 'group'%>
         <div class="controls">
           <%= f.select :requirement_type, options_for_select([:text, :numeric, :date, :enum]) %>
+          <%= content_tag(:span, '', :title => 'Tooltip &#8220;text&#8221; goes here.', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'data-html' => 'true', :class => 'icon questionmark tip') %>
         </div>
       <% else %>
         <div class="controls">
           <%= f.select :requirement_type, options_for_select([:text, :numeric, :date, :enum], @requirement.requirement_type) %>
+          <%= content_tag(:span, '', :title => 'You can designate the format of the answer to be given to a requirement. The default format is text (minimal structured text format). Other options: <ul><li>Numeric format: for integer or real number answers, with an optional unit of measure.</li><li>Date format: YYYY, YYY-MM, or YYYY-MM-DD</li><li>Enum format: answers are an ordered list of values from which the researcher can select.</li></ul>', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'data-html' => 'true', :class => 'icon questionmark tip') %>
         </div>
       <% end %>
     </div>
