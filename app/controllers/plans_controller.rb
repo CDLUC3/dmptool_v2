@@ -210,7 +210,8 @@ class PlansController < ApplicationController
     public_plans = Plan.public_visibility
     current_user_plan_ids = UserPlan.where(user_id: @user.id).pluck(:plan_id)
     user_plans = Plan.where(id: current_user_plan_ids)
-    @plans = user_plans + public_plans
+    institutionally_visible_plans  = Plan.joins(:users).where('users.institution_id = ?',@user.institution_id).institutional_visibility
+    @plans = user_plans + public_plans + institutionally_visible_plans
     @plans = Kaminari.paginate_array(@plans).page(params[:page]).per(5)
   end
 
