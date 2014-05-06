@@ -63,7 +63,21 @@ class PlansController < ApplicationController
   # GET /plans/1
   # GET /plans/1.json
   def show
-    render(layout: "clean")
+    respond_to do |format|
+      format.pdf do
+        render :layout => false
+      end
+      format.rtf do
+        render :layout => false
+      end
+      format.json do
+        render :layout => false
+      end
+      format.html do
+        render(layout: "clean")
+      end
+    end
+
   end
 
   # GET /plans/new
