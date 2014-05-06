@@ -193,19 +193,33 @@ SET `p`.`current_plan_state_id` = `s`.`id`;
 
 # resources: first copy DMP1 resources into DMP2 URL resources;
 # then insert DMP1 help and suggested answers,
-# using their first 50 characters as labels (the actionable URLs labels will not be truncated)
 # help and suggested answers are de-duplicated within institutions
 TRUNCATE TABLE `dmp2`.`resources`;
 INSERT INTO `dmp2`.`resources` (
        `id`,         `resource_type`,  `value`, `label`,      `created_at`,
        `updated_at`, `text`)
-SELECT `id`,          'actionable_url',   `url`, `desc`,
                                                               `created_at`,
        `updated_at`,  NULL
 FROM `dmp`.`resources`;
 
 # then copy DMP1 help texts into DMP2 resources where institution ID is NULL
-# but only for unique combinations of funder ID and help text;
+# but only for unique combinations of funder ID and help text; 
+INSERT INTO `dmp2`.`resources` (
+       `resource_type`,    `value`,                   `label`,
+       `created_at`,       `updated_at`,              `text`,
+       `old_help_text_id`, `old_suggested_answer_id`, `old_institution_id`,
+       `old_funder_id`)
+SELECT 'help_text',         NULL,     dmp2.fnStripTags(CONCAT(LEFT(`help_text`,50), '...'),
+       `h`.`created_at`,   `h`.`updated_at`,          `help_text`,
+       `h`.`id`,            NULL,                      NULL,
+       `f`.`funder_id`
+FROM `dmp`.`help_texts`         AS `h`
+JOIN `dmp`.`question_templates` AS `t` ON `t`.`question_id` = `h`.`question_id`
+JOIN `dmp`.`funder_templates`   AS `f` ON `f`.`id`          = `t`.`funder_template_id`
+WHERE `h`.`institution_id` IS NULL
+      AND LENGTH(`h`.`help_text`) > 50
+GROUP BY `f`.`funder_id` ASC, `h`.`help_text` ASC;
+
 INSERT INTO `dmp2`.`resources` (
        `resource_type`,    `value`,                   `label`,
        `created_at`,       `updated_at`,              `text`,
@@ -219,7 +233,24 @@ FROM `dmp`.`help_texts`         AS `h`
 JOIN `dmp`.`question_templates` AS `t` ON `t`.`question_id` = `h`.`question_id`
 JOIN `dmp`.`funder_templates`   AS `f` ON `f`.`id`          = `t`.`funder_template_id`
 WHERE `h`.`institution_id` IS NULL
+      AND LENGTH(`h`.`help_text`) <= 50
 GROUP BY `f`.`funder_id` ASC, `h`.`help_text` ASC;
+
+# finally copy DMP1 help texts into DMP2 resources where institution ID is not NULL,
+# but only for unique combinations of institution ID and help text
+INSERT INTO `dmp2`.`resources` (
+       `resource_type`,      `value`,                   `label`,
+       `created_at`,         `updated_at`,              `text`,
+       `old_help_text_id`,   `old_suggested_answer_id`, `old_institution_id`,
+       `old_funder_id`)
+SELECT 'help_text',           NULL,     dmp2.fnStripTags(CONCAT(LEFT(`help_text`,50), '...'),
+       `created_at`,         `updated_at`,              `help_text`,
+       `id`,                  NULL,                     `institution_id`,
+        NULL
+FROM `dmp`.`help_texts`
+WHERE `institution_id` IS NOT NULL
+      AND LENGTH(`h`.`help_text`) > 50
+GROUP BY `institution_id` ASC, `help_text` ASC;
 
 # finally copy DMP1 help texts into DMP2 resources where institution ID is not NULL,
 # but only for unique combinations of institution ID and help text
@@ -234,7 +265,25 @@ SELECT 'help_text',           NULL,     dmp2.fnStripTags(LEFT(`help_text`,50)),
         NULL
 FROM `dmp`.`help_texts`
 WHERE `institution_id` IS NOT NULL
+      AND LENGTH(`h`.`help_text`) <= 50
 GROUP BY `institution_id` ASC, `help_text` ASC;
+
+# now do the same thing for suggested answers 
+INSERT INTO `dmp2`.`resources` (
+       `resource_type`,     `value`,                   `label`,
+       `created_at`,        `updated_at`,              `text`,
+       `old_help_text_id`,  `old_suggested_answer_id`, `old_institution_id`,
+       `old_funder_id`)
+SELECT 'suggested_response', NULL,      dmp2.fnStripTags(CONCAT(LEFT(`suggested_answer_text`,50), '...'),
+       `a`.`created_at`,    `a`.`updated_at`,          `suggested_answer_text`,
+        NULL,               `a`.`id`,                   NULL,
+       `funder_id`
+FROM `dmp`.`suggested_answers`  AS `a`
+JOIN `dmp`.`question_templates` AS `t` ON `t`.`question_id` = `a`.`question_id`
+JOIN `dmp`.`funder_templates`   AS `f` ON `f`.`id`          = `t`.`funder_template_id`
+WHERE `a`.`institution_id` IS NULL
+      AND LENGTH(`h`.`suggested_answer_text`) > 50
+GROUP BY `f`.`funder_id` ASC, `a`.`suggested_answer_text` ASC;
 
 # now do the same thing for suggested answers
 INSERT INTO `dmp2`.`resources` (
@@ -250,7 +299,22 @@ FROM `dmp`.`suggested_answers`  AS `a`
 JOIN `dmp`.`question_templates` AS `t` ON `t`.`question_id` = `a`.`question_id`
 JOIN `dmp`.`funder_templates`   AS `f` ON `f`.`id`          = `t`.`funder_template_id`
 WHERE `a`.`institution_id` IS NULL
+      AND LENGTH(`h`.`suggested_answer_text`) <= 50
 GROUP BY `f`.`funder_id` ASC, `a`.`suggested_answer_text` ASC;
+
+INSERT INTO `dmp2`.`resources` (
+       `resource_type`,      `value`,                   `label`,
+       `created_at`,         `updated_at`,              `text`,
+       `old_help_text_id`,   `old_suggested_answer_id`, `old_institution_id`,
+       `old_funder_id`)
+SELECT 'suggested_response',  NULL, dmp2.fnStripTags(CONCAT(LEFT(`suggested_answer_text`,50), '...'),
+       `created_at`,         `updated_at`,              `suggested_answer_text`,
+        NULL,                `id`,                      `institution_id`,
+        NULL
+FROM `dmp`.`suggested_answers`
+WHERE `institution_id` IS NOT NULL
+      AND LENGTH(`h`.`suggested_answer_text`) > 50
+GROUP BY `institution_id` ASC, `suggested_answer_text` ASC;
 
 INSERT INTO `dmp2`.`resources` (
        `resource_type`,      `value`,                   `label`,
@@ -263,17 +327,10 @@ SELECT 'suggested_response',  NULL, dmp2.fnStripTags(LEFT(`suggested_answer_text
         NULL
 FROM `dmp`.`suggested_answers`
 WHERE `institution_id` IS NOT NULL
+      AND LENGTH(`h`.`suggested_answer_text`) <= 50
 GROUP BY `institution_id` ASC, `suggested_answer_text` ASC;
 
 
-#append ellipsis to all resources labels except the actionable_urls
-UPDATE `dmp2`.`resources` 
-SET `label` = CONCAT(`label`, '...')
-WHERE `resource_type` != 'actionable_url'
-AND (length(`label`) > 49);
-
-# resource_contexts: first copy the DMP1 resource contexts for specific questions
-# (i.e., NULL or > 0); note that these referenced resources are all URLs
 TRUNCATE TABLE `dmp2`.`resource_contexts`;
 INSERT INTO `dmp2`.`resource_contexts` (
        `id`,         `institution_id`, `requirements_template_id`, `requirement_id`,

@@ -31,7 +31,7 @@ class PlansController < ApplicationController
       when "Last_Modification_Date"
         @plans = @plans.order(updated_at: :desc)
       else
-        @plans = @plans.order(name: :asc)
+        @plans = @plans.order(updated_at: :desc)
     end
 
     case @scope
