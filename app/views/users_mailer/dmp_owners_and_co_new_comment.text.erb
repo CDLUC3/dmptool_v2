@@ -4,6 +4,6 @@ Hello <%= @vars[:user].full_name %>,
 
 <%= @vars[:comment] %>
 
-If you have questions pertaining to this action, please contact the DMP Administrator at uc3@ucop.edu
+If you have questions pertaining to this action, please visit the DMP Overview page at <%= edit_plan_url(@vars[:plan]) %>
 
 <%= render :partial => 'users_mailer/notification_boilerplate.text.erb' %>

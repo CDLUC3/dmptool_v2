@@ -25,8 +25,6 @@ $(document).ready(function() {
 });
 
 
-
-
 // //automatically checks Institutional reviewer role when Institutional Administrator role gets checked
 $(function() {
 	$('#5').change(function(){
@@ -37,12 +35,30 @@ $(function() {
 });
 
 
+
+
 //orcid id change link
 $(function() {
 	$("#orcid_input_box").hide();
 	$('#change_orcid').click(function(event){
 			event.preventDefault();
 	    $('#orcid_input_box').toggle();
+	});
+});
+
+
+// alert message if DMP Admin remove his own DMP admin role
+$(function() {
+	$('#current_admin_with_alert').click(function(){
+		if (!$('#1').is(':checked')) { 
+
+			if (confirm( "Do you really want to remove yourself from the DMP Administrator role? You will lose all administrative permissions.")){
+				return true;
+			}
+			else {
+				return false;
+			};
+		};
 	});
 });
 

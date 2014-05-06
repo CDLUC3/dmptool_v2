@@ -9,16 +9,30 @@ class PlansController < ApplicationController
   # GET /plans
   # GET /plans.json
   def index
-    user = User.find(current_user.id)
-    @owned_plans = user.owned_plans
-    @coowned_plans = user.coowned_plans
-    plan_ids = UserPlan.where(user_id: user.id).pluck(:plan_id) unless user.id.nil?
+    @owned_plans = @user.owned_plans
+    @coowned_plans = @user.coowned_plans
+    plan_ids = UserPlan.where(user_id: @user.id).pluck(:plan_id) unless @user.id.nil?
     @plans = Plan.where(id: plan_ids)
     count
 
     @order_scope = params[:order_scope]
     @scope = params[:scope]
     @all_scope = params[:all_scope]
+
+    case @scope
+      when "owned"
+        @plans = @owned_plans
+      when "coowned"
+        @plans = @coowned_plans
+      when "approved"
+        @plans = @plans.approved
+      when "submitted"
+        @plans = @plans.submitted
+      when "committed"
+        @plans = @plans.committed
+      when "rejected"
+        @plans = @plans.rejected
+    end
 
     case @order_scope
       when "Name"
@@ -32,27 +46,10 @@ class PlansController < ApplicationController
       when "Last_Modification_Date"
         @plans = @plans.order(updated_at: :desc)
       else
-        @plans = @plans.order(name: :asc)
+        @plans = @plans.order(updated_at: :desc)
     end
 
-    case @scope
-      when "all_limited"
-        @plans = @plans
-      when "owned"
-        @plans = @owned_plans
-      when "coowned"
-        @plans = @coowned_plans
-      when "approved"
-        @plans = @plans.approved
-      when "submitted"
-        @plans = @plans.submitted
-      when "committed"
-        @plans = @plans.committed
-      when "rejected"
-        @plans = @plans.rejected
-      else
-        @plans = @plans
-    end
+
 
     case @all_scope
       when "all"
@@ -66,7 +63,23 @@ class PlansController < ApplicationController
   # GET /plans/1
   # GET /plans/1.json
   def show
-    render(layout: "clean")
+    response.headers["Expires"] = 1.year.ago.httpdate
+    response.etag = nil
+    respond_to do |format|
+      format.pdf do
+        render :layout => false
+      end
+      format.rtf do
+        render :layout => false
+      end
+      format.json do
+        render :layout => false
+      end
+      format.html do
+        render(layout: "clean")
+      end
+    end
+
   end
 
   # GET /plans/new
@@ -213,7 +226,8 @@ class PlansController < ApplicationController
     public_plans = Plan.public_visibility
     current_user_plan_ids = UserPlan.where(user_id: @user.id).pluck(:plan_id)
     user_plans = Plan.where(id: current_user_plan_ids)
-    @plans = user_plans + public_plans
+    institutionally_visible_plans  = Plan.joins(:users).where('users.institution_id = ?',@user.institution_id).institutional_visibility
+    @plans = user_plans + public_plans + institutionally_visible_plans
     @plans = Kaminari.paginate_array(@plans).page(params[:page]).per(5)
   end
 

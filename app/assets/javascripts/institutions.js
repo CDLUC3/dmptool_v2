@@ -54,5 +54,20 @@ $(function() {
 	});
 });
 
+// alert message if Institutional Admin remove his own Inst admin role
+$(function() {
+	$('#current_admin_with_alert').click(function(){
+		if (!$('#5').is(':checked')) { 
+
+			if (confirm( "Do you really want to remove yourself from the Institutional Administrator role? You will lose all administrative permissions.")){
+				return true;
+			}
+			else {
+				return false;
+			};
+		};
+	});
+});
+
 
 

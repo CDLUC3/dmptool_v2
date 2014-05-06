@@ -2,6 +2,14 @@ Hello <%= @vars[:user].full_name %>,
 
 The plan "<%= @vars[:plan].name %>" has had its visibility changed to <%= @vars[:plan].visibility %>.
 
-If you have questions pertaining to this action, please contact the DMP Administrator at uc3@ucop.edu
+Visibility definitions:
+
+Private - Visible to owners and co-owners only
+
+Institutional - Visible to others from <%= @vars[:user].institution.name %>
+
+Public - visible publicly on the web
+
+If you have questions pertaining to this action, please visit the DMP Overview page at <%= edit_plan_url(@vars[:plan]) %>
 
 <%= render :partial => 'users_mailer/notification_boilerplate.text.erb' %>

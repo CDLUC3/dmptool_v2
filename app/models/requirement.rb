@@ -33,7 +33,8 @@ class Requirement < ActiveRecord::Base
   before_save :validating_to_set_either_subgroup_or_requirement
   before_save :validating_not_to_add_a_child_under_a_leaf
   validate :has_alteast_one_enumeration, on: :create
-
+  validate :has_alteast_one_unit_of_measure, on: :create
+  validate :cant_change_requirement_type_on_edit, on: :update
 
   def validating_to_set_either_subgroup_or_requirement
     parent_id = self.parent_id
@@ -68,6 +69,23 @@ class Requirement < ActiveRecord::Base
   def has_alteast_one_enumeration
     if self.requirement_type == :enum && self.enumerations.blank?
       errors[:base] << 'Must add at least one Enumeration value'
+    end
+  end
+
+  def has_alteast_one_unit_of_measure
+    if self.requirement_type == :numeric && self.labels.blank?
+      errors[:base] << 'Must add a Unit of Measure'
+    end
+  end
+
+  def cant_change_requirement_type_on_edit
+    requirements_template = RequirementsTemplate.find(self.requirements_template_id)
+    if requirements_template && requirements_template.active == true
+      unless self.requirement_type.nil?
+        errors[:base] << 'Cannot change Question Type for an existing Requirement of a DMP Template that has been activated.'
+      end
+    else
+      return true
     end
   end
 
@@ -250,6 +268,18 @@ class Requirement < ActiveRecord::Base
       item = item.parent
     end
 
-    return self.id
+    return nil
   end
+
+  def next_requirement_not_folder
+
+    begin
+      next_req_id = next_requirement_id
+      next_req = Requirement.find(next_req_id) unless next_req_id.nil?
+    end until next_req_id.nil? || next_req.group == false
+
+    next_req_id
+  end
+
+
 end

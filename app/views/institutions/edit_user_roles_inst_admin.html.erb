@@ -19,10 +19,23 @@
 					</ul>
 				</div>
 				<br/>
-				<div class="buttons">
-				<%=  submit_tag 'Save Changes', :anchor => 'tab_tab4',  :class => 'btn btn-green' %>
-				<%= link_to 'Back', institutions_path( :anchor => 'tab_tab4'), :class => 'btn' %>
-			</div>
+
+				<div class="buttons" >
+					<%if @user == current_user%>
+						
+							<%= submit_tag 'Save Changes', 
+									class: 'btn btn-green', id: "current_admin_with_alert"%>
+							<%= link_to 'Back', institutions_path( :anchor => 'tab_tab4'), :class => 'btn' %>
+						
+					<%else%>
+						
+							<%= submit_tag 'Save Changes', :anchor => 'tab_tab4',  :class => 'btn btn-green', id: "other_user" %>
+							<%= link_to 'Back', institutions_path( :anchor => 'tab_tab4'), :class => 'btn' %>
+						
+					<%end%>
+				</div>
+
+
 		<%end%>
 		</div>
 	</div>

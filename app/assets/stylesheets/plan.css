@@ -62,6 +62,10 @@ div.comment_box{
     background: none;
 }
 
+.dmp-preview ul>li {
+  list-style-type: disc;
+}
+
 
 
 
