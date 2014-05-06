@@ -16,7 +16,7 @@
 					<tr>
 						<th>Select</th>
 						
-						<th><%= link_to "Resource Id",
+						<th hidden><%= link_to "Resource Id",
 													params.merge({scope: "Resource_id", authenticity_token: nil })%>
 						</th>
 						<th class="span4"><%= link_to "Details",
@@ -48,7 +48,7 @@
 						<%unless resource_context.resource_level == 'Institution'%>
 							<tr>
 								<td class="span1"><%= radio_button_tag :resource, resource_context.resource_id, checked: false %></td>							
-								<td><%= resource_context.resource_id %></td>							
+								<td hidden><%= resource_context.resource_id %></td>							
 								<td>
 									<div class="toggle-links">
 										<%= resource_context.resource.nil? ? " " : resource_context.resource.label %>
