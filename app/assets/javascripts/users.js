@@ -47,21 +47,20 @@ $(function() {
 });
 
 
-// alert message if DMP Admin gets unchecked for the current_user
-// $(function() {
-// 	$("#current_admin_with_alert").hide();
-// 	$('#1').change(function(){
-// 		if ($('#1').is(':checked')) { 
+// alert message if DMP Admin remove his own DMP admin role
+$(function() {
+	$('#current_admin_with_alert').click(function(){
+		if (!$('#1').is(':checked')) { 
 
-// 			$("#current_admin").hide();
-// 			$("#current_admin_with_alert").show();
-// 		else {
-// 			$("#current_admin_with_alert").hide();
-// 			$("#current_admin").show();
-// 		}
-// 	});
-// });
-
+			if (confirm( "If you remove yourself from the DMP Administrator role you will lose all administrative permissions.")){
+				return true;
+			}
+			else {
+				return false;
+			};
+		};
+	});
+});
 
 
 
