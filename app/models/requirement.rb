@@ -268,6 +268,18 @@ class Requirement < ActiveRecord::Base
       item = item.parent
     end
 
-    return self.id
+    return nil
   end
+
+  def next_requirement_not_folder
+
+    begin
+      next_req_id = next_requirement_id
+      next_req = Requirement.find(next_req_id) unless next_req_id.nil?
+    end until next_req_id.nil? || next_req.group == false
+
+    next_req_id
+  end
+
+
 end
