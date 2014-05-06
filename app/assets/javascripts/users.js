@@ -52,7 +52,7 @@ $(function() {
 	$('#current_admin_with_alert').click(function(){
 		if (!$('#1').is(':checked')) { 
 
-			if (confirm( "If you remove yourself from the DMP Administrator role you will lose all administrative permissions.")){
+			if (confirm( "Do you really want to remove yourself from the DMP Administrator role? You will lose all administrative permissions.")){
 				return true;
 			}
 			else {

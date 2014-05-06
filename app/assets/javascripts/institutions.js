@@ -59,7 +59,7 @@ $(function() {
 	$('#current_admin_with_alert').click(function(){
 		if (!$('#5').is(':checked')) { 
 
-			if (confirm( "If you remove yourself from the Institutional Administrator role you will lose all administrative permissions.")){
+			if (confirm( "Do you really want to remove yourself from the Institutional Administrator role? You will lose all administrative permissions.")){
 				return true;
 			}
 			else {
