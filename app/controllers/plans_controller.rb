@@ -19,6 +19,21 @@ class PlansController < ApplicationController
     @scope = params[:scope]
     @all_scope = params[:all_scope]
 
+    case @scope
+      when "owned"
+        @plans = @owned_plans
+      when "coowned"
+        @plans = @coowned_plans
+      when "approved"
+        @plans = @plans.approved
+      when "submitted"
+        @plans = @plans.submitted
+      when "committed"
+        @plans = @plans.committed
+      when "rejected"
+        @plans = @plans.rejected
+    end
+
     case @order_scope
       when "Name"
         @plans = @plans.order(name: :asc)
@@ -34,22 +49,7 @@ class PlansController < ApplicationController
         @plans = @plans.order(updated_at: :desc)
     end
 
-    case @scope
-      when "owned"
-        @plans = @owned_plans
-      when "coowned"
-        @plans = @coowned_plans
-      when "approved"
-        @plans = @plans.approved
-      when "submitted"
-        @plans = @plans.submitted
-      when "committed"
-        @plans = @plans.committed
-      when "rejected"
-        @plans = @plans.rejected
-      else
-        @plans = @plans
-    end
+
 
     case @all_scope
       when "all"
