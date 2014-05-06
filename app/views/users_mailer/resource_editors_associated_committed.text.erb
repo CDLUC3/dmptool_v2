@@ -2,6 +2,6 @@ Hello <%= @vars[:user].full_name %>,
 
 The DMP Template "<%= @vars[:template].name %>" associated with the customization "<%= @vars[:customization].name %>" has been activated.
 
-If you have questions pertaining to this action, please contact the DMP Administrator at uc3@ucop.edu
+If you have questions pertaining to this action, please contact <%= @vars[:user].institution.contact_info %> at <%= @vars[:user].institution.contact_email %>
 
 <%= render :partial => 'users_mailer/notification_boilerplate.text.erb' %>
