@@ -56,8 +56,9 @@
     </div>
   </div>
   <div>
-    <% if (Rails.application.routes.recognize_path(request.referrer) == {:action=>"new", :controller=>"plans"}) || (Rails.application.routes.recognize_path(request.referrer) == {:action=>"copy_existing_template", :controller=>"plans"})%>
-      <%= link_to '<< Back', edit_plan_path(@plan),  method: 'get', :class => 'btn btn-green pull-left', role: "button" %>
+    <% referer_action %>
+    <% if (@referer_url[:controller] == 'plans' && @referer_url[:action] == 'new') || (@referer_url[:controller] == 'plans' && @referer_url[:action] == 'copy_existing_template') %>
+      <%= link_to ' Back', edit_plan_path(@plan),  method: 'get', :class => 'btn btn-green pull-left', role: "button" %>
     <% else %>
       <%= link_to '<< Back', :back,  method: 'get', :class => 'btn btn-green pull-left', role: "button" %>
     <% end %>

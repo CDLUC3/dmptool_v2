@@ -65,4 +65,8 @@ module PlansHelper
       return false
     end
 	end
+
+	def referer_action
+  	@referer_url = Rails.application.routes.recognize_path(URI(request.referer).path)
+	end
 end
