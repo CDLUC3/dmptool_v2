@@ -28,6 +28,7 @@ module Dmptool2
     # config.i18n.default_locale = :de
     config.i18n.enforce_available_locales = true
     config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
+    config.assets.precompile += Ckeditor.assets
     config.autoload_paths += %W(#{config.root}/lib)
     config.assets.compile = true
     config.assets.debug = false
