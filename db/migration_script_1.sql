@@ -193,13 +193,11 @@ SET `p`.`current_plan_state_id` = `s`.`id`;
 
 # resources: first copy DMP1 resources into DMP2 URL resources;
 # then insert DMP1 help and suggested answers,
-# using their first 50 characters as labels (the actionable URLs labels will not be truncated)
 # help and suggested answers are de-duplicated within institutions
 TRUNCATE TABLE `dmp2`.`resources`;
 INSERT INTO `dmp2`.`resources` (
        `id`,         `resource_type`,  `value`, `label`,      `created_at`,
        `updated_at`, `text`)
-SELECT `id`,          'actionable_url',   `url`, `desc`,
                                                               `created_at`,
        `updated_at`,  NULL
 FROM `dmp`.`resources`;

@@ -50,4 +50,8 @@
 		</div>
 	</div>
 </div>
-<%= link_to '<< Back', :back, method: :get, :class => 'btn btn-green pull-left', role: "button" %>
+<% if is_referer_new_action? %>
+  <%= link_to '<< Back', edit_requirements_template_path(@requirements_template),  method: 'get', :class => 'btn btn-green pull-left', role: "button" %>
+<% else %>
+  <%= link_to '<< Back', :back,  method: 'get', :class => 'btn btn-green pull-left', role: "button" %>
+<% end %>
