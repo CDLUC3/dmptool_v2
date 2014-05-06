@@ -7,7 +7,7 @@ module RequirementsTemplatesHelper
   end
 
   def is_referer_new_action?
-  	referer_url = Rails.application.routes.recognize_path(URI(request.referer).path)
+  	referer_url = Rails.application.routes.recognize_path(URI(request.referer || "").path)
   	referer_url[:controller] == 'requirements_templates' && referer_url[:action] == 'new'
 	end
 end
