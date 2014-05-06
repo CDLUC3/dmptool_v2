@@ -64,6 +64,7 @@ class PlansController < ApplicationController
   # GET /plans/1.json
   def show
     response.headers["Expires"] = 1.year.ago.httpdate
+    response.etag = nil
     respond_to do |format|
       format.pdf do
         render :layout => false
