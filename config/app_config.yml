@@ -31,8 +31,8 @@ production:
   feedback_email_from:    no-reply-dmptool@ucop.edu
   recaptcha_public_key:   6Ld2AAYAAAAAAKrPZimDhCZY56x_VK2RuAgao1_6
   recaptcha_private_key:  6Ld2AAYAAAAAAHAzVcdFizHHGPInfgr4aGOm4n4x
-  google_analytics_key:   ""
-  google_analytics_host:  ""
+  google_analytics_key:   UA-30638119-10
+  google_analytics_host:  cdlib.org
 
 production_development:
   production
