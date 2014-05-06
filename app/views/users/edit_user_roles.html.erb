@@ -20,10 +20,25 @@
 					</ul>
 				</div>
 				<br/>
-				<div class="buttons">
-				<%=  submit_tag 'Save Changes',  :class => 'btn btn-green' %>
-				<%= link_to 'Back', users_path(q: @user.email), :class => 'btn' %>
-			</div>
+				
+				<div class="buttons" >
+					<%if @user == current_user%>
+						
+							<%= submit_tag 'Save Changes', 
+									#data: { confirm: "If you remove yourself from the DMP Admin role you will lose all administrative permissions."},
+									class: 'btn btn-green', id: "current_admin_with_alert"%>
+
+							<%= link_to 'Back', users_path(q: @user.email), :class => 'btn' %>
+						
+					<%else%>
+						
+							<%= submit_tag 'Save Changes',
+									class: 'btn btn-green', id: "other_user" %>
+							<%= link_to 'Back', users_path(q: @user.email), :class => 'btn' %>
+						
+					<%end%>
+				</div>
+				
 		<%end%>
 		</div>
 	</div>
