@@ -25,8 +25,6 @@ $(document).ready(function() {
 });
 
 
-
-
 // //automatically checks Institutional reviewer role when Institutional Administrator role gets checked
 $(function() {
 	$('#5').change(function(){
@@ -37,6 +35,8 @@ $(function() {
 });
 
 
+
+
 //orcid id change link
 $(function() {
 	$("#orcid_input_box").hide();
@@ -45,6 +45,23 @@ $(function() {
 	    $('#orcid_input_box').toggle();
 	});
 });
+
+
+// alert message if DMP Admin gets unchecked for the current_user
+// $(function() {
+// 	$("#current_admin_with_alert").hide();
+// 	$('#1').change(function(){
+// 		if ($('#1').is(':checked')) { 
+
+// 			$("#current_admin").hide();
+// 			$("#current_admin_with_alert").show();
+// 		else {
+// 			$("#current_admin_with_alert").hide();
+// 			$("#current_admin").show();
+// 		}
+// 	});
+// });
+
 
 
 
