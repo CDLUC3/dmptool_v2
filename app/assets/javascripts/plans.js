@@ -219,7 +219,6 @@ $(function() {
 		var visibility = $(this).data('visibility');
 
 		$("#shared_plan_id").val(id);
-		//$("#shared_visibility").val(visibility);
 
 		if (visibility  == "institutional")
 		{
