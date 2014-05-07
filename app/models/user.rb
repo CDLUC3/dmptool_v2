@@ -24,11 +24,12 @@ class User < ActiveRecord::Base
 
   accepts_nested_attributes_for :user_plans
 
-  attr_accessor :ldap_create, :password, :password_confirmation
+  attr_accessor :ldap_create, :password, :password_confirmation, :skip_email_uniqueness_validation
 
   VALID_EMAIL_REGEX = /\A[^@]+@[^@]+\.[^@]+\z/i #very simple, but requires basic format and emails are nearly impossible to validate anyway
   validates :institution_id, presence: true, numericality: true
-  validates :email, presence: true, uniqueness: true 
+  validates :email, presence: true
+  validates :email, uniqueness: true unless :skip_email_uniqueness_validation
   validates_format_of :email, with: VALID_EMAIL_REGEX, :allow_blank => true
   validates :prefs, presence: true
   validates :login_id, presence: true, uniqueness: { case_sensitive: false }, :if => :ldap_create
