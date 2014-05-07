@@ -7,7 +7,7 @@
 
 <div class="row-fluid">
 
-	<%if  (@any_resource.count >0 && @resource_contexts.length > 0)%>
+	<%if  (@any_resource.count >0 && @resource_contexts.length > 0) %>
 
 		<%= render 'resource_search' %>
 		<%= form_tag copy_selected_customization_resource_path, :method => :post  do %>
@@ -107,6 +107,10 @@
 		</div>
 
 	<%else%>
+		
+		<%if params[:q]%>
+			<%= render 'resource_search' %>
+		<%end%>
 
 		<table class="table table-striped">
 			<thead>
@@ -144,7 +148,6 @@
 				
 				<tr><td>There are no existing resources to choose from.</td></tr>
 				
-
 			</tbody>
 		</table>
 

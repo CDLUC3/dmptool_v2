@@ -58,16 +58,34 @@ $(function() {
 $(function() {
 	$('#current_admin_with_alert').click(function(){
 		if (!$('#5').is(':checked')) { 
-
 			if (confirm( "Do you really want to remove yourself from the Institutional Administrator role? You will lose all administrative permissions.")){
 				return true;
-			}
-			else {
+ 			} else {
 				return false;
 			};
 		};
 	});
 });
+
+// $(function() {
+// 	$('#current_admin_with_alert').click(function(){
+// 		if (!$('#5').is(':checked')) { 
+// 			bootbox.confirm( "Do you really want to remove yourself from the Institutional Administrator role? You will lose all administrative permissions.", function(result){
+// 				if (result) {
+// 					return true;
+// 				} else {
+// 					return false;
+// 				}
+// 			});
+// 		};
+// 	});
+// });
+
+
+
+
+
+
 
 
 
