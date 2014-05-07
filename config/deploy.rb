@@ -30,5 +30,6 @@ namespace :deploy do
 end
 
 after 'deploy', 'deploy:migrate'
-before 'deploy:restart', 'deploy:symlink_shared'
+after 'deploy:finalize_update', 'deploy:symlink_shared'
+#before 'deploy:restart', 'deploy:symlink_shared'
 after 'deploy:restart', 'unicorn:restart'
