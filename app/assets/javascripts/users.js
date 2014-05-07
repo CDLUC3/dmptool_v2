@@ -49,9 +49,12 @@ $(function() {
 
 // alert message if DMP Admin remove his own DMP admin role
 $(function() {
-	$('#current_admin_with_alert').click(function(){
+	$('#current_dmp_admin_with_alert').click(function(){
 		if (!$('#1').is(':checked')) { 
 
+			//showConfirmDialog
+
+			//if ($('#current_admin_with_alert').confirm( "Do you really want to remove yourself from the DMP Administrator role? You will lose all administrative permissions.")){
 			if (confirm( "Do you really want to remove yourself from the DMP Administrator role? You will lose all administrative permissions.")){
 				return true;
 			}
