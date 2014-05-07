@@ -4,66 +4,132 @@
 	<hr/>
 	
 	<h2>Table of Contents</h2>
+	<ol>
+		<li><a href="#who">Who can use the tool</a></li>
+		<li><a href="#login">How do I log in?</a></li>
+		<li><a href="#overview">Overview of tool features</a></li>
+		<li><a href="#create">How do I create a DMP?</a></li>
+		<li><a href="#sharing">Sharing your DMP pubolcly</li>
+		<li><a href="#help">How do I get help from someone at my institution?</a></li>
+	</ol>
+	
+	<h2 id="who">Who can use the tool</h2>
+
+	<p>DMPTool is free for anyone to create data management plans.</p>
 	<ul>
-		<li><a title="Why the DMPTool?" href="#why">Why the DMPTool?</a></li>
-		<li><a title="Frequently Asked Questions" href="#faq">Frequently Asked Questions</a></li>
-		<li><a title="Video" href="#video">Video</a></li>
-		<li><a title="DMPTool Background" href="#background">DMPTool Background</a></li>
-		<li><a title="Partner Institutions" href="#partners">Partner Institutions</li>
-		<li><a title="Presentations and Press" href="#press">Presentations and Press</a></li>
-		<li><a title="Contact Information" href="#contact">Contact Information</a></li>
+		<li>If you are a researcher from one of the partner institutions, you can log in using your institutional credentials. By being affiliated with your institution, you may be presented with institution-specific guidance (displayed as section-specific instructions and/or resource web links) to help you complete your plan.</li>
+		<li>If your institution is not a partner, you can create your own account by selecting “Not in List” as your institution upon login.</li>
 	</ul>
-	
-	<h2 id="why">Why the DMPTool?</h2>
-	<p>Scholarly researchers today are increasingly required to engage in a range of data management activities to comply with institutional policies, or as a precondition for publication or grant funding. Data management plans are now a standard part of grant proposals for most funding agencies. To aid researchers in creating effective data management plans (DMPs), a group of organizations collaborated on the development of the DMPTool, an online application that helps researchers create data management plans. The DMPTool provides detailed guidance and links to general and institutional resources and walks a researcher through the process of generating a comprehensive plan tailored to specific DMP requirements.</p>
-	
-	<h2 id="faq">Frequently Asked Questions</h2>
-	<p>Go to <a title="DMPTool Askbot" href="http://dmptool.askbot.com" target="_blank">dmptool.askbot.com</a>  to see our answers to frequently asked questions and to ask your own.</p>
-	
-	<h2 id="video">Video</h2>
-	<p>Want a quick overview of the DMPTool? Check out our 90-second video describing the DMPTool's features. 
-	<%= link_to "Go to DMPTool Video page", video_path, :title => "Go to DMPTool Video page" %>
-	</p>
-	
-	<h2 id="background">DMPTool Background</h2>
-	<p>The original DMPTool was a grassroots effort, beginning in January 2011 with eight institutions partnering to provide in-kind contributions of personnel and development. The effort was in direct response to demands from funding agencies, such as the National Science Foundation (NSF) and the National Institutes of Health (NIH), that researchers plan for managing their research data. By joining forces the contributing institutions are able to consolidate expertise and reduce costs in addressing data management needs.
-	</p>
-	
-	<h3>The original contributing institutions were:</h3>
+
+	<h2 id="login">How do I log in?</h2>
+
+	<p>Click on Log In in at the top-right of the home page. You can also click the green “Get Started” button.</p>
 	<ul>
-		<li><a title="The University of California Curation Center" href="http://www.cdlib.org/services/uc3/" target="_blank">The University of California Curation Center</a> (UC3) at the <a title="California Digital Library" href="http://www.cdlib.org" target="_blank">California Digital Library</a></li>
-		<li><a title="DataONE" href="http://www.dataone.org" target="_blank">DataONE</a> </li>
-		<li><a title="Digital Curation Centre (UK)" href="http://www.dcc.ac.uk/" target="_blank">Digital Curation Centre (UK)</a></li>
-		<li><a title="Smithsonian Institution" href="http://www.si.edu/" target="_blank">Smithsonian Institution</a></li>
-		<li><a title="University of California, Los Angeles Library" href="http://www.library.ucla.edu/" target="_blank">University of California, Los Angeles Library</a></li>
-		<li><a title="University of California, San Diego Libraries" href="http://libraries.ucsd.edu/" target="_blank">University of California, San Diego Libraries</a></li>
-		<li><a title="University of Illinois, Urbana-Champaign Library" href="http://www.library.illinois.edu/" target="_blank">University of Illinois, Urbana-Champaign Library</a></li>
-		<li><a title="University of Virginia Library" href="http://www.library.virginia.edu/" target="_blank">University of Virginia Library</a></li>
+		<li>If your institution is listed:
+			<ul>
+				<li>On the Login page, select your institution from the list.</li>
+				<li>Click <strong>Next</strong></li>
+				<li>Researchers at some institutions will be presented with the institution's authentication page. Log in as you usually do for your institution’s web services.</li>
+			</ul>
+		</li>
+		<li>If your institution is <strong>not</strong> listed:
+			<ul>
+				<li>If your institution is not listed, select “Not in List”.</li>
+				<li>Click <strong>Next</strong></li>
+				<li>If you have already created an account with DMPTool, enter the username and password you previously chose and click <strong>Login</strong>. Once logged in, use <strong>My Profile</strong> in the menu bar to manage your password and other information.</li>
+				<li>If this is your first time logging in, click “Create an Account”.</li>
+			</ul>
+		</li>
 	</ul>
-	
-	<p>Since its release in October 2011, the DMPTool has generated huge interest among the science and library community, including its appearance on the Library of Congress' Top 10 Digital Preservation Developments of 2011. As of November 2013, more than 6,000 users from over 600 institutions have used the DMPTool. Given the success of the first version of the DMPTool, the founding partners obtained funding from the <a title="Alfred P. Sloan Foundation" href="http://sloan.org" target="_blank">Alfred P. Sloan Foundation</a> to create a second version of the tool, released in 2014.
-	</p>
-	
-	<h3>Steering Group</h3>
-	<p>The DMPTool Steering Group is a small coordinating body composed of persons elected from the original DMPTool partner institutions. The DMPTool Steering Group directs the technical, content, and community development of the DMPTool. If your institution is a partner and you are interested in joining the Steering Group, please 
-	<%= link_to "contact us", contact_path, :title => "contact us" %>.
-	</p>
-	
-	<h2 id="partners">Partner Institutions</h2>
-	<p>Partner institutions can configure the tool to point to their resources and services, provide customized help, and provide suggested answers to the questions asked by funding agencies. DMPTool users affiliated with partner institutions can login with their own institutional accounts. For more information see <%= link_to "About Partners", partners_path, :title => "About Partners" %>. To view a list of current partners, see <%= link_to "Partner Institutions", partners_list_path, :title => "Partner Institutions" %>.
-	</p>
-	
-	<h2 id="press">Presentations and Press</h2>
-	<p> The original DMPTool partners maintain a list of presentations and press related to the DMPTool at the DMPTool blog: <a title="DMPTool Presentations and Press" href="http://blog.dmptool.org/presentations-and-press" target="_blank">DMPTool Presentations and Press</a>.
-	</p>
-	
-	<h2 id="contact">Contact Information</h2>
-	<p>For more information about the DMPTool, please <%= link_to "contact us", contact_path, :title => "contact us" %>.</p>
-	<blockquote>
-		<strong>Mailing Address:</strong><br/>
-		California Digital Library<br />
-		UC Office of the President<br />
-		415 20th St, 4th Floor<br />
-		Oakland CA 94612
-	</blockquote>
+
+	<h2 id="overview">Overview of tool features</h2>
+
+	<p><img src="https://lh5.googleusercontent.com/rnyVvAEQp-W5WOprxr5NiOWI04PR2nuN8dODIQJdhPkMdN_HZdV0R_PIOii1kPYpnMxbuEvtDrUF80p8EuLltJKqiKzedn4Xn9EK5dN8OXAjdOF7zN3VtBiP1Bk" alt="gfdgsdgds" width="624px;" height="269px;"/></p>
+	<ol>
+	  <li><strong>My Dashboard</strong> is your best starting point for managing your DMPs. From here you can get an overview of all your DMPs.</li>
+	  <li><strong>My DMPs</strong> lists of all your DMPs, noting which you own, co-own, and their status. 
+	  </li>
+	  <li><strong>Create New DMP</strong> allows you to start from a template or you can copy an existing DMP. &nbsp;</li>
+	  <li><strong>My Profile</strong> is where you can update your personal information, including your <a href="http://orcid.org">ORCID</a>. You can also modify your notification preferences. A check mark ( ✓ ) in front of a preference indicates you would like to be sent a notification.</li>
+	  <li><strong>DMP States/Status</strong></li>
+	</ol>
+	<ul>
+	  <li><strong>New.</strong> You have created your DMP, but have not Completed it. </li>
+	  <li><strong>Owned.</strong> DMPs that you have created.</li>
+	  <li><strong>Co-owned.</strong> DMPs for which others have designed you as a co-owner. </li>
+	  <li><strong>Completed.</strong> After clicking &ldquo;Done&rdquo; on the &ldquo;DMP Preview&rdquo; screen, your plan is marked as &lsquo;Completed&rdquo;.</li>
+	</ul>
+	<p><strong><em>The following states only apply if your institution has enabled the &ldquo;Review&rdquo; functionality. Contact your institutional administrator for more information. (The email address and a URL for help are at the top of the page after you log in.)</em></strong></p>
+	<ul>
+	  <li><strong>Submitted.</strong> Your DMP has been submitted for review to your institutional administrator. </li>
+	  <li><strong>Approved.</strong> Your DMP has been approved by your institutional administrator. </li>
+	  <li><strong>Rejected.</strong> Your DMP has been rejected by your institutional administrator.</li>
+	</ul>
+
+	<h2 id="create">How do I create a DMP?</h2>
+
+	<p><img src="https://lh6.googleusercontent.com/CeG81CRDUg-bdOIGv14Rx91k9q53loSYaEkZRukh6huC0lfTpMlJzk70WsTqLiHFOR1q6LitNxm39OVKDltwz5Tt2CMqUkY-nfOQq9UllDa56gt3EQkAALNEgB0" alt="Create new DMP" width="540px;" height="222px;"/></p>
+	<p>After logging in, you will be taken to your <strong>My Dashboard</strong> page, click the <strong>Create New DMP</strong> button below the &ldquo;Overview&rdquo; box or in the navigation bar next to <strong>My DMPs</strong>. &nbsp;</p>
+	<p>There are four steps in the workflow for creating a DMP:</p>
+	<p><strong>Step #1: DMP Overview:</strong> provide general information about the plan, including template name, DMP title, co-owners, etc. </p>
+	<p><strong>Step #2: DMP Details:</strong> provide answers to prompts in your DMP. Click the box size links to fully display section instructions.</p>
+	<p><strong>Step #3: DMP Preview &amp; Completion:</strong> preview the DMP with options to print and download; plan is designated as &ldquo;Completed&rdquo;.</p>
+
+	<h3>Step #1: DMP Overview</h3>
+	<p>You can either: (A) Create a new DMP using a DMP Template; or (B) Copy an existing DMP.</p>
+	<p><img src="https://lh3.googleusercontent.com/ia4KnTFz0WngE5tbBNcal-0GcIkkxPFs-JG9D5Asi0EglXyigOht3uhG3BMxHTlASeI33JW7il7LK8tX3Ju3HXAT1N9iho8r8UsAFsJ6bnc1QilWTDdj20wgvSE" alt="Create New DMP" width="624px;" height="265px;"/></p>
+	<h4>(A) Start from a DMP Template</h4>
+	<p><img src="https://lh4.googleusercontent.com/kqMiejks7toqngOJd5VbUWGoTiECTqmAZ1soOsGh9KiTDhwgMrBqESPbaczD0hKNxgAnMLJ9KMVdouoI3nSt_qoxGe0tF0ZOQy4XyJdx7Fk7F69Z6hD854VgvlQ" alt="Select DMP Template" width="352px;" height="373px;"/></p>
+	<p>1. Click &nbsp;the &ldquo;Select Template&rdquo; button.</p>
+	<p>2. Either browse by or search for a template plan name.</p>
+	<p>Note: In the A-Z browse list, the folder icons and arrows to the left are clickable to view all templates within the folder.</p>
+	<p>Note: These templates include those that are customized by your institution.</p>
+	<p>3. Select the template appropriate for your funder or institution and click &ldquo;Next&rdquo;.</p>
+	<h4>(B) Copy an Existing DMP</h4>
+	 <p>The list of existing DMPs includes those that you own or co-own as well as those that are visible to everyone at your institution or are publicly available. Select a DMP and click &ldquo;Copy this DMP&rdquo;.</p>
+
+	<p>After completing (A) or (B), enter the relevant information on the <strong>DMP Overview</strong> page.</p>
+	<p><img src="https://lh4.googleusercontent.com/JBWKIfOuKA9ptrVDmyRCPCH2SckW092_ZE6mbQgSynQR0vxiibCOKZ_eIchjZUmDf0YTSNez0-f78Jj1w6mal3SEy6T_3gsX5ck4G144_spvTbBBYBgiEmAKmaU" alt="DMP Overview" width="624px;" height="323px;"/></p>
+	<p><strong>Enter the following information:</strong></p>
+	<ol>
+	  <li><strong>DMP Title</strong>. The name should help you identify this specific data management plan and will be listed on the &ldquo;My DMPs&rdquo; page. Often DMP titles are similar to project titles.</li>
+	  <li><strong>Proposal Solicitation Number (optional)</strong>. Enter the funder solicitation number, if available. This information does not &nbsp;appear in your final DMP.</li>
+	  <li><strong>Proposal Submission Deadline (optional)</strong>. Enter the grant submission deadline.</li>
+	  <li><strong>Visibility</strong>. Indicate your preference for DMP visibility. By default, visibility is &ldquo;private&rdquo; and can only be viewed by you and your plan co-owners. Other options are &ldquo;public&rdquo;: viewable by everyone; &nbsp;and &ldquo;institutional&rdquo;: viewable by everyone from your institution.</li>
+	  <li><strong>Add Co-owners (optional)</strong>. Designate DMP co-owner(s), who will be able to view, edit, and comment on your plan. They must already have a DMPTool account to be designated a co-owner.</li>
+	</ol>
+	<p>Click &ldquo;Save and Next&rdquo;.</p>
+
+	<h3>Step #2. DMP Details </h3>
+	<p><img src="https://lh6.googleusercontent.com/trqn9K6xfnaWuICRCSvwA7hHteyy37juvLfYF-DdtGMb2xB_xChxe6AJr_2I3of50adz5BGvVVbGAPcITtZF8vENF3iwDLnaLyLUlDN_ixR3v_LQGHr-cHypiZQ" alt="DMP Details" width="624px;" height="471px;"/></p>
+	<ol>
+	  <li><strong>Template Outline</strong>. You can navigate among different sections of a template using this outline. As you click a section title in the outline on the left, the prompts, resources, and text box for your answers will appear on the right.</li>
+	  <li><strong>Instructions</strong>. There is <strong>Guidance</strong> for each section of the DMP. There may also be a <strong>Links</strong> tab where you will find links to further information, a <strong>Suggested Response</strong> tab with answers that you can simply copy and paste (not shown), and/or <strong>Example Response</strong> tab to help guide you in writing your response (not shown).</li>
+	  <li><strong>Funder</strong> or <strong>Institution requirement</strong> statement. These are instructions directly from the funder or institution that is requiring the DMP.</li>
+	  <li><strong>Text box</strong>. Your answers go here. The text box offers a few editing features (located above the text entry box). </li>
+	  <li><strong>Save Response</strong>. Click &ldquo;Save Response&rdquo; to save your response and remain in the current section. &nbsp;Click the &ldquo;Save and Next&rdquo; button to navigate to the next section in your DMP. </li>
+	</ol>
+	<p>To navigate to other sections of your DMP, use the section links in the Outline in the box on the left. Be sure to save your response before leaving a section.</p>
+
+	<h3>Step #3. DMP Preview &amp; Completion</h3>
+	<p><img src="https://lh6.googleusercontent.com/1yLsFTHADwWJ_JYZu0Difey4tCvfmjj5GJvDIiWzn3OKT0z1Qg69hztipG_pmPy0cJzdEqALQm6ODmUvTlZasiWjKBqlKUY2PPAfufo9tYBVphIzTUGShI0TU54" alt="DMP Details" width="633px;" height="280px;"/></p>
+	<ol>
+	  <li><strong>DMP Preview</strong> button opens a new window and displays the contents of your entire DMP. You can click this at anytime to preview your plan. Be sure to click &ldquo;<strong>Save Response</strong>&rdquo; before clicking <strong>DMP Preview</strong>.</li>
+	  <li><strong>DMP Preview</strong> displays your entire DMP, including section headers and your responses.</li>
+	  <li><strong>Export or Print</strong> &nbsp;your plan as PDF or RTF format, or print your plan.</li>
+	  <li>While in <strong>DMP Preview</strong>, you must click &ldquo;<strong>Done</strong>&rdquo; to change your DMP status to &lsquo;Completed&rsquo;. If your organization has set up a &ldquo;Review&rdquo; process, you will instead see a &ldquo;Submit for Review&rdquo; button. Note: you can always come back and change or add information by clicking on <strong>DMP Overview</strong> or <strong>DMP Details</strong> in the navigation. </li>
+	</ol>
+	<p><img src="https://lh3.googleusercontent.com/Q5pPhpDr0qQ65hspQ55cdHLo13Lvc2-R946b8ukWz66qe5BRgcIMVY5Aa3qNBmuOElGnZ0n2Pq5vBqFByy0CspQVfo0ztovz8K-Y8uSf3JXiLPLTkk9KzBCuDkA" alt="DMP Preview" width="561px;" height="360px;"/></p>
+
+	<h2 id="sharing">Sharing your DMP publicy</h2>
+
+	<p>We encourage DMPTool users to make their DMPs publicly available. This promotes open science and may help others in the community better craft their own DMPs. By default, all plans are &ldquo;private&rdquo; – only owners and co-owners can view the plans. To change this, go to <strong>My DMPs</strong>, put your cursor over the plan you would like to share and click &ldquo;Share&rdquo;. You can share your plan with everyone at your institution, publicly on the DMPTool website, or keep it private. </p>
+	<p>You can also go to the <strong>DMP Overview</strong> page and click <strong>Change Status</strong> next to <strong>Visibility</strong>.</p>
+	<p><img src="https://lh3.googleusercontent.com/CNBXS4xGNpIG768f8M4eZQUxOi8JLcTZakRJaiJvCVVZqucLA4zfZKn1kb8gwG8hy08xAWT8q5YZKMs_g6gjDwRHcdCF000NErcNyh2reC5kKIK1BIhNOrGl-q0" alt="My DMPs" width="624px;" height="300px;"/></p>
+
+	<h2 id="help">How do I get help from someone at my institution?</h2>
+
+	<p>After logging in, you will find an email address and URL for help at the top of the page. </p>
+	<p><img src="https://lh3.googleusercontent.com/RSf9jQOizfbGa3vRXNcE9u5sjGFEx1dSPJbozeNoqkObQbp0LtjLMzmbenEFhckHdZW25bOmiLGyKXKvqYslX-sTfDM6aYCUGyiFtPY9PwzbzNBPV7FG9kohWlw" alt="DMP Overview" width="624px;" height="295px;"/></p>
+
 </div>
