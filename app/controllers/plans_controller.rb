@@ -49,8 +49,6 @@ class PlansController < ApplicationController
         @plans = @plans.order(updated_at: :desc)
     end
 
-
-
     case @all_scope
       when "all"
         @plans = @plans.page(params[:page]).per(9999)
