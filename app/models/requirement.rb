@@ -273,10 +273,12 @@ class Requirement < ActiveRecord::Base
 
   def next_requirement_not_folder
 
+    req = self
+
     begin
-      next_req_id = next_requirement_id
-      next_req = Requirement.find(next_req_id) unless next_req_id.nil?
-    end until next_req_id.nil? || next_req.group == false
+      next_req_id = req.next_requirement_id
+      req = Requirement.find(next_req_id) unless next_req_id.nil?
+    end until next_req_id.nil? || req.group.nil? || req.group == false
 
     next_req_id
   end
