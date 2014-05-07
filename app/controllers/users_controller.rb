@@ -100,7 +100,7 @@ class UsersController < ApplicationController
         if existing_user.blank?
           #add user to DMP users table and redirect to login
           @user.save
-          redirect_to login_path, notice: "You've been added to the DMP Tool with your existing UC3 username, \"#{@user.login_id}\".  Please log in to continue." and return
+          redirect_to login_path, notice: "You've been added to the DMP Tool with your existing UC3 username, \"#{@user.login_id}\".  Please log in with your UCS username and password to continue." and return
         else
           #redirct to login, their record already exists.
           redirect_to login_path, notice: "You already have a DMP Tool account. Your username is \"#{@user.login_id}\".  Please log in with your username and password to continue." and return
