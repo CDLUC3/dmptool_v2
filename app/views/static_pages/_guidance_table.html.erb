@@ -10,7 +10,10 @@
       <th><%= link_to "Template", {order_scope1: "Template", scope1: @scope1}%></th>
       <th class="span5"><%= link_to (public ? 'Funder' : 'Institution'), {order_scope1: "Institution", scope1: @scope1}%></th>
       <th><%= link_to (public ? 'Funder Links' : 'Institution Links'), {order_scope1: "InstitutionLink", scope1: @scope1}%></th>
-      <th><%= link_to "Sample Plans", {order_scope1: "SamplePlans", scope1: @scope1}%></th>
+      <th>
+      	<%= link_to "Sample Plans", {order_scope1: "SamplePlans", scope1: @scope1}%>
+      	<%= content_tag(:span, '', :title => 'Sample plans are provided by a funder, an institution or a trusted party.', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'data-html' => 'true', :class => 'icon questionmark tip') %><br>(if available)
+      </th>
 		</tr>
 	</thead>
 	<tbody>
