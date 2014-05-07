@@ -49,6 +49,7 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    @user.institution_id = params[:institution_id] if params[:institution_id]
     @institution_list = InstitutionsController.institution_select_list
   end
 
