@@ -20,6 +20,7 @@ public/uploads
 public/uploads/
 public/uploads/*
 public/uploads/*/
+public/assets
 public/assets/*
 public/assets/*/
 .idea/
