@@ -103,7 +103,7 @@ class UsersController < ApplicationController
           redirect_to login_path, notice: "You've been added to the DMP Tool with your existing UC3 username, \"#{@user.login_id}\".  Please log in to continue." and return
         else
           #redirct to login, their record already exists.
-          redirect_to login_path, notice: "Your existing DMP Tool username is \"#{@user.login_id}\".  Please log in with your current password to continue." and return
+          redirect_to login_path, notice: "You already have a DMP Tool account. Your username is \"#{@user.login_id}\".  Please log in with your username and password to continue." and return
         end
         @user.skip_email_uniqueness_validation = false
       rescue LdapMixin::LdapException => detail
