@@ -16,7 +16,7 @@
 //= require jquery_ujs
 //= require ckeditor/override
 //= require ckeditor/init
-//= require bootbox
+
 //= require_tree .
 
 
