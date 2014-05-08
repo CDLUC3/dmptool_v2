@@ -1,10 +1,15 @@
 module ApplicationHelper
 
-  #to enable sort with toggle effects
+  #to enable column sorting with toggle effects
+  #current asc and current desc classes are for supporting an eventual arrow image 
+  #or css class (not yet implemented) associated with the sorting direction 
   def sortable(column, title = nil)
     title ||= column.titleize
+    css_class = column == params[:order_scope] ? "current #{params[:direction]}" : nil
     direction = column == params[:order_scope] && params[:direction] == "asc" ? "desc" : "asc"
-    link_to title, :order_scope => column, :direction => direction, :scope => @scope, :all_scope => @all_scope
+    link_to title, 
+      {:order_scope => column, :direction => direction, :scope => @scope, :all_scope => @all_scope},
+      {:class => css_class}
   end
 
   def link_to_add_fields(name, f, association)

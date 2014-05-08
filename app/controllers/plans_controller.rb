@@ -15,11 +15,12 @@ class PlansController < ApplicationController
     @plans = Plan.where(id: plan_ids)
     count
 
-    @order_scope = params[:order_scope]
-    @scope = params[:scope]
-    @all_scope = params[:all_scope]
+    @order_scope = params[:order_scope] || "Last_Modification_Date"
+    @scope = params[:scope] || ""
+    @all_scope = params[:all_scope] || ""
 
-    @direction = params[:direction] || "asc"
+    #to avoid sql injection 
+    @direction = %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
 
     case @scope
       when "owned"
@@ -38,17 +39,16 @@ class PlansController < ApplicationController
 
     case @order_scope
       when "name"
-        #@plans = @plans.order(name: + " #{@direction}")
-        
         @plans = @plans.order('name'+ " " + @direction)    
-      when "Owner"
-        @plans = @plans.joins(:current_state, :users).order('users.first_name ASC', 'users.last_name ASC')
-      when "Status"
-        @plans = @plans.joins(:current_state).order("CONVERT(plan_states.state USING utf8)")
-      when "Visibility"
-        @plans = @plans.order(visibility: :asc)
-      when "Last_Modification_Date"
-        @plans = @plans.order(updated_at: :desc)
+      when "owner"
+        @plans = @plans.joins(:current_state, :users).
+                  order('users.first_name'+ " " + @direction , 'users.last_name'+ " " + @direction)
+      when "status"
+        @plans = @plans.joins(:current_state).order('CONVERT(plan_states.state USING utf8)' + " " + @direction)
+      when "visibility"
+        @plans = @plans.order('visibility'+ " " + @direction)
+      when "last_modification_date"
+        @plans = @plans.order('updated_at'+ " " + @direction)
       else
         @plans = @plans.order(updated_at: :desc)
     end
