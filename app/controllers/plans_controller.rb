@@ -414,6 +414,11 @@ class PlansController < ApplicationController
 
     @all_scope = params[:all_scope]
     @order_scope = params[:order_scope]
+    
+    #these params are for filter by letter and are used in the view
+    @s = params[:s]
+    @e = params[:e]
+     
 
     case @order_scope
       when "PlanTitle"
