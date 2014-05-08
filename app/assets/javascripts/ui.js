@@ -67,8 +67,8 @@ jQuery(function(){
 	else if(window.location.href.indexOf("scope=inactive") != -1){
 		jQuery(".inactive").addClass("current");
 	}
-	else if(window.location.href.indexOf("scope=institutional") != -1){
-		jQuery(".institutional").addClass("current");
+	else if(window.location.href.indexOf("scope=institutional_administrator") != -1){
+		jQuery(".institutional_administrator").addClass("current");
 	}
 	else if(window.location.href.indexOf("scope=public") != -1){
 		jQuery(".public").addClass("current");
@@ -79,14 +79,14 @@ jQuery(function(){
 	else if(window.location.href.indexOf("scope=template_editor") != -1){
 		jQuery(".template_editor").addClass("current");
 	}
-	else if(window.location.href.indexOf("scope=inst_administrator") != -1){
-		jQuery(".inst_administrator").addClass("current");
-	}
-	else if(window.location.href.indexOf("scope=inst_reviewer") != -1){
-		jQuery(".inst_reviewer").addClass("current");
+	else if(window.location.href.indexOf("scope=institutional_reviewer") != -1){
+		jQuery(".institutional_reviewer").addClass("current");
 	}
 	else if(window.location.href.indexOf("scope=dmp_administrator") != -1){
 		jQuery(".dmp_administrator").addClass("current");
+	}
+	else if(window.location.href.indexOf("scope=institutional") != -1){
+		jQuery(".institutional").addClass("current");
 	}
 	else {
 		jQuery(".all_limited").addClass("current");

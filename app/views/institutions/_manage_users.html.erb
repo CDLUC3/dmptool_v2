@@ -1,16 +1,23 @@
 <table class ="table table-striped">
 	<div class="table-scope">
-		<%= link_to "All(#{@all})", institutions_path(anchor: 'tab_tab4', scope: "all"), :class => "all_limited" %> 
+		<%= link_to "All(#{@all})", 
+				institutions_path(anchor: 'tab_tab4', scope: "all"), :class => "all_limited" %> 
 		| 
-		<%= link_to "Resources Editors(#{@resources_editor})",institutions_path(anchor: 'tab_tab4', scope:  "resources_editor"), :class => "resources_editor"  %> 
+		<%= link_to "Resources Editors(#{@resources_editor})",
+								institutions_path(anchor: 'tab_tab4', scope:  "resources_editor"), :class => "resources_editor"  %> 
 		| 
-		<%= link_to "Template Editor(#{@template_editor})", institutions_path(anchor: 'tab_tab4', scope: "template_editor"), :class => "template_editor" %> 
+		<%= link_to "Template Editors(#{@template_editor})", 
+								institutions_path(anchor: 'tab_tab4', scope: "template_editor"), 
+								:class => "template_editor" %> 
 		| 
-		<%= link_to "Institutional Administrator(#{@institutional_administrator})" , institutions_path(anchor: 'tab_tab4', scope: "institutional_administrator"), :class => "inst_administrator" %> 
+		<%= link_to "Institutional Administrators(#{@institutional_administrator})" , 
+							institutions_path(anchor: 'tab_tab4', scope: "institutional_administrator"), :class => "institutional_administrator" %> 
 		| 
-		<%= link_to "Institutional Reviewers(#{@institutional_reviewer})",  institutions_path(anchor: 'tab_tab4', scope: "institutional_reviewer"), :class => "inst_reviewer" %>
+		<%= link_to "Institutional Reviewers(#{@institutional_reviewer})",  
+								institutions_path(anchor: 'tab_tab4', scope: "institutional_reviewer"), :class => "institutional_reviewer" %>
 		|
-		<%= link_to "DMP Administrators(#{@dmp_administrator})",  institutions_path(anchor: 'tab_tab4', scope: "dmp_administrator"), :class => "dmp_administrator" %>
+		<%= link_to "DMP Administrators(#{@dmp_administrator})",  
+								institutions_path(anchor: 'tab_tab4', scope: "dmp_administrator"), :class => "dmp_administrator" %>
 	</div>
 		<thead>
 		  <tr>

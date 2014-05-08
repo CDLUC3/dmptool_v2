@@ -29,7 +29,7 @@
 		
 		<div class="control-group create_account">
 			<p><strong>Don't have a DMPTool account yet?</strong></p>
-				<%= link_to 'Create An Account', new_user_path, :class => 'btn btn-green' %>
+				<%= link_to 'Create An Account', new_user_path(institution_id: session[:institution_id]), :class => 'btn btn-green' %>
 		</div>
 	</div>
 </div>

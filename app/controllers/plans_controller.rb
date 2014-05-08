@@ -40,7 +40,7 @@ class PlansController < ApplicationController
       when "Owner"
         @plans = @plans.joins(:current_state, :users).order('users.first_name ASC', 'users.last_name ASC')
       when "Status"
-        @plans = @plans.joins(:current_state).order("plan_states.state ASC")
+        @plans = @plans.joins(:current_state).order("CONVERT(plan_states.state USING utf8)")
       when "Visibility"
         @plans = @plans.order(visibility: :asc)
       when "Last_Modification_Date"
@@ -48,8 +48,6 @@ class PlansController < ApplicationController
       else
         @plans = @plans.order(updated_at: :desc)
     end
-
-
 
     case @all_scope
       when "all"
