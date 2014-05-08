@@ -57,7 +57,6 @@ module PlanEmail
     # [:dmp_owners_and_co][:submitted] -- A submitted DMP is approved or rejected
     # [:institutional_reviewers][:approved_rejected] -- An Institutional DMP is approved or rejected
     elsif current_state.state == :approved || current_state.state == :rejected || current_state.state == :reviewed
-      debugger
       users = self.users
       users.delete_if {|u| !u[:prefs][:dmp_owners_and_co][:submitted]}
       users.each do |user|
