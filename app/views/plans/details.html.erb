@@ -57,8 +57,9 @@
   </div>
   <div>
     <% @referer_url = referer_action %>
-    <%= request.referer %>
-    <%= @referer_url %>
+    <p><%= request.referer %></p>
+    <p><%= @referer_url %></p>
+    <p><%= request.env["HTTP_REFERER"] %></p>
     <% if (@referer_url[:controller] == 'plans' && @referer_url[:action] == 'new') || (@referer_url[:controller] == 'plans' && @referer_url[:action] == 'copy_existing_template') %>
       <%= link_to ' Back', edit_plan_path(@plan),  method: 'get', :class => 'btn btn-green pull-left', role: "button" %>
     <% else %>
