@@ -32,9 +32,9 @@ class RequirementsTemplate < ActiveRecord::Base
   after_initialize :default_values
   # after_initialize :version_number
 
-  def self.order_by_institution_name
-    joins(:institution).order('institutions.full_name ASC')
-  end
+  # def self.order_by_institution_name
+  #   joins(:institution).order('institutions.full_name ASC')
+  # end
 
   def default_values
     self.active ||= false
