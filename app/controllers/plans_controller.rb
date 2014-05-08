@@ -40,7 +40,7 @@ class PlansController < ApplicationController
       when "Owner"
         @plans = @plans.joins(:current_state, :users).order('users.first_name ASC', 'users.last_name ASC')
       when "Status"
-        @plans = @plans.joins(:current_state).order("plan_states.state ASC")
+        @plans = @plans.joins(:current_state).order("CONVERT(plan_states.state USING utf8)")
       when "Visibility"
         @plans = @plans.order(visibility: :asc)
       when "Last_Modification_Date"
@@ -48,8 +48,6 @@ class PlansController < ApplicationController
       else
         @plans = @plans.order(updated_at: :desc)
     end
-
-
 
     case @all_scope
       when "all"
@@ -374,13 +372,13 @@ class PlansController < ApplicationController
       if @response.nil?
         @response = Response.new
       end
-      @next_requirement = @requirements[@requirements.index(@requirement) + 1]
-      if @next_requirement.nil?
+      next_requirement_id = @requirement.next_requirement_not_folder
+      unless next_requirement_id.nil?
         ## would go back to the 1st Requirement in the list
-        @next_requirement_id = @requirements_template.last_question.id
+        @next_requirement_id = next_requirement_id
       else
         ## traverse through the next requirement in the list
-        @next_requirement_id = @next_requirement.id
+        @next_requirement_id = @requirement.id
       end
     end
   end

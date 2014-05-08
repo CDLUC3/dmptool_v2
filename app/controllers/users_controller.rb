@@ -75,15 +75,45 @@ class UsersController < ApplicationController
     @institution_list = InstitutionsController.institution_select_list
     @user = User.new(user_params)
     @user.ldap_create = true
+
+    existing_user = User.find_by_login_id(@user.login_id)
+    unless existing_user.blank?
+      redirect_to login_path, notice: "You already have a DMP Tool account. Please log in with your current username and password to continue." and return
+    end
+
+    @user.skip_email_uniqueness_validation = true
     if [@user.valid?].all?
+      # if they already have a matching email in ldap then make the account the same login_id as that one
+      ldap_user_by_email = nil
+      begin
+        ldap_user_by_email = Ldap_User::LDAP.fetch_by_email(@user.email)
+      rescue LdapMixin::LdapException
+      end
+      @user.login_id = ldap_user_by_email[:uid].first if ldap_user_by_email
+
       begin
         results = Ldap_User::LDAP.fetch(@user.login_id)
-        if results['objectclass'].include?('dmpUser')
-          @display_text = "A DMPTool account with this login already exists.  Please login."
-        else
-          @display_text = "Please contact uc3@ucop.edu to add your DMPTool account manually."
+
+        #fix up DMP account for in LDAP so that it has dmpUser class, if needed
+        unless results['objectclass'].include?('dmpUser')
+          cl = Ldap_User::LDAP.fetch_attribute(@user.login_id, 'objectclass')
+          cl = cl + ['dmpUser']
+          Ldap_User::LDAP.replace_attribute(@user.login_id, 'objectclass', cl)
+          results = Ldap_User::LDAP.fetch(@user.login_id)
         end
+        existing_user = User.find_by_login_id(@user.login_id)
+        if existing_user.blank?
+          #add user to DMP users table and redirect to login
+          @user.save
+          redirect_to login_path, notice: "You've been added to the DMP Tool with your existing UC3 username, \"#{@user.login_id}\".  Please log in to continue." and return
+        else
+          #redirct to login, their record already exists.
+          redirect_to login_path, notice: "You already have a DMP Tool account. Your username is \"#{@user.login_id}\".  Please log in with your current password to continue." and return
+        end
+        @user.skip_email_uniqueness_validation = false
       rescue LdapMixin::LdapException => detail
+        @user.skip_email_uniqueness_validation = false
+        # add record
         if detail.message.include? 'does not exist'
           # Add the user, spaces are in place of the first/last name as LDAP requires these.
           User.transaction do

@@ -40,7 +40,7 @@ jQuery(function(){
 });
 /* Add class according to categorical view of tabular data */
 jQuery(function(){
-	if(window.location.href.indexOf("scope=all") != -1){
+	if(window.location.href.indexOf("scope=all_limited") != -1){
 		jQuery(".all_limited").addClass("current");
 	}
 	else if(window.location.href.indexOf("scope=owned") != -1){
