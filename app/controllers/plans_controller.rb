@@ -15,7 +15,7 @@ class PlansController < ApplicationController
     @plans = Plan.where(id: plan_ids)
     count
 
-    @order_scope = params[:order_scope] || "Last_Modification_Date"
+    @order_scope = params[:order_scope] || "last_modification_date"
     @scope = params[:scope] || ""
     @all_scope = params[:all_scope] || ""
 
