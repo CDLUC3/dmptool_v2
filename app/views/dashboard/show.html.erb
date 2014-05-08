@@ -41,22 +41,24 @@
 
 		</div>
 
-		<% if defined? @pending_review %>
-		<br/>
-		<h1 class="row-fluid"><span class="icon review"></span>DMPs For My Review</h1>
-		<table class="table table-striped">
-			<tbody>
-				<tr>
-					<td><%= link_to "#{pluralize(@pending_review, 'DMP')} pending review", review_dmps_path(scope: "submitted") %></td>
-				</tr>
-				<tr>
-					<td><%= link_to "#{pluralize(@approved_plans, 'DMP')} Approved", review_dmps_path(scope: "approved") %></td>
-				</tr>
-				<tr>
-					<td><%= link_to "#{pluralize(@rejected_plans, 'DMP')} Rejected", review_dmps_path(scope: "rejected") %></td>
-				</tr>
-			</tbody>
-		</table>
+		<% if user_role_in?(:institutional_reviewer, :dmp_admin) %>
+			<% if defined? @pending_review %>
+			<br/>
+			<h1 class="row-fluid"><span class="icon review"></span>DMPs For My Review</h1>
+			<table class="table table-striped">
+				<tbody>
+					<tr>
+						<td><%= link_to "#{pluralize(@pending_review, 'DMP')} pending review", review_dmps_path(scope: "submitted") %></td>
+					</tr>
+					<tr>
+						<td><%= link_to "#{pluralize(@approved_plans, 'DMP')} Approved", review_dmps_path(scope: "approved") %></td>
+					</tr>
+					<tr>
+						<td><%= link_to "#{pluralize(@rejected_plans, 'DMP')} Rejected", review_dmps_path(scope: "rejected") %></td>
+					</tr>
+				</tbody>
+			</table>
+			<% end %>
 		<% end %>
 
 	<% if defined? @requirements_templates %>
