@@ -117,7 +117,7 @@ class RequirementsTemplate < ActiveRecord::Base
     nil
   end
 
-  #helper method for recursion of first_question
+  #helper method for recursion of last_question
   def find_last_question_node(reqs)
     reqs.each do |r|
       if r.is_group?
