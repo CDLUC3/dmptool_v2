@@ -539,18 +539,24 @@ class PlansController < ApplicationController
       @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: @user.institution_id).first
       if @customization.nil?
         return nil
-      elsif @customization.review_type == :formal_review || @customization.review_type == :informal_review
-        return true
+      elsif @customization.review_type == :formal_review
+        return "formal"
+      elsif @customization.review_type == :informal_review
+        return "informal"
       else
-        return false
+        return "no"
       end
     end
 
     def precendence_template_review_type
-      if (@plan.requirements_template.review_type == :formal_review) || (@plan.requirements_template.review_type == :informal_review)
-        return true
+      if @plan.requirements_template.review_type.nil?
+        return nil
+      elsif @plan.requirements_template.review_type == :formal_review
+        return "formal"
+      elsif @plan.requirements_template.review_type == :informal_review
+        return "informal"
       else
-        return false
+        return "no"
       end
     end
 end
