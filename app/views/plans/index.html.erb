@@ -22,7 +22,8 @@
   <thead>
     <tr>
       <th>
-        <%= link_to "Name", {order_scope: "Name", scope: @scope, all_scope: @all_scope}%>
+        <%#= link_to "Name", {order_scope: "Name", scope: @scope, all_scope: @all_scope}%>
+        <%= sortable "name"%>
       </th>
       <th class="span3">
         <%= link_to "Owner", {order_scope: "Owner", scope: @scope, all_scope: @all_scope}%>
@@ -86,7 +87,7 @@
     </div>
   <% else %>
     <div class="buttons pagination">
-      <%= link_to "View All", plans_path(order_scope: @order_scope, scope: @scope, all_scope: "all"), :method => :get, :class => "btn", :id => 'view_all_plans', role: "button" %>
+      <%= link_to "View All", plans_path(order_scope: @order_scope, scope: @scope, all_scope: "all", direction: @direction), :method => :get, :class => "btn", :id => 'view_all_plans', role: "button" %>
       <%= paginate @plans %>
     </div>
   <%end%>

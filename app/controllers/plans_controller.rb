@@ -19,6 +19,8 @@ class PlansController < ApplicationController
     @scope = params[:scope]
     @all_scope = params[:all_scope]
 
+    @direction = params[:direction] || "asc"
+
     case @scope
       when "owned"
         @plans = @owned_plans
@@ -35,8 +37,10 @@ class PlansController < ApplicationController
     end
 
     case @order_scope
-      when "Name"
-        @plans = @plans.order(name: :asc)
+      when "name"
+        #@plans = @plans.order(name: + " #{@direction}")
+        
+        @plans = @plans.order('name'+ " " + @direction)    
       when "Owner"
         @plans = @plans.joins(:current_state, :users).order('users.first_name ASC', 'users.last_name ASC')
       when "Status"
@@ -57,6 +61,11 @@ class PlansController < ApplicationController
     end
 
   end
+
+
+
+  
+
 
   # GET /plans/1
   # GET /plans/1.json
@@ -484,6 +493,9 @@ class PlansController < ApplicationController
   end
 
   private
+    
+    
+
     # Use callbacks to share common setup or constraints between actions.
     def set_plan
       @plan = Plan.find(params[:id])
