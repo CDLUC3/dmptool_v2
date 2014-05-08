@@ -50,7 +50,8 @@
 		</div>
 	</div>
 </div>
-<% if is_referer_new_action? %>
+<% referer_action %>
+<% if (@referer_url[:controller] == 'requirements_templates' && @referer_url[:action] == 'new') %>
   <%= link_to '<< Back', edit_requirements_template_path(@requirements_template),  method: 'get', :class => 'btn btn-green pull-left', role: "button" %>
 <% else %>
   <%= link_to '<< Back', :back,  method: 'get', :class => 'btn btn-green pull-left', role: "button" %>

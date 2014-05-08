@@ -76,4 +76,14 @@ module ApplicationHelper
         ( params[:controller] == 'customizations' && params[:requirement_id] &&
             current_page?(customization_requirement_path(@resource_context, requirement_id: params[:requirement_id])))
   end
+
+  def set_page_history
+    if session[:page_history].blank?
+      session[:page_history] = []
+    end
+    if session[:page_history].length > 4
+      session[:page_history].pop
+    end
+    session[:page_history].insert(0, request.path)
+  end
 end
