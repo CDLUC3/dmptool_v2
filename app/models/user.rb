@@ -76,10 +76,10 @@ class User < ActiveRecord::Base
         #fix login_id for CDL LDAP to be simple username
         user.login_id = smart_userid_from_omniauth(auth)
         user.institution_id = institution_id
-        user.save!
-      else
+        user.save(:validate => false)
+      elsif user.institution.nil?
         user.institution_id = institution_id
-        user.save!
+        user.save(:validate => false)
       end
 
       Authentication.create!({:user_id => user.id, :provider => auth[:provider], :uid => smart_userid_from_omniauth(auth)})
