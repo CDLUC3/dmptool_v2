@@ -17,33 +17,17 @@
 <div class="buttons">
   <p class="pull-left"> This DMP is <strong class="blue"><%=@plan.visibility.capitalize %></strong><br/></p>
 	<%= link_to "Change Settings", "#", :class => "btn change_visibility_link", :'data-planid' => @plan.id, :'data-visibility' => @plan.visibility %>
+</div>
 
-</div>
 <div class="row-fluid">
-	<%= link_to "<< Back", details_plan_path(@plan), :class => "btn btn-green pull-left", role: "button" %>
-	<% if @customization_review == true %>
-	  <% if state(@plan) == :submitted %>
-    	<%= button_to "Submit for Review", plan_plan_states_submitted_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
-    <% else %>
-    	<%= button_to "Submit for Review", plan_plan_states_submitted_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
-    <% end %>
-  <% elsif (@customization_review == nil && @template_review == true) %>
-	  <% if state(@plan) == :submitted %>
-    	<%= button_to "Submit for Review", plan_plan_states_submitted_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
-    <% else %>
-    	<%= button_to "Submit for Review", plan_plan_states_submitted_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
-    <% end %>
-  <% else %>
-  	<% if state(@plan) == :committed %>
-			<%= button_to "Done", plan_plan_states_committed_path(@plan), disabled: true,  :class => "btn btn-green pull-right" %>
-			<% else %>
-				<%= button_to "Done", plan_plan_states_committed_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
-			<% end %>
-	<% end %>
+  <%= link_to "<< Back", details_plan_path(@plan), :class => "btn btn-green pull-left", role: "button" %>
+  <%= render 'back_submit_buttons.html.erb' %>
 </div>
+
 <div id = 'visibility_dialog_form'>
 	<%= render partial: 'change_visibility', locals: {:plan_id => @plan.id, :visibility => @plan.visibility} %>
 </div>
+
 <script type="text/javascript">
 	tab_jump();
 	add_tab_to_pagination();
