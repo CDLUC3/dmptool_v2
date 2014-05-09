@@ -76,10 +76,11 @@ class User < ActiveRecord::Base
         #fix login_id for CDL LDAP to be simple username
         user.login_id = smart_userid_from_omniauth(auth)
         user.institution_id = institution_id
-        user.save!
-      else
+        user.prefs = create_default_preferences
+        user.save(:validate => false)
+      elsif user.institution.nil?
         user.institution_id = institution_id
-        user.save!
+        user.save(:validate => false)
       end
 
       Authentication.create!({:user_id => user.id, :provider => auth[:provider], :uid => smart_userid_from_omniauth(auth)})
@@ -199,6 +200,10 @@ class User < ActiveRecord::Base
   end
 
   def create_default_preferences
+    self.prefs = self.class.create_default_preferences
+  end
+
+  def self.create_default_preferences
     default_prefs = {
         users:                   {
             role_granted: true
@@ -225,7 +230,6 @@ class User < ActiveRecord::Base
         }
     }
 
-    self.prefs = default_prefs
   end
 
   def secure_hash(string)
