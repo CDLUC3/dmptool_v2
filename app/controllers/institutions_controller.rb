@@ -15,10 +15,10 @@ class InstitutionsController < ApplicationController
     @current_institution = current_user.institution
 
     if user_role_in?(:dmp_admin)
-      @institutions = Institution.all
+      @institutions = Institution.order(full_name: :asc)
       @disabled = false 
     else
-      @institutions = Institution.where(id: [current_user.institution.root.subtree_ids])
+      @institutions = Institution.where(id: [current_user.institution.root.subtree_ids]).order(full_name: :asc)
       @disabled = true
       
       @sub_institutions = @current_institution.root.subtree.collect {|i| ["#{'-' * i.depth} #{i.full_name}", i.id] }
@@ -212,30 +212,6 @@ class InstitutionsController < ApplicationController
     end
   end
 
-
-  # respond_to do |format|
-  #     if @resource_context.update(to_save)
-  #       format.html { redirect_to go_to, notice: message }
-  #       format.json { head :no_content }
-  #     else
-  #       format.html { render 'edit'}
-  #       format.json { head :no_content }
-        
-  #     end
-  #   end
-
-  # if @current_institution.update(institution_params)
-    #   redirect_to edit_institution_path(@current_institution), notice: 'Institution was successfully updated.' 
-    # else
-    #   render edit_institution_path(@current_institution)
-    #   # if params[:full_name].blank? || params[:full_name].nil?
-    #   #   msg = "Please enter a name for the Institution."
-    #   # else
-    #   #   msg = "An error has occured and the institution cannot be updated."
-    #   # end
-    #   # flash[:error] = msg
-    #   # redirect_to edit_institution_path(@current_institution)
-    # end
 
   # DELETE /institutions/1
   # DELETE /institutions/1.json
