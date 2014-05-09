@@ -1,6 +1,6 @@
 /* Homepage Banner */
 .banner.row-fluid {
-	background: url(header_bg.jpg) no-repeat 0 -117px transparent;
+	background: url(<%= asset_path 'header_bg.jpg' %>) no-repeat 0 -117px transparent;
 	width: 1024px;
 	height: 333px;
 	margin: 0 0 35px;
@@ -96,7 +96,8 @@
 	
 /* Static Pages */
 .static-page {
-	margin: 20px 35px; }
+	margin: 20px 35px;
+	font-size: 1.2em; }
 .static-page a {
 	text-decoration: underline; }
 .static-page ul, .static-page ol {
