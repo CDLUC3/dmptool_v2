@@ -248,7 +248,7 @@ SELECT 'help_text',         NULL, CONCAT(LEFT(dmp2.fnStripTags(`help_text`) ,50)
        `created_at`,       `updated_at`,              `help_text`,
        `id`,                NULL,                     `institution_id`,
         NULL
-FROM `dmp`.`help_texts`
+FROM `dmp`.`help_texts` AS `h`
 WHERE `institution_id` IS NOT NULL
 AND LENGTH(dmp2.fnStripTags(`h`.`help_text`)) > 50
 GROUP BY `institution_id` ASC, `help_text` ASC;
@@ -262,7 +262,7 @@ SELECT 'help_text',           NULL,      LEFT(dmp2.fnStripTags(`help_text`), 50)
        `created_at`,         `updated_at`,              `help_text`,
        `id`,                  NULL,                     `institution_id`,
         NULL
-FROM `dmp`.`help_texts`
+FROM `dmp`.`help_texts` AS `h`
 WHERE `institution_id` IS NOT NULL
 AND LENGTH(dmp2.fnStripTags(`h`.`help_text`)) <= 50
 GROUP BY `institution_id` ASC, `help_text` ASC;
@@ -281,7 +281,7 @@ FROM `dmp`.`suggested_answers`  AS `a`
 JOIN `dmp`.`question_templates` AS `t` ON `t`.`question_id` = `a`.`question_id`
 JOIN `dmp`.`funder_templates`   AS `f` ON `f`.`id`          = `t`.`funder_template_id`
 WHERE `a`.`institution_id` IS NULL
-AND LENGTH(dmp2.fnStripTags(`h`.`suggested_answer_text`)) > 50
+AND LENGTH(dmp2.fnStripTags(`a`.`suggested_answer_text`)) > 50
 GROUP BY `f`.`funder_id` ASC, `a`.`suggested_answer_text` ASC;
 
 INSERT INTO `dmp2`.`resources` (
@@ -297,7 +297,7 @@ FROM `dmp`.`suggested_answers`  AS `a`
 JOIN `dmp`.`question_templates` AS `t` ON `t`.`question_id` = `a`.`question_id`
 JOIN `dmp`.`funder_templates`   AS `f` ON `f`.`id`          = `t`.`funder_template_id`
 WHERE `a`.`institution_id` IS NULL
-AND LENGTH(dmp2.fnStripTags(`h`.`suggested_answer_text`)) <= 50
+AND LENGTH(dmp2.fnStripTags(`a`.`suggested_answer_text`)) <= 50
 GROUP BY `f`.`funder_id` ASC, `a`.`suggested_answer_text` ASC;
 
 INSERT INTO `dmp2`.`resources` (
@@ -309,9 +309,9 @@ SELECT 'suggested_response',  NULL, CONCAT(LEFT(dmp2.fnStripTags(`suggested_answ
        `created_at`,         `updated_at`,              `suggested_answer_text`,
         NULL,                `id`,                      `institution_id`,
         NULL
-FROM `dmp`.`suggested_answers`
+FROM `dmp`.`suggested_answers` AS `a`
 WHERE `institution_id` IS NOT NULL
-AND LENGTH(dmp2.fnStripTags(`h`.`suggested_answer_text`)) > 50
+AND LENGTH(dmp2.fnStripTags(`a`.`suggested_answer_text`)) > 50
 GROUP BY `institution_id` ASC, `suggested_answer_text` ASC;
 
 INSERT INTO `dmp2`.`resources` (
@@ -323,9 +323,9 @@ SELECT 'suggested_response',  NULL,        LEFT(dmp2.fnStripTags(`suggested_answ
        `created_at`,         `updated_at`,              `suggested_answer_text`,
         NULL,                `id`,                      `institution_id`,
         NULL
-FROM `dmp`.`suggested_answers`
+FROM `dmp`.`suggested_answers` AS `a`
 WHERE `institution_id` IS NOT NULL
-AND LENGTH(dmp2.fnStripTags(`h`.`suggested_answer_text`)) <= 50
+AND LENGTH(dmp2.fnStripTags(`a`.`suggested_answer_text`)) <= 50
 GROUP BY `institution_id` ASC, `suggested_answer_text` ASC;
 
 
