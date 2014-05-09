@@ -1,4 +1,17 @@
 module ApplicationHelper
+
+  #to enable column sorting with toggle effects
+  #current asc and current desc classes are for supporting an eventual arrow image 
+  #or css class (not yet implemented) associated with the sorting direction 
+  def sortable(column, title = nil)
+    title ||= column.titleize
+    css_class = column == params[:order_scope] ? "current #{params[:direction]}" : nil
+    direction = column == params[:order_scope] && params[:direction] == "asc" ? "desc" : "asc"
+    link_to title, 
+      {:order_scope => column, :direction => direction, :scope => @scope, :all_scope => @all_scope},
+      {:class => css_class}
+  end
+
   def link_to_add_fields(name, f, association)
     new_object = f.object.send(association).klass.new
     id = new_object.object_id
@@ -67,5 +80,15 @@ module ApplicationHelper
                            customization_requirement_path(@resource_context)) ||
         ( params[:controller] == 'customizations' && params[:requirement_id] &&
             current_page?(customization_requirement_path(@resource_context, requirement_id: params[:requirement_id])))
+  end
+
+  def set_page_history
+    if session[:page_history].blank?
+      session[:page_history] = []
+    end
+    if session[:page_history].length > 4
+      session[:page_history].pop
+    end
+    session[:page_history].insert(0, request.path)
   end
 end

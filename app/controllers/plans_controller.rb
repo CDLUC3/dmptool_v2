@@ -15,9 +15,12 @@ class PlansController < ApplicationController
     @plans = Plan.where(id: plan_ids)
     count
 
-    @order_scope = params[:order_scope]
-    @scope = params[:scope]
-    @all_scope = params[:all_scope]
+    @order_scope = params[:order_scope] || "last_modification_date"
+    @scope = params[:scope] || ""
+    @all_scope = params[:all_scope] || ""
+
+    #to avoid sql injection 
+    @direction = %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
 
     case @scope
       when "owned"
@@ -35,16 +38,17 @@ class PlansController < ApplicationController
     end
 
     case @order_scope
-      when "Name"
-        @plans = @plans.order(name: :asc)
-      when "Owner"
-        @plans = @plans.joins(:current_state, :users).order('users.first_name ASC', 'users.last_name ASC')
-      when "Status"
-        @plans = @plans.joins(:current_state).order("CONVERT(plan_states.state USING utf8)")
-      when "Visibility"
-        @plans = @plans.order(visibility: :asc)
-      when "Last_Modification_Date"
-        @plans = @plans.order(updated_at: :desc)
+      when "name"
+        @plans = @plans.order('name'+ " " + @direction)    
+      when "owner"
+        @plans = @plans.joins(:current_state, :users).
+                  order('users.first_name'+ " " + @direction , 'users.last_name'+ " " + @direction)
+      when "status"
+        @plans = @plans.joins(:current_state).order('CONVERT(plan_states.state USING utf8)' + " " + @direction)
+      when "visibility"
+        @plans = @plans.order('visibility'+ " " + @direction)
+      when "last_modification_date"
+        @plans = @plans.order('updated_at'+ " " + @direction)
       else
         @plans = @plans.order(updated_at: :desc)
     end
@@ -57,6 +61,11 @@ class PlansController < ApplicationController
     end
 
   end
+
+
+
+  
+
 
   # GET /plans/1
   # GET /plans/1.json
@@ -405,6 +414,11 @@ class PlansController < ApplicationController
 
     @all_scope = params[:all_scope]
     @order_scope = params[:order_scope]
+    
+    #these params are for filter by letter and are used in the view
+    @s = params[:s]
+    @e = params[:e]
+     
 
     case @order_scope
       when "PlanTitle"
@@ -484,6 +498,9 @@ class PlansController < ApplicationController
   end
 
   private
+    
+    
+
     # Use callbacks to share common setup or constraints between actions.
     def set_plan
       @plan = Plan.find(params[:id])
@@ -539,18 +556,24 @@ class PlansController < ApplicationController
       @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: @user.institution_id).first
       if @customization.nil?
         return nil
-      elsif @customization.review_type == :formal_review || @customization.review_type == :informal_review
-        return true
+      elsif @customization.review_type == :formal_review
+        return "formal"
+      elsif @customization.review_type == :informal_review
+        return "informal"
       else
-        return false
+        return "no"
       end
     end
 
     def precendence_template_review_type
-      if (@plan.requirements_template.review_type == :formal_review) || (@plan.requirements_template.review_type == :informal_review)
-        return true
+      if @plan.requirements_template.review_type.nil?
+        return nil
+      elsif @plan.requirements_template.review_type == :formal_review
+        return "formal"
+      elsif @plan.requirements_template.review_type == :informal_review
+        return "informal"
       else
-        return false
+        return "no"
       end
     end
 end
