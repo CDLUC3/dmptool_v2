@@ -1,0 +1,62 @@
+<% if @customization_review == "formal" %>
+  <% if state(@plan) == :submitted || state(@plan) == :approved || state(@plan) == :rejected %>
+  	<%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
+  <% elsif state(@plan) == :new || state(@plan) == :revised %>
+  	<%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
+  <% elsif state(@plan) == :committed%>
+    <%= link_to "Done", plan_plan_states_committed_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
+  <% else %>
+    <%= link_to "Done", plan_plan_states_committed_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
+  <% end %>
+
+<% elsif @customization_review == "informal" %>
+  <% if state(@plan) == :submitted || state(@plan) == :reviewed %>
+    <%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
+  <% elsif state(@plan) == :new || state(@plan) == :revised %>
+    <%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
+  <% elsif state(@plan) == :committed %>
+    <%= link_to "Done", plan_plan_states_committed_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
+  <% else %>
+    <%= link_to "Done", plan_plan_states_committed_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
+  <% end %>
+
+<% elsif @customization_review == "no" %>
+  <% if state(@plan) == :committed %>
+    <%= link_to "Done", plan_plan_states_committed_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
+  <% else %>
+    <%= link_to "Done", plan_plan_states_committed_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
+  <% end %>
+
+<% elsif (@customization_review == nil && @template_review == "formal") %>
+  <% if state(@plan) == :submitted || state(@plan) == :approved || state(@plan) == :rejected %>
+    <%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
+  <% elsif state(@plan) == :new || state(@plan) == :revised %>
+    <%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
+  <% elsif state(@plan) == :committed%>
+    <%= link_to "Done", plan_plan_states_committed_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
+  <% else %>
+    <%= link_to "Done", plan_plan_states_committed_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
+  <% end %>
+
+<% elsif (@customization_review == nil && @template_review == "informal") %>
+  <% if state(@plan) == :submitted || state(@plan) == :reviewed %>
+    <%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
+  <% elsif state(@plan) == :new || state(@plan) == :revised %>
+    <%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
+  <% elsif state(@plan) == :committed %>
+    <%= link_to "Done", plan_plan_states_committed_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
+  <% else %>
+    <%= link_to "Done", plan_plan_states_committed_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
+  <% end %>
+
+<% elsif (@customization_review == nil && @template_review == "no") %>
+  <% if state(@plan) == :committed %>
+    <%= link_to "Done", plan_plan_states_committed_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
+  <% else %>
+    <%= link_to "Done", plan_plan_states_committed_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
+  <% end %>
+
+<% elsif (@customization_review == nil && @template_review == nil) %>
+  <h3 class="red pull-right"><strong>Review Process not defined for the associated DMP Template</strong></h3>
+
+<% end %>

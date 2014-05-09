@@ -19,7 +19,7 @@ class PlansController < ApplicationController
     @scope = params[:scope] || ""
     @all_scope = params[:all_scope] || ""
 
-    #to avoid sql injection 
+    #to avoid sql injection
     @direction = %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
 
     case @scope
@@ -39,7 +39,7 @@ class PlansController < ApplicationController
 
     case @order_scope
       when "name"
-        @plans = @plans.order('name'+ " " + @direction)    
+        @plans = @plans.order('name'+ " " + @direction)
       when "owner"
         @plans = @plans.joins(:current_state, :users).
                   order('users.first_name'+ " " + @direction , 'users.last_name'+ " " + @direction)
@@ -64,7 +64,7 @@ class PlansController < ApplicationController
 
 
 
-  
+
 
 
   # GET /plans/1
@@ -259,7 +259,7 @@ class PlansController < ApplicationController
       @submitted_plans = Plan.plans_to_be_reviewed(institutions)
       @approved_plans = Plan.plans_approved(institutions)
       @rejected_plans = Plan.plans_rejected(institutions)
-      #@plans = @submitted_plans + @approved_plans + @rejected_plans
+      @reviewed_plans = Plan.plans_reviewed(institutions)
       @plans = Plan.plans_per_institution(institutions)
 
     else
@@ -267,7 +267,7 @@ class PlansController < ApplicationController
       @submitted_plans = Plan.plans_to_be_reviewed(Institution.all.ids)
       @approved_plans = Plan.plans_approved(Institution.all.ids)
       @rejected_plans = Plan.plans_rejected(Institution.all.ids)
-      #@plans = @submitted_plans + @approved_plans + @rejected_plans
+      @reviewed_plans = Plan.plans_reviewed(Institution.all.ids)
       @plans = Plan.plans_per_institution(Institution.all.ids)
 
     end
@@ -285,6 +285,8 @@ class PlansController < ApplicationController
         @plans = @approved_plans
       when "rejected"
         @plans = @rejected_plans
+      when "reviewed"
+        @plans = @reviewed_plans
       else
         @plans
     end
@@ -414,11 +416,11 @@ class PlansController < ApplicationController
 
     @all_scope = params[:all_scope]
     @order_scope = params[:order_scope]
-    
+
     #these params are for filter by letter and are used in the view
     @s = params[:s]
     @e = params[:e]
-     
+
 
     case @order_scope
       when "PlanTitle"
@@ -498,8 +500,8 @@ class PlansController < ApplicationController
   end
 
   private
-    
-    
+
+
 
     # Use callbacks to share common setup or constraints between actions.
     def set_plan
@@ -523,9 +525,10 @@ class PlansController < ApplicationController
 
     def review_count
       @submitted = @submitted_plans.count
-      @approved = @approved_plans.approved.count
-      @rejected = @rejected_plans.rejected.count
-      @all = @submitted + @approved + @rejected
+      @approved = @approved_plans.count
+      @rejected = @rejected_plans.count
+      @reviewed = @reviewed_plans.count
+      @all = @submitted + @approved + @rejected + @reviewed
     end
 
     def set_comments
