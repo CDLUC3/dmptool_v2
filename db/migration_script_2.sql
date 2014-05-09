@@ -95,6 +95,14 @@ JOIN   `dmp2`.`plan_states` AS `plan_states_2` ON `plan_states_2`.`plan_id` = `p
 SET `plans_2`.`current_plan_state_id` = `plan_states_2`.`id`;
 
 
+#migrate answers to responses and overwrite all the previous responses
+TRUNCATE TABLE `dmp2`.`responses`;
+INSERT INTO `dmp2`.`responses` (
+       `id`, `plan_id`, `requirement_id`, `text_value`,`created_at`, `updated_at`, `lock_version`)
+SELECT `id`, `plan_id`, `question_id`   ,  `text`     , `created_at`, `updated_at`, 0
+FROM `dmp`.`answers`; 
+
+
 
 
 
