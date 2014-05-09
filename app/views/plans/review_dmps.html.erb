@@ -8,6 +8,8 @@
 <%= link_to "Approved (#{@approved}) ", {scope: "approved", order_scope: @order_scope, all_scope: @all_scope}, :class => "approved" %>
 |
 <%= link_to "Rejected (#{@rejected}) ", {scope: "rejected", order_scope: @order_scope, all_scope: @all_scope}, :class => "rejected" %>
+|
+<%= link_to "Reviewed (#{@reviewed}) ", {scope: "reviewed", order_scope: @order_scope, all_scope: @all_scope}, :class => "reviewed" %>
 </div>
 <table class="table table-striped" id="review_dmps">
   <thead>
@@ -51,5 +53,5 @@
 <%end%>
 
 </tr>
-  
+
 </table>
