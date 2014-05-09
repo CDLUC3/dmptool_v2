@@ -22,7 +22,7 @@
 	
 /* Header */
 .header {
-	background: url(header_bg.jpg) no-repeat 0 0 #86A641;
+	background: url(<%= asset_path 'header_bg.jpg' %>) no-repeat 0 0 #86A641;
 	color: #FFFFFF;
 	height: 117px;
 	z-index: 100; }
@@ -51,7 +51,7 @@
 	
 /* Header Navigation */
 .header .navbar {
-	background: url(header_nav_bg.jpg) repeat-x 0 0 transparent;
+	background: url(<%= asset_path 'header_nav_bg.jpg' %>) repeat-x 0 0 transparent;
 	width: 100%;
 	height: 45px;
 	margin: 0;
@@ -146,7 +146,7 @@
 .footer [class*="span"], .footer p {
 	margin: 0; }
 .footer .copyright[class*="span"] {
-	background: url(cdl_logo_sm.png) no-repeat 0 0 transparent;
+	background: url(<%= asset_path 'cdl_logo_sm.png' %>) no-repeat 0 0 transparent;
 	min-height: 33px;
 	padding: 5px 0 0 45px; }
 .footer .copyright p {
@@ -280,12 +280,12 @@
 	margin-right: 0;
 	padding-left: 15px; }
 .dashboard-nav ul.nav ul li.last {
-	background: url(tab_arrow.png) no-repeat 0 -87px transparent;
+	background: url(<%= asset_path 'tab_arrow.png' %>) no-repeat 0 -87px transparent;
 	width: 15px;
 	margin-left: -15px; }
 .dashboard-nav ul.nav ul li a {
 	float: left;
-	background: url(tab_arrow.png) no-repeat 0 0 transparent;
+	background: url(<%= asset_path 'tab_arrow.png' %>) no-repeat 0 0 transparent;
 	color: #516935;
 	font-weight: bold;
 	letter-spacing: -0.2px;
