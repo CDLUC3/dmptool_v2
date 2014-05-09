@@ -18,30 +18,15 @@ class RequirementsTemplatesController < ApplicationController
       @requirements_templates = RequirementsTemplate.all
     end
 
-    @order_scope = params[:order_scope]
-    @scope = params[:scope]
-    @all_scope = params[:all_scope]
+    @order_scope = params[:order_scope] || "last_modification_date"
+    @scope = params[:scope] || "all_limited"
+    @all_scope = params[:all_scope] || ""
 
-    case @order_scope
-      when "Name"
-        @requirements_templates = @requirements_templates.order(name: :asc)
-      when "Institution"
-        @requirements_templates = @requirements_templates.order_by_institution_name
-      when "Status"
-        @requirements_templates = @requirements_templates.order(active: :desc)
-      when "Visibility"
-        @requirements_templates = @requirements_templates.order(visibility: :asc)
-      when "Creation_Date"
-        @requirements_templates = @requirements_templates.order(created_at: :desc)
-      when "Last_Modification_Date"
-        @requirements_templates = @requirements_templates.order(updated_at: :desc)
-      else
-        @requirements_templates = @requirements_templates.order(name: :asc)
-    end
+    #to avoid sql injection 
+    @direction = %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
 
+    
     case @scope
-      when "all"
-        @requirements_templates = @requirements_templates
       when "all_limited"
         @requirements_templates = @requirements_templates
       when "active"
@@ -52,9 +37,26 @@ class RequirementsTemplatesController < ApplicationController
         @requirements_templates = @requirements_templates.public_visibility
       when "institutional"
         @requirements_templates = @requirements_templates.institutional_visibility
-      else
-        @requirements_templates = @requirements_templates
     end
+
+    case @order_scope
+      when "name"
+        @requirements_templates = @requirements_templates.order('name'+ " " + @direction)
+      when "institution"
+        @requirements_templates = @requirements_templates.joins(:institution).
+                                    order('institutions.full_name'+ " " + @direction)
+      when "status"
+        @requirements_templates = @requirements_templates.
+                                  order('active'+ " " + (@direction == "asc" ? "desc" : "asc"))
+      when "visibility"
+        @requirements_templates = @requirements_templates.order('visibility'+ " " + @direction)
+      when "creation_date"
+        @requirements_templates = @requirements_templates.order('created_at'+ " " + @direction)
+      when "last_modification_date"
+        @requirements_templates = @requirements_templates.order('updated_at'+ " " + @direction)
+      else
+        @requirements_templates = @requirements_templates.order(name: :asc)
+    end    
 
     case @all_scope
       when "all"

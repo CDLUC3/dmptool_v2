@@ -32,9 +32,9 @@ class RequirementsTemplate < ActiveRecord::Base
   after_initialize :default_values
   # after_initialize :version_number
 
-  def self.order_by_institution_name
-    joins(:institution).order('institutions.full_name ASC')
-  end
+  # def self.order_by_institution_name
+  #   joins(:institution).order('institutions.full_name ASC')
+  # end
 
   def default_values
     self.active ||= false
@@ -117,7 +117,7 @@ class RequirementsTemplate < ActiveRecord::Base
     nil
   end
 
-  #helper method for recursion of first_question
+  #helper method for recursion of last_question
   def find_last_question_node(reqs)
     reqs.each do |r|
       if r.is_group?

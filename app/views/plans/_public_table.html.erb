@@ -36,12 +36,14 @@
 
 <% if @all_scope == "all" %>
   <div class="buttons pagination">
-    <%= link_to "View Less", { :action => "public", :all_scope => "less", order_scope: @order_scope}, { :class => "btn" } %>
+    <%= link_to "View Less", { :action => "public", :all_scope => "less", order_scope: @order_scope, s: @s, e: @e}, 
+          { :class => "btn" } %>
     <%= paginate @plans %>
   </div>
 <% else %>
   <div class="buttons pagination">
-    <%= link_to "View All", { :action => "public", :all_scope => "all", order_scope: @order_scope}, { :class => "btn", :id => 'view_all_plans' } %>
+    <%= link_to "View All", { :action => "public", :all_scope => "all", order_scope: @order_scope, s: @s, e: @e}, 
+        { :class => "btn", :id => 'view_all_plans' } %>
     <%= paginate @plans %>
   </div>
 <%end%>

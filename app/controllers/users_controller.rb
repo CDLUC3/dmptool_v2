@@ -76,6 +76,11 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.ldap_create = true
 
+    existing_user = User.find_by_login_id(@user.login_id)
+    unless existing_user.blank?
+      redirect_to login_path, notice: "You already have a DMP Tool account. Please log in with your current username and password to continue." and return
+    end
+
     @user.skip_email_uniqueness_validation = true
     if [@user.valid?].all?
       # if they already have a matching email in ldap then make the account the same login_id as that one
@@ -100,10 +105,10 @@ class UsersController < ApplicationController
         if existing_user.blank?
           #add user to DMP users table and redirect to login
           @user.save
-          redirect_to login_path, notice: "You've been added to the DMP Tool with your existing UC3 username, \"#{@user.login_id}\".  Please log in with your UCS username and password to continue." and return
+          redirect_to login_path, notice: "You've been added to the DMP Tool with your existing UC3 username, \"#{@user.login_id}\".  Please log in to continue." and return
         else
           #redirct to login, their record already exists.
-          redirect_to login_path, notice: "You already have a DMP Tool account. Your username is \"#{@user.login_id}\".  Please log in with your username and password to continue." and return
+          redirect_to login_path, notice: "You already have a DMP Tool account. Your username is \"#{@user.login_id}\".  Please log in with your current password to continue." and return
         end
         @user.skip_email_uniqueness_validation = false
       rescue LdapMixin::LdapException => detail

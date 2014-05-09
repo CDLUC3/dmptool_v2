@@ -22,21 +22,22 @@
   <thead>
     <tr>
       <th>
-        <%= link_to "Name", {order_scope: "Name", scope: @scope, all_scope: @all_scope}%>
+        <%#= link_to "Name", {order_scope: "Name", scope: @scope, all_scope: @all_scope}%>
+        <%= sortable "name"%>
       </th>
       <th class="span3">
-        <%= link_to "Owner", {order_scope: "Owner", scope: @scope, all_scope: @all_scope}%>
+        <%#= link_to "Owner", {order_scope: "Owner", scope: @scope, all_scope: @all_scope}%>
+        <%= sortable "owner"%>
       </th>
       <th>
-        <%= link_to "Status", {order_scope: "Status", scope: @scope, all_scope: @all_scope}%>
+        <%= sortable "status"%>
       </th>
       <th>
-        <%= link_to "Visibility", {order_scope: "Visibility", scope: @scope, all_scope: @all_scope}%>
+        <%= sortable "visibility" %>
         <%= content_tag(:span, '', :title => 'Three possible states:<ul><li>Private (red lock): only owners and co-owners can view the plan</li><li>Shared with institution (yellow lock): anyone logged in from your institution can view the plan.</li><li>Shared publicly (green lock): anyone can view the plan.</li></ul>', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'data-html' => 'true', :class => 'icon questionmark tip') %>
       </th>
       <th>
-        <%= link_to "Last Modification Date",
-              {order_scope: "Last_Modification_Date", scope: @scope, all_scope: @all_scope}%>
+        <%= sortable "last_modification_date", "Last Modification Date" %>
       </th>
     </tr>
   </thead>
@@ -81,12 +82,12 @@
 
   <% if @all_scope == "all" %>
     <div class="buttons pagination">
-      <%= link_to "View Less", plans_path(order_scope: @order_scope, scope: @scope, all_scope: ""), :method => :get, :class => "btn", :id => 'view_all_plans', role: "button" %>
+      <%= link_to "View Less", plans_path(order_scope: @order_scope, scope: @scope, all_scope: "", direction: @direction), :method => :get, :class => "btn", :id => 'view_all_plans', role: "button" %>
       <%= paginate @plans %>
     </div>
   <% else %>
     <div class="buttons pagination">
-      <%= link_to "View All", plans_path(order_scope: @order_scope, scope: @scope, all_scope: "all"), :method => :get, :class => "btn", :id => 'view_all_plans', role: "button" %>
+      <%= link_to "View All", plans_path(order_scope: @order_scope, scope: @scope, all_scope: "all", direction: @direction), :method => :get, :class => "btn", :id => 'view_all_plans', role: "button" %>
       <%= paginate @plans %>
     </div>
   <%end%>
