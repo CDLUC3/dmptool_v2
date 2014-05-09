@@ -58,6 +58,9 @@ jQuery(function(){
 	else if(window.location.href.indexOf("scope=committed") != -1){
 		jQuery(".committed").addClass("current");
 	}
+	else if(window.location.href.indexOf("scope=reviewed") != -1){
+		jQuery(".reviewed").addClass("current");
+	}
 	else if(window.location.href.indexOf("scope=rejected") != -1){
 		jQuery(".rejected").addClass("current");
 	}

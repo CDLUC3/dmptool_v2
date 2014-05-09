@@ -35,7 +35,8 @@ class Plan < ActiveRecord::Base
   scope :plans_to_be_reviewed, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'submitted'}).where(user_plans: {owner: true})}
   scope :plans_approved, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'approved'}).where(user_plans: {owner: true})}
   scope :plans_rejected, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'rejected'}).where(user_plans: {owner: true})}
-  scope :plans_per_institution, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: ['rejected', 'approved', 'submitted']}).where(user_plans: {owner: true})}
+  scope :plans_reviewed, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'reviewed'}).where(user_plans: {owner: true})}
+  scope :plans_per_institution, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: ['rejected', 'approved', 'submitted', 'reviewed']}).where(user_plans: {owner: true})}
 
   def self.letter_range(s, e)
     #add as a scope where s=start and e=end letter
