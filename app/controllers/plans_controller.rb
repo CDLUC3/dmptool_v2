@@ -327,9 +327,9 @@ class PlansController < ApplicationController
     process_requirements_template(req_temp)
 
     @back_to = plan_template_information_path
-    @back_text = "<< Create New DMP"
+    @back_text = "<< Back"
     @submit_to = new_plan_path
-    @submit_text = "DMP Overview Page >>"
+    @submit_text = "Next >>"
 
   end
 
