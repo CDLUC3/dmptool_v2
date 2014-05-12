@@ -12,12 +12,12 @@
     	/* Test for Safari */
     	if (navigator.userAgent.match(/AppleWebKit/) && ! navigator.userAgent.match(/Chrome/)) {
     		/* include safari stylesheet*/
-   			document.write('<link rel="stylesheet" media="all" href="/assets/safari.css?body=1" />');
+   			document.write('<link rel="stylesheet" media="all" href=<%= asset_path("safari.css") %> />');
 			}
 			/* Test for Chrome */
 			if (navigator.userAgent.match(/Chrome/)) {
 				/* include chrome stylesheet */
-   			document.write('<link rel="stylesheet" media="all" href="/assets/chrome.css?body=1" />');
+   			document.write('<link rel="stylesheet" media="all" href=<%= asset_path("chrome.css") %> />');
 			}
     </script>
     
