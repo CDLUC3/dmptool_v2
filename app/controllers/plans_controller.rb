@@ -35,6 +35,8 @@ class PlansController < ApplicationController
         @plans = @plans.committed
       when "rejected"
         @plans = @plans.rejected
+      when "reviewed"
+        @plans = @plans.reviewed
     end
 
     case @order_scope
@@ -516,6 +518,7 @@ class PlansController < ApplicationController
       @submitted = @plans.submitted.count
       @committed = @plans.committed.count
       @rejected = @plans.rejected.count
+      @reviewed = @plans.reviewed.count
     end
 
     def review_count
