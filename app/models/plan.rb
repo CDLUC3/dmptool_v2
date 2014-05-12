@@ -30,6 +30,7 @@ class Plan < ActiveRecord::Base
   scope :rejected, -> { joins(:current_state).where('plan_states.state =?', :rejected) }
   scope :revised, -> { joins(:current_state).where('plan_states.state =?', :revised) }
   scope :committed, -> { joins(:current_state).where('plan_states.state =?', :committed) }
+  scope :reviewed, -> { joins(:current_state).where('plan_states.state =?', :reviewed) }
 
   # scopes for Plan Review
   scope :plans_to_be_reviewed, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'submitted'}).where(user_plans: {owner: true})}
