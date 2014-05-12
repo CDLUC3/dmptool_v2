@@ -35,6 +35,8 @@ class PlansController < ApplicationController
         @plans = @plans.committed
       when "rejected"
         @plans = @plans.rejected
+      when "reviewed"
+        @plans = @plans.reviewed
     end
 
     case @order_scope
@@ -325,9 +327,9 @@ class PlansController < ApplicationController
     process_requirements_template(req_temp)
 
     @back_to = plan_template_information_path
-    @back_text = "<< Create New DMP"
+    @back_text = "<< Back"
     @submit_to = new_plan_path
-    @submit_text = "DMP Overview Page >>"
+    @submit_text = "Next >>"
 
   end
 
@@ -516,6 +518,7 @@ class PlansController < ApplicationController
       @submitted = @plans.submitted.count
       @committed = @plans.committed.count
       @rejected = @plans.rejected.count
+      @reviewed = @plans.reviewed.count
     end
 
     def review_count
