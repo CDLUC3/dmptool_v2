@@ -144,7 +144,7 @@
         <%= content_tag(:span, '', :title => 'Look up your ORCID id number, or select “Search” to search by name. We strongly recommend not manually entering your ORCID id.', 'data-placement' => 'right', :class => 'icon questionmark tip', :style => 'position: absolute; top: 12px; left: 755px') %>
         <%= label_tag :orcid_id, 'ORCID', :class => 'control-label' %>
         <input type="text" id="orcid_id" class="orcid_widget" name="user[orcid_id]" placeholder="xxxx-xxxx-xxxx-xxxx">
-         <%= javascript_include_tag "orcid_widget" %>
+        <%= javascript_include_tag(asset_path("orcid_widget.js")) %>
         </input>
       </div>
 
@@ -165,7 +165,7 @@
       <div class="control-group" id="orcid_input_box">
         <%= label_tag :orcid_id, 'ORCID', :class => 'control-label' %>
           <input type="text" id="update_orcid_id" class="orcid_widget" name="user[orcid_id]" placeholder="xxxx-xxxx-xxxx-xxxx">
-           <%= javascript_include_tag "orcid_widget" %>
+            <%= javascript_include_tag(asset_path("orcid_widget.js")) %>
           </input>
       </div>
 
