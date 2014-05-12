@@ -10,6 +10,8 @@ module UserPlanEmail
   def email_coowner_added
     # mail all owners and co-owners
 
+    return if self.owner? #do not email owners until later when someone changes their minds
+
     new_user_type = (self.owner ? 'owner': 'co-owner')
     new_user = self.user
     plan = self.plan

@@ -19,7 +19,7 @@
            col1[0] = link_to "#{current_user.owned_plans.count} plans I own", plans_path(:scope => "owned")
            col1[1] = link_to "#{current_user.coowned_plans.count} plans I co-own", plans_path(:scope => "coowned")
            col2 = (current_user.unique_plan_states & PlanState::REVIEW_STATES).map do |state|
-             link_to "#{current_user.plans_by_state(state).count} #{state.capitalize}", review_dmps_path(scope: state)
+             link_to "#{current_user.plans_by_state(state).count} #{state.capitalize}", plans_path(scope: state)
            end
            if col2.length < 1
              col2[0] = "No DMPs are under review."
@@ -68,7 +68,9 @@
 		<thead>
 			<tr>
 				<th>Within my Institution</th>
-				<th>Funder Requirements</th>
+				<th>Funder Requirements
+				<%= content_tag(:span, '', :title => 'Funder Requirements are templates defined by an institution that are available to the public (everyone).', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'data-html' => 'true', :class => 'icon questionmark tip') %>
+				</th>
 			</tr>
 		</thead>
 		<tbody>
