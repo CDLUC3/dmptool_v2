@@ -5,3 +5,10 @@ role :db,  'dmp2.cdlib.org', :primary => true # This is where Rails migrations w
 set :deploy_to, "/dmp2/apps/dmp2/"
 set :unicorn_pid, "/dmp2/apps/dmp2/shared/tmp/unicorn.dmp2.pid"
 set :rails_env, "production"
+
+
+after 'deploy', 'deploy:migrate'
+after 'deploy:finalize_update', 'deploy:symlink_shared'
+load  'deploy/assets'
+after 'deploy:restart', 'unicorn:restart'
+
