@@ -30,13 +30,33 @@
 			    </div>
 			  </div>
 			
-			  <div class="control-group">
-			    <p class ="control-label">Associated DMP template</p>
-			    <div class="controls">
-			      <span style="position: relative; top: 4px"><%= link_to @req_temp.name, edit_requirements_template_path(@req_temp) %></span>
-			      <%= content_tag(:span, '', :title => 'The DMP Template that this customization applies to.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
-			    </div>
-			  </div>
+
+				<%if user_role_in?(:dmp_admin) ||
+						(user_role_in?(:institutional_admin) && (current_user.institution.subtree_ids.include?(@req_temp.institution_id))) ||
+						(user_role_in?(:template_editor) && (current_user.institution.subtree_ids.include?(@req_temp.institution_id)))  %> 
+				  <div class="control-group">
+				    <p class ="control-label">Associated DMP template</p>
+				    <div class="controls">    	
+				      <span style="position: relative; top: 4px"><%= link_to @req_temp.name, edit_requirements_template_path(@req_temp) %></span>
+				      
+				      <%= content_tag(:span, '', :title => 'The DMP Template that this customization applies to.', 
+				      								'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', 
+				      								:class => 'icon questionmark tip') %>
+				    </div>
+				  </div>
+
+			  <%else%>
+
+			  	<div class="control-group">
+				    <p class ="control-label">Associated DMP template</p>
+				    <div class="controls">    	
+				      
+				      <span style="position: relative; top: 4px"><%= @req_temp.name %></span>
+				      <%= content_tag(:span, '', :title => 'The DMP Template that this customization applies to.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
+				    </div>
+				  </div>
+
+			  <%end%>
 			
 			  <div class="control-group" style="position: relative">
 			  	<%= content_tag(:span, '', :title => 'You can require institutional administrator review of plans submitted using this template.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip', :style => 'position: absolute; top: 7px; left: 115px') %>
