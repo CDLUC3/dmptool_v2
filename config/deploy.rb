@@ -28,8 +28,3 @@ namespace :deploy do
     run "ln -s #{shared_path}/uploads #{release_path}/public/uploads"
   end
 end
-
-after 'deploy', 'deploy:migrate'
-after 'deploy:finalize_update', 'deploy:symlink_shared'
-#before 'deploy:restart', 'deploy:symlink_shared'
-after 'deploy:restart', 'unicorn:restart'
