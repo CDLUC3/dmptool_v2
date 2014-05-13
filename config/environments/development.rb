@@ -27,9 +27,6 @@ Dmptool2::Application.configure do
   # number of complex assets.
   config.assets.debug = true
 
-  ## Adding this line for sprockets_better_errors.
-  config.assets.raise_production_errors = true
-
   #special settings if you want to configure Unicorn logs for development use of unicorn server
   if defined? Hulk
     Hulk::Application.configure do

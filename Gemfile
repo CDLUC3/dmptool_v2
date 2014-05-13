@@ -29,7 +29,6 @@ gem "omniauth-shibboleth", :git => "git@bitbucket.org:cdl/omniauth-shibboleth.gi
 
 gem 'mysql2'
 gem 'therubyracer'
-gem 'sprockets_better_errors'
 gem 'enum_column3'
 gem 'bootstrap-sass', '2.3.2.0'
 gem 'sass-rails',  '~> 4.0.0'
