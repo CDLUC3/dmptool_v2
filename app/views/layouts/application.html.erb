@@ -12,19 +12,19 @@
     	/* Test for Safari */
     	if (navigator.userAgent.match(/AppleWebKit/) && ! navigator.userAgent.match(/Chrome/)) {
     		/* include safari stylesheet*/
-   			document.write('<link rel="stylesheet" media="all" href="/assets/safari.css?body=1" />');
+   			document.write('<link rel="stylesheet" media="all" href="/stylesheets/safari.css" />');
 			}
 			/* Test for Chrome */
 			if (navigator.userAgent.match(/Chrome/)) {
 				/* include chrome stylesheet */
-   			document.write('<link rel="stylesheet" media="all" href="/assets/chrome.css?body=1" />');
+   			document.write('<link rel="stylesheet" media="all" href="/stylesheets/chrome.css" />');
 			}
     </script>
     
 
    
-    <!--[if IE 8]><link rel="stylesheet" media="all" href="/assets/ie.css" /><![endif]-->
-    <!--[if IE 7]><link rel="stylesheet" media="all" href="/assets/ie.css" /><![endif]-->
+    <!--[if IE 8]><link rel="stylesheet" media="all" href="/stylesheets/ie.css" /><![endif]-->
+    <!--[if IE 7]><link rel="stylesheet" media="all" href="/stylesheets/ie.css" /><![endif]-->
     <%= render :partial => 'layouts/analytics' %>
   </head>
   <body>

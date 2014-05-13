@@ -220,6 +220,10 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
+    sprockets_better_errors (0.0.5)
+      actionpack (< 4.1)
+      activesupport (< 4.1)
+      sprockets-rails (>= 1.0.0)
     subexec (0.2.3)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
@@ -284,6 +288,7 @@ DEPENDENCIES
   sass-rails (~> 4.0.0)
   selenium-webdriver (~> 2.39.0)
   shoulda-matchers
+  sprockets_better_errors
   therubyracer
   uglifier (= 1.0.3)
   unicorn
