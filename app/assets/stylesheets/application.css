@@ -18,7 +18,4 @@
  *= require ui
  *= require static_pages
  *= require_tree .
- *= stub chrome
- *= stub safari
- *= stub ie
  */

@@ -11,7 +11,7 @@ group :development, :test do
   gem 'debugger'
   gem 'factory_girl_rails'
   gem 'faker'  #to create fake data http://faker.rubyforge.org/
-  gem "rack-test" #to test api 
+  gem "rack-test" #to test api
 end
 
 group :test do
@@ -29,7 +29,6 @@ gem "omniauth-shibboleth", :git => "git@bitbucket.org:cdl/omniauth-shibboleth.gi
 
 gem 'mysql2'
 gem 'therubyracer'
-
 gem 'enum_column3'
 gem 'bootstrap-sass', '2.3.2.0'
 gem 'sass-rails',  '~> 4.0.0'
