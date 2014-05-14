@@ -234,9 +234,9 @@ GEM
       polyglot (>= 0.3.1)
     ttfunk (1.1.1)
     tzinfo (0.3.38)
-    uglifier (1.0.3)
+    uglifier (2.5.0)
       execjs (>= 0.3.0)
-      multi_json (>= 1.0.2)
+      json (>= 1.8.0)
     unicorn (4.8.2)
       kgio (~> 2.6)
       rack
@@ -285,5 +285,5 @@ DEPENDENCIES
   selenium-webdriver (~> 2.39.0)
   shoulda-matchers
   therubyracer
-  uglifier (= 1.0.3)
+  uglifier (= 2.5.0)
   unicorn
