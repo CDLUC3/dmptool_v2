@@ -104,6 +104,9 @@ FROM `dmp`.`answers`;
 
 
 
+ALTER TABLE `dmp2`.`users`                  DROP COLUMN `old_user_id`;
+
+
 
 
 
