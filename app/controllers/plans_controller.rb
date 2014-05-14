@@ -209,6 +209,7 @@ class PlansController < ApplicationController
       end
     end
   end
+
   # DELETE /plans/1
   # DELETE /plans/1.json
   def destroy
@@ -409,7 +410,19 @@ class PlansController < ApplicationController
   end
 
   def public
-    @plans = Plan.public_visibility
+    if user_role_in?(:dmp_admin)
+      #show public and institutional for all institutions
+      @plans = Plan.joins(:user_plans).
+          where("`user_plans`.`owner` = 1 AND (plans.visibility = 'public' OR plans.visibility = 'institutional')")
+    elsif current_user
+      #show public and institutional for my institution
+      @plans = Plan.joins(:users).
+          where("(`user_plans`.`owner` = 1 AND (plans.visibility = 'public' OR (plans.visibility = 'institutional' AND `users`.`institution_id` IN (?))))",
+                current_user.institution.subtree_ids)
+    else
+      #show public
+      @plans = Plan.public_visibility
+    end
 
     @all_scope = params[:all_scope]
     @order_scope = params[:order_scope]
