@@ -35,12 +35,10 @@ $(function() {
 });
 
 $(function() {
+if(window.location.pathname.indexOf("new") > 0){
   $("#cancel_button").click(function() {
   var value = $("#requirement_requirement_type").val();
   switch (value) {
-  case "enum":
-    $("fieldset.requirement_type_enum").hide();
-    break;
   case "numeric":
     $("fieldset.requirement_type_numeric").hide();
     break;
@@ -48,12 +46,7 @@ $(function() {
     break;
   }
   });
-});
-
-$(function() {
-  $("#cancel_button").click(function() {
-
-  });
+}
 });
 
 // from http://nack.co/get-url-parameters-using-jquery/ to check parameters.
