@@ -81,7 +81,7 @@ class Requirement < ActiveRecord::Base
   def cant_change_requirement_type_on_edit
     requirements_template = RequirementsTemplate.find(self.requirements_template_id)
     if requirements_template && requirements_template.active == true
-      unless self.requirement_type.nil?
+      if self.requirement_type_was != self.requirement_type
         errors[:base] << 'Cannot change Question Type for an existing Requirement of a DMP Template that has been activated.'
       end
     else

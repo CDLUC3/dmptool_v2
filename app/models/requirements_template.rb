@@ -28,6 +28,7 @@ class RequirementsTemplate < ActiveRecord::Base
   scope :inactive, -> { where(active: false) }
   scope :institutional_visibility, -> { where(visibility: :institutional) }
   scope :public_visibility, -> { where(visibility: :public) }
+  
 
   after_initialize :default_values
   # after_initialize :version_number
