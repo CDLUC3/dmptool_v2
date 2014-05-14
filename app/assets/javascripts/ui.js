@@ -91,6 +91,9 @@ jQuery(function(){
 	else if(window.location.href.indexOf("scope=institutional") != -1){
 		jQuery(".institutional").addClass("current");
 	}
+	else if(window.location.href.indexOf("scope=your_inst_public") != -1){
+		jQuery(".your_inst_public").addClass("current");
+	}
 	else {
 		jQuery(".all_limited").addClass("current");
 	}

@@ -37,6 +37,9 @@ class RequirementsTemplatesController < ApplicationController
         @requirements_templates = @requirements_templates.public_visibility
       when "institutional"
         @requirements_templates = @requirements_templates.institutional_visibility
+      when "your_inst_public"
+        @requirements_templates = @requirements_templates.
+                                    where(visibility: :public, institution_id: [current_user.institution.subtree_ids])
     end
 
     case @order_scope
@@ -248,6 +251,10 @@ class RequirementsTemplatesController < ApplicationController
       @inactive = RequirementsTemplate.inactive.count
       @public = RequirementsTemplate.public_visibility.count
       @institutional = RequirementsTemplate.institutional_visibility.count
+      @your_inst_public =  RequirementsTemplate.where(visibility: :public, 
+                                institution_id: [current_user.institution.subtree_ids]).count
+
+    
     else
       @all =  RequirementsTemplate.where.
                                 any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public).count
@@ -257,6 +264,8 @@ class RequirementsTemplatesController < ApplicationController
                                 any_of(institution_id: [current_user.institution.subtree_ids], visibility: :public).inactive.count
       @public = RequirementsTemplate.public_visibility.count
       @institutional = RequirementsTemplate.where(institution_id: [current_user.institution.subtree_ids]).institutional_visibility.count
+      @your_inst_public =  RequirementsTemplate.where(visibility: :public, 
+                                institution_id: [current_user.institution.subtree_ids]).count
     end
 
   end

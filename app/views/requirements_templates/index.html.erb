@@ -11,6 +11,9 @@
 	<%= link_to "Institution only (#{@institutional})", {scope: "institutional", order_scope: @order_scope, all_scope: @all_scope}, :class => "institutional" %>
 	|
 	<%= link_to "Public (#{@public})", {scope: "public", order_scope: @order_scope, all_scope: @all_scope}, :class => "public" %>
+	|
+	<%= link_to "Public defined by your Institution (#{@your_inst_public})", {scope: "your_inst_public", order_scope: @order_scope, all_scope: @all_scope}, :class => "your_inst_public" %>
+
 	<%= content_tag(:span, '', :title => '<ul><li>Active: Will appear as an optional funder template when a researcher creates a DMP. It can be visible either publicly (to anyone logged into the tool) or for institutional researchers only.</li><li>Inactive: will not appear as an optional funder template when a researcher creates a DMP. This may be because the template that is no longer in use, or that has not been completed (finalized) by an administrator.</li><li>Institution only: Active or inactive DMP templates for your institution only.</li><li>Public:  All DMP templates with “Public” visibility. They may be active or inactive.</li></ul>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
 </div>
 <table class="table table-striped" id="dmp_templates">
