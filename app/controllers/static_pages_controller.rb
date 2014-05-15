@@ -2,7 +2,7 @@ require 'rss'
 
 class StaticPagesController < ApplicationController
   
-  layout 'application', only: [:guidance]
+  layout 'application', only: [:guidance, :contact]
   
   def orcid
     render(layout: nil)

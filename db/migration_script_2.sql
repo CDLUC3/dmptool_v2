@@ -5,7 +5,7 @@ SET SQL_MODE         = NO_AUTO_VALUE_ON_ZERO;
 SET SQL_SAFE_UPDATES = 0;
 
 #set cutoff date and time for migration
-SET @cutoff = '2014-05-14 17:08:00'; #UTC format
+SET @cutoff = '2014-05-14 22:44:00'; #UTC format
 
 
 # ALTER TABLES
@@ -33,7 +33,7 @@ WHERE `users_1`.`created_at` >= @cutoff; #new dmp1 users
 # where provider is shibboleth and login_id is null, 
 #if a user modifies his record in both dmp1 and dmp2, dmp2 will be overwritten
 UPDATE `dmp2`.`users` AS `users_2`
-JOIN   `dmp`.`authentications` AS `auth_1` ON `auth_1`.`user_id` = `users_2`.`id`
+JOIN   `dmp`.`authentications` AS `auth_1` ON `auth_1`.`user_id` = `users_2`.`old_user_id`
 SET `users_2`.`login_id` = `auth_1`.`uid`
 WHERE `auth_1`.`provider` = 'ldap' AND `users_2`.`created_at` >= @cutoff;
 
