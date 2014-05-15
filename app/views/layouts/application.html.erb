@@ -32,7 +32,7 @@
 
   <div class="container">
   	<% if current_user %>
-  		<%= render 'layouts/dashboard_header' unless ['static_pages', 'user_sessions'].include?(controller_name) && !['guidance', 'public_dmps'].include?(action_name) %>
+  		<%= render 'layouts/dashboard_header' unless ['static_pages', 'user_sessions'].include?(controller_name) && !['guidance', 'public_dmps', 'contact'].include?(action_name) %>
   	<% end %>
 
     <%= render partial: "shared/flash_messages", flash: flash %>
