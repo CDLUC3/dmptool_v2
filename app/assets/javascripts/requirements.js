@@ -16,7 +16,6 @@ $(function() {
 			$("fieldset.requirement_type_enum").hide();
       var divs = $('.control-group [id*="requirement_enumerations_attributes_"][type=text]').parent().parent();
       divs.each(function( index ) {
-        //console.log( index + ": " + $( this ).text() );
         if(index>0){
           $( this ).remove();
         }else{
@@ -26,6 +25,40 @@ $(function() {
 		}
 	}
 });
+
+$(function() {
+if(window.location.pathname.indexOf("new") > 0){
+  $("#cancel_button").click(function() {
+    if($("#requirement_requirement_type").val() == "enum") {
+      $("fieldset.requirement_type_enum").hide();
+      var divs = $('.control-group [id*="requirement_enumerations_attributes_"][type=text]').parent().parent();
+      divs.each(function( index ) {
+        if(index>0){
+          $( this ).remove();
+        }else{
+          $( this ).children('div').children('[id*="requirement_enumerations_attributes_"][type=text]')[0].value = '';
+        }
+      });
+    }
+  });
+}
+});
+
+$(function() {
+if(window.location.pathname.indexOf("edit") > 0){
+  $("#cancel_button").click(function() {
+    if($("#requirement_requirement_type").val() == "enum") {
+      var divs = $('.control-group [id*="requirement_enumerations_attributes_"][type=text]');
+      divs.each(function( index ) {
+        if($(this).val() == "") {
+          $(this).parent().parent().remove();
+        }
+      });
+    }
+  });
+}
+});
+
 
 $(function() {
   $("fieldset.requirement_type_numeric").hide();

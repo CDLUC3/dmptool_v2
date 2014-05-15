@@ -5,7 +5,7 @@ SET SQL_MODE         = NO_AUTO_VALUE_ON_ZERO;
 SET SQL_SAFE_UPDATES = 0;
 
 #set cutoff date and time for migration
-SET @cutoff = '2014-05-14 22:59:00'; #UTC format
+SET @cutoff = '2014-05-15 17:05:00'; #UTC format
 
 
 # ALTER TABLES
