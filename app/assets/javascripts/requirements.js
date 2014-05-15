@@ -14,6 +14,15 @@ $(function() {
 			$("fieldset.requirement_type_enum").show();
 		} else {
 			$("fieldset.requirement_type_enum").hide();
+      var divs = $('.control-group [id*="requirement_enumerations_attributes_"][type=text]').parent().parent();
+      divs.each(function( index ) {
+        //console.log( index + ": " + $( this ).text() );
+        if(index>0){
+          $( this ).remove();
+        }else{
+          $( this ).children('div').children('[id*="requirement_enumerations_attributes_"][type=text]')[0].value = '';
+        }
+      });
 		}
 	}
 });
