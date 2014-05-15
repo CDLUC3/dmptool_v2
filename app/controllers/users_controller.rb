@@ -117,7 +117,7 @@ class UsersController < ApplicationController
         if detail.message.include? 'does not exist'
           # Add the user, spaces are in place of the first/last name as LDAP requires these.
           User.transaction do
-            if !Ldap_User.add(@user.login_id, user_params[:password], ' ', ' ', @user.email)
+            if !Ldap_User.add(@user.login_id, user_params[:password], "#{@user.first_name}", "#{@user.last_name}", @user.email)
               @display_text = "There were problems adding this user to the LDAP directory. Please contact uc3@ucop.edu."
             elsif @user.save
               @user.ensure_ldap_authentication(@user.login_id)
