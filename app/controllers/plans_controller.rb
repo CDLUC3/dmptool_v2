@@ -228,11 +228,11 @@ class PlansController < ApplicationController
   end
 
   def template_information
-    public_plans = Plan.public_visibility
+    public_plans_ids = Plan.public_visibility.ids
     current_user_plan_ids = UserPlan.where(user_id: @user.id).pluck(:plan_id)
-    user_plans = Plan.where(id: current_user_plan_ids)
-    institutionally_visible_plans  = Plan.joins(:users).where('users.institution_id = ?',@user.institution_id).institutional_visibility
-    @plans = user_plans + public_plans + institutionally_visible_plans
+    institutionally_visible_plans_ids  = Plan.joins(:users).where('users.institution_id = ?',@user.institution_id).institutional_visibility.pluck(:id)
+    plans = (current_user_plan_ids + public_plans_ids + institutionally_visible_plans_ids).uniq
+    @plans = Plan.find(plans)
     @plans = Kaminari.paginate_array(@plans).page(params[:page]).per(5)
   end
 
