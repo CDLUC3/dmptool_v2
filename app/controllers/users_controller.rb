@@ -117,7 +117,7 @@ class UsersController < ApplicationController
         if detail.message.include? 'does not exist'
           # Add the user, spaces are in place of the first/last name as LDAP requires these.
           User.transaction do
-            if !Ldap_User.add(@user.login_id, user_params[:password], ' ', ' ', @user.email)
+            if !Ldap_User.add(@user.login_id, user_params[:password], "#{@user.first_name}", "#{@user.last_name}", @user.email)
               @display_text = "There were problems adding this user to the LDAP directory. Please contact uc3@ucop.edu."
             elsif @user.save
               @user.ensure_ldap_authentication(@user.login_id)
@@ -338,12 +338,17 @@ class UsersController < ApplicationController
   end
 
   def update_ldap_if_necessary(user, params)
-    return unless session[:login_method] == 'ldap'
-    ldap_user = Ldap_User.find_by_id(user.login_id)
+    ldap_auths = user.authentications.where(provider: :ldap)
+    return if ldap_auths.count != 1
+    ldap_auth = ldap_auths.first
+    ldap_user = Ldap_User.find_by_id(ldap_auth.uid)
     {:email => :mail, :last_name => :sn, :first_name => :givenname}.each do |k, v|
       if params[k]
         ldap_user.set_attrib_dn(v, params[k]) unless params[k].empty?
       end
+    end
+    if !params[:password].blank? && (params[:password] == params[:password_confirmation])
+      ldap_user.change_password(params[:password])
     end
   end
 

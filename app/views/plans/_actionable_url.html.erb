@@ -48,7 +48,7 @@
 
 <div class= 'template_customization_resources'>
 	<% unless @requirement.template_customization_resources(current_user.institution_id).actionable_url.empty? %>
-  <h3> <%= @requirements_template.name %> for <%= current_user.institution.name %> Resources"</h3>
+  <h3> <%= @requirements_template.name %> for <%= current_user.institution.name %> Resources</h3>
   <ul>
     <%# template customization resources for this requirement, Stephen's case #5 %>
     <% (@requirement.template_customization_resources(current_user.institution_id).actionable_url).each do |resource| %>
@@ -60,9 +60,16 @@
 
 <div class= 'requirement_customization_resources'>
   <%# requirement customization resources for this requirement, Stephen's case #7 %>
-	<ul>
-		<% @url_resources.each do |resource| %>
-			<li><%= link_to resource.label, fix_url(resource.value), target: '_blank' %></li>
-		<% end %>
-	</ul>
+  <% unless @url_resources.empty? %>
+    <% if @requirement.template_customization_resources(current_user.institution_id).actionable_url.exists? %>
+        <h3></h3>
+    <% else %>
+        <h3> <%= @requirements_template.name %> for <%= current_user.institution.name %> Resources</h3>
+    <% end %>
+  	<ul>
+  		<% @url_resources.each do |resource| %>
+  			<li><%= link_to resource.label, fix_url(resource.value), target: '_blank' %></li>
+  		<% end %>
+  	</ul>
+  <% end %>
 </div>
