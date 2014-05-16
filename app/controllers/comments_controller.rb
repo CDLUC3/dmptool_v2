@@ -11,13 +11,24 @@ class CommentsController < ApplicationController
 
   def new
   	@comment = Comment.new
+    comments = Comment.where(plan_id: @plan_id)
+    @reviewer_comments = comments.reviewer_comments.order('created_at DESC')
+    @owner_comments = comments.owner_comments.order('created_at DESC')
   end
 
   def edit
+    @plan_id = comment_params[:plan_id]
+    comments = Comment.where(plan_id: @plan_id)
+    @reviewer_comments = comments.reviewer_comments.order('created_at DESC')
+    @owner_comments = comments.owner_comments.order('created_at DESC')
   end
 
   def create
     @comment = Comment.new(comment_params)
+    @plan_id = comment_params[:plan_id]
+    comments = Comment.where(plan_id: @plan_id)
+    @reviewer_comments = comments.reviewer_comments.order('created_at DESC')
+    @owner_comments = comments.owner_comments.order('created_at DESC')
     respond_to do |format|
       if @comment.save
         format.html { redirect_to comments_path, notice: 'comment was successfully created.' }
@@ -34,6 +45,10 @@ class CommentsController < ApplicationController
   # PATCH/PUT /comments/1
   # PATCH/PUT /comments/1.json
   def update
+    @plan_id = comment_params[:plan_id]
+    comments = Comment.where(plan_id: @plan_id)
+    @reviewer_comments = comments.reviewer_comments.order('created_at DESC')
+    @owner_comments = comments.owner_comments.order('created_at DESC')
     respond_to do |format|
       if @comment.update(comment_params)
         format.html { redirect_to comments_path, notice: 'comment was successfully updated.' }

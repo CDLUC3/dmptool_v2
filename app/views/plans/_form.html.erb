@@ -96,25 +96,27 @@
               </div>
             </div>
           </div>
-          <% if @customization_review == true || (@customization_review == nil && @template_review == true) %>
+          <% if @customization_review == "formal" || @customization_review == "informal" || (@customization_review == nil && @template_review == "formal") || (@customization_review == nil && @template_review == "informal")%>
             <hr/>
             <div class="control-group">
               <p class ="control-label">Reviewer Comments</p>
               <div class="controls">
                 <p><%= link_to(content_tag(:span, "", :class => "icon-chevron-down") + "View", "#", :class => "view-reviewer-comments") %><%= link_to(content_tag(:span, "", :class => "icon-chevron-up") + "Hide", "#", :class => "hide-reviewer-comments") %></p>
                 <div id="reviewer_comments" class="comments">
-                  <% if @reviewer_comments.empty? %>
-                    <strong>There are currently no comments.</strong>
-                    <br/>
-                  <% else %>
-                    <div class="scrollable-container">
-                      <div class="scrollable-content">
-                        <br/>
-                        <%= render partial: 'comments/index_reviewer_comments' %>
-                      </div>
-                    <div class="scrollable-bottom-handle ui-resizable-handle ui-resizable-s"></div>
+                  <div class="ajax_load_reviewer">
+                    <% if @reviewer_comments.empty? %>
+                      <strong>There are currently no comments.</strong>
+                      <br/>
+                    <% else %>
+                      <div class="scrollable-container">
+                        <div class="scrollable-content">
+                          <br/>
+                          <%= render partial: 'comments/index_reviewer_comments' %>
+                        </div>
+                      <div class="scrollable-bottom-handle ui-resizable-handle ui-resizable-s"></div>
+                    </div>
+                    <% end %>
                   </div>
-                  <% end %>
                   <br/>
                   <p><%= link_to "Add Comments", "#", data: {:comment_type => :reviewer}, :class => "btn add_comments_link" %></p>
                 </div>
@@ -127,10 +129,11 @@
             <div class="controls">
               <p><%= link_to(content_tag(:span, "", :class => "icon-chevron-down") + "View", "#", :class => "view-owner-comments") %><%= link_to(content_tag(:span, "", :class => "icon-chevron-up") + "Hide", "#", :class => "hide-owner-comments") %></p>
               <div id="owner_comments" class="comments">
-                <% if @owner_comments.empty? %>
-                  <strong>There are currently no comments.</strong>
-                  <br/>
-                <% else %>
+                <div class ="ajax_load_owner">
+                  <% if @owner_comments.empty? %>
+                    <strong>There are currently no comments.</strong>
+                    <br/>
+                  <% else %>
                     <div class="scrollable-container">
                       <div class="scrollable-content">
                         <br/>
@@ -138,7 +141,8 @@
                       </div>
                       <div class="scrollable-bottom-handle ui-resizable-handle ui-resizable-s"></div>
                     </div>
-                <% end %>
+                  <% end %>
+                </div>
                 <br/>
                 <p><%= link_to "Add Comments", "#", data: {:comment_type => :owner}, :class => "btn add_comments_link" %></p>
               </div>

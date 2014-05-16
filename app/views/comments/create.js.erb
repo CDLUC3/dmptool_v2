@@ -4,5 +4,6 @@
 <%- else %>
   console.log('Created');
   $('#comment_dialog_form').dialog('close');
-  location.reload(true);
+	$('.ajax_load_owner').html("<%=raw escape_javascript(render(:partial => "index_owner_comments"))%>");
+	$('.ajax_load_reviewer').html("<%=raw escape_javascript(render(:partial => "index_reviewer_comments"))%>");
 <%- end %>
