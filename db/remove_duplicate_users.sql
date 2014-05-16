@@ -1,4 +1,4 @@
-SET @cutoff = '2014-05-15 17:05:00'; #UTC format, corresponds to timestamp of first migration
+SET @cutoff = '2014-05-16 18:42:00'; #UTC format, corresponds to timestamp of first migration
 
 
 #removes any users on dmp2 that has been added to both dmp1 and dmp2 after migration1 and before migration2 
