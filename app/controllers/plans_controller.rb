@@ -232,7 +232,7 @@ class PlansController < ApplicationController
     current_user_plan_ids = UserPlan.where(user_id: @user.id).pluck(:plan_id)
     institutionally_visible_plans_ids  = Plan.joins(:users).where('users.institution_id = ?',@user.institution_id).institutional_visibility.pluck(:id)
     plans = (current_user_plan_ids + public_plans_ids + institutionally_visible_plans_ids).uniq
-    @plans = Plan.find(plans)
+    @plans = Plan.where(id: plans)
     @plans = Kaminari.paginate_array(@plans).page(params[:page]).per(5)
   end
 
