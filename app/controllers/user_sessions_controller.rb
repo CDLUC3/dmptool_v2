@@ -109,7 +109,7 @@ class UserSessionsController < ApplicationController
           
           flash[:notice] = "An email has been sent to #{email} with instructions for resetting your password."
           redirect_to login_path and return
-        elsif user.length < 1
+        elsif users.length < 1
           flash[:error] = "No user found with email or username #{email}."
           redirect_to(:action => 'password_reset', email: email) and return
         elsif ldap_user.nil?
