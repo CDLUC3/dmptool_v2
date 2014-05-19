@@ -9,6 +9,7 @@
       <%= form_for @plan, html:{ :class => 'form-horizontal' }  do |f| %>
         <%= render partial: "shared/errors", locals: {model: @plan } %>
         <%= f.hidden_field :current_user_id, value: @user.id %>
+        <%= f.hidden_field :original_plan_id, value: @original_plan_id %>
         <div class="control-group">
           <%= label_tag :selected_requirement_template_name, 'DMP Template', :class => 'control-label' %>
           <div class="controls">

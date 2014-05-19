@@ -1,7 +1,7 @@
 class Plan < ActiveRecord::Base
 
   include PlanEmail
-  attr_accessor :current_user_id
+  attr_accessor :current_user_id, :original_plan_id
   has_many :user_plans
   has_many :users, through: :user_plans
   has_many :plan_states
@@ -18,6 +18,7 @@ class Plan < ActiveRecord::Base
   validates :visibility, presence: true
   validates :requirements_template_id, presence: true
   validate :unique_plan_name_per_owner, on: :create
+  after_create :duplicate_responses
 
   # scopes for plan's visibility
   scope :institutional_visibility, -> { where(visibility: :institutional) }
@@ -96,5 +97,15 @@ class Plan < ActiveRecord::Base
     id  = self.current_plan_state_id
     state = PlanState.find(id).state
     return state
+  end
+
+  def duplicate_responses
+    plan = Plan.find(self.original_plan_id.to_i)
+    responses = plan.responses
+    responses.each do |response|
+      new_response = response.dup
+      new_response.plan_id = self.id
+      new_response.save!
+    end
   end
 end
