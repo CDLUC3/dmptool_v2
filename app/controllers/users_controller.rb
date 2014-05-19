@@ -115,21 +115,38 @@ class UsersController < ApplicationController
         @user.skip_email_uniqueness_validation = false
         # add record
         if detail.message.include? 'does not exist'
-          # Add the user, spaces are in place of the first/last name as LDAP requires these.
-          User.transaction do
+          # Add the user
+          existing_user = User.find_by_email(@user.email)
+          if existing_user #existing non-LDAP (shibboleth) user, needs their id and info changed and have no ldap account
             if !Ldap_User.add(@user.login_id, user_params[:password], "#{@user.first_name}", "#{@user.last_name}", @user.email)
               @display_text = "There were problems adding this user to the LDAP directory. Please contact uc3@ucop.edu."
-            elsif @user.save
-              @user.ensure_ldap_authentication(@user.login_id)
-              @display_text = "This DMPTool account has been created."
+              render action: 'new'
+            else
+              existing_user.login_id = @user.login_id
+              if existing_user.save
+                session[:user_id] = existing_user.id
+                redirect_to edit_user_path(existing_user), notice: "This LDAP DMPTool account has been created.  You may also log in with 'Not in List' institution in addition to your Shibboleth account."
+              end
+            end
+          else
+            User.transaction do
+              if !Ldap_User.add(@user.login_id, user_params[:password], "#{@user.first_name}", "#{@user.last_name}", @user.email)
+                @display_text = "There were problems adding this user to the LDAP directory. Please contact uc3@ucop.edu."
+                render action: 'new'
+              elsif @user.save
+                @user.ensure_ldap_authentication(@user.login_id)
+                session[:user_id] = @user.id
+                redirect_to edit_user_path(@user), notice: 'User was successfully created.'
+              end
             end
           end
         end
       end
     end
-
+=begin
+# this whole section commented out since it is redundant
     respond_to do |format|
-      if !@user.errors.any? && @user.save
+      if !@user.errors.any?
         session[:user_id] = @user.id
         format.html { redirect_to edit_user_path(@user), notice: 'User was successfully created.' }
         format.json { render action: 'show', status: :created, location: @user }
@@ -137,7 +154,7 @@ class UsersController < ApplicationController
         format.html { render action: 'new' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
-    end
+=end
   end
 
   # PATCH/PUT /users/1
