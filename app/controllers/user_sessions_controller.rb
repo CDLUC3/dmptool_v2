@@ -83,12 +83,24 @@ class UserSessionsController < ApplicationController
     if request.post?
       email = params[:email]
       if email.present?
+        ldap_user = nil
+        dmp_user = false
         if email.match(/^.+\@.+\..+$/)
           users =  User.where(email: email).where(active: true)
+          begin
+            ldap_user = Ldap_User.find_by_email(email)
+            dmp_user = ldap_user.objectclass.include?('dmpUser')
+          rescue
+          end
         else
           users =  User.where(active: true).where(login_id: email)
+          begin
+            ldap_user = Ldap_User.find_by_id(email)
+            dmp_user = ldap_user.objectclass.include?('dmpUser')
+          rescue
+          end
         end
-        if users.length > 0
+        if users.length > 0 && !ldap_user.nil? && dmp_user
           user = users.first
           email = user.email
           token = user.ensure_token
@@ -97,8 +109,15 @@ class UserSessionsController < ApplicationController
           
           flash[:notice] = "An email has been sent to #{email} with instructions for resetting your password."
           redirect_to login_path and return
-        else
+        elsif user.length < 1
           flash[:error] = "No user found with email or username #{email}."
+          redirect_to(:action => 'password_reset', email: email) and return
+        elsif ldap_user.nil?
+          flash[:error] = "You must reset your Shibboleth password through your own institution's password reset mechanism." +
+                          "  You do not have an independent login for the DMPTool."
+          redirect_to(:action => 'password_reset', email: email) and return
+        elsif dmp_user == false
+          flash[:error] = "Your LDAP account has not been enabled for use in the DMPTool.  Your account must be set up in the DMPTool before you can change your password."
           redirect_to(:action => 'password_reset', email: email) and return
         end
       else
