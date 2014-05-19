@@ -4,7 +4,7 @@ class PlansController < ApplicationController
   before_action :set_user
   #note show will need to be protected from logins in some cases, but only from non-public plan viewing
   before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details, :preview, :perform_review, :coowners, :add_coowner_autocomplete]
-  #before_action :select_requirements_template, only: [:select_dmp_template]
+  before_action :check_plan_access, except: [:public, :index, :select_dmp_template, :template_information, :copy_existing_template, :new, :create, :review_dmps, :change_visibility]
 
   # GET /plans
   # GET /plans.json
@@ -240,6 +240,7 @@ class PlansController < ApplicationController
     @comment = Comment.new
     comments = Comment.all
     id = params[:plan].to_i unless params[:plan].blank?
+    @original_plan_id = params[:plan].to_i
     plan = Plan.where(id: id).first
     @plan = plan.dup include: [:responses]
     render action: "copy_existing_template"
@@ -511,8 +512,6 @@ class PlansController < ApplicationController
 
   private
 
-
-
     # Use callbacks to share common setup or constraints between actions.
     def set_plan
       @plan = Plan.find(params[:id])
@@ -520,7 +519,7 @@ class PlansController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def plan_params
-      params.require(:plan).permit(:name, :requirements_template_id, :solicitation_identifier, :submission_deadline, :visibility, :current_plan_state_id, :current_user_id, responses_attributes: [:id, :plan_id, :requirement_id, :text_value, :numeric_value, :date_value, :enumeration_id, :lock_version, :label_id])
+      params.require(:plan).permit(:name, :requirements_template_id, :solicitation_identifier, :submission_deadline, :visibility, :current_plan_state_id, :current_user_id, :original_plan_id, responses_attributes: [:id, :plan_id, :requirement_id, :text_value, :numeric_value, :date_value, :enumeration_id, :lock_version, :label_id])
     end
 
     def count
@@ -588,6 +587,19 @@ class PlansController < ApplicationController
         return "informal"
       else
         return "no"
+      end
+    end
+
+    def check_plan_access
+      unless @user.id.nil?
+        user_plans =  UserPlan.where(user_id: @user.id, plan_id: @plan.id)
+        unless !user_plans.empty?
+          flash[:error] = "You don't have access to this content."
+          redirect_to plans_path # halts request cycle
+        end
+      else
+        flash[:error] = "You need to be logged in."
+        redirect_to root_url
       end
     end
 end
