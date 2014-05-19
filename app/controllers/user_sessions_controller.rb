@@ -90,14 +90,14 @@ class UserSessionsController < ApplicationController
           begin
             ldap_user = Ldap_User.find_by_email(email)
             dmp_user = ldap_user.objectclass.include?('dmpUser')
-          rescue
+          rescue Exception => ex
           end
         else
           users =  User.where(active: true).where(login_id: email)
           begin
             ldap_user = Ldap_User.find_by_id(email)
             dmp_user = ldap_user.objectclass.include?('dmpUser')
-          rescue
+          rescue Exception => ex
           end
         end
         if users.length > 0 && !ldap_user.nil? && dmp_user
@@ -109,7 +109,7 @@ class UserSessionsController < ApplicationController
           
           flash[:notice] = "An email has been sent to #{email} with instructions for resetting your password."
           redirect_to login_path and return
-        elsif user.length < 1
+        elsif users.length < 1
           flash[:error] = "No user found with email or username #{email}."
           redirect_to(:action => 'password_reset', email: email) and return
         elsif ldap_user.nil?
@@ -161,7 +161,7 @@ class UserSessionsController < ApplicationController
   
       begin
         Ldap_User.find_by_email(@user.email).change_password(password)
-      rescue
+      rescue Exception => ex
         flash[:error] = "Problem updating password in LDAP. Please retry."
         redirect_to(complete_password_reset_path(:id => @user.id, :token => @user.token)) and return
       end
