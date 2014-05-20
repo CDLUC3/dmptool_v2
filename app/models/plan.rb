@@ -100,12 +100,14 @@ class Plan < ActiveRecord::Base
   end
 
   def duplicate_responses
-    plan = Plan.find(self.original_plan_id.to_i)
-    responses = plan.responses
-    responses.each do |response|
-      new_response = response.dup
-      new_response.plan_id = self.id
-      new_response.save!
+    unless self.original_plan_id == ""
+      plan = Plan.find(self.original_plan_id.to_i)
+      responses = plan.responses
+      responses.each do |response|
+        new_response = response.dup
+        new_response.plan_id = self.id
+        new_response.save!
+      end
     end
   end
 end
