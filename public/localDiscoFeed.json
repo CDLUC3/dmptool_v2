@@ -1,0 +1,102 @@
+[
+{
+ "entityID": "urn:mace:incommon:ucop.edu",
+ "DisplayNames": [
+  {
+  "value": "University of California - Office of the President",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:uci.edu",
+ "DisplayNames": [
+  {
+  "value": "University of California-Irvine",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:ucsd.edu",
+ "DisplayNames": [
+  {
+  "value": "University of California-San Diego",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:ucla.edu",
+ "DisplayNames": [
+  {
+  "value": "University of California-Los Angeles",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:ucr.edu",
+ "DisplayNames": [
+  {
+  "value": "University of California, Riverside",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:ucmerced.edu",
+ "DisplayNames": [
+  {
+  "value": "University of California, Merced",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:ucdavis.edu",
+ "DisplayNames": [
+  {
+  "value": "University of California, Davis",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://shibboleth.ucdavis.edu/icons/ucd_logo.png",
+  "height": "101",
+  "width": "396",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:lbl.gov",
+ "DisplayNames": [
+  {
+  "value": "Lawrence Berkeley National Laboratory",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "https://commons.lbl.gov/display/IDMgmt/Web+Single+Sign+On+at+LBNL",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.lbl.gov/Disclaimers.html",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://commons.lbl.gov/download/attachments/58393603/lbl-logo-scaled.png",
+  "height": "111",
+  "width": "130",
+  "lang": "en"
+  }
+ ]
+}
+]
