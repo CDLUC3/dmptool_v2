@@ -4,8 +4,8 @@ class PlansController < ApplicationController
   before_action :set_user
   #note show will need to be protected from logins in some cases, but only from non-public plan viewing
   before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details, :preview, :perform_review, :coowners, :add_coowner_autocomplete]
-  before_action :check_plan_access, except: [:public, :index, :select_dmp_template, :template_information, :copy_existing_template, :new, :create, :review_dmps, :change_visibility]
-
+  before_action :check_plan_access, except: [:public, :index, :select_dmp_template, :template_information, :new, :create, :review_dmps, :change_visibility, :copy_existing_template]
+  before_action :check_copy_plan_access, only: [:copy_existing_template]
   # GET /plans
   # GET /plans.json
   def index
@@ -592,7 +592,7 @@ class PlansController < ApplicationController
 
     def check_plan_access
       unless @user.id.nil?
-        user_plans =  UserPlan.where(user_id: @user.id, plan_id: @plan.id)
+        user_plans = UserPlan.where(user_id: @user.id, plan_id: @plan.id)
         unless !user_plans.empty?
           flash[:error] = "You don't have access to this content."
           redirect_to plans_path # halts request cycle
@@ -600,6 +600,21 @@ class PlansController < ApplicationController
       else
         flash[:error] = "You need to be logged in."
         redirect_to root_url
+      end
+    end
+
+    def check_copy_plan_access
+    ## This params is from Copy Existing Template action
+      if params[:plan] == "" || params[:plan].nil?
+        flash[:error] = "Please select an existing Plan to copy."
+        redirect_to plans_path
+      else
+        @copy_plan = Plan.find(params[:plan])
+        copy_plans = UserPlan.where(user_id: @user.id, plan_id: @copy_plan.id)
+        unless !copy_plans.empty?
+          flash[:error] = "You don't have access to this content."
+          redirect_to plans_path # halts request cycle
+        end
       end
     end
 end
