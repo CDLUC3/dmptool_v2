@@ -30,7 +30,7 @@
 </div>
 
 <% unless @customization.nil? %>
-  <% if @customization.review_type == :formal_review || (@customization.review_type == nil && @plan.requirements_template.review_type == :formal_review) %>
+  <% if @customization.review_type == :formal_review %>
     <fieldset class="spaced_below">
       <label class ="control-label">Review Decision:</label>
       <% if state(@plan) == :approved || state(@plan) == :rejected %>
@@ -40,10 +40,15 @@
         <%= link_to "Reject", '#', :id => "reject_with_comments_link" , class: "btn" %>
       <% end %>
     </fieldset>
-  <% elsif @customization.review_type == :informal_review || (@customization.review_type == nil && @plan.requirements_template.review_type == :informal_review) %>
+  <% elsif @customization.review_type == :informal_review %>
     <fieldset class="spaced_below">
+      <% if state(@plan) == :reviewed %>
+        <strong>The Plan is set to <span class ="blue">Reviewed</span> state.</strong>
+      <% else %>
       <%= link_to "Plan Reviewed", plan_plan_states_reviewed_path(@plan), method: :post, :class => "btn btn-green" %>
+      <% end %>
     </fieldset>
+  <% elsif @customization.review_type == :no_review %>
   <% end %>
 
 <% else %>
@@ -60,8 +65,13 @@
     </fieldset>
   <% elsif @plan.requirements_template.review_type == :informal_review %>
       <fieldset class="spaced_below">
+      <% if state(@plan) == :reviewed %>
+        <strong>The Plan is set to <span class ="blue">Reviewed</span> state.</strong>
+      <% else %>
       <%= link_to "Plan Reviewed", plan_plan_states_reviewed_path(@plan), method: :post, :class => "btn btn-green" %>
+      <% end %>
     </fieldset>
+  <% elsif @plan.requirements_template.review_type == :no_review %>
   <% end %>
 
 <% end %>
