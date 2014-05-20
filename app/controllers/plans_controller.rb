@@ -611,7 +611,10 @@ class PlansController < ApplicationController
         redirect_to plans_path
       else
         @copy_plan = Plan.find(params[:plan])
-        copy_plans = UserPlan.where(user_id: @user.id, plan_id: @copy_plan.id)
+        user_plans = UserPlan.where(user_id: @user.id, plan_id: @copy_plan.id)
+        institutionally_visible_plans  = Plan.joins(:users).where('users.institution_id = ?',@user.institution_id).institutional_visibility
+        public_plans = Plan.public_visibility
+        copy_plans = user_plans + institutionally_visible_plans + public_plans
         unless !copy_plans.empty?
           flash[:error] = "You don't have access to this content."
           redirect_to plans_path # halts request cycle
