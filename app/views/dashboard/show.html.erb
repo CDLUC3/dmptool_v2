@@ -11,26 +11,28 @@
 				</tr>
 			</thead>
 			<tbody>
-        <%
-          #this layout is a PITA and really should NOT be a table, but since
-          #the UI developer isn't going to change it, I'll do some gymnastics
-          #to make things pretty within a table
-           col1 = []
-           col1[0] = link_to "#{current_user.owned_plans.count} plans I own", plans_path(:scope => "owned")
-           col1[1] = link_to "#{current_user.coowned_plans.count} plans I co-own", plans_path(:scope => "coowned")
-           col2 = (current_user.unique_plan_states & PlanState::REVIEW_STATES).map do |state|
-             link_to "#{current_user.plans_by_state(state).count} #{state.capitalize}", plans_path(scope: state)
-           end
-           if col2.length < 1
-             col2[0] = "No DMPs are under review."
-           end
-           max_item = [col1.length, col2.length].max - 1
-        %>
-        <% 0.upto(max_item) do |i| %>
-				<tr>
-					<td><%= (col1[i].nil? ? '' : col1[i] ) %></td>
-					<td><%= (col2[i].nil? ? '' : col2[i] ) %></td>
-				</tr>
+				<% unless current_user.nil? %>
+	        <%
+	          #this layout is a PITA and really should NOT be a table, but since
+	          #the UI developer isn't going to change it, I'll do some gymnastics
+	          #to make things pretty within a table
+	           col1 = []
+	           col1[0] = link_to "#{current_user.owned_plans.count} plans I own", plans_path(:scope => "owned")
+	           col1[1] = link_to "#{current_user.coowned_plans.count} plans I co-own", plans_path(:scope => "coowned")
+	           col2 = (current_user.unique_plan_states & PlanState::REVIEW_STATES).map do |state|
+	             link_to "#{current_user.plans_by_state(state).count} #{state.capitalize}", plans_path(scope: state)
+	           end
+	           if col2.length < 1
+	             col2[0] = "No DMPs are under review."
+	           end
+	           max_item = [col1.length, col2.length].max - 1
+	        %>
+	        <% 0.upto(max_item) do |i| %>
+					<tr>
+						<td><%= (col1[i].nil? ? '' : col1[i] ) %></td>
+						<td><%= (col2[i].nil? ? '' : col2[i] ) %></td>
+					</tr>
+	        <% end %>
         <% end %>
 			</tbody>
 		</table>
