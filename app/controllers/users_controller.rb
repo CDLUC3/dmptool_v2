@@ -4,6 +4,7 @@ class UsersController < ApplicationController
 
   include InstitutionsHelper
 
+  before_action :only_edit_self, only: [:edit]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :check_dmp_admin_access, only: [:index, :edit_user_roles, :update_user_roles, :destroy]
   before_action :require_logout, only: [:new]
@@ -161,6 +162,9 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
 
   def update
+    if params[:id].to_i != current_user.id
+      redirect_to edit_user_path(current_user) and return
+    end
     @user = User.find(params[:id])
     @my_institution = @user.institution
     if user_role_in?(:dmp_admin)
@@ -398,6 +402,14 @@ class UsersController < ApplicationController
     unless @user == current_user
       flash[:error] = "User information may only be edited by that user"
       redirect_to root_path
+    end
+  end
+
+  def only_edit_self
+    if !current_user.nil? && current_user.id != params[:id].to_i
+      params[:id] = current_user.id
+    elsif current_user.blank?
+      params[:id] = nil
     end
   end
 
