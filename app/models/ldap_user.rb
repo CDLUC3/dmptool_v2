@@ -1,11 +1,14 @@
 class Ldap_User
   LDAP = UserLdap::Server.
-      new({ :host            => LDAP_CONFIG["host"],
-            :port            => LDAP_CONFIG["port"],
-            :base            => LDAP_CONFIG["user_base"],
-            :admin_user      => LDAP_CONFIG["admin_user"],
-            :admin_password  => LDAP_CONFIG["admin_password"],
-            :minter          => LDAP_CONFIG["ark_minter_url"]})
+      new({ :host             => LDAP_CONFIG["host"],
+            :port             => LDAP_CONFIG["port"],
+            :base             => LDAP_CONFIG["user_base"],
+            :admin_user       => LDAP_CONFIG["admin_user"],
+            :admin_password   => LDAP_CONFIG["admin_password"],
+            :ezid_minter_uri  => LDAP_CONFIG["ezid_minter_uri"],
+            :ezid_user        => LDAP_CONFIG["ezid_user"],
+            :ezid_pwd         => LDAP_CONFIG["ezid_pwd"]
+          })
 
   AUTHLOGIC_MAP =
       { 'login'         => 'uid',

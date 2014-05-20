@@ -20,7 +20,7 @@ module UserLdap
           :cn                    => "#{firstname} #{lastname}",
           :displayName           => "#{firstname} #{lastname}",
           :userPassword          => password,
-          :arkId                 => "ark:/13030/#{@minter.mint}",
+          :arkId                 => "#{@minter.mint}",
           :mail                  => email
       }
       true_or_exception(@admin_ldap.add(:dn => ns_dn(userid), :attributes => attr))

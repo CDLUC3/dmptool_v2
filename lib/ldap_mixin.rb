@@ -11,11 +11,12 @@ module LdapMixin
 
   def initialize(init_hash)
 
-    host, port, base, admin_user, admin_password, minter =
+    host, port, base, admin_user, admin_password, ezid_minter_uri, ezid_user, ezid_pwd =
         init_hash[:host], init_hash[:port], init_hash[:base],
-            init_hash[:admin_user], init_hash[:admin_password], init_hash[:minter]
+            init_hash[:admin_user], init_hash[:admin_password], init_hash[:ezid_minter_uri],
+            init_hash[:ezid_user], init_hash[:ezid_pwd]
 
-    @minter = Noid::Minter.new(minter)
+    @minter = Ezid::Minter.new(ezid_minter_uri, ezid_user, ezid_pwd)
     @base = base
     @ldap_connect = {:host => host, :port => port,
                      :auth => {:method => :simple, :username => admin_user, :password => admin_password},
