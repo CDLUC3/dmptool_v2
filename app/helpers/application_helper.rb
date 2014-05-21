@@ -23,7 +23,7 @@ module ApplicationHelper
 
   def fix_url(u)
     begin
-      uri = URI.parse(str)
+      uri = URI.parse(u)
       uri.kind_of?(URI::HTTP)
       return u
     rescue URI::InvalidURIError
