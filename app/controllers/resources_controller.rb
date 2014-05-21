@@ -232,7 +232,10 @@
 
 
   def create_customization_resource
+
     
+    @resource_type = params[:resource][:resource_type]
+    @value = params[:resource][:value]
     @tab = params[:tab]
     @custom_origin = params[:custom_origin]
     @tab_number = params[:tab_number]
@@ -242,6 +245,25 @@
     @template_name = RequirementsTemplate.find(@template_id).name
     @customization_overview_id = params[:customization_overview_id]
     @customization_overview = ResourceContext.find(@customization_overview_id)
+
+    
+    if (  (@resource_type == "actionable_url") &&  (!is_valid_url?(@value))  )
+
+      
+        flash[:error] = "The url: #{@value} is a not valid url."
+        
+        redirect_to new_customization_resource_path(template_id: @template_id,
+                  customization_overview_id: @customization_overview_id,
+                  resource_level: @resource_level,
+                  requirement_id: @requirement_id,
+                  tab_number:     @tab_number,
+                  tab:            @tab,
+                  custom_origin:  @custom_origin)
+                  
+        return
+      
+    end
+    
 
     if user_role_in?(:dmp_admin)
       @current_institution_id = @customization_overview.institution_id
@@ -385,6 +407,19 @@
   end
 
   private
+
+    def is_valid_url?(str)
+      if !str.start_with?('http://') && !str.start_with?('https://')
+        str = 'http://' + str
+      end
+      begin
+        uri = URI.parse(str)
+        uri.kind_of?(URI::HTTP)
+      rescue URI::InvalidURIError
+        false
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_resource
       @resource = Resource.find(params[:id])
@@ -394,5 +429,7 @@
     def resource_params
       params.require(:resource).permit(:resource_type, :value, :label, :text)
     end
+
+
 
 end

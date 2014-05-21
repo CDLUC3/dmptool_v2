@@ -1,10 +1,13 @@
 class Resource < ActiveRecord::Base
+  include ActiveModel::Validations
   has_many :resource_contexts
 
   #validates_columns :resource_type
   validates :resource_type, presence: true
   validates_presence_of :value, if: :actionable_url_resource
   validates :label, presence: true
+  
+
   
 
   # validates_columns :value
@@ -20,7 +23,7 @@ class Resource < ActiveRecord::Base
   	resource_type == "actionable_url"
   end
 
- 
+  
 
 end
 
