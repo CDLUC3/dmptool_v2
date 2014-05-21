@@ -4,7 +4,6 @@ class UsersController < ApplicationController
 
   include InstitutionsHelper
 
-  before_action :only_edit_self, only: [:edit]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :check_dmp_admin_access, only: [:index, :edit_user_roles, :update_user_roles, :destroy]
   before_action :require_logout, only: [:new]
@@ -57,7 +56,9 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-
+    unless can_edit_user?(params[:id])
+      redirect_to(edit_user_path(current_user), notice: "You may not edit the user you were attempting to edit.  You're now editing your own information.") and return
+    end
     @user = User.find(params[:id])
     @my_institution = @user.institution
     if user_role_in?(:dmp_admin)
@@ -405,12 +406,18 @@ class UsersController < ApplicationController
     end
   end
 
-  def only_edit_self
-    if !current_user.nil? && current_user.id != params[:id].to_i
-      params[:id] = current_user.id
-    elsif current_user.blank?
-      params[:id] = nil
+  def can_edit_user?(user_id)
+    return false if current_user.blank? || user_id.blank?
+    return true if current_user.id == user_id.to_i
+    return true if user_role_in?(:dmp_admin)
+    if user_role_in?(:institutional_admin)
+      u = User.find_by_id(user_id)
+      return false if u.nil?
+      if current_user.institution.subtree_ids.include?(u.institution.id)
+        return true
+      end
     end
+    return false
   end
 
 
