@@ -22,11 +22,13 @@ module ApplicationHelper
   end
 
   def fix_url(u)
-    uu = URI.parse(u)
-    if(!uu.scheme)
-      return "http://" + u
+    begin
+      uri = URI.parse(str)
+      uri.kind_of?(URI::HTTP)
+      return u
+    rescue URI::InvalidURIError
+      return "http://#{u}"
     end
-    u
   end
 
 
