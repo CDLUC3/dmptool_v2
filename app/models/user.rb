@@ -45,6 +45,8 @@ class User < ActiveRecord::Base
   before_validation :create_default_preferences, if: Proc.new { |x| x.prefs.empty? }
   before_validation :add_default_institution, if: Proc.new { |x| x.institution_id.nil? }
 
+  after_destroy :make_other_tables_consistent
+
 
   def ensure_ldap_authentication(uid)
     unless Authentication.find_by_user_id_and_provider(self.id, 'ldap')
@@ -270,5 +272,10 @@ class User < ActiveRecord::Base
 
   def self.unpicky(hash, key)
     hash[key.intern] || hash[key.to_s]
+  end
+
+  def make_other_tables_consistent
+    Authentication.destroy_all(user_id: self.id)
+    Authorization.destroy_all(user_id: self.id)
   end
 end
