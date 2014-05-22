@@ -6,6 +6,7 @@ class Response < ActiveRecord::Base
   validates :plan_id, presence: true, numericality: true
   validates :requirement_id, presence: true, numericality: true
   validates :text_value, presence: true, if: :validate_only_if_obligation_mandatory
+  after_update :check_revised
   #after_update :associated_responses
 
 
@@ -36,6 +37,18 @@ class Response < ActiveRecord::Base
         return self.id
       else
         return ""
+      end
+    end
+  end
+
+  def check_revised
+    if self.changed?
+      plan = Plan.find(self.plan_id)
+      plan_state_id = plan.current_plan_state_id
+      state = PlanState.find(plan_state_id).state
+      if (state  == :committed) || (state == :approved) || (state == :rejected) || (state == :reviewed)
+        ps = PlanState.new({plan_id: plan.id, state: 'revised', user_id: plan.current_user_id })
+        ps.save
       end
     end
   end

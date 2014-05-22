@@ -633,8 +633,7 @@ class PlansController < ApplicationController
        @responses_array << value
        return @responses_array
       end
-      debugger
-      unless !@responses_array.empty?
+       unless !@responses_array.empty?
         ## Update the plan state to revised.
       else
        ## Do nothing.
