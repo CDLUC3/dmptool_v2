@@ -55,34 +55,42 @@ class User < ActiveRecord::Base
   end
 
   def self.from_omniauth(auth, institution_id)
-    uid = smart_userid_from_omniauth(auth)
-    return nil if uid.blank? || unpicky(auth, :info).blank? || unpicky(unpicky(auth, :info), :email).blank?
+    auth = auth.with_indifferent_access
+    auth[:info] = auth[:info].with_indifferent_access unless auth[:info].blank?
+
+    uid = smart_userid_from_omniauth(auth) #gets info[:uid] or auth[:uid], reduced long LDAP string to simple user_id
+
+    return nil if uid.blank? || auth[:info].blank? || auth[:info][:email].blank?
     a = Authentication.find_by_uid(uid)
-    (a.nil? ? nil: a.user) || create_from_omniauth(auth, institution_id)
+    if a.nil?
+      create_from_omniauth(auth, institution_id)
+    else
+      a.user
+    end
   end
 
   def self.create_from_omniauth(auth, institution_id)
-    info = unpicky(auth, :info)
-    email = unpicky(info, :email)
+    info = auth[:info]
+    email = smart_email_from_omniauth(info[:email]) #reduce email to first, or take garbage off email if needed
     user = User.find_by_email(email)
     ActiveRecord::Base.transaction do
       if user.nil?
         user = User.new
-        user.email = smart_email_from_omniauth(email)
+        user.email = email
         # Set any of the omniauth fields that have values  in the database.
         # The keys are the omniauth field names, the values are the database field names
         # for mapping omniauth field names to db field names.
         {:first_name => :first_name, :last_name => :last_name}.each do |k, v|
-          user.send("#{v}=", unpicky(info, k)) if !unpicky(info, k).blank?
+          user.send("#{v}=", info[k]) unless info[k].blank?
         end
         #fix login_id for CDL LDAP to be simple username
         user.login_id = smart_userid_from_omniauth(auth)
         user.institution_id = institution_id
         user.prefs = create_default_preferences
         user.save(:validate => false)
-      elsif user.institution.nil?
+      elsif user.institution.nil? || auth[:provider].to_s == 'shibboleth'
         user.institution_id = institution_id
-        user.save(:validate => false)
+        user.save(:validate => false) #don't want to validate just to set institution_id since this user is garbage if they don't have institution set anyway
       end
 
       Authentication.create!({:user_id => user.id, :provider => auth[:provider], :uid => smart_userid_from_omniauth(auth)})
@@ -90,19 +98,19 @@ class User < ActiveRecord::Base
     user
   end
 
-  #returns the userid from omniauth, for LDAP usernames we don't qualify it
-  #while for shibboleth we have a longer qualified string which we need to distinguish
-  #since an unqualified login or an email may not be unique
+  #returns the userid from omniauth.  May be long string for shibboleth
+  # but for ldap we only get a brief username without all the uid, ou, ou, etc
   def self.smart_userid_from_omniauth(auth)
-    info = unpicky(auth, :info)
-    uid = (info ? unpicky(info, :uid) : nil) || unpicky(auth, :uid)
+    info = auth[:info]
+    uid = (info ? info[:uid] : nil) || auth[:uid]
     if uid.match(/^uid=\S+?,ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)
       return uid.match(/^uid=(\S+?),ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)[1]
     end
     uid
   end
 
-  #fixes weird emails
+  #fixes weird emails, only gets first email and dumps garbage like ;, or
+  #multiple emails incorrectly jammed into one field
   def self.smart_email_from_omniauth(email)
     e = email
     if email.class == Array
@@ -268,10 +276,6 @@ class User < ActiveRecord::Base
   TOKEN_CHARS = ('a'..'z').to_a + ('A'..'Z').to_a + ('0'..'9').to_a
   def generate_token
     40.times.collect {TOKEN_CHARS.sample}.join('')
-  end
-
-  def self.unpicky(hash, key)
-    hash[key.intern] || hash[key.to_s]
   end
 
   def make_other_tables_consistent

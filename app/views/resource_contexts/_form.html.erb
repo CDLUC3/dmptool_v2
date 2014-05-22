@@ -7,9 +7,9 @@
   <div class="tab-content">
     <div class="tab-pane active" id="tab1">
 			<%= form_for @resource_context, html:{ :class => 'form-horizontal', multipart: true}  do |f| %>
-			
+
 			  <%= render partial: "shared/errors", locals: {model: @resource_context } %>
-			
+
 			  <div class="control-group" id="inst_text">
 			    <p class ="control-label">Customized for</p>
 			    <div class="controls">
@@ -19,9 +19,9 @@
 			      <%= f.hidden_field :institution_id %>
 			    </div>
 			  </div>
-			
+
 			  <%= f.hidden_field :requirements_template_id %>
-			
+
 			  <div class="control-group">
 			    <%= f.label :name , "Customization Name", :class=> "control-label " %>
 			    <div class="controls">
@@ -29,18 +29,18 @@
 			      <%= content_tag(:span, '', :title => 'This field cannot be edited.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
 			    </div>
 			  </div>
-			
+
 
 				<%if user_role_in?(:dmp_admin) ||
 						(user_role_in?(:institutional_admin) && (current_user.institution.subtree_ids.include?(@req_temp.institution_id))) ||
-						(user_role_in?(:template_editor) && (current_user.institution.subtree_ids.include?(@req_temp.institution_id)))  %> 
+						(user_role_in?(:template_editor) && (current_user.institution.subtree_ids.include?(@req_temp.institution_id)))  %>
 				  <div class="control-group">
 				    <p class ="control-label">Associated DMP template</p>
-				    <div class="controls">    	
+				    <div class="controls">
 				      <span style="position: relative; top: 4px"><%= link_to @req_temp.name, edit_requirements_template_path(@req_temp) %></span>
-				      
-				      <%= content_tag(:span, '', :title => 'The DMP Template that this customization applies to.', 
-				      								'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', 
+
+				      <%= content_tag(:span, '', :title => 'The DMP Template that this customization applies to.',
+				      								'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true',
 				      								:class => 'icon questionmark tip') %>
 				    </div>
 				  </div>
@@ -49,28 +49,28 @@
 
 			  	<div class="control-group">
 				    <p class ="control-label">Associated DMP template</p>
-				    <div class="controls">    	
-				      
+				    <div class="controls">
+
 				      <span style="position: relative; top: 4px"><%= @req_temp.name %></span>
 				      <%= content_tag(:span, '', :title => 'The DMP Template that this customization applies to.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
 				    </div>
 				  </div>
 
 			  <%end%>
-			
+
 			  <div class="control-group" style="position: relative">
 			  	<%= content_tag(:span, '', :title => 'You can require institutional administrator review of plans submitted using this template.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip', :style => 'position: absolute; top: 7px; left: 115px') %>
 			    <p class ="control-label">Review type</p>
 			    <div class="controls checkbox-controls">
 			      <%= f.radio_button :review_type, :formal_review, :class => 'radio inline', :id => 'formal_review'  %>
-			      <%= label_tag :formal_review, 'Formal review required', :class => 'checkbox-label'%><br/>
+			      <%= label_tag :formal_review, 'Review Required', :class => 'checkbox-label'%><br/>
 			      <%= f.radio_button :review_type, :informal_review, :class => 'radio inline', :id => 'informal_review'  %>
-			      <%= label_tag :informal_review, 'Informal review', :class => 'checkbox-label'%><br/>
+			      <%= label_tag :informal_review, 'Informal Review Allowed', :class => 'checkbox-label'%><br/>
 			      <%= f.radio_button :review_type, :no_review, :class => 'radio inline', :id => 'no_review'  %>
-			      <%= label_tag :no_review, 'No review required', :class => 'checkbox-label'%>
+			      <%= label_tag :no_review, 'No Review Needed', :class => 'checkbox-label'%>
 			    </div>
 			  </div>
-			
+
 			  <div class="control-group">
 			    <%= f.label :contact_info, 'Contact Information',:class => "control-label" %>
 			    <div class="controls">
@@ -78,21 +78,21 @@
 			      <%= content_tag(:span, '', :title => 'Name & E-mail for contact about this specific DMP Template customizations. Default is the institutional admin contact information.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
 			    </div>
 			  </div>
-			
+
 			  <div class="control-group">
 			    <%= f.label :contact_email, 'Contact Email', :class => "control-label required" %>
 			    <div class="controls">
 			      <%= f.text_field :contact_email, :class => "input-xlarge", 'aria-required' => 'true' %>
 			    </div>
 			  </div>
-			
+
 			  <div class="control-group">
 			    <p class ="control-label">Creation Date</p>
 			    <div class="controls">
 			      <p><%= (@resource_context.created_at.nil? ? 'none' : @resource_context.created_at) %></p>
 			    </div>
 			  </div>
-			
+
 			  <div class="control-group">
 			    <p class ="control-label">Last Modification Date</p>
 			    <div class="controls">
