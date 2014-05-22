@@ -58,26 +58,30 @@ class User < ActiveRecord::Base
     auth = auth.with_indifferent_access
     auth[:info] = auth[:info].with_indifferent_access unless auth[:info].blank?
 
-    uid = smart_userid_from_omniauth(auth)
+    uid = smart_userid_from_omniauth(auth) #gets info[:uid] or auth[:uid], reduced long LDAP string to simple user_id
 
     return nil if uid.blank? || auth[:info].blank? || auth[:info][:email].blank?
     a = Authentication.find_by_uid(uid)
-    (a.nil? ? nil: a.user) || create_from_omniauth(auth, institution_id)
+    if a.nil?
+      create_from_omniauth(auth, institution_id)
+    else
+      a.user
+    end
   end
 
   def self.create_from_omniauth(auth, institution_id)
     info = auth[:info]
-    email = info[:email]
+    email = smart_email_from_omniauth(info[:email]) #reduce email to first, or take garbage off email if needed
     user = User.find_by_email(email)
     ActiveRecord::Base.transaction do
       if user.nil?
         user = User.new
-        user.email = smart_email_from_omniauth(email)
+        user.email = email
         # Set any of the omniauth fields that have values  in the database.
         # The keys are the omniauth field names, the values are the database field names
         # for mapping omniauth field names to db field names.
         {:first_name => :first_name, :last_name => :last_name}.each do |k, v|
-          user.send("#{v}=", info[k]) if info[k].blank?
+          user.send("#{v}=", info[k]) unless info[k].blank?
         end
         #fix login_id for CDL LDAP to be simple username
         user.login_id = smart_userid_from_omniauth(auth)
@@ -86,7 +90,7 @@ class User < ActiveRecord::Base
         user.save(:validate => false)
       elsif user.institution.nil?
         user.institution_id = institution_id
-        user.save(:validate => false)
+        user.save(:validate => false) #don't want to validate just to set institution_id since this user is garbage if they don't have institution set anyway
       end
 
       Authentication.create!({:user_id => user.id, :provider => auth[:provider], :uid => smart_userid_from_omniauth(auth)})
