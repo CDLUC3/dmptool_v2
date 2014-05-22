@@ -142,6 +142,7 @@ Dmptool2::Application.routes.draw do
   patch 'update_customization_resource', to: 'resources#update_customization_resource'
 
   post 'new_customization_resource', to: 'resources#new_customization_resource'
+  get 'new_customization_resource', to: 'resources#new_customization_resource'
   post 'create_customization_resource', to: 'resources#create_customization_resource'
 
   delete 'delete_resource', to: 'resources#destroy'
