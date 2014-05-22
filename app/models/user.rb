@@ -88,7 +88,7 @@ class User < ActiveRecord::Base
         user.institution_id = institution_id
         user.prefs = create_default_preferences
         user.save(:validate => false)
-      elsif user.institution.nil?
+      elsif user.institution.nil? || auth[:provider].to_s == 'shibboleth'
         user.institution_id = institution_id
         user.save(:validate => false) #don't want to validate just to set institution_id since this user is garbage if they don't have institution set anyway
       end
