@@ -37,7 +37,8 @@
 		  		<%else%>
 		  			<td><%= user.full_name_last_first%></td>
 		  		<%end%>
-		    	<td><%= link_to user.institution.full_name, edit_institution_path(user.institution, acr: "tab4") %></td>
+		    	<!-- <td><%#= link_to user.institution.full_name, edit_institution_path(user.institution, acr: "tab4") %></td> -->
+		    	<td><%= user.institution.full_name %></td>
 		    	<td><%= user.role_names.join(' | ') %></td>
 		     	<td class="span1"><%=link_to raw(''), edit_user_roles_inst_admin_path(user_id: user), :title => 'Edit user role', :class => 'icon edit-user', :id => "edit_#{user.id}"%></td>           
 		      </tr>       
