@@ -34,7 +34,7 @@ class Response < ActiveRecord::Base
       plan_state_id = plan.current_plan_state_id
       state = PlanState.find(plan_state_id).state
       if (state  == :committed) || (state == :approved) || (state == :rejected) || (state == :reviewed)
-        ps = PlanState.new({plan_id: plan.id, state: 'revised', user_id: plan.current_user_id.to_i })
+        ps = PlanState.new({plan_id: plan.id, state: 'revised', user_id: self.current_user_id.to_i })
         ps.save
       end
     end
