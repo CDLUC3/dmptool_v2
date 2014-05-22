@@ -82,7 +82,7 @@
 
     <div class="controls">
       <%= image_tag @current_institution.logo.url if @current_institution.logo? %>
-      <%= f.file_field :logo,:onchange =>"validateFiles(this);" %>
+      <%= f.file_field :logo, :onchange =>"validateFiles(this);" %>
       <%= f.hidden_field :logo_cache %>
       <%= content_tag(:span, '', :title => 'Logos can be in .jpeg, .png, .jpg, or .gif format. They should be approximately 170 by 60, but will be re-sized on upload.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
     </div>
