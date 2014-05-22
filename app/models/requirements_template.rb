@@ -28,6 +28,7 @@ class RequirementsTemplate < ActiveRecord::Base
   scope :inactive, -> { where(active: false) }
   scope :institutional_visibility, -> { where(visibility: :institutional) }
   scope :public_visibility, -> { where(visibility: :public) }
+  scope :current, -> { where("start_date IS NULL OR start_date < ?", Time.new).where("end_date IS NULL OR end_date > ?", Time.new) }
   
 
   after_initialize :default_values

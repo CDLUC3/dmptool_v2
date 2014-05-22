@@ -67,7 +67,7 @@ class StaticPagesController < ApplicationController
   end
   
   def guidance
-    @public_templates = RequirementsTemplate.public_visibility.includes(:institution, :sample_plans, :additional_informations)
+    @public_templates = RequirementsTemplate.public_visibility.includes(:institution, :sample_plans, :additional_informations).active.current.public_visibility
     
     @scope1 = params[:scope1]
     @order_scope1 = params[:order_scope1]   
@@ -105,7 +105,7 @@ class StaticPagesController < ApplicationController
       @scope2 = params[:scope2]
       @order_scope2 = params[:order_scope2]
 
-      @institution_templates = current_user.institution.requirements_templates_deep.institutional_visibility.
+      @institution_templates = current_user.institution.requirements_templates_deep.institutional_visibility.active.current.
               includes(:institution, :sample_plans, :additional_informations)
     
 
