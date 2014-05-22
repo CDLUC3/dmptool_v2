@@ -126,7 +126,7 @@
 
   end
  
-
+#create institutional resource
   def create
     @tab_number = (params[:tab_number].blank? ? 'tab_tab2' : params[:tab_number] )
     @resource = Resource.new(resource_params)
@@ -217,6 +217,7 @@
   def new_customization_resource
 
     @tab = params[:tab]
+    @custom_origin = params[:custom_origin]
     @tab_number = params[:tab_number]
     @requirement_id = params[:requirement_id]
     @resource_level = params[:resource_level]
@@ -269,13 +270,14 @@
   
       flash[:error] = "The url: #{@value} is a not valid url."
       
-      redirect_to new_customization_resource_path(template_id: @template_id,
+      redirect_to new_customization_resource_path(
+                custom_origin:  @custom_origin,
+                template_id: @template_id,
                 customization_overview_id: @customization_overview_id,
                 resource_level: @resource_level,
-                requirement_id: @requirement_id,
-                tab_number:     @tab_number,
                 tab:            @tab,
-                custom_origin:  @custom_origin)         
+                requirement_id: @requirement_id,
+                tab_number:     @tab_number) 
       return
     end
     
