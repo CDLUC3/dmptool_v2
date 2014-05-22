@@ -8,6 +8,7 @@
       <%= f.hidden_field :requirement_id, value: requirement_id %>
       <%= f.hidden_field :plan_id, value: plan_id %>
       <%= f.hidden_field :label_id %>
+      <%= f.hidden_field :current_user_id, value: current_user.id %>
       <%= hidden_field_tag :next_requirement_id, @next_requirement_id %>
   </div>
   <% if requirement(requirement_id).requirement_type == :text %>
