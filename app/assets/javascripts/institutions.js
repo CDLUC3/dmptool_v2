@@ -67,6 +67,17 @@ $(function() {
 	});
 });
 
+$.extend({ alert: function (message, title) {
+  $("<div></div>").dialog( {
+    buttons: { "Ok": function () { $(this).dialog("close"); } },
+    close: function (event, ui) { $(this).remove(); },
+    resizable: false,
+    title: title,
+    modal: true
+  }).text(message);
+}
+});
+
 function validateFiles(inputFile) {
   var extErrorMessage = "Only image file with extension: .jpg, .jpeg, .gif or .png is allowed";
   var allowedExtension = ["jpg", "jpeg", "gif", "png"];
@@ -80,7 +91,7 @@ function validateFiles(inputFile) {
  
   if (extError) {
     // window.alert(extErrorMessage);
-    $.alert("extErrorMessage", "Wrong File Extension")
+    $.alert(extErrorMessage, "Wrong File Extension");
     $(inputFile).val('');
   };
 }
