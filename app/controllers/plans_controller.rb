@@ -6,7 +6,6 @@ class PlansController < ApplicationController
   before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details, :preview, :perform_review, :coowners, :add_coowner_autocomplete]
   before_action :check_copy_plan_access, only: [:copy_existing_template]
   before_action :check_plan_access, only: [:edit, :update, :destroy, :details, :add_coowner_autocomplete, :delete_coowner, :preview]
-  after_action  :loop_through_responses, only: [:details]
 
   # GET /plans
   # GET /plans.json
@@ -516,7 +515,12 @@ class PlansController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_plan
-      @plan = Plan.find(params[:id])
+      begin
+        @plan = Plan.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        redirect_to plans_path, error: "The Plan you were looking for does not exist."
+        return
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -621,22 +625,6 @@ class PlansController < ApplicationController
           flash[:error] = "You don't have access to this content."
           redirect_to plans_path # halts request cycle
         end
-      end
-    end
-
-    def loop_through_responses
-      @responses_array = []
-      responses = @plan.responses
-      #@responses_array = responses.each &:associated_responses
-      responses.each do |response|
-       value = response.associated_responses
-       @responses_array << value
-       return @responses_array
-      end
-       unless !@responses_array.empty?
-        ## Update the plan state to revised.
-      else
-       ## Do nothing.
       end
     end
 end

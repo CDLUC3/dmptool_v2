@@ -1,5 +1,7 @@
 class Response < ActiveRecord::Base
 
+  attr_accessor :current_user_id
+
   belongs_to :plan
   belongs_to :requirement
 
@@ -7,8 +9,6 @@ class Response < ActiveRecord::Base
   validates :requirement_id, presence: true, numericality: true
   validates :text_value, presence: true, if: :validate_only_if_obligation_mandatory
   after_update :check_revised
-  #after_update :associated_responses
-
 
   def validate_only_if_obligation_mandatory
   	requirement_id = self.requirement_id
@@ -28,26 +28,13 @@ class Response < ActiveRecord::Base
       false
   end
 
-  def associated_responses
-    plan = Plan.find(self.plan_id)
-    plan_state_id = plan.current_plan_state_id
-    state = PlanState.find(plan_state_id).state
-    if (state  == :committed) || (state == :approved) || (state == :rejected) || (state == :reviewed)
-      if self.previous_changes != ""
-        return self.id
-      else
-        return ""
-      end
-    end
-  end
-
   def check_revised
     if self.changed?
       plan = Plan.find(self.plan_id)
       plan_state_id = plan.current_plan_state_id
       state = PlanState.find(plan_state_id).state
       if (state  == :committed) || (state == :approved) || (state == :rejected) || (state == :reviewed)
-        ps = PlanState.new({plan_id: plan.id, state: 'revised', user_id: plan.current_user_id })
+        ps = PlanState.new({plan_id: plan.id, state: 'revised', user_id: self.current_user_id.to_i })
         ps.save
       end
     end
