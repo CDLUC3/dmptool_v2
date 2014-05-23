@@ -1,10 +1,10 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th class="span5"><%= link_to "Plan Title", {order_scope: "PlanTitle", all_scope: @all_scope}%></th>
-      <th class="span5"><%= link_to "Funder Template", {order_scope: "FunderTemplate", all_scope: @all_scope}%></th>
-      <th class="span5"><%= link_to "Institution", {order_scope: "OwnerInstitution", all_scope: @all_scope}%></th>
-      <th class="span5"><%= link_to "Owner", {order_scope: "Owner", all_scope: @all_scope}%></th>
+      <th class="span5"><%= link_to "Plan Title", {order_scope: "PlanTitle", all_scope: @all_scope, s: @s, e: @e}%></th>
+      <th class="span5"><%= link_to "Funder Template", {order_scope: "FunderTemplate", all_scope: @all_scope, s: @s, e: @e}%></th>
+      <th class="span5"><%= link_to "Institution", {order_scope: "OwnerInstitution", all_scope: @all_scope, s: @s, e: @e}%></th>
+      <th class="span5"><%= link_to "Owner", {order_scope: "Owner", all_scope: @all_scope, s: @s, e: @e}%></th>
       <th>Download</th>
     </tr>
   </thead>
