@@ -48,6 +48,8 @@ class User < ActiveRecord::Base
   after_destroy :make_other_tables_consistent
 
 
+  class LoginException < Exception ; end
+
   def ensure_ldap_authentication(uid)
     unless Authentication.find_by_user_id_and_provider(self.id, 'ldap')
       Authentication.create(:user => self, :provider => 'ldap', :uid => uid)
@@ -60,11 +62,24 @@ class User < ActiveRecord::Base
 
     uid = smart_userid_from_omniauth(auth) #gets info[:uid] or auth[:uid], reduced long LDAP string to simple user_id
 
-    return nil if uid.blank? || auth[:info].blank? || auth[:info][:email].blank?
+    raise LoginException.new('Incomplete information was supplied by your identity provider') if uid.blank? || auth[:info].blank? || auth[:info][:email].blank?
+
+    email = smart_email_from_omniauth(auth[:info][:email])
+
+    u = User.where(email: email)
+
+    raise LoginException.new('multiple users with the same email address') if u.length > 1
+
+    debugger
+
+    raise LoginException.new('this user has been removed from the tool') if u.length == 1 && (!u.first.deleted_at.blank? || u.active == false)
+
     a = Authentication.find_by_uid(uid)
+
     if a.nil?
       create_from_omniauth(auth, institution_id)
     else
+      raise LoginException.new('Invalid account information (authentication without user record)') if a.user.nil?
       a.user
     end
   end

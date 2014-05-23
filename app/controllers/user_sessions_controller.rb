@@ -19,7 +19,12 @@ class UserSessionsController < ApplicationController
   def create
     redirect_to choose_institution_path if session[:institution_id].blank? and return
     auth = env["omniauth.auth"]
-    user = User.from_omniauth(auth, session['institution_id'])
+    user = nil
+    begin
+      user = User.from_omniauth(auth, session['institution_id'])
+    rescue User::LoginException => ex
+      redirect_to choose_institution_path, flash: { error: ex.to_s } and return
+    end
     if auth[:provider] == 'shibboleth' && user.nil?
       redirect_to choose_institution_path, flash: { error: 'Problem with InCommon login.  Your InCommon provider may not be releasing the necessary attributes.'} and return
     end
