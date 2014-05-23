@@ -351,6 +351,7 @@ class ResourceContextsController < ApplicationController
 
   def select_resource
     
+    @origin_url = params[:origin_url]
     @custom_origin = params[:custom_origin]
     @tab = params[:tab]
     @tab_number = ''
