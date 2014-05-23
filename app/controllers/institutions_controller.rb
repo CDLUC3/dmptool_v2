@@ -1,9 +1,9 @@
 class InstitutionsController < ApplicationController
 
   before_action :require_login, :except=>[:partners_list]
-  before_action :set_institution, only: [:show, :destroy]
+  before_action :set_institution, only: [:show, :destroy, :update]
   before_action :check_for_cancel, :update => [:create, :update, :destroy]
-  before_filter :populate_institution_select_list, only: [:index, :new, :create]
+  before_filter :populate_institution_select_list, only: [:index, :new, :create, :update, :edit]
   before_action :check_institution_admin_access, :except=>[:partners_list]
 
   include InstitutionsHelper
@@ -26,19 +26,19 @@ class InstitutionsController < ApplicationController
         end
       end
     end
-    # @current_institution.shib_entity_id = @current_institution.root.shib_entity_id
-    # @current_institution.shib_domain = @current_institution.root.shib_domain
-    
 
     if user_role_in?(:dmp_admin)
       @institutions = Institution.order(full_name: :asc)
       @disabled = false 
+      @institution_pool = Institution.order(full_name: :asc).where("id != ?", @current_institution.id).collect {|i| ["#{'-' * i.depth} #{i.full_name}", i.id] } 
     else
       @institutions = Institution.where(id: [current_user.institution.root.subtree_ids]).order(full_name: :asc)
       @disabled = true
       
-      @sub_institutions = @current_institution.root.subtree.collect {|i| ["#{'-' * i.depth} #{i.full_name}", i.id] }
-      @sub_institutions.delete_if {|i| i[1] == @current_institution.id}
+      #@sub_institutions = @current_institution.root.subtree.collect {|i| ["#{'-' * i.depth} #{i.full_name}", i.id] }
+      #@sub_institutions.delete_if {|i| i[1] == @current_institution.id}
+      @institution_pool = @current_institution.root.subtree.collect {|i| ["#{'-' * i.depth} #{i.full_name}", i.id] } 
+      @institution_pool.delete_if {|i| i[1] == @current_institution.id}
     end
 
     @institution = Institution.new(:parent_id => params[:parent_id])
@@ -195,9 +195,11 @@ class InstitutionsController < ApplicationController
   # PATCH/PUT /institutions/1
   # PATCH/PUT /institutions/1.json
   def update
+
     @acr = params[:acr]
     @admin_acr = params[:admin_acr]
     @current_institution = Institution.find(params[:id])
+    
     if user_role_in?(:dmp_admin) 
       @institution_pool = Institution.order(full_name: :asc).where("id != ?", @current_institution.id).collect {|i| ["#{'-' * i.depth} #{i.full_name}", i.id] } 
     else
@@ -213,7 +215,8 @@ class InstitutionsController < ApplicationController
           format.html { redirect_to institutions_path(@current_institution), 
                         notice: 'Institution was successfully updated.' }
         else
-          format.html { render 'index'}     
+          format.html { redirect_to institutions_path(@current_institution), 
+                        notice:  'Something went wrong' }     
         end 
       end
     else
@@ -226,6 +229,7 @@ class InstitutionsController < ApplicationController
         end 
       end
     end
+    
   end
 
 
@@ -327,7 +331,7 @@ class InstitutionsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def institution_params
-    params.require(:institution).permit(:full_name, :nickname, :desc, :contact_info, :contact_email, :url, :url_text, :shib_entity_id, :shib_domain, :logo, :remote_logo_url, :parent_id)
+    params.require(:institution).permit(:full_name, :nickname, :desc, :contact_info, :contact_email, :url, :url_text, :shib_entity_id, :shib_domain, :logo, :logo_cache, :remote_logo_url, :parent_id)
   end
 
   def check_for_cancel
