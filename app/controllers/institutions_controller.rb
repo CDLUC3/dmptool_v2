@@ -13,6 +13,22 @@ class InstitutionsController < ApplicationController
   def index
 
     @current_institution = current_user.institution
+    @i = @current_institution
+    if (@current_institution.parent_id && @current_institution.shib_entity_id.blank?)
+      while (!@i.nil?) do
+
+        if (@i.shib_entity_id.blank? && @i.shib_domain.blank?)
+          @i = @i.parent
+        else
+          @current_institution.shib_entity_id = @i.shib_entity_id
+          @current_institution.shib_domain = @i.shib_domain
+          @i = nil
+        end
+      end
+    end
+    # @current_institution.shib_entity_id = @current_institution.root.shib_entity_id
+    # @current_institution.shib_domain = @current_institution.root.shib_domain
+    
 
     if user_role_in?(:dmp_admin)
       @institutions = Institution.order(full_name: :asc)

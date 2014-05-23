@@ -12,6 +12,7 @@
   <div class="control-group">
     <%= f.label :shib_entity_id, "Entity_id", :class => "control-label " %>
     <div class="controls">
+      
       <%= f.text_field :shib_entity_id, readonly: @current_institution.is_shibboleth?, disabled: @disabled %>
       <%= content_tag(:span, '', :title => 'Shibboleth endpoint registered with the Incommon Federation. This can only be edited by the DMPTool Administrator. Contact uc3@ucop.edu with any questions.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
     </div>
@@ -20,6 +21,7 @@
   <div class="control-group">
     <%= f.label :shib_domain , "Shibboleth Domain", :class => "control-label "%>
     <div class="controls">
+      
       <%= f.text_field :shib_domain, readonly: @current_institution.is_shibboleth? , disabled: @disabled %>
       <%= content_tag(:span, '', :title => 'This can only be edited by the DMPTool Administrator. Contact uc3@ucop.edu with any questions.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
     </div>
