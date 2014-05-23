@@ -71,6 +71,8 @@ class StaticPagesController < ApplicationController
     
     @scope1 = params[:scope1]
     @order_scope1 = params[:order_scope1]   
+    @s = params[:s]
+    @e = params[:e]  
 
     case @order_scope1
       when "Template"

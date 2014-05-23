@@ -19,11 +19,11 @@
 </div>
 <br/>
 <div class="row-fluid">
-	<%= link_to('A - F', { :s => 'a', :e => 'f' }, :class => 'btn viewA-F') %> 
-	<%= link_to('G - L', { :s => 'g', :e => 'l' }, :class => 'btn viewG-L') %> 
-	<%= link_to('M - S', { :s => 'm', :e => 's' }, :class => 'btn viewM-S') %> 
-	<%= link_to('T - Z', { :s => 't', :e => 'z' }, :class => 'btn viewT-Z') %> 
-	<%= link_to('All', { :s => 'a', :e => 'z' }, :class => 'btn viewA-Z') %>
+	<%= link_to('A - F', { :s => 'a', :e => 'f' , order_scope1: @order_scope1, scope1: @scope1}, :class => 'btn viewA-F') %> 
+	<%= link_to('G - L', { :s => 'g', :e => 'l' , order_scope1: @order_scope1, scope1: @scope1}, :class => 'btn viewG-L') %> 
+	<%= link_to('M - S', { :s => 'm', :e => 's' , order_scope1: @order_scope1, scope1: @scope1}, :class => 'btn viewM-S') %> 
+	<%= link_to('T - Z', { :s => 't', :e => 'z' , order_scope1: @order_scope1, scope1: @scope1}, :class => 'btn viewT-Z') %> 
+	<%= link_to('All', { :s => 'a', :e => 'z' , order_scope1: @order_scope1, scope1: @scope1}, :class => 'btn viewA-Z') %>
 </div>
 <br/>
 
