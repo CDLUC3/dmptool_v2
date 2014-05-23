@@ -35,10 +35,11 @@ class InstitutionsController < ApplicationController
       @institutions = Institution.where(id: [current_user.institution.root.subtree_ids]).order(full_name: :asc)
       @disabled = true
       
-      #@sub_institutions = @current_institution.root.subtree.collect {|i| ["#{'-' * i.depth} #{i.full_name}", i.id] }
-      #@sub_institutions.delete_if {|i| i[1] == @current_institution.id}
-      @institution_pool = @current_institution.root.subtree.collect {|i| ["#{'-' * i.depth} #{i.full_name}", i.id] } 
-      @institution_pool.delete_if {|i| i[1] == @current_institution.id}
+      @sub_institutions = @current_institution.root.subtree.collect {|i| ["#{'-' * i.depth} #{i.full_name}", i.id] }
+      @sub_institutions.delete_if {|i| i[1] == @current_institution.id}
+      #@institution_pool = @current_institution.root.subtree.collect {|i| ["#{'-' * i.depth} #{i.full_name}", i.id] } 
+      #@institution_pool.delete_if {|i| i[1] == @current_institution.id}
+      #@institution_pool.delete_if {|i| i[1] == @current_institution.subtree_ids}
     end
 
     @institution = Institution.new(:parent_id => params[:parent_id])

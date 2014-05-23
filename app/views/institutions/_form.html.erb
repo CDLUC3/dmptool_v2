@@ -39,10 +39,11 @@
       <% else %>
 
         <%= f.select :parent_id, 
-            #@sub_institutions,
-            @institution_pool,
+            @sub_institutions,
+            #@institution_pool,
             { selected:  @current_institution.parent_id, :include_blank => 'none'}, 
-            {:disabled => (!@current_institution.is_shibboleth? || !user_role_in?(:institutional_admin))}
+            #{:disabled => (!@current_institution.is_shibboleth? || !user_role_in?(:institutional_admin))}
+            {:disabled => true}
         %>
     
       <% end %>
