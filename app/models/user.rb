@@ -66,11 +66,9 @@ class User < ActiveRecord::Base
 
     email = smart_email_from_omniauth(auth[:info][:email])
 
-    u = User.where(email: email)
+    u = User.with_deleted.where(email: email)
 
     raise LoginException.new('multiple users with the same email address') if u.length > 1
-
-    debugger
 
     raise LoginException.new('this user has been removed from the tool') if u.length == 1 && (!u.first.deleted_at.blank? || u.active == false)
 
