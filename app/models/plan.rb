@@ -44,7 +44,7 @@ class Plan < ActiveRecord::Base
 
   def self.letter_range(s, e)
     #add as a scope where s=start and e=end letter
-    where("name REGEXP ?", "^[#{s}-#{e}]")
+    where("plans.name REGEXP ?", "^[#{s}-#{e}]")
   end
 
   def self.search_terms(terms)
