@@ -79,8 +79,6 @@ class ResourceContextsController < ApplicationController
     @req_temp = @resource_context.requirements_template
     message = @resource_context.changed ? 'Customization was successfully created.' : ''
 
-   
-
     respond_to do |format|
       if @resource_context.save
         customization_resources_list
@@ -190,7 +188,6 @@ class ResourceContextsController < ApplicationController
                       requirement_id:  @requirement_id,
                       anchor: @tab_number), 
                         notice: "The resource was successfully unlinked." }
-        
       end
     end
   end
