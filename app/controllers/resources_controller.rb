@@ -164,6 +164,7 @@
 
   # DELETE /resources/1
   def destroy
+
     @resource_id = params[:resource_id]
     @resource = Resource.find(@resource_id)
     @customization_ids = ResourceContext.where(resource_id: @resource_id).pluck(:id)
@@ -171,6 +172,10 @@
     @custom_origin = params[:custom_origin]
     @tab_number = params[:tab_number]
     @requirement_id = params[:requirement_id]
+    @origin_url = params[:origin_url]
+    @resource_level = params[:resource_level]
+    @tab = params[:tab]
+    @template_id = params[:template_id]
 
     if @resource.destroy
       if @customization_ids
