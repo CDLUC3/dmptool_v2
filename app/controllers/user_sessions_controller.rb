@@ -19,7 +19,23 @@ class UserSessionsController < ApplicationController
   def create
     redirect_to choose_institution_path if session[:institution_id].blank? and return
     auth = env["omniauth.auth"]
-    user = User.from_omniauth(auth, session['institution_id'])
+    user = nil
+    begin
+      user = User.from_omniauth(auth, session['institution_id'])
+    rescue User::LoginException => ex
+      msg = ex.to_s
+      case ex.to_s
+        when 'incomplete information from identity provider'
+          msg = "Your identify provider didn't provide complete information.  Please contact us so we can help troubleshoot this problem."
+        when 'multiple users with same email'
+          msg = "Multiple users have the same email as you.  Please contact us to fix the problem."
+        when 'user deactivated'
+          msg = "Your user account is currently deactivated.  In order to be reactivate your account, please contact us."
+        when 'authentication without user record'
+          msg = "You've previously logged in but do not have a current account. Contact us for help resolving this problem."
+      end
+      redirect_to choose_institution_path, flash: { error: msg } and return
+    end
     if auth[:provider] == 'shibboleth' && user.nil?
       redirect_to choose_institution_path, flash: { error: 'Problem with InCommon login.  Your InCommon provider may not be releasing the necessary attributes.'} and return
     end
