@@ -62,22 +62,22 @@ class User < ActiveRecord::Base
 
     uid = smart_userid_from_omniauth(auth) #gets info[:uid] or auth[:uid], reduced long LDAP string to simple user_id
 
-    raise LoginException.new('Incomplete information was supplied by your identity provider') if uid.blank? || auth[:info].blank? || auth[:info][:email].blank?
+    raise LoginException.new('incomplete information from identity provider') if uid.blank? || auth[:info].blank? || auth[:info][:email].blank?
 
     email = smart_email_from_omniauth(auth[:info][:email])
 
     u = User.with_deleted.where(email: email)
 
-    raise LoginException.new('multiple users with the same email address') if u.length > 1
+    raise LoginException.new('multiple users with same email') if u.length > 1
 
-    raise LoginException.new('this user has been removed from the tool') if u.length == 1 && (!u.first.deleted_at.blank? || u.active == false)
+    raise LoginException.new('user deactivated') if u.length == 1 && (!u.first.deleted_at.blank? || u.active == false)
 
     a = Authentication.find_by_uid(uid)
 
     if a.nil?
       create_from_omniauth(auth, institution_id)
     else
-      raise LoginException.new('Invalid account information (authentication without user record)') if a.user.nil?
+      raise LoginException.new('authentication without user record') if a.user.nil?
       a.user
     end
   end
