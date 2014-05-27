@@ -67,6 +67,8 @@ class UsersController < ApplicationController
       @institution_list = @my_institution.root.subtree.collect {|i| ["#{'-' * i.depth} #{i.full_name}", i.id] }
     end
 
+    @email_editable = ( @user.authentications.where(provider: 'shibboleth').count < 1 )
+
     @roles = @user.roles.map {|r| r.name}.join(' | ')
 
   end
