@@ -45,6 +45,8 @@ class User < ActiveRecord::Base
   before_validation :create_default_preferences, if: Proc.new { |x| x.prefs.empty? }
   before_validation :add_default_institution, if: Proc.new { |x| x.institution_id.nil? }
 
+  before_update :try_update_ldap, :if => :email_changed?
+
   after_destroy :make_other_tables_consistent
 
 
@@ -282,6 +284,22 @@ class User < ActiveRecord::Base
 
   def ldap_user?
     self.authentications.where(:provider => 'ldap').first.present?
+  end
+
+  #anytime the email is updated, try to update ldap or return false to prevent saving
+  def try_update_ldap
+    auths = self.authentications.where(provider: 'ldap')
+    if auths.length > 0
+      uid = auths.first.uid
+    else
+      uid = self.login_id
+    end
+    begin
+      Ldap_User::LDAP.replace_attribute(uid, 'mail', [self.email])
+    rescue LdapMixin::LdapException => ex
+      return false
+    end
+    return true
   end
 
   protected
