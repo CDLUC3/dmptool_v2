@@ -216,18 +216,18 @@ class ResourceContextsController < ApplicationController
   end
 
 
-  def unlink_institutional_resource
-    @resource_context = ResourceContext.find(params[:resource_context_id])
-    if @resource_context.destroy
-      respond_to do |format|
-        format.html { redirect_to institutions_path(anchor: 'tab_tab2'), 
-                        notice: "The resource was successfully unlinked." }
-      end
-    else
-      flash[:error] = "A problem prevented this resource to be unlinked."
-      redirect_to institutions_path(anchor: 'tab_tab2')
-    end
-  end
+  # def unlink_institutional_resource
+  #   @resource_context = ResourceContext.find(params[:resource_context_id])
+  #   if @resource_context.destroy
+  #     respond_to do |format|
+  #       format.html { redirect_to institutions_path(anchor: 'tab_tab2'), 
+  #                       notice: "The resource was successfully unlinked." }
+  #     end
+  #   else
+  #     flash[:error] = "A problem prevented this resource to be unlinked."
+  #     redirect_to institutions_path(anchor: 'tab_tab2')
+  #   end
+  # end
 
 
   def destroy

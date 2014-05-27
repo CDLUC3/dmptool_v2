@@ -38,16 +38,6 @@
                                                origin_url: smart_origin_url),
                                                :class => 'icon edit-user',
                                                :title => 'Edit' %>
-            <%#= link_to raw(''), 
-						unlink_resource_from_customization_path(resource_id: resource_context.resource.id,
-                            								template_id: @customization.requirements_template_id, 
-                                            customization_id: @customization.id,
-                                            institution_id: @customization.institution_id,
-                                            unlink_from_customization: true,
-                                            custom_origin: "Overview"),  
-                                  			method: :post,
-                                  			:class => 'icon unlink',
-                                  			:title => 'Unlink from customization' %>
             </td>
 			<td><%= resource_context.institution.nil? ? " " :  resource_context.institution.nickname %></td>
 			<td><%= resource_context.created_at.nil? ? " " :  resource_context.created_at.strftime("%m/%d/%Y %I:%M%p") %></td>
