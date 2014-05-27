@@ -23,7 +23,7 @@
 				</td>
 				<td><%= link_to raw(''), edit_resource_path(resource_context.resource_id, origin_url: smart_origin_url,
 	                    tab_number: (defined?(@tab_number) ? @tab_number: nil)), :class => 'icon edit-user', :title => 'Edit' %>
-					<%= link_to raw(''), 
+					<%#= link_to raw(''), 
 							unlink_institutional_resource_path(resource_context_id: resource_context.id, origin_url: smart_origin_url,
 	                                               tab_number: (defined?(@tab_number) ? @tab_number: nil)),
 	            method: :post, :class => 'icon unlink', :title => 'Unlink from Institution' %>
