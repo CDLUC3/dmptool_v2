@@ -2,7 +2,7 @@
   <% unless current_user.institution.nil? %>
     <div class="inst-logo span3">
       <%if current_user.institution_id == 0%>
-        <%= image_tag("UC3-logo.png") %>
+        <%= image_tag("UC3-logo.jpg") %>
       <%elsif !current_user.institution.logo %>
         <%= image_tag("blank_institution_logo.png") %>
       <%else%>
