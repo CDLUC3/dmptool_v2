@@ -40,7 +40,8 @@
 
 						<%= f.select :parent_id, 
 			      	options_for_select(@categories), 
-			      	{:prompt => 'Select', :include_blank => 'none'}
+			      	{:include_blank => 'none', selected: @current_user.institution.parent_id},
+			      	{:disabled => true}
 			      %>
 
 					<% else %>

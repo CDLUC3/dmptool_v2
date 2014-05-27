@@ -40,7 +40,8 @@
 
 			<%= f.select :parent_id, 
           @institution_pool,
-          	{ selected:  @current_institution.parent_id, :include_blank => 'none'}
+          	{ selected:  @current_institution.parent_id, :include_blank => 'none'},
+            {:disabled => true}
       %>
 
 		<% else %>

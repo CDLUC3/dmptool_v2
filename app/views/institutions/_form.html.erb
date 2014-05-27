@@ -34,15 +34,16 @@
       <% if user_role_in?(:dmp_admin) %>
         <%= f.select :parent_id, 
               @categories,
-              { selected:  @current_institution.parent_id, :include_blank => 'none'}
+              { selected:  @current_institution.parent_id, :include_blank => 'none'},
+              {:disabled => true}
         %>
       <% else %>
 
         <%= f.select :parent_id, 
             @sub_institutions,
             #@institution_pool,
-            { selected:  @current_institution.parent_id, :include_blank => 'none'}, 
             #{:disabled => (!@current_institution.is_shibboleth? || !user_role_in?(:institutional_admin))}
+            { selected:  @current_institution.parent_id, :include_blank => 'none'},
             {:disabled => true}
         %>
     
