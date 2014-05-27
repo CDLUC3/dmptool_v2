@@ -286,8 +286,11 @@ class User < ActiveRecord::Base
     self.authentications.where(:provider => 'ldap').first.present?
   end
 
-  #anytime the email is updated, try to update ldap or return false to prevent saving
+  #anytime the email is updated, try to update ldap or return false to prevent saving when it can't be changed
   def try_update_ldap
+    auths = self.authentications.where(provider: 'shibboleth')
+    return false if auths.length > 0
+
     auths = self.authentications.where(provider: 'ldap')
     if auths.length > 0
       uid = auths.first.uid
