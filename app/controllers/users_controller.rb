@@ -51,6 +51,7 @@ class UsersController < ApplicationController
     @user = User.new
     @user.institution_id = params[:institution_id] if params[:institution_id]
     @institution_list = InstitutionsController.institution_select_list
+    @email_editable = true
   end
 
 
@@ -155,6 +156,18 @@ class UsersController < ApplicationController
             end
           end
         end
+      end
+    end
+    @email_editable = true
+    respond_to do |format|
+      if !@user.errors.any?
+        #these will probably be skipped since redirects above
+        session[:user_id] = @user.id
+        format.html { redirect_to edit_user_path(@user), notice: 'User was successfully created.' }
+        format.json { render action: 'show', status: :created, location: @user }
+      else
+        format.html { render action: 'new' }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
