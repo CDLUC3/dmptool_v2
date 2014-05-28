@@ -7,7 +7,10 @@
 	float:none!important
 }
 
-.orcid_before_html{margin-right:5px}
+.orcid_before_html{
+	margin-left: 30px;
+	margin-right:5px
+}
 
 .orcid_success_div,.orcid_search_div{
 	background:#fff;width:auto;border:1px solid #ccc;margin:10px;padding:10px;position:relative
