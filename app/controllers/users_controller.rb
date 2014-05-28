@@ -199,11 +199,11 @@ class UsersController < ApplicationController
       #  return
       #end
     end
-    
+
     User.transaction do
       #@user.institution_id = params[:user].delete(:institution_id)
       respond_to do |format|
-        if @orcid_id.blank?     
+        if @orcid_id.blank?
           if @user.update_attributes(user_params)
             update_notifications(params[:prefs])
             # LDAP will not except for these two fields to be empty.
@@ -215,9 +215,9 @@ class UsersController < ApplicationController
             format.json { head :no_content }
           else
             format.html { render 'edit'}
-            format.json { head :no_content }    
+            format.json { head :no_content }
           end
-        
+
         else
           if (@user.update_attributes(user_params) && @user.update_attribute(:orcid_id, @orcid_id))
             update_notifications(params[:prefs])
@@ -289,7 +289,7 @@ class UsersController < ApplicationController
   def autocomplate_users_plans
     if !params[:name_term].blank?
       like = params[:name_term].concat("%")
-      @users = User.where("CONCAT(first_name, ' ', last_name) LIKE ? ", like).active
+      @users = User.where("CONCAT(first_name, ' ', last_name) LIKE ? OR email LIKE ?", like, like).active
     end
     list = map_users_for_autocomplete(@users)
     render json: list
