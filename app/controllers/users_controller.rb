@@ -139,7 +139,7 @@ class UsersController < ApplicationController
               existing_user.login_id = @user.login_id
               if existing_user.save
                 session[:user_id] = existing_user.id
-                redirect_to edit_user_path(existing_user), notice: "This LDAP DMPTool account has been created.  You may also log in with 'Not in List' institution in addition to your Shibboleth account."
+                redirect_to edit_user_path(existing_user), notice: "This LDAP DMPTool account has been created.  You may also log in with 'Not in List' institution in addition to your Shibboleth account." and return
               end
             end
           else
@@ -151,7 +151,7 @@ class UsersController < ApplicationController
               elsif @user.save
                 @user.ensure_ldap_authentication(@user.login_id)
                 session[:user_id] = @user.id
-                redirect_to edit_user_path(@user), notice: 'User was successfully created.'
+                redirect_to edit_user_path(@user), notice: 'User was successfully created.' and return
               end
             end
           end
@@ -163,7 +163,7 @@ class UsersController < ApplicationController
       if !@user.errors.any?
         #these will probably be skipped since redirects above
         session[:user_id] = @user.id
-        format.html { redirect_to edit_user_path(@user), notice: 'User was successfully created.' }
+        format.html { redirect_to edit_user_path(@user), notice: 'User was successfully created.' } and return
         format.json { render action: 'show', status: :created, location: @user }
       else
         format.html { render action: 'new' }
