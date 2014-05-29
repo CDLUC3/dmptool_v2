@@ -147,7 +147,14 @@
       <tr>
         <th>Requirement:</th>
         <th>Associated Template:</th>
-        <th>Unlink</th>
+        <th>Unlink
+          <%= content_tag(:span, '', 
+          :title => 'Unlinking a resource from a requirement or template means it will no longer appear to plan creators. If the resource is not linked to any other templates or requirements, unlinking it will cause it to be deleted from the DMPTool.', 
+          'data-toggle' => 'tooltip', 
+          'data-placement' => 'top', 
+          'data-html' => 'true', 
+          :class => 'icon questionmark tip') %>
+        </th>
       </tr>
 
       <% @resource_contexts_requirements.each do |resource_contexts_requirement| %>
