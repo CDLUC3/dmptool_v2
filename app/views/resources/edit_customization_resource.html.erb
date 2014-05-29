@@ -57,7 +57,7 @@
     <div class="actions pull-left">
     
         <%#= link_to '<< Back', request.env["HTTP_REFERER"] + "##{@tab_number}", :class => "btn" %>
-        <%= link_to '<< Back', session[:page_history][1] + "##{@tab_number}", :class => "btn" %>
+        <%= link_to '<< Back', :back, :class => "btn" %>
     </div>
 
     <div class="actions pull-right">
