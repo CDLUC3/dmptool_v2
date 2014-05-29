@@ -45,8 +45,12 @@ class User < ActiveRecord::Base
   before_validation :create_default_preferences, if: Proc.new { |x| x.prefs.empty? }
   before_validation :add_default_institution, if: Proc.new { |x| x.institution_id.nil? }
 
+  before_update :try_update_ldap, :if => :email_changed?
+
   after_destroy :make_other_tables_consistent
 
+
+  class LoginException < Exception ; end
 
   def ensure_ldap_authentication(uid)
     unless Authentication.find_by_user_id_and_provider(self.id, 'ldap')
@@ -60,11 +64,22 @@ class User < ActiveRecord::Base
 
     uid = smart_userid_from_omniauth(auth) #gets info[:uid] or auth[:uid], reduced long LDAP string to simple user_id
 
-    return nil if uid.blank? || auth[:info].blank? || auth[:info][:email].blank?
+    raise LoginException.new('incomplete information from identity provider') if uid.blank? || auth[:info].blank? || auth[:info][:email].blank?
+
+    email = smart_email_from_omniauth(auth[:info][:email])
+
+    u = User.with_deleted.where(email: email)
+
+    raise LoginException.new('multiple users with same email') if u.length > 1
+
+    raise LoginException.new('user deactivated') if u.length == 1 && (!u.first.deleted_at.blank? || u.active == false)
+
     a = Authentication.find_by_uid(uid)
+
     if a.nil?
       create_from_omniauth(auth, institution_id)
     else
+      raise LoginException.new('authentication without user record') if a.user.nil?
       a.user
     end
   end
@@ -269,6 +284,25 @@ class User < ActiveRecord::Base
 
   def ldap_user?
     self.authentications.where(:provider => 'ldap').first.present?
+  end
+
+  #anytime the email is updated, try to update ldap or return false to prevent saving when it can't be changed
+  def try_update_ldap
+    auths = self.authentications.where(provider: 'shibboleth')
+    return false if auths.length > 0
+
+    auths = self.authentications.where(provider: 'ldap')
+    if auths.length > 0
+      uid = auths.first.uid
+    else
+      uid = self.login_id
+    end
+    begin
+      Ldap_User::LDAP.replace_attribute(uid, 'mail', [self.email])
+    rescue LdapMixin::LdapException => ex
+      return false
+    end
+    return true
   end
 
   protected

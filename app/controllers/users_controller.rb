@@ -51,6 +51,7 @@ class UsersController < ApplicationController
     @user = User.new
     @user.institution_id = params[:institution_id] if params[:institution_id]
     @institution_list = InstitutionsController.institution_select_list
+    @email_editable = true
   end
 
 
@@ -67,6 +68,8 @@ class UsersController < ApplicationController
       @institution_list = @my_institution.root.subtree.collect {|i| ["#{'-' * i.depth} #{i.full_name}", i.id] }
     end
 
+    @email_editable = ( @user.authentications.where(provider: 'shibboleth').count < 1 )
+
     @roles = @user.roles.map {|r| r.name}.join(' | ')
 
   end
@@ -78,10 +81,15 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.ldap_create = true
 
-    existing_user = User.find_by_login_id(@user.login_id)
-    unless existing_user.blank?
-      redirect_to login_path, notice: "You already have a DMP Tool account. Please log in with your current username and password to continue." and return
+    existing_user = User.with_deleted.where(login_id: @user.login_id)
+    if existing_user.length > 0
+      existing_user = existing_user.first
+      if !existing_user.deleted_at.blank? || existing_user.active == false
+        redirect_to login_path, notice: "You already have a DMP Tool account with this username, but it's deactivated. Please contact us if you need to have it reactivated." and return
+      end
+      redirect_to login_path, notice: "You already have a DMP Tool account with this username. Please log in with your current username and password to continue." and return
     end
+
 
     @user.skip_email_uniqueness_validation = true
     if [@user.valid?].all?
@@ -96,31 +104,35 @@ class UsersController < ApplicationController
       begin
         results = Ldap_User::LDAP.fetch(@user.login_id)
 
-        #fix up DMP account for in LDAP so that it has dmpUser class, if needed
+        #fix up DMP account in LDAP so that it has dmpUser class, if needed
         unless results['objectclass'].include?('dmpUser')
           cl = Ldap_User::LDAP.fetch_attribute(@user.login_id, 'objectclass')
           cl = cl + ['dmpUser']
           Ldap_User::LDAP.replace_attribute(@user.login_id, 'objectclass', cl)
           results = Ldap_User::LDAP.fetch(@user.login_id)
         end
-        existing_user = User.find_by_login_id(@user.login_id)
-        if existing_user.blank?
-          #add user to DMP users table and redirect to login
+        existing_user = User.with_deleted.where(login_id: @user.login_id)
+
+        #no existing LDAP User in DB so create one, but it already exists in LDAP
+        if existing_user.length < 1
           @user.save
           redirect_to login_path, notice: "You've been added to the DMP Tool with your existing UC3 username, \"#{@user.login_id}\".  Please log in to continue." and return
         else
           #redirct to login, their record already exists.
+          existing_user = existing_user.first
           redirect_to login_path, notice: "You already have a DMP Tool account. Your username is \"#{@user.login_id}\".  Please log in with your current password to continue." and return
         end
         @user.skip_email_uniqueness_validation = false
       rescue LdapMixin::LdapException => detail
+        #couldn't fetch this user from LDAP if it got here
         @user.skip_email_uniqueness_validation = false
-        # add record
+
         if detail.message.include? 'does not exist'
-          # Add the user
-          existing_user = User.find_by_email(@user.email)
-          if existing_user #existing non-LDAP (shibboleth) user, needs their id and info changed and have no ldap account
-            if !Ldap_User.add(@user.login_id, user_params[:password], "#{@user.first_name}", "#{@user.last_name}", @user.email)
+          existing_user = User.with_deleted.where(email: @user.email)
+          if existing_user.length > 0
+            # user with existing Shibboleth Account
+            existing_user = existing_user.first
+            unless Ldap_User.add(@user.login_id, user_params[:password], "#{@user.first_name}", "#{@user.last_name}", @user.email)
               @display_text = "There were problems adding this user to the LDAP directory. Please contact uc3@ucop.edu."
               render action: 'new'
             else
@@ -131,6 +143,7 @@ class UsersController < ApplicationController
               end
             end
           else
+            # user getting a new account
             User.transaction do
               if !Ldap_User.add(@user.login_id, user_params[:password], "#{@user.first_name}", "#{@user.last_name}", @user.email)
                 @display_text = "There were problems adding this user to the LDAP directory. Please contact uc3@ucop.edu."
@@ -145,10 +158,10 @@ class UsersController < ApplicationController
         end
       end
     end
-=begin
-# this whole section commented out since it is redundant
+    @email_editable = true
     respond_to do |format|
       if !@user.errors.any?
+        #these will probably be skipped since redirects above
         session[:user_id] = @user.id
         format.html { redirect_to edit_user_path(@user), notice: 'User was successfully created.' }
         format.json { render action: 'show', status: :created, location: @user }
@@ -156,7 +169,7 @@ class UsersController < ApplicationController
         format.html { render action: 'new' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
-=end
+    end
   end
 
   # PATCH/PUT /users/1
