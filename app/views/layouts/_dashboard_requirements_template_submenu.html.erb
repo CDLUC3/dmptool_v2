@@ -6,7 +6,9 @@
     <% if menu_level(0) == 'dmp_templates' && menu_level(1) == 'overview' %>
 
       <li class="current"><%= link_to(content_tag(:span, 'Template Overview'), '#') %></li>
-      <li><%= link_to(content_tag(:span, 'Template Details'), requirements_template_requirements_path(@requirements_template)) %></li>
+      <% if @requirements_template && @requirements_template.id %>
+        <li><%= link_to(content_tag(:span, 'Template Details'), requirements_template_requirements_path(@requirements_template)) %></li>
+      <% end %>
       <li class="last"></li>
     <% end %>
 
