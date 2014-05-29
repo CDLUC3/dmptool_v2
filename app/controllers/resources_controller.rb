@@ -81,7 +81,7 @@
 
     if @resource_level == 'requirement' #customization details
 
-
+      # respond_to do |format|
       if (  (@resource_type == "actionable_url") &&  (!is_valid_url?(@value))  )
         flash[:error] = "The url: #{@value} is a not valid url."  
         redirect_to edit_customization_resource_path(id: @resource.id,
