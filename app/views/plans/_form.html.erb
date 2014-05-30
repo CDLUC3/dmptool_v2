@@ -15,7 +15,7 @@
           <div class="controls">
             <% if @plan.new_record? && current_page?(controller: 'plans', action: 'new') %>
               <%= f.hidden_field :requirements_template_id, value: params[:requirements_template_id], id: 'dmp_template_id' %>
-              <%= text_field_tag(:selected_requirement_template, RequirementsTemplate.find(params[:requirements_template_id]).name, id: 'selected_requirement_template_name', :class => 'input-xxlarge', disabled: true) %>
+              <%= text_field_tag(:selected_requirement_template, RequirementsTemplate.where(params[:requirements_template_id]).first.try(:name), id: 'selected_requirement_template_name', :class => 'input-xxlarge', disabled: true) %>
             <% elsif @plan.new_record? && current_page?(controller: 'plans', action: 'copy_existing_template') %>
               <%= f.hidden_field :requirements_template_id, value: @plan.requirements_template_id, id: 'dmp_template_id' %>
               <%= text_field_tag(:selected_requirement_template, @plan.requirements_template.name, id: 'selected_requirement_template_name', :class => 'input-xxlarge', disabled: true) %>
