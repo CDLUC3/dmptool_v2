@@ -373,7 +373,8 @@ class ResourceContextsController < ApplicationController
       when "Overview"
         @origin_path =  "#{edit_resource_context_path(@customization_overview_id)}"
       when "Details"
-        @origin_path =  "#{customization_requirement_path(@customization_overview_id)}"
+        @origin_path =  "#{customization_requirement_path(id: @customization_overview_id,
+                                               requirement_id: @requirement_id)}"
       else
         @origin_path =  "#{edit_resource_context_path(@customization_overview_id)}"
     end
