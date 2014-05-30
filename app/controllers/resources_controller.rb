@@ -89,6 +89,16 @@
     @resource_level = params[:resource_level]
     @requirement_id = params[:requirement_id]
     @template_id = params[:template_id]
+
+    case @custom_origin
+      when "Overview"
+        @origin_path =  "#{edit_resource_context_path(@customization_id)}"
+      when "Details"
+        @origin_path =  "#{customization_requirement_path(id: @customization_id,
+                                            requirement_id: @requirement_id)}"
+      else
+        @origin_path =  "#{edit_resource_context_path(@customization_id)}"
+    end
     
 
     if @resource_level == 'requirement' #customization details
