@@ -7,6 +7,7 @@ development:
   recaptcha_private_key:  6Ld2AAYAAAAAAHAzVcdFizHHGPInfgr4aGOm4n4x
   google_analytics_key:   UA-30638119-8
   google_analytics_host:  cdlib.org
+  host_for_email_links:   https://dmp2-dev.cdlib.org
 
 development_nonlocal:
   development
@@ -20,6 +21,7 @@ stage:
   recaptcha_private_key:  6Ld2AAYAAAAAAHAzVcdFizHHGPInfgr4aGOm4n4x
   google_analytics_key:   UA-30638119-9
   google_analytics_host:  cdlib.org
+  host_for_email_links:   https://dmp2-staging.cdlib.org
 
 stage_development:
   stage
@@ -33,6 +35,7 @@ production:
   recaptcha_private_key:  6Ld2AAYAAAAAAHAzVcdFizHHGPInfgr4aGOm4n4x
   google_analytics_key:   UA-30638119-10
   google_analytics_host:  cdlib.org
+  host_for_email_links:   https://dmptool.org
 
 production_development:
   production
