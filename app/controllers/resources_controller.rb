@@ -38,15 +38,16 @@
     @tab_number = params[:tab_number] || ''
     @custom_origin = params[:custom_origin]
     @origin_url = params[:origin_url]
+     
 
     case @custom_origin
       when "Overview"
-        @origin_path =  "#{edit_resource_context_path(@customization_overview_id)}"
+        @origin_path =  "#{edit_resource_context_path(@customization_id)}"
       when "Details"
         @origin_path =  "#{customization_requirement_path(id: @customization_id,
                                                requirement_id: @requirement_id)}"
       else
-        @origin_path =  "#{edit_resource_context_path(@customization_overview_id)}"
+        @origin_path =  "#{edit_resource_context_path(@customization_id)}"
     end
 
     @resource_templates_id = ResourceContext.where(resource_id: @resource.id).pluck(:requirements_template_id)
@@ -88,6 +89,16 @@
     @resource_level = params[:resource_level]
     @requirement_id = params[:requirement_id]
     @template_id = params[:template_id]
+
+    case @custom_origin
+      when "Overview"
+        @origin_path =  "#{edit_resource_context_path(@customization_id)}"
+      when "Details"
+        @origin_path =  "#{customization_requirement_path(id: @customization_id,
+                                            requirement_id: @requirement_id)}"
+      else
+        @origin_path =  "#{edit_resource_context_path(@customization_id)}"
+    end
     
 
     if @resource_level == 'requirement' #customization details
@@ -257,6 +268,16 @@
     @template_name = RequirementsTemplate.find(@template_id).name
     @resource = Resource.new
 
+    case @custom_origin
+      when "Overview"
+        @origin_path =  "#{edit_resource_context_path(@customization_overview_id)}"
+      when "Details"
+        @origin_path =  "#{customization_requirement_path(id: @customization_overview_id,
+                                               requirement_id: @requirement_id)}"
+      else
+        @origin_path =  "#{edit_resource_context_path(@customization_overview_id)}"
+    end
+
     @customization_overview = ResourceContext.find(@customization_overview_id)
     @current_institution_id = nil
 
@@ -296,6 +317,16 @@
     @template_name = RequirementsTemplate.find(@template_id).name
     @customization_overview_id = params[:customization_overview_id]
     @customization_overview = ResourceContext.find(@customization_overview_id)
+
+    case @custom_origin
+      when "Overview"
+        @origin_path =  "#{edit_resource_context_path(@customization_overview_id)}"
+      when "Details"
+        @origin_path =  "#{customization_requirement_path(id: @customization_overview_id,
+                                               requirement_id: @requirement_id)}"
+      else
+        @origin_path =  "#{edit_resource_context_path(@customization_overview_id)}"
+    end
 
     
     if (  (@resource_type == "actionable_url") &&  (!is_valid_url?(@value))  )

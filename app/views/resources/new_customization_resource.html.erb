@@ -52,8 +52,19 @@
       </div>
 
       <div class="actions pull-left">
-        <%= link_to '<< Back', :back,
-                :class => "btn" %>
+        <% if @custom_origin == 'Details' %>
+          <%= link_to '<< Back', 
+                  "#{@origin_path}"+
+                  '#'+
+                  "#{@tab_number}",  
+                  :class => "btn" %>
+        <%else%>
+          <%= link_to '<< Back', 
+                    "#{@origin_path}",  
+                    :class => "btn" %>
+        <%end%>
+          <%#= link_to '<< Back', :back,
+                  :class => "btn" %>
       </div>
 
       <div class="actions pull-right">
