@@ -37,6 +37,17 @@
     @tab = params[:tab] 
     @tab_number = params[:tab_number] || ''
     @custom_origin = params[:custom_origin]
+    @origin_url = params[:origin_url]
+
+    case @custom_origin
+      when "Overview"
+        @origin_path =  "#{edit_resource_context_path(@customization_overview_id)}"
+      when "Details"
+        @origin_path =  "#{customization_requirement_path(id: @customization_id,
+                                               requirement_id: @requirement_id)}"
+      else
+        @origin_path =  "#{edit_resource_context_path(@customization_overview_id)}"
+    end
 
     @resource_templates_id = ResourceContext.where(resource_id: @resource.id).pluck(:requirements_template_id)
 
@@ -71,20 +82,28 @@
     @tab = params[:tab]
     @tab_number = params[:tab_number]
     @custom_origin = params[:custom_origin]
+    @origin_url = params[:origin_url]
     @resource = Resource.find(params[:id])
     @customization_id = params[:customization_id]
     @resource_level = params[:resource_level]
     @requirement_id = params[:requirement_id]
     @template_id = params[:template_id]
+    
 
     if @resource_level == 'requirement' #customization details
 
-
+      # respond_to do |format|
       if (  (@resource_type == "actionable_url") &&  (!is_valid_url?(@value))  )
         flash[:error] = "The url: #{@value} is a not valid url."  
         redirect_to edit_customization_resource_path(id: @resource.id,
                                                customization_id: @customization_id,
-                                               custom_origin: @custom_origin)         
+                                               custom_origin: @custom_origin,
+                                               requirement_id: @requirement_id,
+                                               resource_level: @resource_level,
+                                               tab: @tab,
+                                               tab_number: @tab_number,
+                                               template_id: @template_id,
+                                               origin_url: @origin_url)         
         return
       end
 
@@ -107,7 +126,13 @@
         flash[:error] = "The url: #{@value} is a not valid url."  
         redirect_to edit_customization_resource_path(id: @resource.id,
                                                customization_id: @customization_id,
-                                               custom_origin: @custom_origin)         
+                                               custom_origin: @custom_origin,
+                                               requirement_id: @requirement_id,
+                                               resource_level: @resource_level,
+                                               tab: @tab,
+                                               tab_number: @tab_number,
+                                               template_id: @template_id,
+                                               origin_url: @origin_url)        
         return
       end
 
@@ -223,6 +248,7 @@
 
     @tab = params[:tab]
     @custom_origin = params[:custom_origin]
+    @origin_url = params[:origin_url]
     @tab_number = params[:tab_number]
     @requirement_id = params[:requirement_id]
     @resource_level = params[:resource_level]
@@ -262,6 +288,7 @@
     @value = params[:resource][:value]
     @tab = params[:tab]
     @custom_origin = params[:custom_origin]
+    @origin_url = params[:origin_url]
     @tab_number = params[:tab_number]
     @requirement_id = params[:requirement_id]
     @resource_level = params[:resource_level]
@@ -350,6 +377,7 @@
 
     @tab = params[:tab]
     @custom_origin = params[:custom_origin]
+    @origin_url = params[:origin_url]
     @tab_number = params[:tab_number]
     @requirement_id = params[:requirement_id]
     @resource_level = params[:resource_level]

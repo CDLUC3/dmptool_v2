@@ -8,6 +8,7 @@ class Response < ActiveRecord::Base
   validates :plan_id, presence: true, numericality: true
   validates :requirement_id, presence: true, numericality: true
   validates :text_value, presence: true, if: :validate_only_if_obligation_mandatory
+  after_create :check_revised
   after_update :check_revised
 
   def validate_only_if_obligation_mandatory
