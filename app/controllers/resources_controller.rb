@@ -39,6 +39,16 @@
     @custom_origin = params[:custom_origin]
     @origin_url = params[:origin_url]
 
+    case @custom_origin
+      when "Overview"
+        @origin_path =  "#{edit_resource_context_path(@customization_overview_id)}"
+      when "Details"
+        @origin_path =  "#{customization_requirement_path(id: @customization_id,
+                                               requirement_id: @requirement_id)}"
+      else
+        @origin_path =  "#{edit_resource_context_path(@customization_overview_id)}"
+    end
+
     @resource_templates_id = ResourceContext.where(resource_id: @resource.id).pluck(:requirements_template_id)
 
     @resource_contexts_templates = ResourceContext.
@@ -78,6 +88,7 @@
     @resource_level = params[:resource_level]
     @requirement_id = params[:requirement_id]
     @template_id = params[:template_id]
+    
 
     if @resource_level == 'requirement' #customization details
 
