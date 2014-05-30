@@ -5,7 +5,7 @@ class PlansController < ApplicationController
   #note show will need to be protected from logins in some cases, but only from non-public plan viewing
   before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details, :preview, :perform_review, :coowners, :add_coowner_autocomplete]
   before_action :check_copy_plan_access, only: [:copy_existing_template]
-  before_action :check_plan_access, only: [:edit, :update, :destroy, :details, :add_coowner_autocomplete, :delete_coowner, :preview]
+  before_action :check_plan_access, only: [:edit, :update, :destroy, :details, :add_coowner_autocomplete, :preview]
 
   # GET /plans
   # GET /plans.json
