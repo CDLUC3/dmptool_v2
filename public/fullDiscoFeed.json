@@ -1,0 +1,5675 @@
+[
+{
+ "entityID": "urn:mace:incommon:osu.edu",
+ "DisplayNames": [
+  {
+  "value": "Ohio State University",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "https://webauth.service.ohio-state.edu/info.html",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://ocio.osu.edu/policy/policies",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://webauth.service.ohio-state.edu/images/osu_mdui.png",
+  "height": "83",
+  "width": "83",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:ucop.edu",
+ "DisplayNames": [
+  {
+  "value": "University of California - Office of the President",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:uci.edu",
+ "DisplayNames": [
+  {
+  "value": "University of California-Irvine",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:washington.edu",
+ "DisplayNames": [
+  {
+  "value": "University of Washington",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "The University of Washington IdP enables standards-based federation for the UW community.\n",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "https://wiki.cac.washington.edu/x/fiOD",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://wiki.cac.washington.edu/download/attachments/8594302/uw.png",
+  "height": "63",
+  "width": "128",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:internet2.edu",
+ "DisplayNames": [
+  {
+  "value": "Internet2",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.internet2.edu/about/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.internet2.edu/policies/privacy/",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.internet2.edu/media/medialibrary/2013/10/15/internet2_logo_200pxtrans.gif",
+  "height": "200",
+  "width": "200",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:ucsd.edu",
+ "DisplayNames": [
+  {
+  "value": "University of California-San Diego",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibb-idp.georgetown.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Georgetown University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:case.edu",
+ "DisplayNames": [
+  {
+  "value": "Case Western Reserve University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:virginia.edu",
+ "DisplayNames": [
+  {
+  "value": "University of Virginia",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:uchicago.edu",
+ "DisplayNames": [
+  {
+  "value": "University of Chicago",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "The University of Chicago Web Single Sign-On servce",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://shibboleth2.uchicago.edu/idp/shib_img/idplogo.png",
+  "height": "83",
+  "width": "350",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:muohio.edu",
+ "DisplayNames": [
+  {
+  "value": "Miami University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:stanford.edu",
+ "DisplayNames": [
+  {
+  "value": "Stanford University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Stanford University's identity provider uses Stanford WebAuth to provide single sign-on functionality",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://shibboleth.stanford.edu/",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://idp.stanford.edu/logo.png",
+  "height": "60",
+  "width": "80",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:uab.edu",
+ "DisplayNames": [
+  {
+  "value": "University of Alabama at Birmingham",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:ucla.edu",
+ "DisplayNames": [
+  {
+  "value": "University of California-Los Angeles",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib2.its.rochester.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Rochester",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:ucr.edu",
+ "DisplayNames": [
+  {
+  "value": "University of California, Riverside",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://webauth.umaryland.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Maryland Baltimore",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "The University of Maryland, Baltimore (UMB) is the State's public health, law and human services university devoted to excellence in professional and graduate education, research, patient care, and public service. As a diverse community of outstanding faculty, staff and students, and using state-of-the-art technological support, we educate leaders in health care delivery, biomedical science, global health, social work and the law. We emphasize interdisciplinary education and research in an atmosphere that explicitly values civility, diversity, collaboration, teamwork and accountability. By conducting internationally recognized research to cure disease and to improve the health, social functioning and just treatment of the people we serve, we foster economic development in the City, State, and nation. We are committed to ensuring that the knowledge we generate provides maximum benefit to society and directly enhances our various communities.",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.umaryland.edu/cits/policies/privacy_policy.doc",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://directory.umaryland.edu/shibboleth/umblogo.gif",
+  "height": "89",
+  "width": "340",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:nyu.edu",
+ "DisplayNames": [
+  {
+  "value": "New York University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:dartmouth.edu",
+ "DisplayNames": [
+  {
+  "value": "Dartmouth College",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:ucmerced.edu",
+ "DisplayNames": [
+  {
+  "value": "University of California, Merced",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:usc.edu",
+ "DisplayNames": [
+  {
+  "value": "University of Southern California",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:psu.edu",
+ "DisplayNames": [
+  {
+  "value": "Penn State",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.psu.edu/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.psu.edu/web-privacy-statement",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://ait.its.psu.edu/psulogoforincommon.png",
+  "height": "70",
+  "width": "130",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:umbc.edu",
+ "DisplayNames": [
+  {
+  "value": "University of Maryland Baltimore County",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "The University of Maryland Baltimore County IdP enables standards-based federation for the UMBC community.\n",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "https://wiki.umbc.edu/display/MW/Shibboleth+Identity+Provider",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.umbc.edu/policies/pdfs/x-1.00.06%20web%20site%20privacy%20statement.pdf",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://webauth.umbc.edu/umbclogo.png",
+  "height": "133",
+  "width": "345",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:duke.edu",
+ "DisplayNames": [
+  {
+  "value": "Duke University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:ohio.edu",
+ "DisplayNames": [
+  {
+  "value": "Ohio University Main Campus",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:stonybrook.edu",
+ "DisplayNames": [
+  {
+  "value": "Stony Brook University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:umd.edu",
+ "DisplayNames": [
+  {
+  "value": "University of Maryland College Park",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "The University of Maryland, College Park is a public research university, the flagship campus of the University System of Maryland, and the original 1862 land-grant institution in the State.",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.umd.edu",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.nethics.umd.edu/aup/",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.urhome.umd.edu/trademarks/marks/gr/webglobesm.gif",
+  "height": "61",
+  "width": "61",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:clemson.edu",
+ "DisplayNames": [
+  {
+  "value": "Clemson University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "The Identity Provider for Clemson University",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.clemson.edu/ccit/help_support/safe_computing/resources/best_practices.html",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.clemson.edu/ccit/about/policies/index.html",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.clemson.edu/administration/public-affairs/toolbox/downloads/logos/logos/wordmark.png",
+  "height": "130",
+  "width": "449",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib.its.fsu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Florida State University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:ohiolink.edu",
+ "DisplayNames": [
+  {
+  "value": "OhioLink",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Federated login server for OhioLINK staff",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://authdb.ohiolink.edu/images/full_logo.jpg",
+  "height": "36",
+  "width": "425",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:johnshopkins.edu",
+ "DisplayNames": [
+  {
+  "value": "Johns Hopkins",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://login.johnshopkins.edu/login/images/jhlogo.gif",
+  "height": "52",
+  "width": "266",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:ucdavis.edu",
+ "DisplayNames": [
+  {
+  "value": "University of California, Davis",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://shibboleth.ucdavis.edu/icons/ucd_logo.png",
+  "height": "101",
+  "width": "396",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:tamu.edu",
+ "DisplayNames": [
+  {
+  "value": "Texas A & M University",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://infrastructure.tamu.edu/",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://infrastructure.tamu.edu/images/TAM-PrimaryMarkA.png",
+  "height": "400",
+  "width": "350",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:iu.edu",
+ "DisplayNames": [
+  {
+  "value": "Indiana University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "The Identity Provider for Indiana University.",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://kb.iu.edu/data/bdbk.html",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://protect.iu.edu/privacy/policies",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://idp.iu.edu/shibboleth-idp/images/iu-logo.png",
+  "height": "64",
+  "width": "350",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:northwestern.edu",
+ "DisplayNames": [
+  {
+  "value": "Northwestern University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:buffalo.edu",
+ "DisplayNames": [
+  {
+  "value": "The State University of New York at Buffalo",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://ubidm.buffalo.edu/2-line_blue_gray.png",
+  "height": "127",
+  "width": "846",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:msu.edu",
+ "DisplayNames": [
+  {
+  "value": "Michigan State University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:lafayette.edu",
+ "DisplayNames": [
+  {
+  "value": "Lafayette College",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://its.lafayette.edu/policies/accounts/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://its.lafayette.edu/policies/shibboleth/",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:richmond.edu",
+ "DisplayNames": [
+  {
+  "value": "University of Richmond",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:musc.edu",
+ "DisplayNames": [
+  {
+  "value": "Medical University of South Carolina",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://login.wisc.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Wisconsin-Madison",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "https://login.wisc.edu/docs",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.cio.wisc.edu/policies.aspx",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://login.wisc.edu/images/logo.png",
+  "height": "150",
+  "width": "224",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:nih.gov",
+ "DisplayNames": [
+  {
+  "value": "National Institutes of Health",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:idp.protectnetwork.org",
+ "DisplayNames": [
+  {
+  "value": "ProtectNetwork",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://webauth.oit.umass.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Massachusetts Amherst",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:columbia.edu",
+ "DisplayNames": [
+  {
+  "value": "Columbia University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp-co.calstate.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "California State University, Office of the Chancellor",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:jmu.edu",
+ "DisplayNames": [
+  {
+  "value": "James Madison University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:lbl.gov",
+ "DisplayNames": [
+  {
+  "value": "Lawrence Berkeley National Laboratory",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "https://commons.lbl.gov/display/IDMgmt/Web+Single+Sign+On+at+LBNL",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.lbl.gov/Disclaimers.html",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://commons.lbl.gov/download/attachments/58393603/lbl-logo-scaled.png",
+  "height": "111",
+  "width": "130",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:mlml.calstate.edu",
+ "DisplayNames": [
+  {
+  "value": "Moss Landing Marine Laboratories",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.vcu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Virginia Commonwealth University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:vt.edu",
+ "DisplayNames": [
+  {
+  "value": "Virginia Polytechnic Institute and State University",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.vt.edu/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.vt.edu/about/privacy.html",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.branding.unirel.vt.edu/images/S_logo-virginia-tech.jpg",
+  "height": "40",
+  "width": "230",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:odu.edu",
+ "DisplayNames": [
+  {
+  "value": "Old Dominion University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Old Dominion University Shibboleth IDP",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "https://shibboleth.odu.edu",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://shibboleth.odu.edu/images/mkwl-logo-sm.png",
+  "height": "48",
+  "width": "128",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.incommonfederation.org/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "InCommon Operations",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.umich.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Michigan",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "The University of Michigan",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.umich.edu/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.itcs.umich.edu/itcsdocs/r1465/",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://shibboleth.umich.edu/images/StackedBlockM-InC.png",
+  "height": "150",
+  "width": "300",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:berkeley.edu",
+ "DisplayNames": [
+  {
+  "value": "University of California, Berkeley",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:utah.edu",
+ "DisplayNames": [
+  {
+  "value": "University of Utah",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.wm.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "College of William and Mary",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:rutgers.edu",
+ "DisplayNames": [
+  {
+  "value": "Rutgers, The State University of New Jersey",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://login.emory.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Emory University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:uiuc.edu",
+ "DisplayNames": [
+  {
+  "value": "University of Illinois at Urbana-Champaign",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.gmu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "George Mason University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:carleton.edu",
+ "DisplayNames": [
+  {
+  "value": "Carleton College",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:sc.edu",
+ "DisplayNames": [
+  {
+  "value": "University of South Carolina",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:starkstate.edu",
+ "DisplayNames": [
+  {
+  "value": "Stark State College of Technology",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:umn.edu",
+ "DisplayNames": [
+  {
+  "value": "University of Minnesota",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "University of Minnesota, All Campuses",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "https://wiki.umn.edu/ShibAuth/UMNIdP",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www1.umn.edu/twincities/privacy/",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:uiowa.edu",
+ "DisplayNames": [
+  {
+  "value": "University of Iowa",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "The University of Iowa",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://its.uiowa.edu/shibboleth",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.uiowa.edu/~our/opmanual/ii/19.htm#193",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://dnaapps.uiowa.edu/federation/images/DomeWdL-M.gif",
+  "height": "100",
+  "width": "352",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp2.unr.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Nevada, Reno",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Founded in 1874 as the Silver State's first university, Nevada is a top-caliber, land-grant research university.",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.unr.edu",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.unr.edu/general-information/privacy",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://idp2.unr.edu/idp/images/unr-n-400.png",
+  "height": "134",
+  "width": "400",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:usf.edu",
+ "DisplayNames": [
+  {
+  "value": "University of South Florida",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "This is the Shibboleth Identity Provider for the University of South Florida",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.usf.edu",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:udayton.edu",
+ "DisplayNames": [
+  {
+  "value": "University of Dayton",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "University of Dayton Shibboleth IdP",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.udayton.edu/udit/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.udayton.edu/udit/service_level_resources/policies/index.php",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www-secure.udayton.edu/_udayton/images/logo/redbluep1.gif",
+  "height": "288",
+  "width": "290",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:arizona.edu",
+ "DisplayNames": [
+  {
+  "value": "The University of Arizona",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:mit.edu",
+ "DisplayNames": [
+  {
+  "value": "Massachusetts Institute of Technology",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://vushib-idp.vanderbilt.edu/idp/Shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Vanderbilt University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:ucsf.edu",
+ "DisplayNames": [
+  {
+  "value": "University of California, San Francisco",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib.unl.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Nebraska-Lincoln",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "The University of Nebraska-Lincoln, chartered in 1869, is an educational institution of international stature. UNL is listed by the Carnegie Foundation within the \"Research Universities (very high research activity)\" category. UNL is a land-grant university and a member of the Association of Public and Land-grant Universities (APLU). The university is accredited by the Higher Learning Commission of the North Central Association of Colleges and Schools.",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.unl.edu/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.unl.edu/is/about/UNLprivacy.pdf",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://idm.unl.edu/wdn/templates_3.0/images/logo.png",
+  "height": "67",
+  "width": "66",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:ucsc.edu",
+ "DisplayNames": [
+  {
+  "value": "University of California, Santa Cruz",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.purdue.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Purdue University Main Campus",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.purdue.edu/policies/",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.purdue.edu//purdue/globals/graphics/v4_purdue/PU_signature_white_bg_215x80.png",
+  "height": "80",
+  "width": "215",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:nmu.edu",
+ "DisplayNames": [
+  {
+  "value": "Northern Michigan University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibidp.colostate.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Colorado State University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:stevens.edu",
+ "DisplayNames": [
+  {
+  "value": "Stevens Institute of Technology",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:mcnc.org",
+ "DisplayNames": [
+  {
+  "value": "MCNC",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:asu.edu",
+ "DisplayNames": [
+  {
+  "value": "Arizona State University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.uhd.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Houston-Downtown",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://sso.brown.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Brown University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib-idp.umsystem.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Missouri System",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:ncsu.edu",
+ "DisplayNames": [
+  {
+  "value": "North Carolina State University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Sign in with your NC State UnityID credentials",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://oit.ncsu.edu/iam/shibboleth",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://shib.ncsu.edu/inc/fed_logo.gif",
+  "height": "33",
+  "width": "195",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://fedauth.colorado.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Colorado at Boulder",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "The University of Colorado at Boulder's Identity Provider",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.colorado.edu/oit/webaccess",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.colorado.edu/oit/webaccess",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:ramapo.edu",
+ "DisplayNames": [
+  {
+  "value": "Ramapo College of New Jersey",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://login.ufl.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Florida",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "University of Florida - GatorLink Credentials",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.it.ufl.edu/identity/shibboleth/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://privacy.ufl.edu/",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://images.webadmin.ufl.edu/signatures/wordmark.gif",
+  "height": "38",
+  "width": "135",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://adfs.unco.edu/adfs/services/trust",
+ "DisplayNames": [
+  {
+  "value": "University of Northern Colorado",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.unco.edu/generalcounsel/privacy.htm",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.unco.edu/assets/images/unc_logo_combo_stacked.jpg",
+  "height": "175",
+  "width": "300",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://vsu-pbslive-01v.vsu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Virginia State University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:unc.edu",
+ "DisplayNames": [
+  {
+  "value": "University of North Carolina at Chapel Hill",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "University of North Carolina at Chapel Hill",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:unoh.edu",
+ "DisplayNames": [
+  {
+  "value": "University of Northwestern Ohio",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:uww.edu",
+ "DisplayNames": [
+  {
+  "value": "University of Wisconsin - Whitewater",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.calpoly.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "California Polytechnic State University-San Luis Obispo",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.calpoly.edu/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://afd.calpoly.edu/security/policies/index.html",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.uvm.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Vermont",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "University of Vermont Identity Provider",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "https://www.uvm.edu/it/account/?Page=sso.html",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "https://idp.uvm.edu/idp/privacy.html",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.uvm.edu/www/images/templates/uvmlogo-words.gif",
+  "height": "31",
+  "width": "290",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:nau.edu",
+ "DisplayNames": [
+  {
+  "value": "Northern Arizona University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://login.wustl.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Washington University in St. Louis",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Enterprise SSO authentication system for WUSTLKey Connect services.",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://wustlkey.wustl.edu/Pages/default.aspx",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://connect.wustl.edu/selfservice/images/ConnectLogoTransparent.png",
+  "height": "70",
+  "width": "330",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:humboldt.edu",
+ "DisplayNames": [
+  {
+  "value": "Humboldt State University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://sso.csumb.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "California State University, Monterey Bay",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.csuchico.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "California State University, Chico",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Provides authentication and authorization functions for federated applications used by faculty, staff, and students at California State University, Chico.",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.csuchico.edu/isec/incommonpop.shtml",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.csuchico.edu/isec/incommonpop.shtml",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.csuchico.edu/weblogos/logos/seal154r.gif",
+  "height": "154",
+  "width": "154",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.csupomona.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "California State Polytechnic University, Pomona",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.csudh.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "California State University, Dominguez Hills",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.okstate.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Oklahoma State University Main Campus",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Oklahoma State University System",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.it.okstate.edu/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://stillwater.sharepoint.okstate.edu/Policies/Shared%20Documents/Family%20Educational%20Rights%20and%20Privacy%20Acts%20(B",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://app.it.okstate.edu/osucalendar/images/logo.png",
+  "height": "130",
+  "width": "200",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:rock.k12.nc.us",
+ "DisplayNames": [
+  {
+  "value": "Rockingham County Schools",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.pennkey.upenn.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Pennsylvania",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.fullerton.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "California State University, Fullerton",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.csus.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "California State University, Sacramento",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://incommon.waketech.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Wake Tech Community College",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:alaska.edu",
+ "DisplayNames": [
+  {
+  "value": "University of Alaska Statewide System",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "InCommon federated IdP (identity provider) for all students, faculty, & staff at all campuses of the University of Alaska.",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "https://iam.alaska.edu/trac/wiki/UAInCPOP.html",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "https://iam.alaska.edu/trac/wiki/IamUaArp",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.alaska.edu/files/opa/color.jpg",
+  "height": "632",
+  "width": "860",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://webauth.shib.lsu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Louisiana State University",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "https://webauth.shib.lsu.edu/shibboleth/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.lsu.edu/itpolicy",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://webauth.shib.lsu.edu/shibboleth/images/lsulogo.png",
+  "height": "60",
+  "width": "200",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://login.sonoma.edu/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Sonoma State University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.csusb.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "California State University, San Bernardino",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "https://iam.csusb.edu/incommon/incommonpop.pdf",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "https://iam.csusb.edu/incommon/incommonpop.pdf",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.csusb.edu/banner/Content/images/csusb_logo.gif",
+  "height": "90",
+  "width": "217",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:davie.k12.nc.us",
+ "DisplayNames": [
+  {
+  "value": "Davie County Schools",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp01.sjsu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "San Jose State University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib-idp.its.csufresno.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "California State University, Fresno",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibidp.cpcc.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Central Piedmont Community College",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://logintest.wustl.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "zTest_Washington University in St. Louis",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Test environment IDP for Washington University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://cma-shibboleth.csum.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "California Maritime Academy",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.uic.edu/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Illinois at Chicago",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://www.ohsu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Oregon Health & Science University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://prdidp.uncg.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of North Carolina at Greensboro",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.uncg.edu",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://policy.uncg.edu/acceptable_use/",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://ure.uncg.edu/brandguide/logos/abbrevvcolor.png",
+  "height": "85",
+  "width": "90",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.csusm.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "California State University, San Marcos",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.sdsu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "San Diego State University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.raidp.org/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Clemson's Research Affiliate Identity Provider",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.utsystem.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Texas System",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Logon service for The University of Texas System Administration",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "https://www.utsystem.edu/privacy.htm",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://idm.utsystem.edu/images/UTSystemSeal-Small.jpg",
+  "height": "75",
+  "width": "75",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.nss.udel.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Delaware",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.its.utexas.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Texas at Austin",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Logon service for The University of Texas at Austin",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.utexas.edu/its/help/shibboleth",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "https://www.utexas.edu/cio/policies/web-privacy/",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.utexas.edu/includes/core/images/wordmark-stacked-2012.png",
+  "height": "150",
+  "width": "344",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.sfsu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "San Francisco State University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.utdallas.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Texas at Dallas",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib2.utep.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Texas at El Paso",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Logon service for The University of Texas at El Paso",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://idm.utsystem.edu/images/utep-logo.jpg",
+  "height": "100",
+  "width": "75",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib2.swmed.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Texas Southwestern Medical Center at Dallas",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Logon service for The University of Texas Southwestern Medical Center",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://idm.utsystem.edu/images/utswmc-logo.jpg",
+  "height": "103",
+  "width": "75",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.uta.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Texas at Arlington",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.uta.edu/oit/policy/Internet-privacy.php",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib-idp2.uth.tmc.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Texas Health Science Center At Houston",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://sso.it.utsa.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Texas at San Antonio",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Use your myUTSA ID to login to services across the UT System federation, other Universities worldwide, and 3rd party applications affiliated with UTSA.",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.utsa.edu/policies/privacy.html",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://sso.it.utsa.edu/images/utsa-logo.png",
+  "height": "54",
+  "width": "338",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.uttyler.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Texas At Tyler",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Single Signon Service at The University of Texas at Tyler",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.uttyler.edu/privacy",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://idp.uttyler.edu/images/utt-logo.gif",
+  "height": "45",
+  "width": "63",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.utmb.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Texas Medical Branch At Galveston",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib.uthscsa.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Texas Health Science Center At San Antonio",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib.utb.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Texas At Brownsville",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp1.utpa.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Texas-Pan American",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib.mdanderson.org/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Texas M.D. Anderson Cancer Center",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth-2.baylor.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Baylor University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://login.cmu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Carnegie Mellon University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Carnegie Mellon University Identity Provider",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://identity.andrew.cmu.edu/incommon/cmu-181x125.gif",
+  "height": "125",
+  "width": "181",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://usd-shibboleth.usd.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of South Dakota",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "University of South Dakota, Vermillion",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.usd.edu/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.usd.edu/policies/upload/Policy-Web-Privacy.pdf",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.usd.edu/USD_logo_RV.png",
+  "height": "64",
+  "width": "100",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://mckinley.csuci.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "California State University, Channel Islands",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.uams.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Arkansas for Medical Sciences",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:csun.edu",
+ "DisplayNames": [
+  {
+  "value": "California State University, Northridge",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://weblogin.albany.edu/shibboleth/idp2",
+ "DisplayNames": [
+  {
+  "value": "University At Albany, State University of New York",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://maenad.csc.albany.edu/incommon/logo_A1_pms269-InCommon.png",
+  "height": "150",
+  "width": "203",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.iastate.edu/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Iowa State University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "The Iowa State University of Science and Technology",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://shibboleth.iastate.edu/ISU_InCommon_Nameplate.png",
+  "height": "249",
+  "width": "564",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.princeton.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Princeton University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://login.uc.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Cincinnati Main Campus",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "https://www.uc.edu/kb/display/IDM/Federated+Central+Login+Service",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.uc.edu/content/dam/uc/trustees/docs/rules_10/10-43-11.pdf",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://login.uc.edu/idp/images/UC_logo-incommon-official.png",
+  "height": "153",
+  "width": "270",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibidp.luc.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Loyola University of Chicago",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.caltech.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "California Institute of Technology",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.csustan.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "California State University, Stanislaus",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.uoregon.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Oregon",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "University of Oregon's Shibboleth Identity Provider",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://shibboleth.uoregon.edu/images/Large_UO_Logo.jpg",
+  "height": "239",
+  "width": "200",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.pitt.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Pittsburgh",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://technology.pitt.edu/research-computing/rc-incommon-shibboleth/privacy.html",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.pitt.edu/seal/seal-400x400-72rgb.png",
+  "height": "400",
+  "width": "400",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://vince.csueastbay.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "California State University, East Bay",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://its-shib.its.csulb.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "California State University, Long Beach",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.si.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Smithsonian Institution",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib.csub.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "California State University, Bakersfield",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://identityprovider.anl.gov/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Argonne National Laboratory",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "https://www.anl.gov",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "https://www.anl.gov/notice.html",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://login.anl.gov/idp/images/argonne_header_logo_white.jpg",
+  "height": "100",
+  "width": "227",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.coconino.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Coconino County Community College",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://sso.memphis.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "The University of Memphis",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.calstatela.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "California State University, Los Angeles",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.usu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Utah State University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.tulane.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Tulane University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.uwm.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Wisconsin-Milwaukee",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Primary Identity Provider for UW-Milwaukee",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://iam.uwm.edu/services/uwm_saml.cfm",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://iam.uwm.edu/guide/",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://wayf.uwm.edu/files/uwm_preferred_logo.gif",
+  "height": "81",
+  "width": "276",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.american.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "American University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.ubalt.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Baltimore",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.ubalt.edu",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://login.gac.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Gustavus Adolphus College",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib.uni.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Northern Iowa",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "University of Northern Iowa",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.uni.edu/its/success/federated-identity-based-authentication-and-authorization",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.uni.edu/policies/web-privacy-statement",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://shib.uni.edu/uni_shib_logo.jpg",
+  "height": "151",
+  "width": "150",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://login.regis.edu",
+ "DisplayNames": [
+  {
+  "value": "Regis University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://vm-shibboleth.umb.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Massachusetts Boston",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "University of Massachusetts, Boston",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.umb.edu",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.udc.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of the District of Columbia",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://sso.ecu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "East Carolina University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.gatech.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Georgia Institute of Technology",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.hawaii.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Hawaii",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://qa2.docufide.com/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Docufide, Inc.",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp-prod.cc.ucf.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Central Florida",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://idp-prod.cc.ucf.edu/idp/ucflogo.gif",
+  "height": "75",
+  "width": "150",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://fiuidp.fiu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Florida International University",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://it.fiu.edu/index.shtlm",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://fiuidp.fiu.edu/idp/images/fiulogo.jpg",
+  "height": "85",
+  "width": "64",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.rice.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Rice University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://sso.fau.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Florida Atlantic University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Florida Atlantic Test IDP",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.fau.edu/oit/accounts/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.fau.edu/oit/accounts/",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.fau.edu/images/shibboleth.png",
+  "height": "150",
+  "width": "150",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://webso.iup.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Indiana University of Pennsylvania",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.iup.edu/itsupportcenter/howto.aspx?id=70227",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://webso.iup.edu/images/iup_mdui.png",
+  "height": "110",
+  "width": "83",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.goodwin.edu/idp/saml",
+ "DisplayNames": [
+  {
+  "value": "Goodwin College",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://certify.skidmore.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Skidmore College",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Creative Thought Matters",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib.fortlewis.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Fort Lewis College",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.boisestate.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Boise State University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "You are connecting to a Boise State University website that requires authentication.  Please enter your BroncoWeb username and password to continue.",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://news.boisestate.edu/files/2009/07/horz_blue_on_white180.png",
+  "height": "50",
+  "width": "180",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://fedidp.bcm.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Baylor College of Medicine",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth-dev-v.musc.edu/shibboleth-idp",
+ "DisplayNames": [
+  {
+  "value": "ztest_Medical University of South Carolina",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibprodapp.loyola.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Loyola University Maryland",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "urn:mace:incommon:ucsb.edu",
+ "DisplayNames": [
+  {
+  "value": "University of California-Santa Barbara",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "UCSB is a public research university within the University of California system. It is located on the California coast about 100 miles northwest of Los Angeles.",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.ucsb.edu/campus/index.shtml",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.ucsb.edu/policies/index.shtml",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "http://login.mayo.edu/adfs/services/trust",
+ "DisplayNames": [
+  {
+  "value": "Mayo Clinic",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://auth.yale.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Yale University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.shibboleth.ttu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Texas Tech University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.reed.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Reed College",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://icarus.sdstate.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "South Dakota State University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.smu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Southern Methodist University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Logon service for Southern Methodist University",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://idp.smu.edu/SMU-logo-1.png",
+  "height": "80",
+  "width": "260",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.uark.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Arkansas",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "University of Arkansas, Fayetteville",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.uark.edu",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://its.uark.edu/privacy.html",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://idp.uark.edu/idp/images/uark.logo.png",
+  "height": "88",
+  "width": "300",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib-idp.rpi.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Rensselaer Polytechnic Institute",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.elon.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Elon University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://authentic.txstate.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Texas State University - San Marcos",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Texas State University-San Marcos",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://security.vpit.txstate.edu/policies/incommon-pop.html",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.tr.txstate.edu/privacy-statement.html",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://authentic.txstate.edu/images/fiercebobcat.png",
+  "height": "274",
+  "width": "579",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "http://shibboleth.bsu.edu/sso",
+ "DisplayNames": [
+  {
+  "value": "Ball State University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://myid.vsc.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Vermont State Colleges",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://identity.andrew.cmu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Carnegie Mellon University Tartan-ConnectID for Guests",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Carnegie Mellon University Social Identity Gateway",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://identity.andrew.cmu.edu/incommon/connectid-200x125.png",
+  "height": "125",
+  "width": "200",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.millersville.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Millersville University of Pennsylvania",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Millersville University Shibboleth Identity Provider",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.millersville.edu/registrar/faculty/ferpa.php",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.ias.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Institute for Advanced Study",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://sso.cc.lehigh.edu/sso/saml2/idp/metadata.php",
+ "DisplayNames": [
+  {
+  "value": "Lehigh University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Lehigh University IDP (SimpleSAMLPHP)",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.lehigh.edu/helpdesk/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.lehigh.edu/security/privacy.html",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://sso.cc.lehigh.edu/sso/resources/lehightheme/logo.png",
+  "height": "80",
+  "width": "201",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.utulsa.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Tulsa",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.sbcc.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Santa Barbara City College",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Santa Barbara City College Shibboleth and CAS server",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.sbcc.edu/boardoftrustees/files/policies/AP%203720%20Electronic%20Communication%20Procedures.pdf",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://caneid.miami.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Miami",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://ukidp.uky.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Kentucky",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://oba.coppin.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Coppin State University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "http://adfs.directory.vccs.edu/adfs/services/trust",
+ "DisplayNames": [
+  {
+  "value": "Virginia Community College System",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibidp.ku.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Kansas",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "The University of Kansas",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.ku.edu",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.policy.ku.edu/infoaccess.shtml",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://webmedia.ku.edu/css/template2012/login/logo.png",
+  "height": "139",
+  "width": "180",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib.lternet.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "LTERN (Long Term Ecological Research Network)",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "The U.S. LTER Network is an National Science Funded project that includes 26 research sites encompasing a wide range of ecosystem types spanning broad ranges of environmental conditions and human domination of the landscape. The geographic distribution of sites ranges from Alaska to Antarctica and from the Caribbean to French Polynesia and includes agricultural lands, alpine tundra, barrier islands, coastal lagoons, cold and hot deserts, coral reefs, estuaries, forests, freshwater wetlands, grasslands, kelp forests, lakes, open ocean, savannas, streams, and urban landscapes.",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.lternet.edu",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "http://sts.uidaho.edu/adfs/services/trust",
+ "DisplayNames": [
+  {
+  "value": "University of Idaho",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib.mcnallysmith.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "McNally Smith College",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.gallaudet.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Gallaudet University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Gallaudet University IDP",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://cas.cgcent.miami.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "zTest_University of Miami",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth-idp.collegenet.com/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "CollegeNET, Inc.",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "CollegeNET, Inc. is a leading developer of web-based systems for higher education and non-profit organizations, serving more than 1,300 clients worldwide.\nCollegeNET products include course and event scheduling, space and resource management, web calendar publishing, e-commerce and contributions, accounting, online admission application processing, online course evaluation, and commencement services.",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://corp.collegenet.com/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://corp.collegenet.com/privacy.html",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://corp.collegenet.com/images/CN_blue-small.jpg",
+  "height": "60",
+  "width": "200",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.wpi.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Worcester Polytechnic Institute",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.wpi.edu",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.wpi.edu/Images/template/wpilogo.gif",
+  "height": "60",
+  "width": "489",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib.bu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Boston University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://cas.kumc.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Kansas Medical Center",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "University of Kansas Medical Center",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.kumc.edu",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib01.ship.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Shippensburg University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Shippensburg, Pennsylvania",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.ship.edu/its/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.ship.edu/ITS/Computing_and_Information_Network_Usage_Policy_Statement/",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://shib01.ship.edu/ShipLogo.jpg",
+  "height": "900",
+  "width": "1200",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib.med.cornell.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Weill Cornell Medical College",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://shib.med.cornell.edu/idp/images/wcmc.jpg",
+  "height": "87",
+  "width": "360",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://login.fandm.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Franklin & Marshall College",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.fandm.edu/its/policies",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.fandm.edu/its/policies",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://secure.fandm.edu/images/fandmft.gif",
+  "height": "77",
+  "width": "265",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.ameslab.gov/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Ames Laboratory",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://access.research.cchmc.org/fed/idp/metadata",
+ "DisplayNames": [
+  {
+  "value": "Cincinnati Children's Hospital Medical Center",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "CCHMC Research IdP",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://unmpidp.unm.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of New Mexico",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Primary IDP for the University of New Mexico",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://webauth.wfunet.wfu.edu/saml/saml2/idp/metadata.php",
+ "DisplayNames": [
+  {
+  "value": "Wake Forest University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "A collegiate university in Winston-Salem, North Carolina distinguished by small classes and faculty-student engagement.",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.wfu.edu/",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://login.nd.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Notre Dame",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.colby.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Colby College",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Colby College Shibboleth Identity Provider Service",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "https://www.colby.edu/administration_cs/its/policies/index.cfm",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.colby.edu/images/ColbyLogo_280_1.png",
+  "height": "75",
+  "width": "149",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://signin.k-state.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Kansas State University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Kansas State University Shibboleth Identity Provider",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.k-state.edu/its/shibboleth",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "https://www.k-state.edu/its/policies/",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.k-state.edu/images/kstate-logo.jpg",
+  "height": "65",
+  "width": "200",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib.towson.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Towson University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "The Towson University Shibboleth Identity Provider allows TU faculty, staff and students to access external service providers using their TU NetID.",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://shib.towson.edu/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "https://inside.towson.edu/generalcampus/tupolicies/categorylist.cfm?thecategory=Information%20Technology",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://shib.towson.edu/tulogo.png",
+  "height": "95",
+  "width": "150",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib.ou.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Oklahoma",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.unicon.net/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Unicon, Inc.",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Login service for Unicon Employees",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.unicon.net/files/Image/unicon_logo_600_high.jpg",
+  "height": "88",
+  "width": "600",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://uisshibb1.uis.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Illinois At Springfield",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "User Identification Service @ Illinois Springfield",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.uis.edu",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.uis.edu/informationtechnologyservices/about/policies.html#acceptuse",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.uis.edu/creativeservices/standards/logos/images/webMattWhite/uisDomeLogoBlueWeb72dpi-200hMatWh.gif",
+  "height": "200",
+  "width": "131",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.bridgewater.edu/simplesaml",
+ "DisplayNames": [
+  {
+  "value": "Bridgewater College",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.longsight.com/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Longsight",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Longsight IDP",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.longsight.com/incommon/pop.html",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.longsight.com/privacy-policy",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://idp.longsight.com/idp/images/logo.png",
+  "height": "50",
+  "width": "252",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.niu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Northern Illinois University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://sso.unt.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of North Texas System",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Identity Provider for UNT (Denton), UNT Health Science Center, UNT Dallas, and UNT System.",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://login.ligo.org/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "LIGO Scientific Collaboration",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Laser Interferometer Gravitational-Wave Observatory (LIGO)",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "https://dcc.ligo.org/cgi-bin/DocDB/ShowDocument?docid=89286",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "https://dcc.ligo.org/cgi-bin/DocDB/ShowDocument?docid=89243",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://login.ligo.org/SAML2/metadata/ui/ligologo80x60.png",
+  "height": "60",
+  "width": "80",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://auth.creighton.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Creighton University",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://auth.creighton.edu/creighton-logo.gif",
+  "height": "75",
+  "width": "160",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.wmich.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Western Michigan University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Western Michigan University",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.wmich.edu/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.wmich.edu/it/policies/",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://idp.wmich.edu/idp/images/w_logo.png",
+  "height": "150",
+  "width": "172",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibidp.syr.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Syracuse University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://auth.unomaha.edu/idp",
+ "DisplayNames": [
+  {
+  "value": "University of Nebraska at Omaha",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "IDP for the University of Nebraska Omaha.",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://auth.unomaha.edu/html/icon_uno-clr-lrg.png",
+  "height": "75",
+  "width": "101",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://sonny.furman.edu/idp",
+ "DisplayNames": [
+  {
+  "value": "Furman University",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://furman.edu/",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibidp.bloomu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Bloomsburg University of Pennsylvania",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Identity provider for all faculty, staff, and students of Bloomsburg University, one of the fourteen universities in the Pennsylvania State System of Higher Education (PASSHE).",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.bloomu.edu/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.bloomu.edu/policies_procedures",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://sso.bloomu.edu/idp/images/bu.jpg",
+  "height": "137",
+  "width": "259",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://sso.umuc.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University Of Maryland University College",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.maine.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Maine System",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://identity.maine.edu/cas/images/ums-logo.png",
+  "height": "180",
+  "width": "250",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.oar.net/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Ohio Technology Consortium (OH-TECH)",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "InCommon Federation Identity Provider for the Ohio Technology Consortium, an activity of the Ohio Board of Regents.",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "https://iamohio.net/content/oh_tech_web_identity_services",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://ohio.gov/policies/",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://idp.oar.net/images/full_logo.png",
+  "height": "149",
+  "width": "353",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://gateway.capella.edu/FIM/sps/capella_saml2_idp/saml20",
+ "DisplayNames": [
+  {
+  "value": "Capella University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.ua.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Alabama, The",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.goucher.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Goucher College",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibidp.moxiesoft.com/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Moxie Software, Inc.",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Shibboleth IdP for Moxie Software, formerly nGenera.",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "http://adfs.morgan.edu/adfs/services/trust",
+ "DisplayNames": [
+  {
+  "value": "Morgan State University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.bnl.gov/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Brookhaven National Laboratory",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Brookhaven National Laboratory - BNL.GOV",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://idp.bnl.gov/images/logo.jpg",
+  "height": "145",
+  "width": "396",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://sso.pacificu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Pacific University",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://sso.pacificu.edu/PacU_Logo_RGB.png",
+  "height": "150",
+  "width": "221",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.juilliard.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "The Juilliard School",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "The identity provider for InCommon operations.",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://idp.juilliard.edu/idp/images/jlogo2011.jpg",
+  "height": "109",
+  "width": "300",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://webauth.meredith.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Meredith College",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://webauth.meredith.edu/idp/images/logo.jpg",
+  "height": "68",
+  "width": "342",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "http://login.ewu.edu/adfs/services/trust",
+ "DisplayNames": [
+  {
+  "value": "Eastern Washington University",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://access.ewu.edu/OIT/Services/Accounts-Passwords.xml",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.ewu.edu/Privacy-Policy.xml",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://login.ewu.edu/adfs/ls/images/ewulogo.jpg",
+  "height": "150",
+  "width": "180",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://fed.huit.harvard.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Harvard College",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.clarion.edu/idp",
+ "DisplayNames": [
+  {
+  "value": "Clarion University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Clarion University is a member of the Pennsylvania State System of Higher Education",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://idp.clarion.edu/idp/images/eagle_logo2.gif",
+  "height": "68",
+  "width": "207",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibidp.amherst.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Amherst College",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://qagateway.capella.edu/FIM/sps/CAPLA_SAML2_IDP/saml20",
+ "DisplayNames": [
+  {
+  "value": "ztest_Capella University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.smith.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Smith College",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Identity Provider for Smith College Shibboleth users",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.smith.edu/its/about_its/cis_program.html",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://idp.smith.edu/idp/images/logolargest.gif",
+  "height": "88",
+  "width": "504",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib-idp.tufts.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Tufts University",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://shib-idp.tufts.edu/Tufts_univ_blue.gif",
+  "height": "135",
+  "width": "316",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://umshibp.olemiss.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Mississippi",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://en.wikipedia.org/wiki/University_of_Mississippi",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://secure1.olemiss.edu/irj/go/km/docs/documents/UMImages/UMLogo.png",
+  "height": "100",
+  "width": "400",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://saml.dpsnc.net/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Durham Public Schools",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://secure.stevenson.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Stevenson University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.pace.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Pace University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://login.stolaf.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "St. Olaf College",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.shicloud.com/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "SHI International Corporation",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Development IdP for SHI",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://webauth.auburn.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Auburn University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Identity provider for Auburn University",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.auburn.edu/main/privacy.html",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://login.bc.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Boston College",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.gsu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Georgia State University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Georgia State University is located in the heart of downtown Atlanta. Georgia State is one of the country's leading urban research universities.",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.mbl.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Marine Biological Laboratory",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Marine Biological Laboratory Federated Single Sign-On Service",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.mbl.edu",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.mbl.edu/it/files/2013/05/incommon_privacy_statement.pdf",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib.bucknell.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Bucknell University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Bucknell University, founded in 1846, combines the personal liberal arts experience with first-class research facilities, global study opportunities and 110 fields of study.",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.bucknell.edu/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.bucknell.edu/documents/lit/policies/InCommonPOP.pdf",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.bucknell.edu/images/system/bucknell_logo.png",
+  "height": "95",
+  "width": "181",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://id.uakron.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Akron, Main Campus, The",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://webauth.njit.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "New Jersey Institute of Technology",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.lhup.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Lock Haven University",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.lhup.edu/computing_and_tech",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.lhup.edu/computing_and_tech/aup.html",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.lhup.edu/images/web-logo-head-11.jpg",
+  "height": "42",
+  "width": "447",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib.sou.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Southern Oregon University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "A public liberal arts university.",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.sou.edu/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.sou.edu/policies/Electronic-Commerce-Privacy.pdf",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://shib.sou.edu/SOU-Logo.jpg",
+  "height": "96",
+  "width": "96",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.its.msstate.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Mississippi State University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://neuidmsso.neu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Northeastern University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.apu.edu/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Azusa Pacific University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Identity Provider for Azusa Pacific University's Faculty, Staff, Students and Alumni.",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.uchastings.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of California Hastings College of the Law",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibidp.wsu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Washington State University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Shibboleth Identity Provider for Washington State University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "http://sso.sandburg.edu/adfs/services/trust",
+ "DisplayNames": [
+  {
+  "value": "Carl Sandburg College",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.sandburg.edu/about-us/incommon-pop",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.sandburg.edu/about-us/incommon-pop",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.sandburg.edu/incommon/InCommonLogo.png",
+  "height": "41",
+  "width": "150",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://netid.uwosh.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Wisconsin Oshkosh",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.unmc.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Nebraska Medical Center",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "The University of Nebraska Medical Center IdP enables standards-based federation for the UNMC community.",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "https://www.unmc.edu",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.unmc.edu/its/privacystatement.htm",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://net.unmc.edu/standards/assets/unmcicon.png",
+  "height": "100",
+  "width": "171",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib-idp.siu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Southern Illinois University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.kutztown.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Kutztown University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.utk.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Tennessee",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.wpunj.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "William Paterson University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "http://idp.devsnc.com/openam",
+ "DisplayNames": [
+  {
+  "value": "ServiceNow",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "IdP DevSNC OpenAM",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.lib.uh.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Houston Libraries",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Shibboleth identity provider for the University of Houston Libraries. ",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://shibboleth.lib.uh.edu/idp/images2/uhl.png",
+  "height": "150",
+  "width": "379",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://websso.pomona.edu/",
+ "DisplayNames": [
+  {
+  "value": "Pomona College",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Pomona College Shibboleth IdP",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://its.pomona.edu/about/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.pomona.edu/administration/privacy/",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://community.pomona.edu/image/2013-design-update/logo-new.png",
+  "height": "125",
+  "width": "300",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://singlesignon.gwu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "The George Washington University",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://singlesignon.gwu.edu/idp/images/gwlogo.png",
+  "height": "90",
+  "width": "199",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.uconn.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Connecticut",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.hamilton.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Hamilton College",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://my.hamilton.edu/images/wordmark.jpg",
+  "height": "49",
+  "width": "212",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://fim.temple.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Temple University",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://policies.temple.edu/getdoc.asp?policy_no=04.72.11",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://temple.edu/sites/all/themes/edu/logo.png",
+  "height": "67",
+  "width": "310",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib.calu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "California University of Pennsylvania",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.calu.edu",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.calu.edu/faculty-staff/it-services/policies-guides/index.htm",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.calu.edu/_files/images/logo_72red.jpg",
+  "height": "72",
+  "width": "72",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.brandeis.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Brandeis University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.greatplains.net/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "GPN (Great Plains Network)",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.wooster.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "The College of Wooster",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.ndsu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "North Dakota State University Main Campus",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "North Dakota State University",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.ndsu.edu/eci/shibboleth/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.ndsu.edu/its/security/privacy_statement/",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.ndsu.edu/shibboleth/logo.png",
+  "height": "64",
+  "width": "350",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://auth.chaminade.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Chaminade University of Honolulu",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.chaminade.edu/incommon/operational_practices.pdf",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.sru.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Slippery Rock University of Pennsylvania",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Slippery Rock University of Pennsylvania",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.uwex.uwc.edu/idp",
+ "DisplayNames": [
+  {
+  "value": "University of Wisconsin Colleges and Extension",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://cits.uwex.uwc.edu/",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://cits.uwex.uwc.edu/sites/default/files/PDF/incommonpop_agreement.pdf",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://idp.uwex.uwc.edu/idp/images/logo.gif",
+  "height": "159",
+  "width": "242",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.hampshire.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Hampshire College",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.weber.edu/idp",
+ "DisplayNames": [
+  {
+  "value": "Weber State University",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://weber.edu",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.weber.edu/images/WSU_Logo.png",
+  "height": "122",
+  "width": "238",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.allegheny.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Allegheny College",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "The national liberal arts college where 2,100 students with unusual combinations of interests, skills and talents excel.",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.allegheny.edu",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://sites.allegheny.edu/resources/privacy-and-security-policy/",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://shibboleth.allegheny.edu/ac-logo.png",
+  "height": "120",
+  "width": "460",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.pct.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Pennsylvania College of Technology",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "http://sso.davidson.edu/adfs/services/trust",
+ "DisplayNames": [
+  {
+  "value": "Davidson College",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Davidson College, Davidson, NC",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://webapps.davidson.edu/common/davidson.gif",
+  "height": "48",
+  "width": "198",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://secure.binghamton.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Binghamton University",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Binghamton University Authentication Service.",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "https://its.binghamton.edu/policies/privacy",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.binghamton.edu/images/v2/binghamton-university-logo2.png",
+  "height": "115",
+  "width": "315",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://judge.wcu.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Western Carolina University",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.wcu.edu",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://judge.wcu.edu/idp/images/wculogo.png",
+  "height": "70",
+  "width": "171",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib.wit.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Wentworth Institute of Technology",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.wit.edu/dts/network-services",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.wit.edu/dts/policies/incommon.html",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://shib.wit.edu/logo.gif",
+  "height": "85",
+  "width": "274",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.uaex.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Arkansas, Cooperative Extension Service",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.uaex.edu",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.uaex.edu/privacy.aspx",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://idpinfo.uaex.edu/ua-color-left-small.png",
+  "height": "100",
+  "width": "523",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.cirrusidentity.com/idp",
+ "DisplayNames": [
+  {
+  "value": "Cirrus Identity, Inc.",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Identity Provider for Cirrus Identity employees.",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://cirrusidentity.com/about/privacy",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://apps.cirrusidentity.com/console/static/images/cirrusidentity-ipad-144.png",
+  "height": "144",
+  "width": "144",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibidp.bates.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Bates College",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Bates College Identity Provider",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.bates.edu/ils/login-service",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.bates.edu/ils/policies",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://abacus.bates.edu/1855/wordmarks/bates-wordmark-201-515x150.jpg",
+  "height": "150",
+  "width": "515",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib.ccbcmd.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Community College of Baltimore County",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Community College of Baltimore County IdP",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.ccbcmd.edu",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.ccbcmd.edu/privacy.html",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.ccbcmd.edu/images/templates/logo.gif",
+  "height": "74",
+  "width": "194",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib.wheatonma.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Wheaton College",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Wheaton College Norton, MA",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://its-00004v7.iowa.uiowa.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Z SHA-256 Test KB1",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://its-00004v8.iowa.uiowa.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Z SHA-256 Test KB2",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib-test-sha1.middleware.vt.edu",
+ "DisplayNames": [
+  {
+  "value": "Z SHA-256 Test MA1",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib-test-sha2.middleware.vt.edu",
+ "DisplayNames": [
+  {
+  "value": "Z SHA-256 Test MA2",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://testidp01.ligo.org/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Z SHA-256 Test SK1",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Z SHA-256 Test SK1",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://testidp02.ligo.org/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Z SHA-256 Test SK2",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Z SHA-256 Test SK2",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idm-l1-test.unl.edu/idp-zsha1/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Z SHA-256 Test BB1",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idm-l1-test.unl.edu/idp-zsha2/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Z SHA-256 Test BB2",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.esc.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "SUNY Empire State College",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "http://www.esc.edu/policies/?search=cid%3D35661",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.esc.edu/media/esc-website/style-assets/images/logos/esc-logo-orange-bkg.jpg",
+  "height": "302",
+  "width": "57",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://sso.cedarville.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Cedarville University",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://federation.icermali.org/adfs/services/trust",
+ "DisplayNames": [
+  {
+  "value": "NIAID International Center for Excellence in Research - Mali",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://federation.iceruganda.org/adfs/services/trust",
+ "DisplayNames": [
+  {
+  "value": "NIAID International Center for Excellence in Research - Uganda",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shibboleth.uwyo.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Wyoming",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Production IdP for UWYO domain",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://www.uwyo.edu/_files/images/logo.png",
+  "height": "253",
+  "width": "88",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://thelonious.campusguard.com/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Merchant Preservation Services",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Test - CG IdP",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://junebug.mcc.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Mott Community College",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.pima.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Pima County Community College District",
+  "lang": "en"
+  }
+ ],
+ "InformationURLs": [
+  {
+  "value": "http://www.pima.edu",
+  "lang": "en"
+  }
+ ],
+ "PrivacyStatementURLs": [
+  {
+  "value": "https://www.pima.edu/privacy-policy/index.html",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://shib-pprd.middleware.vt.edu",
+ "DisplayNames": [
+  {
+  "value": "zTEST_VTIdP",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "TEST Virginia Tech IdP",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://smidp.uwstout.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "University of Wisconsin - Stout",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.davidsonccc.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Davidson County Community College",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idp.crl.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Center for Research Libraries",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://login.montana.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "Montana State University - Bozeman",
+  "lang": "en"
+  }
+ ],
+ "Descriptions": [
+  {
+  "value": "Montana State University Bozeman's InCommon Identity provider.",
+  "lang": "en"
+  }
+ ],
+ "Logos": [
+  {
+  "value": "https://login.montana.edu/cas/meta/img/BZlogo.png",
+  "height": "54",
+  "width": "54",
+  "lang": "en"
+  }
+ ]
+},
+{
+ "entityID": "https://idpStaging.miamioh.edu/idp/shibboleth",
+ "DisplayNames": [
+  {
+  "value": "zTEST_MUOhioIdP",
+  "lang": "en"
+  }
+ ]
+}
+]
