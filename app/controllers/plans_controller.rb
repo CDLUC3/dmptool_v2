@@ -572,7 +572,7 @@ class PlansController < ApplicationController
     end
 
     def precendence_review_type
-      @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: @user.institution_id).first
+      @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: @user.institution_id, resource_id: nil, requirement_id: nil).first
       if @customization.nil?
         return nil
       elsif @customization.review_type == :formal_review
