@@ -1,5 +1,9 @@
 .header ul.nav {
 	width: auto; }
+
+.dashboard-header .inst-logo {
+	top: 0;
+}
 	
 .table {
 	border-collapse: collapse; }

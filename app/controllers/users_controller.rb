@@ -300,6 +300,7 @@ class UsersController < ApplicationController
 
 
   def autocomplate_users_plans
+    list = []
     if !params[:name_term].blank?
       items = params[:name_term].split
       conditions1 = items.map{|item| "CONCAT(first_name, ' ', last_name) LIKE ?" }
@@ -307,13 +308,14 @@ class UsersController < ApplicationController
       conditions = "( (#{conditions1.join(' AND ')})" + ' OR ' + "(#{conditions2.join(' AND ')}) )"
       values = items.map{|item| "%#{item}%" }
       @users = User.where(conditions, *(values * 2)).active
+      list = map_users_for_autocomplete(@users)
     end
-    list = map_users_for_autocomplete(@users)
     render json: list
   end
 
 
   def autocomplete_users
+    list = []
     role_number = params[:role_number].to_i
     if !params[:name_term].blank?
       like = params[:name_term].concat("%")
@@ -325,8 +327,8 @@ class UsersController < ApplicationController
       conditions = "( (#{conditions1.join(' AND ')})" + ' OR ' + "(#{conditions2.join(' AND ')}) )"
       values = items.map{|item| "%#{item}%" }
       @users = u.where(conditions, *(values * 2) )
+      list = map_users_for_autocomplete(@users)
     end
-    list = map_users_for_autocomplete(@users)
     render json: list
   end
 
