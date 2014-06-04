@@ -66,7 +66,7 @@
           <%= render partial: '/users/plan_autocomplete_widget',
               :locals =>
              {  user_role: 'coowner',
-                submit_url: add_coowner_autocomplete_path,
+                submit_url: '', #this item is submitted as part of the main form, not by itself
                 item_description: 'co-owner'
              } %>
 
@@ -74,7 +74,7 @@
           <%= render partial: '/users/plan_autocomplete_widget',
               :locals =>
              {  user_role: 'coowner',
-                submit_url: add_coowner_autocomplete_path,
+                submit_url: '', #this item is submitted as part of the main form, not by itself
                 item_description: 'co-owner'
              } %>
             <div class="controls">
