@@ -407,9 +407,11 @@ class UsersController < ApplicationController
     end
 
     # Sets the preferences the user wants to true
-    prefs.each_key do |key|
-      prefs[key].each_key do |k|
-        @user.prefs[key.to_sym][k.to_sym] = true
+    if prefs
+      prefs.each_key do |key|
+        prefs[key].each_key do |k|
+          @user.prefs[key.to_sym][k.to_sym] = true
+        end
       end
     end
 
