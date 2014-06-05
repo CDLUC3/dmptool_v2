@@ -19,7 +19,8 @@ module InstitutionsHelper
 
 
   def plans_count_for_institution(institution)
-    Plan.joins(:requirements_template).where("requirements_templates.institution_id IN (?)", [institution.id]).count  
+    #Plan.joins(:requirements_template).where("requirements_templates.institution_id IN (?)", [institution.id]).count 
+    Plan.joins(:users).where(user_plans: {owner: true}).where("users.institution_id IN (?)", [institution.id]).count 
   end
 
   def institution_admins(institution)
