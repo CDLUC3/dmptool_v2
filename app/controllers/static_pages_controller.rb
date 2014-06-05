@@ -52,7 +52,9 @@ class StaticPagesController < ApplicationController
         end
 
         addl_to = (current_user ? [current_user.institution.contact_email] : [])
-        (APP_CONFIG['feedback_email_to'] + addl_to).each do |i|
+        all_emails = APP_CONFIG['feedback_email_to'] + addl_to
+        all_emails.delete_if {|x| x.blank? } #delete any blank emails
+        all_emails.each do |i|
           GenericMailer.contact_email(params, i).deliver
         end
         flash[:alert] = "Your email message was sent to the DMPTool team."

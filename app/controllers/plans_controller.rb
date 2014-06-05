@@ -3,9 +3,9 @@ class PlansController < ApplicationController
   before_action :require_login, except: [:public, :show]
   before_action :set_user
   #note show will need to be protected from logins in some cases, but only from non-public plan viewing
-  before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details, :preview, :perform_review, :coowners, :add_coowner_autocomplete]
+  before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details, :preview, :perform_review, :coowners]
   before_action :check_copy_plan_access, only: [:copy_existing_template]
-  before_action :check_plan_access, only: [:edit, :update, :destroy, :details, :add_coowner_autocomplete, :preview]
+  before_action :check_plan_access, only: [:edit, :update, :destroy, :details, :preview]
 
   # GET /plans
   # GET /plans.json
@@ -463,39 +463,41 @@ class PlansController < ApplicationController
 
 
   def add_coowner_autocomplete
-    @invalid_users = Array.new
-    @existing_coowners  = Array.new
-    @owner = Array.new
+    invalid_users = Array.new
+    existing_coowners  = Array.new
+    owners = Array.new
+    if @plan.blank? or @plan.id.blank?
+      @invalid_users, @existing_coowners, @owner = invalid_users, existing_coowners, owners
+      return # can't add a user to a plan that hasn't been created yet
+    end
     u_name, = nil
     params.each do |k,v|
       u_name = v if k.end_with?('_name')
     end
-    @item_description = params[:item_description]
+    item_description = params[:item_description]
     unless u_name.blank?
       u_name.split(',').each do |n|
         unless n.blank?
-          @m = n.match(/<?(\S+\@\S+\.[^ >]+)/)
-          @term = n
-          @user, @email = nil, nil
-          @email = @m[1] unless @m.nil?
-          @user = User.find_by(email: @email)
-          owner = UserPlan.where(plan_id: @plan.id, user_id: @user.id, owner: true).first unless @user.nil?
-          if @user.nil?
-            @invalid_users << @term
-          elsif @user.user_plans.where(plan_id: @plan.id, owner: false).count > 0
-            @existing_coowners << @user.full_name
-           elsif !owner.nil?
-            @owner << User.find(owner.user_id).full_name
+          m = n.match(/<?(\S+\@\S+\.[^ >]+)/)
+          term = n
+          user, email = nil, nil
+          email = m[1] unless m.nil?
+          user = User.find_by(email: email)
+          owner = UserPlan.where(plan_id: @plan.id, user_id: user.id, owner: true).first unless user.nil?
+          if user.nil?
+            invalid_users << term
+          elsif user.user_plans.where(plan_id: @plan.id, owner: false).count > 0
+            existing_coowners << user.full_name
+          elsif !owner.nil?
+            owners << User.find(owner.user_id).full_name
           else
-            userplan = UserPlan.create(owner: false, user_id: @user.id, plan_id: @plan.id)
+            userplan = UserPlan.create(owner: false, user_id: user.id, plan_id: @plan.id)
             userplan.save!
           end
         end
       end
     end
-      return @invalid_users
-      return @existing_coowners
-      return @owner
+    @invalid_users, @existing_coowners, @owner = invalid_users, existing_coowners, owners
   end
 
   def delete_coowner
