@@ -1,7 +1,4 @@
 dmptool
 =======
 
-Repository for the dmptool project. All downloads/documents are located in the related [dmpdocs](https://github.com/CDLUC3/dmpdocs) repository.
-
-**Looking for the code? We will be moving it here shortly. In the interim it's available on [Bitbucket](https://bitbucket.org/dmptool/dmptool2).**
-
+**Project moved to Github in June 2014. Go to [github.com/CDLUC3/dmptool](https://github.com/CDLUC3/dmptool).**
