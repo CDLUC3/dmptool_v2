@@ -1,18 +1,22 @@
 <div class= 'global_resources'>
-	<% unless @requirement.global_resources.actionable_url.empty? %>
+	<% unless (  @requirement.global_resources.actionable_url.empty? && @requirement.template_resources.actionable_url.empty? &&
+                @requirement.requirement_resources.actionable_url.empty? ) %>
     <h3> General Resources</h3>
-  <ul>
-    <%# global resources for this requirement, Stephen's case #1 %>
-    <% (@requirement.global_resources.actionable_url).each do |resource| %>
-      <li><%= link_to resource.label, fix_url(resource.value), target: '_blank' %></li>
-    <% end %>
-  </ul>
+  <%end%>
+
+  <% unless @requirement.global_resources.actionable_url.empty? %>
+    <ul>
+      <%# global resources for this requirement, Stephen's case #1 %>
+      <% (@requirement.global_resources.actionable_url).each do |resource| %>
+        <li><%= link_to resource.label, fix_url(resource.value), target: '_blank' %></li>
+      <% end %>
+    </ul>
   <% end %>
 </div>
 
 <div class= 'template_resources'>
 	<% unless @requirement.template_resources.actionable_url.empty? %>
-  <h3> General Resources</h3>
+  <!-- <h3> General Resources</h3> -->
   <ul>
     <%# template resources for this requirement, Stephen's case #2 %>
     <% (@requirement.template_resources.actionable_url).each do |resource| %>
@@ -24,7 +28,7 @@
 
 <div class= 'requirement_resources'>
 	<% unless @requirement.requirement_resources.actionable_url.empty? %>
-  <h3> General Resources</h3>
+  <!-- <h3> General Resources</h3> -->
   <ul>
     <%# requirement resources for this requirement, Stephen's case #3 %>
     <% (@requirement.requirement_resources.actionable_url).each do |resource| %>

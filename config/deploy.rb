@@ -3,7 +3,7 @@ require 'capistrano-unicorn'
 require 'bundler/capistrano'
 
 set :application, 'dmptool2'
-set :repository,  'git@bitbucket.org:dmptool/dmptool2.git'
+set :repository,  'git@github.org:CDLUC3/dmptool.git'
 
 set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
 
