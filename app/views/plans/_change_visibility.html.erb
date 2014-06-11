@@ -7,7 +7,9 @@
       <%= radio_button_tag :visibility, :institutional  %>
       <%= label_tag :visibility_institutional, "With others from #{current_user.institution.full_name}", :class => 'radio-label' %><br/>
       <%= radio_button_tag :visibility, :public%>
-      <%= label_tag :visibility_public, 'Publicly on the web', :class => 'radio-label' %><br/>
+      <%= label_tag :visibility_public, 'Publicly on the web. Your DMP will appear on the Public DMPs 
+                                        page of this site.', 
+                                        :class => 'radio-label' %><br/>
       <%= radio_button_tag :visibility, :private %>
       <%= label_tag :visibility_private, 'Private (owners and co-owners only)', :class => 'radio-label'%>
     </div>
