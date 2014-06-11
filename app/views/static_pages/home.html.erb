@@ -1,10 +1,7 @@
 <% @title_text = "Home" %>
 <div class="banner row-fluid">
-	<h1>Data Management <br/>
-		Planning Tool</h1>
-	<p><strong>Create, review, and share <br/>
-		data management plans</strong> that meet<br/>
-		institutional and funder requirements.</p>
+	<h1>Data Management Planning Tool</h1>
+	<p><strong>Create, review, and share data management plans</strong> that meet institutional and funder requirements.</p>
 	<%= link_to "Get Started", (current_user ? dashboard_path: choose_institution_path), :class => "btn btn-large" %>
 </div>
 <div class="buckets-header row-fluid">
