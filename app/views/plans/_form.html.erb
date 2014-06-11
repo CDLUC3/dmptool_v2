@@ -150,13 +150,26 @@
             </div>
           </div>
           <hr/>
+
+
+
           <div class="control-group">
             <p class ="control-label">Visibility</p>
-            <div class="controls">
-              <p> This DMP is <strong class="blue"><%=@plan.visibility.capitalize %></strong><br/>
-              <%= link_to "Change Settings", "#", :class => "btn change_visibility_link", :'data-planid' => @plan.id, :'data-visibility' => @plan.visibility %></p>
+            <div class="controls" style="border-style:solid; border-width:3px; border-color:blue; width:18%;">
+              <p>
+                This DMP is <strong class="blue"><%=@plan.visibility.capitalize %></strong><br/>
+              <%= link_to "Change Settings", "#", :class => "btn change_visibility_link", :'data-planid' => @plan.id, :'data-visibility' => @plan.visibility %>
+              </p>
+            </div>
+            <div class="controls" style="border-style:solid; border-width:3px; border-color:red; width:27%; float:left">
+              <p>
+                Note: when visibility is set to "Public", your DMP will appear on the <a href="/public_dmps">Public DMPs</a> page of this site. 
+              </p>
             </div>
           </div>
+
+
+
           <hr/>
           <div class="control-group">
             <p class ="control-label">Available Actions</p>
