@@ -1,16 +1,16 @@
 require 'rss'
 
 class StaticPagesController < ApplicationController
-  
+
   layout 'application', only: [:guidance, :contact]
-  
+
   def orcid
     render(layout: nil)
   end
 
   def home
     @rss = Rails.cache.read('rss')
-    @public_dmps = Plan.public_visibility.order(name: :asc).limit(5)
+    @public_dmps = Plan.public_visibility.order(name: :asc).limit(3)
     if @rss.nil?
       begin
         rss_xml = open(APP_CONFIG['rss']).read
@@ -24,10 +24,10 @@ class StaticPagesController < ApplicationController
 
   def about
   end
-  
+
   def video
   end
-  
+
   def partners
   end
 
@@ -52,7 +52,9 @@ class StaticPagesController < ApplicationController
         end
 
         addl_to = (current_user ? [current_user.institution.contact_email] : [])
-        (APP_CONFIG['feedback_email_to'] + addl_to).each do |i|
+        all_emails = APP_CONFIG['feedback_email_to'] + addl_to
+        all_emails.delete_if {|x| x.blank? } #delete any blank emails
+        all_emails.each do |i|
           GenericMailer.contact_email(params, i).deliver
         end
         flash[:alert] = "Your email message was sent to the DMPTool team."
@@ -62,15 +64,17 @@ class StaticPagesController < ApplicationController
                           email: params['email'], message: params[:message]) and return
     end
   end
-  
+
   def privacy
   end
-  
+
   def guidance
-    @public_templates = RequirementsTemplate.public_visibility.includes(:institution, :sample_plans, :additional_informations)
-    
+    @public_templates = RequirementsTemplate.public_visibility.includes(:institution, :sample_plans, :additional_informations).active.current.public_visibility
+
     @scope1 = params[:scope1]
-    @order_scope1 = params[:order_scope1]   
+    @order_scope1 = params[:order_scope1]
+    @s = params[:s]
+    @e = params[:e]
 
     case @order_scope1
       when "Template"
@@ -91,11 +95,11 @@ class StaticPagesController < ApplicationController
       else
         @public_templates = @public_templates.page(params[:public_guidance_page]).per(10)
     end
-    
+
     unless params[:s].blank? || params[:e].blank?
       @public_templates = @public_templates.letter_range_by_institution(params[:s], params[:e])
     end
-    
+
     if !params[:q].blank?
       @public_templates = @public_templates.search_terms(params[:q])
     end
@@ -105,9 +109,9 @@ class StaticPagesController < ApplicationController
       @scope2 = params[:scope2]
       @order_scope2 = params[:order_scope2]
 
-      @institution_templates = current_user.institution.requirements_templates_deep.institutional_visibility.
+      @institution_templates = current_user.institution.requirements_templates_deep.institutional_visibility.active.current.
               includes(:institution, :sample_plans, :additional_informations)
-    
+
 
       case @order_scope2
         when "Template"
@@ -130,6 +134,6 @@ class StaticPagesController < ApplicationController
       end
 
     end
-    
+
   end
 end

@@ -55,7 +55,17 @@
     </div>
 
     <div class="actions pull-left">
-        <%= link_to '<< Back', request.env["HTTP_REFERER"] + "##{@tab_number}", :class => "btn" %>
+      <% if @custom_origin == 'Details' %>
+        <%= link_to '<< Back', 
+                  "#{@origin_path}"+
+                  '#'+
+                  "#{@tab_number}",  
+                  :class => "btn" %>
+      <%else%>
+        <%= link_to '<< Back', 
+                  "#{@origin_path}",  
+                  :class => "btn" %>
+      <%end%>
     </div>
 
     <div class="actions pull-right">
@@ -74,7 +84,7 @@
                                       tab: @tab,
                                       origin_url: smart_origin_url),
                                       :method => :delete,
-                                    data: { confirm: 'Are you sure? This resource will be deleted from all templates!' },
+                                    data: { confirm: 'Are you sure? This resource will be deleted from all templates and all requirements!' },
                                     :class => "red remove_fields") %>
     </div>
   </fieldset>
@@ -104,7 +114,14 @@
 
       <tr>
         <th colspan="2">Template:</th>
-        <th>Unlink</th>
+        <th>Unlink
+        <%= content_tag(:span, '', 
+          :title => 'Unlinking a resource from a requirement or template means it will no longer appear to plan creators. If the resource is not linked to any other templates or requirements, unlinking it will cause it to be deleted from the DMPTool.', 
+          'data-toggle' => 'tooltip', 
+          'data-placement' => 'top', 
+          'data-html' => 'true', 
+          :class => 'icon questionmark tip') %>
+        </th>
       </tr>
 
       <% @resource_contexts_templates.each do |resource_contexts_template| %>
@@ -112,14 +129,26 @@
 
           <td colspan="2" ><%= resource_contexts_template.requirements_template.name %></td>
           <td>
-            <%= link_to raw(''),
-                    unlink_resource_from_template_path(resource_id: @resource.id,
+            <%if (!@any_requirements && @templates_count==1)%>
+              <%= link_to raw(''),
+                unlink_resource_from_template_path(resource_id: @resource.id,
+                                        template_id: resource_contexts_template.requirements_template_id,
+                                        customization_id: @customization_id,
+                                        custom_origin: @custom_origin,
+                                        tab_number: @tab_number),
+                                        method: :post,
+                                        :class => 'icon unlink',
+                                        data: { confirm: 'Are you sure? This resource is not linked to any other templates; therefore unlinking it will cause it to be deleted from the DMPTool.' } %>
+            <%else%>
+              <%= link_to raw(''),
+                unlink_resource_from_template_path(resource_id: @resource.id,
                                         template_id: resource_contexts_template.requirements_template_id,
                                         customization_id: @customization_id,
                                         custom_origin: @custom_origin,
                                         tab_number: @tab_number),
                                         method: :post,
                                         :class => 'icon unlink' %>
+            <%end%>
           </td>
         </tr>
       <% end %>
@@ -139,7 +168,14 @@
       <tr>
         <th>Requirement:</th>
         <th>Associated Template:</th>
-        <th>Unlink</th>
+        <th>Unlink
+          <%= content_tag(:span, '', 
+          :title => 'Unlinking a resource from a requirement or template means it will no longer appear to plan creators. If the resource is not linked to any other templates or requirements, unlinking it will cause it to be deleted from the DMPTool.', 
+          'data-toggle' => 'tooltip', 
+          'data-placement' => 'top', 
+          'data-html' => 'true', 
+          :class => 'icon questionmark tip') %>
+        </th>
       </tr>
 
       <% @resource_contexts_requirements.each do |resource_contexts_requirement| %>
@@ -147,7 +183,8 @@
          <td><%= resource_contexts_requirement.requirement.text_brief%></td>
           <td><%= resource_contexts_requirement.requirements_template.name%></td>
            <td>
-            <%= link_to raw(''),
+            <%if (!@any_templates && @requirements_count==1)%>
+              <%= link_to raw(''),
                     unlink_resource_from_requirement_path(resource_id: @resource.id,
                                         template_id: resource_contexts_requirement.requirements_template_id,
                                         requirement_id: resource_contexts_requirement.requirement_id,
@@ -155,7 +192,19 @@
                                         custom_origin: @custom_origin,
                                         tab_number: @tab_number),
                                         method: :post,
-                                        :class => 'icon unlink' %>
+                                        :class => 'icon unlink',
+                                        data: { confirm: 'Are you sure? This resource is not linked to any other requirements; therefore unlinking it will cause it to be deleted from the DMPTool.' } %>
+            <%else%>
+              <%= link_to raw(''),
+                    unlink_resource_from_requirement_path(resource_id: @resource.id,
+                                        template_id: resource_contexts_requirement.requirements_template_id,
+                                        requirement_id: resource_contexts_requirement.requirement_id,
+                                        customization_id: @customization_id,
+                                        custom_origin: @custom_origin,
+                                        tab_number: @tab_number),
+                                        method: :post,
+                                        :class => 'icon unlink'%>
+            <%end%>
           </td>
         </tr>
       <% end %>

@@ -1,7 +1,9 @@
 <div class="dashboard-header row-fluid">
   <% unless current_user.institution.nil? %>
     <div class="inst-logo span3">
-      <%if !current_user.institution.logo || current_user.institution_id == 0%>
+      <%if current_user.institution_id == 0%>
+        <%= image_tag("UC3-logo.jpg") %>
+      <%elsif !current_user.institution.logo %>
         <%= image_tag("blank_institution_logo.png") %>
       <%else%>
         <%= image_tag current_user.institution.logo, :alt => "#{current_user.institution.logo}" %>
@@ -15,8 +17,8 @@
     <%end%>
     </div>
     <div class="inst-info span4">
-      <%= link_to current_user.institution.url, :id => 'inst-domain' do %>
-        <span class="icon institution-domain"></span><%= current_user.institution.url %>
+      <%= link_to  current_user.institution.url, :id => 'inst-domain' do %>
+        <span class="icon institution-domain"></span><%= current_user.institution.url_text %>
       <% end %>
       <%= mail_to current_user.institution.contact_email, :id => "inst-contact" do %>
         <span class="icon institution-contact"></span>Contact <%= current_user.institution.contact_info %>

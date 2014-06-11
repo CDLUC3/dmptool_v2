@@ -67,19 +67,34 @@ $(function() {
 	});
 });
 
-// $(function() {
-// 	$('#current_admin_with_alert').click(function(){
-// 		if (!$('#5').is(':checked')) { 
-// 			bootbox.confirm( "Do you really want to remove yourself from the Institutional Administrator role? You will lose all administrative permissions.", function(result){
-// 				if (result) {
-// 					return true;
-// 				} else {
-// 					return false;
-// 				}
-// 			});
-// 		};
-// 	});
-// });
+$.extend({ alert: function (message, title) {
+  $("<div></div>").dialog( {
+    buttons: { "Ok": function () { $(this).dialog("close"); } },
+    close: function (event, ui) { $(this).remove(); },
+    resizable: false,
+    title: title,
+    modal: true
+  }).text(message);
+}
+});
+
+function validateFiles(inputFile) {
+  var extErrorMessage = "Only image file with extension: .jpg, .jpeg, .gif or .png is allowed";
+  var allowedExtension = ["jpg", "jpeg", "gif", "png"];
+  var extName;
+  var extError = false;
+ 
+  $.each(inputFile.files, function() {
+    extName = this.name.split('.').pop();
+    if ($.inArray(extName, allowedExtension) == -1) {extError=true;};
+  });
+ 
+  if (extError) {
+    // window.alert(extErrorMessage);
+    $.alert(extErrorMessage, "Wrong File Extension");
+    $(inputFile).val('');
+  };
+}
 
 
 

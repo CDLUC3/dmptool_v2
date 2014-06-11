@@ -79,8 +79,6 @@ class ResourceContextsController < ApplicationController
     @req_temp = @resource_context.requirements_template
     message = @resource_context.changed ? 'Customization was successfully created.' : ''
 
-   
-
     respond_to do |format|
       if @resource_context.save
         customization_resources_list
@@ -190,7 +188,6 @@ class ResourceContextsController < ApplicationController
                       requirement_id:  @requirement_id,
                       anchor: @tab_number), 
                         notice: "The resource was successfully unlinked." }
-        
       end
     end
   end
@@ -219,18 +216,18 @@ class ResourceContextsController < ApplicationController
   end
 
 
-  def unlink_institutional_resource
-    @resource_context = ResourceContext.find(params[:resource_context_id])
-    if @resource_context.destroy
-      respond_to do |format|
-        format.html { redirect_to institutions_path(anchor: 'tab_tab2'), 
-                        notice: "The resource was successfully unlinked." }
-      end
-    else
-      flash[:error] = "A problem prevented this resource to be unlinked."
-      redirect_to institutions_path(anchor: 'tab_tab2')
-    end
-  end
+  # def unlink_institutional_resource
+  #   @resource_context = ResourceContext.find(params[:resource_context_id])
+  #   if @resource_context.destroy
+  #     respond_to do |format|
+  #       format.html { redirect_to institutions_path(anchor: 'tab_tab2'), 
+  #                       notice: "The resource was successfully unlinked." }
+  #     end
+  #   else
+  #     flash[:error] = "A problem prevented this resource to be unlinked."
+  #     redirect_to institutions_path(anchor: 'tab_tab2')
+  #   end
+  # end
 
 
   def destroy
@@ -351,6 +348,7 @@ class ResourceContextsController < ApplicationController
 
   def select_resource
     
+    @origin_url = params[:origin_url]
     @custom_origin = params[:custom_origin]
     @tab = params[:tab]
     @tab_number = ''
@@ -375,7 +373,8 @@ class ResourceContextsController < ApplicationController
       when "Overview"
         @origin_path =  "#{edit_resource_context_path(@customization_overview_id)}"
       when "Details"
-        @origin_path =  "#{customization_requirement_path(@customization_overview_id)}"
+        @origin_path =  "#{customization_requirement_path(id: @customization_overview_id,
+                                               requirement_id: @requirement_id)}"
       else
         @origin_path =  "#{edit_resource_context_path(@customization_overview_id)}"
     end

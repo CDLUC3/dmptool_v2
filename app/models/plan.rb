@@ -18,7 +18,9 @@ class Plan < ActiveRecord::Base
   validates :visibility, presence: true
   validates :requirements_template_id, presence: true
   validate :unique_plan_name_per_owner, on: :create
+
   after_create :duplicate_responses
+  after_update :change_status_to_revised
 
   # scopes for plan's visibility
   scope :institutional_visibility, -> { where(visibility: :institutional) }
@@ -42,7 +44,7 @@ class Plan < ActiveRecord::Base
 
   def self.letter_range(s, e)
     #add as a scope where s=start and e=end letter
-    where("name REGEXP ?", "^[#{s}-#{e}]")
+    where("plans.name REGEXP ?", "^[#{s}-#{e}]")
   end
 
   def self.search_terms(terms)
@@ -90,7 +92,8 @@ class Plan < ActiveRecord::Base
   end
 
   def plans_count_for_institution(institution)
-    Plan.where(:requirements_templates => { :institution_id => institution.subtree_ids }).count
+    #Plan.where(:requirements_templates => { :institution_id => institution.subtree_ids }).count
+    Plan.joins(:users).where(user_plans: {owner: true}).where("users.institution_id IN (?)", [institution.id]).count 
   end
 
   def current_plan_state
@@ -108,6 +111,16 @@ class Plan < ActiveRecord::Base
         new_response.plan_id = self.id
         new_response.save!
       end
+    end
+  end
+
+  def change_status_to_revised
+    if current_plan_state == :committed || current_plan_state == :approved || current_plan_state == :rejected || current_plan_state == :reviewed
+      if self.name_changed? || self.requirements_template_id_changed? || self.solicitation_identifier_changed? || self.submission_deadline_changed? || self.created_at_changed? || self.visibility_changed?
+        PlanState.create!(plan_id: self.id, state: :revised)
+      end
+    else
+      # Do nothing
     end
   end
 end

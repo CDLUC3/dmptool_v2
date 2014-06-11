@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
   validates_presence_of :first_name
   validates_presence_of :last_name
   validates_confirmation_of :password
-  validates_format_of :orcid_id, with: /[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}/, :allow_blank => true
+  #validates_format_of :orcid_id, with: /[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}/, :allow_blank => true
   validates_format_of :password, with: /([A-Za-z])/, :allow_blank => true
   validates_format_of :password, with: /([0-9])/, :allow_blank => true
   validates_length_of :password, within: 8..30, :allow_blank => true
@@ -45,6 +45,12 @@ class User < ActiveRecord::Base
   before_validation :create_default_preferences, if: Proc.new { |x| x.prefs.empty? }
   before_validation :add_default_institution, if: Proc.new { |x| x.institution_id.nil? }
 
+  before_update :try_update_ldap, :if => :email_changed?
+
+  after_destroy :make_other_tables_consistent
+
+
+  class LoginException < Exception ; end
 
   def ensure_ldap_authentication(uid)
     unless Authentication.find_by_user_id_and_provider(self.id, 'ldap')
@@ -53,34 +59,53 @@ class User < ActiveRecord::Base
   end
 
   def self.from_omniauth(auth, institution_id)
-    uid = smart_userid_from_omniauth(auth)
-    return nil if uid.blank? || unpicky(auth, :info).blank? || unpicky(unpicky(auth, :info), :email).blank?
+    auth = auth.with_indifferent_access
+    auth[:info] = auth[:info].with_indifferent_access unless auth[:info].blank?
+
+    uid = smart_userid_from_omniauth(auth) #gets info[:uid] or auth[:uid], reduced long LDAP string to simple user_id
+
+    raise LoginException.new('incomplete information from identity provider') if uid.blank? || auth[:info].blank? || auth[:info][:email].blank?
+
+    email = smart_email_from_omniauth(auth[:info][:email])
+
+    u = User.with_deleted.where(email: email)
+
+    raise LoginException.new('multiple users with same email') if u.length > 1
+
+    raise LoginException.new('user deactivated') if u.length == 1 && (!u.first.deleted_at.blank? || u.active == false)
+
     a = Authentication.find_by_uid(uid)
-    (a.nil? ? nil: a.user) || create_from_omniauth(auth, institution_id)
+
+    if a.nil?
+      create_from_omniauth(auth, institution_id)
+    else
+      raise LoginException.new('authentication without user record') if a.user.nil?
+      a.user
+    end
   end
 
   def self.create_from_omniauth(auth, institution_id)
-    info = unpicky(auth, :info)
-    email = unpicky(info, :email)
+    info = auth[:info]
+    email = smart_email_from_omniauth(info[:email]) #reduce email to first, or take garbage off email if needed
     user = User.find_by_email(email)
     ActiveRecord::Base.transaction do
       if user.nil?
         user = User.new
-        user.email = smart_email_from_omniauth(email)
+        user.email = email
         # Set any of the omniauth fields that have values  in the database.
         # The keys are the omniauth field names, the values are the database field names
         # for mapping omniauth field names to db field names.
         {:first_name => :first_name, :last_name => :last_name}.each do |k, v|
-          user.send("#{v}=", unpicky(info, k)) if !unpicky(info, k).blank?
+          user.send("#{v}=", info[k]) unless info[k].blank?
         end
         #fix login_id for CDL LDAP to be simple username
         user.login_id = smart_userid_from_omniauth(auth)
         user.institution_id = institution_id
         user.prefs = create_default_preferences
         user.save(:validate => false)
-      elsif user.institution.nil?
+      elsif user.institution.nil? || auth[:provider].to_s == 'shibboleth'
         user.institution_id = institution_id
-        user.save(:validate => false)
+        user.save(:validate => false) #don't want to validate just to set institution_id since this user is garbage if they don't have institution set anyway
       end
 
       Authentication.create!({:user_id => user.id, :provider => auth[:provider], :uid => smart_userid_from_omniauth(auth)})
@@ -88,19 +113,19 @@ class User < ActiveRecord::Base
     user
   end
 
-  #returns the userid from omniauth, for LDAP usernames we don't qualify it
-  #while for shibboleth we have a longer qualified string which we need to distinguish
-  #since an unqualified login or an email may not be unique
+  #returns the userid from omniauth.  May be long string for shibboleth
+  # but for ldap we only get a brief username without all the uid, ou, ou, etc
   def self.smart_userid_from_omniauth(auth)
-    info = unpicky(auth, :info)
-    uid = (info ? unpicky(info, :uid) : nil) || unpicky(auth, :uid)
+    info = auth[:info]
+    uid = (info ? info[:uid] : nil) || auth[:uid]
     if uid.match(/^uid=\S+?,ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)
       return uid.match(/^uid=(\S+?),ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)[1]
     end
     uid
   end
 
-  #fixes weird emails
+  #fixes weird emails, only gets first email and dumps garbage like ;, or
+  #multiple emails incorrectly jammed into one field
   def self.smart_email_from_omniauth(email)
     e = email
     if email.class == Array
@@ -261,6 +286,25 @@ class User < ActiveRecord::Base
     self.authentications.where(:provider => 'ldap').first.present?
   end
 
+  #anytime the email is updated, try to update ldap or return false to prevent saving when it can't be changed
+  def try_update_ldap
+    auths = self.authentications.where(provider: 'shibboleth')
+    return false if auths.length > 0
+
+    auths = self.authentications.where(provider: 'ldap')
+    if auths.length > 0
+      uid = auths.first.uid
+    else
+      uid = self.login_id
+    end
+    begin
+      Ldap_User::LDAP.replace_attribute(uid, 'mail', [self.email])
+    rescue LdapMixin::LdapException => ex
+      return false
+    end
+    return true
+  end
+
   protected
 
   TOKEN_CHARS = ('a'..'z').to_a + ('A'..'Z').to_a + ('0'..'9').to_a
@@ -268,7 +312,8 @@ class User < ActiveRecord::Base
     40.times.collect {TOKEN_CHARS.sample}.join('')
   end
 
-  def self.unpicky(hash, key)
-    hash[key.intern] || hash[key.to_s]
+  def make_other_tables_consistent
+    Authentication.destroy_all(user_id: self.id)
+    Authorization.destroy_all(user_id: self.id)
   end
 end

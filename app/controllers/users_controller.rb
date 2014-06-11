@@ -4,7 +4,6 @@ class UsersController < ApplicationController
 
   include InstitutionsHelper
 
-  before_action :only_edit_self, only: [:edit]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :check_dmp_admin_access, only: [:index, :edit_user_roles, :update_user_roles, :destroy]
   before_action :require_logout, only: [:new]
@@ -52,12 +51,15 @@ class UsersController < ApplicationController
     @user = User.new
     @user.institution_id = params[:institution_id] if params[:institution_id]
     @institution_list = InstitutionsController.institution_select_list
+    @email_editable = true
   end
 
 
   # GET /users/1/edit
   def edit
-
+    unless can_edit_user?(params[:id])
+      redirect_to(edit_user_path(current_user), notice: "You may not edit the user you were attempting to edit.  You're now editing your own information.") and return
+    end
     @user = User.find(params[:id])
     @my_institution = @user.institution
     if user_role_in?(:dmp_admin)
@@ -65,6 +67,8 @@ class UsersController < ApplicationController
     else
       @institution_list = @my_institution.root.subtree.collect {|i| ["#{'-' * i.depth} #{i.full_name}", i.id] }
     end
+
+    @email_editable = ( @user.authentications.where(provider: 'shibboleth').count < 1 )
 
     @roles = @user.roles.map {|r| r.name}.join(' | ')
 
@@ -77,10 +81,15 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.ldap_create = true
 
-    existing_user = User.find_by_login_id(@user.login_id)
-    unless existing_user.blank?
-      redirect_to login_path, notice: "You already have a DMP Tool account. Please log in with your current username and password to continue." and return
+    existing_user = User.with_deleted.where(login_id: @user.login_id)
+    if existing_user.length > 0
+      existing_user = existing_user.first
+      if !existing_user.deleted_at.blank? || existing_user.active == false
+        redirect_to login_path, notice: "You already have a DMP Tool account with this username, but it's deactivated. Please contact us if you need to have it reactivated." and return
+      end
+      redirect_to login_path, notice: "You already have a DMP Tool account with this username. Please log in with your current username and password to continue." and return
     end
+
 
     @user.skip_email_uniqueness_validation = true
     if [@user.valid?].all?
@@ -95,41 +104,46 @@ class UsersController < ApplicationController
       begin
         results = Ldap_User::LDAP.fetch(@user.login_id)
 
-        #fix up DMP account for in LDAP so that it has dmpUser class, if needed
+        #fix up DMP account in LDAP so that it has dmpUser class, if needed
         unless results['objectclass'].include?('dmpUser')
           cl = Ldap_User::LDAP.fetch_attribute(@user.login_id, 'objectclass')
           cl = cl + ['dmpUser']
           Ldap_User::LDAP.replace_attribute(@user.login_id, 'objectclass', cl)
           results = Ldap_User::LDAP.fetch(@user.login_id)
         end
-        existing_user = User.find_by_login_id(@user.login_id)
-        if existing_user.blank?
-          #add user to DMP users table and redirect to login
+        existing_user = User.with_deleted.where(login_id: @user.login_id)
+
+        #no existing LDAP User in DB so create one, but it already exists in LDAP
+        if existing_user.length < 1
           @user.save
           redirect_to login_path, notice: "You've been added to the DMP Tool with your existing UC3 username, \"#{@user.login_id}\".  Please log in to continue." and return
         else
           #redirct to login, their record already exists.
+          existing_user = existing_user.first
           redirect_to login_path, notice: "You already have a DMP Tool account. Your username is \"#{@user.login_id}\".  Please log in with your current password to continue." and return
         end
         @user.skip_email_uniqueness_validation = false
       rescue LdapMixin::LdapException => detail
+        #couldn't fetch this user from LDAP if it got here
         @user.skip_email_uniqueness_validation = false
-        # add record
+
         if detail.message.include? 'does not exist'
-          # Add the user
-          existing_user = User.find_by_email(@user.email)
-          if existing_user #existing non-LDAP (shibboleth) user, needs their id and info changed and have no ldap account
-            if !Ldap_User.add(@user.login_id, user_params[:password], "#{@user.first_name}", "#{@user.last_name}", @user.email)
+          existing_user = User.with_deleted.where(email: @user.email)
+          if existing_user.length > 0
+            # user with existing Shibboleth Account
+            existing_user = existing_user.first
+            unless Ldap_User.add(@user.login_id, user_params[:password], "#{@user.first_name}", "#{@user.last_name}", @user.email)
               @display_text = "There were problems adding this user to the LDAP directory. Please contact uc3@ucop.edu."
               render action: 'new'
             else
               existing_user.login_id = @user.login_id
               if existing_user.save
                 session[:user_id] = existing_user.id
-                redirect_to edit_user_path(existing_user), notice: "This LDAP DMPTool account has been created.  You may also log in with 'Not in List' institution in addition to your Shibboleth account."
+                redirect_to edit_user_path(existing_user), notice: "This LDAP DMPTool account has been created.  You may also log in with 'Not in List' institution in addition to your Shibboleth account." and return
               end
             end
           else
+            # user getting a new account
             User.transaction do
               if !Ldap_User.add(@user.login_id, user_params[:password], "#{@user.first_name}", "#{@user.last_name}", @user.email)
                 @display_text = "There were problems adding this user to the LDAP directory. Please contact uc3@ucop.edu."
@@ -137,25 +151,25 @@ class UsersController < ApplicationController
               elsif @user.save
                 @user.ensure_ldap_authentication(@user.login_id)
                 session[:user_id] = @user.id
-                redirect_to edit_user_path(@user), notice: 'User was successfully created.'
+                redirect_to edit_user_path(@user), notice: 'User was successfully created.' and return
               end
             end
           end
         end
       end
     end
-=begin
-# this whole section commented out since it is redundant
+    @email_editable = true
     respond_to do |format|
       if !@user.errors.any?
+        #these will probably be skipped since redirects above
         session[:user_id] = @user.id
-        format.html { redirect_to edit_user_path(@user), notice: 'User was successfully created.' }
+        format.html { redirect_to edit_user_path(@user), notice: 'User was successfully created.' } and return
         format.json { render action: 'show', status: :created, location: @user }
       else
         format.html { render action: 'new' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
-=end
+    end
   end
 
   # PATCH/PUT /users/1
@@ -198,11 +212,11 @@ class UsersController < ApplicationController
       #  return
       #end
     end
-    
+
     User.transaction do
       #@user.institution_id = params[:user].delete(:institution_id)
       respond_to do |format|
-        if @orcid_id.blank?     
+        if @orcid_id.blank?
           if @user.update_attributes(user_params)
             update_notifications(params[:prefs])
             # LDAP will not except for these two fields to be empty.
@@ -214,9 +228,9 @@ class UsersController < ApplicationController
             format.json { head :no_content }
           else
             format.html { render 'edit'}
-            format.json { head :no_content }    
+            format.json { head :no_content }
           end
-        
+
         else
           if (@user.update_attributes(user_params) && @user.update_attribute(:orcid_id, @orcid_id))
             update_notifications(params[:prefs])
@@ -286,16 +300,22 @@ class UsersController < ApplicationController
 
 
   def autocomplate_users_plans
+    list = []
     if !params[:name_term].blank?
-      like = params[:name_term].concat("%")
-      @users = User.where("CONCAT(first_name, ' ', last_name) LIKE ? ", like).active
+      items = params[:name_term].split
+      conditions1 = items.map{|item| "CONCAT(first_name, ' ', last_name) LIKE ?" }
+      conditions2 = items.map{|item| "email LIKE ?" }
+      conditions = "( (#{conditions1.join(' AND ')})" + ' OR ' + "(#{conditions2.join(' AND ')}) )"
+      values = items.map{|item| "%#{item}%" }
+      @users = User.where(conditions, *(values * 2)).active
+      list = map_users_for_autocomplete(@users)
     end
-    list = map_users_for_autocomplete(@users)
     render json: list
   end
 
 
   def autocomplete_users
+    list = []
     role_number = params[:role_number].to_i
     if !params[:name_term].blank?
       like = params[:name_term].concat("%")
@@ -307,8 +327,8 @@ class UsersController < ApplicationController
       conditions = "( (#{conditions1.join(' AND ')})" + ' OR ' + "(#{conditions2.join(' AND ')}) )"
       values = items.map{|item| "%#{item}%" }
       @users = u.where(conditions, *(values * 2) )
+      list = map_users_for_autocomplete(@users)
     end
-    list = map_users_for_autocomplete(@users)
     render json: list
   end
 
@@ -387,9 +407,11 @@ class UsersController < ApplicationController
     end
 
     # Sets the preferences the user wants to true
-    prefs.each_key do |key|
-      prefs[key].each_key do |k|
-        @user.prefs[key.to_sym][k.to_sym] = true
+    if prefs
+      prefs.each_key do |key|
+        prefs[key].each_key do |k|
+          @user.prefs[key.to_sym][k.to_sym] = true
+        end
       end
     end
 
@@ -405,12 +427,18 @@ class UsersController < ApplicationController
     end
   end
 
-  def only_edit_self
-    if !current_user.nil? && current_user.id != params[:id].to_i
-      params[:id] = current_user.id
-    elsif current_user.blank?
-      params[:id] = nil
+  def can_edit_user?(user_id)
+    return false if current_user.blank? || user_id.blank?
+    return true if current_user.id == user_id.to_i
+    return true if user_role_in?(:dmp_admin)
+    if user_role_in?(:institutional_admin)
+      u = User.find_by_id(user_id)
+      return false if u.nil?
+      if current_user.institution.subtree_ids.include?(u.institution.id)
+        return true
+      end
     end
+    return false
   end
 
 

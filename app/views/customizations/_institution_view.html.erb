@@ -53,7 +53,7 @@
                                  :partial_name => tab[:partial],
                                  :collection => @requirement.institution_customization_resources(@institution).send(tab[:scope]),
                                  #:editable => !template_cust,
-                                 :editable      => true,
+                                 :editable      => false,
                                  :cust_level    => '4',
                                  :tab_name      => tab[:name],
                                  :tab_number    => index+1 }

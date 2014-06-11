@@ -37,6 +37,18 @@
     @tab = params[:tab] 
     @tab_number = params[:tab_number] || ''
     @custom_origin = params[:custom_origin]
+    @origin_url = params[:origin_url]
+     
+
+    case @custom_origin
+      when "Overview"
+        @origin_path =  "#{edit_resource_context_path(@customization_id)}"
+      when "Details"
+        @origin_path =  "#{customization_requirement_path(id: @customization_id,
+                                               requirement_id: @requirement_id)}"
+      else
+        @origin_path =  "#{edit_resource_context_path(@customization_id)}"
+    end
 
     @resource_templates_id = ResourceContext.where(resource_id: @resource.id).pluck(:requirements_template_id)
 
@@ -66,16 +78,45 @@
 
   def update_customization_resource
     
+    @resource_type = params[:resource][:resource_type]
+    @value = params[:resource][:value]
     @tab = params[:tab]
     @tab_number = params[:tab_number]
     @custom_origin = params[:custom_origin]
+    @origin_url = params[:origin_url]
     @resource = Resource.find(params[:id])
     @customization_id = params[:customization_id]
     @resource_level = params[:resource_level]
     @requirement_id = params[:requirement_id]
     @template_id = params[:template_id]
 
+    case @custom_origin
+      when "Overview"
+        @origin_path =  "#{edit_resource_context_path(@customization_id)}"
+      when "Details"
+        @origin_path =  "#{customization_requirement_path(id: @customization_id,
+                                            requirement_id: @requirement_id)}"
+      else
+        @origin_path =  "#{edit_resource_context_path(@customization_id)}"
+    end
+    
+
     if @resource_level == 'requirement' #customization details
+
+      # respond_to do |format|
+      if (  (@resource_type == "actionable_url") &&  (!is_valid_url?(@value))  )
+        flash[:error] = "The url: #{@value} is a not valid url."  
+        redirect_to edit_customization_resource_path(id: @resource.id,
+                                               customization_id: @customization_id,
+                                               custom_origin: @custom_origin,
+                                               requirement_id: @requirement_id,
+                                               resource_level: @resource_level,
+                                               tab: @tab,
+                                               tab_number: @tab_number,
+                                               template_id: @template_id,
+                                               origin_url: @origin_url)         
+        return
+      end
 
       respond_to do |format|
         if @resource.update(resource_params)
@@ -92,6 +133,20 @@
       
     else #customization overview
 
+      if (  (@resource_type == "actionable_url") &&  (!is_valid_url?(@value))  )
+        flash[:error] = "The url: #{@value} is a not valid url."  
+        redirect_to edit_customization_resource_path(id: @resource.id,
+                                               customization_id: @customization_id,
+                                               custom_origin: @custom_origin,
+                                               requirement_id: @requirement_id,
+                                               resource_level: @resource_level,
+                                               tab: @tab,
+                                               tab_number: @tab_number,
+                                               template_id: @template_id,
+                                               origin_url: @origin_url)        
+        return
+      end
+
       respond_to do |format|
         if @resource.update(resource_params)
           format.html { redirect_to edit_resource_context_path(@customization_id),
@@ -107,7 +162,7 @@
 
   end
  
-
+#create institutional resource
   def create
     @tab_number = (params[:tab_number].blank? ? 'tab_tab2' : params[:tab_number] )
     @resource = Resource.new(resource_params)
@@ -145,6 +200,7 @@
 
   # DELETE /resources/1
   def destroy
+
     @resource_id = params[:resource_id]
     @resource = Resource.find(@resource_id)
     @customization_ids = ResourceContext.where(resource_id: @resource_id).pluck(:id)
@@ -152,6 +208,10 @@
     @custom_origin = params[:custom_origin]
     @tab_number = params[:tab_number]
     @requirement_id = params[:requirement_id]
+    @origin_url = params[:origin_url]
+    @resource_level = params[:resource_level]
+    @tab = params[:tab]
+    @template_id = params[:template_id]
 
     if @resource.destroy
       if @customization_ids
@@ -198,6 +258,8 @@
   def new_customization_resource
 
     @tab = params[:tab]
+    @custom_origin = params[:custom_origin]
+    @origin_url = params[:origin_url]
     @tab_number = params[:tab_number]
     @requirement_id = params[:requirement_id]
     @resource_level = params[:resource_level]
@@ -205,6 +267,16 @@
     @customization_overview_id = params[:customization_overview_id]
     @template_name = RequirementsTemplate.find(@template_id).name
     @resource = Resource.new
+
+    case @custom_origin
+      when "Overview"
+        @origin_path =  "#{edit_resource_context_path(@customization_overview_id)}"
+      when "Details"
+        @origin_path =  "#{customization_requirement_path(id: @customization_overview_id,
+                                               requirement_id: @requirement_id)}"
+      else
+        @origin_path =  "#{edit_resource_context_path(@customization_overview_id)}"
+    end
 
     @customization_overview = ResourceContext.find(@customization_overview_id)
     @current_institution_id = nil
@@ -232,9 +304,12 @@
 
 
   def create_customization_resource
-    
+   
+    @resource_type = params[:resource][:resource_type]
+    @value = params[:resource][:value]
     @tab = params[:tab]
     @custom_origin = params[:custom_origin]
+    @origin_url = params[:origin_url]
     @tab_number = params[:tab_number]
     @requirement_id = params[:requirement_id]
     @resource_level = params[:resource_level]
@@ -242,6 +317,33 @@
     @template_name = RequirementsTemplate.find(@template_id).name
     @customization_overview_id = params[:customization_overview_id]
     @customization_overview = ResourceContext.find(@customization_overview_id)
+
+    case @custom_origin
+      when "Overview"
+        @origin_path =  "#{edit_resource_context_path(@customization_overview_id)}"
+      when "Details"
+        @origin_path =  "#{customization_requirement_path(id: @customization_overview_id,
+                                               requirement_id: @requirement_id)}"
+      else
+        @origin_path =  "#{edit_resource_context_path(@customization_overview_id)}"
+    end
+
+    
+    if (  (@resource_type == "actionable_url") &&  (!is_valid_url?(@value))  )
+  
+      flash[:error] = "The url: #{@value} is a not valid url."
+      
+      redirect_to new_customization_resource_path(
+                custom_origin:  @custom_origin,
+                template_id: @template_id,
+                customization_overview_id: @customization_overview_id,
+                resource_level: @resource_level,
+                tab:            @tab,
+                requirement_id: @requirement_id,
+                tab_number:     @tab_number) 
+      return
+    end
+    
 
     if user_role_in?(:dmp_admin)
       @current_institution_id = @customization_overview.institution_id
@@ -306,6 +408,7 @@
 
     @tab = params[:tab]
     @custom_origin = params[:custom_origin]
+    @origin_url = params[:origin_url]
     @tab_number = params[:tab_number]
     @requirement_id = params[:requirement_id]
     @resource_level = params[:resource_level]
@@ -385,6 +488,16 @@
   end
 
   private
+
+    def is_valid_url?(str)
+      begin
+        uri = URI.parse(str)
+        str.start_with?('mailto')  || uri.kind_of?(URI::HTTP)
+      rescue URI::InvalidURIError
+        false
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_resource
       @resource = Resource.find(params[:id])
@@ -394,5 +507,7 @@
     def resource_params
       params.require(:resource).permit(:resource_type, :value, :label, :text)
     end
+
+
 
 end

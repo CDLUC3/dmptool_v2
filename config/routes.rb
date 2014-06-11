@@ -120,7 +120,7 @@ Dmptool2::Application.routes.draw do
   get 'review_dmps', to: 'plans#review_dmps'
   post 'change_visibility', to: 'plans#change_visibility'
   get 'public_dmps', to: 'plans#public'
-  post 'add_coowner_autocomplete', to: 'plans#add_coowner_autocomplete'
+  #post 'add_coowner_autocomplete', to: 'plans#add_coowner_autocomplete' #this isn't used and is a helping function for the users controller
   delete 'delete_coowner', to: 'plans#delete_coowner'
   post 'reject_with_comments', to: 'plan_states#reject_with_comments'
 
@@ -142,6 +142,7 @@ Dmptool2::Application.routes.draw do
   patch 'update_customization_resource', to: 'resources#update_customization_resource'
 
   post 'new_customization_resource', to: 'resources#new_customization_resource'
+  get 'new_customization_resource', to: 'resources#new_customization_resource'
   post 'create_customization_resource', to: 'resources#create_customization_resource'
 
   delete 'delete_resource', to: 'resources#destroy'

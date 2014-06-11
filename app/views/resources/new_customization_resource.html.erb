@@ -6,6 +6,7 @@
                           customization_overview_id: @customization_overview_id,
                           resource_level: @resource_level,
                           tab_number: @tab_number,
+                          tab: @tab,
                           requirement_id: @requirement_id,
                           custom_origin: @custom_origin),
                           html: { :class => 'form-horizontal' } do |f| %>
@@ -51,8 +52,19 @@
       </div>
 
       <div class="actions pull-left">
-        <%= link_to '<< Back', :back,
-                :class => "btn" %>
+        <% if @custom_origin == 'Details' %>
+          <%= link_to '<< Back', 
+                  "#{@origin_path}"+
+                  '#'+
+                  "#{@tab_number}",  
+                  :class => "btn" %>
+        <%else%>
+          <%= link_to '<< Back', 
+                    "#{@origin_path}",  
+                    :class => "btn" %>
+        <%end%>
+          <%#= link_to '<< Back', :back,
+                  :class => "btn" %>
       </div>
 
       <div class="actions pull-right">

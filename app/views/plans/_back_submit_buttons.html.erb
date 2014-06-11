@@ -1,23 +1,23 @@
 <% if @customization_review == "formal" %>
-  <% if state(@plan) == :submitted || state(@plan) == :approved || state(@plan) == :rejected %>
+  <% if state(@plan) == :submitted || state(@plan) == :rejected %>
   	<%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
   <% elsif state(@plan) == :new || state(@plan) == :revised %>
   	<%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
   <% elsif state(@plan) == :committed%>
     <%= link_to "Done", plan_plan_states_committed_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
-  <% else %>
+  <% elsif state(@plan) == :approved %>
     <%= link_to "Done", plan_plan_states_committed_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
   <% end %>
 
 <% elsif @customization_review == "informal" %>
-  <% if state(@plan) == :submitted || state(@plan) == :reviewed %>
+  <% if state(@plan) == :submitted %>
     <%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
   <% elsif state(@plan) == :new || state(@plan) == :revised %>
     <%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), method: :post, :class => "btn btn-green pull-right" %><%= content_tag(:span, '', :title => '<p>Submit your Plan for Informal Review Process.</p>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip pull-right') %>
     <%= link_to "Done", plan_plan_states_committed_path(@plan), method: :post, :class => "btn btn-green pull-right" %><%= content_tag(:span, '', :title => '<p>Complete your Plan.</p>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip pull-right') %>
   <% elsif state(@plan) == :committed %>
     <%= link_to "Done", plan_plan_states_committed_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
-  <% else %>
+  <% elsif state(@plan) == :reviewed %>
     <%= link_to "Done", plan_plan_states_committed_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
   <% end %>
 
@@ -29,25 +29,25 @@
   <% end %>
 
 <% elsif (@customization_review == nil && @template_review == "formal") %>
-  <% if state(@plan) == :submitted || state(@plan) == :approved || state(@plan) == :rejected %>
+  <% if state(@plan) == :submitted || state(@plan) == :rejected %>
     <%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
   <% elsif state(@plan) == :new || state(@plan) == :revised %>
     <%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
   <% elsif state(@plan) == :committed%>
     <%= link_to "Done", plan_plan_states_committed_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
-  <% else %>
+  <% elsif state(@plan) == :approved %>
     <%= link_to "Done", plan_plan_states_committed_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
   <% end %>
 
 <% elsif (@customization_review == nil && @template_review == "informal") %>
-  <% if state(@plan) == :submitted || state(@plan) == :reviewed %>
+  <% if state(@plan) == :submitted %>
     <%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
   <% elsif state(@plan) == :new || state(@plan) == :revised %>
     <%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), method: :post, :class => "btn btn-green pull-right" %><%= content_tag(:span, '', :title => '<p>Submit your Plan for Informal Review Process.</p>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip pull-right') %>
     <%= link_to "Done", plan_plan_states_committed_path(@plan), method: :post, :class => "btn btn-green pull-right" %><%= content_tag(:span, '', :title => '<p>Complete your Plan.</p>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip pull-right') %>
   <% elsif state(@plan) == :committed %>
     <%= link_to "Done", plan_plan_states_committed_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
-  <% else %>
+  <% elsif state(@plan) == :reviewed %>
     <%= link_to "Done", plan_plan_states_committed_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
   <% end %>
 
@@ -59,6 +59,6 @@
   <% end %>
 
 <% elsif (@customization_review == nil && @template_review == nil) %>
-  <h3 class="red pull-right"><strong>Review Process not defined for the associated DMP Template</strong></h3>
+  <h3 class="red pull-right"><strong>Review Process is not defined for the associated DMP Template</strong></h3>
 
 <% end %>

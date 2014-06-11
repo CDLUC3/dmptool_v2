@@ -3,8 +3,9 @@ class PlansController < ApplicationController
   before_action :require_login, except: [:public, :show]
   before_action :set_user
   #note show will need to be protected from logins in some cases, but only from non-public plan viewing
-  before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details, :preview, :perform_review, :coowners, :add_coowner_autocomplete]
-  before_action :check_plan_access, except: [:public, :index, :select_dmp_template, :template_information, :copy_existing_template, :new, :create, :review_dmps, :change_visibility]
+  before_action :set_plan, only: [:show, :edit, :update, :destroy, :publish, :export, :details, :preview, :perform_review, :coowners]
+  before_action :check_copy_plan_access, only: [:copy_existing_template]
+  before_action :check_plan_access, only: [:edit, :update, :destroy, :details, :preview]
 
   # GET /plans
   # GET /plans.json
@@ -462,39 +463,41 @@ class PlansController < ApplicationController
 
 
   def add_coowner_autocomplete
-    @invalid_users = Array.new
-    @existing_coowners  = Array.new
-    @owner = Array.new
+    invalid_users = Array.new
+    existing_coowners  = Array.new
+    owners = Array.new
+    if @plan.blank? or @plan.id.blank?
+      @invalid_users, @existing_coowners, @owner = invalid_users, existing_coowners, owners
+      return # can't add a user to a plan that hasn't been created yet
+    end
     u_name, = nil
     params.each do |k,v|
       u_name = v if k.end_with?('_name')
     end
-    @item_description = params[:item_description]
+    item_description = params[:item_description]
     unless u_name.blank?
       u_name.split(',').each do |n|
         unless n.blank?
-          @m = n.match(/<?(\S+\@\S+\.[^ >]+)/)
-          @term = n
-          @user, @email = nil, nil
-          @email = @m[1] unless @m.nil?
-          @user = User.find_by(email: @email)
-          owner = UserPlan.where(plan_id: @plan.id, user_id: @user.id, owner: true).first unless @user.nil?
-          if @user.nil?
-            @invalid_users << @term
-          elsif @user.user_plans.where(plan_id: @plan.id, owner: false).count > 0
-            @existing_coowners << @user.full_name
-           elsif !owner.nil?
-            @owner << User.find(owner.user_id).full_name
+          m = n.match(/<?(\S+\@\S+\.[^ >]+)/)
+          term = n
+          user, email = nil, nil
+          email = m[1] unless m.nil?
+          user = User.find_by(email: email)
+          owner = UserPlan.where(plan_id: @plan.id, user_id: user.id, owner: true).first unless user.nil?
+          if user.nil?
+            invalid_users << term
+          elsif user.user_plans.where(plan_id: @plan.id, owner: false).count > 0
+            existing_coowners << user.full_name
+          elsif !owner.nil?
+            owners << User.find(owner.user_id).full_name
           else
-            userplan = UserPlan.create(owner: false, user_id: @user.id, plan_id: @plan.id)
+            userplan = UserPlan.create(owner: false, user_id: user.id, plan_id: @plan.id)
             userplan.save!
           end
         end
       end
     end
-      return @invalid_users
-      return @existing_coowners
-      return @owner
+    @invalid_users, @existing_coowners, @owner = invalid_users, existing_coowners, owners
   end
 
   def delete_coowner
@@ -514,7 +517,12 @@ class PlansController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_plan
-      @plan = Plan.find(params[:id])
+      begin
+        @plan = Plan.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        redirect_to plans_path, error: "The Plan you were looking for does not exist."
+        return
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -566,7 +574,7 @@ class PlansController < ApplicationController
     end
 
     def precendence_review_type
-      @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: @user.institution_id).first
+      @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: @user.institution_id, resource_id: nil, requirement_id: nil).first
       if @customization.nil?
         return nil
       elsif @customization.review_type == :formal_review
@@ -592,7 +600,8 @@ class PlansController < ApplicationController
 
     def check_plan_access
       unless @user.id.nil?
-        user_plans =  UserPlan.where(user_id: @user.id, plan_id: @plan.id)
+        @plan = Plan.find(params[:id])
+        user_plans = UserPlan.where(user_id: @user.id, plan_id: @plan.id)
         unless !user_plans.empty?
           flash[:error] = "You don't have access to this content."
           redirect_to plans_path # halts request cycle
@@ -600,6 +609,24 @@ class PlansController < ApplicationController
       else
         flash[:error] = "You need to be logged in."
         redirect_to root_url
+      end
+    end
+
+    def check_copy_plan_access
+    ## This params is from Copy Existing Template action
+      if params[:plan] == "" || params[:plan].nil?
+        flash[:error] = "Please select an existing Plan to copy."
+        redirect_to plans_path
+      else
+        @copy_plan = Plan.find(params[:plan])
+        user_plans = UserPlan.where(user_id: @user.id, plan_id: @copy_plan.id)
+        institutionally_visible_plans  = Plan.joins(:users).where('users.institution_id = ?',@user.institution_id).institutional_visibility
+        public_plans = Plan.public_visibility
+        copy_plans = user_plans + institutionally_visible_plans + public_plans
+        unless !copy_plans.empty?
+          flash[:error] = "You don't have access to this content."
+          redirect_to plans_path # halts request cycle
+        end
       end
     end
 end
