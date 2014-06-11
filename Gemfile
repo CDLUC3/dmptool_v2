@@ -6,7 +6,7 @@ gem 'unicorn'
 
 group :development, :test do
   gem 'rspec-rails', '2.13.1'
-  gem 'capistrano'
+  gem 'capistrano', '~> 2.15'
   gem 'capistrano-unicorn'
   gem 'debugger'
   gem 'factory_girl_rails'

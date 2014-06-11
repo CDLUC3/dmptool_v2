@@ -28,3 +28,5 @@ namespace :deploy do
     run "ln -s #{shared_path}/uploads #{release_path}/public/uploads"
   end
 end
+
+
