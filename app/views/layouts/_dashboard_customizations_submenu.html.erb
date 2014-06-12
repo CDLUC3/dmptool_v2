@@ -2,7 +2,7 @@
   <%= link_to(content_tag(:span, 'Customizations'), resource_contexts_path) %>
   <ul class="children dmp-templates">
     <!-- The following adds "current" class when on Customization Overview page -->
-    <% if current_page_includes?(edit_resource_context_path(@resource_context), new_resource_context_path) %>
+    <% if menu_level(1) == 'overview' %>
       <li class="current"><%= link_to(content_tag(:span, 'Overview'), '#') %></li>
       <% unless @resource_context.new_record? %>
         <li><%= link_to(content_tag(:span, 'Details'), customization_requirement_path(@resource_context)) %></li>
@@ -10,10 +10,7 @@
       <li class="last"></li>
     <% end %>
     <!-- The following adds "current" class when on Customization Details page -->
-    <% if current_page_includes?(customization_requirement_path(@resource_context)) ||
-              (params[:controller] == 'customizations' &&
-               current_page?(customization_requirement_path(@resource_context, requirement_id: params[:requirement_id])))                                 %>
-      
+    <% if menu_level(1) == 'details' %>
       <li><%= link_to(content_tag(:span, 'Overview'), edit_resource_context_path(@resource_context)) %></li>
       <li class="current"><%= link_to(content_tag(:span, 'Details'), '#') %></li>
       <li class="last"></li>

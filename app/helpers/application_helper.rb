@@ -50,6 +50,13 @@ module ApplicationHelper
     end
   end
 
+  def menu_level(x)
+    return '' unless @display_menu
+    m = @display_menu.split(':')
+    return '' if x >= m.length
+    m[x]
+  end
+
   def response_value_s(response)
     if response.nil? then
       return "[No response]"
