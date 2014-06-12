@@ -91,6 +91,11 @@ class Plan < ActiveRecord::Base
     @owner ||= users.where('user_plans.owner' => true).first
   end
 
+  def display_state
+    return '' if self.current_state.nil?
+    self.current_state.display_state
+  end
+
   def plans_count_for_institution(institution)
     #Plan.where(:requirements_templates => { :institution_id => institution.subtree_ids }).count
     Plan.joins(:users).where(user_plans: {owner: true}).where("users.institution_id IN (?)", [institution.id]).count 
