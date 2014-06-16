@@ -249,7 +249,7 @@ class PlansController < ApplicationController
 
   def perform_review
     set_comments
-    @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: @user.institution_id).first
+    @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: @user.institution_id, resource_id: nil, requirement_id: nil).first
   end
 
 
