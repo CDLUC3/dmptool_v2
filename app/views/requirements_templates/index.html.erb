@@ -144,8 +144,9 @@
 		<%= paginate @requirements_templates %>
 	</div>
 <%end%>
-
-<%= button_to "Create New Template >>", new_requirements_template_path, :method => :get, :class => "btn"  %>
+<% if user_role_in?(:dmp_admin, :template_editor,  :institutional_admin) %>
+  <%= button_to "Create New Template >>", new_requirements_template_path, :method => :get, :class => "btn"  %>
+<% end %>
 
 
 
