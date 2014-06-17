@@ -319,7 +319,7 @@ class PlansController < ApplicationController
     req_temp = RequirementsTemplate.
                   includes(:institution).
                   where(active: true).
-                  any_of(visibility: :public, institution_id: [@user.institution.subtree_ids])
+                  any_of(visibility: :public, institution_id: [@user.institution.root.subtree_ids])
 
     if !params[:q].blank?
       req_temp = req_temp.name_search_terms(params[:q])
