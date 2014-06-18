@@ -127,8 +127,22 @@
 
       <% @resource_contexts_templates.each do |resource_contexts_template| %>
         <tr>
-
-          <td colspan="2" ><%= resource_contexts_template.requirements_template.name %></td>
+        
+          <%if resource_contexts_template.requirements_template_id.to_s == @template_id %>
+            <td colspan="2">
+              <%= resource_contexts_template.requirements_template.name %> (current) 
+              <%= content_tag(:span, '', 
+                :title => 'This is the name of the template you are currently working on.', 
+                  'data-toggle' => 'tooltip', 
+                  'data-placement' => 'top', 
+                  'data-html' => 'true', 
+                  :class => 'icon questionmark tip') %>
+            </td>
+          <%else%>
+            <td colspan="2"><%= resource_contexts_template.requirements_template.name %></td>
+          <%end%>
+          
+  
           <td>
             <%if (!@any_requirements && @templates_count==1)%>
               <%= link_to raw(''),
@@ -151,6 +165,7 @@
                                         :class => 'icon unlink' %>
             <%end%>
           </td>
+          
         </tr>
       <% end %>
 
@@ -182,8 +197,20 @@
       <% @resource_contexts_requirements.each do |resource_contexts_requirement| %>
         <tr>
          <td><%= resource_contexts_requirement.requirement.text_brief%></td>
-          <td><%= resource_contexts_requirement.requirements_template.name%></td>
-           <td>
+         <%if resource_contexts_requirement.requirements_template.id.to_s == @template_id %>
+            <td colspan="2">
+              <%= resource_contexts_requirement.requirements_template.name %> (current) 
+              <%= content_tag(:span, '', 
+                :title => 'This is the name of the template you are currently working on.', 
+                  'data-toggle' => 'tooltip', 
+                  'data-placement' => 'top', 
+                  'data-html' => 'true', 
+                  :class => 'icon questionmark tip') %>
+            </td>
+          <%else%>
+            <td><%= resource_contexts_requirement.requirements_template.name%></td>
+          <%end%>
+          <td>
             <%if (!@any_templates && @requirements_count==1)%>
               <%= link_to raw(''),
                     unlink_resource_from_requirement_path(resource_id: @resource.id,
