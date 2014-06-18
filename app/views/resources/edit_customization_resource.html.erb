@@ -198,7 +198,7 @@
         <tr>
          <td><%= resource_contexts_requirement.requirement.text_brief%></td>
          <%if resource_contexts_requirement.requirements_template.id.to_s == @template_id %>
-            <td colspan="2">
+            <td>
               <%= resource_contexts_requirement.requirements_template.name %> (current) 
               <%= content_tag(:span, '', 
                 :title => 'This is the name of the template you are currently working on.', 
