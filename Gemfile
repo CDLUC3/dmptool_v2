@@ -5,7 +5,7 @@ gem 'rails', '4.0.5'
 gem 'unicorn'
 
 group :development, :test do
-  gem 'rspec-rails', '2.13.1'
+  gem 'rspec-rails', '~> 2.13.1'
   gem 'capistrano', '~> 2.15'
   gem 'capistrano-unicorn'
   gem 'debugger'
@@ -16,6 +16,7 @@ end
 
 group :test do
   gem 'selenium-webdriver', '~> 2.39.0'
+  gem 'rspec-rails', '~> 2.13.1'
   gem "capybara", "~> 2.2.1"
   gem 'shoulda-matchers'
   gem 'launchy'

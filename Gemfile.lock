@@ -280,7 +280,7 @@ DEPENDENCIES
   rack-test
   rails (= 4.0.5)
   recaptcha
-  rspec-rails (= 2.13.1)
+  rspec-rails (~> 2.13.1)
   sass-rails (~> 4.0.0)
   selenium-webdriver (~> 2.39.0)
   shoulda-matchers
