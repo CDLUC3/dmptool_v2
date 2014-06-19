@@ -15,7 +15,9 @@ feature 'sub user scope' do
 
     click_on('Select Template >>')
 
-    sleep 5
+    expect(page).to have_field('requirements_template_id_46')
+
+    expect(page).to have_text('top_level_test_inst_template')
 
   end
 
