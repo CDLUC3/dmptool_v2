@@ -1,3 +1,4 @@
+<% @display_menu = "review_dmp" %>
 <h1 class="row-fluid"><span class="icon review"></span>Review DMPs</h1>
 <br/>
 <h3><strong>Perform Review </strong></h3>
@@ -34,7 +35,7 @@
     <fieldset class="spaced_below">
       <label class ="control-label">Review Decision:</label>
       <% if state(@plan) == :approved || state(@plan) == :rejected %>
-        <strong>The Plan is set to <span class ="blue"><%= state(@plan).capitalize %></span> state.</strong>
+        <strong>The Plan is set to <span class ="blue"><%= @plan.display_state %></span> state.</strong>
       <% else %>
         <%= link_to "Approve", plan_plan_states_approved_path(@plan), method: :post, :class => "btn btn-green" %>
         <%= link_to "Reject", '#', :id => "reject_with_comments_link" , class: "btn" %>
@@ -57,7 +58,7 @@
       <fieldset class="spaced_below">
       <label class ="control-label">Review Decision:</label>
       <% if state(@plan) == :approved || state(@plan) == :rejected %>
-        <strong>The Plan is set to <span class ="blue"><%= state(@plan).capitalize %></span> state.</strong>
+        <strong>The Plan is set to <span class ="blue"><%= @plan.display_state %></span> state.</strong>
       <% else %>
         <%= link_to "Approve", plan_plan_states_approved_path(@plan), method: :post, :class => "btn btn-green" %>
         <%= link_to "Reject", '#', :id => "reject_with_comments_link" , class: "btn" %>

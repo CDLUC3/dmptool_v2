@@ -249,7 +249,7 @@ class PlansController < ApplicationController
 
   def perform_review
     set_comments
-    @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: @user.institution_id).first
+    @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: @user.institution_id, resource_id: nil, requirement_id: nil).first
   end
 
 
@@ -319,7 +319,7 @@ class PlansController < ApplicationController
     req_temp = RequirementsTemplate.
                   includes(:institution).
                   where(active: true).
-                  any_of(visibility: :public, institution_id: [@user.institution.subtree_ids])
+                  any_of(visibility: :public, institution_id: [@user.institution.root.subtree_ids])
 
     if !params[:q].blank?
       req_temp = req_temp.name_search_terms(params[:q])
