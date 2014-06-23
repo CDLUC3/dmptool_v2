@@ -231,7 +231,9 @@ class PlansController < ApplicationController
   def template_information
     public_plans_ids = Plan.public_visibility.ids
     current_user_plan_ids = UserPlan.where(user_id: @user.id).pluck(:plan_id)
-    institutionally_visible_plans_ids  = Plan.joins(:users).where('users.institution_id = ?',@user.institution_id).institutional_visibility.pluck(:id)
+    institutionally_visible_plans_ids  = Plan.joins(:users)
+          .where(users: {institution_id: @user.institution.root.subtree_ids})
+          .institutional_visibility.pluck(:id)
     plans = (current_user_plan_ids + public_plans_ids + institutionally_visible_plans_ids).uniq
     @plans = Plan.where(id: plans)
     @plans = Kaminari.paginate_array(@plans).page(params[:page]).per(5)
@@ -415,13 +417,12 @@ class PlansController < ApplicationController
   def public
     if user_role_in?(:dmp_admin)
       #show public and institutional for all institutions
-      @plans = Plan.joins(:user_plans).
-          where("`user_plans`.`owner` = 1 AND (plans.visibility = 'public' OR plans.visibility = 'institutional')")
+      @plans = Plan.public_and_institutional
     elsif current_user
       #show public and institutional for my institution
-      @plans = Plan.joins(:users).
-          where("(`user_plans`.`owner` = 1 AND (plans.visibility = 'public' OR (plans.visibility = 'institutional' AND `users`.`institution_id` IN (?))))",
-                current_user.institution.subtree_ids)
+      @plans = Plan.joins(:users)
+          .where("(user_plans.owner = 1 AND (plans.visibility = 'public' OR (plans.visibility = 'institutional' AND users.institution_id IN (?))))",
+                current_user.institution.root.subtree_ids)
     else
       #show public
       @plans = Plan.public_visibility
