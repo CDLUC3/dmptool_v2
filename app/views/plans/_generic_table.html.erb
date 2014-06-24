@@ -1,0 +1,50 @@
+<% # should pass local variable of "plans" and "namespace" %>
+<table class="table table-striped">
+<thead>
+<%# wanted_params = params.slice('all_scope','s', 'e') %>
+<tr>
+  <th class="span5"><%= link_to "Plan Title", params.merge({"#{namespace}:order_scope" => "plans.name"}) %></th>
+  <th class="span5"><%= link_to "Funder Template", params.merge({"#{namespace}:order_scope" => "requirements_templates.name"}) %></th>
+  <th class="span5"><%= link_to "Institution", params.merge({"#{namespace}:order_scope" => "institutions.full_name"}) %></th>
+  <th class="span5"><%= link_to "Owner", params.merge({"#{namespace}:order_scope" => "CONCAT(users.first_name, ' ', users.last_name)"}) %></th>
+  <th>Download</th>
+</tr>
+</thead>
+<tbody>
+<% plans.each do |plan| %>
+  <tr>
+    <td class="plan_name">
+      <div class="toggle-links">
+        <strong><%= plan.name %></strong>
+      </div>
+    </td>
+    <td>
+      <%= (plan.requirements_template && plan.requirements_template.name) || 'seriously, more junk data?' %>
+    </td>
+    <td>
+      <%= plan.owner.institution.name %>
+    </td>
+    <td>
+      <%= plan.owner.full_name %>
+    </td>
+    <td class="span1">
+      <%= link_to('', plan_path(plan, format: "pdf"), :class => 'icon pdf', :target => '_blank') %>
+    </td>
+  </tr>
+<% end %>
+</tbody>
+</table>
+
+<% if params["#{namespace}:all_scope"] == "all" %>
+  <div class="buttons pagination">
+    <%= link_to "View Less", params.merge({"#{namespace}:all_scope" => "less"}),
+                { :class => "btn" } %>
+    <%= paginate plans, :param_name => "#{namespace}:page" %>
+  </div>
+<% else %>
+  <div class="buttons pagination">
+    <%= link_to "View All", params.merge({"#{namespace}:all_scope" => "all"}),
+                { :class => "btn", :id => 'view_all_plans' } %>
+    <%= paginate plans, :param_name => "#{namespace}:page" %>
+  </div>
+<%end%>

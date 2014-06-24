@@ -415,52 +415,42 @@ class PlansController < ApplicationController
   end
 
   def public
+
+    # gets parameters for public table
+    public_params = {}
+    params.slice("public:order_scope", "public:all_scope", "public:page")
+          .each{|k,v| public_params[ k.partition(/^[a-z_]+\:/)[2] ] = v }
+
+    # gets parameters for institutional table
+    inst_params = {}
+    params.slice("institutional:order_scope", "institutional:all_scope", "institutional:page")
+          .each{|k,v| inst_params[ k.partition(/^[a-z_]+\:/)[2] ] = v }
+
+    @plans = Plan.joins( {:users => :institution} ).joins(:requirements_template)
+          .where("user_plans.owner = 1").public_visibility
+    @inst_plans = Plan.joins( {:users => :institution} ).joins(:requirements_template)
+          .where("user_plans.owner = 1").institutional_visibility
+
     if user_role_in?(:dmp_admin)
-      #show public and institutional for all institutions
-      @plans = Plan.public_and_institutional
+      @inst_plan_mode = 'admin'
     elsif current_user
       #show public and institutional for my institution
-      @plans = Plan.joins(:users)
-          .where("(user_plans.owner = 1 AND (plans.visibility = 'public' OR (plans.visibility = 'institutional' AND users.institution_id IN (?))))",
-                current_user.institution.root.subtree_ids)
+      @inst_plans = @inst_plans.where("users.institution_id IN (?)", current_user.institution.root.subtree_ids)
+      @inst_plan_mode = 'institutional'
     else
-      #show public
-      @plans = Plan.public_visibility
+      @inst_plans = nil
     end
 
-    @all_scope = params[:all_scope]
-    @order_scope = params[:order_scope]
-
-    #these params are for filter by letter and are used in the view
-    @s = params[:s]
-    @e = params[:e]
-
-
-    case @order_scope
-      when "PlanTitle"
-        @plans = @plans.order(name: :asc)
-      when "FunderTemplate"
-        @plans = @plans.joins(:requirements_template).order('requirements_templates.name ASC')
-      when "OwnerInstitution"
-        @plans = @plans.order_by_institution
-      when "Owner"
-        @plans = @plans.order_by_owner
-      else
-        @plans = @plans.order(name: :asc)
-    end
+    @plans = multitable(@plans, public_params)
+    @inst_plans = multitable(@inst_plans, inst_params)
 
     unless params[:s].blank? || params[:e].blank?
       @plans = @plans.letter_range(params[:s], params[:e])
     end
-    unless params[:q].blank? then
+    unless params[:q].blank?
       @plans = @plans.search_terms(params[:q])
     end
 
-    if @all_scope != 'all'
-      @plans = @plans.page(params[:page]).per(10)
-    else
-      @plans = @plans.page(0).per(9999)
-    end
   end
 
 
@@ -630,5 +620,24 @@ class PlansController < ApplicationController
           redirect_to plans_path # halts request cycle
         end
       end
+    end
+
+    def multitable(collection, subparams)
+      return nil if collection.nil?
+      valid_sort = ["plans.name", "requirements_templates.name", "institutions.full_name",
+                    "CONCAT(users.first_name, ' ', users.last_name)"]
+      if valid_sort.include?(subparams['order_scope'])
+        collection = collection.order("#{subparams['order_scope']} ASC")
+      else
+        collection = collection.order(name: :asc)
+      end
+
+      if subparams['all_scope'] != 'all'
+        p = ( subparams['page'].nil? ? 1 : subparams['page'].to_i )
+        collection = collection.page(p).per(10)
+      else
+        collection = collection.page(0).per(9999)
+      end
+      return collection
     end
 end
