@@ -432,11 +432,11 @@ class PlansController < ApplicationController
           .where("user_plans.owner = 1").institutional_visibility
 
     if user_role_in?(:dmp_admin)
-      @inst_plan_mode = 'admin'
+      @show_institution = true
     elsif current_user
       #show public and institutional for my institution
       @inst_plans = @inst_plans.where("users.institution_id IN (?)", current_user.institution.root.subtree_ids)
-      @inst_plan_mode = 'institutional'
+      @show_institution = false
     else
       @inst_plans = nil
     end

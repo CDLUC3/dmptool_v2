@@ -30,12 +30,13 @@
 			:class => 'btn viewA-Z') %>
 </div>
 <br/>
-<%= render partial: 'generic_table', locals: {plans: @plans, namespace: 'public'} %>
+<%= render partial: 'generic_table', locals: {plans: @plans, namespace: 'public', show_institution: true} %>
 
-<% unless @inst_plans.nil? %>
+<% unless @inst_plans.nil? || @inst_plans.length < 1 %>
   <br/>
   <h1 class="row-fluid"><span class="icon public-dmps"></span>Institutional DMPs</h1>
-  <%= render partial: 'generic_table', locals: {plans: @inst_plans, namespace: 'institutional'} %>
+  <%= render partial: 'generic_table', locals: {plans: @inst_plans, namespace: 'institutional',
+              show_institution: @show_institution} %>
 <% end %>
 
 
