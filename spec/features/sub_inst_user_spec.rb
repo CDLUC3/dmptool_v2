@@ -20,7 +20,7 @@ feature 'sub institution user scope' do
 
     logs_in_with "#{SUB_USER_USERNAME}", "#{SUB_USER_PASSWORD}", "#{SUB_USER_INSTITUTION_NAME}"
     visit(public_dmps_path)
-    click_on('View All')
+    find(:css, 'a#institutional_view_all_plans').click
     expect(page).to have_text('top_level_plan_my_dog_has_fleas')
 
   end

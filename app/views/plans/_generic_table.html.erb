@@ -52,7 +52,7 @@
 <% else %>
   <div class="buttons pagination">
     <%= link_to "View All", params.merge({"#{namespace}:all_scope" => "all"}),
-                { :class => "btn", :id => 'view_all_plans' } %>
+                { :class => "btn", :id => "#{namespace}_view_all_plans" } %>
     <%= paginate plans, :param_name => "#{namespace}:page" %>
   </div>
 <%end%>
