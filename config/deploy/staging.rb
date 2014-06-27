@@ -6,6 +6,9 @@ set :deploy_to, "/dmp2/apps/dmp2/"
 set :unicorn_pid, "/dmp2/apps/dmp2/shared/tmp/unicorn.dmp2.pid"
 set :rails_env, "stage"
 
+
 after 'deploy', 'deploy:migrate'
-before 'deploy:restart', 'deploy:symlink_shared'
+#before 'deploy:restart', 'deploy:symlink_shared'
+after 'deploy:finalize_update', 'deploy:symlink_shared'
+load  'deploy/assets'
 after 'deploy:restart', 'unicorn:restart'
