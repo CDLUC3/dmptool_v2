@@ -10,12 +10,9 @@ feature 'res editor user' do
 
 		expect(page).to have_link('My Dashboard')
 		expect(page).to have_link('My Profile')				
-		expect(page).to have_link('Customizations') 
-		
 		expect(page).to have_no_link('Institution Profile') 
 		expect(page).to have_no_link('DMP Administration')	
-		expect(page).to have_no_link('DMP Templates')
-
+		
 	end
 
 	# scenario 'resources editor grants and revokes a role' , :js => true do	
