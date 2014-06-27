@@ -85,7 +85,7 @@ class RequirementsTemplate < ActiveRecord::Base
   end
 
   def last_question
-    requirements = self.requirements.roots.order("position DESC")
+    requirements = self.requirements.roots.reorder("position DESC")
     find_last_question_node(requirements)
   end
 
@@ -123,7 +123,7 @@ class RequirementsTemplate < ActiveRecord::Base
   def find_last_question_node(reqs)
     reqs.each do |r|
       if r.is_group?
-        children = r.children.order("position DESC")
+        children = r.children.reorder("position DESC")
         return find_question_node(children) unless children.nil? || children.length < 1
       else
         return r
