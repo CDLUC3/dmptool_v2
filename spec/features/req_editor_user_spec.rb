@@ -83,7 +83,7 @@ feature 'req editor user' do
 
 
 
-	scenario 'requirement editor creates a single requirement' do #, :js => true do
+	scenario 'requirement editor creates a single requirement' , :js => true do
 
 		logs_in_with "#{REQ_EDITOR_USERNAME}", "#{REQ_EDITOR_PASSWORD}", "#{REQ_EDITOR_INSTITUTION_NAME}"
 		within('#quick_dashboard') do
