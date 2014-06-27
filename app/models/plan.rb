@@ -26,6 +26,7 @@ class Plan < ActiveRecord::Base
   scope :institutional_visibility, -> { where(visibility: :institutional) }
   scope :public_visibility, -> { where(visibility: :public) }
   scope :private_visibility, -> { where(visibility: :private) }
+  scope :public_and_institutional, -> { where(visibility: [:public, :institutional])}
 
   # scopes for plan's states
   scope :submitted, -> { joins(:current_state).where('plan_states.state =?', :submitted) }
@@ -89,6 +90,11 @@ class Plan < ActiveRecord::Base
 
   def owner
     @owner ||= users.where('user_plans.owner' => true).first
+  end
+
+  def display_state
+    return '' if self.current_state.nil?
+    self.current_state.display_state
   end
 
   def plans_count_for_institution(institution)

@@ -1,3 +1,4 @@
+<% @display_menu = "customizations" %>
 <h1 class="row-fluid"><span class="icon resource-template"></span>Existing Resources</h1>
 <% unless user_role_in?(:dmp_admin) %>
 	<h2>For <%= current_user.institution.full_name %></h2>

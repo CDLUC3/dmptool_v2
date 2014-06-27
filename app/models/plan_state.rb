@@ -5,6 +5,24 @@ class PlanState < ActiveRecord::Base
   
   after_create :update_current_plan_state
 
+
+  DISPLAY_STATES = {
+      new: 'New',
+      committed: 'Completed',
+      submitted: 'Submitted',
+      approved: 'Approved',
+      reviewed: 'Reviewed',
+      rejected: 'Rejected',
+      revised: 'Revised',
+      inactive: 'Inactive',
+      deleted: 'Deleted'
+  }
+
+  def display_state
+    return '' if self.state.nil?
+    DISPLAY_STATES[self.state]
+  end
+
   private
     def update_current_plan_state
       #update the current plan pointer in the plan model
