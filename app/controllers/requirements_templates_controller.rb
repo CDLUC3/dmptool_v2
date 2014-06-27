@@ -108,7 +108,7 @@ class RequirementsTemplatesController < ApplicationController
     else
       @requirements_templates = RequirementsTemplate.
                                 where(active: true).
-                                any_of(visibility: :public, institution_id: [current_user.institution.root.subtree_ids]).
+                                where("visibility = 'public' OR institution_id IN ( ? )", current_user.institution.root.subtree_ids).
                                 page(params[:page]).per(5)
     end
   end

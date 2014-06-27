@@ -25,6 +25,26 @@ feature 'sub institution user scope' do
 
   end
 
+  scenario 'copy template from institutional parent', js: true do
+
+    logs_in_with "#{SUB_USER_USERNAME}", "#{SUB_USER_PASSWORD}", "#{SUB_USER_INSTITUTION_NAME}"
+    visit(requirements_templates_path)
+    click_on('Create New Template >>')
+    expect(page).to have_text('Create New DMP Template')
+
+    click_link('4')
+    find(:css, 'input#requirements_template_47').click
+
+    click_on('Copy Template')
+
+    expect(page).to have_text('Requirements template was successfully created.')
+
+    click_on('Save and Next >>')
+
+    expect(page).to have_text('etaoin shrdlu')
+
+  end
+
 
 
 end
