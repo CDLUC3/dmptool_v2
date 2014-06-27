@@ -83,7 +83,7 @@ feature 'req editor user' do
 
 
 
-	scenario 'requirement editor creates a  single requirement' , :js => true do
+	scenario 'requirement editor creates a single requirement' do #, :js => true do
 
 		logs_in_with "#{REQ_EDITOR_USERNAME}", "#{REQ_EDITOR_PASSWORD}", "#{REQ_EDITOR_INSTITUTION_NAME}"
 		within('#quick_dashboard') do
@@ -99,11 +99,11 @@ feature 'req editor user' do
 		click_button 'Save'
 		expect(page).to have_content("Requirement was successfully created.")
 		expect(page).to have_content("bla_#{@temp}")
-		# within('#req_bla') do
-		# 	click_link 'delete_requirement'
-		# end
-		# find('.confirm').click
-		# expect(page).to have_no_content("bla")
+		#within('#req_bla') do
+		click_link "delete_requirement_bla_#{@temp}"
+		#end
+		find('.confirm').click
+		expect(page).to have_no_content("bla_#{@temp}")
 
 	end
 	
