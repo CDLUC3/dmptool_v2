@@ -5,7 +5,7 @@ include Credentials
 
 feature 'generic user' do 
 
-	scenario 'generic user dashboard visibility', :js => true do
+	scenario 'generic user dashboard visibility' do #, :js => true do
 
 		logs_in_with "test_user2", "test_user2", "Test Institution"
 

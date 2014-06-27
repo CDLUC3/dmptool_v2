@@ -84,7 +84,7 @@ feature 'dmp admin user' do
 	end
 
 
-	scenario 'dmp admin grants and revokes roles through the DMP Admin page' , :js => true do
+	scenario 'dmp admin grants and revokes roles through the DMP Admin page' do #, :js => true do
 		
 		logs_in_with "#{DMP_ADMIN_USERNAME}", "#{DMP_ADMIN_PASSWORD}", "#{DMP_ADMIN_INSTITUTION_NAME}"
 		click_link 'DMP Administration'
