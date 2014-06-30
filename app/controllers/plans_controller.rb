@@ -245,7 +245,7 @@ class PlansController < ApplicationController
     id = params[:plan].to_i unless params[:plan].blank?
     @original_plan_id = params[:plan].to_i
     plan = Plan.where(id: id).first
-    @plan = plan.dup include: [:responses]
+    @plan = plan.deep_clone include: [:responses]
     render action: "copy_existing_template"
   end
 
