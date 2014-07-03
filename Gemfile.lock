@@ -30,6 +30,13 @@ GIT
       mime-types
       orm_adapter (~> 0.5.0)
 
+GIT
+  remote: https://github.com/moiristo/deep_cloneable.git
+  revision: 0ef84fb4248d6c0833b5b6a57fd29064ddc5f4b4
+  specs:
+    deep_cloneable (2.0.0)
+      activerecord (>= 3.1.0, < 5.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -95,8 +102,6 @@ GEM
       debugger-ruby_core_source (~> 1.3.5)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.3.5)
-    deep_cloneable (2.0.0)
-      activerecord (>= 3.1.0, < 5.0.0)
     diff-lcs (1.2.5)
     enum_column3 (0.1.4)
     erubis (2.7.0)
@@ -259,7 +264,7 @@ DEPENDENCIES
   carrierwave
   ckeditor!
   debugger
-  deep_cloneable (~> 2.0.0)
+  deep_cloneable (~> 2.0.0)!
   enum_column3
   exception_notification
   factory_girl_rails
