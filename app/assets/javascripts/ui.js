@@ -1,21 +1,4 @@
 /* Add class to current main navigation item */
-jQuery(function(){
-	if(window.location.href.indexOf("guidance") != -1){
-		jQuery(".header .nav-guidance").addClass("current");
-	}
-	else if(window.location.href.indexOf("public_dmps") != -1){
-		jQuery(".header .nav-public").addClass("current");
-	}
-	else if(window.location.href.indexOf("help") != -1){
-		jQuery(".header .nav-help").addClass("current");
-	}
-	else if(window.location.href.indexOf("contact") != -1){
-		jQuery(".header .nav-contact").addClass("current");
-	}
-	else if(window.location.href.indexOf("about") != -1){
-		jQuery(".header .nav-about").addClass("current");
-	}
-});
 
 /* Add class according to alphabetical view of tabular data */
 jQuery(function(){

@@ -231,7 +231,9 @@ class PlansController < ApplicationController
   def template_information
     public_plans_ids = Plan.public_visibility.ids
     current_user_plan_ids = UserPlan.where(user_id: @user.id).pluck(:plan_id)
-    institutionally_visible_plans_ids  = Plan.joins(:users).where('users.institution_id = ?',@user.institution_id).institutional_visibility.pluck(:id)
+    institutionally_visible_plans_ids  = Plan.joins(:users)
+          .where(users: {institution_id: @user.institution.root.subtree_ids})
+          .institutional_visibility.pluck(:id)
     plans = (current_user_plan_ids + public_plans_ids + institutionally_visible_plans_ids).uniq
     @plans = Plan.where(id: plans)
     @plans = Kaminari.paginate_array(@plans).page(params[:page]).per(5)
@@ -243,33 +245,34 @@ class PlansController < ApplicationController
     id = params[:plan].to_i unless params[:plan].blank?
     @original_plan_id = params[:plan].to_i
     plan = Plan.where(id: id).first
-    @plan = plan.dup include: [:responses]
+    @plan = plan.deep_clone include: [:responses]
     render action: "copy_existing_template"
   end
 
   def perform_review
     set_comments
-    @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: @user.institution_id).first
+    @customization = ResourceContext.where(requirements_template_id: @plan.requirements_template_id, institution_id: @user.institution_id, resource_id: nil, requirement_id: nil).first
   end
 
 
   def review_dmps
-    if user_role_in?(:institutional_reviewer, :institutional_admin)
-      institutions = Institution.find(@user.institution_id).subtree_ids
-      @submitted_plans = Plan.plans_to_be_reviewed(institutions)
-      @approved_plans = Plan.plans_approved(institutions)
-      @rejected_plans = Plan.plans_rejected(institutions)
-      @reviewed_plans = Plan.plans_reviewed(institutions)
-      @plans = Plan.plans_per_institution(institutions)
-
-    else
-      user_role_in?(:dmp_admin)
+    # if user_role_in?(:institutional_reviewer, :institutional_admin)
+    if user_role_in?(:dmp_admin)
       @submitted_plans = Plan.plans_to_be_reviewed(Institution.all.ids)
       @approved_plans = Plan.plans_approved(Institution.all.ids)
       @rejected_plans = Plan.plans_rejected(Institution.all.ids)
       @reviewed_plans = Plan.plans_reviewed(Institution.all.ids)
       @plans = Plan.plans_per_institution(Institution.all.ids)
 
+    elsif user_role_in?(:institutional_reviewer, :institutional_admin)
+      
+      institutions = Institution.find(@user.institution_id).subtree_ids
+      @submitted_plans = Plan.plans_to_be_reviewed(institutions)
+      @approved_plans = Plan.plans_approved(institutions)
+      @rejected_plans = Plan.plans_rejected(institutions)
+      @reviewed_plans = Plan.plans_reviewed(institutions)
+      @plans = Plan.plans_per_institution(institutions)
+      
     end
 
     review_count
@@ -318,7 +321,7 @@ class PlansController < ApplicationController
     req_temp = RequirementsTemplate.
                   includes(:institution).
                   where(active: true).
-                  any_of(visibility: :public, institution_id: [@user.institution.subtree_ids])
+                  any_of(visibility: :public, institution_id: [@user.institution.root.subtree_ids])
 
     if !params[:q].blank?
       req_temp = req_temp.name_search_terms(params[:q])
@@ -412,53 +415,42 @@ class PlansController < ApplicationController
   end
 
   def public
+
+    # gets parameters for public table
+    public_params = {}
+    params.slice("public:order_scope", "public:all_scope", "public:page")
+          .each{|k,v| public_params[ k.partition(/^[a-z_]+\:/)[2] ] = v }
+
+    # gets parameters for institutional table
+    inst_params = {}
+    params.slice("institutional:order_scope", "institutional:all_scope", "institutional:page")
+          .each{|k,v| inst_params[ k.partition(/^[a-z_]+\:/)[2] ] = v }
+
+    @plans = Plan.joins( {:users => :institution} ).joins(:requirements_template)
+          .where("user_plans.owner = 1").public_visibility
+    @inst_plans = Plan.joins( {:users => :institution} ).joins(:requirements_template)
+          .where("user_plans.owner = 1").institutional_visibility
+
     if user_role_in?(:dmp_admin)
-      #show public and institutional for all institutions
-      @plans = Plan.joins(:user_plans).
-          where("`user_plans`.`owner` = 1 AND (plans.visibility = 'public' OR plans.visibility = 'institutional')")
+      @show_institution = true
     elsif current_user
       #show public and institutional for my institution
-      @plans = Plan.joins(:users).
-          where("(`user_plans`.`owner` = 1 AND (plans.visibility = 'public' OR (plans.visibility = 'institutional' AND `users`.`institution_id` IN (?))))",
-                current_user.institution.subtree_ids)
+      @inst_plans = @inst_plans.where("users.institution_id IN (?)", current_user.institution.root.subtree_ids)
+      @show_institution = false
     else
-      #show public
-      @plans = Plan.public_visibility
+      @inst_plans = nil
     end
 
-    @all_scope = params[:all_scope]
-    @order_scope = params[:order_scope]
-
-    #these params are for filter by letter and are used in the view
-    @s = params[:s]
-    @e = params[:e]
-
-
-    case @order_scope
-      when "PlanTitle"
-        @plans = @plans.order(name: :asc)
-      when "FunderTemplate"
-        @plans = @plans.joins(:requirements_template).order('requirements_templates.name ASC')
-      when "OwnerInstitution"
-        @plans = @plans.order_by_institution
-      when "Owner"
-        @plans = @plans.order_by_owner
-      else
-        @plans = @plans.order(name: :asc)
-    end
+    @plans = multitable(@plans, public_params)
+    @inst_plans = multitable(@inst_plans, inst_params)
 
     unless params[:s].blank? || params[:e].blank?
       @plans = @plans.letter_range(params[:s], params[:e])
     end
-    unless params[:q].blank? then
+    unless params[:q].blank?
       @plans = @plans.search_terms(params[:q])
     end
 
-    if @all_scope != 'all'
-      @plans = @plans.page(params[:page]).per(10)
-    else
-      @plans = @plans.page(0).per(9999)
-    end
   end
 
 
@@ -628,5 +620,24 @@ class PlansController < ApplicationController
           redirect_to plans_path # halts request cycle
         end
       end
+    end
+
+    def multitable(collection, subparams)
+      return nil if collection.nil?
+      valid_sort = ["plans.name", "requirements_templates.name", "institutions.full_name",
+                    "CONCAT(users.first_name, ' ', users.last_name)"]
+      if valid_sort.include?(subparams['order_scope'])
+        collection = collection.order("#{subparams['order_scope']} ASC")
+      else
+        collection = collection.order(name: :asc)
+      end
+
+      if subparams['all_scope'] != 'all'
+        p = ( subparams['page'].nil? ? 1 : subparams['page'].to_i )
+        collection = collection.page(p).per(10)
+      else
+        collection = collection.page(0).per(9999)
+      end
+      return collection
     end
 end

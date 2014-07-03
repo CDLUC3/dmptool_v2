@@ -108,7 +108,7 @@ class RequirementsTemplatesController < ApplicationController
     else
       @requirements_templates = RequirementsTemplate.
                                 where(active: true).
-                                any_of(visibility: :public, institution_id: [current_user.institution.subtree_ids]).
+                                where("visibility = 'public' OR institution_id IN ( ? )", current_user.institution.root.subtree_ids).
                                 page(params[:page]).per(5)
     end
   end
@@ -186,13 +186,38 @@ class RequirementsTemplatesController < ApplicationController
       requirements_template = RequirementsTemplate.where(id: id).first
     else
       requirements_template = RequirementsTemplate.
-                                where(id: id, institution_id: [current_user.institution.subtree_ids]).
+                                where(id: id, institution_id: [current_user.institution.root.subtree_ids]).
                                 first
     end
 
-    @requirements_template = requirements_template.dup include: [:sample_plans, :additional_informations, :requirements], validate: false
+    @requirements_template = requirements_template.deep_clone include: [:sample_plans, :additional_informations, :requirements], validate: false
+
+    @requirements_template.name = "Copy of #{@requirements_template.name}"
+
+    count = 1
+    while RequirementsTemplate.where(name: @requirements_template.name).count > 0
+      count += 1
+      @requirements_template.name[/^Copy [0-9]* ?of/] = "Copy #{count} of"
+    end
+
     respond_to do |format|
       if @requirements_template.save
+
+        #now fix the ancestry to apply old order and structure to new
+        o = requirements_template.requirements.order(:position).pluck(:id)
+        n = @requirements_template.requirements.order(:position).pluck(:id)
+        corr = Hash[o.zip(n)] #this creates a hash with old (keys) and new (values) for the copied requirements for updating ancestry column in new
+
+        #now should be able to map any numbers in the ancestry column (example "274/279") into the new structure that was copied
+        @requirements_template.requirements.each do |r|
+          unless r.ancestry.nil?
+            val = r.ancestry
+            val = val.split("/").map{|i| corr[i.to_i]}.join("/")
+            r.update_column(:ancestry, val ) #update new ancestry
+          end
+        end
+
+
         format.html { redirect_to edit_requirements_template_path(@requirements_template), notice: 'Requirements template was successfully created.' }
         format.json { render action: 'edit', status: :created, location: @requirements_template }
       else

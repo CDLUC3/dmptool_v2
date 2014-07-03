@@ -26,6 +26,7 @@ class Plan < ActiveRecord::Base
   scope :institutional_visibility, -> { where(visibility: :institutional) }
   scope :public_visibility, -> { where(visibility: :public) }
   scope :private_visibility, -> { where(visibility: :private) }
+  scope :public_and_institutional, -> { where(visibility: [:public, :institutional])}
 
   # scopes for plan's states
   scope :submitted, -> { joins(:current_state).where('plan_states.state =?', :submitted) }
@@ -91,6 +92,11 @@ class Plan < ActiveRecord::Base
     @owner ||= users.where('user_plans.owner' => true).first
   end
 
+  def display_state
+    return '' if self.current_state.nil?
+    self.current_state.display_state
+  end
+
   def plans_count_for_institution(institution)
     #Plan.where(:requirements_templates => { :institution_id => institution.subtree_ids }).count
     Plan.joins(:users).where(user_plans: {owner: true}).where("users.institution_id IN (?)", [institution.id]).count 
@@ -107,7 +113,7 @@ class Plan < ActiveRecord::Base
       plan = Plan.find(self.original_plan_id.to_i)
       responses = plan.responses
       responses.each do |response|
-        new_response = response.dup
+        new_response = response.deep_clone
         new_response.plan_id = self.id
         new_response.save!
       end

@@ -1,4 +1,5 @@
 <% @title_text = "DMP Templates" %>
+<% @display_menu = "dmp_templates" %>
 <h1 class="row-fluid"><span class="icon dmp-template"></span>DMP Templates</h1>
 
 <div class="table-scope">
@@ -47,7 +48,7 @@
 			<td class="requirements_template_name">
 				<div class="toggle-links">
 					
-					<%=content_tag(:strong, requirements_template.name)%>
+					<%=content_tag(:strong, requirements_template.name, id: requirements_template.name)%>
 
 					<% if user_role_in?(:dmp_admin) %>
 						<div class="template-links">
@@ -143,8 +144,9 @@
 		<%= paginate @requirements_templates %>
 	</div>
 <%end%>
-
-<%= button_to "Create New Template >>", new_requirements_template_path, :method => :get, :class => "btn"  %>
+<% if user_role_in?(:dmp_admin, :template_editor,  :institutional_admin) %>
+  <%= button_to "Create New Template >>", requirements_template_information_path, :method => :get, :class => "btn"  %>
+<% end %>
 
 
 

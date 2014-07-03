@@ -31,6 +31,7 @@ class Response < ActiveRecord::Base
 
   def check_revised
     if self.changed?
+      return if plan.current_plan_state_id.nil?
       plan = Plan.find(self.plan_id)
       plan_state_id = plan.current_plan_state_id
       state = PlanState.find(plan_state_id).state

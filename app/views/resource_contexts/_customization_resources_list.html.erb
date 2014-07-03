@@ -33,6 +33,7 @@
 			<td>
             <%= link_to raw(''),
               edit_customization_resource_path(id: resource_context.resource_id,
+              																 template_id: @template.id,
                                                customization_id: @customization.id,
                                                custom_origin: "Overview",
                                                origin_url: smart_origin_url),

@@ -1,21 +1,23 @@
-<li <%= 'class=current-parent' if current_page_includes?(edit_plan_path(@plan), details_plan_path(@plan), preview_plan_path(@plan)) %>>
+<li <%= 'class=current-parent' if menu_level(0) == 'plans' %>>
   <%= link_to(content_tag(:span, 'Create New DMP'), plan_template_information_path) %>
   <ul class="children dmp-templates">
     <!-- The following adds "current" class when on DMP Overview page -->
-    <% if current_page_includes?({controller: 'plans', action: 'new'}, edit_plan_path(@plan)) %>
+    <% if menu_level(1) == 'overview' %>
       <li class="current"><%= link_to(content_tag(:span, 'DMP Overview'), '#') %></li>
-      <li><%= link_to(content_tag(:span, 'DMP Details'), details_plan_path(@plan)) %></li>
-      <li><%= link_to(content_tag(:span, 'DMP Preview'), preview_plan_path(@plan)) %></li>
+      <% if @plan && @plan.id %>
+        <li><%= link_to(content_tag(:span, 'DMP Details'), details_plan_path(@plan)) %></li>
+        <li><%= link_to(content_tag(:span, 'DMP Preview'), preview_plan_path(@plan)) %></li>
+      <% end %>
       <li class="last"></li>
     <% end %>
     <!-- The following adds "current" class when on DMP Details page -->
-    <% if current_page?(details_plan_path(@plan)) %>
+    <% if menu_level(1) == 'details' %>
       <li><%= link_to(content_tag(:span, 'DMP Overview'), edit_plan_path(@plan)) %></li>
       <li class="current"><%= link_to(content_tag(:span, 'DMP Details'), '#') %></li>
       <li><%= link_to(content_tag(:span, 'DMP Preview'), preview_plan_path(@plan)) %></li>
       <li class="last"></li>
     <% end %>
-    <% if current_page?(preview_plan_path(@plan)) %>
+    <% if menu_level(1) == 'preview' %>
       <li><%= link_to(content_tag(:span, 'DMP Overview'), edit_plan_path(@plan)) %></li>
       <li><%= link_to(content_tag(:span, 'DMP Details'), details_plan_path(@plan)) %></li>
       <li class="current"><%= link_to(content_tag(:span, 'DMP Preview'), '#') %></li>
