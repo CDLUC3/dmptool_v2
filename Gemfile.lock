@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/radar/paranoia.git
-  revision: 9c14b8602ba2b547778a3389f41a2f870adf94bd
+  revision: d657443970a857c88f212c6f7e2265d7e2ec98d5
   branch: rails4
   specs:
     paranoia (2.0.2)
@@ -24,18 +24,11 @@ GIT
 
 GIT
   remote: https://github.com/galetahub/ckeditor.git
-  revision: 53c7e16c6a3fa457823daaff472621d795d9f81f
+  revision: 7e61c976e13e29524adee76355e34e525905c582
   specs:
     ckeditor (4.0.11)
       mime-types
       orm_adapter (~> 0.5.0)
-
-GIT
-  remote: https://github.com/moiristo/deep_cloneable.git
-  revision: 0ef84fb4248d6c0833b5b6a57fd29064ddc5f4b4
-  specs:
-    deep_cloneable (2.0.0)
-      activerecord (>= 3.1.0, < 5.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -102,13 +95,15 @@ GEM
       debugger-ruby_core_source (~> 1.3.5)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.3.5)
+    deep_cloneable (2.0.0)
+      activerecord (>= 3.1.0, < 5.0.0)
     diff-lcs (1.2.5)
     enum_column3 (0.1.4)
     erubis (2.7.0)
     exception_notification (4.0.1)
       actionmailer (>= 3.0.4)
       activesupport (>= 3.0.4)
-    execjs (2.2.1)
+    execjs (2.1.0)
     factory_girl (4.4.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.4.1)
@@ -117,17 +112,17 @@ GEM
     faker (1.3.0)
       i18n (~> 0.5)
     ffi (1.9.3)
-    hashie (2.1.2)
+    hashie (2.1.1)
     highline (1.6.21)
     hike (1.2.3)
     i18n (0.6.9)
-    jquery-rails (3.1.1)
+    jquery-rails (3.1.0)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
-    jquery-ui-rails (5.0.0)
+    jquery-ui-rails (4.2.1)
       railties (>= 3.2.16)
     json (1.8.1)
-    kaminari (0.16.1)
+    kaminari (0.15.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.9.2)
@@ -164,12 +159,12 @@ GEM
       rubyntlm (~> 0.1.1)
     orm_adapter (0.5.0)
     pdf-core (0.2.5)
-    polyglot (0.3.5)
+    polyglot (0.3.4)
     prawn (1.0.0)
       pdf-core (~> 0.2.2)
       ttfunk (~> 1.1.1)
     pyu-ruby-sasl (0.0.3.3)
-    rabl (0.10.1)
+    rabl (0.10.0)
       activesupport (>= 2.3.14)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -195,7 +190,7 @@ GEM
     rspec-expectations (2.13.0)
       diff-lcs (>= 1.1.3, < 2.0)
     rspec-mocks (2.13.1)
-    rspec-rails (2.13.2)
+    rspec-rails (2.13.1)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
@@ -203,7 +198,7 @@ GEM
       rspec-expectations (~> 2.13.0)
       rspec-mocks (~> 2.13.0)
     rubyntlm (0.1.1)
-    rubyzip (1.1.6)
+    rubyzip (1.1.3)
     sass (3.2.19)
     sass-rails (4.0.3)
       railties (>= 4.0.0, < 5.0)
@@ -264,7 +259,7 @@ DEPENDENCIES
   carrierwave
   ckeditor!
   debugger
-  deep_cloneable (~> 2.0.0)!
+  deep_cloneable (~> 2.0.0)
   enum_column3
   exception_notification
   factory_girl_rails
