@@ -113,7 +113,7 @@ class Plan < ActiveRecord::Base
       plan = Plan.find(self.original_plan_id.to_i)
       responses = plan.responses
       responses.each do |response|
-        new_response = response.dup
+        new_response = response.deep_clone
         new_response.plan_id = self.id
         new_response.save!
       end

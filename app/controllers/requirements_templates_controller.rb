@@ -190,7 +190,7 @@ class RequirementsTemplatesController < ApplicationController
                                 first
     end
 
-    @requirements_template = requirements_template.dup include: [:sample_plans, :additional_informations, :requirements], validate: false
+    @requirements_template = requirements_template.deep_clone include: [:sample_plans, :additional_informations, :requirements], validate: false
 
     @requirements_template.name = "Copy of #{@requirements_template.name}"
 

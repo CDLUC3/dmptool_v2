@@ -48,7 +48,7 @@
 			<td class="requirements_template_name">
 				<div class="toggle-links">
 					
-					<%=content_tag(:strong, requirements_template.name)%>
+					<%=content_tag(:strong, requirements_template.name, id: requirements_template.name)%>
 
 					<% if user_role_in?(:dmp_admin) %>
 						<div class="template-links">
