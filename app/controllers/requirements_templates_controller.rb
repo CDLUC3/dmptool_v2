@@ -186,8 +186,8 @@ class RequirementsTemplatesController < ApplicationController
       requirements_template = RequirementsTemplate.where(id: id).first
     else
       requirements_template = RequirementsTemplate.
-                                where(id: id, institution_id: [current_user.institution.root.subtree_ids]).
-                                first
+          where("visibility = 'public' OR institution_id IN ( ? )", current_user.institution.root.subtree_ids).
+          where(id: id).first
     end
 
     @requirements_template = requirements_template.deep_clone include: [:sample_plans, :additional_informations, :requirements], validate: false
