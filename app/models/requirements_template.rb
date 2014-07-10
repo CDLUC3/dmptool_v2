@@ -3,12 +3,12 @@ class RequirementsTemplate < ActiveRecord::Base
   include RequirementsTemplateEmail
 
   belongs_to :institution
-  has_many :resource_templates
-  has_many :requirements
-  has_many :tags, inverse_of: :requirements_template
-  has_many :additional_informations, inverse_of: :requirements_template
-  has_many :sample_plans, inverse_of: :requirements_template
-  has_many :resource_contexts
+  has_many :requirements, dependent: :destroy
+  has_many :tags, inverse_of: :requirements_template, dependent: :destroy
+  has_many :additional_informations, inverse_of: :requirements_template, dependent: :destroy
+  has_many :sample_plans, inverse_of: :requirements_template, dependent: :destroy
+  has_many :resource_contexts, dependent: :destroy
+  has_many :plans, dependent: :destroy
 
   accepts_nested_attributes_for :requirements, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
   accepts_nested_attributes_for :tags, allow_destroy: true, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
