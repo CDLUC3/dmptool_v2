@@ -181,9 +181,9 @@ class RequirementsTemplatesController < ApplicationController
     respond_to do |format|
       format.html {
         if params[:after_url].blank?
-          redirect_to requirements_templates_url, notice: 'Requirements template was deleted.'
+          redirect_to requirements_templates_url, notice: 'DMP template was deleted.'
         else
-          redirect_to params[:after_url], notice: 'Requirements template was deleted.'
+          redirect_to params[:after_url], notice: 'DMP template was deleted.'
         end
       }
       format.json { head :no_content }
