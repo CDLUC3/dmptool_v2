@@ -41,7 +41,7 @@ class Requirement < ActiveRecord::Base
     return true if parent_id.nil?
     parent = Requirement.find(parent_id)
     has_children = parent.has_children?
-    return true if has_children.nil?
+    return true if has_children.nil? || has_children == false
     child = parent.children.first
       if (child.group? == true && self.group? == false)
         errors[:base] <<  "Cannot add a Single Requirement since a Sub Group already exists."
