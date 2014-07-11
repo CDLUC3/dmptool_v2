@@ -34,6 +34,14 @@
 		    <%= link_to activate_link_text(@requirements_template),
 		      toggle_active_requirements_template_path(@requirements_template), remote: true, id: "activate_link_#{@requirements_template.id}", :class => 'btn' %>
 	    </div>
+      <div>
+        <br/>
+        <% if @requirements_template.plans.count < 1 %>
+          <%= link_to 'Delete', requirements_template_path(@requirements_template, after_url: requirements_templates_path), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn' %>
+        <% else %>
+          <p>This template cannot be deleted until all DMPs that use it have been removed.</p>
+        <% end %>
+      </div>
 	  </div>
 	</div>
 	<div class="tabbable span8">

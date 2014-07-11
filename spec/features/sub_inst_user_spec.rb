@@ -43,6 +43,37 @@ feature 'sub institution user scope' do
 
     expect(page).to have_text('etaoin shrdlu')
 
+    click_on('Delete')
+
+    find(:css, "div.modal-footer>a.confirm").click
+
+    expect(page).to have_text('DMP template was deleted.')
+
+  end
+
+  scenario 'copy template from public template', js: true do
+
+    logs_in_with "#{SUB_USER_USERNAME}", "#{SUB_USER_PASSWORD}", "#{SUB_USER_INSTITUTION_NAME}"
+    visit(requirements_templates_path)
+    click_on('Create New Template >>')
+    expect(page).to have_text('Create New DMP Template')
+
+    find(:css, 'input#requirements_template_2').click
+
+    click_on('Copy Template')
+
+    expect(page).to have_text('Requirements template was successfully created.')
+
+    click_on('Save and Next >>')
+
+    expect(page).to have_text('Policies for re-use, redistribution')
+
+    click_on('Delete')
+
+    find(:css, "div.modal-footer>a.confirm").click
+
+    expect(page).to have_text('DMP template was deleted.')
+
   end
 
 

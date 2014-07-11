@@ -172,9 +172,20 @@ class RequirementsTemplatesController < ApplicationController
   # DELETE /requirements_templates/1
   # DELETE /requirements_templates/1.json
   def destroy
-    @requirements_template.destroy
+    if (user_role_in?(:dmp_admin) ||
+        (user_role_in?(:institutional_admin) && current_user.institution.subtree_ids.include?(@requirements_template.institution_id) ) ||
+        (user_role_in?(:template_editor) && current_user.institution == @requirements_template.institution_id ) ) &&
+        @requirements_template.plans.count < 1
+      @requirements_template.destroy
+    end
     respond_to do |format|
-      format.html { redirect_to requirements_templates_url }
+      format.html {
+        if params[:after_url].blank?
+          redirect_to requirements_templates_url, notice: 'DMP template was deleted.'
+        else
+          redirect_to params[:after_url], notice: 'DMP template was deleted.'
+        end
+      }
       format.json { head :no_content }
     end
   end
