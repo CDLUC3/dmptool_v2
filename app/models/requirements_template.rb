@@ -104,6 +104,13 @@ class RequirementsTemplate < ActiveRecord::Base
     end
   end
 
+  def user_can_delete_me?(user)
+    ( (user.has_role?(Role::DMP_ADMIN) ||
+        (user.has_role?(Role::INSTITUTIONAL_ADMIN) && user.institution.subtree_ids.include?(self.institution_id) ) ||
+        (user.has_role?(Role::TEMPLATE_EDITOR) && user.institution.subtree_ids.include?(self.institution_id) ) ) &&
+        self.plans.count < 1 )
+  end
+
   private
 
   #helper method for recursion of first_question
