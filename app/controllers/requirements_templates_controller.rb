@@ -208,6 +208,8 @@ class RequirementsTemplatesController < ApplicationController
       @requirements_template.name[/^Copy [0-9]* ?of/] = "Copy #{count} of"
     end
 
+    @requirements_template.institution_id = current_user.institution_id
+
     respond_to do |format|
       if @requirements_template.save
 
