@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 20140403204948) do
     t.string   "logo"
     t.string   "ancestry"
     t.datetime "deleted_at"
+    t.integer  "old_key"
   end
 
   add_index "institutions", ["ancestry"], name: "index_institutions_on_ancestry", using: :btree
@@ -84,39 +85,6 @@ ActiveRecord::Schema.define(version: 20140403204948) do
     t.datetime "updated_at"
     t.integer  "position"
     t.integer  "requirement_id"
-  end
-
-  create_table "old_authentications", force: true do |t|
-    t.integer  "user_id"
-    t.string   "provider"
-    t.string   "uid"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "new_user_id"
-  end
-
-  create_table "old_authorizations", force: true do |t|
-    t.integer  "role_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "old_authorizations", ["user_id", "role_id"], name: "index_authorizations_on_user_id_and_role_id", unique: true, using: :btree
-
-  create_table "old_users", force: true do |t|
-    t.integer  "institution_id"
-    t.string   "email"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "token"
-    t.datetime "token_expiration"
-    t.binary   "prefs"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "login_id"
-    t.boolean  "active",           default: true
-    t.datetime "deleted_at"
   end
 
   create_table "plan_states", force: true do |t|
@@ -168,10 +136,11 @@ ActiveRecord::Schema.define(version: 20140403204948) do
     t.boolean  "active"
     t.date     "start_date"
     t.date     "end_date"
-    t.enum     "visibility",     limit: [:public, :institutional]
-    t.enum     "review_type",    limit: [:formal_review, :informal_review, :no_review]
+    t.enum     "visibility",      limit: [:public, :institutional]
+    t.enum     "review_type",     limit: [:formal_review, :informal_review, :no_review]
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "old_foreign_key"
   end
 
   create_table "resource_contexts", force: true do |t|
@@ -181,6 +150,9 @@ ActiveRecord::Schema.define(version: 20140403204948) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "resource_id"
+    t.integer  "old_funder_id"
+    t.integer  "old_help_text_id"
+    t.integer  "old_suggested_answer_id"
     t.string   "name"
     t.string   "contact_info"
     t.string   "contact_email"
@@ -194,11 +166,13 @@ ActiveRecord::Schema.define(version: 20140403204948) do
   add_index "resource_contexts", ["resource_id"], name: "index_resource_contexts_on_resource_id", using: :btree
 
   create_table "resources", force: true do |t|
-    t.enum     "resource_type", limit: [:actionable_url, :help_text, :example_response, :suggested_response]
+    t.enum     "resource_type",           limit: [:actionable_url, :help_text, :example_response, :suggested_response]
     t.text     "value"
     t.string   "label"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "old_help_text_id"
+    t.integer  "old_suggested_answer_id"
     t.text     "text"
   end
 

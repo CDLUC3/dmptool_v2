@@ -1,4 +1,5 @@
 <% @title_text = "Public DMPs" %>
+<% @display_menu = "public_dmps" %>
 <h1 class="row-fluid"><span class="icon public-dmps"></span>Public DMPs</h1>
 <br/>
 <div class="row-fluid">
@@ -17,18 +18,26 @@
 </div>
 <br/>
 <div class="row-fluid">
-	<%= link_to('A - F', { :s => 'a', :e => 'f' , all_scope: @all_scope, order_scope: @order_scope}, 
+	<%= link_to('A - F', params.merge({ 's' => 'a', 'e' => 'f' , "public:page" => '1'}),
 				:class => 'btn viewA-F') %> 
-	<%= link_to('G - L', { :s => 'g', :e => 'l' , all_scope: @all_scope, order_scope: @order_scope}, 
+	<%= link_to('G - L', params.merge({ 's' => 'g', 'e' => 'l' , "public:page" => '1'}),
 				:class => 'btn viewG-L') %> 
-	<%= link_to('M - S', { :s => 'm', :e => 's' , all_scope: @all_scope, order_scope: @order_scope}, 
+	<%= link_to('M - S', params.merge({ 's' => 'm', 'e' => 's' , "public:page" => '1'}),
 				:class => 'btn viewM-S') %> 
-	<%= link_to('T - Z', { :s => 't', :e => 'z' , all_scope: @all_scope, order_scope: @order_scope}, 
+	<%= link_to('T - Z', params.merge({ 's' => 't', 'e' => 'z' , "public:page" => '1'}),
 			:class => 'btn viewT-Z') %> 
-	<%= link_to('All', { :s => 'a', :e => 'z' , all_scope: @all_scope, order_scope: @order_scope}, 
+	<%= link_to('All', params.merge({ 's' => 'a', 'e' => 'z' , "public:page" => '1'}),
 			:class => 'btn viewA-Z') %>
 </div>
 <br/>
-<%= render partial: 'public_table', :locals => {templates: @public_templates} %>
+<%= render partial: 'generic_table', locals: {plans: @plans, namespace: 'public', show_institution: true} %>
+
+<% unless @inst_plans.nil? || @inst_plans.length < 1 %>
+  <br/>
+  <h1 class="row-fluid"><span class="icon public-dmps"></span>Institutional DMPs</h1>
+  <%= render partial: 'generic_table', locals: {plans: @inst_plans, namespace: 'institutional',
+              show_institution: @show_institution} %>
+<% end %>
+
 
 

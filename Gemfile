@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 ruby '2.0.0'
 
-gem 'rails', '4.0.0'
+gem 'rails', '4.0.5'
 gem 'unicorn'
 
 group :development, :test do
-  gem 'rspec-rails', '2.13.1'
+  gem 'rspec-rails', '~> 2.13.1'
   gem 'capistrano', '~> 2.15'
   gem 'capistrano-unicorn'
   gem 'debugger'
@@ -16,6 +16,7 @@ end
 
 group :test do
   gem 'selenium-webdriver', '~> 2.39.0'
+  gem 'rspec-rails', '~> 2.13.1'
   gem "capybara", "~> 2.2.1"
   gem 'shoulda-matchers'
   gem 'launchy'
@@ -33,7 +34,7 @@ gem 'enum_column3'
 gem 'bootstrap-sass', '2.3.2.0'
 gem 'sass-rails',  '~> 4.0.0'
 gem 'uglifier', '2.5.0'
-gem 'deep_cloneable', '~> 1.5.5'
+gem 'deep_cloneable', '~> 2.0.0'
 gem 'ancestry'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'

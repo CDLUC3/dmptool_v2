@@ -3,12 +3,12 @@ class RequirementsTemplate < ActiveRecord::Base
   include RequirementsTemplateEmail
 
   belongs_to :institution
-  has_many :resource_templates
-  has_many :requirements
-  has_many :tags, inverse_of: :requirements_template
-  has_many :additional_informations, inverse_of: :requirements_template
-  has_many :sample_plans, inverse_of: :requirements_template
-  has_many :resource_contexts
+  has_many :requirements, dependent: :destroy
+  has_many :tags, inverse_of: :requirements_template, dependent: :destroy
+  has_many :additional_informations, inverse_of: :requirements_template, dependent: :destroy
+  has_many :sample_plans, inverse_of: :requirements_template, dependent: :destroy
+  has_many :resource_contexts, dependent: :destroy
+  has_many :plans, dependent: :destroy
 
   accepts_nested_attributes_for :requirements, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
   accepts_nested_attributes_for :tags, allow_destroy: true, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
@@ -85,7 +85,7 @@ class RequirementsTemplate < ActiveRecord::Base
   end
 
   def last_question
-    requirements = self.requirements.roots.order("position DESC")
+    requirements = self.requirements.roots.reorder("position DESC")
     find_last_question_node(requirements)
   end
 
@@ -102,6 +102,13 @@ class RequirementsTemplate < ActiveRecord::Base
     reqs.each_with_index do |req, i|
       req.update_column(:position, i + good_reqs.length + 1)
     end
+  end
+
+  def user_can_delete_me?(user)
+    ( (user.has_role?(Role::DMP_ADMIN) ||
+        (user.has_role?(Role::INSTITUTIONAL_ADMIN) && user.institution.subtree_ids.include?(self.institution_id) ) ||
+        (user.has_role?(Role::TEMPLATE_EDITOR) && user.institution.subtree_ids.include?(self.institution_id) ) ) &&
+        self.plans.count < 1 )
   end
 
   private
@@ -123,7 +130,7 @@ class RequirementsTemplate < ActiveRecord::Base
   def find_last_question_node(reqs)
     reqs.each do |r|
       if r.is_group?
-        children = r.children.order("position DESC")
+        children = r.children.reorder("position DESC")
         return find_question_node(children) unless children.nil? || children.length < 1
       else
         return r

@@ -1,4 +1,6 @@
 <% @title_text = "My DMPs" %>
+<% @display_menu = "my_dmps" %>
+
 <% @plan_id = nil %>
 <h1 class="row-fluid"><span class="icon dmp-template"></span>My DMPs</h1>
 <div class="table-scope">
@@ -72,7 +74,7 @@
           </div>
         </td>
         <td><%= owner_name(plan) %></td>
-        <td><strong><%= state(plan) == :committed ? "Completed" : state(plan).capitalize %></strong></td>
+        <td><strong><%= plan.display_state %></strong></td>
         <%if plan.visibility == :private %>
           <td class="span1"><span class="private-visibility icon" title="Private"></span></td>
         <% elsif plan.visibility == :public %>

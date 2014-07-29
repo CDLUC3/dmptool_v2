@@ -1,42 +1,46 @@
-<h1 class="row-fluid"><span class="icon new-template"></span>Create New DMP</h1>
+<% @display_menu = "dmp_templates" %>
+<h1 class="row-fluid"><span class="icon new-template"></span>Create New DMP Template</h1>
 <div class="dmptool-page row-fluid">
 	<div class="span6">
-		<h2>Create New DMP</h2>
-
-		<p><strong>Copy an Existing DMP Template</strong></p>
+		<h2>Copy an Existing DMP Template</h2>
 
 		<p>Select an existing requirements template below and edit the template information and details.</p>
+
+    <% if @requirements_templates.length > 0 %>
 		
-		<%= form_tag copy_existing_requirements_template_path, method: :get do %>
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th class="span1"></th>
-						<th>Name</th>
-						<th>Status</th>
-						</tr>
-					</thead>
-				<tbody>
-				<% @requirements_templates.each do |requirements_template| %>
-					<tr>
-						<td class="span1"><%= radio_button_tag :requirements_template, requirements_template.id, checked: false %></td>
-						<td><%= requirements_template.name %></td>
-						<td><%= requirements_template.active ? "active" : "inactive" %></td>
-					</tr>
-				<% end %>
-				</tbody>
-			</table>
-			<div class="buttons pagination">
-				<%= paginate @requirements_templates %>
-			</div>
-			<%= submit_tag "Template Information", :class => "btn" %>
-		<% end %>
+      <%= form_tag copy_existing_requirements_template_path, method: :post do %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th class="span1"></th>
+              <th>Name</th>
+              <th>Status</th>
+              </tr>
+            </thead>
+          <tbody>
+          <% @requirements_templates.each do |requirements_template| %>
+            <tr>
+              <td class="span1"><%= radio_button_tag :requirements_template, requirements_template.id, checked: false %></td>
+              <td><%= requirements_template.name %></td>
+              <td><%= requirements_template.active ? "active" : "inactive" %></td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <div class="buttons pagination">
+          <%= paginate @requirements_templates %>
+        </div>
+        <%= submit_tag "Copy Template", :class => "btn" %>
+      <% end %>
+    <% else %>
+      <p>There are no existing templates to edit.</p>
+    <% end %>
 	</div>
 
 	<div class="span6" id = "create_new_template_test">
-		<p><strong>Create New DMP Template</strong></p>
+		<h2>Create New DMP Template</h2>
 		<p>Input basic and optional information of the new requirements template and edit the template details.</p>
-		<%= button_to "Template Information", new_requirements_template_path, :method => :get, :class => "btn", :id => "create_new_template" %>
+		<%= button_to "Create New Template", new_requirements_template_path, :method => :get, :class => "btn", :id => "create_new_template" %>
 	</div>
 
 

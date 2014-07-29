@@ -4,44 +4,37 @@
     <ul class="nav">
 
       <!-- My Dashboard -->
-      <li <%= "class=current" if current_page?(dashboard_path) %>><%= link_to(content_tag(:span, 'My Dashboard'), dashboard_path) %></li>
+      <li <%= "class=current" if menu_level(0) == 'dashboard' %>><%= link_to(content_tag(:span, 'My Dashboard'), dashboard_path) %></li>
 
       <!-- My DMPs -->
-      <li <%= "class=current" if current_page?(plans_path) %>><%= link_to(content_tag(:span, 'My DMPs'), plans_path) %></li>
+      <li <%= "class=current" if menu_level(0) == 'my_dmps' %>><%= link_to(content_tag(:span, 'My DMPs'), plans_path) %></li>
 
       <!-- Create New DMP -->
-      <% if current_page_includes?(edit_plan_path(@plan), details_plan_path(@plan), preview_plan_path(@plan),
-                    plan_template_information_path, copy_existing_plans_template_path, select_dmp_template_path) %>
+      <% if menu_level(0) == 'plans' && !menu_level(1).blank? %>
         <%= render partial: 'layouts/dashboard_create_dmp_submenu' %>
       <% else %>
-        <li <%= "class=current" if current_page_includes?(plan_template_information_path, copy_existing_plans_template_path, select_dmp_template_path) %>>
+        <li <%= "class=current" if menu_level(0) == 'plans' %>>
           <%= link_to(content_tag(:span, 'Create New DMP'), plan_template_information_path) %>
         </li>
       <% end %>
 
       <!-- Review DMPs -->
       <% if user_role_in?(:institutional_reviewer, :dmp_admin) %>
-        <li <%= "class=current" if current_page?(review_dmps_path) %>><%= link_to(content_tag(:span, 'Review DMPs'), review_dmps_path) %></li>
+        <li <%= "class=current" if menu_level(0) == 'review_dmp' %>><%= link_to(content_tag(:span, 'Review DMPs'), review_dmps_path) %></li>
       <% end %>
 
       <!-- DMP Templates -->
       <% if user_role_in?(:dmp_admin, :institutional_admin, :template_editor, :resource_editor) %>
-        <% if current_page_includes?({controller: 'requirements_templates', action: 'new'},
-                                    edit_requirements_template_path(@requirements_template),
-                                    requirements_template_requirements_path(@requirements_template),
-                                    new_requirements_template_requirement_path(@requirements_template),
-                                    edit_requirements_template_requirement_path(@requirements_template, @requirement)) ||
-            ((user_role_in?(:institutional_admin, :template_editor, :resource_editor) && !user_role_in?(:dmp_admin)) &&
-            customization_section? )
-
-        %>
-          <% if customization_section? %>
+        <% if menu_level(0) == 'dmp_templates' ||
+            ((user_role_in?(:institutional_admin, :template_editor, :resource_editor) &&
+                !user_role_in?(:dmp_admin)) && menu_level(0) == 'customizations' ) %>
+          <% if menu_level(0) == 'customizations' %>
             <%= render partial: 'layouts/dashboard_customizations_under_dmp_submenu' %>
           <% else %>
             <%= render partial: 'layouts/dashboard_requirements_template_submenu' %>
           <% end %>
         <% else %>
-          <li <%= 'class=current' if current_page?(requirements_templates_path) %>>
+          <li <%= 'class=current' if menu_level(0) == 'dmp_templates' %>>
             <%= link_to(content_tag(:span, 'DMP Templates'), requirements_templates_path) %>
           </li>
         <% end %>
@@ -49,10 +42,10 @@
 
       <!-- Customizations -->
       <% if user_role_in?(:dmp_admin) %>
-        <% if customization_section? %>
+        <% if menu_level(0) == 'customizations' && !menu_level(1).blank? %>
           <%= render partial: 'layouts/dashboard_customizations_submenu' %>
         <% else %>
-          <li <%= 'class=current' if current_page_includes?(resource_contexts_path, dmp_for_customization_path) %> >
+          <li <%= 'class=current' if menu_level(0) == 'customizations' %> >
             <%= link_to(content_tag(:span, 'Customizations'), resource_contexts_path) %>
           </li>
         <% end %>
@@ -60,19 +53,19 @@
 
       <!-- Institution Profile -->
       <% if user_role_in?(:institutional_admin, :dmp_admin) %>
-        <li <%= 'class=current' if current_page_includes?(institutions_path, new_institution_path) %> >
+        <li <%= 'class=current' if menu_level(0) == 'institution' %> >
           <%= link_to(content_tag(:span, 'Institution Profile'), institutions_path) %>
         </li>
       <% end %>
 
       <!-- My Profile -->
-      <li <%= 'class=current' if current_page?(edit_user_path(current_user)) %>>
+      <li <%= 'class=current' if menu_level(0) == 'my_profile' %>>
         <%= link_to(content_tag(:span, 'My Profile'), edit_user_path(current_user)) %>
       </li>
 
       <!-- DMP Administration -->
       <% if user_role_in?(:dmp_admin) %>
-        <li <%= 'class=current' if current_page?(users_url) %>>
+        <li <%= 'class=current' if menu_level(0) == 'dmp_admin' %>>
           <%= link_to(content_tag(:span, 'DMP Administration'), users_url) %>
         </li>
       <% end %>

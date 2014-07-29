@@ -3,14 +3,14 @@ module Features
 	module SessionHelpers
 		
 		def logs_in_with(username, password, institution)
-			logs_out
-			click_link 'Log In'
-			page.select institution, :from => 'institution_id'
-			click_button 'Next'
-			fill_in 'username', with: username
-			fill_in 'password', with: password
-			click_button 'Login'
-			expect(page).to have_content 'Welcome!'
+      logs_out
+      click_link 'Log In'
+      page.select institution, :from => 'institution_id'
+      click_button 'Next'
+      fill_in 'username', with: username
+      fill_in 'password', with: password
+      click_button 'Login'
+      expect(page).to have_content 'Welcome!'
 		end
 
 

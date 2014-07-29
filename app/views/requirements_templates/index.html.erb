@@ -1,4 +1,5 @@
 <% @title_text = "DMP Templates" %>
+<% @display_menu = "dmp_templates" %>
 <h1 class="row-fluid"><span class="icon dmp-template"></span>DMP Templates</h1>
 
 <div class="table-scope">
@@ -47,16 +48,19 @@
 			<td class="requirements_template_name">
 				<div class="toggle-links">
 					
-					<%=content_tag(:strong, requirements_template.name)%>
+					<%=content_tag(:strong, requirements_template.name, id: requirements_template.name)%>
 
 					<% if user_role_in?(:dmp_admin) %>
 						<div class="template-links">
-							<%= (link_to "Overview", edit_requirements_template_path(requirements_template))+" | "+
-									(link_to "Details",requirements_template_requirements_path(requirements_template), :class => "details")+" | "+
-									(link_to activate_link_text(requirements_template), 
+							<%= link_to "Overview", edit_requirements_template_path(requirements_template) %> |
+							<%= link_to "Details",requirements_template_requirements_path(requirements_template), :class => "details" %> |
+							<%= link_to activate_link_text(requirements_template),
 										toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", 
-										:class => "ajax")+" | "+
-									(link_to "Customize", resource_contexts_choose_institution_path(requirements_template_id: requirements_template.id))%>
+										:class => "ajax" %> |
+							<%= link_to "Customize", resource_contexts_choose_institution_path(requirements_template_id: requirements_template.id) %>
+              <% if requirements_template.user_can_delete_me?(current_user) %>
+                | <%= link_to 'Delete', requirements_template_path(requirements_template, after_url: request.original_url), :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+              <% end %>
 						</div>
 					
 					<% elsif user_role_in?(:institutional_admin) && (current_user.institution.subtree_ids.include?(requirements_template.institution_id))%>
@@ -67,6 +71,9 @@
 										toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", 
 										:class => "ajax")+" | "+
 									(link_to "Customize", new_resource_context_path(requirements_template_id: requirements_template, institution_id: current_user.institution_id))%>
+              <% if requirements_template.user_can_delete_me?(current_user) %>
+                | <%= link_to 'Delete', requirements_template_path(requirements_template, after_url: request.original_url), :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+              <% end %>
 						</div>
 
 					<% elsif user_role_in?(:institutional_admin) && (!current_user.institution.subtree_ids.include?(requirements_template.institution_id))%>
@@ -82,6 +89,9 @@
 										toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", 
 										:class => "ajax")+" | "+
 									(link_to "Customize", new_resource_context_path(requirements_template_id: requirements_template, institution_id: current_user.institution_id))%>
+              <% if requirements_template.user_can_delete_me?(current_user) %>
+                | <%= link_to 'Delete', requirements_template_path(requirements_template, after_url: request.original_url), :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+              <% end %>
 						</div>
 
 					<%elsif user_role_in?(:template_editor) && user_role_in?(:resource_editor) && (!current_user.institution.subtree_ids.include?(requirements_template.institution_id))%>
@@ -102,6 +112,9 @@
 									(link_to activate_link_text(requirements_template), 
 										toggle_active_requirements_template_path(requirements_template),remote: true, id: "activate_link_#{requirements_template.id}", 
 										:class => "ajax")%>
+              <% if requirements_template.user_can_delete_me?(current_user) %>
+                | <%= link_to 'Delete', requirements_template_path(requirements_template, after_url: request.original_url), :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+              <% end %>
 					</div>
 				
 					<%elsif (user_role_in?(:resource_editor))%>
@@ -143,13 +156,7 @@
 		<%= paginate @requirements_templates %>
 	</div>
 <%end%>
-
-<%= button_to "Create New Template >>", new_requirements_template_path, :method => :get, :class => "btn"  %>
-
-
-
-
-
-
-
+<% if user_role_in?(:dmp_admin, :template_editor,  :institutional_admin) %>
+  <%= button_to "Create New Template >>", requirements_template_information_path, :method => :get, :class => "btn"  %>
+<% end %>
 
