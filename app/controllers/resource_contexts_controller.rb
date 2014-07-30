@@ -132,6 +132,10 @@ class ResourceContextsController < ApplicationController
     @template_id = params[:template_id]
     @custom_origin = params[:custom_origin]
     @tab_number = params[:tab_number]
+    @tab = params[:tab]
+    @last_template = params[:last_template]
+    @resource_level = params[:resource_level]
+    @requirement_id = params[:requirement_id]
 
     @institution_customization = ResourceContext.find(@customization_id).institution_id
     
@@ -144,20 +148,39 @@ class ResourceContextsController < ApplicationController
     @resource_contexts.each do |resource_context|
         resource_context.destroy
     end
+
+    if @last_template == 'yes'
     
-    if @custom_origin == 'Overview'
-      respond_to do |format|
-        format.html { redirect_to edit_resource_context_path(@customization_id), 
-                        notice: "The resource was successfully unlinked." }
+      if @custom_origin == 'Overview'
+        respond_to do |format|
+          format.html { redirect_to edit_resource_context_path(@customization_id), 
+                          notice: "The resource was successfully unlinked." }
+        end
+      else #details
+        respond_to do |format|
+          format.html { redirect_to customization_requirement_path(id: @customization_id, 
+                        requirement_id:  @requirement_id,
+                        anchor: @tab_number), 
+                          notice: "The resource was successfully unlinked." }
+        end
       end
-    else #details
+
+    else
       respond_to do |format|
-        format.html { redirect_to customization_requirement_path(id: @customization_id, 
-                      requirement_id:  @requirement_id,
-                      anchor: @tab_number), 
-                        notice: "The resource was successfully unlinked." }
+          format.html { redirect_to edit_customization_resource_path(id: @resource_id,
+                                      customization_id: @customization_id,
+                                      template_id: @template_id,
+                                      resource_level: @resource_level,
+                                      requirement_id: @requirement_id,
+                                      tab_number:     @tab_number,
+                                      tab:            @tab,
+                                      custom_origin: @custom_origin,
+                                      origin_url:     request.original_url), 
+                          notice: "The resource was successfully unlinked." }
       end
     end
+
+
   end
 
 
@@ -167,7 +190,9 @@ class ResourceContextsController < ApplicationController
     @template_id = params[:template_id]
     @custom_origin = params[:custom_origin]
     @tab_number = params[:tab_number]
-    @requirement_id = params[:requirement_id]   
+    @tab = params[:tab]
+    @requirement_id = params[:requirement_id] 
+    @last_requirement = params[:last_requirement]  
 
     @resource_contexts = ResourceContext.where(resource_id: @resource_id, 
                                                 requirement_id: @requirement_id, 
@@ -176,19 +201,36 @@ class ResourceContextsController < ApplicationController
     @resource_contexts.each do |resource_context|
         resource_context.destroy
     end
+
+    if (@last_requirement == 'yes')
     
-    if @custom_origin == 'Overview'
-      respond_to do |format|
-        format.html { redirect_to edit_resource_context_path(@customization_id), 
-                        notice: "The resource was successfully unlinked." }
+      if @custom_origin == 'Overview'
+        respond_to do |format|
+          format.html { redirect_to edit_resource_context_path(@customization_id), 
+                          notice: "The resource was successfully unlinked." }
+        end
+      else #details
+        respond_to do |format|
+          format.html { redirect_to customization_requirement_path(id: @customization_id, 
+                        requirement_id:  @requirement_id,
+                        anchor: @tab_number), 
+                          notice: "The resource was successfully unlinked." }
+        end
       end
-    else #details
+    else
       respond_to do |format|
-        format.html { redirect_to customization_requirement_path(id: @customization_id, 
-                      requirement_id:  @requirement_id,
-                      anchor: @tab_number), 
-                        notice: "The resource was successfully unlinked." }
+          format.html { redirect_to edit_customization_resource_path(id: @resource_id,
+                                      customization_id: @customization_id,
+                                      template_id: @template_id,
+                                      resource_level: @resource_level,
+                                      requirement_id: @requirement_id,
+                                      tab_number:     @tab_number,
+                                      tab:            @tab,
+                                      custom_origin: @custom_origin,
+                                      origin_url:     request.original_url), 
+                          notice: "The resource was successfully unlinked." }
       end
+
     end
   end
 
