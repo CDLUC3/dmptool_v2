@@ -4,7 +4,7 @@ include Credentials
 
 feature 'dmp admin user' do
 
-	scenario 'dmp admin visits my dashboard page' do #, :js => true do
+	scenario 'dmp admin visits my dashboard page', :js => true do
 
 		
 		logs_in_with "#{DMP_ADMIN_USERNAME}", "#{DMP_ADMIN_PASSWORD}", "#{DMP_ADMIN_INSTITUTION_NAME}"
