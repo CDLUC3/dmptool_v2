@@ -52,5 +52,67 @@ VALUES
 		(6, 3, 15, '2013-11-01 23:46:01', '2013-12-11 20:40:29');
 
 
+INSERT INTO `requirements_templates` (
+       `id`,         `institution_id`, `name`,        `active`,     `start_date`,
+       `end_date`,   `visibility`,     `review_type`, `created_at`, `updated_at`)
+VALUES 	(46,  1,  'top_level_test_inst_template',  1,     '2011-08-01', NULL,   'institutional',         
+				'no_review',   '2011-08-01 14:33:12', '2014-03-20 19:49:40'),
+
+				(2,  3,  'template_to_copy',  1,     '2011-08-01', NULL,   'public',         
+					'no_review',   '2011-08-01 14:33:12', '2014-03-20 19:49:40'),
+
+				(47,  1,  'template_47',  1,     '2011-08-01', NULL,   'public',         
+					'no_review',   '2011-08-01 14:33:12', '2014-03-20 19:49:40'),
+
+				(10,  3,  'template_10',  1,     '2011-08-01', NULL,   'public',         
+					'no_review',   '2011-08-01 14:33:12', '2014-03-20 19:49:40');
+
+
+
+INSERT INTO `requirements` (`id`,
+       `position`,                 `text_brief`,
+       `text_full`,     `requirement_type`,         `obligation`,
+       `default`,       `requirements_template_id`, `created_at`,
+       `updated_at`,    `ancestry`,                 `group`)
+VALUES (1, 1,  'Policies for re-use, redistribution', 'Policies for re-use, redistribution', 'text', 'optional',
+        NULL, 2,   '2011-08-01 14:42:55',
+       '2014-04-02 17:30:57', NULL, NULL),
+
+				(4, 1,  'etaoin shrdlu', 'etaoin shrdlu', 'text', 'optional',
+        NULL, 47,   '2011-08-01 14:42:55',
+       '2014-04-02 17:30:57', NULL, NULL),
+
+				(11, 1,  'requirements_for_10', 'requirements_for_10', 'text', 'optional',
+        NULL, 10,   '2011-08-01 14:42:55',
+       '2014-04-02 17:30:57', NULL, NULL);
+
+
+
+INSERT INTO `plans` (
+       `id`,                      `name`,                `requirements_template_id`,
+       `solicitation_identifier`, `submission_deadline`, `visibility`,
+       `created_at`,              `updated_at`,          `current_plan_state_id`)
+VALUES (1,  'top_level_plan_my_dog_has_fleas', 46,
+       '',          NULL,                 'public',
+       '2011-08-01 14:33:12',  '2014-03-20 19:49:40',  1);
+
+
+INSERT INTO `plan_states` ( `id`,
+       `plan_id`, `state`, `user_id`, `created_at`, `updated_at`)
+VALUES (1, 1, 'new',   14, '2013-11-01 23:46:51', '2013-12-20 21:32:03'),
+				(2, 2, 'new',   15, '2013-11-01 23:46:51', '2013-12-20 21:32:03');
+
+
+
+INSERT INTO `user_plans` (
+       `id`, `user_id`, `plan_id`, `owner`, `created_at`, `updated_at`)
+VALUES (1, '14', '1',  1,  '2011-08-01 14:33:12', '2014-03-20 19:49:40'),
+				(2, '15', '2',  1,  '2011-08-01 14:33:12', '2014-03-20 19:49:40');
+
+
+
+
+
+
 
 
