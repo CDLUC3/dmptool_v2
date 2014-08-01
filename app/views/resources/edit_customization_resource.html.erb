@@ -150,7 +150,8 @@
                                         template_id: resource_contexts_template.requirements_template_id,
                                         customization_id: @customization_id,
                                         custom_origin: @custom_origin,
-                                        tab_number: @tab_number),
+                                        tab_number: @tab_number,
+                                        last_template: 'yes'),
                                         method: :post,
                                         :class => 'icon unlink',
                                         data: { confirm: 'Are you sure? This resource is not linked to any other templates; therefore unlinking it will cause it to be deleted from the DMPTool.' } %>
@@ -160,7 +161,8 @@
                                         template_id: resource_contexts_template.requirements_template_id,
                                         customization_id: @customization_id,
                                         custom_origin: @custom_origin,
-                                        tab_number: @tab_number),
+                                        tab_number: @tab_number,
+                                        last_template: 'no'),
                                         method: :post,
                                         :class => 'icon unlink' %>
             <%end%>
@@ -218,7 +220,8 @@
                                         requirement_id: resource_contexts_requirement.requirement_id,
                                         customization_id: @customization_id,
                                         custom_origin: @custom_origin,
-                                        tab_number: @tab_number),
+                                        tab_number: @tab_number,
+                                        last_requirement: 'yes'),
                                         method: :post,
                                         :class => 'icon unlink',
                                         data: { confirm: 'Are you sure? This resource is not linked to any other requirements; therefore unlinking it will cause it to be deleted from the DMPTool.' } %>
@@ -229,7 +232,8 @@
                                         requirement_id: resource_contexts_requirement.requirement_id,
                                         customization_id: @customization_id,
                                         custom_origin: @custom_origin,
-                                        tab_number: @tab_number),
+                                        tab_number: @tab_number,
+                                        last_requirement: 'no'),
                                         method: :post,
                                         :class => 'icon unlink'%>
             <%end%>
