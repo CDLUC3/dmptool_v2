@@ -3,7 +3,7 @@ require 'spec_helper'
 
 feature 'institutions' do 
 
-	scenario 'return list of all institutions' , :js => true do
+	scenario 'return list of all institutions' do #, :js => true do
 
 		visit '/api/v1/institutions'
 
