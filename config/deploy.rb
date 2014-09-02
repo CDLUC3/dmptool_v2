@@ -12,6 +12,7 @@ set :scm, :git # You can set :scm explicitly or Capistrano will make an intellig
 
 set :user, 'dmp2'
 set :deploy_via, :remote_cache
+set :copy_exclude, ['.git']
 set :branch, fetch(:branch, 'master')
 set :env, fetch(:env, 'development')
 set :rails_env, fetch(:renv, 'development')
