@@ -14,8 +14,8 @@
 class Api::V1::BaseController < ActionController::Base
 	respond_to :json
 
-
-
+  #API calls should be stateless. Otherwise Rails would check for an authenticity token on POST, PUT/PATCH and DELETE.
+  protect_from_forgery with: :null_session
 
 
 	
