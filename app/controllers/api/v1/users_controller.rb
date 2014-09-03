@@ -3,19 +3,27 @@ class Api::V1::UsersController < Api::V1::BaseController
 
 	respond_to :json
 
-	def index         
-  	@users = User.all
+	def index 
+    if user_role_in?(:dmp_admin, :resource_editor, :template_editor, :institutional_reviewer, :institutional_reviewer)
+      @users = User.all
+    end
 	end 
 
 	def show
-    @user = User.find(params[:id])
+    if user_role_in?(:dmp_admin, :resource_editor, :template_editor, :institutional_reviewer, :institutional_reviewer)
+      @user = User.find(params[:id])
+    end
   end
 
 
   protected
   def authenticate
     authenticate_or_request_with_http_basic do |username, password|
-      Ldap_User.valid_ldap_credentials?(username, password)
+      if Ldap_User.valid_ldap_credentials?(username, password)
+        user = User.find_by_login_id(username)
+        session[:user_id] = user.id
+        session[:login_method] = "ldap"
+      end
     end
   end
 
