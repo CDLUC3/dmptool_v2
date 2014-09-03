@@ -2,7 +2,7 @@ require 'spec_helper'
 # require 'support/features/credentials'
 # require 'support/features/session_helpers'
 
-# include Credentials
+include Credentials
 # include Features::SessionHelpers
 
 
@@ -28,7 +28,7 @@ describe 'users', :type => :api do
 
 		# page.driver.browser.basic_authorize "admin", "secret"
 
-		get '/api/v1/users', {}, { 'Authorization' => encode('admin', 'secret') }
+		get '/api/v1/users', {}, { 'Authorization' => encode("#{DMP_ADMIN_USERNAME}", "#{DMP_ADMIN_PASSWORD}") }
 
 		response.status.should eql(200)
 
