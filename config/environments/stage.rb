@@ -139,9 +139,3 @@ end
 # end
 
 
-
-
-<<<<<<< HEAD
-
-=======
->>>>>>> development
