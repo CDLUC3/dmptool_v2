@@ -99,9 +99,7 @@ feature 'req editor user' do
 		click_button 'Save'
 		expect(page).to have_content("Requirement was successfully created.")
 		expect(page).to have_content("bla_#{@temp}")
-		#within('#req_bla') do
 		click_link "delete_requirement_bla_#{@temp}"
-		#end
 		find('.confirm').click
 		expect(page).to have_no_content("bla_#{@temp}")
 

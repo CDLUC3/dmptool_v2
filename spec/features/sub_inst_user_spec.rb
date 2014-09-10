@@ -4,7 +4,7 @@ include Credentials
 
 feature 'sub institution user scope' do
 
-  scenario 'template availability shown for institutional parent', js: true do
+  scenario 'template availability shown for institutional parent' do #, js: true do
 
     logs_in_with "#{SUB_USER_USERNAME}", "#{SUB_USER_PASSWORD}", "#{SUB_USER_INSTITUTION_NAME}"
     # click the Create New DMP link with the path below, otherwise there are duplicates
@@ -20,7 +20,7 @@ feature 'sub institution user scope' do
 
     logs_in_with "#{SUB_USER_USERNAME}", "#{SUB_USER_PASSWORD}", "#{SUB_USER_INSTITUTION_NAME}"
     visit(public_dmps_path)
-    find(:css, 'a#institutional_view_all_plans').click
+    #find(:css, 'a#institutional_view_all_plans').click
     expect(page).to have_text('top_level_plan_my_dog_has_fleas')
 
   end
@@ -32,7 +32,7 @@ feature 'sub institution user scope' do
     click_on('Create New Template >>')
     expect(page).to have_text('Create New DMP Template')
 
-    click_link('4')
+    #click_link('4')
     find(:css, 'input#requirements_template_47').click
 
     click_on('Copy Template')
@@ -51,7 +51,7 @@ feature 'sub institution user scope' do
 
   end
 
-  scenario 'copy template from public template', js: true do
+  scenario 'copy template from public template' , js: true do
 
     logs_in_with "#{SUB_USER_USERNAME}", "#{SUB_USER_PASSWORD}", "#{SUB_USER_INSTITUTION_NAME}"
     visit(requirements_templates_path)

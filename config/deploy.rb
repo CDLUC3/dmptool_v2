@@ -2,13 +2,17 @@ require 'capistrano/ext/multistage'
 require 'capistrano-unicorn'
 require 'bundler/capistrano'
 
-set :application, 'dmptool2'
-set :repository,  'git@bitbucket.org:dmptool/dmptool2.git'
+# set :application, 'dmptool2'
+# set :repository,  'git@bitbucket.org:dmptool/dmptool2.git'
+
+set :application, 'dmptool'
+set :repository,  'git@github.com:cdluc3/dmptool.git'
 
 set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
 
 set :user, 'dmp2'
 set :deploy_via, :remote_cache
+set :copy_exclude, ['.git']
 set :branch, fetch(:branch, 'master')
 set :env, fetch(:env, 'development')
 set :rails_env, fetch(:renv, 'development')
