@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
 
   include UserEmail
 
+  before_create :set_auth_token
+
   acts_as_paranoid
 
   serialize :prefs, Hash
@@ -218,7 +220,23 @@ class User < ActiveRecord::Base
     return {:roles_added => roles_to_add, :roles_removed => roles_to_remove}
   end
 
+  
   private
+
+
+  def set_auth_token
+    return if auth_token.present?
+    self.auth_token = generate_auth_token
+  end
+
+
+  def generate_auth_token
+    loop do 
+      token = SecureRandom.hex
+      break token unless self.class.exists?(auth_token: token)
+    end
+  end
+
 
   def add_default_institution
     self.institution_id = 0
