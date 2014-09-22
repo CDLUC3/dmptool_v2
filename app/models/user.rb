@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
 
   include UserEmail
 
-  before_create :set_auth_token
+  before_create :set_auth_token #used for api token-based authentication
 
   acts_as_paranoid
 
@@ -224,12 +224,14 @@ class User < ActiveRecord::Base
   private
 
 
+  #used for api token-based authentication
   def set_auth_token
     return if auth_token.present?
     self.auth_token = generate_auth_token
   end
 
 
+  #used for api token-based authentication
   def generate_auth_token
     loop do 
       token = SecureRandom.hex
