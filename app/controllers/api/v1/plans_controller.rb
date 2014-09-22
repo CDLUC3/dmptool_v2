@@ -1,30 +1,21 @@
 class Api::V1::PlansController < Api::V1::BaseController
 
-	# respond_to :json
 
- #  	def index         
- #    	@plans = Plan.all     
- #  	end 
+ 	def index         
+   	@plans = Plan.all 
 
- #respond_to :json
+    if from_date = params[:from_date]
+      @plans = @plans.where(["created_at > ?", from_date])
+    end
 
-   	def index         
-     	@plans = Plan.all 
+    render json: @plans, status: 200
 
-     	respond_to do |format|
-     		format.json {render json: @plans, status: 200}
-     		format.xml {render xml: @plans, status: 200}
-     	end
-
-   	end 
+ 	end 
 
 	def show
     @plan = Plan.find(params[:id])
 
-    respond_to do |format|
-     	format.json {render json: @plan, status: 200}
-     	format.xml {render xml: @plan, status: 200}
-    end
+    render json: @plan, status:200
   end
 
 
