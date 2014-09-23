@@ -220,8 +220,6 @@ class User < ActiveRecord::Base
     return {:roles_added => roles_to_add, :roles_removed => roles_to_remove}
   end
 
-  
-  private
 
 
   #used for api token-based authentication
@@ -239,6 +237,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  
+  private
+
+
+  
 
   def add_default_institution
     self.institution_id = 0

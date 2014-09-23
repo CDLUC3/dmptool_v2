@@ -25,6 +25,9 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   protected
 
+
+  
+
   
   def authenticate
     authenticate_token || render_unauthorized

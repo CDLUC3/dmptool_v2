@@ -25,6 +25,9 @@ Dmptool2::Application.routes.draw do
   end
 
 
+  match 'remove_token', to: 'users#remove_token', :via => [:get, :post]
+  match 'add_token', to: 'users#add_token', :via => [:get, :post]
+
   match '/500', :to => 'errors#internal_error', :via => :all
   match '/404', :to => 'errors#not_found', :via => :all
   match '/403', :to => 'errors#forbidden', :via => :all
@@ -52,6 +55,8 @@ Dmptool2::Application.routes.draw do
   post 'requirements/reorder', to: 'requirements#reorder', as: "reorder_requirements"
   get 'customizations/:id/requirements/(:requirement_id)', to: 'customizations#show', as: 'customization_requirement'
   get 'institutions', to: 'institutions#index'
+
+  
 
   resources :requirements_templates do
     resources :requirements

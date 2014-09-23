@@ -135,7 +135,7 @@
 <% end %>
 
 <% unless @user.new_record? %>
-    <p><strong>Other Information</strong></p>
+    <p><strong>Orcid</strong></p>
     <hr/>
 
     <% if @user.orcid_id.nil? || @user.orcid_id.blank? %>
@@ -176,6 +176,13 @@
       </div>
 
     <% end %>
+<% end %>
+
+
+<% unless @user.new_record? %>
+  <div id="token_partial">
+    <%= render partial: 'token'%>
+  </div>
 <% end %>
 
 
