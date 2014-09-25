@@ -1,34 +1,36 @@
-<p><strong>API Token</strong></p>
-  <hr/>
+
+
+  
+
+<div id="fade_slow">
+  
+  
+    
   <%if current_user.auth_token%>
-    <div id="token_present" class="control-group">
-      <p class="control-label">My Token</p>
-      <div class="controls everythingOnOneLine">
-        <div id="token_here">
-          <%= current_user.auth_token %>
-        </div>
-        <div>
-          &nbsp;&nbsp;&nbsp;
-          <%= link_to 'Remove Token', 
-                      remove_token_path, 
-                      remote: true, :class => 'btn' %>
-          &nbsp;&nbsp;&nbsp;
-          <%= link_to 'Generate New Token',
-                      add_token_path, 
-                      remote: true, 
-                      :class => 'btn' %>
-        </div>
-      </div>
+    <div><%= current_user.auth_token %></div>
+    <div>
+      &nbsp;&nbsp;&nbsp;
+      <%= link_to 'Generate New Token',
+                  add_token_path, 
+                  remote: true, 
+                  :class => 'btn' %>
+      &nbsp;&nbsp;&nbsp;
+      <%= link_to 'Remove Token', 
+                  remove_token_path, 
+                  remote: true, :class => 'btn' %>
     </div>
+      
   <%else%>
-    <div  id="token_absent" class="control-group">     
-      <div class="controls">
-        <div>
-          <%= link_to 'Generate New Token',
-                      add_token_path, 
-                      remote: true, 
-                      :class => 'btn' %>
-        </div>
-      </div>
+    
+    <div>You don't have any token.</div>
+    <div>
+      &nbsp;&nbsp;&nbsp;
+      <%= link_to 'Generate New Token',
+                  add_token_path, 
+                  remote: true, 
+                  :class => 'btn' %>
+      &nbsp;&nbsp;&nbsp;
     </div>
   <%end%>
+
+</div>

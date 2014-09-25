@@ -1,2 +1,8 @@
-$('#token_partial').html('<%= j(render partial: 'token') %>');
+// $('#token_partial').fadeOut().fadeIn().html('<%= j(render partial: 'token') %>');
+// .toggle( "puff" );
 
+
+
+
+$('#token_partial').hide();
+$('#token_partial').fadeIn().html('<%= j(render partial: 'token') %>');

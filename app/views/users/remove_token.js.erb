@@ -1,10 +1,4 @@
-// document.getElementById('token_present').style.display = 'block';
-// // alert(element); //just to see that it's getting to your template.
-// document.getElementById('token_absent').style.display = 'none';
 
-
-
-
-
-$('#token_partial').html('<%= j(render partial: 'token') %>');
+$('#token_partial').hide();
+$('#token_partial').fadeIn().html('<%= j(render partial: 'token') %>');
 

@@ -180,8 +180,15 @@
 
 
 <% unless @user.new_record? %>
-  <div id="token_partial">
-    <%= render partial: 'token'%>
+  <p><strong>API Token</strong></p>
+  <hr/>
+  <div class="control-group">
+    <p class="control-label">My Token</p>
+    <div class="controls everythingOnOneLine">
+      <div id="token_partial">
+        <%= render partial: 'token'%>
+      </div>
+    </div>
   </div>
 <% end %>
 

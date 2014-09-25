@@ -66,8 +66,10 @@ $(function() {
 });
 
 
-
-
+//adds effects to token generator
+// $(function() {
+// 	$("#fade_slow").fadeOut( "slow" );
+// });
 
 
 
