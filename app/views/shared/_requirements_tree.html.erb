@@ -32,3 +32,16 @@
   <% end %>
 <% end %>
 </ul>
+
+
+<script>
+$(function() {
+  $(".requirement_direct_link").bind("click",function(e) {
+    e.preventDefault();
+    var requirement_id = ( $(e.target).parent()[0].id);
+    var res = requirement_id.replace("requirement_", "");
+    $("#next_requirement_id").val(res);
+    $(".form-horizontal").submit();
+  });
+})
+ </script>

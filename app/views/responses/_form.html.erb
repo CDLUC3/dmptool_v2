@@ -57,8 +57,8 @@
       <%= f.submit "Save Response", name: 'save_only', :class => 'btn btn-success pull-right', method: 'post', id: 'save_only', remote: true %>
       <%= link_to 'Cancel Changes', details_plan_path(@plan), :class => "btn" %>
     <% else %>
-      <%= f.submit "Save and Next", name: 'save_and_next', :class => 'btn btn-success pull-right', method: 'post' %>
-      <%= f.submit "Save Response", name: 'save_only', :class => 'btn btn-success pull-right', method: 'post'%>
+      <%= f.submit "Save and Next", name: 'save_and_next', :class => 'btn btn-success pull-right', method: 'post', remote: true  %>
+      <%= f.submit "Save Response", name: 'save_only', :class => 'btn btn-success pull-right', method: 'post', remote: true %>
       <%= link_to 'Cancel Changes', details_plan_path(@plan), :class => "btn", role: "button" %>
     <% end %>
   </div>
