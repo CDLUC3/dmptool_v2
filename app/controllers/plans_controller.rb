@@ -389,6 +389,7 @@ class PlansController < ApplicationController
       next_requirement_id = @requirement.next_requirement_not_folder
       unless next_requirement_id.nil?
         ## would go back to the 1st Requirement in the list
+        #TO DO: save previous requirements HERE
         @next_requirement_id = next_requirement_id
       else
         ## traverse through the next requirement in the list
