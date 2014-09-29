@@ -23,27 +23,10 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
 
-  protected
+  # protected
 
   
-  def authenticate
-    authenticate_token || render_unauthorized
-  end
-
   
-  def authenticate_token
-    authenticate_with_http_token do |token, options|
-      user = User.find_by(auth_token: token)
-      session[:user_id] = user.id if user
-    end
-
-  end
-
-
-  def render_unauthorized
-    self.headers['WWW-Authenticate'] = 'Token realm="Users"'
-    render json: 'Bad credentials', status: 401
-  end
 
 
 
