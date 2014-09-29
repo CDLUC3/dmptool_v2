@@ -1,8 +1,6 @@
 class Api::V1::UsersController < Api::V1::BaseController
 	before_action :authenticate
 
-	# respond_to :json
-
 	def index 
     if user_role_in?(:dmp_admin)
       @users = User.all
@@ -23,14 +21,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
 
-  # protected
-
-  
-  
-
-
-
-
+ 
 
   # def authenticate
   #   authenticate_or_request_with_http_basic do |username, password|
