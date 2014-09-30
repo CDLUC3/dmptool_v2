@@ -16,7 +16,8 @@ class Api::V1::PlansController < Api::V1::BaseController
 	def show
     @plan = Plan.find(params[:id])
     if (@plan.visibility == :public)  ||  
-    		((@plan.visibility == :institutional) && (current_user.institution_id == @plan.requirements_template.institution_id))  
+    		((@plan.visibility == :institutional) && (current_user.institution_id == @plan.requirements_template.institution_id)) ||
+        ( (@plan.visibility == :private) && ( @plan.users.include?(current_user)) )
     	render json: @plan, status:200
     else
     	 render json: 'You are not authorized to look at this content', status: 401
