@@ -30,7 +30,15 @@ class ResponsesController < ApplicationController
       @last_question = @requirements_template.last_question
     end
     respond_to do |format|
-      if (params[:save_and_next] || !params[:save_only]) && (@requirement.id == @last_question.id)
+      if ( !params[:save_and_next] && !params[:save_only]) && (@requirement.id == @last_question.id)
+        if @response.save
+          format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id) }
+          format.json { render action: 'show', status: :created, location: @response }
+        else
+          format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id) }
+          format.json { render json: @response.errors, status: :unprocessable_entity }
+        end
+      elsif (params[:save_and_next] || !params[:save_only]) && (@requirement.id == @last_question.id)
         if @response.save
           format.html { redirect_to preview_plan_path(@plan) }
           format.json { render action: 'show', status: :created, location: @response }
@@ -74,7 +82,16 @@ class ResponsesController < ApplicationController
         @requirements = @requirements_template.requirements
         @last_question = @requirements_template.last_question
       end
-      if (params[:save_and_next] || !params[:save_only]) && (@requirement.id == @last_question.id)
+      if ( !params[:save_and_next] && !params[:save_only]) && (@requirement.id == @last_question.id)
+        if @response.update(response_params)
+          format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id) }
+          format.json { head :no_content }
+        else
+          redirect_to details_plan_path(@plan, requirement_id: @requirement_id)
+          format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id) }
+          format.json { render json: @response.errors, status: :unprocessable_entity }
+        end
+      elsif (params[:save_and_next] || !params[:save_only]) && (@requirement.id == @last_question.id)
         if @response.update(response_params)
           format.html { redirect_to preview_plan_path(@plan) }
           format.json { head :no_content }
