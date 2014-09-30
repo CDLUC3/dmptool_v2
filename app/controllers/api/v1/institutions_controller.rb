@@ -27,14 +27,6 @@ class Api::V1::InstitutionsController < Api::V1::BaseController
   	@institutions = Institution.all 
 	end	
 
-  def require_admin
-    unless user_role_in?(:dmp_admin)
-      flash[:error] = "You must be an administrator to access this page."
-      session[:return_to] = request.original_url
-      redirect_to choose_institution_path and return
-    end
-  end
-
   
 
 end
