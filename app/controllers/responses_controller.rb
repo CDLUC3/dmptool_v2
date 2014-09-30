@@ -29,7 +29,7 @@ class ResponsesController < ApplicationController
       @requirements = @requirements_template.requirements
       @last_question = @requirements_template.last_question
     end
-    respond_to do |format|
+    respond_to do |format|    
       if ( !params[:save_and_next] && !params[:save_only]) && (@requirement.id == @last_question.id)
         if @response.save
           format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id) }
