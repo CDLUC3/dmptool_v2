@@ -1,5 +1,7 @@
 class Api::V1::PlansController < Api::V1::BaseController
-	before_action :authenticate
+	
+    before_action :authenticate
+
 
  	def index         
    	@public_plans = Plan.all.public_visibility
@@ -10,8 +12,8 @@ class Api::V1::PlansController < Api::V1::BaseController
       @plans = @plans.where(["created_at > ?", from_date])
     end
     render json: @plans, status: 200
-
  	end 
+
 
 	def show
     @plan = Plan.find(params[:id])
