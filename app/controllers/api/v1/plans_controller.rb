@@ -2,6 +2,8 @@ class Api::V1::PlansController < Api::V1::BaseController
 	
     before_action :authenticate
 
+    respond_to :json
+
 
  	def index         
        	@public_plans = Plan.all.public_visibility
@@ -11,7 +13,7 @@ class Api::V1::PlansController < Api::V1::BaseController
         if from_date = params[:from_date]
           @plans = @plans.where(["created_at > ?", from_date])
         end
-        render json: @plans, status: 200
+        @plans
  	end 
 
 
@@ -20,7 +22,8 @@ class Api::V1::PlansController < Api::V1::BaseController
             if (@plan.visibility == :public)  ||  
             		((@plan.visibility == :institutional) && (current_user.institution_id == @plan.requirements_template.institution_id)) ||
                 ( (@plan.visibility == :private) && ( @plan.users.include?(current_user)) )
-            	render json: @plan, status:200
+            	
+                @plan
             else
             	 render json: 'You are not authorized to look at this content', status: 401
             end
