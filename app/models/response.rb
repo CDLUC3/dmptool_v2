@@ -7,20 +7,81 @@ class Response < ActiveRecord::Base
 
   validates :plan_id, presence: true, numericality: true
   validates :requirement_id, presence: true, numericality: true
-  validates :text_value, presence: true, if: :validate_only_if_obligation_mandatory
+  
   after_create :check_revised
   after_update :check_revised
 
-  def validate_only_if_obligation_mandatory
-  	requirement_id = self.requirement_id
-  	obligation = Requirement.find(requirement_id).obligation
+  validates :text_value, presence: true, if: :requirement_type_is_text
+  validates :enumeration_id, presence: true, if: :requirement_type_is_enum
+  validate :mandatory_text_or_enum_present  
+
+  def mandatory_text_or_enum_present
+    requirement_id = self.requirement_id
+    obligation = Requirement.find(requirement_id).obligation
     requirement_type = Requirement.find(requirement_id).requirement_type
-  	if obligation == :mandatory && requirement_type == :text
-  		return true
-  	else
-  		return false
-  	end
+    if obligation == :mandatory
+      if ( ( (text_value.nil?) && (requirement_type == :text) ) || ((enumeration_id.nil?) && (requirement_type == :enum) ) )
+        errors.add(:base, "This response is mandatory.")
+      end
+    end
   end
+
+
+  def requirement_type_is_text
+    requirement_id = self.requirement_id
+    requirement_type = Requirement.find(requirement_id).requirement_type 
+    if requirement_type == :text
+      return true
+    else
+      return false
+    end
+  end
+
+  def requirement_type_is_enum
+    requirement_id = self.requirement_id
+    requirement_type = Requirement.find(requirement_id).requirement_type
+    if requirement_type == :enum
+      return true
+    else
+      return false
+    end
+  end
+
+  # def presence_of_text_or_enumeration_id
+  #   requirement_id = self.requirement_id
+  #   obligation = Requirement.find(requirement_id).obligation
+  #   requirement_type = Requirement.find(requirement_id).requirement_type
+  #   if obligation == :mandatory
+  #     if ( (text_value.nil? && requirement_type == :text) || 
+  #           (enumeration_id.nil? && requirement_type == :enum) )
+  #       errors.add(:base, 'This response is mandatory.')
+  #       return true
+  #     else
+  #       return false
+  #     end
+  #   else
+  #     if ( (text_value.nil? && requirement_type == :text) || 
+  #           (enumeration_id.nil? && requirement_type == :enum) )
+  #       return true
+  #     else
+  #       return false
+  #     end
+  #   end
+  # end
+
+
+
+
+  # def validate_only_if_obligation_mandatory
+  # 	requirement_id = self.requirement_id
+  # 	obligation = Requirement.find(requirement_id).obligation
+  #   requirement_type = Requirement.find(requirement_id).requirement_type
+  # 	if obligation == :mandatory && requirement_type == :text
+  # 		return true
+  # 	else
+  # 		return false
+  # 	end
+  # end
 
   def update_with_conflict_validation(*args)
     update(*args)
