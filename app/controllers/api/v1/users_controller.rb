@@ -1,13 +1,13 @@
 class Api::V1::UsersController < Api::V1::BaseController
 	before_action :authenticate
 
+  respond_to :json
+
 	def index 
     if user_role_in?(:dmp_admin)
       @users = User.all
-      render json: @users, status: 200
     elsif user_role_in?(:institutional_admin) 
-      @users = User.all
-      render json: @users, status: 200
+      @users = User.where(institution_id: [current_user.institution.subtree_ids])
     else
       render json: 'You are not authorized to look at this content', status: 401
     end
@@ -17,10 +17,10 @@ class Api::V1::UsersController < Api::V1::BaseController
 	def show
     if @user = User.find_by_id(params[:id])
       if user_role_in?(:dmp_admin)
-        render json: @user, status: 200
+        @user
       elsif user_role_in?(:institutional_admin)
         if current_user.institution.subtree_ids.include?(@user.institution.id)
-          render json: @user, status: 200
+          @user
         else
           render json: 'You are not authorized to look at this content', status: 401
         end
