@@ -29,7 +29,7 @@ class ResponsesController < ApplicationController
       @requirements = @requirements_template.requirements
       @last_question = @requirements_template.last_question
     end
-    respond_to do |format|
+    respond_to do |format|    
       if ( !params[:save_and_next] && !params[:save_only]) && (@requirement.id == @last_question.id)
         if @response.save
           format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id) }
@@ -39,14 +39,26 @@ class ResponsesController < ApplicationController
           format.json { render json: @response.errors, status: :unprocessable_entity }
         end
       elsif (params[:save_and_next] || !params[:save_only]) && (@requirement.id == @last_question.id)
-        if @response.save
-          format.html { redirect_to preview_plan_path(@plan) }
-          format.json { render action: 'show', status: :created, location: @response }
-        else
-          format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id) }
-          format.json { render json: @response.errors, status: :unprocessable_entity }
-        end
+        
 
+        if @response.save
+          if @response.errors.any?
+            format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id)  }
+            format.json { render action: 'show', status: :created, location: @response }
+          else
+            format.html { redirect_to preview_plan_path(@plan) }
+            format.json { render action: 'show', status: :created, location: @response }
+          end
+        else
+          if @response.errors.any?
+            format.html { redirect_to preview_plan_path(@plan) }
+            format.json { render action: 'show', status: :created, location: @response }
+          else
+            format.html { redirect_to preview_plan_path(@plan) }
+            format.json { render action: 'show', status: :created, location: @response }
+          end
+        end
+        
       elsif (params[:save_and_next] || !params[:save_only])
         if @response.save
           format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id), notice: 'Response was successfully created.' }
@@ -81,7 +93,7 @@ class ResponsesController < ApplicationController
       unless @requirements_template.nil?
         @requirements = @requirements_template.requirements
         @last_question = @requirements_template.last_question
-      end
+      end 
       if ( !params[:save_and_next] && !params[:save_only]) && (@requirement.id == @last_question.id)
         if @response.update(response_params)
           format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id) }
@@ -96,9 +108,8 @@ class ResponsesController < ApplicationController
           format.html { redirect_to preview_plan_path(@plan) }
           format.json { head :no_content }
         else
-          redirect_to details_plan_path(@plan, requirement_id: @requirement_id)
-          format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id) }
-          format.json { render json: @response.errors, status: :unprocessable_entity }
+          format.html { redirect_to preview_plan_path(@plan) }
+          format.json { head :no_content }
         end
 
       elsif (params[:save_and_next] || !params[:save_only])
