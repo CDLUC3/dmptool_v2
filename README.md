@@ -5,13 +5,15 @@ dmptool
 
 **Project moved to Github in June 2014. Go to [github.com/CDLUC3/dmptool](https://github.com/CDLUC3/dmptool).**
 
-Installation Instructions:
+**Background** Instructions:
 
-DMPTool is a standard database-driven app using Rails v4.x conventions without an extreme number of dependencies on other tools.  
+DMPTool is a standard database-driven app using Rails v4.x conventions with a few number of dependencies on other tools.  
 
-The application is configured and implemented using OAuth to authenticate to LDAP server and/or a Shibboleth IdP.    
+The application is configured and implemented using OAuth to authenticate to LDAP server and/or a Shibboleth IdP.  In order to use the tool as is, you must configure with one of these 2 authentication mechanisms.     
 
-**Configuration files**  - Required to run the application.
+** Helpful Information for running an instance of DMPTool **
+
+**Configuration files**  - Required to run the application.  There are template versions of this in the repository.  
 
 * config/database.yml - contains credential information for your database.
 * config/shibboleth.yml - contains information for attributes received from shibboleth
