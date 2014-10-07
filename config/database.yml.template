@@ -1,0 +1,27 @@
+#
+# This is a template file. Update your database information and rename
+# this file to config/database.yml
+#
+development:
+  adapter: mysql2
+  database: dmp2_dev
+  username: xxx
+  password: xxx
+  host: dmp2-dev.cdlib.org
+  port: 3306
+
+test:
+  adapter: mysql2
+  database: dmp2_test
+  username: xxx
+  password: xxx
+  host: dmp2-dev.cdlib.org
+  port: 3306
+
+production:
+  adapter: mysql2
+  database: dmp2_dev
+  username: xxx
+  password: xxx
+  host: dmp2-dev.cdlib.org
+  port: 3306

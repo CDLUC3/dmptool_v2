@@ -1,0 +1,71 @@
+#
+# This is a template file.  Update your LDAP server information
+# and rename to ldap.yml
+#
+development:
+  admin_password:   xxxxxx
+  admin_user:       cn=Directory Manager
+  group_base:       ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+  host:             uc3-mrt-wrk1-dev.cdlib.org
+  port:             4444
+  user_base:        ou=People,ou=uc3,dc=cdlib,dc=org
+  inst_base:        o=institutions,ou=uc3,dc=cdlib,dc=org
+#
+# EZID information is required for creating new users in the CDL
+# LDAP server directory.   
+  ark_minter_url:   http://noid.cdlib.org/nd/noidu_p9
+  ezid_minter_uri:  https://ezid-wf.cdlib.org/shoulder/ark:/99166/p9
+  ezid_user:        cdldmptool
+  ezid_pwd:         xxxxxx
+  omniauth_uid:     uid
+  omniauth_method:  ssl
+  omniauth_title:   LDAP
+  
+stage:
+  admin_password:   xxxxx
+  admin_user:       cn=Directory Manager
+  group_base:       ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+  #host:           uc3-mrt-wrk1-dev.cdlib.org
+  host:             uc3-mrt-wrk1-stg.cdlib.org
+  port:             1636
+  user_base:        ou=People,ou=uc3,dc=cdlib,dc=org
+  inst_base:        o=institutions,ou=uc3,dc=cdlib,dc=org
+  ark_minter_url:   http://noid.cdlib.org/nd/noidu_p9
+  ezid_minter_uri:  https://ezid-wf.cdlib.org/shoulder/ark:/99166/p9
+  ezid_user:        cdldmptool
+  ezid_pwd:         xxxxxx
+  omniauth_uid:     uid
+  omniauth_method:  ssl
+  omniauth_title:   LDAP
+
+test:
+  admin_password:   xxxx
+  admin_user:       cn=Directory Manager
+  group_base:       ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+  host:             uc3-mrt-wrk1-dev.cdlib.org
+  port:             4444
+  user_base:        ou=People,ou=uc3,dc=cdlib,dc=org
+  inst_base:        o=institutions,ou=uc3,dc=cdlib,dc=org
+  ark_minter_url:   http://noid.cdlib.org/nd/noidu_p9
+  ezid_minter_uri:  https://ezid-wf.cdlib.org/shoulder/ark:/99166/p9
+  ezid_user:        cdldmptool
+  ezid_pwd:         xxxxxx
+  omniauth_uid:     uid
+  omniauth_method:  ssl
+  omniauth_title:   LDAP
+
+production:
+  admin_password:   xxxxxxx
+  admin_user:       cn=Directory Manager
+  group_base:       ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+  host:             xxx.cdlib.org
+  port:             1636
+  user_base:        ou=People,ou=uc3,dc=cdlib,dc=org
+  inst_base:        o=institutions,ou=uc3,dc=cdlib,dc=org
+  ark_minter_url:   http://noid.cdlib.org/nd/noidu_p9
+  ezid_minter_uri:  https://ezid.cdlib.org/shoulder/ark:/99166/p9
+  ezid_user:        cdldmptool
+  ezid_pwd:         xxxxxx
+  omniauth_uid:     uid
+  omniauth_method:  ssl
+  omniauth_title:   LDAP
