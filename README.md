@@ -3,15 +3,13 @@
 dmptool
 =======
 
-**Project moved to Github in June 2014. Go to [github.com/CDLUC3/dmptool](https://github.com/CDLUC3/dmptool).**
+**Project moved to Github in June 2014. **
 
-**Background** Instructions:
+** Helpful information for installing and running DMPTool for your environment:**
 
 DMPTool is a standard database-driven app using Rails v4.x conventions with a few number of dependencies on other tools.  
 
-The application is configured and implemented using OAuth to authenticate to LDAP server and/or a Shibboleth IdP.  In order to use the tool as is, you must configure with one of these 2 authentication mechanisms.     
-
-** Helpful Information for running an instance of DMPTool **
+The application is configured and requires OmniAuth to authenticate to LDAP server and/or a Shibboleth IdP.  In order to use the tool as is, you must configure with one of these 2 authentication providers. 
 
 **Configuration files**  - Required to run the application.  There are template versions of this in the repository.  
 
@@ -38,5 +36,6 @@ There are 6 roles associated with the application which give access to different
 * DMP - data management plans - allows user to create new plans, collaborate with others, print, and export
 
 **Visibility** of information in the tool can be either private, viewable for users within an institution or public (open to everyone).
+
 
 
