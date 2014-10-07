@@ -3,9 +3,9 @@
 dmptool
 =======
 
-**Project moved to Github in June 2014. **
+**Project moved to Github in June 2014.**
 
-** Helpful information for installing and running DMPTool for your environment:**
+**Helpful information for installing and running DMPTool for your environment:**
 
 DMPTool is a standard database-driven app using Rails v4.x conventions with a few number of dependencies on other tools.  
 
