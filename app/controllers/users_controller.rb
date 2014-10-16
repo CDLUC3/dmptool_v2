@@ -72,6 +72,8 @@ class UsersController < ApplicationController
 
     @roles = @user.roles.map {|r| r.name}.join(' | ')
 
+
+
   end
 
   # POST /users
@@ -193,24 +195,10 @@ class UsersController < ApplicationController
     @update_orcid_id = params[:user][:update_orcid_id]
 
     if !@orcid_id.blank?
-      #if valid_orcid?(@orcid_id)
         @orcid_id = "http://orcid.org/" + "#{@orcid_id}"
-      #else
-      #  flash[:error] = "The orcid id: #{@orcid_id} is a not valid orcid id."
-      #  @orcid_id = ""
-      #  redirect_to edit_user_path(@user)
-      #  return
-      #end
     end
     if !@update_orcid_id.blank?
-      #if valid_orcid?(@update_orcid_id)
         @orcid_id = "http://orcid.org/" + "#{@orcid_id}"
-      #else
-      #  flash[:error] = "The orcid id: #{@update_orcid_id} is a not valid orcid id."
-      #  @orcid_id = ""
-      #  redirect_to edit_user_path(@user)
-      #  return
-      #end
     end
 
     User.transaction do
@@ -226,9 +214,11 @@ class UsersController < ApplicationController
             format.html { redirect_to edit_user_path(@user),
                         notice: 'User information updated.'  }
             format.json { head :no_content }
+            
           else
             format.html { render 'edit'}
             format.json { head :no_content }
+            
           end
 
         else
@@ -241,9 +231,11 @@ class UsersController < ApplicationController
             format.html { redirect_to edit_user_path(@user),
                         notice: 'User information updated.'  }
             format.json { head :no_content }
+            
           else
             format.html { render 'edit'}
             format.json { head :no_content }
+            
           end
         end
       end
@@ -357,8 +349,33 @@ class UsersController < ApplicationController
   #   password.match(/[A-Za-z]/)
   # end
 
-  private
+  
 
+
+  def remove_token
+    @user = current_user
+    puts "its inside remove_token"
+    @user.auth_token = nil
+    @user.save
+    respond_to do |format|
+      format.js 
+    end 
+  end
+
+  def add_token
+    @user = current_user
+    @user.auth_token = nil
+    @user.save
+    @user.set_auth_token
+    @user.save
+    respond_to do |format|
+      format.js
+    end 
+  end
+
+
+  private
+  
 
   def map_users_for_autocomplete(users)
     @users.map {|u| Hash[ id: u.id, full_name: u.full_name, label: u.label]}

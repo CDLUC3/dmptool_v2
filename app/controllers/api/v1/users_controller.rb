@@ -33,17 +33,4 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
 
- 
-#basic auth authentication
-  # def authenticate
-  #   authenticate_or_request_with_http_basic do |username, password|
-  #     if Ldap_User.valid_ldap_credentials?(username, password)
-  #       user = User.find_by_login_id(username)
-  #       session[:user_id] = user.id
-  #       session[:login_method] = "ldap"
-  #     end
-  #   end
-  # end
-
-
 end

@@ -135,7 +135,7 @@
 <% end %>
 
 <% unless @user.new_record? %>
-    <p><strong>Other Information</strong></p>
+    <p><strong>Orcid</strong></p>
     <hr/>
 
     <% if @user.orcid_id.nil? || @user.orcid_id.blank? %>
@@ -176,6 +176,20 @@
       </div>
 
     <% end %>
+<% end %>
+
+
+<% unless @user.new_record? %>
+  <p><strong>API Token</strong></p>
+  <hr/>
+  <div class="control-group">
+    <p class="control-label">My Token</p>
+    <div class="controls everythingOnOneLine">
+      <div id="token_partial">
+        <%= render partial: 'token'%>
+      </div>
+    </div>
+  </div>
 <% end %>
 
 
