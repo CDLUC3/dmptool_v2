@@ -48,6 +48,10 @@ class Api::V1::BaseController < ActionController::Base
     authenticate_token || render_unauthorized
   end
 
+  def soft_authenticate
+    authenticate_token 
+  end
+
   
   def authenticate_token
     authenticate_with_http_token do |token, options|
