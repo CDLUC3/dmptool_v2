@@ -1,6 +1,9 @@
  class ResourcesController < ApplicationController
 
-  before_action :require_login, only: [:show]
+  before_action :require_login, only: [:show, :edit_customization_resource, :edit, :create, 
+                                        :update, :new, :new_customization_resource,
+                                        :update_customization_resource, :create_customization_resource,
+                                        :destroy, :copy_selected_customization_resource]
   before_action :set_resource, only: [:show, :edit, :update]
 
   # GET /resources
