@@ -198,7 +198,7 @@
 
       <% @resource_contexts_requirements.each do |resource_contexts_requirement| %>
         <tr>
-         <td><%= resource_contexts_requirement.requirement.text_brief%></td>
+         <td><%= resource_contexts_requirement.requirement.text_brief if resource_contexts_requirement.requirement%></td>
          <%if resource_contexts_requirement.requirements_template.id.to_s == @template_id %>
             <td>
               <%= resource_contexts_requirement.requirements_template.name %> (current) 
