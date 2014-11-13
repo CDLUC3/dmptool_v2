@@ -13,7 +13,7 @@
   <% if state(@plan) == :submitted %>
     <%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
   <% elsif state(@plan) == :new || state(@plan) == :revised %>
-    <%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), method: :post, :class => "btn btn-green pull-right" %><%= content_tag(:span, '', :title => '<p>Submit your Plan for Informal Review Process.</p>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip pull-right') %>
+    <%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), method: :post, :class => "btn btn-green pull-right" %><%= content_tag(:span, '', :title => '<p>Submit your Plan for an Informal Review from your institution.</p>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip pull-right') %>
     <%= link_to "Done", plan_plan_states_committed_path(@plan), method: :post, :class => "btn btn-green pull-right" %><%= content_tag(:span, '', :title => '<p>Complete your Plan.</p>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip pull-right') %>
   <% elsif state(@plan) == :committed %>
     <%= link_to "Done", plan_plan_states_committed_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
@@ -43,7 +43,7 @@
   <% if state(@plan) == :submitted %>
     <%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
   <% elsif state(@plan) == :new || state(@plan) == :revised %>
-    <%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), method: :post, :class => "btn btn-green pull-right" %><%= content_tag(:span, '', :title => '<p>Submit your Plan for Informal Review Process.</p>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip pull-right') %>
+    <%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), method: :post, :class => "btn btn-green pull-right" %><%= content_tag(:span, '', :title => '<p>Submit your Plan for an Informal Review from your institution.</p>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip pull-right') %>
     <%= link_to "Done", plan_plan_states_committed_path(@plan), method: :post, :class => "btn btn-green pull-right" %><%= content_tag(:span, '', :title => '<p>Complete your Plan.</p>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip pull-right') %>
   <% elsif state(@plan) == :committed %>
     <%= link_to "Done", plan_plan_states_committed_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
