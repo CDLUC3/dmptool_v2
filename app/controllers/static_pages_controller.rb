@@ -1,6 +1,4 @@
 require 'rss'
-require 'open-uri'
-require 'open_uri_redirections'
 
 class StaticPagesController < ApplicationController
 
@@ -15,7 +13,7 @@ class StaticPagesController < ApplicationController
     @public_dmps = Plan.public_visibility.order(name: :asc).limit(3)
     if @rss.nil?
       begin
-        rss_xml = open(APP_CONFIG['rss'], :allow_redirections => :all).read
+        rss_xml = open(APP_CONFIG['rss']).read
         @rss = RSS::Parser.parse(rss_xml, false).items.first(5)
         Rails.cache.write("rss", @rss, :expires_in => 15.minutes)
       rescue Exception => e

@@ -49,4 +49,4 @@ gem 'activerecord_any_of'
 gem 'prawn', '~> 1.0.0'
 gem 'exception_notification'
 gem 'rabl' # for rendering views in the api
-gem 'open_uri_redirections' #for redirection forbidden from http to https on dmptool blog
+
