@@ -13,7 +13,7 @@ development_nonlocal:
   development
 
 stage:
-  rss:                    http://blog.dmptool.org/feed
+  rss:                    https://blog.dmptool.org/feed
   blog:                   http://blog.dmptool.org
   feedback_email_to:      [uc3@ucop.edu]
   feedback_email_from:    no-reply-dmptool@ucop.edu
@@ -27,7 +27,7 @@ stage_development:
   stage
 
 production:
-  rss:                    http://blog.dmptool.org/feed
+  rss:                    https://blog.dmptool.org/feed
   blog:                   http://blog.dmptool.org
   feedback_email_to:      [uc3@ucop.edu]
   feedback_email_from:    no-reply-dmptool@ucop.edu
@@ -42,7 +42,7 @@ production_development:
 
 
 test:
-  rss:                    http://blog.dmptool.org/feed
+  rss:                    https://blog.dmptool.org/feed
   blog:                   http://blog.dmptool.org
   feedback_email_to:      [pwillet.ucop.edu, mstrong@ucop.edu]
   feedback_email_from:    no-reply-dmptool@ucop.edu
