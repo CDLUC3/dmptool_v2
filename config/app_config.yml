@@ -1,5 +1,5 @@
 development:
-  rss:                    http://blog.dmptool.org/feed
+  rss:                    https://blog.dmptool.org/feed
   blog:                   http://blog.dmptool.org
   feedback_email_to:      [pwillet.ucop.edu, mstrong@ucop.edu, sfisher@ucop.edu]
   feedback_email_from:    no-reply-dmptool@ucop.edu
