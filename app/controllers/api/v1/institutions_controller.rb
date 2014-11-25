@@ -9,12 +9,20 @@ class Api::V1::InstitutionsController < Api::V1::BaseController
 
 
 	def show
-    	@institution = Institution.find_by_id(params[:id])
+    if @institution = Institution.find_by_id(params[:id]) 
+      @institution 
+    else
+      render json: 'The institution you are looking for doesn\'t exist', status: 404
+    end
   end  
 
 
 	def plans_count_show
-  	@institution = Institution.find_by_id(params[:id])
+  	if @institution = Institution.find_by_id(params[:id]) 
+      @institution 
+    else
+      render json: 'The institution you are looking for doesn\'t exist', status: 404
+    end
 	end 
 
 
@@ -24,7 +32,11 @@ class Api::V1::InstitutionsController < Api::V1::BaseController
 
 
 	def admins_count_show
-  	@institution = Institution.find_by_id(params[:id])
+  	if @institution = Institution.find_by_id(params[:id]) 
+      @institution 
+    else
+      render json: 'The institution you are looking for doesn\'t exist', status: 404
+    end
 	end 
 
 
@@ -32,6 +44,5 @@ class Api::V1::InstitutionsController < Api::V1::BaseController
   	@institutions = Institution.all 
 	end	
 
-  
 
 end

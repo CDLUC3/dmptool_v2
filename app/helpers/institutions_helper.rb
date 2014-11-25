@@ -1,4 +1,6 @@
 module InstitutionsHelper
+  
+
   def nested_institutions(institutions)
     institutions.map do |institution, sub_institutions|   
       render(institution) + content_tag(:div, nested_institutions(sub_institutions), :class => "nested_institutions")
@@ -17,14 +19,14 @@ module InstitutionsHelper
   end
 
 
-
   def plans_count_for_institution(institution)
-    #Plan.joins(:requirements_template).where("requirements_templates.institution_id IN (?)", [institution.id]).count 
-    Plan.joins(:users).where(user_plans: {owner: true}).where("users.institution_id IN (?)", [institution.id]).count 
+    Plan.joins(:users).where(user_plans: {owner: true}).where("users.institution_id = ?", institution.id).count 
   end
+
 
   def institution_admins(institution)
     Authorization.joins(:user).where("users.institution_id = ? AND authorizations.role_id = ?", institution.id, 5).count
   end
-  
+ 
+
 end
