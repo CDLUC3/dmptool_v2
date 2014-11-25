@@ -1,0 +1,28 @@
+   
+  <%if current_user.auth_token%>
+    <div><%= current_user.auth_token %></div>
+    <div>
+      &nbsp;&nbsp;&nbsp;
+      <%= link_to 'Generate New Token',
+                  add_token_path, 
+                  remote: true, 
+                  :class => 'btn' %>
+      &nbsp;&nbsp;&nbsp;
+      <%= link_to 'Remove Token', 
+                  remove_token_path, 
+                  remote: true, :class => 'btn' %>
+    </div>
+      
+  <%else%>
+    
+    <div>You don't have any token.</div>
+    <div>
+      &nbsp;&nbsp;&nbsp;
+      <%= link_to 'Generate New Token',
+                  add_token_path, 
+                  remote: true, 
+                  :class => 'btn' %>
+      &nbsp;&nbsp;&nbsp;
+    </div>
+  <%end%>
+

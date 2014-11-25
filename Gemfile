@@ -15,8 +15,8 @@ group :development, :test do
 end
 
 group :test do
-  gem 'selenium-webdriver', '~> 2.39.0'
-  gem 'rspec-rails', '~> 2.13.1'
+  gem 'selenium-webdriver'
+  # gem 'rspec-rails', '~> 2.13.1'
   gem "capybara", "~> 2.2.1"
   gem 'shoulda-matchers'
   gem 'launchy'
@@ -38,9 +38,6 @@ gem 'deep_cloneable', '~> 2.0.0'
 gem 'ancestry'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-#gem 'turbolinks', '1.0.0'
-#gem 'jquery-turbolinks'
-#gem 'jbuilder', '1.0.1'
 gem 'kaminari'
 gem 'carrierwave'
 gem "mini_magick"
@@ -52,4 +49,4 @@ gem 'activerecord_any_of'
 gem 'prawn', '~> 1.0.0'
 gem 'exception_notification'
 gem 'rabl' # for rendering views in the api
-#gem 'bootbox-rails' #Wrappers for JavaScript alert(), confirm() and other dialogs using Twitter's bootstrap framework
+
