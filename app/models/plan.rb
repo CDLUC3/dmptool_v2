@@ -98,8 +98,7 @@ class Plan < ActiveRecord::Base
   end
 
   def plans_count_for_institution(institution)
-    #Plan.where(:requirements_templates => { :institution_id => institution.subtree_ids }).count
-    Plan.joins(:users).where(user_plans: {owner: true}).where("users.institution_id IN (?)", [institution.id]).count 
+    Plan.joins(:users).where(user_plans: {owner: true}).where("users.institution_id = ?", institution.id).count 
   end
 
   def current_plan_state
