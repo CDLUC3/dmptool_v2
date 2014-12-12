@@ -170,6 +170,7 @@ class ApplicationController < ActionController::Base
     def process_requirements_template(requirement_templates)
 
       institutions = get_base_institution_buckets(requirement_templates)
+
       return {} if institutions.blank?
 
       #this creates a hash with institutions as keys and requirements_templates as values like below
@@ -177,7 +178,7 @@ class ApplicationController < ActionController::Base
       #     <institution_object2> => [<requirements_template_1>] }
       # This works slightly different between institutional admins and WAS admins since the tree
       # is not the same.
-      rt_tree = Hash[institutions.map{|i| [i, requirement_templates.where(institution_id: i.id)] }]
+      rt_tree = Hash[institutions.map{|i| [i, requirement_templates.where(institution_id: i.subtree_ids)] }]
 
       #this transforms the hash so that there is a possible 2-level heirarchy like institution => [req_template1, req_template2] or
       # req_template => nil, see example below:
