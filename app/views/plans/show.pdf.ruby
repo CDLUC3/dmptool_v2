@@ -129,7 +129,7 @@ end
 # pdf.render
 
 
-pdf = Prawn::Document.new(:bottom_margin=>30, :top_margin=>72, :left_margin=>50) do |pdf|
+pdf = Prawn::Document.new(:bottom_margin=>30, :top_margin=>60, :left_margin=>50) do |pdf|
   @cover = false
   if @plan.visibility == :public
 
@@ -143,14 +143,14 @@ pdf = Prawn::Document.new(:bottom_margin=>30, :top_margin=>72, :left_margin=>50)
       # pdf.rectangle [15, 700], 520, 2
       # pdf.rectangle [0, 680], 518, 3
       # pdf.rectangle [0, 698], 518, 3
-      pdf.rectangle [0, 700], 518, 3
+      pdf.rectangle [0, 702], 518, 3
       pdf.fill
     end
 
     pdf.fill_color "000000"
     pdf.stroke_color "000000"
 
-    pdf.move_down 16
+    pdf.move_down 26
     pdf.font_size(20)
 
     pdf.span(350, :position => :center) do
@@ -165,8 +165,18 @@ pdf = Prawn::Document.new(:bottom_margin=>30, :top_margin=>72, :left_margin=>50)
       pdf.text("A Data management plan created using the DMPTool", :style => :italic)
     end
 
+    @coowners = Array.new
+    user_plans = @plan.user_plans.where(owner: false)
+    user_plans.each do |user_plan|
+      id = user_plan.user_id
+      @coowner = User.find(id)
+      @coowners<< @coowner
+    end
+
+    @coowners.length>0 ? @separator=", " : @separator=""  
+
     pdf.move_down 35
-    pdf.text("Creator(s): " + @plan.owner.full_name) # TO DO: add co-owners: , [Co-owner name], [Co-owner name]")
+    pdf.text("Creator(s): " + @plan.owner.full_name + @separator + @coowners.map { |coowner| coowner.full_name.to_s }.join(", ") ) 
     pdf.move_down 14
     pdf.text("Affiliation: " + @plan.owner.institution.name)
     
