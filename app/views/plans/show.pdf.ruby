@@ -129,7 +129,7 @@ end
 # pdf.render
 
 
-pdf = Prawn::Document.new(:bottom_margin=>30, :top_margin=>55, :left_margin=>50) do |pdf|
+pdf = Prawn::Document.new(:bottom_margin=>60, :top_margin=>55, :left_margin=>50) do |pdf|
   @cover = false
   if @plan.visibility == :public
 
