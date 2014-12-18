@@ -92,6 +92,17 @@ class Plan < ActiveRecord::Base
     @owner ||= users.where('user_plans.owner' => true).first
   end
 
+  def coowners
+    @coowners = Array.new
+    user_plans = self.user_plans.where(owner: false)
+    user_plans.each do |user_plan|
+      id = user_plan.user_id
+      @coowner = User.find(id)
+      @coowners<< @coowner
+    end
+    @coowners
+  end
+
   def display_state
     return '' if self.current_state.nil?
     self.current_state.display_state

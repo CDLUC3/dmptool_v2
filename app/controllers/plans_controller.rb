@@ -411,6 +411,8 @@ class PlansController < ApplicationController
   end
 
   def preview
+    @plan = Plan.find(params[:id])
+    @coowners = @plan.coowners
     @customization_review  = precendence_review_type
     @template_review = precendence_template_review_type
   end

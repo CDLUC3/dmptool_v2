@@ -161,13 +161,15 @@ pdf = Prawn::Document.new(:bottom_margin=>50, :top_margin=>60, :left_margin=>50)
       pdf.text("A Data management plan created using the DMPTool", :style => :italic)
     end
 
-    @coowners = Array.new
-    user_plans = @plan.user_plans.where(owner: false)
-    user_plans.each do |user_plan|
-      id = user_plan.user_id
-      @coowner = User.find(id)
-      @coowners<< @coowner
-    end
+    # @coowners = Array.new
+    # user_plans = @plan.user_plans.where(owner: false)
+    # user_plans.each do |user_plan|
+    #   id = user_plan.user_id
+    #   @coowner = User.find(id)
+    #   @coowners<< @coowner
+    # end
+
+    @coowners = @plan.coowners
 
     @coowners.length>0 ? @separator=", " : @separator=""  
 
