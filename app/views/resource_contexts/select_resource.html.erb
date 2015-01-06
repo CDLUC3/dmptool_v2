@@ -51,12 +51,10 @@
 				</thead>
 				<tbody>
 					<%if @resource_contexts.length < 1 && params[:q] %>
-						<tr>
-							<td>No results found</td>
-						</tr>
+						<tr><td colspan="7" style="text-align: center;">No results found</td></tr>
 					<%elsif @any_resource.count == 0 && params[:q].blank?%>
 						<tr>
-							<td>There are no existing resources</td>
+							<td colspan="7" style="text-align: center;">There are no existing resources</td>
 						</tr>
 					<%else%>
 						<% @resource_contexts.each do |resource_context| %>

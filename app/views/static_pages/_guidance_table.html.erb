@@ -19,9 +19,8 @@
 	<tbody>
 		<%if templates.count == 0 && params[:q] %>
 			<tr>
-				<td>No results found</td>
-			</tr>
-			
+				<td colspan="4" style="text-align: center;">No results found</td>
+			</tr>		
 		<%else%>
 			<% templates.each do |t| %>
 				<tr>	
@@ -50,16 +49,21 @@
 		<%end%>
 	</tbody>
 </table>
-<% if @scope1 == "all" %>
-	<div class="buttons pagination">
-		<%= link_to "View Less", {:method => :get, order_scope1: @order_scope1, scope1: "", s: @s, e: @e}, {:class => "btn"}%>
-		<%= paginate @public_templates, {:param_name => 'public_guidance_page', order_scope1: @order_scope1} %>
-	</div>
-<% else %>
-	<div class="buttons pagination">
-		<%= link_to "View All", {:method => :get, order_scope1: @order_scope1, scope1: "all", s: @s, e: @e}, {:class => "btn"}%>
-		<%= paginate @public_templates, {:param_name => 'public_guidance_page', order_scope1: @order_scope1} %>
-	</div>
+
+<%if templates.count == 0 && params[:q] %>
+	<div></div>
+<%else%>
+	<% if @scope1 == "all" %>
+		<div class="buttons pagination">
+			<%= link_to "View Less", {:method => :get, order_scope1: @order_scope1, scope1: "", s: @s, e: @e}, {:class => "btn"}%>
+			<%= paginate @public_templates, {:param_name => 'public_guidance_page', order_scope1: @order_scope1} %>
+		</div>
+	<% else %>
+		<div class="buttons pagination">
+			<%= link_to "View All", {:method => :get, order_scope1: @order_scope1, scope1: "all", s: @s, e: @e}, {:class => "btn"}%>
+			<%= paginate @public_templates, {:param_name => 'public_guidance_page', order_scope1: @order_scope1} %>
+		</div>
+	<%end%>
 <%end%>
 
 
