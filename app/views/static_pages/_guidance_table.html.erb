@@ -17,30 +17,37 @@
 		</tr>
 	</thead>
 	<tbody>
-		<% templates.each do |t| %>
-			<tr>	
-				
-				<td><%= link_to t.name,	basic_requirements_template_path(t, format: :rtf ), :target => '_blank' %>
-						<%= link_to '', basic_requirements_template_path(t, format: :rtf), :class => 'icon rtf', :target => '_blank' %>
-				</td>
-				<td><%= (t.institution ? t.institution.full_name: '') %></td>
-				<td>
-					<% t.additional_informations.each do |info| %>
-					<div class="samples">
-						<%= link_to info.label, info.url, :target => '_blank' %>
-					</div>
-					<% end %>
-				</td>
-				<td>
-					<% t.sample_plans.each do |s| %>
-					<div class="samples">
-						<%= link_to s.label, s.url, :target => '_blank' %>
-						<%= link_to '', s.url, :class => 'icon pdf', :target => '_blank' %>
-					</div>
-					<% end %>
-				</td>
+		<%if templates.count == 0 && params[:q] %>
+			<tr>
+				<td>No results found</td>
 			</tr>
-		<% end %>
+			
+		<%else%>
+			<% templates.each do |t| %>
+				<tr>	
+					
+					<td><%= link_to t.name,	basic_requirements_template_path(t, format: :rtf ), :target => '_blank' %>
+							<%= link_to '', basic_requirements_template_path(t, format: :rtf), :class => 'icon rtf', :target => '_blank' %>
+					</td>
+					<td><%= (t.institution ? t.institution.full_name: '') %></td>
+					<td>
+						<% t.additional_informations.each do |info| %>
+						<div class="samples">
+							<%= link_to info.label, info.url, :target => '_blank' %>
+						</div>
+						<% end %>
+					</td>
+					<td>
+						<% t.sample_plans.each do |s| %>
+						<div class="samples">
+							<%= link_to s.label, s.url, :target => '_blank' %>
+							<%= link_to '', s.url, :class => 'icon pdf', :target => '_blank' %>
+						</div>
+						<% end %>
+					</td>
+				</tr>
+			<% end %>
+		<%end%>
 	</tbody>
 </table>
 <% if @scope1 == "all" %>
