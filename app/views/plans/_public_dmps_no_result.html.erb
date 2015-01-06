@@ -1,0 +1,38 @@
+<%  # should pass local variable of "plans" and "namespace" and "show_institution"
+    # plans is the collection of plans to show
+    # namespace is a string to add to the front of parameters to keep them separate
+    # show_institution is a boolean that indicates whether the institution column should be shown
+%>
+
+
+
+
+<table class="table table-striped">
+<thead>
+<%# wanted_params = params.slice('all_scope','s', 'e') %>
+<tr>
+  <th class="span5"><%= link_to "Plan Title", params.merge({"#{namespace}:order_scope" => "plans.name"}) %></th>
+  <th class="span5"><%= link_to "Funder Template", params.merge({"#{namespace}:order_scope" => "requirements_templates.name"}) %></th>
+  <% if show_institution %>
+    <th class="span5"><%= link_to "Institution", params.merge({"#{namespace}:order_scope" => "institutions.full_name"}) %></th>
+  <% end %>
+  <th class="span5"><%= link_to "Owner", params.merge({"#{namespace}:order_scope" => "CONCAT(users.first_name, ' ', users.last_name)"}) %></th>
+  <th>Download</th>
+</tr>
+</thead>
+<tbody>
+  
+  <tr>
+    <td class="plan_name">
+      <div class="toggle-links">
+        No results found
+      </div>
+    </td>
+    
+  </tr>
+  
+</tbody>
+</table>
+
+  
+

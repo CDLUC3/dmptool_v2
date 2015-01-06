@@ -3,6 +3,10 @@
     # namespace is a string to add to the front of parameters to keep them separate
     # show_institution is a boolean that indicates whether the institution column should be shown
 %>
+
+
+
+
 <table class="table table-striped">
 <thead>
 <%# wanted_params = params.slice('all_scope','s', 'e') %>
@@ -18,11 +22,7 @@
 </thead>
 <tbody>
 
-<%if plans.count == 0 && params[:q] %>
-  <tr>
-    <td>No results found</td>
-  </tr>
-<%else%>
+
   <% plans.each do |plan| %>
     <tr>
       <td class="plan_name">
@@ -62,7 +62,7 @@
       <%= paginate plans, :param_name => "#{namespace}:page" %>
     </div>
   <%end%>
-<%end%>
+
 
 
 
