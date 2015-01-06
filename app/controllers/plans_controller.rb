@@ -7,6 +7,15 @@ class PlansController < ApplicationController
   before_action :check_copy_plan_access, only: [:copy_existing_template]
   before_action :check_plan_access, only: [:edit, :update, :destroy, :details, :preview]
 
+  before_action :set_cache_buster, only: [:show]
+
+
+  def set_cache_buster
+    response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
+  end
+
   # GET /plans
   # GET /plans.json
   def index
@@ -81,7 +90,8 @@ class PlansController < ApplicationController
         render :layout => false
       end
       format.html do
-        render(layout: "clean")
+        render :layout => false
+        # render(layout: "clean")
       end
     end
 
