@@ -24,7 +24,12 @@
     <td><strong>Owner:</strong></td>
     <td><%= plan.owner.full_name || "[non specified]" %></td>
     <td><strong>Co-owner[s]:</strong></td>
-    <td><%= @coowners.map { |coowner| coowner.full_name.to_s }.join(", ") || "[non specified]" %></td>   
+
+    <td>
+      <%if @coowners%>
+        <%= @coowners.map { |coowner| coowner.full_name.to_s }.join(", ") %>
+      <%end%>
+    </td>   
   </tr>
 
   <tr>
@@ -35,7 +40,9 @@
        <td></td>
     <% end %>
   <td><strong>Solicitation Number:</strong></td>
-  <td><%= plan.solicitation_identifier || "[not specified]" %></td>  
+  <td>
+    <%= plan.solicitation_identifier || "[not specified]" %>
+  </td>  
   </tr>
 
 </table>

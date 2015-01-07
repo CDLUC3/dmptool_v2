@@ -17,42 +17,53 @@
 		</tr>
 	</thead>
 	<tbody>
-		<% templates.each do |t| %>
-			<tr>	
-				
-				<td><%= link_to t.name,	basic_requirements_template_path(t, format: :rtf ), :target => '_blank' %>
-						<%= link_to '', basic_requirements_template_path(t, format: :rtf), :class => 'icon rtf', :target => '_blank' %>
-				</td>
-				<td><%= (t.institution ? t.institution.full_name: '') %></td>
-				<td>
-					<% t.additional_informations.each do |info| %>
-					<div class="samples">
-						<%= link_to info.label, info.url, :target => '_blank' %>
-					</div>
-					<% end %>
-				</td>
-				<td>
-					<% t.sample_plans.each do |s| %>
-					<div class="samples">
-						<%= link_to s.label, s.url, :target => '_blank' %>
-						<%= link_to '', s.url, :class => 'icon pdf', :target => '_blank' %>
-					</div>
-					<% end %>
-				</td>
-			</tr>
-		<% end %>
+		<%if templates.count == 0 && params[:q] %>
+			<tr>
+				<td colspan="4" style="text-align: center;">No results found</td>
+			</tr>		
+		<%else%>
+			<% templates.each do |t| %>
+				<tr>	
+					
+					<td><%= link_to t.name,	basic_requirements_template_path(t, format: :rtf ), :target => '_blank' %>
+							<%= link_to '', basic_requirements_template_path(t, format: :rtf), :class => 'icon rtf', :target => '_blank' %>
+					</td>
+					<td><%= (t.institution ? t.institution.full_name: '') %></td>
+					<td>
+						<% t.additional_informations.each do |info| %>
+						<div class="samples">
+							<%= link_to info.label, info.url, :target => '_blank' %>
+						</div>
+						<% end %>
+					</td>
+					<td>
+						<% t.sample_plans.each do |s| %>
+						<div class="samples">
+							<%= link_to s.label, s.url, :target => '_blank' %>
+							<%= link_to '', s.url, :class => 'icon pdf', :target => '_blank' %>
+						</div>
+						<% end %>
+					</td>
+				</tr>
+			<% end %>
+		<%end%>
 	</tbody>
 </table>
-<% if @scope1 == "all" %>
-	<div class="buttons pagination">
-		<%= link_to "View Less", {:method => :get, order_scope1: @order_scope1, scope1: "", s: @s, e: @e}, {:class => "btn"}%>
-		<%= paginate @public_templates, {:param_name => 'public_guidance_page', order_scope1: @order_scope1} %>
-	</div>
-<% else %>
-	<div class="buttons pagination">
-		<%= link_to "View All", {:method => :get, order_scope1: @order_scope1, scope1: "all", s: @s, e: @e}, {:class => "btn"}%>
-		<%= paginate @public_templates, {:param_name => 'public_guidance_page', order_scope1: @order_scope1} %>
-	</div>
+
+<%if templates.count == 0 && params[:q] %>
+	<div></div>
+<%else%>
+	<% if @scope1 == "all" %>
+		<div class="buttons pagination">
+			<%= link_to "View Less", {:method => :get, order_scope1: @order_scope1, scope1: "", s: @s, e: @e}, {:class => "btn"}%>
+			<%= paginate @public_templates, {:param_name => 'public_guidance_page', order_scope1: @order_scope1} %>
+		</div>
+	<% else %>
+		<div class="buttons pagination">
+			<%= link_to "View All", {:method => :get, order_scope1: @order_scope1, scope1: "all", s: @s, e: @e}, {:class => "btn"}%>
+			<%= paginate @public_templates, {:param_name => 'public_guidance_page', order_scope1: @order_scope1} %>
+		</div>
+	<%end%>
 <%end%>
 
 
