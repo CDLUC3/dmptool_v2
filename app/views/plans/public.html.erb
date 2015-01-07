@@ -30,7 +30,12 @@
 			:class => 'btn viewA-Z') %>
 </div>
 <br/>
-<%= render partial: 'generic_table', locals: {plans: @plans, namespace: 'public', show_institution: true} %>
+
+<%if params[:q] && @plans.count == 0%>
+	<%= render partial: 'public_dmps_no_result', locals: {plans: @plans, namespace: 'public', show_institution: true} %>
+<%else%>
+	<%= render partial: 'generic_table', locals: {plans: @plans, namespace: 'public', show_institution: true} %>
+<%end%>
 
 <% unless @inst_plans.nil? || @inst_plans.length < 1 %>
   <br/>
