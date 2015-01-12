@@ -54,7 +54,7 @@
       <tr>
         <td class="plan_name">
           <div class="toggle-links">
-            <strong id ="#{plan.name}"><%= plan.name %></strong>
+            <strong><%= plan.name %></strong>
             <div class="template-links">
               <% @plan_id = plan.id %>
                 <%= link_to('Overview', edit_plan_path(plan)) %>
@@ -100,9 +100,9 @@
     </div>
   <%end%>
 
-    </tr>
-  </tbody>
-</table>
+    <!-- </tr> -->
+  <!-- </tbody> -->
+<!-- </table> -->
 <%= button_to 'Create New DMP', plan_template_information_path, :method => :get, :class => 'btn' %>
 <div id = 'visibility_dialog_form'>
   <%= render partial: 'change_visibility', locals: {:plan_id => @plan_id} %>
