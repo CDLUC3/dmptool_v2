@@ -62,7 +62,7 @@
               | <%= link_to('Share', '#', {:class => 'change_visibility_link', :'data-planid' => plan.id, :'data-visibility' => plan.visibility }) %>
 
               <% if (review_type(plan) == true) || (review_type(plan) == nil && plan.requirements_template.try(:review_type) && plan.requirements_template.review_type != :no_review) %>
-                | <%= link_to('Submit', preview_plan_path(plan)) %>
+                | <%= link_to('Preview', preview_plan_path(plan)) %>
               <% end %>
               | <%= link_to('Copy', copy_existing_plans_template_path(:plan => plan)) %>
               <br><%= link_to('Export as PDF', plan_path(plan, :format => "pdf")) %>
