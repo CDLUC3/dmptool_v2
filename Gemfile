@@ -8,7 +8,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 2.13.1'
   gem 'capistrano', '~> 2.15'
   gem 'capistrano-unicorn'
-  gem 'debugger'
+  gem 'byebug'
   gem 'factory_girl_rails'
   gem 'faker'  #to create fake data http://faker.rubyforge.org/
   gem "rack-test" #to test api
