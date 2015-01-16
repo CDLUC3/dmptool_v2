@@ -45,6 +45,7 @@ class RequirementsController < ApplicationController
     respond_to do |format|
       if !group.nil? && group == 1
         if @requirement.save
+          @requirement.requirements_template.touch
           format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement, node_type: 'group'), notice: 'Requirement was successfully created.' }
           format.json { render action: 'show', status: :created, location: @requirement }
         else
@@ -53,6 +54,7 @@ class RequirementsController < ApplicationController
         end
       else
         if @requirement.save
+          @requirement.requirements_template.touch
           format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement), notice: 'Requirement was successfully created.' }
           format.json { render action: 'show', status: :created, location: @requirement }
         else
@@ -71,7 +73,8 @@ class RequirementsController < ApplicationController
     @labels = @requirement.labels
     respond_to do |format|
       if @requirement.update(requirement_params)
-        format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement), notice: 'Requirement was successfully updated.' }
+        @requirement.requirements_template.touch unless @requirement.previous_changes.blank?
+        format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement), notice: "Requirement was successfully updated. "}
         format.json { head :no_content }
       else
         format.html { render action: 'index' }
@@ -85,6 +88,7 @@ class RequirementsController < ApplicationController
   def destroy
     @requirements = @requirements_template.requirements
     @requirement.destroy
+    @requirement.requirements_template.touch
     respond_to do |format|
       format.html { redirect_to requirements_template_requirements_path }
       format.json { head :no_content }
@@ -119,6 +123,7 @@ class RequirementsController < ApplicationController
               #unless @drop_req.ancestor_ids.include?(@drag_req.id) #do not change anything for dragging yourself into your own area
               @drag_req.position_after(@drop_req.id)
               @drag_req.update_column(:ancestry, @drop_req.ancestry)
+              @drag_req.requirements_template.touch
             end
             #end
           elsif @drag_req.group.blank? && @drop_req.group #one requirement dropped on a folder
@@ -127,6 +132,7 @@ class RequirementsController < ApplicationController
               a = (@drop_req.ancestry.nil? ? [] : @drop_req.ancestry.split("/"))
               a = (a + [@drop_req.id]).join("/")
               @drag_req.update_column(:ancestry, a)
+              @drag_req.requirements_template.touch
             end
 
           elsif @drag_req.group && @drop_req.group #dropping on a folder on a folder
@@ -139,6 +145,7 @@ class RequirementsController < ApplicationController
                 @drag_req.update_column(:ancestry, new_path.join("/")) #put it under the dropped folder
                 new_path = new_path + [@drag_req.id]
                 fix_descendant_ancestry(desc_ids, old_path, new_path)
+                @drag_req.requirements_template.touch
               end
             end
           elsif @drag_req.group && @drop_req.group.blank? #dropping on a folder on a file
@@ -151,6 +158,7 @@ class RequirementsController < ApplicationController
                 @drag_req.update_column(:ancestry, @drop_req.ancestry) #put it under same parent
                 new_path = new_path + [@drag_req.id]
                 fix_descendant_ancestry(desc_ids, old_path, new_path)
+                @drag_req.requirements_template.touch
               end
             end
           end
@@ -161,6 +169,7 @@ class RequirementsController < ApplicationController
         @requirements = @requirements_template.requirements
       end
     end
+    
   end
 
   private
