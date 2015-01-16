@@ -46,7 +46,7 @@ class RequirementsController < ApplicationController
       if !group.nil? && group == 1
         if @requirement.save
           @requirement.requirements_template.touch
-          format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement, node_type: 'group'), notice: 'Requirement was successfully created.' }
+          format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement, node_type: 'group'), notice: 'Group was successfully created.' }
           format.json { render action: 'show', status: :created, location: @requirement }
         else
           format.html { render action: 'index' }
@@ -73,9 +73,14 @@ class RequirementsController < ApplicationController
     @labels = @requirement.labels
     respond_to do |format|
       if @requirement.update(requirement_params)
-        @requirement.requirements_template.touch unless @requirement.previous_changes.blank?
-        format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement), notice: "Requirement was successfully updated. "}
-        format.json { head :no_content }
+        if @requirement.previous_changes.blank?
+          format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement) }
+          format.json { head :no_content }
+        else
+          @requirement.requirements_template.touch 
+          format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement), notice: "Requirement was successfully updated. "}
+          format.json { head :no_content }
+        end
       else
         format.html { render action: 'index' }
         format.json { render json: @requirement.errors, status: :unprocessable_entity }
