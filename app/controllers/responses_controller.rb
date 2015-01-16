@@ -32,6 +32,7 @@ class ResponsesController < ApplicationController
     respond_to do |format|    
       if ( !params[:save_and_next] && !params[:save_only]) && (@requirement.id == @last_question.id)
         if @response.save
+          @response.plan.touch
           format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id) }
           format.json { render action: 'show', status: :created, location: @response }
         else
@@ -46,6 +47,7 @@ class ResponsesController < ApplicationController
             format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id)  }
             format.json { render action: 'show', status: :created, location: @response }
           else
+            @response.plan.touch 
             format.html { redirect_to preview_plan_path(@plan) }
             format.json { render action: 'show', status: :created, location: @response }
           end
@@ -54,6 +56,7 @@ class ResponsesController < ApplicationController
             format.html { redirect_to preview_plan_path(@plan) }
             format.json { render action: 'show', status: :created, location: @response }
           else
+            @response.plan.touch 
             format.html { redirect_to preview_plan_path(@plan) }
             format.json { render action: 'show', status: :created, location: @response }
           end
@@ -61,6 +64,7 @@ class ResponsesController < ApplicationController
         
       elsif (params[:save_and_next] || !params[:save_only])
         if @response.save
+          @response.plan.touch 
           format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id), notice: 'Response was successfully created.' }
           format.json { render action: 'show', status: :created, location: @response }
         else
@@ -70,6 +74,7 @@ class ResponsesController < ApplicationController
 
       else
         if @response.save
+          @response.plan.touch 
           format.html { redirect_to details_plan_path(@plan, requirement_id: @requirement_id), notice: 'Response was successfully created.' }
           format.json { render action: 'show', status: :created, location: @response }
         else
@@ -97,6 +102,7 @@ class ResponsesController < ApplicationController
       end 
       if ( !params[:save_and_next] && !params[:save_only]) && (@requirement.id == @last_question.id)
         if @response.update(response_params)
+          @response.plan.touch unless @response.previous_changes.blank?
           format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id) }
           format.json { head :no_content }
         else
@@ -108,6 +114,7 @@ class ResponsesController < ApplicationController
         end
       elsif (params[:save_and_next] || !params[:save_only]) && (@requirement.id == @last_question.id)
         if @response.update(response_params)
+          @response.plan.touch unless @response.previous_changes.blank?
           format.html { redirect_to preview_plan_path(@plan) }
           format.json { head :no_content }
         else
@@ -120,8 +127,14 @@ class ResponsesController < ApplicationController
 
       elsif (params[:save_and_next] || !params[:save_only])
         if @response.update(response_params)
-          format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id), notice: 'Response was successfully created.' }
-          format.json { render action: 'show', status: :created, location: @response }
+          if @response.previous_changes.blank?
+            format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id) }
+            format.json { render action: 'show', status: :created, location: @response }
+          else
+            @response.plan.touch
+            format.html { redirect_to details_plan_path(@plan, requirement_id: @next_requirement_id), notice: 'Response was successfully updated.' }
+            format.json { render action: 'show', status: :created, location: @response }
+          end
         else
           if response_params[:text_value].blank?
             @response.destroy
@@ -132,8 +145,14 @@ class ResponsesController < ApplicationController
 
       else
         if @response.update(response_params)
-          format.html { redirect_to details_plan_path(@plan, requirement_id: @requirement_id), notice: 'response was successfully updated.' }
-          format.json { head :no_content }
+          if @response.previous_changes.blank?
+            format.html { redirect_to details_plan_path(@plan, requirement_id: @requirement_id) }
+            format.json { head :no_content }
+          else
+            @response.plan.touch
+            format.html { redirect_to details_plan_path(@plan, requirement_id: @requirement_id), notice: 'Response was successfully updated.' }
+            format.json { head :no_content }
+          end
         else
           if response_params[:text_value].blank?
             @response.destroy
@@ -145,7 +164,6 @@ class ResponsesController < ApplicationController
     end
 
   rescue ActiveRecord::StaleObjectError
-    #render :conflict_resolution_view
     flash[:error] = "This record changed while you were editing."
     redirect_to details_plan_path(@plan, requirement_id: @requirement_id)
 

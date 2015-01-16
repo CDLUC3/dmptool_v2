@@ -11,9 +11,18 @@ class Response < ActiveRecord::Base
   after_create :check_revised
   after_update :check_revised
 
+  before_destroy :update_plan_modified_date
+
   validates :text_value, presence: true, if: :requirement_type_is_text
   validates :enumeration_id, presence: true, if: :requirement_type_is_enum
   validate :mandatory_text_or_enum_present  
+
+
+  def update_plan_modified_date
+    plan = self.plan
+    plan.touch 
+  end
+
 
   def mandatory_text_or_enum_present
     requirement_id = self.requirement_id
