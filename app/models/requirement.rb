@@ -5,7 +5,7 @@ class Requirement < ActiveRecord::Base
   has_many :enumerations, inverse_of: :requirement
   has_many :labels, inverse_of: :requirement
   has_many :resource_contexts
-  belongs_to :requirements_template
+  belongs_to :requirements_template, :touch => true
 
   accepts_nested_attributes_for :enumerations, allow_destroy: true, reject_if: proc { |attributes| attributes['value'].blank? }
   accepts_nested_attributes_for :labels, allow_destroy: true, reject_if: proc { |attributes| attributes['desc'].blank? }
