@@ -1,6 +1,6 @@
 class Api::V1::PlansController < Api::V1::BaseController
 	
-    before_action :soft_authenticate
+   before_action :soft_authenticate
 
     respond_to :json
 
@@ -22,6 +22,7 @@ class Api::V1::PlansController < Api::V1::BaseController
 
 
 	def show
+
         if @user = User.find_by_id(session[:user_id])
             if @plan = Plan.find_by_id(params[:id])
                 if (@plan.visibility == :public)  ||  
@@ -29,6 +30,9 @@ class Api::V1::PlansController < Api::V1::BaseController
                     ( (@plan.visibility == :private) && ( @plan.users.include?(current_user)) )
                 	
                     @plan
+                    # @owner = @plan.owner
+                    # @coowners = @plan.coowners
+
                 else
                 	 render json: 'You are not authorized to look at this content.', status: 401
                 end
@@ -39,6 +43,8 @@ class Api::V1::PlansController < Api::V1::BaseController
             if @plan = Plan.find_by_id(params[:id])
                 if (@plan.visibility == :public)
                     @plan
+                    # @owner = @plan.owner
+                    # @coowners = @plan.coowners
                 else
                     render json: 'You are not authorized to look at this content.', status: 401
                 end
@@ -47,6 +53,9 @@ class Api::V1::PlansController < Api::V1::BaseController
             end
 
         end
+
+
+
     end
 
 
