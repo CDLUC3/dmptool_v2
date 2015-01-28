@@ -103,6 +103,14 @@ class Plan < ActiveRecord::Base
     @coowners
   end
 
+  def created
+    created_at.to_date.strftime("%m/%d/%Y")
+  end
+
+  def modified
+    updated_at.to_date.strftime("%m/%d/%Y")
+  end
+
   def display_state
     return '' if self.current_state.nil?
     self.current_state.display_state
