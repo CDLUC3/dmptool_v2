@@ -1,24 +1,36 @@
 object @plan
 
-attributes :id, :name, :solicitation_identifier, :visibility, :created_at, :updated_at
+attributes  :name, 
+            :solicitation_identifier, 
+            :visibility, 
+            :created, 
+            :modified 
 
-#node(:owner) { |p| @plan.owner.full_name }
-
-node :owner do |p| 
-  p.owner.full_name 
+node :state do |p|
+  p.current_state.state
 end
 
-child :current_state do
-  attributes :state
+node :institution do |p|
+  p.owner.institution.full_name
 end
 
-child :requirements_template do
-  attributes :id, :institution_id, :name, :active, :start_date, :end_date, :review_type
+child :owner => :owner do
+  attributes :full_name, :email 
 end
 
 child :coowners => :coowners do
-  attributes :full_name
+  attributes :full_name, :email
 end
+
+child :requirements_template do
+  attributes  :name => :name, 
+              :active => :active, 
+              :start_date_us_format => :start_date, 
+              :end_date_us_format => :end_date, 
+              :review_type => :review_type
+end
+
+
 
 
 
