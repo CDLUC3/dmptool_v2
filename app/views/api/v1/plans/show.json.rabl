@@ -32,25 +32,25 @@ child :requirements_template => :template do
               :start_date_us_format => :start_date, 
               :end_date_us_format => :end_date, 
               :review_type => :review_type
+
+              child :requirements do
+                attribute  :id
+                attribute  :requirements_template_id => :template_id
+                attribute  :text_brief
+                attribute  :obligation
+                   
+                child :responses do 
+                  attribute :id, if: lambda {|res| (res.plan_id == @id )} 
+                  attribute :plan_id, if: lambda {|res| res.plan_id == @id }
+                  attribute :plan_id, if: lambda {|res| res.plan_id == @id } 
+                end
+
+              end
+
               
-              #child :resource_contexts => :customization do
-               # attribute :institution_id
-                #attribute :requirements_template_id => :template_id
-
-                #child :requirements do
-                 # attribute  :requirements_template_id => :template_id
-                  #attribute  :text_brief
-                  #attribute  :obligation
-                  #child :responses do
-                   # attribute :plan_id
-                    #attribute :text_value, :unless => lambda { |r| r.text_value.blank?}
-                    #attribute :numeric_value, :unless => lambda { |r| r.numeric_value.blank?}
-                    #attribute :date_value, :unless => lambda { |r| r.date_value.blank?}
-                  #end
-                #end
-
-              #end
 end
 
+child :responses do
+ attributes :id, :plan_id, :requirement_id, :text_value 
+end
 
- 
