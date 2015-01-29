@@ -1,10 +1,10 @@
 object @plan
 
-attributes  :name, 
-            :solicitation_identifier, 
-            :visibility, 
-            :created, 
-            :modified 
+attribute  :name
+attribute  :solicitation_identifier, :unless => lambda { |p| p.solicitation_identifier.blank?}
+attribute  :visibility
+attribute  :created
+attribute  :modified 
 
 node :state do |p|
   p.current_state.state
@@ -22,7 +22,7 @@ child :coowners => :coowners do
   attributes :full_name, :email
 end
 
-child :requirements_template do
+child :requirements_template => :template do
   attributes  :name => :name, 
               :active => :active, 
               :start_date_us_format => :start_date, 

@@ -1,6 +1,7 @@
 class Api::V1::PlansController < Api::V1::BaseController
 	
    before_action :soft_authenticate
+   #before_action :authenticate
 
     respond_to :json
 
