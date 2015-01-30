@@ -76,7 +76,7 @@ class Requirement < ActiveRecord::Base
       unless @response.blank?
         if !@response.text_value.blank?
           @html_value = @response.text_value 
-          @value = strip_tags(@html_value).html_safe if @html_value
+          @value = strip_tags(@html_value).html_safe.gsub("&nbsp;", "").gsub("&#39;", "'") if @html_value
         elsif !@response.numeric_value.blank?
           @value = @response.numeric_value 
         elsif !@response.date_value.blank?
