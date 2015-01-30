@@ -444,12 +444,15 @@ class PlansController < ApplicationController
     @inst_plans = Plan.joins( {:users => :institution} ).joins(:requirements_template)
           .where("user_plans.owner = 1").institutional_visibility
 
-    if user_role_in?(:dmp_admin)
-      @show_institution = true
-    elsif current_user
+    @show_institution = false
+    
+    if current_user
+
+      (user_role_in?(:dmp_admin) || current_user.institution.has_children? || current_user.institution.parent ) ? @show_institution = true : @show_institution = false   
+
       #show public and institutional for my institution
       @inst_plans = @inst_plans.where("users.institution_id IN (?)", current_user.institution.root.subtree_ids)
-      @show_institution = false
+      
     else
       @inst_plans = nil
     end
