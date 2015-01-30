@@ -1,5 +1,7 @@
 class Requirement < ActiveRecord::Base
 
+  include ActionView::Helpers::SanitizeHelper
+
   has_ancestry
   has_many :responses
   has_many :enumerations, inverse_of: :requirement
@@ -69,9 +71,13 @@ class Requirement < ActiveRecord::Base
   def response_text(plan) 
     unless plan.plan_responses_ids.blank?
       @response = responses.where(id:  [plan.plan_responses_ids]).first
-      @text_value = @response.text_value unless @response.blank?
+      unless @response.blank?
+        @html_value = @response.text_value 
+        @text_value = strip_tags(@html_value).gsub!("&nbsp;", "") if @html_value
+      end
     end
   end
+
 
   def has_alteast_one_enumeration
     if self.requirement_type == :enum && self.enumerations.blank?

@@ -1,12 +1,12 @@
 object @plan
 
-#attribute  :id
-#attribute  :requirements_template_id => :template_id
 attribute  :name
 attribute  :solicitation_identifier, :unless => lambda { |p| p.solicitation_identifier.blank?}
 attribute  :visibility
 attribute  :created
 attribute  :modified 
+
+parent = root_object
 
 node :state do |p|
   p.current_state.state
@@ -26,8 +26,6 @@ child({:coowners => :coowners}, :if => lambda { |p| p.coowners.present? }) do
 end
 
 
-parent = root_object
-
 child :requirements_template => :template do
   attributes  :name => :name, 
               :active => :active, 
@@ -35,13 +33,9 @@ child :requirements_template => :template do
               :end_date_us_format => :end_date, 
               :review_type => :review_type
 
-              
-
               child :requirements do
                 attributes :text_brief 
-                #if @plan
-                  node(:response) { |req|  req.response_text(parent)  }
-                #end
+                node(:response) { |req|  req.response_text(parent)  }
               end
               
 end
