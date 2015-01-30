@@ -103,6 +103,10 @@ class Plan < ActiveRecord::Base
     @coowners
   end
 
+  def one_response(requirement)
+    @response = Response.where(plan_id: id, requirement_id: requirement.id).first
+  end
+
   def created
     created_at.to_date.strftime("%m/%d/%Y")
   end

@@ -1,9 +1,13 @@
 class Api::V1::PlansController < Api::V1::BaseController
 	
+   include ApplicationHelper
+
    before_action :soft_authenticate
    #before_action :authenticate
 
     respond_to :json
+
+
 
 
  	def index
@@ -27,7 +31,7 @@ class Api::V1::PlansController < Api::V1::BaseController
         if @user = User.find_by_id(session[:user_id])
             if @plan = Plan.find_by_id(params[:id])
                 @id = @plan.id
-                #@plan_responses = Response.where(plan_id: @id)
+                @plan_responses = Response.where(plan_id: @id)
                 if (@plan.visibility == :public)  ||  
                 		((@plan.visibility == :institutional) && (current_user.institution_id == @plan.requirements_template.institution_id)) ||
                     ( (@plan.visibility == :private) && ( @plan.users.include?(current_user)) )
@@ -44,7 +48,7 @@ class Api::V1::PlansController < Api::V1::BaseController
         else
             if @plan = Plan.find_by_id(params[:id])
                 @id = @plan.id
-                #@plan_responses = Response.where(plan_id: @id)
+                @plan_responses = Response.where(plan_id: @id)
                 if (@plan.visibility == :public)
                     @plan
                     
@@ -60,6 +64,10 @@ class Api::V1::PlansController < Api::V1::BaseController
 
 
     end
+
+def single_response(plan_id, requirement_id)
+    @response = Response.where(plan_id: plan_id, requirement_id: requirement_id).first
+end
 
 
 end

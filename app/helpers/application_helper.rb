@@ -3,6 +3,9 @@ module ApplicationHelper
   #to enable column sorting with toggle effects
   #current asc and current desc classes are for supporting an eventual arrow image 
   #or css class (not yet implemented) associated with the sorting direction 
+  
+ 
+
   def sortable(column, title = nil)
     title ||= column.titleize
     css_class = column == params[:order_scope] ? "current #{params[:direction]}" : nil
