@@ -25,28 +25,32 @@ child({:coowners => :coowners}, :if => lambda { |p| p.coowners.present? }) do
   attributes :full_name, :email
 end
 
+
+parent = root_object
+
 child :requirements_template => :template do
   attributes  :name => :name, 
-  #            :id => :id,
               :active => :active, 
               :start_date_us_format => :start_date, 
               :end_date_us_format => :end_date, 
               :review_type => :review_type
+
+              
+
+              child :requirements do
+                attributes :text_brief 
+                #if @plan
+                  node(:response) { |req|  req.response_text(parent)  }
+                #end
+              end
               
 end
 
-child :responses do
- #attribute :id 
- #attribute :plan_id 
- #attribute :requirement_id 
- attribute :text_value 
 
- child :requirement do
-  #attribute  :id
-  #attribute  :requirements_template_id => :template_id
-  attribute  :text_brief
-  attribute  :obligation 
- end
 
-end
+
+
+
+
+
 

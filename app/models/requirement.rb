@@ -66,6 +66,13 @@ class Requirement < ActiveRecord::Base
     end
   end
 
+  def response_text(plan) 
+    unless plan.plan_responses_ids.blank?
+      @response = responses.where(id:  [plan.plan_responses_ids]).first
+      @text_value = @response.text_value unless @response.blank?
+    end
+  end
+
   def has_alteast_one_enumeration
     if self.requirement_type == :enum && self.enumerations.blank?
       errors[:base] << 'Must add at least one Enumeration value'

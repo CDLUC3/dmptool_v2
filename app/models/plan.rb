@@ -43,6 +43,17 @@ class Plan < ActiveRecord::Base
   scope :plans_reviewed, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'reviewed'}).where(user_plans: {owner: true})}
   scope :plans_per_institution, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: ['rejected', 'approved', 'submitted', 'reviewed']}).where(user_plans: {owner: true})}
 
+
+  def plan_responses_ids
+    @response_ids = [] 
+    responses.each do |response|
+      @response_ids << response.id
+      
+    end
+    @response_ids
+  end
+
+
   def self.letter_range(s, e)
     #add as a scope where s=start and e=end letter
     where("plans.name REGEXP ?", "^[#{s}-#{e}]")
