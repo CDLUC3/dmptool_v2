@@ -56,6 +56,7 @@ class Requirement < ActiveRecord::Base
       end
   end
 
+
   def validating_not_to_add_a_child_under_a_leaf
     parent_id = self.parent_id
     return true if parent_id.nil?
@@ -68,12 +69,21 @@ class Requirement < ActiveRecord::Base
     end
   end
 
+
   def response_text(plan) 
     unless plan.plan_responses_ids.blank?
       @response = responses.where(id:  [plan.plan_responses_ids]).first
       unless @response.blank?
-        @html_value = @response.text_value 
-        @text_value = strip_tags(@html_value).gsub!("&nbsp;", "") if @html_value
+        if !@response.text_value.blank?
+          @html_value = @response.text_value 
+          @value = strip_tags(@html_value).html_safe if @html_value
+        elsif !@response.numeric_value.blank?
+          @value = @response.numeric_value 
+        elsif !@response.date_value.blank?
+          @value = @response.date_value.to_date.strftime("%m/%d/%Y")
+        elsif !@response.enumeration_id.blank?
+          @value = @response.enumeration.value
+        end
       end
     end
   end
