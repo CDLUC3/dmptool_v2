@@ -7,6 +7,8 @@ class PlansController < ApplicationController
   before_action :check_copy_plan_access, only: [:copy_existing_template]
   before_action :check_plan_access, only: [:edit, :update, :destroy, :details, :preview]
 
+  before_action :check_read_only_plan_access, only: [:show]
+
   before_action :set_cache_buster, only: [:show]
 
 
@@ -635,6 +637,19 @@ class PlansController < ApplicationController
           flash[:error] = "You don't have access to this content."
           redirect_to plans_path # halts request cycle
         end
+      end
+    end
+
+
+    def check_read_only_plan_access
+      @plan = Plan.find(params[:id])
+      if current_user
+        #do nothing
+      else
+        unless @plan.visibility == :public
+          flash[:error] = "You don't have access to this content."
+          redirect_to root_url
+        end 
       end
     end
 
