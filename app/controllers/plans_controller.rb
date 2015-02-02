@@ -643,15 +643,37 @@ class PlansController < ApplicationController
 
     def check_read_only_plan_access
       @plan = Plan.find(params[:id])
-      if current_user
-        #do nothing
-      else
+      if current_user 
+        unless user_role_in?(:dmp_admin)
+          # if @plan.visibility == :private 
+          #   redirect_to root_url, :flash => { :error => "You don't have access to this content." } unless current_user == @plan.owner || @plan.coowners.include?(current_user)
+          # elsif @plan.visibility == :institutional
+          #   redirect_to root_url, :flash => { :error => "You don't have access to this content." } unless current_user.institution.root.subtree_ids.include?(@plan.owner.institution_id) || @plan.coowners.include?(current_user)
+          # #elsif plan has unit visibility
+          #   #display error and go back one page unless user is same institution or parent of same institution or if its a coowner (an owner is always part of same institution)
+          # else #this plan is public
+          #   #do nothing
+          # end
+          case @plan.visibility
+
+          when :private 
+            redirect_to root_url, :flash => {:error=>"You don't have access to this content."} unless current_user == @plan.owner || @plan.coowners.include?(current_user)
+          when :institutional
+            redirect_to root_url, :flash => {:error=>"You don't have access to this content."} unless current_user.institution.root.subtree_ids.include?(@plan.owner.institution_id) || @plan.coowners.include?(current_user)
+          #when unit 
+            #display error and go back one page unless user is same institution or parent of same institution or if its a coowner (an owner is always part of same institution)
+          else #this plan is public
+            #do nothing
+          end
+        end
+      else #(=> user is not logged in)
         unless @plan.visibility == :public
           flash[:error] = "You don't have access to this content."
           redirect_to root_url
         end 
       end
     end
+
 
     def multitable(collection, subparams)
       return nil if collection.nil?
