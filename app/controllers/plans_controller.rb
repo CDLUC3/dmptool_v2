@@ -661,11 +661,11 @@ class PlansController < ApplicationController
         unless user_role_in?(:dmp_admin)
           case @plan.visibility
           when :private 
-            redirect_to root_url, :flash => {:error=>"You don't have access to this content."} unless current_user == @plan.owner || @plan.coowners.include?(current_user)
+            redirect_to root_url, :flash=>{:error=>"You don't have access to this content."} unless current_user == @plan.owner || @plan.coowners.include?(current_user)
           when :institutional
-            redirect_to root_url, :flash => {:error=>"You don't have access to this content."} unless current_user.institution.root.subtree_ids.include?(@plan.owner.institution_id) || @plan.coowners.include?(current_user)
-          #when unit 
-            #display error and go back one page unless user is same institution or parent of same institution or if its a coowner (an owner is always part of same institution)
+            redirect_to root_url, :flash=>{:error=>"You don't have access to this content."} unless current_user.institution.root.subtree_ids.include?(@plan.owner.institution_id) || @plan.coowners.include?(current_user)
+          when :unit 
+            redirect_to root_url, :flash=>{:error=>"You don't have access to this content."} unless current_user.institution.subtree_ids.include?(@plan.owner.institution_id) || @plan.coowners.include?(current_user)
           else #this plan is public
             #do nothing
           end
