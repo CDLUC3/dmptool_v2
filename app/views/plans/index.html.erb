@@ -75,13 +75,22 @@
         </td>
         <td><%= owner_name(plan) %></td>
         <td><strong><%= plan.display_state %></strong></td>
-        <%if plan.visibility == :private %>
+
+        <%case plan.visibility%>
+        <%when :private%>
           <td class="span1"><span class="private-visibility icon" title="Private"></span></td>
-        <% elsif plan.visibility == :public %>
+        <%when :public%>
           <td class="span1"><span class="public-visibility icon" title="Public"></span></td>
-        <% else %>
+        <%when :institutional%>
           <td class="span1"><span class="institutional-visibility icon" title="Institutional"></span></td>
-        <% end %>
+        <%when :unit%>
+          <td class="span1"><span title="Unit"></span>    
+            <%= image_tag 'unit.png', size: "38x28", alt: 'Unit', title: 'Unit' %>
+          </td>
+        <%else%>
+          <td class="span1"><span class="public-visibility icon" title="Public"></span></td>
+        <%end%>
+
         <td><%= plan.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
       </tr>
     <% end %>
