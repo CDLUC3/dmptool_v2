@@ -681,7 +681,7 @@ class PlansController < ApplicationController
 
     def multitable(collection, subparams)
       return nil if collection.nil?
-      valid_sort = ["plans.name", "requirements_templates.name", "institutions.full_name",
+      valid_sort = ["plans.name", "requirements_templates.name", "institutions.full_name", "visibility",
                     "CONCAT(users.first_name, ' ', users.last_name)"]
       if valid_sort.include?(subparams['order_scope'])
         collection = collection.order("#{subparams['order_scope']} ASC")
