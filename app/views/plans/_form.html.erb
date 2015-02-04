@@ -60,7 +60,11 @@
               <%= f.radio_button :visibility, :institutional, :class => 'radio inline', :id => 'institutional'  %>
               <%= label_tag :institutional, 'institutional', :class => 'radio-label'%><br/>
               <%= f.radio_button :visibility, :private, :class => 'radio inline', :id => 'private', checked: true  %>
-              <%= label_tag :private, 'private', :class => 'radio-label'%>
+              <%= label_tag :private, 'private', :class => 'radio-label'%><br/>
+              <%if current_user.institution.parent%>
+                <%= f.radio_button :visibility, :unit, :class => 'radio inline', :id => 'unit'%>
+                <%= label_tag :unit, 'unit', :class => 'radio-label'%>
+              <%end%>
             </div>
           </div>
           <%= render partial: '/users/plan_autocomplete_widget',
