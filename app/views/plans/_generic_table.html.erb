@@ -18,6 +18,9 @@
   <% end %>
   <th class="span5"><%= link_to "Owner", params.merge({"#{namespace}:order_scope" => "CONCAT(users.first_name, ' ', users.last_name)"}) %></th>
   <th>Download</th>
+  <%if namespace == "institutional" %>
+    <th>Visibility</th> 
+  <%end%>
 </tr>
 </thead>
 <tbody>
@@ -44,6 +47,11 @@
       <td class="span1">
         <%= link_to('', plan_path(plan, format: "pdf"), :class => 'icon pdf', :target => '_blank') %>
       </td>
+      <%unless plan.visibility == :public %>
+        <td>
+          <%= plan.visibility %>
+        </td>
+      <%end%>
     </tr>
   <% end %>
   </tbody>
