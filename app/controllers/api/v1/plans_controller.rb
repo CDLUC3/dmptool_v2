@@ -16,8 +16,9 @@ class Api::V1::PlansController < Api::V1::BaseController
             @coowned_private_plans = @user.coowned_plans.private_visibility
 
             @institutional_plans = Plan.institutional_visibility.joins( {:users => :institution} ).where("user_plans.owner = 1").where("users.institution_id IN (?)", @user.institution.root.subtree_ids)
+            @unit_plans = Plan.unit_visibility.joins( {:users => :institution} ).where("user_plans.owner = 1").where("users.institution_id IN (?)", @user.institution.subtree_ids)
 
-            @plans = @public_plans + @owned_private_plans + @coowned_private_plans + @institutional_plans
+            @plans = @public_plans + @owned_private_plans + @coowned_private_plans + @institutional_plans + @unit_plans
             if from_date = params[:from_date]
               @plans = @plans.where(["created_at > ?", from_date])
             end
@@ -35,6 +36,7 @@ class Api::V1::PlansController < Api::V1::BaseController
 
                 if (@plan.visibility == :public)  ||  
                     ( (@plan.visibility == :institutional) && ( @user.institution.root.subtree_ids.include?(@plan.owner.institution_id) || @plan.coowners.include?(@user)  ) ) ||
+                    ( (@plan.visibility == :unit) && ( @user.institution.subtree_ids.include?(@plan.owner.institution_id) || @plan.coowners.include?(@user)  ) ) ||
                     ( (@plan.visibility == :private) && ( @user == @plan.owner || @plan.coowners.include?(@user)) )
                 	
                     @plan
