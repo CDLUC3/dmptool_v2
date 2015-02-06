@@ -236,17 +236,24 @@ class PlansController < ApplicationController
       user_plans.delete_all
       plan_states.delete_all
       @plan.destroy
-      redirect_to plans_url, notice: "The plan has been successfully deleted."
+      redirect_to plans_url(order_scope: params[:order_scope], scope: params[:scope], all_scope: params[:all_scope], 
+                        direction: params[:direction]), notice: "The plan has been successfully deleted."
     end
   end
 
   def template_information
     public_plans_ids = Plan.public_visibility.ids
     current_user_plan_ids = UserPlan.where(user_id: @user.id).pluck(:plan_id)
+    
     institutionally_visible_plans_ids  = Plan.joins(:users)
           .where(users: {institution_id: @user.institution.root.subtree_ids})
           .institutional_visibility.pluck(:id)
-    plans = (current_user_plan_ids + public_plans_ids + institutionally_visible_plans_ids).uniq
+
+    unit_visible_plans_ids = Plan.joins(:users)
+          .where(users: {institution_id: @user.institution.subtree_ids})
+          .unit_visibility.pluck(:id)
+    
+    plans = (current_user_plan_ids + public_plans_ids + institutionally_visible_plans_ids + unit_visible_plans_ids).uniq
     @plans = Plan.where(id: plans)
     @plans = Kaminari.paginate_array(@plans).page(params[:page]).per(5)
   end
@@ -551,7 +558,10 @@ class PlansController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def plan_params
-      params.require(:plan).permit(:name, :requirements_template_id, :solicitation_identifier, :submission_deadline, :visibility, :current_plan_state_id, :current_user_id, :original_plan_id, responses_attributes: [:id, :plan_id, :requirement_id, :text_value, :numeric_value, :date_value, :enumeration_id, :lock_version, :label_id])
+      params.require(:plan).permit(:name, :requirements_template_id, :solicitation_identifier, :submission_deadline, 
+                                  :visibility, :current_plan_state_id, :current_user_id, :original_plan_id, 
+                                  responses_attributes: [:id, :plan_id, :requirement_id, :text_value, :numeric_value, 
+                                    :date_value, :enumeration_id, :lock_version, :label_id])
     end
 
     def count
