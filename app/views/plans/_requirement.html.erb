@@ -7,5 +7,6 @@
     </div>
   <%- end -%>
   <div>
-    <%= response_value_s(requirement.responses.where(plan: @plan).take) %>
+    <%#= response_value_s(requirement.responses.where(plan: @plan).take) %>
+    <%= requirement.response_html(@plan) %>
   </div>

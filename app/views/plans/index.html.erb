@@ -39,7 +39,7 @@
       </th>
       <th>
         <%= sortable "visibility" %>
-        <%= content_tag(:span, '', :title => 'Three possible states:<ul><li>Private (red lock): only owners and co-owners can view the plan.</li><li>Shared with institution (yellow key): anyone logged in from your institution can view, copy and or download the plan.</li><li>Share publicly (green people): anyone can view, copy and or download the plan. 
+        <%= content_tag(:span, '', :title => 'Four possible states:<ul><li>Private (red lock): only owners and co-owners can view the plan.</li><li>Shared with institution (yellow key): anyone logged in from your institution can view, copy and or download the plan.</li><li>Shared within unit (hierarchy icon): anyone logged in from your institution or from a parent institution can view, copy and or download the plan. </li><li>Share publicly (green people): anyone can view, copy and or download the plan. 
           Your DMP will appear on the <a href="/public_dmps">Public DMPs</a> page of this site.</li></ul>', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'data-html' => 'true', :class => 'icon questionmark tip') %>
       </th>
       
@@ -68,20 +68,31 @@
               <br><%= link_to('Export as PDF', plan_path(plan, :format => "pdf")) %>
               | <%= link_to('Export as RTF', plan_path(plan, :format => "rtf")) %>
               <% unless coowner(plan) == true %>
-              | <%= link_to 'Delete', plan, method: :delete, data: { confirm: 'Are you sure?' },:class => "delete" %>
+  
+              | <%= link_to 'Delete', plan_path(plan, order_scope: @order_scope, scope: @scope,  all_scope: @all_scope), 
+                { :class => "delete",  method: :delete, :data => { :confirm => 'Are you sure?' } }  %>       
               <% end %>
             </div>
           </div>
         </td>
         <td><%= owner_name(plan) %></td>
         <td><strong><%= plan.display_state %></strong></td>
-        <%if plan.visibility == :private %>
+
+        <%case plan.visibility%>
+        <%when :private%>
           <td class="span1"><span class="private-visibility icon" title="Private"></span></td>
-        <% elsif plan.visibility == :public %>
+        <%when :public%>
           <td class="span1"><span class="public-visibility icon" title="Public"></span></td>
-        <% else %>
+        <%when :institutional%>
           <td class="span1"><span class="institutional-visibility icon" title="Institutional"></span></td>
-        <% end %>
+        <%when :unit%>
+          <td class="span1"><span title="Unit"></span>    
+            <%= image_tag 'unit.png', size: "38x28", alt: 'Unit', title: 'Unit' %>
+          </td>
+        <%else%>
+          <td class="span1"><span class="public-visibility icon" title="Public"></span></td>
+        <%end%>
+
         <td><%= plan.updated_at.strftime("%m/%d/%Y %I:%M%p") %></td>
       </tr>
     <% end %>
