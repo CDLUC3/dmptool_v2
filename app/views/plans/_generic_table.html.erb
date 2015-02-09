@@ -8,21 +8,23 @@
 
 
 <table class="table table-striped">
-<thead>
-<%# wanted_params = params.slice('all_scope','s', 'e') %>
-<tr>
-  <th class="span5"><%= link_to "Plan Title", params.merge({"#{namespace}:order_scope" => "plans.name"}) %></th>
-  <th class="span5"><%= link_to "Funder Template", params.merge({"#{namespace}:order_scope" => "requirements_templates.name"}) %></th>
-  <% if show_institution %>
-    <th class="span5"><%= link_to "Institution", params.merge({"#{namespace}:order_scope" => "institutions.full_name"}) %></th>
-  <% end %>
-  <th class="span5"><%= link_to "Owner", params.merge({"#{namespace}:order_scope" => "CONCAT(users.first_name, ' ', users.last_name)"}) %></th>
-  <th>Download</th>
-  <%if namespace == "institutional" %>
-    <!-- <th>Visibility (this is temporary)</th>  -->
-   <th> <%= link_to "Visibility (this is temporary)", params.merge({"#{namespace}:order_scope" => "visibility"}) %></th>
-  <%end%>
-</tr>
+  <thead>
+
+    <tr>
+      <th class="span5"><%= link_to "Plan Title", params.merge({"#{namespace}:order_scope" => "plan"}) %></th>
+      <th class="span5"><%= link_to "Funder Template", params.merge({"#{namespace}:order_scope" => "template"}) %></th>
+      
+      <% if show_institution %>
+        <th class="span5"><%= link_to "Institution", params.merge({"#{namespace}:order_scope" => "institution"}) %></th>
+      <% end %>
+      <th class="span5"><%= link_to "Owner", params.merge({"#{namespace}:order_scope" => "owner"}) %></th>
+      <th>Download</th>
+      <%if namespace == "institutional" %>
+         
+       <th> <%= link_to "Visibility (this is temporary)", params.merge({"#{namespace}:order_scope" => "visibility"}) %></th>
+      <%end%>
+    </tr>
+
 </thead>
 <tbody>
 
@@ -35,7 +37,7 @@
         </div>
       </td>
       <td>
-        <%= (plan.requirements_template && plan.requirements_template.name) || 'seriously, more junk data?' %>
+        <%= (plan.requirements_template && plan.requirements_template.name) || '' %>
       </td>
       <% if show_institution %>
         <td>
