@@ -1,5 +1,7 @@
 class Api::V1::UsersController < Api::V1::BaseController
-	before_action :authenticate
+	
+  before_action :soft_authenticate
+   #before_action :authenticate
 
   respond_to :json
 
