@@ -89,7 +89,8 @@ def print_responses(pdf, requirement, heading)
         end
       end
     else
-      html = Nokogiri::HTML(response_value_s(Response.where(:requirement=>requirement, :plan=>@plan).first))
+      #html = Nokogiri::HTML(response_value_s(Response.where(:requirement=>requirement, :plan=>@plan).first))
+      html = Nokogiri::HTML(requirement.response_html(@plan))
       pdf.font("Helvetica", :style=>:normal)
       pdf.pad(10) do
         pdf.indent(12) do

@@ -81,7 +81,8 @@ def print_responses(doc, requirement, heading, styles)
       print_responses(doc, child, "#{heading}.#{i+1}", styles)
     end
   else
-    html = Nokogiri::HTML(response_value_s(Response.where(:requirement=>requirement, :plan=>@plan).first))
+    # html = Nokogiri::HTML(response_value_s(Response.where(:requirement=>requirement, :plan=>@plan).first))
+    html = Nokogiri::HTML(requirement.response_html(@plan))
     render_html(doc, html, styles)
   end
 end

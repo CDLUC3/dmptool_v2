@@ -474,12 +474,11 @@ class PlansController < ApplicationController
       else 
         @inst_plans = Plan.where(id: [@inst_plans_ids, @unit_plans_ids])
       end  
-      
-      
+         
     else
       @inst_plans = nil
     end
-
+    
     @plans = multitable(@plans, public_params)
     @inst_plans = multitable(@inst_plans, inst_params)
 
@@ -691,12 +690,27 @@ class PlansController < ApplicationController
 
     def multitable(collection, subparams)
       return nil if collection.nil?
-      valid_sort = ["plans.name", "requirements_templates.name", "institutions.full_name", "visibility",
-                    "CONCAT(users.first_name, ' ', users.last_name)"]
+      valid_sort = ["plan", "institution", "visibility",
+                    "owner", "template"]
+
+
       if valid_sort.include?(subparams['order_scope'])
-        collection = collection.order("#{subparams['order_scope']} ASC")
-      else
-        collection = collection.order(name: :asc)
+
+        case subparams['order_scope']
+        when "plan"
+          collection = collection.order(name: :asc) 
+        when "template"
+          collection = collection.joins(:requirements_template).order('requirements_templates.name ASC')
+        when "institution"
+          collection = collection.order_by_institution
+        when "owner"
+         collection = collection.order_by_owner
+        when "visibility"
+         collection = collection.order(visibility: :desc)
+        else
+          collection = collection.order(name: :asc)
+        end             
+
       end
 
       if subparams['all_scope'] != 'all'
