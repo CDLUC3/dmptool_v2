@@ -232,6 +232,10 @@ $(function() {
 	  {
 	  	$("#visibility_private").click();
 	  }
+	  else if (visibility  == "unit")
+	  {
+	  	$("#visibility_unit").click();
+	  }
 	});
 });
 
