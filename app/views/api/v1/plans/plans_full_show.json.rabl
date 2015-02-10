@@ -1,6 +1,6 @@
 object @plan
 
-attribute  :id
+#attribute  :id
 attribute  :name
 attribute  :solicitation_identifier, :unless => lambda { |p| p.solicitation_identifier.blank?}
 attribute  :visibility
