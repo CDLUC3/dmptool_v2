@@ -7,6 +7,7 @@ attribute  :visibility
 attribute  :created
 attribute  :modified 
 
+parent = root_object
 
 node :state do |p|
   p.current_state.state
@@ -32,14 +33,10 @@ child :requirements_template => :template do
               :start_date_us_format => :start_date, 
               :end_date_us_format => :end_date, 
               :review_type => :review_type
+
+              child :requirements do
+                attributes :text_brief, :text_full
+                node(:response) { |req|  req.response_text(parent)  }
+              end
               
 end
-
-
-
-
-
-
-
-
-
