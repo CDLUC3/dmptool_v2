@@ -39,6 +39,7 @@ $(function() {
       close: function() {
         $('#comment_dialog-form').dialog("close");
         $(this).find('form')[0].reset();
+        window.location.reload() 
       }
 		}).prev ().find(".ui-dialog-titlebar-close").show();
 		return false
