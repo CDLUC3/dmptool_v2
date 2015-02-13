@@ -25,6 +25,8 @@
         </div>
         <a href="#" class="show_less">Show less</a>
       </div>
-      <%= link_to "", comment, :method => :delete, :data => { :confirm => "Are you sure?"}, :class => "icon trash pull-right", :title => "Delete" %>
+      <%if current_user == comment.user%>
+        <%= link_to "", comment, :method => :delete, :data => { :confirm => "Are you sure?"}, :class => "icon trash pull-right", :title => "Delete" %>
+      <%end%>
   </div>
 <% end %>

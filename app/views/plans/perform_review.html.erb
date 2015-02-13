@@ -16,15 +16,15 @@
 
 <div class="comments">
 
-  <%# if @reviewer_comments.empty? %>
-  <% if @all_comments.empty? %>
+  <% if @reviewer_comments.empty? %>
+  <%# if @all_comments.empty? %>
     <strong>There are currently no comments.</strong>
     <br/>
   <% else %>
     <div class="scrollable-container">
       <div class="scrollable-content">
         <br/>
-        <%= render partial: 'comments/index_all_comments' %>
+        <%= render partial: 'comments/index_reviewer_comments' %>
       </div>
     <div class="scrollable-bottom-handle ui-resizable-handle ui-resizable-s"></div>
   </div>
