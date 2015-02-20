@@ -21,7 +21,7 @@
       <th>Download</th>
       <%if namespace == "institutional" %>
          
-       <th> <%= link_to "Visibility (this is temporary)", params.merge({"#{namespace}:order_scope" => "visibility"}) %></th>
+       <th> <%= link_to "Visibility", params.merge({"#{namespace}:order_scope" => "visibility"}) %></th>
       <%end%>
     </tr>
 
