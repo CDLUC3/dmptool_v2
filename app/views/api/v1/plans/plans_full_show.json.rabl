@@ -27,6 +27,17 @@ child({:coowners => :coowners}, :if => lambda { |p| p.coowners.present? }) do
 end
 
 
+child({:comments => :comments}, :if => lambda { |p| p.comments.present? }) do
+             
+  attributes  :comment_type => :comment_type, 
+              :value => :value
+
+              node :user do |p|
+                p.user.full_name
+              end
+end
+
+
 child :requirements_template => :template do
   attributes  :name => :name, 
               :active => :active, 

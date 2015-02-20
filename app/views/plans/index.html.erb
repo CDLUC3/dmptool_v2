@@ -39,8 +39,13 @@
       </th>
       <th>
         <%= sortable "visibility" %>
-        <%= content_tag(:span, '', :title => 'Four possible states:<ul><li>Private (red lock): only owners and co-owners can view the plan.</li><li>Shared with institution (yellow key): anyone logged in from your institution can view, copy and or download the plan.</li><li>Shared within unit (hierarchy icon): anyone logged in from your institution or from a parent institution can view, copy and or download the plan. </li><li>Share publicly (green people): anyone can view, copy and or download the plan. 
-          Your DMP will appear on the <a href="/public_dmps">Public DMPs</a> page of this site.</li></ul>', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'data-html' => 'true', :class => 'icon questionmark tip') %>
+        <%if current_user && (current_user.institution.has_children? || current_user.institution.parent) %>
+          <%= content_tag(:span, '', :title => 'Four possible states:<ul><li>Private (red lock): only owners and co-owners can view the plan.</li><li>Shared with institution (yellow key): anyone logged in from your entire institution hierarchy can view, copy and or download the plan.</li><li>Shared within unit (hierarchy icon): anyone logged in from your institution or from a parent institution can view, copy and or download the plan. </li><li>Share publicly (green people): anyone can view, copy and or download the plan. 
+            Your DMP will appear on the <a href="/public_dmps">Public DMPs</a> page of this site.</li></ul>', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'data-html' => 'true', :class => 'icon questionmark tip') %>
+        <%else%>
+          <%= content_tag(:span, '', :title => 'Four possible states:<ul><li>Private (red lock): only owners and co-owners can view the plan.</li><li>Shared with institution (yellow key): anyone logged in from your institution can view, copy and or download the plan.</li><li>Share publicly (green people): anyone can view, copy and or download the plan. 
+            Your DMP will appear on the <a href="/public_dmps">Public DMPs</a> page of this site.</li></ul>', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'data-html' => 'true', :class => 'icon questionmark tip') %>
+        <%end%>
       </th>
       
       

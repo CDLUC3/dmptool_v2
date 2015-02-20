@@ -587,6 +587,7 @@ class PlansController < ApplicationController
       comments = Comment.where(plan_id: @plan.id)
       @reviewer_comments = comments.reviewer_comments.order('created_at DESC')
       @owner_comments = comments.owner_comments.order('created_at DESC')
+      @all_comments = comments.order(created_at: :desc)
       @plan_states = @plan.plan_states
     end
 

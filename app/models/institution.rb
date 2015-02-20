@@ -42,7 +42,7 @@ class Institution < ActiveRecord::Base
 
 
   def users_in_role(role_name)
-    User.joins({:authorizations => :role}).where("roles.name = ?", role_name).where(institution_id: self.id)
+    User.joins({:authorizations => :role}).where("roles.name = ?", role_name).where(institution_id: [self.subtree_ids])
   end
 
   def users_in_and_above_inst_in_role(role_number)

@@ -12,7 +12,7 @@ class Comment < ActiveRecord::Base
   validates :visibility, presence: true
   validates :value, presence: true
 
-  scope :owner, -> { where(visibility: :owner) }
+  scope :owner, -> { where(visibility: :owner) } #this oddly corresponds to the author of the comment
   scope :reviewer, -> { where(visibility: :reviewer) }
 
   scope :owner_comments, -> { where(comment_type: :owner) }
@@ -20,10 +20,12 @@ class Comment < ActiveRecord::Base
 
   def owner?
     visibility == :owner
+    #comment_type == :owner
   end
 
   def reviewer?
     visibility == :reviewer
+    #comment_type == :reviewer
   end
 
 end
