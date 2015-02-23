@@ -4,9 +4,10 @@ include Credentials
 
 feature 'ucop user scope' do
 
-  scenario 'public dmp page visibility' do #, js: true do
+  scenario 'public dmps page unit and institutional visibility' do #, js: true do
 
     logs_in_with "#{UCOP_USERNAME}", "#{UCOP_PASSWORD}", "#{UCOP_INSTITUTION_NAME}"
+    
     visit(public_dmps_path)
     
     expect(page).to have_content 'Institutional DMPs'
@@ -14,10 +15,27 @@ feature 'ucop user scope' do
     expect(page).to have_content 'cdl_unit_plan'
     expect(page).to have_content 'nrs_unit_plan'
     expect(page).to have_content 'ucop_institutional_plan'
-    expect(page).to have_content 'ucop_institutional_plan'
-    expect(page).to have_content 'ucop_institutional_plan'
+    expect(page).to have_content 'cdl_institutional_plan'
+    expect(page).to have_content 'nrs_institutional_plan'
 
   end
+
+
+  #  scenario '???' do #, js: true do
+
+  #   logs_in_with "#{UCOP_USERNAME}", "#{UCOP_PASSWORD}", "#{UCOP_INSTITUTION_NAME}"
+    
+  #   visit(public_dmps_path)
+    
+  #   expect(page).to have_content 'Institutional DMPs'
+  #   expect(page).to have_content 'ucop_unit_plan'
+  #   expect(page).to have_content 'cdl_unit_plan'
+  #   expect(page).to have_content 'nrs_unit_plan'
+  #   expect(page).to have_content 'ucop_institutional_plan'
+  #   expect(page).to have_content 'cdl_institutional_plan'
+  #   expect(page).to have_content 'nrs_institutional_plan'
+
+  # end
 
 
   # scenario 'public dmp shown from institutional parent', js: true do
