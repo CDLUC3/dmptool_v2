@@ -7,6 +7,8 @@ class PlansController < ApplicationController
   before_action :check_copy_plan_access, only: [:copy_existing_template]
   before_action :check_plan_access, only: [:edit, :update, :destroy, :details, :preview]
 
+  before_action :check_read_only_plan_access, only: [:show]
+
   before_action :set_cache_buster, only: [:show]
 
 
@@ -234,17 +236,24 @@ class PlansController < ApplicationController
       user_plans.delete_all
       plan_states.delete_all
       @plan.destroy
-      redirect_to plans_url, notice: "The plan has been successfully deleted."
+      redirect_to plans_url(order_scope: params[:order_scope], scope: params[:scope], all_scope: params[:all_scope], 
+                        direction: params[:direction]), notice: "The plan has been successfully deleted."
     end
   end
 
   def template_information
     public_plans_ids = Plan.public_visibility.ids
     current_user_plan_ids = UserPlan.where(user_id: @user.id).pluck(:plan_id)
+    
     institutionally_visible_plans_ids  = Plan.joins(:users)
           .where(users: {institution_id: @user.institution.root.subtree_ids})
           .institutional_visibility.pluck(:id)
-    plans = (current_user_plan_ids + public_plans_ids + institutionally_visible_plans_ids).uniq
+
+    unit_visible_plans_ids = Plan.joins(:users)
+          .where(users: {institution_id: @user.institution.subtree_ids})
+          .unit_visibility.pluck(:id)
+    
+    plans = (current_user_plan_ids + public_plans_ids + institutionally_visible_plans_ids + unit_visible_plans_ids).uniq
     @plans = Plan.where(id: plans)
     @plans = Kaminari.paginate_array(@plans).page(params[:page]).per(5)
   end
@@ -444,16 +453,32 @@ class PlansController < ApplicationController
     @inst_plans = Plan.joins( {:users => :institution} ).joins(:requirements_template)
           .where("user_plans.owner = 1").institutional_visibility
 
-    if user_role_in?(:dmp_admin)
-      @show_institution = true
-    elsif current_user
-      #show public and institutional for my institution
-      @inst_plans = @inst_plans.where("users.institution_id IN (?)", current_user.institution.root.subtree_ids)
-      @show_institution = false
+    @unit_plans = Plan.joins( {:users => :institution} ).joins(:requirements_template)
+          .where("user_plans.owner = 1").where(visibility: :unit)
+
+    @show_institution = false
+    
+    if current_user
+
+      (user_role_in?(:dmp_admin) || current_user.institution.has_children? || current_user.institution.parent ) ? @show_institution = true : @show_institution = false   
+
+      #show institutional for my institution
+      @inst_plans_ids = @inst_plans.where("users.institution_id IN (?)", current_user.institution.root.subtree_ids).pluck(:id)
+
+      @unit_plans_ids = @unit_plans.where("users.institution_id IN (?)", current_user.institution.subtree_ids).pluck(:id)
+
+      if  @unit_plans_ids == [] && @inst_plans_ids != []
+        @inst_plans = Plan.where(id: [@inst_plans_ids])
+      elsif @inst_plans_ids == [] && @unit_plans_ids != []
+         @inst_plans = Plan.where(id: [@unit_plans_ids])
+      else 
+        @inst_plans = Plan.where(id: [@inst_plans_ids, @unit_plans_ids])
+      end  
+         
     else
       @inst_plans = nil
     end
-
+    
     @plans = multitable(@plans, public_params)
     @inst_plans = multitable(@inst_plans, inst_params)
 
@@ -532,7 +557,10 @@ class PlansController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def plan_params
-      params.require(:plan).permit(:name, :requirements_template_id, :solicitation_identifier, :submission_deadline, :visibility, :current_plan_state_id, :current_user_id, :original_plan_id, responses_attributes: [:id, :plan_id, :requirement_id, :text_value, :numeric_value, :date_value, :enumeration_id, :lock_version, :label_id])
+      params.require(:plan).permit(:name, :requirements_template_id, :solicitation_identifier, :submission_deadline, 
+                                  :visibility, :current_plan_state_id, :current_user_id, :original_plan_id, 
+                                  responses_attributes: [:id, :plan_id, :requirement_id, :text_value, :numeric_value, 
+                                    :date_value, :enumeration_id, :lock_version, :label_id])
     end
 
     def count
@@ -559,6 +587,7 @@ class PlansController < ApplicationController
       comments = Comment.where(plan_id: @plan.id)
       @reviewer_comments = comments.reviewer_comments.order('created_at DESC')
       @owner_comments = comments.owner_comments.order('created_at DESC')
+      @all_comments = comments.order(created_at: :desc)
       @plan_states = @plan.plan_states
     end
 
@@ -635,14 +664,54 @@ class PlansController < ApplicationController
       end
     end
 
+
+    def check_read_only_plan_access
+      @plan = Plan.find(params[:id])
+      if current_user 
+        unless user_role_in?(:dmp_admin)
+          case @plan.visibility
+          when :private 
+            redirect_to root_url, :flash=>{:error=>"You don't have access to this content."} unless current_user == @plan.owner || @plan.coowners.include?(current_user)
+          when :institutional
+            redirect_to root_url, :flash=>{:error=>"You don't have access to this content."} unless current_user.institution.root.subtree_ids.include?(@plan.owner.institution_id) || @plan.coowners.include?(current_user)
+          when :unit 
+            redirect_to root_url, :flash=>{:error=>"You don't have access to this content."} unless current_user.institution.subtree_ids.include?(@plan.owner.institution_id) || @plan.coowners.include?(current_user)
+          else #this plan is public
+            #do nothing
+          end
+        end
+      else #(=> user is not logged in)
+        unless @plan.visibility == :public
+          flash[:error] = "You don't have access to this content."
+          redirect_to root_url
+        end 
+      end
+    end
+
+
     def multitable(collection, subparams)
       return nil if collection.nil?
-      valid_sort = ["plans.name", "requirements_templates.name", "institutions.full_name",
-                    "CONCAT(users.first_name, ' ', users.last_name)"]
+      valid_sort = ["plan", "institution", "visibility",
+                    "owner", "template"]
+
+
       if valid_sort.include?(subparams['order_scope'])
-        collection = collection.order("#{subparams['order_scope']} ASC")
-      else
-        collection = collection.order(name: :asc)
+
+        case subparams['order_scope']
+        when "plan"
+          collection = collection.order(name: :asc) 
+        when "template"
+          collection = collection.joins(:requirements_template).order('requirements_templates.name ASC')
+        when "institution"
+          collection = collection.order_by_institution
+        when "owner"
+         collection = collection.order_by_owner
+        when "visibility"
+         collection = collection.order(visibility: :desc)
+        else
+          collection = collection.order(name: :asc)
+        end             
+
       end
 
       if subparams['all_scope'] != 'all'

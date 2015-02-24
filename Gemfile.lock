@@ -67,6 +67,10 @@ GEM
     bootstrap-sass (2.3.2.0)
       sass (~> 3.2)
     builder (3.1.4)
+    byebug (3.5.1)
+      columnize (~> 0.8)
+      debugger-linecache (~> 1.2)
+      slop (~> 3.6)
     capistrano (2.15.5)
       highline
       net-scp (>= 1.0.0)
@@ -88,13 +92,8 @@ GEM
       mime-types (>= 1.16)
     childprocess (0.5.3)
       ffi (~> 1.0, >= 1.0.11)
-    columnize (0.8.9)
-    debugger (1.6.8)
-      columnize (>= 0.3.1)
-      debugger-linecache (~> 1.2.0)
-      debugger-ruby_core_source (~> 1.3.5)
+    columnize (0.9.0)
     debugger-linecache (1.2.0)
-    debugger-ruby_core_source (1.3.5)
     deep_cloneable (2.0.0)
       activerecord (>= 3.1.0, < 5.0.0)
     diff-lcs (1.2.5)
@@ -212,6 +211,7 @@ GEM
       websocket (~> 1.0)
     shoulda-matchers (2.6.1)
       activesupport (>= 3.0.0)
+    slop (3.6.0)
     sprockets (2.11.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -253,12 +253,12 @@ DEPENDENCIES
   american_date
   ancestry
   bootstrap-sass (= 2.3.2.0)
+  byebug
   capistrano (~> 2.15)
   capistrano-unicorn
   capybara (~> 2.2.1)
   carrierwave
   ckeditor!
-  debugger
   deep_cloneable (~> 2.0.0)
   enum_column3
   exception_notification

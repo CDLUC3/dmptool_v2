@@ -1,4 +1,5 @@
-<%= form_tag(change_visibility_path, id: "visibility_form", method: :post, html: { :class => "form-horizontal"}) do %>
+<%#= form_tag(change_visibility_path, id: "visibility_form", method: :post, html: { :class => "form-horizontal"}) do %>
+<%= form_tag(change_visibility_path, id: "visibility_form", method: :post) do %>
 
   <%= hidden_field_tag(:plan_id, plan_id, id: 'shared_plan_id') %>
   <%#= hidden_field_tag(:visibility, visibility, id: 'shared_visibility') %>
@@ -6,12 +7,20 @@
     <div class="controls checkbox-controls">
       <%= radio_button_tag :visibility, :institutional  %>
       <%= label_tag :visibility_institutional, "With others from #{current_user.institution.full_name}", :class => 'radio-label' %><br/>
+
       <%= radio_button_tag :visibility, :public%>
       <%= label_tag :visibility_public, 'Publicly on the web. Your DMP will appear on the Public DMPs 
                                         page of this site.', 
                                         :class => 'radio-label' %><br/>
+
       <%= radio_button_tag :visibility, :private %>
-      <%= label_tag :visibility_private, 'Private (owners and co-owners only)', :class => 'radio-label'%>
+      <%= label_tag :visibility_private, 'Private (owners and co-owners only)', :class => 'radio-label'%><br/>
+
+      <%if current_user.institution.has_children? || current_user.institution.parent %>
+        <%= radio_button_tag :visibility, :unit %>
+        <%= label_tag :visibility_unit, "Within your institution/sub-institution unit only.", 
+                      :class => 'radio-label'%>
+      <%end%>
     </div>
   </div>
   <br/>

@@ -1,11 +1,13 @@
 class Requirement < ActiveRecord::Base
 
+  include ActionView::Helpers::SanitizeHelper
+
   has_ancestry
   has_many :responses
   has_many :enumerations, inverse_of: :requirement
   has_many :labels, inverse_of: :requirement
   has_many :resource_contexts
-  belongs_to :requirements_template
+  belongs_to :requirements_template 
 
   accepts_nested_attributes_for :enumerations, allow_destroy: true, reject_if: proc { |attributes| attributes['value'].blank? }
   accepts_nested_attributes_for :labels, allow_destroy: true, reject_if: proc { |attributes| attributes['desc'].blank? }
@@ -54,6 +56,7 @@ class Requirement < ActiveRecord::Base
       end
   end
 
+
   def validating_not_to_add_a_child_under_a_leaf
     parent_id = self.parent_id
     return true if parent_id.nil?
@@ -66,17 +69,57 @@ class Requirement < ActiveRecord::Base
     end
   end
 
+
+  def response_text(plan) 
+    unless plan.plan_responses_ids.blank?
+      @response = responses.where(id:  [plan.plan_responses_ids]).first
+      unless @response.blank?
+        if !@response.text_value.blank?
+          @html_value = @response.text_value 
+          @value = strip_tags(@html_value).html_safe.gsub("&nbsp;", "").gsub("&#39;", "'") if @html_value
+        elsif !@response.numeric_value.blank?
+          @value = @response.numeric_value 
+        elsif !@response.date_value.blank?
+          @value = @response.date_value.to_date.strftime("%m/%d/%Y")
+        elsif !@response.enumeration_id.blank?
+          @value = @response.enumeration.value
+        end
+      end
+    end
+  end
+
+
+  def response_html(plan) 
+    unless plan.plan_responses_ids.blank?
+      @response = responses.where(id:  [plan.plan_responses_ids]).first
+      unless @response.blank?
+        if !@response.text_value.blank?
+          @value = @response.text_value.html_safe
+        elsif !@response.numeric_value.blank?
+          @value = @response.numeric_value 
+        elsif !@response.date_value.blank?
+          @value = @response.date_value.to_date.strftime("%m/%d/%Y")
+        elsif !@response.enumeration_id.blank?
+          @value = @response.enumeration.value
+        end
+      end
+    end
+  end
+
+
   def has_alteast_one_enumeration
     if self.requirement_type == :enum && self.enumerations.blank?
       errors[:base] << 'Must add at least one Enumeration value'
     end
   end
 
+
   def has_alteast_one_unit_of_measure
     if self.requirement_type == :numeric && self.labels.blank?
       errors[:base] << 'Must add a Unit of Measure'
     end
   end
+
 
   def cant_change_requirement_type_on_edit
     requirements_template = RequirementsTemplate.find(self.requirements_template_id)
@@ -88,6 +131,7 @@ class Requirement < ActiveRecord::Base
       return true
     end
   end
+
 
   # gets all the resources, of any kind of attachment that are attached to this requirement
   # as viewed by the institution in the parameter
@@ -101,6 +145,7 @@ class Requirement < ActiveRecord::Base
         where("resource_contexts.requirement_id IS NULL OR requirement_id = ?", self.id)
   end
 
+
   # gets all the resources that are not customized for a specific institution's viewing.  Levels 1, 2, 3
   def non_customized_resources
     template_id = self.requirements_template.id
@@ -111,6 +156,7 @@ class Requirement < ActiveRecord::Base
         where("resource_contexts.requirements_template_id IS NULL OR resource_contexts.requirements_template_id = ?", template_id ).
         where("resource_contexts.requirement_id IS NULL OR requirement_id = ?", self.id)
   end
+
 
   # global resources for this requirement, Stephen's case #1
   def global_resources

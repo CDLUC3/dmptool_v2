@@ -279,10 +279,13 @@ a.hide-plan-history .icon-chevron-up, a.hide-reviewer-comments .icon-chevron-up,
 	position: absolute;
 	left: 100%;
 	top: -1px; }
+
 .history, .comments {
 	margin: -10px 0 10px; }
+
 .history ul {
 	margin: 0; }
+
 .history li, .comments .comment {
 	border-radius: 4px;
 	border: 2px solid #B6B6B7;
@@ -290,6 +293,24 @@ a.hide-plan-history .icon-chevron-up, a.hide-reviewer-comments .icon-chevron-up,
 	margin: 5px 0;
 	padding: 10px;
 	position: relative; }
+
+#owner_comment {
+  border-radius: 4px;
+  border: 2px solid #B6B6B7;
+  background: #F0F0F0;
+  margin: 5px 0;
+  margin-left: 20px;
+  padding: 10px;
+  position: relative; }
+
+#reviewer_comment {
+  border-radius: 4px;
+  border: 2px solid #B6B6B7;
+  background: #C0C0C0;
+  margin: 5px 0;
+  padding: 10px;
+  position: relative; }
+
 .comments .comment {
 	padding-right: 35px; }
 .history .date-updated, .comment .date-created {

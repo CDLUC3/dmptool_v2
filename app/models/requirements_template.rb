@@ -50,6 +50,17 @@ class RequirementsTemplate < ActiveRecord::Base
   #   end
   # end
 
+
+  def start_date_us_format
+    start_date.nil? ? nil : start_date.strftime("%m/%d/%Y") 
+  end
+
+
+  def end_date_us_format
+    end_date.nil? ? nil : end_date.strftime("%m/%d/%Y") 
+  end
+
+
   def self.letter_range_by_institution(s, e)
     #add as a scope where s=start and e=end letter
     joins(:institution).where("full_name REGEXP ?", "^[#{s}-#{e}]")

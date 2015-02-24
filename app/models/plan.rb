@@ -27,6 +27,7 @@ class Plan < ActiveRecord::Base
   scope :public_visibility, -> { where(visibility: :public) }
   scope :private_visibility, -> { where(visibility: :private) }
   scope :public_and_institutional, -> { where(visibility: [:public, :institutional])}
+  scope :unit_visibility, -> { where(visibility: :unit) }
 
   # scopes for plan's states
   scope :submitted, -> { joins(:current_state).where('plan_states.state =?', :submitted) }
@@ -42,6 +43,17 @@ class Plan < ActiveRecord::Base
   scope :plans_rejected, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'rejected'}).where(user_plans: {owner: true})}
   scope :plans_reviewed, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'reviewed'}).where(user_plans: {owner: true})}
   scope :plans_per_institution, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: ['rejected', 'approved', 'submitted', 'reviewed']}).where(user_plans: {owner: true})}
+
+
+  def plan_responses_ids
+    @response_ids = [] 
+    responses.each do |response|
+      @response_ids << response.id
+      
+    end
+    @response_ids
+  end
+
 
   def self.letter_range(s, e)
     #add as a scope where s=start and e=end letter
@@ -101,6 +113,14 @@ class Plan < ActiveRecord::Base
       @coowners<< @coowner
     end
     @coowners
+  end
+
+  def created
+    created_at.to_date.strftime("%m/%d/%Y")
+  end
+
+  def modified
+    updated_at.to_date.strftime("%m/%d/%Y")
   end
 
   def display_state

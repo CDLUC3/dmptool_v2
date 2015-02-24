@@ -7,6 +7,7 @@ class Api::V1::BaseController < ActionController::Base
 
 
 	
+ 
 
   def safe_has_role?(role)
     #this returns whether a user has a role, but does it safely.  If no user is logged in

@@ -168,7 +168,7 @@ class AuthorizationsController < ApplicationController
       end
       user = users.first
     end
-     if (user.institution != current_user.institution && !user_role_in?(:dmp_admin))
+     unless (current_user.institution.subtree_ids.include?(user.institution.id) || user_role_in?(:dmp_admin))
       flash[:error] = "The user you chose belongs to a different institution."
       redirect_to :back and return
     end

@@ -1,7 +1,7 @@
 object @user
 
-attributes :id, :first_name, :last_name, :email
+attributes :first_name, :last_name, :email
 
 child :institution do
-	attributes :id, :full_name
+	attributes :full_name
 end

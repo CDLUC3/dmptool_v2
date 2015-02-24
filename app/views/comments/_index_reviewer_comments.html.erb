@@ -1,5 +1,11 @@
 <% @reviewer_comments.each do |comment| %>
-	<div class="comment">
+	<%if comment.owner?%>
+    <div class="comment" id="owner_comment">
+  <%elsif comment.reviewer?%>
+    <div class="comment" id="reviewer_comment">
+  <%else%>
+    <div class="comment">
+  <%end%>
 		<span class="date-created"><%= comment.created_at.strftime("%m/%d/%Y %I:%M %p") %></span>
 		<% unless !User.exists?(comment.user_id)%>
 			<strong><%= User.find(comment.user_id).full_name %>:</strong>
@@ -19,6 +25,8 @@
 		  </div>
 		  <a href="#" class="show_less">Show less</a>
 		</div>
-		<%= link_to "", comment, :method => :delete, :data => { :confirm => "Are you sure?"}, :class => "icon trash pull-right", :title => "Delete" %>
+		<%if current_user == comment.user%>
+			<%= link_to "", comment, :method => :delete, :data => { :confirm => "Are you sure?"}, :class => "icon trash pull-right", :title => "Delete" %>
+		<%end%>
 	</div>
 <% end %>
