@@ -471,6 +471,8 @@ class PlansController < ApplicationController
         @inst_plans = Plan.where(id: [@inst_plans_ids])
       elsif @inst_plans_ids == [] && @unit_plans_ids != []
          @inst_plans = Plan.where(id: [@unit_plans_ids])
+      elsif @inst_plans_ids == [] && @unit_plans_ids == []
+         @inst_plans = nil
       else 
         @inst_plans = Plan.where(id: [@inst_plans_ids, @unit_plans_ids])
       end  
@@ -480,7 +482,9 @@ class PlansController < ApplicationController
     end
     
     @plans = multitable(@plans, public_params)
-    @inst_plans = multitable(@inst_plans, inst_params)
+    # if @inst_plans
+      @inst_plans = multitable(@inst_plans, inst_params)
+    # end
 
     unless params[:s].blank? || params[:e].blank?
       @plans = @plans.letter_range(params[:s], params[:e])
