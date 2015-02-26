@@ -12,11 +12,13 @@ node :state do |p|
   p.current_state.state
 end
 
-node :institution do |p|
+#node :institution do |p|
+node({:institution => :institution}, :if => lambda { |p| p.owner.present? }) do
   p.owner.institution.full_name
 end
 
-child :owner => :owner do
+#child :owner => :owner do
+child({:owner => :owner}, :if => lambda { |p| p.owner.present? }) do
   attributes :full_name, :email 
 end
 
