@@ -13,7 +13,7 @@ node :state do |p|
 end
 
 #node :institution do |p|
-node({:institution => :institution}, :if => lambda { |p| p.owner.present? }) do
+node({:institution => :institution}, :if => lambda { |p| p.owner.present? }) do |p|
   p.owner.institution.full_name
 end
 
