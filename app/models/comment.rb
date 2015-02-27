@@ -28,4 +28,10 @@ class Comment < ActiveRecord::Base
     #comment_type == :reviewer
   end
 
+#used to filter dirty data in the api
+  def author_name
+    user ? user.full_name : "anonymous"
+  end
+
+
 end

@@ -36,9 +36,10 @@ child({:comments => :comments}, :if => lambda { |p| p.comments.present? }) do
   attributes  :comment_type => :comment_type, 
               :value => :value
 
-              #node :user do |p|
-               # p.user.full_name
-              #end
+              node :author do |c|
+                c.author_name
+              end
+
 end
 
 
