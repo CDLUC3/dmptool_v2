@@ -104,6 +104,12 @@ class Plan < ActiveRecord::Base
     @owner ||= users.where('user_plans.owner' => true).first
   end
 
+
+  def institution_name
+    owner ? owner.institution.full_name : "Unknown"
+  end
+
+
   def coowners
     @coowners = Array.new
     user_plans = self.user_plans.where(owner: false)
