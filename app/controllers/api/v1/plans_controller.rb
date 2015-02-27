@@ -10,7 +10,12 @@ class Api::V1::PlansController < Api::V1::BaseController
   def index
     if @user = User.find_by_id(session[:user_id])
       if user_role_in?(:dmp_admin)
-          @plans = Plan.all
+          #@plans = Plan.all
+          @public_plans = Plan.all.public_visibility
+          @institutional_plans = Plan.all.institutional_visibility
+          @unit_plans = Plan.all.unit_visibility
+          @private_plans = Plan.all.private_visibility
+          @plans = @private_plans + @institutional_plans + @unit_plans + @public_plans
       else
           @public_plans = Plan.all.public_visibility
           
