@@ -13,11 +13,15 @@ node :state do |p|
   p.current_state.state
 end
 
+#node :institution do |p|
+#  p.owner.institution.full_name
+#end
+
 node :institution do |p|
-  p.owner.institution.full_name
+  p.institution_name
 end
 
-child :owner => :owner do
+child({:owner => :owner}, :if => lambda { |p| p.owner.present? }) do
   attributes :full_name, :email 
 end
 
@@ -32,9 +36,9 @@ child({:comments => :comments}, :if => lambda { |p| p.comments.present? }) do
   attributes  :comment_type => :comment_type, 
               :value => :value
 
-              node :user do |p|
-                p.user.full_name
-              end
+              #node :user do |p|
+               # p.user.full_name
+              #end
 end
 
 

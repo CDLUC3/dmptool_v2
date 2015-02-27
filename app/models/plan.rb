@@ -104,6 +104,13 @@ class Plan < ActiveRecord::Base
     @owner ||= users.where('user_plans.owner' => true).first
   end
 
+
+#for plans api in case of dirty data with plans without owners
+  def institution_name
+    owner ? owner.institution.full_name : "Unknown"
+  end
+
+
   def coowners
     @coowners = Array.new
     user_plans = self.user_plans.where(owner: false)
