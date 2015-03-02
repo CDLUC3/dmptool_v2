@@ -64,7 +64,7 @@
     <% else %>
       <%= link_to '<< Back', :back,  method: 'get', :class => 'btn btn-green pull-left', role: "button" %>
     <% end %>
-    <%= link_to 'DMP Preview >>', preview_plan_path(@plan),  method: 'get', :class => 'btn btn-green pull-right', role: "button" %>
+    <%= link_to 'DMP Preview >>', preview_plan_path(@plan), name: 'save_preview', :class => 'btn btn-green pull-right', role: "button", id: 'save_on_preview' %>
   </div>
 </div>
 <script type="text/javascript">
@@ -81,4 +81,12 @@
     document.getElementById(id).style.height = 'auto';
     //$j('#'+id).css('height', 'auto');
   }
+</script>
+<script type="text/javascript">
+$(function() {
+  $("#save_on_preview").bind("click",function(e) {
+    $('#true_on_preview').val(true);
+    $(".form-horizontal").submit();
+  });
+});
 </script>

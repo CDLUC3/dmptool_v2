@@ -3,6 +3,8 @@
 
   <%= f.hidden_field :lock_version %>
 
+  <%= hidden_field_tag(:save_on_preview, false, id: 'true_on_preview') %>
+
   <%= render partial: "shared/errors", locals: {model: @response} %>
   <div class="control-group">
       <%= f.hidden_field :requirement_id, value: requirement_id %>
@@ -67,3 +69,4 @@
 <div id="alert_message" title="Please Enter a Valid Response.">
   Cannot save an empty Response. Please enter a valid Response before continuing.
 </div>
+
