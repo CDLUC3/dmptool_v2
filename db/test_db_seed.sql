@@ -52,7 +52,7 @@ INSERT INTO `requirements_templates` (`id`, `institution_id`, `name`, `active`, 
 VALUES
       (1,6,'cdl institutional template with optional review',1,NULL,NULL,'institutional','informal_review','2015-03-09 20:07:29','2015-03-09 21:37:59'),
       (2,6,'cdl public template - no review',1,NULL,NULL,'public','no_review','2015-03-09 20:10:23','2015-03-09 20:11:45'),
-      (3,5,'ucop institutional template - informal review',1,NULL,NULL,'institutional','informal_review','2015-03-09 20:12:14','2015-03-09 20:13:04'),
+      (3,5,'ucop_institutional_template_informal_review',1,NULL,NULL,'institutional','informal_review','2015-03-09 20:12:14','2015-03-09 20:13:04'),
       (4,5,'ucop public template - formal review',1,NULL,NULL,'public','formal_review','2015-03-09 20:13:39','2015-03-09 20:14:23'),
       (5,7,'NRS institutional template - no review',1,NULL,NULL,'institutional','no_review','2015-03-09 20:14:58','2015-03-09 20:15:59'),
       (6,7,'NRS public template no review',1,NULL,NULL,'public','no_review','2015-03-09 20:17:24','2015-03-09 20:18:17'),

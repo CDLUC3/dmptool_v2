@@ -11,16 +11,16 @@ feature 'req editor user' do
 			click_link 'DMP Templates'
 		end
 		click_link 'Institution only'
-		find('#top_level_test_inst_template').hover
+		find('#ucop_institutional_template_informal_review').hover
 		find('.details').click
-		expect(page).to have_content "op_level_test_inst_template"
+		expect(page).to have_content "ucop_institutional_template_informal_review"
 		click_link 'Add Group'
 		@temp = Time.now.to_s
 		fill_in "requirement_text_brief", with: "new_group_#{@temp}"
 		within('.buttons') do
 			click_button 'Save'
 		end
-		expect(page).to have_content("Requirement was successfully created.")
+		expect(page).to have_content("Group was successfully created.")
 		expect(page).to have_content("new_group_#{@temp}")
 		
 		click_link "delete_requirement_new_group_#{@temp}"
@@ -65,7 +65,7 @@ feature 'req editor user' do
 		
 		expect(page).to have_content(%r{#{"DMP TEMPLATE OVERVIEW"}}i)
 		#expect(page).to have_field("institution_name", :disabled => true)
-		expect(page).to have_content("Test Institution")
+		expect(page).to have_content("UCOP")
 		@temp = Time.now.to_s
 		fill_in 'requirements_template_name', with: "test-template-1-public_#{@temp}"
 		page.choose 'public'
@@ -90,9 +90,9 @@ feature 'req editor user' do
 			click_link 'DMP Templates'
 		end
 		click_link 'Institution only'
-		find('#top_level_test_inst_template').hover
+		find('#ucop_institutional_template_informal_review').hover
 		find('.details').click
-		expect(page).to have_content "top_level_test_inst_template"
+		expect(page).to have_content "ucop_institutional_template_informal_review"
 		@temp = Time.now.to_s
 		fill_in 'requirement_text_brief', with: "bla_#{@temp}"
 		fill_in 'requirement_text_full', with: "bla_question_#{@temp}"
