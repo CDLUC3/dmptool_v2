@@ -59,7 +59,7 @@
       <tr>
         <td class="plan_name">
           <div class="toggle-links">
-            <strong><%= plan.name %></strong>
+            <strong id=<%= plan.name %>> <%= plan.name %></strong>
             <div class="template-links">
               <% @plan_id = plan.id %>
                 <%= link_to('Overview', edit_plan_path(plan)) %>
