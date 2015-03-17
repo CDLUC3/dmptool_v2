@@ -13,6 +13,10 @@ node :state do |p|
   p.current_state.state
 end
 
+#node :institution do |p|
+#  p.owner.institution.full_name
+#end
+
 node :institution do |p|
   p.institution_name
 end
@@ -35,6 +39,7 @@ child({:comments => :comments}, :if => lambda { |p| p.comments.present? }) do
               node :author do |c|
                 c.author_name
               end
+
 end
 
 

@@ -7,7 +7,7 @@ feature 'generic user' do
 
 	scenario 'generic user dashboard visibility' do #, :js => true do
 
-		logs_in_with "test_user2", "test_user2", "Test Institution"
+		logs_in_with "testsub_01", "testsub_01", "sub test institution 1"
 
 		check_quick_dashboard_generic_visibility
 	

@@ -92,10 +92,10 @@ class Requirement < ActiveRecord::Base
   def response_html(plan) 
     unless plan.plan_responses_ids.blank?
       @response = responses.where(id:  [plan.plan_responses_ids]).first
-      unless @response.blank?
+      unless @response == nil
         if !@response.text_value.blank?
           @value = @response.text_value.html_safe
-        elsif !@response.numeric_value.blank?
+        elsif @response.numeric_value
           @value = @response.numeric_value 
         elsif !@response.date_value.blank?
           @value = @response.date_value.to_date.strftime("%m/%d/%Y")
