@@ -1,7 +1,7 @@
 INSERT INTO `institutions` (`id`, `full_name`, `nickname`, `ancestry`)
 
 VALUES ('1', 'Test Institution', 'Testy', NULL),     
-       ('2', 'Non Partner Institution', 'Non partner', NULL), #set manually
+       ('0', 'Non Partner Institution', 'Non partner', NULL), #set manually to have id=0
        ('3', 'sub test institution 1', 'sub test institution 1', 1),
        ('4', 'sub test institution 2', 'sub test institution 2', 1),
        ('5', 'UCOP', 'UCOP', NULL),
@@ -50,7 +50,7 @@ VALUES
 
 INSERT INTO `requirements_templates` (`id`, `institution_id`, `name`, `active`, `start_date`, `end_date`, `visibility`, `review_type`, `created_at`, `updated_at`)
 VALUES
-      (1,6,'cdl institutional template with optional review',1,NULL,NULL,'institutional','informal_review','2015-03-09 20:07:29','2015-03-09 21:37:59'),
+      (1,6,'cdl_institutional_template_with_optional_review',1,NULL,NULL,'institutional','informal_review','2015-03-09 20:07:29','2015-03-09 21:37:59'),
       (2,6,'cdl public template - no review',1,NULL,NULL,'public','no_review','2015-03-09 20:10:23','2015-03-09 20:11:45'),
       (3,5,'ucop_institutional_template_informal_review',1,NULL,NULL,'institutional','informal_review','2015-03-09 20:12:14','2015-03-09 20:13:04'),
       (4,5,'ucop public template - formal review',1,NULL,NULL,'public','formal_review','2015-03-09 20:13:39','2015-03-09 20:14:23'),
@@ -119,31 +119,6 @@ VALUES
       (18,21,'off white','2015-03-09 21:36:34','2015-03-09 21:36:34',NULL,0),
       (19,21,'turquoise','2015-03-09 21:36:34','2015-03-09 21:36:34',NULL,0);
 
-
-
-INSERT INTO `responses` (`id`, `plan_id`, `requirement_id`, `label_id`, `text_value`, `created_at`, `updated_at`, `numeric_value`, `date_value`, `enumeration_id`, `lock_version`)
-VALUES
-      (1,1,13,NULL,'<p>1</p>\r\n','2015-03-09 20:55:47','2015-03-09 20:55:47',NULL,NULL,NULL,0),
-      (2,1,14,NULL,'<p>City</p>\r\n','2015-03-09 20:56:00','2015-03-09 20:56:00',NULL,NULL,NULL,0),
-      (3,1,15,NULL,NULL,'2015-03-09 20:56:07','2015-03-09 20:56:07',NULL,'2015-03-10',NULL,0),
-      (4,2,13,NULL,'<p>Yes</p>\r\n','2015-03-09 21:01:31','2015-03-09 21:01:31',NULL,NULL,NULL,0),
-      (5,2,14,NULL,'<p>Here</p>\r\n','2015-03-09 21:01:38','2015-03-09 21:01:38',NULL,NULL,NULL,0),
-      (6,2,15,NULL,NULL,'2015-03-09 21:01:48','2015-03-09 21:01:48',NULL,'2015-03-01',NULL,0),
-      (7,3,9,NULL,'<p>Answer 1</p>\r\n','2015-03-09 21:17:13','2015-03-09 21:17:13',NULL,NULL,NULL,0),
-      (8,3,10,NULL,NULL,'2015-03-09 21:17:21','2015-03-09 21:17:21',NULL,NULL,7,0),
-      (9,4,9,NULL,'<p>1</p>\r\n','2015-03-09 21:18:07','2015-03-09 21:18:07',NULL,NULL,NULL,0),
-      (10,4,10,NULL,NULL,'2015-03-09 21:18:16','2015-03-09 21:18:16',NULL,NULL,8,0),
-      (11,5,9,NULL,'<p>1234567</p>\r\n','2015-03-09 21:19:12','2015-03-09 21:19:12',NULL,NULL,NULL,0),
-      (12,5,10,NULL,NULL,'2015-03-09 21:19:19','2015-03-09 21:19:19',NULL,NULL,6,0),
-      (13,6,9,NULL,'<p>abc</p>\r\n','2015-03-09 21:20:56','2015-03-09 21:20:56',NULL,NULL,NULL,0),
-      (14,6,10,NULL,NULL,'2015-03-09 21:21:02','2015-03-09 21:21:02',NULL,NULL,8,0),
-      (15,7,7,NULL,'<p>explanation 1</p>\r\n','2015-03-09 21:22:58','2015-03-09 21:22:58',NULL,NULL,NULL,0),
-      (16,7,8,NULL,'<p>explanation 2</p>\r\n','2015-03-09 21:23:06','2015-03-09 21:23:06',NULL,NULL,NULL,0),
-      (17,8,1,1,NULL,'2015-03-09 21:40:23','2015-03-09 21:40:23',23,NULL,NULL,0),
-      (18,8,2,NULL,NULL,'2015-03-09 21:40:31','2015-03-09 21:40:31',NULL,NULL,3,0),
-      (19,9,21,NULL,NULL,'2015-03-09 21:41:34','2015-03-09 21:41:34',NULL,NULL,14,0),
-      (20,10,17,NULL,'<p>1</p>\r\n','2015-03-09 21:42:38','2015-03-09 21:42:38',NULL,NULL,NULL,0),
-      (21,10,18,NULL,NULL,'2015-03-09 21:42:46','2015-03-09 21:42:46',NULL,'2015-03-11',NULL,0);
 
 
 
