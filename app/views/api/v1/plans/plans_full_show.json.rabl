@@ -9,13 +9,11 @@ attribute  :modified
 
 parent = root_object
 
+
 node :state do |p|
-  p.current_state.state
+  p.current_state_name
 end
 
-#node :institution do |p|
-#  p.owner.institution.full_name
-#end
 
 node :institution do |p|
   p.institution_name

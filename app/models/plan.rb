@@ -105,8 +105,15 @@ class Plan < ActiveRecord::Base
   end
 
 
+#in case of dirty data with plans without owners
   def institution_name
     owner ? owner.institution.full_name : "Unknown"
+  end
+
+
+#in case of dirty data with plans without current state
+  def current_state_name
+    current_plan_state_id ? current_state.state : "Unspecified"
   end
 
 
