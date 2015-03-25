@@ -8,10 +8,6 @@ attribute  :created
 attribute  :modified 
 
 
-#node :state do |p|
-#  p.current_state.state
-#end
-
 
 node :state do |p|
   p.current_state_name
@@ -22,7 +18,7 @@ node :institution do |p|
   p.institution_name
 end
 
-#child :owner => :owner do
+
 child({:owner => :owner}, :if => lambda { |p| p.owner.present? }) do
   attributes :full_name, :email 
 end
