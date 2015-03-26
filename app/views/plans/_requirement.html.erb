@@ -1,4 +1,5 @@
-<h2><%= heading %><%#= requirement_counter + 1 %> <strong><%= requirement.text_brief %></strong><h2>
+<!-- <h2><%= heading %><%#= requirement_counter + 1 %> <strong><%= requirement.text_brief %></strong><h2> -->
+<%= heading %><%#= requirement_counter + 1 %> <strong><%= requirement.text_brief %></strong>
   <%- if requirement.children.size > 0 then -%>
     <div>
       <%#= render(partial: "requirement",
@@ -7,7 +8,7 @@
 
       <%= render(partial: "requirement",
                  collection: requirement.children.order(:position),
-                 locals: { heading: ""}) %>
+                 locals: { heading: " "}) %>
     </div>
   <%- end -%>
   <div>
