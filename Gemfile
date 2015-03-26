@@ -22,11 +22,11 @@ group :test do
   gem 'launchy'
 end
 
-gem "ckeditor", :git => "https://github.com/galetahub/ckeditor.git"
+gem "ckeditor", '4.0.11'
 
 gem 'omniauth'
 gem 'omniauth-ldap'
-gem "omniauth-shibboleth", :git => "git@bitbucket.org:cdl/omniauth-shibboleth.git", :branch => 'master'
+gem "omniauth-shibboleth", :git => "https://bitbucket.org/cdl/omniauth-shibboleth.git", :branch => 'master'
 
 gem 'mysql2'
 gem 'therubyracer'
@@ -36,9 +36,9 @@ gem 'sass-rails',  '~> 4.0.0'
 gem 'uglifier', '2.5.0'
 gem 'deep_cloneable', '~> 2.0.0'
 gem 'ancestry'
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
-gem 'kaminari'
+gem 'jquery-rails', '~> 3.1.0'
+gem 'jquery-ui-rails', '~> 4.2.1'
+gem 'kaminari', '~> 0.16.3'
 gem 'carrierwave'
 gem "mini_magick"
 gem 'paranoia', :github => 'radar/paranoia', :branch => 'rails4'
@@ -48,5 +48,5 @@ gem "recaptcha", :require => "recaptcha/rails"
 gem 'activerecord_any_of'
 gem 'prawn', '~> 1.0.0'
 gem 'exception_notification'
-gem 'rabl' # for rendering views in the api
+gem 'rabl' # for rendering json views in the api https://github.com/nesquena/rabl
 

@@ -65,23 +65,23 @@ def render_html(doc, n, styles, state={})
     doc << ")"
   else
     doc << n.text
-    #raise Exception.new(n.name)
   end
 end
 
 def print_responses(doc, requirement, heading, styles)
   doc.paragraph(styles[:requirement_heading]) do |r|
-    r << "#{heading} "
+    #r << "#{heading} " #with indentation in front of every requirement
+    r << "#{heading}" #without indentation
     r.apply(styles[:strong]) do |b|
       b << requirement.text_brief.to_s
     end
   end
   if requirement.children.size > 0 then
     requirement.children.order(:position).each_with_index do |child, i|
-      print_responses(doc, child, "#{heading}.#{i+1}", styles)
+       #print_responses(doc, child, "#{heading}.#{i+1}", styles) #with numbering
+       print_responses(doc, child, "", styles) #without numbering
     end
   else
-    # html = Nokogiri::HTML(response_value_s(Response.where(:requirement=>requirement, :plan=>@plan).first))
     html = Nokogiri::HTML(requirement.response_html(@plan))
     render_html(doc, html, styles)
   end
@@ -145,7 +145,8 @@ doc.paragraph(styles[:title]) do |p|
   end
 end
 @plan.requirements_template.requirements.order(:position).roots.each_with_index do |req, i|
-  print_responses(doc, req, (i + 1).to_s, styles)
+  # print_responses(doc, req, (i + 1).to_s, styles) #with numbering
+  print_responses(doc, req, "", styles) #without numbering
 end
 footer = doc.footer=RTF::FooterNode.new(doc)
 footer.paragraph(styles[:footer]) do |p|

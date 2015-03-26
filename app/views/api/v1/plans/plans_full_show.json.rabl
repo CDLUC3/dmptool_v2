@@ -9,9 +9,11 @@ attribute  :modified
 
 parent = root_object
 
+
 node :state do |p|
-  p.current_state.state
+  p.current_state_name
 end
+
 
 node :institution do |p|
   p.institution_name
@@ -35,6 +37,7 @@ child({:comments => :comments}, :if => lambda { |p| p.comments.present? }) do
               node :author do |c|
                 c.author_name
               end
+
 end
 
 

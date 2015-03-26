@@ -89,12 +89,12 @@ feature 'dmp admin user' do
 		logs_in_with "#{DMP_ADMIN_USERNAME}", "#{DMP_ADMIN_PASSWORD}", "#{DMP_ADMIN_INSTITUTION_NAME}"
 		click_link 'DMP Administration'
 
-		fill_in 'q', with: 'test_user2'
+		fill_in 'q', with: 'testsub'
 		click_button "Search"
 
-		click_link('edit_14') # edit roles for user_id 14, test_user2
+		click_link('edit_6') # edit roles for user_id 6, testsub
 		
-		expect(page).to have_content("test_user2 Current Roles:")
+		expect(page).to have_content("testsub Current Roles:")
 
 		within '#role_1' do
 			check 'role_ids[]'
@@ -107,15 +107,15 @@ feature 'dmp admin user' do
 
 		expect(page).to have_content("User was successfully updated.")
 
-		fill_in 'q', with: 'test_user2'
+		fill_in 'q', with: 'testsub'
 		click_button "Search"
 
-		within '#user_14' do
+		within '#user_6' do
 			expect(page).to have_content("DMP Administrator")
 			expect(page).to have_content("Template Editor")
 		end
 
-		click_link('edit_14') # edit roles for user_id 14, test_user2
+		click_link('edit_6') # edit roles for user_id 6, testsub
 
 		within '#role_1' do
 			uncheck 'role_ids[]'
@@ -125,10 +125,10 @@ feature 'dmp admin user' do
 		end
 		click_on "Save Changes"
 
-		fill_in 'q', with: 'test_user2'
+		fill_in 'q', with: 'testsub'
 		click_button "Search"
 
-		within '#user_14' do
+		within '#user_6' do
 			expect(page).to have_no_content("DMP Administrator")
 			expect(page).to have_no_content("Template Editor")
 		end

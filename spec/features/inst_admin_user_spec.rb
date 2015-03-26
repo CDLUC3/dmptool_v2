@@ -10,7 +10,6 @@ feature 'inst admin user' do
 
 		expect(page).to have_link('My Dashboard')	
 		expect(page).to have_link('DMP Templates')		
-		#expect(page).to have_link('Customizations') 
 		expect(page).to have_link('Institution Profile') 
 		expect(page).to have_link('My Profile')	
 		
