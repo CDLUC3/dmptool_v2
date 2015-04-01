@@ -78,7 +78,7 @@ class Requirement < ActiveRecord::Base
           @html_value = @response.text_value 
           @value = strip_tags(@html_value).html_safe.gsub("&nbsp;", "").gsub("&#39;", "'") if @html_value
         elsif !@response.numeric_value.blank?
-          @value = @response.numeric_value 
+          @value = @response.numeric_value.to_s  
         elsif !@response.date_value.blank?
           @value = @response.date_value.to_date.strftime("%m/%d/%Y")
         elsif !@response.enumeration_id.blank?
@@ -95,8 +95,8 @@ class Requirement < ActiveRecord::Base
       unless @response == nil
         if !@response.text_value.blank?
           @value = @response.text_value.html_safe
-        elsif @response.numeric_value
-          @value = @response.numeric_value 
+        elsif !@response.numeric_value.blank?
+          @value = @response.numeric_value.to_s 
         elsif !@response.date_value.blank?
           @value = @response.date_value.to_date.strftime("%m/%d/%Y")
         elsif !@response.enumeration_id.blank?
