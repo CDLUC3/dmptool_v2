@@ -58,7 +58,8 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     unless can_edit_user?(params[:id])
-      redirect_to(edit_user_path(current_user), notice: "You may not edit the user you were attempting to edit.  You're now editing your own information.") and return
+      redirect_to(edit_user_path(current_user),
+          notice: "You may not edit the user you were attempting to edit.  You're now editing your own information.") and return
     end
     @user = User.find(params[:id])
     @my_institution = @user.institution
@@ -211,6 +212,7 @@ class UsersController < ApplicationController
             #user_params[:first_name] = " " if user_params[:first_name].empty?
             #user_params[:last_name] = " " if user_params[:last_name].empty?
             update_ldap_if_necessary(@user, user_params)
+            @current_user = User.find_by_id(session[:user_id])
             format.html { redirect_to edit_user_path(@user),
                         notice: 'User information updated.'  }
             format.json { head :no_content }
