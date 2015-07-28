@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
         session[:return_to] = request.original_url
         redirect_to choose_institution_path and return
       elsif controller_name != 'users' && (current_user.first_name.blank? || current_user.last_name.blank?)
-        flash[:error] = "You must fill in your first and last name and save your account information before using the DMP tool."
+        flash[:error] = "You must fill in your first and last name and save your account information to continue using the DMP tool."
         redirect_to edit_user_path(session[:user_id])
       end
     end
