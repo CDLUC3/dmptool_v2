@@ -1,0 +1,29 @@
+.cke_editable ol>li {
+    list-style-type: upper-roman;
+    /* first level */
+}
+
+.cke_editable ol>li>ol>li{
+    list-style-type: upper-alpha;
+    /* second level */
+}
+
+.cke_editable ol>li>ol>li>ol>li{
+    list-style-type: decimal;
+    /* third level */
+}
+
+.cke_editable ol>li>ol>li>ol>li>ol>li{
+    /* fourth level */
+    list-style-type: lower-alpha;
+}
+
+.cke_editable ol>li>ol>li>ol>li>ol>li>ol>li{
+    /* fifth level */
+    list-style-type: lower-roman;
+}
+
+.cke_editable ol>li>ol>li>ol>li>ol>li>ol>li>ol>li{
+    /* sixth level */
+    list-style-type: lower-roman;
+}
