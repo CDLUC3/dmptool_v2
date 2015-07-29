@@ -118,8 +118,8 @@ class UsersController < ApplicationController
 
         #no existing LDAP User in DB so create one, but it already exists in LDAP
         if existing_user.length < 1
-          @user.save
-          redirect_to login_path, notice: "You've been added to the DMP Tool with your existing UC3 username, \"#{@user.login_id}\".  Please log in to continue." and return
+          @user.save unless User.find_by_email(@user.email)
+          redirect_to login_path, notice: "You're now in the DMP Tool with your existing UC3 username, \"#{@user.login_id}\".  Please log in to continue." and return
         else
           #redirct to login, their record already exists.
           existing_user = existing_user.first
