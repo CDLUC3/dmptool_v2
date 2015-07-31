@@ -31,8 +31,6 @@ def mk_formatted_texts(n)
     if @text_types.include?(c.name)
       mk_formatted_text(c)
     else
-      #puts "non-formatted child node: #{c.inspect}"
-      #mk_formatted_text(c)
       nil
     end
   end
@@ -49,7 +47,7 @@ def render_html(pdf, n, temp_state={})
   when "p"
     pdf.formatted_text(mk_formatted_texts(n.children))
   when "ul"
-    pdf.indent(20) do
+    pdf.indent(10) do
       n.element_children.each do |li|
         render_html(pdf, li, {:list_mode=>:ul})
       end
@@ -57,34 +55,36 @@ def render_html(pdf, n, temp_state={})
   when "ol"
     state[:list_level] = (state[:list_level] || 0) + 1
     state[:list_mode] = :ol
-    #puts "starting list level #{state[:list_level]}"
-    pdf.indent(20) do
+    pdf.indent(10) do
       n.element_children.each_with_index do |li, idx|
         render_html(pdf, li, state.merge({:index => idx + 1}))
       end
     end
-    #puts "ending list level #{state[:list_level]}"
   when "li"
+    pdf.move_down 5
     if state[:list_mode] == :ul
-      out_marker = "\u2022 "
+      out_marker = "\u2022"
     else #ol
-      out_marker = "#{state[:index]}. "
+      out_marker = "#{state[:index]}."
     end
-    texty_children = []
-    output_number = true
-    n.children.each do |child|
-      if @text_types.include?(child.name)
-        texty_children.push(child)
-      else
-        pdf.formatted_text(( output_number ? [{:text=>out_marker}] : [] ) +
-            mk_formatted_texts(texty_children)) if texty_children.length > 0
-        texty_children = []
-        render_html(pdf, child, state)
-        output_number = false
+    pdf.float do
+      pdf.bounding_box([-30, pdf.cursor], :width => 30) do
+        pdf.text out_marker, :align => :right
       end
     end
-    pdf.formatted_text(( output_number ? [{:text=>out_marker}] : [] ) +
-        mk_formatted_texts(texty_children)) if texty_children.length > 0
+    pdf.indent(10) do
+      texty_children = []
+      n.children.each do |child|
+        if @text_types.include?(child.name)
+          texty_children.push(child)
+        else
+          pdf.formatted_text(mk_formatted_texts(texty_children)) if texty_children.length > 0
+          texty_children = []
+          render_html(pdf, child, state)
+        end
+      end
+      pdf.formatted_text(mk_formatted_texts(texty_children)) if texty_children.length > 0
+    end
   when "hr"
     pdf.stroke_horizontal_rule
   else
@@ -103,7 +103,6 @@ def print_responses(pdf, requirement, heading)
     if requirement.children.size > 0 then
       pdf.indent(12) do
         requirement.children.order(:position).each_with_index do |child, i|
-          # print_responses(pdf, child, "#{heading}.#{i+1}")
           print_responses(pdf, child, "")
         end
       end
