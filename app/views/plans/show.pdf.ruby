@@ -1,44 +1,46 @@
 # -*- mode: ruby -*-
 require 'nokogiri'
 
-def mk_formatted_text(n)
-  case n.name
-  when "b", "strong"
-    {:text => n.text,
-      :styles => [:bold]}
-  when "i", "em"
-    {:text => n.text,
-      :styles => [:italic]}
-  when "u"
-    {:text => n.text,
-      :styles => [:underline]}
-  when "s"
-    {:text => n.text,
-      :styles => [:strikethrough]}
-  when "sup"
-    {:text => n.text,
-      :styles => [:superscript]}
-  when "sub"
-    {:text => n.text,
-      :styles => [:subscript]}
-  when "text"
-    {:text => n.text}
-  when "br"
+@text_types = ['b', 'strong', 'i', 'em', 'u', 's', 'sup', 'sub', 'text', 'br', 'a']
+
+@text_styles = {'b' => :bold, 'strong' => :bold, 'i' => :italic, 'em' => :italic,
+                'u' => :underline, 's' => :strikethrough, 'sup' => :superscript,
+                'sub' => :subscript }
+
+def mk_formatted_text(n, styles = [])
+
+  case
+  when @text_styles.keys.include?(n.name)
+    n.children.map{|c| mk_formatted_text(c, styles.push(@text_styles[n.name])) }
+  when n.name == "text"
+    {:text => n.text.gsub(/[\r\n\t]/, ''), :styles => styles}
+  when n.name == "br"
     {:text => "\n" }
-  when "a"
+  when n.name == "a"
     {:text => "#{n.text} (#{n['href']})",
-      :styles => [:underline]}
+      :styles => styles.merge([:underline])}
   else
     #raise Exception.new("Unexpected tag: #{n.name}.")
-    {:text => n.text }
+    {:text => n.text,
+       :styles => styles}
   end
 end
 
 def mk_formatted_texts(n)
-  return n.map {|c| mk_formatted_text(c)}
+  my_texts = n.map do |c|
+    if @text_types.include?(c.name)
+      mk_formatted_text(c)
+    else
+      #puts "non-formatted child node: #{c.inspect}"
+      #mk_formatted_text(c)
+      nil
+    end
+  end
+  my_texts.reject(&:nil?).flatten
 end
 
-def render_html(pdf, n, state={})
+def render_html(pdf, n, temp_state={})
+  state = temp_state.dup
   case n.name
   when "document", "html", "body"
     n.children.each do |c|
@@ -47,26 +49,42 @@ def render_html(pdf, n, state={})
   when "p"
     pdf.formatted_text(mk_formatted_texts(n.children))
   when "ul"
-    pdf.indent(10) do
-      n.children.each do |li|
+    pdf.indent(20) do
+      n.element_children.each do |li|
         render_html(pdf, li, {:list_mode=>:ul})
       end
     end
   when "ol"
-    pdf.indent(10) do
-      # keep this here so that render_html can modify it
-      state = {:list_mode=>:ol, :index=>1}
-      n.children.each do |li|
-        render_html(pdf, li, state)
+    state[:list_level] = (state[:list_level] || 0) + 1
+    state[:list_mode] = :ol
+    #puts "starting list level #{state[:list_level]}"
+    pdf.indent(20) do
+      n.element_children.each_with_index do |li, idx|
+        render_html(pdf, li, state.merge({:index => idx + 1}))
       end
     end
+    #puts "ending list level #{state[:list_level]}"
   when "li"
     if state[:list_mode] == :ul
-      pdf.formatted_text([{:text=>"\u2022 "}] + mk_formatted_texts(n.children))
-    else # :ol
-      pdf.formatted_text([{:text=>"#{state[:index]}. "}] + mk_formatted_texts(n.children))
-      state[:index] = state[:index] + 1
+      out_marker = "\u2022 "
+    else #ol
+      out_marker = "#{state[:index]}. "
     end
+    texty_children = []
+    output_number = true
+    n.children.each do |child|
+      if @text_types.include?(child.name)
+        texty_children.push(child)
+      else
+        pdf.formatted_text(( output_number ? [{:text=>out_marker}] : [] ) +
+            mk_formatted_texts(texty_children)) if texty_children.length > 0
+        texty_children = []
+        render_html(pdf, child, state)
+        output_number = false
+      end
+    end
+    pdf.formatted_text(( output_number ? [{:text=>out_marker}] : [] ) +
+        mk_formatted_texts(texty_children)) if texty_children.length > 0
   when "hr"
     pdf.stroke_horizontal_rule
   else
@@ -211,12 +229,3 @@ pdf = Prawn::Document.new(:bottom_margin=>50, :top_margin=>60, :left_margin=>50)
 end
 
 pdf.render
-
-
-
-
-
-
-
-
-
