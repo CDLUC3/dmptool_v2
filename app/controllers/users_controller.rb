@@ -58,7 +58,8 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     unless can_edit_user?(params[:id])
-      redirect_to(edit_user_path(current_user), notice: "You may not edit the user you were attempting to edit.  You're now editing your own information.") and return
+      redirect_to(edit_user_path(current_user),
+          notice: "You may not edit the user you were attempting to edit.  You're now editing your own information.") and return
     end
     @user = User.find(params[:id])
     @my_institution = @user.institution
@@ -117,8 +118,8 @@ class UsersController < ApplicationController
 
         #no existing LDAP User in DB so create one, but it already exists in LDAP
         if existing_user.length < 1
-          @user.save
-          redirect_to login_path, notice: "You've been added to the DMP Tool with your existing UC3 username, \"#{@user.login_id}\".  Please log in to continue." and return
+          @user.save unless User.find_by_email(@user.email)
+          redirect_to login_path, notice: "You're now in the DMP Tool with your existing UC3 username, \"#{@user.login_id}\".  Please log in to continue." and return
         else
           #redirct to login, their record already exists.
           existing_user = existing_user.first
@@ -211,6 +212,7 @@ class UsersController < ApplicationController
             #user_params[:first_name] = " " if user_params[:first_name].empty?
             #user_params[:last_name] = " " if user_params[:last_name].empty?
             update_ldap_if_necessary(@user, user_params)
+            @current_user = User.find_by_id(session[:user_id])
             format.html { redirect_to edit_user_path(@user),
                         notice: 'User information updated.'  }
             format.json { head :no_content }

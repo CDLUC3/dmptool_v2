@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.0.0'
 
-gem 'rails', '4.0.5'
+gem 'rails', '4.0.13'
 gem 'unicorn'
 
 group :development, :test do
@@ -44,6 +44,8 @@ gem "mini_magick"
 gem 'paranoia', :github => 'radar/paranoia', :branch => 'rails4'
 gem 'american_date'
 gem 'ifad-rtf', :git => 'https://github.com/clbustos/rtf.git'
+#gem 'rtf'
+#gem 'ruby-rtf'
 gem "recaptcha", :require => "recaptcha/rails"
 gem 'activerecord_any_of'
 gem 'prawn', '~> 1.0.0'

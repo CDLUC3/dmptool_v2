@@ -8,7 +8,6 @@ set :rails_env, "stage"
 
 
 after 'deploy', 'deploy:migrate'
-#before 'deploy:restart', 'deploy:symlink_shared'
 after 'deploy:finalize_update', 'deploy:symlink_shared'
 load  'deploy/assets'
 after 'deploy:restart', 'unicorn:restart'

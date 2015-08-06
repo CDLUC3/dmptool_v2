@@ -54,12 +54,18 @@ li {
 	line-height: 1.3;
 	list-style: none;
 	margin: 0 0 5px 0; }
-ol > li {
+.dmp-preview ol > li {
 	list-style: decimal; }
-ol ol > li {
-	list-style: upper-alpha; }
-ol ol ol > li {
-	list-style: lower-roman; }
+.dmp-preview ol ol > li {
+	list-style: decimal; }
+.dmp-preview ol ol ol > li {
+	list-style: decimal; }
+.dmp-preview ol ol ol ol> li {
+  list-style: decimal; }
+.dmp-preview ol ol ol ol ol> li {
+  list-style: decimal; }
+.dmp-preview ol ol ol ol ol ol> li {
+  list-style: decimal; }
 ul.nav li {
 	margin-bottom: 0; }
 td, th {

@@ -62,6 +62,7 @@ class User < ActiveRecord::Base
 
   def self.from_omniauth(auth, institution_id)
     auth = auth.with_indifferent_access
+
     auth[:info] = auth[:info].with_indifferent_access unless auth[:info].blank?
 
     uid = smart_userid_from_omniauth(auth) #gets info[:uid] or auth[:uid], reduced long LDAP string to simple user_id

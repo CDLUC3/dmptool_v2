@@ -1,6 +1,15 @@
-<script type="text/javascript">
-window.print()
-</script>
-<%= render(partial: "requirement",
+<html>
+  <head>
+<%= stylesheet_link_tag "scaffolds" %>
+  </head>
+  <body>
+    <script type="text/javascript">
+      window.print()
+    </script>
+    <div class="dmp-preview">
+      <%= render(partial: "requirement",
            collection: (@plan.requirements_template.requirements.order(:position).roots),
            locals: { heading: "" }) %>
+    </div>
+  </body>
+</html>
