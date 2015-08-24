@@ -81,14 +81,21 @@ class RequirementsTemplatesController < ApplicationController
   # shows a basic template (as RTF for now)
   def basic
     @rt = RequirementsTemplate.find(params[:id])
-
+    response.headers["Expires"] = 1.year.ago.httpdate
+    response.etag = nil
     respond_to do |format|
-      format.rtf {
+      format.rtf do
         headers["Content-Disposition"] = "attachment; filename=\"" + sanitize_for_filename(@rt.name) + ".rtf\""
         render :layout => false,
                :content_type=> 'application/rtf'
                #:action => 'basic.rtf.erb',
-      }
+      end
+      format.pdf do
+        headers["Content-Disposition"] = "attachment; filename=\"" + sanitize_for_filename(@rt.name) + ".pdf\""
+        render :layout => false,
+               :content_type=> 'application/pdf'
+        #:template => '/plans/show.pdf.ruby'
+      end
     end
   end
 
