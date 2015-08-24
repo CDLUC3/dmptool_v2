@@ -1,6 +1,5 @@
 # -*- mode: ruby -*-
 require 'nokogiri'
-require 'byebug'
 
 @text_types = ['b', 'strong', 'i', 'em', 'u', 's', 'sup', 'sub', 'text', 'br', 'a']
 
