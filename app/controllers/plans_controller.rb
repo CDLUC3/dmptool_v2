@@ -1,3 +1,5 @@
+require 'htmltoword'
+
 class PlansController < ApplicationController
 
   before_action :require_login, except: [:public, :show]
@@ -10,6 +12,8 @@ class PlansController < ApplicationController
   before_action :check_read_only_plan_access, only: [:show]
 
   before_action :set_cache_buster, only: [:show]
+
+  respond_to :docx
 
 
   def set_cache_buster
@@ -94,6 +98,14 @@ class PlansController < ApplicationController
       format.html do
         render :layout => false
         # render(layout: "clean")
+      end
+      format.docx do
+        #the docx library has all kinds of problems rendering complex views named as <same_name>.docx
+        #so I have to put the docx in the beginning part of the filename and render it to string first to work around problems
+        str = render_to_string(:template => '/plans/show_docx.html.erb', :layout => false)
+        #render docx: 'show', filename: "#{sanitize_for_filename(@plan.name)}.docx"
+        render docx: "#{sanitize_for_filename(@plan.name)}.docx", content: str
+        #render docx: 'show', filename: "#{sanitize_for_filename(@plan.name)}.docx", :layout => false
       end
     end
 

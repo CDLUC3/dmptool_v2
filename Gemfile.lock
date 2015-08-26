@@ -109,6 +109,10 @@ GEM
     hashie (3.4.0)
     highline (1.7.1)
     hike (1.2.3)
+    htmltoword (0.4.2)
+      actionpack
+      nokogiri
+      rubyzip (>= 1.0)
     i18n (0.7.0)
     jquery-rails (3.1.2)
       railties (>= 3.0, < 5.0)
@@ -252,6 +256,7 @@ DEPENDENCIES
   exception_notification
   factory_girl_rails
   faker
+  htmltoword
   ifad-rtf!
   jquery-rails (~> 3.1.0)
   jquery-ui-rails (~> 4.2.1)

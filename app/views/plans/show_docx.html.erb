@@ -1,0 +1,14 @@
+<html>
+  <head>
+<%# stylesheet_link_tag "scaffolds" %>
+  </head>
+  <body>
+    <div class="dmp-preview">
+      <h1><%= @plan.name %></h1>
+      <hr/>
+      <%= render(partial: "requirement_docx",
+           collection: (@plan.requirements_template.requirements.order(:position).roots),
+           locals: { heading: "", level: 1 }) %>
+    </div>
+  </body>
+</html>
