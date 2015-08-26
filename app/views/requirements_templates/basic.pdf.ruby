@@ -17,8 +17,9 @@ def mk_formatted_text(n, styles = [])
   when n.name == "br"
     {:text => "\n" }
   when n.name == "a"
-    {:text => "#{n.text} (#{n['href']})",
-      :styles => styles.merge([:underline])}
+    {:text =>n.text, :link => n['href'], :styles => styles.push(:underline) }
+    #{:text => "#{n.text} (#{n['href']})",
+    #  :styles => styles.merge([:underline])}
   else
     #raise Exception.new("Unexpected tag: #{n.name}.")
     {:text => n.text,
