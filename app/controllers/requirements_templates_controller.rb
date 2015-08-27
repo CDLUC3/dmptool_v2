@@ -7,6 +7,8 @@ class RequirementsTemplatesController < ApplicationController
   before_action :check_DMPTemplate_editor_access, only: [:show, :edit, :update, :destroy]
   before_action :view_DMP_index_permission, only: [:index]
 
+  respond_to :docx
+
   # GET /requirements_templates
   # GET /requirements_templates.json
   def index
@@ -95,6 +97,10 @@ class RequirementsTemplatesController < ApplicationController
         render :layout => false,
                :content_type=> 'application/pdf'
         #:template => '/plans/show.pdf.ruby'
+      end
+      format.html { render :layout => false}
+      format.docx do
+        render docx: 'basic', filename: "#{sanitize_for_filename(@rt.name)}.docx"
       end
     end
   end

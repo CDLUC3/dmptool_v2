@@ -24,6 +24,8 @@ end
 
 gem "ckeditor", '4.0.11'
 
+gem 'htmltoword'
+
 gem 'omniauth'
 gem 'omniauth-ldap'
 gem "omniauth-shibboleth", :git => "https://bitbucket.org/cdl/omniauth-shibboleth.git", :branch => 'master'
