@@ -154,6 +154,7 @@ GEM
       pyu-ruby-sasl (~> 0.0.3.1)
       rubyntlm (~> 0.1.1)
     orm_adapter (0.5.0)
+    pandoc-ruby (1.0.0)
     pdf-core (0.6.0)
     prawn (2.0.2)
       pdf-core (~> 0.6.0)
@@ -267,6 +268,7 @@ DEPENDENCIES
   omniauth
   omniauth-ldap
   omniauth-shibboleth!
+  pandoc-ruby
   paranoia!
   prawn (~> 2.0.2)
   rabl

@@ -53,4 +53,5 @@ gem 'activerecord_any_of'
 gem 'prawn', '~> 2.0.2'
 gem 'exception_notification'
 gem 'rabl' # for rendering json views in the api https://github.com/nesquena/rabl
+gem 'pandoc-ruby'
 

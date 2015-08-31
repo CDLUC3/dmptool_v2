@@ -1,4 +1,5 @@
 require 'htmltoword'
+require 'pandoc-ruby'
 
 class PlansController < ApplicationController
 
@@ -97,15 +98,13 @@ class PlansController < ApplicationController
       end
       format.html do
         render :layout => false
-        # render(layout: "clean")
+        # render(layout: "clean")S
       end
       format.docx do
-        #the docx library has all kinds of problems rendering complex views named as <same_name>.docx
-        #so I have to put the docx in the beginning part of the filename and render it to string first to work around problems
         str = render_to_string(:template => '/plans/show_docx.html.erb', :layout => false)
-        #render docx: 'show', filename: "#{sanitize_for_filename(@plan.name)}.docx"
-        render docx: "#{sanitize_for_filename(@plan.name)}.docx", content: str
-        #render docx: 'show', filename: "#{sanitize_for_filename(@plan.name)}.docx", :layout => false
+        converter = PandocRuby.new(str, :from => :html, :to => :docx)
+        headers["Content-Disposition"] = "attachment; filename=\"" + sanitize_for_filename(@plan.name) + ".docx\""
+        render :text => converter.convert, :content_type=> 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
       end
     end
 
