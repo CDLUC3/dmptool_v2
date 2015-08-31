@@ -1,4 +1,5 @@
 require 'rtf'
+require 'pandoc-ruby'
 
 class RequirementsTemplatesController < ApplicationController
 
@@ -100,7 +101,11 @@ class RequirementsTemplatesController < ApplicationController
       end
       format.html { render :layout => false}
       format.docx do
-        render docx: 'basic', filename: "#{sanitize_for_filename(@rt.name)}.docx"
+        #render docx: 'basic', filename: "#{sanitize_for_filename(@rt.name)}.docx"
+        str = render_to_string(:template => '/requirements_templates/basic.html.erb', :layout => false)
+        converter = PandocRuby.new(str, :from => :html, :to => :docx)
+        headers["Content-Disposition"] = "attachment; filename=\"" + sanitize_for_filename(@rt.name) + ".docx\""
+        render :text => converter.convert, :content_type=> 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
       end
     end
   end
