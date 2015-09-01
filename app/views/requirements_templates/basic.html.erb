@@ -34,9 +34,15 @@
         <h3><%= req.text_full.to_s %></h3>
       <% end %>
 
-      <% req.non_customized_resources.guidance.each do |g| %>
-        <div class="guidance"><%= raw(g.text) %></div><br/>
+      <%
+      req_guide = req.non_customized_resources.guidance
+        if req_guide.length > 0
+          req_guide.each do |g| %>
+            <div class="guidance"><%= raw(g.text) %></div><br/>
+          <% end %>
+        <% else %>
+          <p>No guidance is available for this requirement.</p>
+        <% end %>
       <% end %>
-    <% end %>
   </body>
 </html>
