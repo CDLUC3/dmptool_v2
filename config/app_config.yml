@@ -8,6 +8,7 @@ development:
   google_analytics_key:   UA-30638119-8
   google_analytics_host:  cdlib.org
   host_for_email_links:   https://dmp2-dev.cdlib.org
+  ld_path_for_pandoc:     /dmp2/local/lib64
 
 development_nonlocal:
   development
@@ -22,6 +23,7 @@ stage:
   google_analytics_key:   UA-30638119-9
   google_analytics_host:  cdlib.org
   host_for_email_links:   https://dmp2-staging.cdlib.org
+  ld_path_for_pandoc:     /dmp2/local/lib64
 
 stage_development:
   stage
@@ -36,6 +38,7 @@ production:
   google_analytics_key:   UA-30638119-10
   google_analytics_host:  dmptool.org
   host_for_email_links:   https://dmptool.org
+  ld_path_for_pandoc:     /dmp2/local/lib64
 
 production_development:
   production
