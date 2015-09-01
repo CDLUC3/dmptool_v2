@@ -71,7 +71,7 @@
               <%# end %>
               | <%= link_to('Copy', copy_existing_plans_template_path(:plan => plan)) %>
               <br><%= link_to('Export as PDF', plan_path(plan, :format => "pdf")) %>
-              | <%= link_to('Export as RTF', plan_path(plan, :format => "rtf")) %>
+              | <%= link_to('Export as DOCX', plan_path(plan, :format => "docx")) %>
               <% unless coowner(plan) == true %>
   
               | <%= link_to 'Delete', plan_path(plan, order_scope: @order_scope, scope: @scope,  all_scope: @all_scope), 

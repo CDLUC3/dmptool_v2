@@ -24,8 +24,8 @@
 		<%else%>
 			<% templates.each do |t| %>
 				<tr>
-					<td><%= link_to t.name,	basic_requirements_template_path(t, format: :pdf ), :target => '_blank' %>
-							<%= link_to '', basic_requirements_template_path(t, format: :pdf), :class => 'icon pdf', :target => '_blank' %>
+					<td><%= link_to t.name,	basic_requirements_template_path(t, format: :docx ), :target => '_blank' %>
+							<%= link_to '', basic_requirements_template_path(t, format: :docx), :class => 'icon docx', :target => '_blank' %>
 					</td>
 					<td><%= (t.institution ? t.institution.full_name: '') %></td>
 					<td>

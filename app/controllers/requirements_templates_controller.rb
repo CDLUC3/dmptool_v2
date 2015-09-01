@@ -101,9 +101,10 @@ class RequirementsTemplatesController < ApplicationController
       end
       format.html { render :layout => false}
       format.docx do
+        templ_path = File.join(Rails.root.to_s, 'public')
         #render docx: 'basic', filename: "#{sanitize_for_filename(@rt.name)}.docx"
         str = render_to_string(:template => '/requirements_templates/basic.html.erb', :layout => false)
-        converter = PandocRuby.new(str, :from => :html, :to => :docx)
+        converter = PandocRuby.new(str, :from => :html, :to => :docx, 'data-dir' => templ_path)
         headers["Content-Disposition"] = "attachment; filename=\"" + sanitize_for_filename(@rt.name) + ".docx\""
         render :text => converter.convert, :content_type=> 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
       end
