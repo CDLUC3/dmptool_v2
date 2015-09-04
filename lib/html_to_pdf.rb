@@ -1,3 +1,5 @@
+require 'roman-numerals'
+
 module HtmlToPdf
   TEXT_TYPES = ['b', 'strong', 'i', 'em', 'u', 's', 'sup', 'sub', 'text', 'br', 'a']
 
@@ -68,7 +70,8 @@ module HtmlToPdf
         if state[:list_mode] == :ul
           out_marker = "\u2022"
         else #ol
-          out_marker = "#{state[:index]}."
+          #out_marker = "#{state[:index]}."
+          out_marker = "#{list_item(state[:list_level], state[:index])}."
         end
         pdf.float do
           pdf.bounding_box([-30, pdf.cursor], :width => 30) do
@@ -95,5 +98,27 @@ module HtmlToPdf
           pdf.formatted_text([mk_formatted_text(n)])
         end
     end
+  end
+
+
+  # returns the list item label based on list level and number in sequence
+  def self.list_item(list_level, ordinal)
+    case list_level
+      when 3, 6
+        latin(ordinal).downcase
+      when 4, 7
+        roman(ordinal).downcase
+      else
+        ordinal
+    end
+  end
+
+  def self.roman(ordinal)
+    RomanNumerals.to_roman(ordinal)
+  end
+
+  NUM_TO_LETTERS = ('A'..'ZZ').to_a
+  def self.latin(ordinal)
+    NUM_TO_LETTERS[ordinal - 1]
   end
 end
