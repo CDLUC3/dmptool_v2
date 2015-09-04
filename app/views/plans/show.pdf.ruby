@@ -3,8 +3,8 @@ require 'nokogiri'
 
 def print_responses(pdf, requirement, heading)
   pdf.pad(12) do
-    pdf.font_size(14)
-    pdf.font("Helvetica", :style=>:normal)
+    pdf.font_size(12)
+    pdf.font("Times-Roman", :style=>:normal)
     pdf.formatted_text([{:text=> heading, :styles=>[:normal]},
                         {:text=> " #{requirement.text_brief.to_s}", :styles=>[:bold]}])
     if requirement.children.size > 0 then
@@ -15,7 +15,7 @@ def print_responses(pdf, requirement, heading)
       end
     else
       html = Nokogiri::HTML(requirement.response_html(@plan))
-      pdf.font("Helvetica", :style=>:normal)
+      pdf.font("Times-Roman", :style=>:normal)
       pdf.pad(10) do
         pdf.indent(12) do
           HtmlToPdf.render_html(pdf, html)
