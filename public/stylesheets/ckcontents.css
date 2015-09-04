@@ -9,13 +9,13 @@
 }
 
 .cke_editable ol>li>ol>li>ol>li{
-    list-style-type: decimal;
+    list-style-type: lower-latin;
     /* third level */
 }
 
 .cke_editable ol>li>ol>li>ol>li>ol>li{
     /* fourth level */
-    list-style-type: decimal;
+    list-style-type: lower-roman;
 }
 
 .cke_editable ol>li>ol>li>ol>li>ol>li>ol>li{
@@ -25,5 +25,10 @@
 
 .cke_editable ol>li>ol>li>ol>li>ol>li>ol>li>ol>li{
     /* sixth level */
-    list-style-type: decimal;
+    list-style-type: lower-latin;
+}
+
+.cke_editable ol>li>ol>li>ol>li>ol>li>ol>li>ol>li>ol>li{
+    /* seventh level */
+    list-style-type: lower-roman;
 }
