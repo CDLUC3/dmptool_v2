@@ -4,7 +4,7 @@ require 'nokogiri'
 def print_responses(pdf, requirement, heading)
   pdf.pad(12) do
     pdf.font_size(12)
-    pdf.font("Times-Roman", :style=>:normal)
+    pdf.font("MyTrueTypeFamily", :style => :normal)
     pdf.formatted_text([{:text=> heading, :styles=>[:normal]},
                         {:text=> " #{requirement.text_brief.to_s}", :styles=>[:bold]}])
     unless requirement.text_full.to_s.blank?
@@ -16,7 +16,7 @@ def print_responses(pdf, requirement, heading)
 
     requirement.non_customized_resources.guidance.each do |g|
       html = Nokogiri::HTML(g.text)
-      pdf.font("Times-Roman", :style=>:normal)
+      pdf.font("MyTrueTypeFamily", :style => :normal)
       pdf.pad(10) do
         pdf.indent(12) do
           HtmlToPdf.render_html(pdf, html)
@@ -28,10 +28,15 @@ end
 
 
 pdf = Prawn::Document.new(:bottom_margin=>50, :top_margin=>60, :left_margin=>50) do |pdf|
+  font_family = Hash[APP_CONFIG['pdf_font'].to_a.map{|i| [i.first.to_sym, File.join(Rails.root, 'fonts', i[1])] } ]
+
+  pdf.font_families.update(
+      "MyTrueTypeFamily" => font_family)
+
   @cover = false
 
   pdf.font_size(16)
-  pdf.font("Helvetica", :style=>:normal)
+  pdf.font("MyTrueTypeFamily", :style=>:normal)
   pdf.text "#{@rt.name}", :align => :center, :style => :bold
   pdf.pad(10) do
     pdf.text "#{@rt.institution.full_name}", :align => :center
