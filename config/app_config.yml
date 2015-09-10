@@ -30,10 +30,10 @@ stage:
   host_for_email_links:   https://dmp2-staging.cdlib.org
   ld_path_for_pandoc:     /dmp2/local/lib64
   pdf_font:
-    bold: skl
-    italic: klj
-    bold_italic: ksjn
-    normal: kljs
+    bold: Crimson-Bold.ttf
+    italic: Crimson-Italic.ttf
+    bold_italic: Crimson-BoldItalic.ttf
+    normal: Crimson-Roman.ttf
 
 stage_development:
   stage
@@ -49,7 +49,11 @@ production:
   google_analytics_host:  dmptool.org
   host_for_email_links:   https://dmptool.org
   ld_path_for_pandoc:     /dmp2/local/lib64
-  pdf_font:               public/Crimson-Roman.ttf
+  pdf_font:
+    bold: Crimson-Bold.ttf
+    italic: Crimson-Italic.ttf
+    bold_italic: Crimson-BoldItalic.ttf
+    normal: Crimson-Roman.ttf
 
 production_development:
   production
