@@ -1,3 +1,6 @@
+require 'htmltoword'
+require 'pandoc-ruby'
+
 class PlansController < ApplicationController
 
   before_action :require_login, except: [:public, :show]
@@ -10,6 +13,8 @@ class PlansController < ApplicationController
   before_action :check_read_only_plan_access, only: [:show]
 
   before_action :set_cache_buster, only: [:show]
+
+  respond_to :docx
 
 
   def set_cache_buster
@@ -93,7 +98,14 @@ class PlansController < ApplicationController
       end
       format.html do
         render :layout => false
-        # render(layout: "clean")
+        # render(layout: "clean")S
+      end
+      format.docx do
+        templ_path = File.join(Rails.root.to_s, 'public')
+        str = render_to_string(:template => '/plans/show_docx.html.erb', :layout => false)
+        converter = PandocRuby.new(str, :from => :html, :to => :docx, 'data-dir' => templ_path )
+        headers["Content-Disposition"] = "attachment; filename=\"" + sanitize_for_filename(@plan.name) + ".docx\""
+        render :text => converter.convert, :content_type=> 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
       end
     end
 

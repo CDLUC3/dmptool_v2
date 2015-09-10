@@ -1,0 +1,13 @@
+<h<%=level+1%>><%= requirement_docx.text_brief %></h<%=level+1%>>
+
+<%- if requirement_docx.children.size > 0 then -%>
+  <%= render(partial: "requirement_docx",
+           collection: requirement_docx.children.order(:position),
+           locals: { heading: "#{heading}", level: level + 1 }) %>
+<%- end -%>
+
+<div>
+  <%= requirement_docx.response_html(@plan) %>
+</div>
+
+</dl>

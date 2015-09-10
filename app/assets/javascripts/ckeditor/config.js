@@ -6,7 +6,8 @@ if(typeof(CKEDITOR) != 'undefined')
    config.toolbar = [
     [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript' ],
     [ 'NumberedList', 'BulletedList', 'HorizontalRule', 'Outdent', 'Indent' ],
-    [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo', 'Find', 'Replace' ]
+    [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo', 'Find', 'Replace' ],
+   config.contentsCss = '/stylesheets/ckcontents.css'
  ];
 }
 } else{

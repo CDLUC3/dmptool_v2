@@ -1,0 +1,50 @@
+<html>
+
+<head>
+  <style>
+    .guidance {
+      margin: 1em 0 1em 0;
+    }
+
+    h1 {
+      font-family: "Times New Roman", Georgia, Serif;
+      color: black;
+    }
+
+    li {
+      line-height: 1.3;
+      margin: 0 0 5px 0; }
+    .dmp-preview ol > li {
+      list-style: decimal; }
+    .dmp-preview ol ol > li {
+      list-style: decimal; }
+    .dmp-preview ol ol ol > li {
+      list-style: lower-latin; }
+    .dmp-preview ol ol ol ol> li {
+      list-style: lower-roman; }
+    .dmp-preview ol ol ol ol ol> li {
+      list-style: decimal; }
+    .dmp-preview ol ol ol ol ol ol> li {
+      list-style: lower-latin; }
+    .dmp-preview ol ol ol ol ol ol ol> li {
+      list-style: lower-roman; }
+  </style>
+
+</head>
+  <body class=".dmp-preview">
+    <h1><%= @rt.name %></h1>
+    <h1><%= @rt.institution.full_name %></h1>
+    <hr/>
+
+    <% @rt.requirements.order(:position).roots.each_with_index do |req, i| %>
+      <h2><%= req.text_brief.to_s %></h2>
+      <% unless req.text_full.to_s.blank? %>
+        <h3><%= req.text_full.to_s %></h3>
+      <% end %>
+
+      <% req.non_customized_resources.guidance.each do |g| %>
+        <div class="guidance"><%= raw(g.text) %></div><br/>
+      <% end %>
+    <% end %>
+  </body>
+</html>

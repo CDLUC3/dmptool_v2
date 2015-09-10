@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.0.0'
 
-gem 'rails', '4.0.5'
+gem 'rails', '4.0.13'
 gem 'unicorn'
 
 group :development, :test do
@@ -24,6 +24,8 @@ end
 
 gem "ckeditor", '4.0.11'
 
+gem 'htmltoword'
+
 gem 'omniauth'
 gem 'omniauth-ldap'
 gem "omniauth-shibboleth", :git => "https://bitbucket.org/cdl/omniauth-shibboleth.git", :branch => 'master'
@@ -44,9 +46,13 @@ gem "mini_magick"
 gem 'paranoia', :github => 'radar/paranoia', :branch => 'rails4'
 gem 'american_date'
 gem 'ifad-rtf', :git => 'https://github.com/clbustos/rtf.git'
+#gem 'rtf'
+#gem 'ruby-rtf'
 gem "recaptcha", :require => "recaptcha/rails"
 gem 'activerecord_any_of'
-gem 'prawn', '~> 1.0.0'
+gem 'prawn', '~> 2.0.2'
 gem 'exception_notification'
 gem 'rabl' # for rendering json views in the api https://github.com/nesquena/rabl
+gem 'pandoc-ruby'
+gem 'roman-numerals' #, :git => 'https://github.com/AndrewVos/roman-numerals'
 

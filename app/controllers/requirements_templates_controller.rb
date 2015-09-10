@@ -1,4 +1,5 @@
 require 'rtf'
+require 'pandoc-ruby'
 
 class RequirementsTemplatesController < ApplicationController
 
@@ -6,6 +7,8 @@ class RequirementsTemplatesController < ApplicationController
   before_action :set_requirements_template, only: [:show, :edit, :update, :destroy, :toggle_active]
   before_action :check_DMPTemplate_editor_access, only: [:show, :edit, :update, :destroy]
   before_action :view_DMP_index_permission, only: [:index]
+
+  respond_to :docx
 
   # GET /requirements_templates
   # GET /requirements_templates.json
@@ -81,14 +84,30 @@ class RequirementsTemplatesController < ApplicationController
   # shows a basic template (as RTF for now)
   def basic
     @rt = RequirementsTemplate.find(params[:id])
-
+    response.headers["Expires"] = 1.year.ago.httpdate
+    response.etag = nil
     respond_to do |format|
-      format.rtf {
+      format.rtf do
         headers["Content-Disposition"] = "attachment; filename=\"" + sanitize_for_filename(@rt.name) + ".rtf\""
         render :layout => false,
                :content_type=> 'application/rtf'
                #:action => 'basic.rtf.erb',
-      }
+      end
+      format.pdf do
+        headers["Content-Disposition"] = "attachment; filename=\"" + sanitize_for_filename(@rt.name) + ".pdf\""
+        render :layout => false,
+               :content_type=> 'application/pdf'
+        #:template => '/plans/show.pdf.ruby'
+      end
+      format.html { render :layout => false}
+      format.docx do
+        templ_path = File.join(Rails.root.to_s, 'public')
+        #render docx: 'basic', filename: "#{sanitize_for_filename(@rt.name)}.docx"
+        str = render_to_string(:template => '/requirements_templates/basic.html.erb', :layout => false)
+        converter = PandocRuby.new(str, :from => :html, :to => :docx, 'data-dir' => templ_path)
+        headers["Content-Disposition"] = "attachment; filename=\"" + sanitize_for_filename(@rt.name) + ".docx\""
+        render :text => converter.convert, :content_type=> 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      end
     end
   end
 
