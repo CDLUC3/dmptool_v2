@@ -31,6 +31,7 @@ pdf = Prawn::Document.new(:bottom_margin=>50, :top_margin=>60, :left_margin=>50)
 
   pdf.font_families.update(
    "MyTrueTypeFamily" => font_family)
+  pdf.font("MyTrueTypeFamily")
 
   @cover = false
   if @plan.visibility == :public
