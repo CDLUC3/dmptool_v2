@@ -121,6 +121,10 @@ class Api::V1::PlansController < Api::V1::BaseController
     if @user = User.find_by_id(session[:user_id])
       if user_role_in?(:dmp_admin)
         @plans = Plan.all
+      elsif user_role_in?(:institutional_admin)
+        @institutional_plans = Plan.institutional_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id IN (?)", @user.institution.root.subtree_ids)
+        @unit_plans = Plan.unit_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id IN (?)", @user.institution.subtree_ids)
+        @plans = @institutional_plans + @unit_plans
       else
         @public_plans = Plan.all.public_visibility
 
