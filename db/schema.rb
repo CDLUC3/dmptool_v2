@@ -11,14 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150204185430) do
+ActiveRecord::Schema.define(version: 20151214170435) do
 
   create_table "additional_informations", force: true do |t|
-    t.string   "url"
-    t.string   "label"
+    t.string   "url",                      limit: 255
+    t.string   "label",                    limit: 255
     t.integer  "requirements_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "annita", id: false, force: true do |t|
+    t.integer "xnum"
   end
 
   create_table "authentications", force: true do |t|
@@ -28,6 +32,8 @@ ActiveRecord::Schema.define(version: 20150204185430) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "authentications", ["provider", "uid"], name: "provider_and_uid", unique: true, using: :btree
 
   create_table "authorizations", force: true do |t|
     t.integer  "role_id"
@@ -84,6 +90,39 @@ ActiveRecord::Schema.define(version: 20150204185430) do
     t.integer  "requirement_id"
   end
 
+  create_table "old_authentications", force: true do |t|
+    t.integer  "user_id"
+    t.string   "provider",    limit: 255
+    t.string   "uid",         limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "new_user_id"
+  end
+
+  create_table "old_authorizations", force: true do |t|
+    t.integer  "role_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "old_authorizations", ["user_id", "role_id"], name: "index_authorizations_on_user_id_and_role_id", unique: true, using: :btree
+
+  create_table "old_users", force: true do |t|
+    t.integer  "institution_id"
+    t.string   "email",            limit: 255
+    t.string   "first_name",       limit: 255
+    t.string   "last_name",        limit: 255
+    t.string   "token",            limit: 255
+    t.datetime "token_expiration"
+    t.binary   "prefs"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "login_id",         limit: 255
+    t.boolean  "active",                       default: true
+    t.datetime "deleted_at"
+  end
+
   create_table "plan_states", force: true do |t|
     t.integer  "plan_id"
     t.enum     "state",      limit: [:new, :committed, :submitted, :approved, :reviewed, :rejected, :revised, :inactive, :deleted]
@@ -93,7 +132,7 @@ ActiveRecord::Schema.define(version: 20150204185430) do
   end
 
   create_table "plans", force: true do |t|
-    t.string   "name"
+    t.text     "name"
     t.integer  "requirements_template_id"
     t.string   "solicitation_identifier"
     t.datetime "submission_deadline"
@@ -129,7 +168,7 @@ ActiveRecord::Schema.define(version: 20150204185430) do
 
   create_table "requirements_templates", force: true do |t|
     t.integer  "institution_id"
-    t.string   "name"
+    t.string   "name",           limit: 255
     t.boolean  "active"
     t.date     "start_date"
     t.date     "end_date"
@@ -146,7 +185,7 @@ ActiveRecord::Schema.define(version: 20150204185430) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "resource_id"
-    t.string   "name"
+    t.text     "name"
     t.string   "contact_info"
     t.string   "contact_email"
     t.enum     "review_type",              limit: [:formal_review, :informal_review, :no_review]
