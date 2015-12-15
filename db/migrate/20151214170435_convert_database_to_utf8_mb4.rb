@@ -21,7 +21,7 @@ class ConvertDatabaseToUtf8Mb4 < ActiveRecord::Migration
       }
     varchar_cols.each_pair do |k, v|
       v.each do |col|
-        execute "ALTER TABLE `#{k}` MODIFY `#{col}` VARCHAR(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin"
+        execute "ALTER TABLE `#{k}` MODIFY `#{col}` VARCHAR(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
       end
     end
 
@@ -39,7 +39,7 @@ class ConvertDatabaseToUtf8Mb4 < ActiveRecord::Migration
     }
     text_cols.each_pair do |k, v|
       v.each do |col|
-        execute "ALTER TABLE `#{k}` MODIFY `#{col}` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin"
+        execute "ALTER TABLE `#{k}` MODIFY `#{col}` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
       end
     end
 
@@ -47,7 +47,7 @@ class ConvertDatabaseToUtf8Mb4 < ActiveRecord::Migration
     %w{ authentications authorizations comments enumerations institutions labels plan_states
         plans published_plans requirements requirements_templates resource_contexts resources
         responses roles sample_plans tags user_plans users }.each do |table|
-      execute "ALTER TABLE #{table} CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin"
+      execute "ALTER TABLE #{table} CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"
     end
   end
 end
