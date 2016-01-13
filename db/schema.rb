@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150204185430) do
+ActiveRecord::Schema.define(version: 20151214170435) do
 
   create_table "additional_informations", force: true do |t|
     t.string   "url"
@@ -19,6 +19,10 @@ ActiveRecord::Schema.define(version: 20150204185430) do
     t.integer  "requirements_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "annita", id: false, force: true do |t|
+    t.integer "xnum"
   end
 
   create_table "authentications", force: true do |t|
@@ -93,7 +97,7 @@ ActiveRecord::Schema.define(version: 20150204185430) do
   end
 
   create_table "plans", force: true do |t|
-    t.string   "name"
+    t.text     "name"
     t.integer  "requirements_template_id"
     t.string   "solicitation_identifier"
     t.datetime "submission_deadline"
@@ -146,7 +150,7 @@ ActiveRecord::Schema.define(version: 20150204185430) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "resource_id"
-    t.string   "name"
+    t.text     "name"
     t.string   "contact_info"
     t.string   "contact_email"
     t.enum     "review_type",              limit: [:formal_review, :informal_review, :no_review]
