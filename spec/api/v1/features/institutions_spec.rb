@@ -1,3 +1,4 @@
+=begin
 require 'spec_helper'
 
 
@@ -14,3 +15,4 @@ feature 'institutions' do
 	end
 
 end
+=end

@@ -1,39 +1,99 @@
 require 'spec_helper'
-# require 'support/features/credentials'
-# require 'support/features/session_helpers'
-
-include Credentials
-# include Features::SessionHelpers
-
+require_relative '../api_spec_helper.rb'
 
 describe 'users', :type => :api do 
 
-	setup { @user = User.create! }
+  before :each do
+    setup_test_data 
+  end
 
-	def encode(username, password)
-		ActionController::HttpAuthentication::Basic.encode_credentials(username, password)
-	end
-
-	it 'authorization denied if not authenticated' do 
-
-		get '/api/v1/users'
-		
-		response.status.should eql(401)
-
-	end
-
-
-
-	it 'return list of all users if authenticated' do 
-
-		# page.driver.browser.basic_authorize "admin", "secret"
-
-		get '/api/v1/users', {}, { 'Authorization' => encode("#{DMP_ADMIN_USERNAME}", "#{DMP_ADMIN_PASSWORD}") }
-
-		response.status.should eql(200)
-
-	end
-
-	
-
+  # -------------------------------------------------------------
+  it 'unable to get list of users or a specific user if unauthorized' do 
+    validations = lambda do |role, response|
+      response.status.should eql(401)
+    end
+    
+    test_unauthorized(['/api/v1/users', "/api/v1/users/#{@template_editor.id}"], validations)
+  end
+  
+  # -------------------------------------------------------------
+  it 'return list of users if user is an admin (dmp of institutional)' do 
+    validations = lambda do |role, response|
+      response.status.should eql(200)
+      response.content_type.should eql(Mime::JSON)
+    
+      users = json(response.body)
+      users.size.should be > 1
+      
+      i, ids = 0, []
+      
+      if role === 'dmp_admin'
+        # DMP_ADMIN - Should have gotten back ALL of our test users
+        ids = @users.collect{|u| u.id}
+                
+      elsif role === 'institutional_admin'
+        # INSTITUTIONAL_ADMIN - Should have gotten back only users for their institution
+        ids = @institutional_admin.institution.users.collect{|u| u.id}
+        
+      else
+        # Not a valid admin role!
+        '?_admin'.should eql(role)
+      end
+      
+      users.each do |user|
+        i = i + 1 if ids.include?(user[:user][:id])
+        
+        # Make sure all of the required values are present
+        user[:user][:id].should be
+        user[:user][:email].should be
+        user[:user][:first_name].should be
+        user[:user][:last_name].should be
+      
+        # Make sure that any values that should NOT be there are missing
+        user[:user][:password].should be_nil
+        user[:user][:login_id].should be_nil
+      end
+      i.should eql(ids.size)
+    end
+    
+    test_authorized(['/api/v1/users'], validations)
+  end
+  
+  # -------------------------------------------------------------
+  it 'return user information if current user is an admin' do 
+    validations = lambda do |role, response|
+      response.status.should eql(200)
+      response.content_type.should eql(Mime::JSON)
+    
+      users = json(response.body)
+      users.size.should eql 1
+      
+      # The user returned should match the one we requested!
+      users[:user][:email].should eql @institutional_admin.email
+      
+      # Make sure all of the required values are present
+      users[:user][:email].should be
+      users[:user][:first_name].should be
+      users[:user][:last_name].should be
+      
+      # Make sure that any values that should NOT be there are missing
+      users[:user][:id].should be_nil
+      users[:user][:password].should be_nil
+      users[:user][:login_id].should be_nil
+    end
+    
+    test_authorized(["/api/v1/users/#{@institutional_admin.id}"], validations)
+  end
+  
+  # -------------------------------------------------------------
+  it 'does not return user information if user is from another institution' do 
+    validations = lambda do |role, response|
+      if role === 'institutional_admin'
+        response.status.should eql(401)
+        response.content_type.should eql(Mime::JSON)
+      end
+    end
+    
+    test_authorized(["/api/v1/users/#{@resource_editor.id}"], validations)
+  end
 end
