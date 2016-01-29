@@ -54,8 +54,7 @@ class Api::V1::PlansController < Api::V1::BaseController
       if @plan = Plan.find_by_id(params[:id])
         if user_role_in?(:dmp_admin)
           @plan
-        else
-          @id = @plan.id
+        else         
           if (@plan.visibility == :public) ||
               ((@plan.visibility == :institutional) && (@user.institution.root.subtree_ids.include?(@plan.owner.institution_id) || @plan.coowners.include?(@user))) ||
               ((@plan.visibility == :unit) && (@user.institution.subtree_ids.include?(@plan.owner.institution_id) || @plan.coowners.include?(@user))) ||

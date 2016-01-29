@@ -1,23 +1,25 @@
 require 'spec_helper'
 require_relative '../api_spec_helper.rb'
 
-describe 'users', :type => :api do 
+describe 'Users API', :type => :api do 
 
   before :each do
     setup_test_data 
   end
 
   # -------------------------------------------------------------
-  it 'unable to get list of users or a specific user if unauthorized' do 
+  it 'should not return a list of users or a specific user if user is not an authorized admin' do 
     validations = lambda do |role, response|
       response.status.should eql(401)
     end
     
     test_unauthorized(['/api/v1/users', "/api/v1/users/#{@template_editor.id}"], validations)
+    test_authorized(@users_without_admin_access, 
+                      ['/api/v1/users', "/api/v1/users/#{@template_editor.id}"], validations)
   end
   
   # -------------------------------------------------------------
-  it 'return list of users if user is an admin (dmp of institutional)' do 
+  it 'should return list of users if current user is an authorized admin' do 
     validations = lambda do |role, response|
       response.status.should eql(200)
       response.content_type.should eql(Mime::JSON)
@@ -56,11 +58,11 @@ describe 'users', :type => :api do
       i.should eql(ids.size)
     end
     
-    test_authorized(['/api/v1/users'], validations)
+    test_authorized(@users_with_admin_access, ['/api/v1/users'], validations)
   end
   
   # -------------------------------------------------------------
-  it 'return user information if current user is an admin' do 
+  it 'should return a specific user if current user is an authorized admin' do 
     validations = lambda do |role, response|
       response.status.should eql(200)
       response.content_type.should eql(Mime::JSON)
@@ -82,18 +84,18 @@ describe 'users', :type => :api do
       users[:user][:login_id].should be_nil
     end
     
-    test_authorized(["/api/v1/users/#{@institutional_admin.id}"], validations)
+    test_authorized(@users_with_admin_access, 
+                    ["/api/v1/users/#{@institutional_admin.id}"], validations)
   end
   
   # -------------------------------------------------------------
-  it 'does not return user information if user is from another institution' do 
+  it 'should not return a specific user if current user is from another institution' do 
     validations = lambda do |role, response|
-      if role === 'institutional_admin'
-        response.status.should eql(401)
-        response.content_type.should eql(Mime::JSON)
-      end
+      response.status.should eql(401)
+      response.content_type.should eql(Mime::JSON)
     end
     
-    test_authorized(["/api/v1/users/#{@resource_editor.id}"], validations)
+    test_specific_role(@institutional_admin, 
+                        ["/api/v1/users/#{@resource_editor2.id}"], validations)
   end
 end

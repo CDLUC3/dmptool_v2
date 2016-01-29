@@ -1,13 +1,13 @@
 require 'spec_helper'
 require_relative '../api_spec_helper.rb'
 
-describe 'institutions', :type => :api do 
+describe 'Institutions API', :type => :api do 
   before :each do
     setup_test_data
   end
 
   # -------------------------------------------------------------
-  it 'return list of plan counts for each institution' do 
+  it 'should return list of plan counts for each institution' do 
     validations = lambda do |role, response|
       response.status.should eql(200)
       response.content_type.should eql(Mime::JSON)
@@ -25,11 +25,11 @@ describe 'institutions', :type => :api do
     
     # should work whether authorized or unauthorized
     test_unauthorized(['/api/v1/institutions_plans_count'], validations)
-    test_authorized(['/api/v1/institutions_plans_count'], validations)
+    test_authorized(@users, ['/api/v1/institutions_plans_count'], validations)
   end
   
   # -------------------------------------------------------------
-  it 'return plan count for a specific institution' do 
+  it 'should return plan count for a specific institution' do 
     validations = lambda do |role, response|
       response.status.should eql(200)
       response.content_type.should eql(Mime::JSON)
@@ -45,11 +45,12 @@ describe 'institutions', :type => :api do
     
     # should work whether authorized or unauthorized
     test_unauthorized(["/api/v1/institutions_plans_count/#{@institution_3.id}"], validations)
-    test_authorized(["/api/v1/institutions_plans_count/#{@institution_3.id}"], validations)
+    test_authorized(@users, 
+                      ["/api/v1/institutions_plans_count/#{@institution_3.id}"], validations)
   end
   
   # -------------------------------------------------------------
-  it 'return list of administrator counts for each institution' do 
+  it 'should return list of administrator counts for each institution' do 
     validations = lambda do |role, response|
       response.status.should eql(200)
       response.content_type.should eql(Mime::JSON)
@@ -67,11 +68,11 @@ describe 'institutions', :type => :api do
     
     # should work whether authorized or unauthorized
     test_unauthorized(['/api/v1/institutions_admins_count'], validations)
-    test_authorized(['/api/v1/institutions_admins_count'], validations)
+    test_authorized(@users, ['/api/v1/institutions_admins_count'], validations)
   end
 
   # -------------------------------------------------------------
-  it 'return administrator count for a specific institution' do 
+  it 'should return administrator count for a specific institution' do 
     validations = lambda do |role, response|
       response.status.should eql(200)
       response.content_type.should eql(Mime::JSON)
@@ -88,11 +89,12 @@ describe 'institutions', :type => :api do
     
     # should work whether authorized or unauthorized
     test_unauthorized(["/api/v1/institutions_admins_count/#{@institution_2.id}"], validations)
-    test_authorized(["/api/v1/institutions_admins_count/#{@institution_2.id}"], validations)
+    test_authorized(@users,
+                   ["/api/v1/institutions_admins_count/#{@institution_2.id}"], validations)
   end
 
   # -------------------------------------------------------------
-  it 'return list of institutions' do 
+  it 'should return list of institutions' do 
     validations = lambda do |role, response|
       response.status.should eql(200)
       response.content_type.should eql(Mime::JSON)
@@ -114,11 +116,11 @@ describe 'institutions', :type => :api do
     
     # should work whether authorized or unauthorized
     test_unauthorized(['/api/v1/institutions'], validations)
-    test_authorized(['/api/v1/institutions'], validations)
+    test_authorized(@users, ['/api/v1/institutions'], validations)
   end
 
   # -------------------------------------------------------------
-  it 'return a specific institution' do 
+  it 'should return a specific institution' do 
     validations = lambda do |role, response|
       response.status.should eql(200)
       response.content_type.should eql(Mime::JSON)
@@ -136,6 +138,6 @@ describe 'institutions', :type => :api do
     
     # should work whether authorized or unauthorized
     test_unauthorized(["/api/v1/institutions/#{@institution_2.id}"], validations)
-    test_authorized(["/api/v1/institutions/#{@institution_2.id}"], validations)
+    test_authorized(@users, ["/api/v1/institutions/#{@institution_2.id}"], validations)
   end
 end
