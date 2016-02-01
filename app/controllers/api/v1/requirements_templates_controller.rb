@@ -3,15 +3,15 @@ class Api::V1::RequirementsTemplatesController < Api::V1::BaseController
   include ApplicationHelper
 
   before_action :soft_authenticate
+  before_action :request_params
 
   respond_to :json
 
   # ------------------------------------------------------------------------
   def index
-    @public_templates = RequirementsTemplate.public_visibility
-    @institutional_templates = []
+    @public_templates, @institutional_templates = [], []
     
-    if @user = User.find_by_id(session[:user_id])
+    if @user = User.find_by_id(session[:user_id]) and params[:visibility] != 'public'
       # If this is a DMP_ADMIN retrieve all of the institutional templates
       if user_role_in?(:dmp_admin)
         @institutional_templates = RequirementsTemplate.institutional_visibility
@@ -24,7 +24,16 @@ class Api::V1::RequirementsTemplatesController < Api::V1::BaseController
       end
     end
     
+    if params[:visibility] != 'institutional'
+      @public_templates = RequirementsTemplate.public_visibility
+    end
+    
     @requirements_templates = @public_templates + @institutional_templates
+    
+    if params[:visibility]
+      @requirements_templates.select{|t| t.visibility === params[:visibility]}
+    end
+    
   end
 
   # ------------------------------------------------------------------------
@@ -66,4 +75,8 @@ class Api::V1::RequirementsTemplatesController < Api::V1::BaseController
     end
   end
   
+  private
+    def request_params
+      params.permit(:visibility)
+    end
 end

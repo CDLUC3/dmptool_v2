@@ -99,12 +99,54 @@ describe 'Requirements_Templates API', :type => :api do
       # Make sure all of the required values are present
       templates[:template][:id].should be
       templates[:template][:name].should be
-      template[:template][:visibility].should be
+      templates[:template][:visibility].should be
       templates[:template][:created].should be
     end
   
     test_authorized(@users, ["/api/v1/templates/#{@requirements_template_public.id}",
                              "/api/v1/templates/#{@requirements_template_public.id}"], validations)
+  end
+  
+  # -------------------------------------------------------------
+  it 'should return a list of institutional templates because institutional visibility was specified' do 
+    validations = lambda do |role, response|
+      response.status.should eql(200)
+      response.content_type.should eql(Mime::JSON)
+      
+      templates = json(response.body)
+      
+      i = 0
+      ids = @templates_institutional.collect{|t| t.id}
+      templates[:templates].each do |template|
+        # Make sure we're showing the right templates!
+        i = i + 1 if ids.include?(template[:template][:id])
+      end
+      
+      i.should eql @templates_institutional.size
+    end
+    
+    test_specific_role(@dmp_admin, ['/api/v1/templates?visibility=institutional'], validations)
+  end
+  
+  # -------------------------------------------------------------
+  it 'should return a list of public templates because public visibility was specified' do 
+    validations = lambda do |role, response|
+      response.status.should eql(200)
+      response.content_type.should eql(Mime::JSON)
+      
+      templates = json(response.body)
+      
+      i = 0
+      ids = @templates_public.collect{|t| t.id}
+      templates[:templates].each do |template|
+        # Make sure we're showing the right templates!
+        i = i + 1 if ids.include?(template[:template][:id])
+      end
+      
+      i.should eql @templates_public.size
+    end
+    
+    test_specific_role(@dmp_admin, ['/api/v1/templates?visibility=public'], validations)
   end
   
   # -------------------------------------------------------------
@@ -134,7 +176,7 @@ describe 'Requirements_Templates API', :type => :api do
       # Make sure all of the required values are present
       templates[:template][:id].should be
       templates[:template][:name].should be
-      template[:template][:visibility].should be
+      templates[:template][:visibility].should be
       templates[:template][:created].should be
     end
     
