@@ -23,6 +23,7 @@ describe 'Requirements_Templates API', :type => :api do
         # Make sure all of the required values are present
         template[:template][:id].should be
         template[:template][:name].should be
+        template[:template][:visibility].should be
         template[:template][:created].should be
       end
       
@@ -72,6 +73,7 @@ describe 'Requirements_Templates API', :type => :api do
         # Make sure all of the required values are present
         template[:template][:id].should be
         template[:template][:name].should be
+        template[:template][:visibility].should be
         template[:template][:created].should be
       end
       
@@ -97,6 +99,7 @@ describe 'Requirements_Templates API', :type => :api do
       # Make sure all of the required values are present
       templates[:template][:id].should be
       templates[:template][:name].should be
+      template[:template][:visibility].should be
       templates[:template][:created].should be
     end
   
@@ -131,6 +134,7 @@ describe 'Requirements_Templates API', :type => :api do
       # Make sure all of the required values are present
       templates[:template][:id].should be
       templates[:template][:name].should be
+      template[:template][:visibility].should be
       templates[:template][:created].should be
     end
     
