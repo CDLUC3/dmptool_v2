@@ -3,7 +3,7 @@ require_relative '../api_spec_helper.rb'
 
 describe 'Users API', :type => :api do 
 
-  before :each do
+  before :all do
     setup_test_data 
   end
 
@@ -13,13 +13,14 @@ describe 'Users API', :type => :api do
       response.status.should eql(401)
     end
     
-    test_unauthorized(['/api/v1/users', "/api/v1/users/#{@template_editor.id}"], validations)
+    test_unauthorized(['/api/v1/users', "/api/v1/users/#{@users[0].id}"], validations)
+    
     test_authorized(@users_without_admin_access, 
-                      ['/api/v1/users', "/api/v1/users/#{@template_editor.id}"], validations)
+                      ['/api/v1/users', "/api/v1/users/#{@users[0].id}"], validations)
   end
   
   # -------------------------------------------------------------
-  it 'should return list of users if current user is an authorized admin' do 
+  it 'should return list of users if current user is an admin' do 
     validations = lambda do |role, response|
       response.status.should eql(200)
       response.content_type.should eql(Mime::JSON)
@@ -29,16 +30,16 @@ describe 'Users API', :type => :api do
       
       i, ids = 0, []
       
-      if role === 'dmp_admin'
+      if role.starts_with?("dmp_admin")
         # DMP_ADMIN - Should have gotten back ALL of our test users
         ids = @users.collect{|u| u.id}
-                
-      elsif role === 'institutional_admin'
-        # INSTITUTIONAL_ADMIN - Should have gotten back only users for their institution
-        ids = @institutional_admin.institution.users.collect{|u| u.id}
+
+      elsif role.starts_with?("institutional_admin")
+        # INSTITUTIONAL_ADMIN - Should have gotten back only users for their institution except DMP_ADMINs
+        ids = (@users_of_institution_2 - @users_with_dmp_admin_access).collect{|u| u.id}
         
       else
-        # Not a valid admin role!
+        # Not a valid admin role so force a failure!
         '?_admin'.should eql(role)
       end
       
@@ -55,10 +56,12 @@ describe 'Users API', :type => :api do
         user[:user][:password].should be_nil
         user[:user][:login_id].should be_nil
       end
+      
       i.should eql(ids.size)
     end
-    
-    test_authorized(@users_with_admin_access, ['/api/v1/users'], validations)
+
+    test_specific_role(@dmp_admin_institution_1, ['/api/v1/users'], validations)
+    test_specific_role(@institutional_admin_institution_2, ['/api/v1/users'], validations)
   end
   
   # -------------------------------------------------------------
@@ -71,7 +74,7 @@ describe 'Users API', :type => :api do
       users.size.should eql 1
       
       # The user returned should match the one we requested!
-      users[:user][:email].should eql @institutional_admin.email
+      users[:user][:email].should eql @template_editor_institution_2.email
       
       # Make sure all of the required values are present
       users[:user][:email].should be
@@ -84,8 +87,8 @@ describe 'Users API', :type => :api do
       users[:user][:login_id].should be_nil
     end
     
-    test_authorized(@users_with_admin_access, 
-                    ["/api/v1/users/#{@institutional_admin.id}"], validations)
+    test_specific_role(@dmp_admin_institution_1, ["/api/v1/users/#{@template_editor_institution_2.id}"], validations)
+    test_specific_role(@institutional_admin_institution_2, ["/api/v1/users/#{@template_editor_institution_2.id}"], validations)
   end
   
   # -------------------------------------------------------------
@@ -95,7 +98,7 @@ describe 'Users API', :type => :api do
       response.content_type.should eql(Mime::JSON)
     end
     
-    test_specific_role(@institutional_admin, 
-                        ["/api/v1/users/#{@resource_editor2.id}"], validations)
+    test_specific_role(@institutional_admin_institution_2, 
+                        ["/api/v1/users/#{@resource_editor_institution_1.id}"], validations)
   end
 end

@@ -2,7 +2,7 @@ require 'spec_helper'
 require_relative '../api_spec_helper.rb'
 
 describe 'Requirements_Templates API', :type => :api do 
-  before :each do
+  before :all do
     setup_test_data
   end
   
@@ -34,7 +34,11 @@ describe 'Requirements_Templates API', :type => :api do
       
       templates = json(response.body)
 
-puts @institution_2.id
+puts "Insitution: #{@institution_2.id}"
+puts "User Insitution: #{@institutional_admin.institution.id}"
+puts "RT 1: #{@requirements_template_institutional.institution_id}"
+puts "RT 2: #{@requirements_template_institutional_2.institution_id}"
+puts "RT Unused: #{@requirements_template_institutional_but_unused.institution_id}"
 puts templates
       
       i = 0

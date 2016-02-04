@@ -2,6 +2,28 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 end
 
+# ---------------------------------------------------------------------------------
+# HELPER INSTANCE VARIABLES
+# ---------------------------------------------------------------------------------
+#  @institutions                  <-- All 3 institutions
+#  @users                         <-- All users - 1 user per role per institution
+#  @users_with_admin_access       <-- All users with DMP_ADMIN or INSTITUTIONAL_ADMIN
+#  @users_without_admin_access    <-- All users who are NOT a DMP_ADMIN or INSTITUTIONAL_ADMIN
+
+#  @users_of_institution_1        <-- All users attached to institution_1
+#  @users_of_institution_2        <-- All users attached to institution_2
+#  @users_of_institution_3        <-- All users attached to institution_3
+
+#  @users_with_dmp_admin_access
+#  @users_with_institutional_admin_access
+#  @users_with_institutional_reviewer_access
+#  @users_with_template_editor_access
+#  @users_with_resource_editor_access
+#
+#  Individual users can be accessed via:
+#  @[role]_[institution]          <-- e.g. institutional_admin_institution_2
+# ---------------------------------------------------------------------------------
+
 # -------------------------------------------------------------
 def encode(token)
   ActionController::HttpAuthentication::Token.encode_credentials(token)
@@ -50,14 +72,80 @@ end
 def setup_test_data
   # Institutions
   # ---------------------------------------------
-  @institution_1 = create(:institution_1)
-  @institution_2 = create(:institution_2)
-  @institution_3 = create(:institution_3)
+  @insts, @institutions = {}, []
   
-  @institutions = [@institution_1, @institution_2, @institution_3]
+  # Create 3 instances of an Institution
+  (1..3).each do |i|
+    id = "institution_#{i}"
+    
+    FactoryGirl.define do
+      factory id, class: Institution do
+        full_name id
+        contact_email "#{id}@cdlib.org"
+      end
+    end
+    
+    instance_variable_set("@#{id}", create(id))
+    
+    @institutions << instance_variable_get("@#{id}")
+    @insts[id] = instance_variable_get("@#{id}")
+  end
   
   # Users and Roles
   # ---------------------------------------------
+  @roles = {dmp_admin: Role::DMP_ADMIN, 
+            institutional_admin: Role::INSTITUTIONAL_ADMIN, 
+            institutional_reviewer: Role::INSTITUTIONAL_REVIEWER, 
+            template_editor: Role::TEMPLATE_EDITOR, 
+            resource_editor: Role::RESOURCE_EDITOR}
+  
+  @users = []
+  @users_with_admin_access = []
+  @users_without_admin_access = []
+  
+  # Generate a set of users for each role at each institution
+  @insts.each do |inst_name, institution|
+    instance_variable_set("@users_of_#{inst_name}", [])
+    
+    @roles.each do |role_name, role|
+      instance_variable_set("@users_with_#{role_name}_access", [])
+      
+      FactoryGirl.define do
+        factory "#{role_name}_#{inst_name}", class: User do
+          email "#{role_name}_#{inst_name}@cdlib.org"
+          login_id "#{role_name}_#{inst_name}"
+          first_name "#{role_name}" 
+          last_name "#{inst_name}"
+          password 'secret123' 
+          password_confirmation 'secret123'
+        end
+      end
+    
+      instance_variable_set("@#{role_name}_#{inst_name}", create("#{role_name}_#{inst_name}", 
+                                                                  institution_id: institution.id))
+      
+      user = instance_variable_get("@#{role_name}_#{inst_name}")
+      
+      # Add the user to the appropriate arrays
+      @users << user
+
+      instance_variable_get("@users_of_#{inst_name}") << user
+      instance_variable_get("@users_with_#{role_name}_access") << user
+      
+      if [:dmp_admin, :institutional_admin].include?(role_name)
+        @users_with_admin_access << user
+      else
+        @users_without_admin_access << user
+      end
+    end
+  end
+  
+  # Attach the users to their roles
+  @users.each do |user|
+    user.update_authorizations([@roles[:"#{user.first_name}"]])
+  end
+
+=begin     
   @dmp_admin = create(:dmp_admin, institution_id: @institution_1.id)
   @dmp_admin.update_authorizations([Role::DMP_ADMIN])
   @institutional_admin = create(:institutional_admin, institution_id: @institution_2.id)
@@ -77,7 +165,7 @@ def setup_test_data
   @users_with_admin_access = [@dmp_admin, @institutional_admin]
   @users_without_admin_access = [@institutional_reviewer, @template_editor, @resource_editor]
   @users_with_institutional_access = [@institutional_admin, @institutional_reviewer, @template_editor, @resource_editor]
-  
+=end
   # Requirements Templates
   # ---------------------------------------------
   @requirements_template_public = create(:requirements_template_public, institution_id: @institution_1.id)
@@ -157,71 +245,6 @@ end
 
 
 FactoryGirl.define do
-  # Institutions
-  # -------------------------------------------
-  factory :institution_1, class: Institution do
-    full_name 'Test Institution 1'
-    contact_email 'tst@ucop.edu'
-  end
-  factory :institution_2, class: Institution do
-    full_name 'Test Institution 2'
-    contact_email 'tst2@ucop.edu'
-  end
-  factory :institution_3, class: Institution do
-    full_name 'Test Institution 3'
-    contact_email 'tst3@ucop.edu'
-  end
-  
-  # Users
-  # -------------------------------------------
-  factory :dmp_admin, class: User do
-    email 'dmp_admin_test@ucop.edu'
-    login_id 'dmp_admin'
-    first_name 'DMP' 
-    last_name 'ADMIN'
-    password 'secret123' 
-    password_confirmation 'secret123'
-  end
-  factory :institutional_admin, class: User do
-    email 'dmp_institutional_admin_test@ucop.edu'
-    login_id 'institutional_admin'
-    first_name 'INSTITUTIONAL' 
-    last_name 'ADMIN'
-    password 'secret123' 
-    password_confirmation 'secret123'
-  end
-  factory :institutional_reviewer, class: User do
-    email 'dmp_institutional_reviewer_test@ucop.edu'
-    login_id 'institutional_reviewer'
-    first_name 'INSTITUTIONAL' 
-    last_name 'REVIEWER'
-    password 'secret123' 
-    password_confirmation 'secret123'
-  end
-  factory :template_editor, class: User do
-    email 'dmp_template_editor_test@ucop.edu'
-    login_id 'template_editor'
-    first_name 'TEMPLATE' 
-    last_name 'EDITOR'
-    password 'secret123' 
-    password_confirmation 'secret123'
-  end
-  factory :resource_editor, class: User do
-    email 'dmp_resource_editor_test@ucop.edu'
-    login_id 'resource_editor'
-    first_name 'RESOURCE' 
-    last_name 'EDITOR'
-    password 'secret123' 
-    password_confirmation 'secret123'
-  end
-  factory :resource_editor2, class: User do
-    email 'dmp_resource_editor2_test@ucop.edu'
-    login_id 'resource_editor2'
-    first_name 'RESOURCE' 
-    last_name 'EDITOR2'
-    password 'secret123' 
-    password_confirmation 'secret123'
-  end
   
   # Templates
   # -------------------------------------------
