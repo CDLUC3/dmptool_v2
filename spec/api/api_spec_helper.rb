@@ -83,10 +83,15 @@ def setup_test_data
   @requirements_template_public = create(:requirements_template_public, institution_id: @institution_1.id)
   @requirements_template_institutional = create(:requirements_template_institutional, institution_id: @institution_2.id)
   @requirements_template_institutional_2 = create(:requirements_template_institutional, institution_id: @institution_3.id)
+  @requirements_template_institutional_but_unused = create(:requirements_template_institutional_but_unused, institution_id: @institution_2.id)
+  @requirements_template_institutional_inactive = create(:requirements_template_inactive, institution_id: @institution_2.id)
 
-  @templates = [@requirements_template_public, @requirements_template_institutional]
-  @templates_public = [@requirements_template_public]
-  @templates_institutional = [@requirements_template_institutional]
+  @templates_accessable = [@requirements_template_public, @requirements_template_institutional]
+  @templates_institutional = [@requirements_template_institutional, 
+                              @requirements_template_institutional_but_unused]
+  @templates_inaccessable = [@requirements_template_institutional_2, 
+                             @requirements_template_institutional_but_unused, 
+                             @requirements_template_institutional_inactive]
   
   # Plans
   # ---------------------------------------------
@@ -234,6 +239,28 @@ FactoryGirl.define do
     visibility 'institutional'
     review_type 'no_review'
   end
+  factory :requirements_template_institutional_2, class: RequirementsTemplate do
+    name 'rt_institutional_2'
+    active 'active'
+    start_date '2016-01-27 05:07:50'
+    visibility 'institutional'
+    review_type 'no_review'
+  end
+  factory :requirements_template_institutional_but_unused, class: RequirementsTemplate do
+    name 'rt_institutional_but_unused'
+    active 'active'
+    start_date '2016-01-27 05:07:50'
+    visibility 'institutional'
+    review_type 'no_review'
+  end
+  factory :requirements_template_inactive, class: RequirementsTemplate do
+    name 'rt_institutional_inactive'
+    active 'inactive'
+    start_date '2016-01-27 05:07:50'
+    visibility 'institutional'
+    review_type 'no_review'
+  end
+  
   
   # Plans
   # -------------------------------------------

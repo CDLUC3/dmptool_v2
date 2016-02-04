@@ -5,7 +5,7 @@ class Api::V1::BaseController < ActionController::Base
   #API calls should be stateless. Otherwise Rails would check for an authenticity token on POST, PUT/PATCH and DELETE.
   protect_from_forgery with: :null_session
 
-
+  @@realm = "Institutions"
 	
  
 
@@ -46,29 +46,35 @@ class Api::V1::BaseController < ActionController::Base
 
 
   def authenticate
-    authenticate_token || render_unauthorized
+    authenticate_token || render_bad_credentials
   end
 
   def soft_authenticate
     authenticate_token 
   end
 
-  
   def authenticate_token
     authenticate_with_http_token do |token, options|
       user = User.find_by(auth_token: token)
       session[:user_id] = user.id if user
     end
-
   end
 
 
-  def render_unauthorized
-    self.headers['WWW-Authenticate'] = 'Token realm="Users"'
+  def render_bad_credentials
+    self.headers['WWW-Authenticate'] = "Token realm=\"#{@@realm}\""
     render json: 'Bad credentials', status: 401
   end
 
+  def render_unauthorized
+    self.headers['WWW-Authenticate'] = "Token realm=\"#{@@realm}\""
+    render json: 'You are not authorized to look at this content.', status: 401
+  end
 
+  def render_not_found
+    self.headers['WWW-Authenticate'] = "Token realm=\"#{@@realm}\""
+    render json: 'The content you are looking for doesn\'t exist', status: 404
+  end
 	
 end
 

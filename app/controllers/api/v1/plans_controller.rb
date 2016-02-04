@@ -3,7 +3,8 @@ class Api::V1::PlansController < Api::V1::BaseController
   include ApplicationHelper
 
   before_action :soft_authenticate
-  #before_action :authenticate
+
+  @@realm = "Plans"
 
   respond_to :json
 
@@ -144,22 +145,38 @@ class Api::V1::PlansController < Api::V1::BaseController
     @plans
   end
 
+  # ------------------------------------------------------------------------------------
+  # Returns all templates 'used' by the user's institution
+  def templates_index
+    @user = User.find_by_id(session[:user_id])
+    
+    # If an institutional user, return the templates that the instition has used to make plans
+    if user_role_in?(:institutional_admin, :institutional_reviewer, :resource_editor, :template_editor)
+      @plans = Plan.joins(:users).where("users.institution_id IN (?)", @user.institution.id).
+                            includes(:requirements_template).order(id: :asc)
+      @plans
+    else
+      render_unauthorized
+    end
+  end
 
+  # ------------------------------------------------------------------------------------
+  # Returns the template 'used' by the specified plan
+  def templates_show
+    @user = User.find_by_id(session[:user_id])
+    
+    # If an institutional user, return the template 
+    if user_role_in?(:institutional_admin, :institutional_reviewer, :resource_editor, :template_editor)
+      @plan = Plan.joins(:users).where("users.institution_id IN (?)", @user.institution.id).find_by_id(params[:id])
+
+      # User does not have access to the requested plan
+      if @plan.nil?
+        render_unauthorized
+      else
+        @plan
+      end
+    else
+      render_unauthorized
+    end
+  end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
