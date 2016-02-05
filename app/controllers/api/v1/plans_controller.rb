@@ -5,6 +5,8 @@ class Api::V1::PlansController < Api::V1::BaseController
   before_action :soft_authenticate
   #before_action :authenticate
 
+  @@realm = "Plans"
+
   respond_to :json
 
   def index
@@ -60,11 +62,11 @@ class Api::V1::PlansController < Api::V1::BaseController
               ((@plan.visibility == :private) && (@user == @plan.owner || @plan.coowners.include?(@user)))
             @plan
           else
-            render json: 'You are not authorized to look at this content.', status: 401
+            render_unauthorized
           end
         end
       else
-        render json: 'The plan you are looking for doesn\'t exist', status: 404
+        render_not_found
       end
     else
       if @plan = Plan.find_by_id(params[:id])
@@ -72,10 +74,10 @@ class Api::V1::PlansController < Api::V1::BaseController
         if (@plan.visibility == :public)
           @plan
         else
-          render json: 'You are not authorized to look at this content.', status: 401
+          render_unauthorized
         end
       else
-        render json: 'The plan you are looking for doesn\'t exist', status: 404
+        render_not_found
       end
     end
   end
@@ -94,11 +96,11 @@ class Api::V1::PlansController < Api::V1::BaseController
               ((@plan.visibility == :private) && (@user == @plan.owner || @plan.coowners.include?(@user)))
             @plan
           else
-            render json: 'You are not authorized to look at this content.', status: 401
+            render_unauthorized
           end
         end
       else
-        render json: 'The plan you are looking for doesn\'t exist', status: 404
+        render_not_found
       end
     else
       if @plan = Plan.find_by_id(params[:id])
@@ -106,10 +108,10 @@ class Api::V1::PlansController < Api::V1::BaseController
         if (@plan.visibility == :public)
           @plan
         else
-          render json: 'You are not authorized to look at this content.', status: 401
+          render_unauthorized
         end
       else
-        render json: 'The plan you are looking for doesn\'t exist', status: 404
+        render_not_found
       end
     end
   end
@@ -168,20 +170,3 @@ class Api::V1::PlansController < Api::V1::BaseController
 
 
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

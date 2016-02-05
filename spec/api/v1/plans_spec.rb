@@ -1,61 +1,211 @@
-# require 'spec_helper'
+require 'spec_helper'
+require_relative '../api_spec_helper.rb'
 
-# include Credentials
+describe 'Plans API', :type => :api do 
+  before :each do
+    setup_test_data
+  end
+  
+  # Public plans
+  # Insititutional plans
+  # Private plans (owned or coowned)
+  # 
+  # Plan states that are visible at the public level:
+  # 'New', 'Completed', 'Submitted', 'Approved', 'Reviewed', 'Rejected',
+  # 'Revised', 'Inactive', 'Deleted'
 
-# describe 'plans', :type => :api do
+  # -------------------------------------------------------------
+  it 'should NOT return a list of plans for an unauthorized user' do 
+    validations = lambda do |role, response|
+      response.status.should eql(401)
+      response.content_type.should eql(Mime::JSON)      
+    end
+  
+    test_unauthorized(["/api/v1/plans", "/api/v1/plans_full"], validations)
+  end
 
-	
-# 	@inst_1 = Institution.create!(full_name: 'inst_1', nickname: 'i_1')
+  # -------------------------------------------------------------
+  it 'should return a list of plans for the institutional_admin' do 
+    validations = lambda do |role, response|
+      response.status.should eql(200)
+      response.content_type.should eql(Mime::JSON)
+  
+      plans = json(response.body)
 
-# 	@rt_1 = RequirementsTemplate.create!(
-# 																institution_id: @inst_1.id, name: 'rt_1', 
-# 																active: 'active', start_date: '2014-04-17 05:07:50',
-# 																visibility: 'public', review_type: 'no_review',
-# 																created_at: '2009-08-04 18:02:26', updated_at: '2009-08-04 18:02:26')
+      i = 0
+      ids = [@plan_public_1.id, @plan_public_2.id, 
+             @plan_institutional_1.id, @plan_institutional_2.id, 
+             @plan_private_1.id, @plan_private_3.id]
+      plans.each do |plan|
+        # Make sure we're showing the right templates!
+        i = i + 1 if ids.include?(plan[:plan][:id])
+      end
+      
+      i.should eql 6
+    end
+  
+    test_specific_role(@institutional_admin, ["/api/v1/plans", 
+                                              "/api/v1/plans_full"], validations)
+  end
+  
+  # -------------------------------------------------------------
+  it 'should return a list of plans for the institutional non-admin' do 
+    validations = lambda do |role, response|
+      response.status.should eql(200)
+      response.content_type.should eql(Mime::JSON)
+  
+      plans = json(response.body)
 
+      i = 0
+      ids = [@plan_public_1.id, @plan_public_2.id, 
+             @plan_institutional_1.id, @plan_institutional_2.id, 
+             @plan_private_2.id]
+      plans.each do |plan|
+        # Make sure we're showing the right templates!
+        i = i + 1 if ids.include?(plan[:plan][:id])
+      end
+      
+      i.should eql 5
+    end
+  
+    test_authorized(@users_without_admin_access, ["/api/v1/plans", 
+                                                  "/api/v1/plans_full"], validations)
+  end
 
-# 	# @plan_1 = Plan.create!(
-# 	# 									name: 'plan_1', requirements_template_id: @rt_1.id, visibility: 'public', 
-# 	# 									created_at: '2011-08-04 18:02:26', updated_at: '2011-09-21 19:23:00',
-# 	# 									current_plan_state_id: 1) 
+  # -------------------------------------------------------------
+  it 'should return a list of ALL plans for the dmp_admin' do 
+    validations = lambda do |role, response|
+      response.status.should eql(200)
+      response.content_type.should eql(Mime::JSON)
+  
+      plans = json(response.body)
 
-# 	# @plan_2 = Plan.create!(
-# 	# 									name: 'plan_2', requirements_template_id: @rt_1.id, visibility: 'public', 
-# 	# 									created_at: '2013-01-02 19:08:43', updated_at: '2014-04-17 05:07:50', 
-# 	# 									current_plan_state_id: 1) 
+      i = 0
+      ids = @plans.collect{|t| t.id}
+      plans.each do |plan|
+        # Make sure we're showing the right templates!
+        i = i + 1 if ids.include?(plan[:plan][:id])
+      end
+      
+      i.should eql @plans.size
+    end
+  
+    test_specific_role(@dmp_admin, ["/api/v1/plans", "/api/v1/plans_full"], validations)
+  end
 
-# 	# @plan_3 = Plan.create!(
-# 	# 									name: 'plan_3', requirements_template_id: @rt_1.id, visibility: 'public', 
-# 	# 									created_at: '2010-12-24 19:08:43', updated_at: '2014-04-17 05:07:50', 
-# 	# 									current_plan_state_id: 1) 
-	
+  # -------------------------------------------------------------
+  it 'should return a specific plan for the institutional_admin' do 
+    @test_plans = [@plan_public_1.id, @plan_public_2.id, 
+                   @plan_institutional_1.id, @plan_institutional_2.id,
+                   @plan_private_1.id, @plan_private_3.id]
+    
+    validations = lambda do |role, response|
+      response.status.should eql(200)
+      response.content_type.should eql(Mime::JSON)
+  
+      plans = json(response.body)
+      plans.size.should eql 1
 
+      # The plan returned should match the one we requested!
+      @test_plans.should include plans[:plan][:id]
+    
+      # Make sure all of the required values are present
+      plans[:plan][:id].should be
+      plans[:plan][:name].should be
+      plans[:plan][:visibility].should be
+    end
+  
+    @test_plans.each do |plan_id|
+      test_specific_role(@institutional_admin, 
+          ["/api/v1/plans/#{plan_id}", "/api/v1/plans_full/#{plan_id}"], validations)
+    end
+  end
 
-# 	it 'returns list of all plans' do 
-# 		get '/api/v1/plans'
-# 		response.status.should eql(200)
-# 		# response.should be_success
-# 	end
+  # -------------------------------------------------------------
+  it 'should NOT return a specific plan for the institutional_admin' do 
+    validations = lambda do |role, response|
+      response.status.should eql(401)
+      response.content_type.should eql(Mime::JSON)
+    end
+  
+    [@plan_institutional_3.id, @plan_private_2.id].each do |plan_id|
+      test_specific_role(@institutional_admin,
+                ["/api/v1/plans/#{plan_id}", "/api/v1/plans_full/#{plan_id}"], validations)
+    end
+  end
+  
+  # -------------------------------------------------------------
+  it 'should return a specific plan for the institutional non-admin' do 
+    @test_plans = [@plan_public_1.id, @plan_public_2.id, 
+                   @plan_institutional_1.id, @plan_institutional_2.id, 
+                   @plan_private_2.id]
+       
+    validations = lambda do |role, response|      
+      response.status.should eql(200)
+      response.content_type.should eql(Mime::JSON)
+  
+      plans = json(response.body)
+      plans.size.should eql 1
 
+      # The plan returned should match the one we requested!
+      @test_plans.should include plans[:plan][:id]
+    end
+  
+    @test_plans.each do |plan_id|
+      test_authorized(@users_without_admin_access,
+          ["/api/v1/plans/#{plan_id}", "/api/v1/plans_full/#{plan_id}"], validations)
+    end
+  end
+  
+  # -------------------------------------------------------------
+  it 'should NOT return a specific plan for the institutional non-admin' do 
+    validations = lambda do |role, response|
+      response.status.should eql(401)
+      response.content_type.should eql(Mime::JSON)
+    end
+  
+    [@plan_institutional_3.id, @plan_private_1.id, @plan_private_3.id].each do |plan_id|
+      test_authorized(@users_without_admin_access,
+              ["/api/v1/plans/#{plan_id}", "/api/v1/plans_full/#{plan_id}"], validations)
+    end
+  end
 
-# 	it 'returns plans ordered by creation date' do 
-# 		get '/api/v1/plans?order=date'
-# 		response.status.should eql(200)
+  # -------------------------------------------------------------
+  it 'should return a specific plan for the dmp_admin' do 
+    validations = lambda do |role, response|
+      response.status.should eql(200)
+      response.content_type.should eql(Mime::JSON)
+  
+      plans = json(response.body)
+      plans.size.should eql 1
 
-# 		# plans = JSON.parse(response.body, symbolize_names: true)
-# 		# names = plans.collect{ |p| p[:name] }
-# 		# names.should include @plan_1.name
-# 		# names.first.should == @plan_3.name
+      # The plan returned should match the one we requested!
+       @plans.collect{|t| t.id}.should include plans[:plan][:id]
+    end
+  
+    @plans.each do |plan|
+      test_specific_role(@dmp_admin,
+              ["/api/v1/plans/#{plan.id}", "/api/v1/plans_full/#{plan.id}"], validations)
+    end
+  end
 
-# 		# expect(names).to include(@plan_1.name)
+  
+  
 
-		
-
-		
-
-# 	end
-
-
-# end
-
-
+=begin  
+  # -------------------------------------------------------------
+  it 'make sure institutional admins cannot see plans for another institituon' do 
+    validations = lambda do |role, response|
+      response.status.should eql(401)
+      response.content_type.should eql(Mime::JSON)
+    end
+  
+    test_specific_role(@institutional_admin, 
+                    ["/api/v1/plans/#{@plan_public_1.id}",
+                     "/api/v1/plans/#{@plan_institutional_1.id}",
+                     "/api/v1/plans/#{@plan_institutional_2.id}",
+                     "/api/v1/plans/#{@plan_private_1.id}",
+                     "/api/v1/plans/#{@plan_private_2.id}"], validations)
+  end
+=end
+end

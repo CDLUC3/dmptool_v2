@@ -3,6 +3,8 @@ class Api::V1::UsersController < Api::V1::BaseController
   before_action :soft_authenticate
    #before_action :authenticate
 
+  @@realm = "Users"
+   
   respond_to :json
 
 	def index 
@@ -11,7 +13,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     elsif user_role_in?(:institutional_admin) 
       @users = User.where(institution_id: [current_user.institution.root.subtree_ids])
     else
-      render json: 'You are not authorized to look at this content', status: 401
+      render_unauthorized
     end
 	end 
 
@@ -24,13 +26,13 @@ class Api::V1::UsersController < Api::V1::BaseController
         if current_user.institution.root.subtree_ids.include?(@user.institution.id)
           @user
         else
-          render json: 'You are not authorized to look at this content', status: 401
+          render_unauthorized
         end
       else
-        render json: 'You are not authorized to look at this content', status: 401
+        render_unauthorized
       end
     else
-      render json: 'The user you are looking for doesn\'t exist', status: 404
+      render_not_found
     end
   end
 

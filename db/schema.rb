@@ -14,15 +14,11 @@
 ActiveRecord::Schema.define(version: 20151214170435) do
 
   create_table "additional_informations", force: true do |t|
-    t.string   "url"
-    t.string   "label"
+    t.string   "url",                      limit: 255
+    t.string   "label",                    limit: 255
     t.integer  "requirements_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "annita", id: false, force: true do |t|
-    t.integer "xnum"
   end
 
   create_table "authentications", force: true do |t|
@@ -133,7 +129,7 @@ ActiveRecord::Schema.define(version: 20151214170435) do
 
   create_table "requirements_templates", force: true do |t|
     t.integer  "institution_id"
-    t.string   "name"
+    t.string   "name",           limit: 255
     t.boolean  "active"
     t.date     "start_date"
     t.date     "end_date"

@@ -2,19 +2,21 @@ Dmptool2::Application.routes.draw do
 
   namespace :api, :defaults => {:format => :json} do
     namespace :v1 do
-      resources :resources
-      resources :institutions
-      resources :users
-      resources :requirements_templates
-      resources :roles
-      resources :requirements
-      resources :comments
-      resources :plans
-      resources :resource_contexts
-      resources :responses
-      resources :published_plans
-      resources :plans_states
-      resources :sample_plans
+      #resources :resources
+      #resources :roles
+      #resources :requirements
+      #resources :comments
+      #resources :resource_contexts
+      #resources :responses
+      #resources :published_plans
+      #resources :plans_states
+      #resources :sample_plans
+      
+      resources :institutions, only: [:index, :show]
+      resources :users, only: [:index, :show]
+      resources :requirements_templates, only: [:index, :show], path: :templates
+      resources :plans, only: [:index, :show]
+      
 
       get 'institutions_plans_count/:id', to: 'institutions#plans_count_show'
       get 'institutions_plans_count', to: 'institutions#plans_count_index'
@@ -23,8 +25,12 @@ Dmptool2::Application.routes.draw do
 
       get 'plans_full/:id', to: 'plans#plans_full_show'
       get 'plans_full', to: 'plans#plans_full_index'
+      
       get 'plans_owned', to: 'plans#plans_owned'
       get 'plans_owned_full', to: 'plans#plans_owned_full'
+      
+      get 'plans_templates/:id', to: 'plans#templates_show'
+      get 'plans_templates', to: 'plans#templates_index'
     end
   end
 
