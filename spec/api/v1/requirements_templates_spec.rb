@@ -1,9 +1,16 @@
-require 'spec_helper'
 require_relative '../api_spec_helper.rb'
 
-describe 'Requirements_Templates API', :type => :api do 
+describe 'Templates API', :type => :api do 
   before :all do
-    setup_test_data
+    @institutions = create_test_institutions
+    
+    @users = create_test_user_per_role(@institutions[0], get_roles)
+
+    @dmp_admin = @users.select{|u| u.has_role?(Role::DMP_ADMIN)}[0]
+    @inst_users = @users.select{|u| u.id != @dmp_admin.id}
+    
+    @templates = create_test_templates(@institutions[0])
+    @templates2 = create_test_templates(@institutions[1])
   end
   
   # -------------------------------------------------------------
@@ -34,15 +41,8 @@ describe 'Requirements_Templates API', :type => :api do
       
       templates = json(response.body)
 
-puts "Insitution: #{@institution_2.id}"
-puts "User Insitution: #{@institutional_admin.institution.id}"
-puts "RT 1: #{@requirements_template_institutional.institution_id}"
-puts "RT 2: #{@requirements_template_institutional_2.institution_id}"
-puts "RT Unused: #{@requirements_template_institutional_but_unused.institution_id}"
-puts templates
-      
       i = 0
-      ids = @templates_institutional.collect{|t| t.id}
+      ids = @templates.collect{|t| t.id}
       templates[:templates].each do |template|
         # Make sure we're showing the right templates!
         i = i + 1 if ids.include?(template[:template][:id])
@@ -53,10 +53,10 @@ puts templates
         template[:template][:created].should be
       end
       
-      i.should eql @templates_institutional.size
+      i.should eql @templates.size
     end
     
-    test_authorized(@users_with_institutional_access, ['/api/v1/templates'], validations)
+    test_authorized(@inst_users, ['/api/v1/templates'], validations)
   end
   
   # -------------------------------------------------------------
@@ -68,22 +68,16 @@ puts templates
       templates = json(response.body)
       
       i = 0
-      ids = @templates_public.collect{|t| t.id}
+      ids = @templates2.collect{|t| t.id}
       templates[:templates].each do |template|
         # Make sure we're showing the right templates!
         i = i + 1 if ids.include?(template[:template][:id])
-        
-        # Make sure all of the required values are present
-        template[:template][:id].should be
-        template[:template][:name].should be
-        template[:template][:created].should be
       end
       
-      i.should eql @templates_public.size
+      i.should eql 0
     end
     
-    test_unauthorized(['/api/v1/templates'], validations)
-    test_authorized(@users, ['/api/v1/templates'], validations)
+    test_authorized(@inst_users, ['/api/v1/templates'], validations)
   end
   
   # -------------------------------------------------------------
@@ -94,48 +88,31 @@ puts templates
       
       templates = json(response.body)
       
-      i = 0
-      ids = @templates_public.collect{|t| t.id}
-      templates[:templates].each do |template|
-        # Make sure we're showing the right templates!
-        i = i + 1 if ids.include?(template[:template][:id])
-        
-        # Make sure all of the required values are present
-        template[:template][:id].should be
-        template[:template][:name].should be
-        template[:template][:created].should be
-      end
+      templates.size.should eql 1
+
+      # The institution returned should match the one we requested!
+      @templates.collect{|t| t.id}.should include templates[:template][:id]
       
-      i.should eql @templates_public.size
+      # Make sure that all of the required values were returned
+      templates[:template][:id].should be
+      templates[:template][:name].should be
+      templates[:template][:created].should be
     end
-    
-    test_authorized(@users_with_institutional_access, ['/api/v1/templates'], validations)
+
+    @templates.each do |template|
+      test_authorized(@inst_users, ["/api/v1/templates/#{template.id}"], validations)
+    end
   end
   
   # -------------------------------------------------------------
-  it 'should return a 401 error when requesting a specific template that belongs to another institution' do 
+  it 'should return a 404 error when requesting a specific template that belongs to another institution' do 
     validations = lambda do |role, response|
-      response.status.should eql(200)
+      response.status.should eql(404)
       response.content_type.should eql(Mime::JSON)
-      
-      templates = json(response.body)
-      
-      i = 0
-      ids = @templates_public.collect{|t| t.id}
-      templates[:templates].each do |template|
-        # Make sure we're showing the right templates!
-        i = i + 1 if ids.include?(template[:template][:id])
-        
-        # Make sure all of the required values are present
-        template[:template][:id].should be
-        template[:template][:name].should be
-        template[:template][:created].should be
-      end
-      
-      i.should eql @templates_public.size
     end
     
-    test_unauthorized(['/api/v1/templates'], validations)
-    test_authorized(@users, ['/api/v1/templates'], validations)
+    @templates2.each do |template|
+      test_authorized(@inst_users, ["/api/v1/templates/#{template.id}"], validations)
+    end
   end
 end

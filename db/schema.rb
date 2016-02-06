@@ -220,8 +220,8 @@ ActiveRecord::Schema.define(version: 20151214170435) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "login_id"
+    t.date     "deleted_at"
     t.boolean  "active",           default: true
-    t.datetime "deleted_at"
     t.string   "orcid_id"
     t.string   "auth_token"
   end

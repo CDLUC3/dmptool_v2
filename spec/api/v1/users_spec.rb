@@ -1,10 +1,20 @@
-require 'spec_helper'
 require_relative '../api_spec_helper.rb'
 
 describe 'Users API', :type => :api do 
 
   before :all do
-    setup_test_data 
+    @institutions = create_test_institutions
+    
+    @users = create_test_user_per_role(@institutions[0], get_roles)
+    @user2 = create(:api_user, institution_id: @institutions[1].id)
+    
+    @users_with_admin_access = @users.select{|u| u.has_role?(Role::DMP_ADMIN) or
+                                                 u.has_role?(Role::INSTITUTIONAL_ADMIN)}
+
+    @users_without_admin_access = (@users - @users_with_admin_access)
+    
+    @dmp_admin = @users.select{|u| u.has_role?(Role::DMP_ADMIN)}[0]
+    @inst_admin = @users.select{|u| u.has_role?(Role::INSTITUTIONAL_ADMIN)}[0]
   end
 
   # -------------------------------------------------------------
@@ -30,13 +40,14 @@ describe 'Users API', :type => :api do
       
       i, ids = 0, []
       
-      if role.starts_with?("dmp_admin")
+      if @dmp_admin.login_id === role
         # DMP_ADMIN - Should have gotten back ALL of our test users
         ids = @users.collect{|u| u.id}
+        ids << @user2.id
 
-      elsif role.starts_with?("institutional_admin")
+      elsif @inst_admin.login_id === role
         # INSTITUTIONAL_ADMIN - Should have gotten back only users for their institution except DMP_ADMINs
-        ids = (@users_of_institution_2 - @users_with_dmp_admin_access).collect{|u| u.id}
+        ids = (@users).collect{|u| u.id}
         
       else
         # Not a valid admin role so force a failure!
@@ -60,21 +71,22 @@ describe 'Users API', :type => :api do
       i.should eql(ids.size)
     end
 
-    test_specific_role(@dmp_admin_institution_1, ['/api/v1/users'], validations)
-    test_specific_role(@institutional_admin_institution_2, ['/api/v1/users'], validations)
+    test_authorized(@users_with_admin_access, ['/api/v1/users'], validations)
   end
   
   # -------------------------------------------------------------
-  it 'should return a specific user if current user is an authorized admin' do 
+  it 'should return a ANY specific user if current user is a dmp admin' do 
     validations = lambda do |role, response|
       response.status.should eql(200)
       response.content_type.should eql(Mime::JSON)
     
       users = json(response.body)
       users.size.should eql 1
-      
+
       # The user returned should match the one we requested!
-      users[:user][:email].should eql @template_editor_institution_2.email
+      emails = @users.collect{|u| u.email}
+      emails << @user2.email
+      emails.should include users[:user][:email]
       
       # Make sure all of the required values are present
       users[:user][:email].should be
@@ -87,8 +99,40 @@ describe 'Users API', :type => :api do
       users[:user][:login_id].should be_nil
     end
     
-    test_specific_role(@dmp_admin_institution_1, ["/api/v1/users/#{@template_editor_institution_2.id}"], validations)
-    test_specific_role(@institutional_admin_institution_2, ["/api/v1/users/#{@template_editor_institution_2.id}"], validations)
+    @users.each do |user|
+      test_specific_role(@dmp_admin, ["/api/v1/users/#{user.id}"], validations)
+    end
+    
+    test_specific_role(@dmp_admin, ["/api/v1/users/#{@user2.id}"], validations)
+  end
+  
+  # -------------------------------------------------------------
+  it 'should return a specific user for the institution if current user is a institutional admin' do 
+    validations = lambda do |role, response|
+      response.status.should eql(200)
+      response.content_type.should eql(Mime::JSON)
+    
+      users = json(response.body)
+      users.size.should eql 1
+      
+      # The user returned should match the one we requested!
+      emails = @users.collect{|u| u.email}
+      emails.should include users[:user][:email]
+      
+      # Make sure all of the required values are present
+      users[:user][:email].should be
+      users[:user][:first_name].should be
+      users[:user][:last_name].should be
+      
+      # Make sure that any values that should NOT be there are missing
+      users[:user][:id].should be_nil
+      users[:user][:password].should be_nil
+      users[:user][:login_id].should be_nil
+    end
+    
+    @users.each do |user|
+      test_specific_role(@inst_admin, ["/api/v1/users/#{user.id}"], validations)
+    end
   end
   
   # -------------------------------------------------------------
@@ -98,7 +142,6 @@ describe 'Users API', :type => :api do
       response.content_type.should eql(Mime::JSON)
     end
     
-    test_specific_role(@institutional_admin_institution_2, 
-                        ["/api/v1/users/#{@resource_editor_institution_1.id}"], validations)
+    test_specific_role(@inst_admin, ["/api/v1/users/#{@user2.id}"], validations)
   end
 end

@@ -1,9 +1,10 @@
-require 'spec_helper'
 require_relative '../api_spec_helper.rb'
 
 describe 'Institutions API', :type => :api do 
-  before :each do
-    setup_test_data
+  before :all do
+    @institutions = create_test_institutions
+    
+    @users = create_test_user_per_role(@institutions[0], get_roles)
   end
 
   # -------------------------------------------------------------
@@ -38,15 +39,15 @@ describe 'Institutions API', :type => :api do
       institutions.size.should be >= 1
       
       #Return the institution id so that we can verify it below
-      institutions[:institution][:id].should eql @institution_3.id
+      institutions[:institution][:id].should eql @institutions[2].id
       
       # ** SHOULD ALSO VERIFY PLAN COUNT! **
     end
     
     # should work whether authorized or unauthorized
-    test_unauthorized(["/api/v1/institutions_plans_count/#{@institution_3.id}"], validations)
+    test_unauthorized(["/api/v1/institutions_plans_count/#{@institutions[2].id}"], validations)
     test_authorized(@users, 
-                      ["/api/v1/institutions_plans_count/#{@institution_3.id}"], validations)
+                      ["/api/v1/institutions_plans_count/#{@institutions[2].id}"], validations)
   end
   
   # -------------------------------------------------------------
@@ -81,16 +82,16 @@ describe 'Institutions API', :type => :api do
       institutions.size.should be >= 1
       
       #Return the institution id so that we can verify it below
-      institutions[:institution][:id].should eql @institution_2.id
+      institutions[:institution][:id].should eql @institutions[0].id
       
       # ** SHOULD ALSO VERIFY ADMIN COUNT! **
       institutions[:institution][:admins].should eql 1
     end
     
     # should work whether authorized or unauthorized
-    test_unauthorized(["/api/v1/institutions_admins_count/#{@institution_2.id}"], validations)
+    test_unauthorized(["/api/v1/institutions_admins_count/#{@institutions[0].id}"], validations)
     test_authorized(@users,
-                   ["/api/v1/institutions_admins_count/#{@institution_2.id}"], validations)
+                   ["/api/v1/institutions_admins_count/#{@institutions[0].id}"], validations)
   end
 
   # -------------------------------------------------------------
@@ -129,7 +130,7 @@ describe 'Institutions API', :type => :api do
       institutions.size.should eql 1
       
       # The institution returned should match the one we requested!
-      institutions[:institution][:full_name].should eql @institution_2.full_name
+      institutions[:institution][:full_name].should eql @institutions[1].full_name
       
       # Make sure that all of the required values were returned
       institutions[:institution][:id].should be
@@ -137,7 +138,7 @@ describe 'Institutions API', :type => :api do
     end
     
     # should work whether authorized or unauthorized
-    test_unauthorized(["/api/v1/institutions/#{@institution_2.id}"], validations)
-    test_authorized(@users, ["/api/v1/institutions/#{@institution_2.id}"], validations)
+    test_unauthorized(["/api/v1/institutions/#{@institutions[1].id}"], validations)
+    test_authorized(@users, ["/api/v1/institutions/#{@institutions[1].id}"], validations)
   end
 end
