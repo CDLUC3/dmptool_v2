@@ -11,7 +11,11 @@ describe 'Plans API', :type => :api do
     
     @dmp_admin = @users.select{|u| u.has_role?(Role::DMP_ADMIN)}[0]
     @inst_admin = @users.select{|u| u.has_role?(Role::INSTITUTIONAL_ADMIN)}[0]
+    @inst_reviewer = @users.select{|u| u.has_role?(Role::INSTITUTIONAL_REVIEWER)}[0]
+    @template_editor = @users.select{|u| u.has_role?(Role::TEMPLATE_EDITOR)}[0]
     @resource_editor = @users.select{|u| u.has_role?(Role::RESOURCE_EDITOR)}[0]
+
+    @inst_users = [@inst_admin, @inst_reviewer, @template_editor, @resource_editor];
     
     #User for Institution 2
     @template_editor2 = create(:api_user, institution_id: @institutions[1].id)
@@ -26,28 +30,35 @@ describe 'Plans API', :type => :api do
         create_test_plan(@templates[0], 'institutional', @inst_admin, nil),
         create_test_plan(@templates[0], 'unit', @inst_admin, nil),
         create_test_plan(@templates[0], 'public', @inst_admin, nil),
-        create_test_plan(@templates[1], 'private', @inst_admin, @resource_editor)
+        create_test_plan(@templates[1], 'private', @inst_admin, @resource_editor),
+        create_test_plan(@templates[1], 'public', @inst_admin, nil),
+        create_test_plan(@templates[0], 'private', @inst_admin, @resource_editor),
+        create_test_plan(@templates[1], 'institutional', @inst_admin, @resource_editor),
+        create_test_plan(@templates[0], 'unit', @inst_admin, @resource_editor)
     ]
 
-    @inst_user_plans = [
-      create_test_plan(@templates2[0], 'public', @template_editor2, nil),
-      create_test_plan(@templates[1], 'public', @inst_admin, nil),
-      create_test_plan(@templates[1], 'private', @resource_editor, nil),
-      create_test_plan(@templates[0], 'private', @inst_admin, @resource_editor),
-      create_test_plan(@templates[1], 'institutional', @resource_editor, nil),
-      create_test_plan(@templates[0], 'unit', @resource_editor, nil),
-      create_test_plan(@templates[1], 'institutional', @inst_admin, @resource_editor),
-      create_test_plan(@templates[0], 'unit', @inst_admin, @resource_editor)
+    @template_editor_plans = [
+      create_test_plan(@templates[1], 'private', @template_editor, nil),
+      create_test_plan(@templates[1], 'institutional', @template_editor, @resource_editor),
+      create_test_plan(@templates[0], 'unit', @template_editor, nil)
     ]
+    
+    @resource_editor_plans = [create_test_plan(@templates[1], 'private', @resource_editor, nil)]
+    @resource_editor_plans.concat @inst_admin_plans.select{|p| p.coowners.include?(@resource_editor)}
+    @resource_editor_plans.concat @template_editor_plans.select{|p| p.coowners.include?(@resource_editor)}
+    
+    @template_editor2_plans = [create_test_plan(@templates2[0], 'public', @template_editor2, nil)]
     
     @inaccessible_plans = [
       create_test_plan(@templates2[0], 'private', @template_editor2, nil),
       create_test_plan(@templates2[0], 'institutional', @template_editor2, nil),
       create_test_plan(@templates2[0], 'unit', @template_editor2, nil)
     ]
+        
+    @unused_templates = [@templates2[1]]
     
     @public_plans = @inst_admin_plans.select{|p| p.visibility === 'public'}
-    @public_plans.concat @inst_user_plans.select{|p| p.visibility === 'public'}
+    @public_plans.concat @template_editor2_plans.select{|p| p.visibility === 'public'}
   end
   
   # -------------------------------------------------------------
@@ -101,41 +112,45 @@ describe 'Plans API', :type => :api do
       plans = json(response.body)
 
       i = 0
-      ids = @inst_user_plans.collect{|p| p.id}
+      ids = @resource_editor_plans.collect{|p| p.id}
       plans.each do |plan|
         # Make sure we're showing the right templates!
         i = i + 1 if ids.include?(plan[:plan][:id])
       end
       
-      i.should eql @inst_user_plans.size
+      i.should eql @resource_editor_plans.size
     end
   
     test_specific_role(@resource_editor, ["/api/v1/plans", "/api/v1/plans_full"], validations)
   end
 
-=begin
   # -------------------------------------------------------------
   it 'should return a list of ALL plans for the dmp_admin' do 
+    plans = @resource_editor_plans.collect{|p| p.id}
+    plans.concat @template_editor_plans.collect{|p| p.id}
+    plans.concat @template_editor2_plans.collect{|p| p.id}
+    plans.concat @inst_admin_plans.collect{|p| p.id}
+    plans.concat @inaccessible_plans.collect{|p| p.id}
+    
+    plans = plans.uniq
+    
     validations = lambda do |role, response|
       response.status.should eql(200)
       response.content_type.should eql(Mime::JSON)
   
-      plans = json(response.body)
-
+      json = json(response.body)
+      
       i = 0
-      ids = @inst_user_plans.collect{|t| t.id}
-      ids.concat @inst_admin_plans.collect{|t| t.id}
-      plans.each do |plan|
+      json.each do |plan|
         # Make sure we're showing the right templates!
-        i = i + 1 if ids.include?(plan[:plan][:id])
+        i = i + 1 if plans.include?(plan[:plan][:id])
       end
       
-      i.should eql @plans.size
+      i.should eql plans.size
     end
   
     test_specific_role(@dmp_admin, ["/api/v1/plans", "/api/v1/plans_full"], validations)
   end
-=end
   
   # -------------------------------------------------------------
   it 'should return a specific plan for the institutional_admin' do 
@@ -178,7 +193,7 @@ describe 'Plans API', :type => :api do
 
   # -------------------------------------------------------------
   it 'should return a specific plan for the institutional non-admin' do 
-    plan_ids = @inst_user_plans.collect{|p| p.id}
+    plan_ids = @resource_editor_plans.collect{|p| p.id}
        
     validations = lambda do |role, response|      
       response.status.should eql(200)
@@ -212,7 +227,9 @@ describe 'Plans API', :type => :api do
 
   # -------------------------------------------------------------
   it 'should return a specific plan for the dmp_admin' do 
-    plans = @inst_user_plans.collect{|p| p.id}
+    plans = @resource_editor_plans.collect{|p| p.id}
+    plans.concat @template_editor_plans.collect{|p| p.id}
+    plans.concat @template_editor2_plans.collect{|p| p.id}
     plans.concat @inst_admin_plans.collect{|p| p.id}
     plans.concat @inaccessible_plans.collect{|p| p.id}
     
@@ -231,6 +248,67 @@ describe 'Plans API', :type => :api do
       test_specific_role(@dmp_admin,
               ["/api/v1/plans/#{plan}", "/api/v1/plans_full/#{plan}"], validations)
     end
+  end
+
+  # -------------------------------------------------------------
+  it 'should return a list of plans used for the institutional user' do 
+    validations = lambda do |role, response|
+      response.status.should eql(200)
+      response.content_type.should eql(Mime::JSON)
+  
+      plans = json(response.body)
+
+      i = 0
+      ids = @unused_templates.collect{|p| p.id}
+      plans.each do |plan|
+        # Make sure we're showing the right templates!
+        i = i + 1 if ids.include?(plan[:plan][:template][:id])
+      end
+      
+      i.should eql 0
+    end
+  
+    test_authorized(@inst_users, ["/api/v1/plans_templates"], validations)
+  end
+
+  # -------------------------------------------------------------
+  it 'should return a specific used plan for the institutional user' do 
+    validations = lambda do |role, response|
+      response.status.should eql(200)
+      response.content_type.should eql(Mime::JSON)
+  
+      json = json(response.body)
+      json.size.should eql 1
+
+      # The plan returned should match the one we requested!
+       json[:plan][:id].should be
+       json[:plan][:created].should be
+       json[:plan][:template][:id].should be
+       json[:plan][:template][:name].should be
+    end
+
+    @inst_admin_plans.each do |plan|
+      test_specific_role(@inst_admin, ["/api/v1/plans_templates/#{plan.id}"], validations)
+    end
+
+    @template_editor_plans.each do |plan|
+      test_specific_role(@template_editor, ["/api/v1/plans_templates/#{plan.id}"], validations)
+    end
+
+    @resource_editor_plans.each do |plan|
+      test_specific_role(@resource_editor, ["/api/v1/plans_templates/#{plan.id}"], validations)
+    end
+  end
+
+  # -------------------------------------------------------------
+  it 'should NOT return a list of plans used or a specific plan used for an unauthorized user' do 
+    validations = lambda do |role, response|
+      response.status.should eql(401)
+      response.content_type.should eql(Mime::JSON)
+    end
+  
+    test_unauthorized(["/api/v1/plans_templates", "/api/v1/plans_templates/#{@resource_editor_plans[1].id}"], validations)
+    test_specific_role(@dmp_admin, ["/api/v1/plans_templates", "/api/v1/plans_templates/#{@inst_admin_plans[1].id}"], validations)
   end
 
 # TODO: Need to add tests for the other routes

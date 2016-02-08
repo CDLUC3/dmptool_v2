@@ -121,8 +121,8 @@ class Plan < ActiveRecord::Base
     user_plans = self.user_plans.where(owner: false)
     user_plans.each do |user_plan|
       id = user_plan.user_id
-      @coowner = User.find(id)
-      @coowners<< @coowner
+      @coowner = User.find(id) if id
+      @coowners<< @coowner if id
     end
     @coowners
   end
