@@ -311,7 +311,25 @@ describe 'Plans API', :type => :api do
     test_specific_role(@dmp_admin, ["/api/v1/plans_templates", "/api/v1/plans_templates/#{@inst_admin_plans[1].id}"], validations)
   end
 
-# TODO: Need to add tests for the other routes
-#       Need to fix issue with dmp_admin return list test  
+  # -------------------------------------------------------------
+  it 'should return a list of plans owned by the user' do 
+    validations = lambda do |role, response|
+      response.status.should eql(200)
+      response.content_type.should eql(Mime::JSON)
+  
+      plans = json(response.body)
+
+      i = 0
+      ids = @inst_admin_plans.collect{|p| p.id}
+      plans.each do |plan|
+        # Make sure we're showing the right templates!
+        i = i + 1 if ids.include?(plan[:plan][:id])
+      end
+      
+      i.should eql @inst_admin_plans.size
+    end
+  
+    test_specific_role(@inst_admin, ["/api/v1/plans_owned", "/api/v1/plans_owned_full"], validations)
+  end
   
 end
