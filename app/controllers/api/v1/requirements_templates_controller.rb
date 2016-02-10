@@ -38,7 +38,7 @@ class Api::V1::RequirementsTemplatesController < Api::V1::BaseController
 
       # If we found the template
       if @requirements_template
-        if user_role_in?(:dmp_amin){
+        if user_role_in?(:dmp_amin)
           @requirements_template
         
         else
@@ -53,6 +53,7 @@ class Api::V1::RequirementsTemplatesController < Api::V1::BaseController
       else
         render_not_found
       end
+      
     else
       # No authorization sent so return an unauthorized message
       render_unauthorized
