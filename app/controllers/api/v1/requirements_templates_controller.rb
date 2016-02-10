@@ -38,7 +38,7 @@ class Api::V1::RequirementsTemplatesController < Api::V1::BaseController
 
       # If we found the template
       if @requirements_template
-        if user_role_in?(:dmp_amin)
+        if user_role_in?(:dmp_admin)
           @requirements_template
         
         else
