@@ -13,7 +13,7 @@ class Api::V1::RequirementsTemplatesController < Api::V1::BaseController
     @user = User.find_by_id(session[:user_id])
     
     # If an institutional user, return the templates that the instition has used to make plans
-    if if user_role_in?(:dmp_admin)
+    if user_role_in?(:dmp_admin)
       @requirements_templates = RequirementsTemplate.all
     
     elsif user_role_in?(:institutional_admin, :institutional_reviewer, 
@@ -44,12 +44,13 @@ class Api::V1::RequirementsTemplatesController < Api::V1::BaseController
         else
           # Return the template only if its active and belongs to the user's institution
           if @requirements_template.institution.id === @user.institution.id and
-                                              @requirements_template.active
+                                                              @requirements_template.active
             @requirements_template
           else
             render_not_found
           end
         end
+        
       else
         render_not_found
       end
@@ -59,4 +60,5 @@ class Api::V1::RequirementsTemplatesController < Api::V1::BaseController
       render_unauthorized
     end
   end
+  
 end
