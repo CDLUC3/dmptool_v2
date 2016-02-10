@@ -179,7 +179,7 @@ class Api::V1::PlansController < Api::V1::BaseController
 
   # ------------------------------------------------------------------------------------
   # Returns all templates 'used' by the user's institution
-  def templates_index
+  def plans_templates_index
     @user = User.find_by_id(session[:user_id])
     
     # If an institutional user, return the templates that the instition has used to make plans
@@ -199,7 +199,7 @@ class Api::V1::PlansController < Api::V1::BaseController
 
   # ------------------------------------------------------------------------------------
   # Returns the template 'used' by the specified plan
-  def templates_show
+  def plans_templates_show
     @user = User.find_by_id(session[:user_id])
     
     # If an institutional user, return the template 

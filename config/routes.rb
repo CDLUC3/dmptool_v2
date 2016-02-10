@@ -29,8 +29,8 @@ Dmptool2::Application.routes.draw do
       get 'plans_owned', to: 'plans#plans_owned'
       get 'plans_owned_full', to: 'plans#plans_owned_full'
       
-      get 'plans_templates/:id', to: 'plans#templates_show'
-      get 'plans_templates', to: 'plans#templates_index'
+      get 'plans_templates/:id', to: 'plans#plans_templates_show'
+      get 'plans_templates', to: 'plans#plans_templates_index'
     end
   end
 
