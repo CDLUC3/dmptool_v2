@@ -1,6 +1,6 @@
 object @plan
 
-attributes :id, :name
+attributes :id
 attributes :created_at => :created
 
 child :requirements_template => :template do
