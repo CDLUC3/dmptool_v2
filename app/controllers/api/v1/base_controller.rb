@@ -78,5 +78,10 @@ class Api::V1::BaseController < ActionController::Base
     render json: 'The content you are looking for doesn\'t exist', status: 404
   end
 
+
+  def sanitize_for_filename(filename)
+    ActiveSupport::Inflector.transliterate filename.downcase.gsub(/[\\\/?:*"><|]+/,"_").gsub(/\s/,"_")
+  end
+
 end
 

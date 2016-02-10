@@ -14,12 +14,12 @@ Dmptool2::Application.routes.draw do
       
       resources :institutions, only: [:index, :show]
       resources :users, only: [:index, :show]
-      resources :requirements_templates, only: [:index, :show], path: :templates
+      resources :requirements_templates, only: [:index, :show], path: :templates_for_institution
       resources :plans, only: [:index, :show]
       
-
       get 'institutions_plans_count/:id', to: 'institutions#plans_count_show'
       get 'institutions_plans_count', to: 'institutions#plans_count_index'
+      
       get 'institutions_admins_count/:id', to: 'institutions#admins_count_show'
       get 'institutions_admins_count', to: 'institutions#admins_count_index'
 

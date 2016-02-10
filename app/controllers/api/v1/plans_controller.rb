@@ -1,3 +1,6 @@
+require 'htmltoword'
+require 'pandoc-ruby'
+
 class Api::V1::PlansController < Api::V1::BaseController
 
   include ApplicationHelper
@@ -105,13 +108,32 @@ class Api::V1::PlansController < Api::V1::BaseController
     else
       if @plan = Plan.find_by_id(params[:id])
         @id = @plan.id
-        if (@plan.visibility == :public)
+        if (@plan.visibility != :public)
           @plan
         else
           render_unauthorized
         end
       else
         render_not_found
+      end
+    end
+    
+    respond_to do |format|
+      format.json do
+        render :layout => false
+      end
+      format.pdf do
+        render :layout => false, :template => '/plans/show.pdf.ruby'
+      end
+      format.rtf do
+        render :layout => false, :template => '/plans/show.rtf.ruby'
+      end
+      format.docx do
+        templ_path = File.join(Rails.root.to_s, 'public')
+        str = render_to_string(:template => '/plans/plans_show_docx.html.erb', :layout => false)
+        converter = PandocRuby.new(str, :from => :html, :to => :docx, 'data-dir' => templ_path )
+        headers["Content-Disposition"] = "attachment; filename=\"" + sanitize_for_filename(@plan.name) + ".docx\""
+        render :text => converter.convert, :content_type=> 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
       end
     end
   end
@@ -161,7 +183,12 @@ class Api::V1::PlansController < Api::V1::BaseController
     @user = User.find_by_id(session[:user_id])
     
     # If an institutional user, return the templates that the instition has used to make plans
-    if user_role_in?(:institutional_admin, :institutional_reviewer, :resource_editor, :template_editor)
+    if user_role_in?(:dmp_admin)
+      @plans = Plan.includes(:requirements_template).order(id: :asc)
+      
+      @plans
+      
+    elsif user_role_in?(:institutional_admin, :institutional_reviewer, :resource_editor, :template_editor)
       @plans = Plan.joins(:users).where("users.institution_id IN (?)", @user.institution.id).
                             includes(:requirements_template).order(id: :asc)
       @plans
@@ -176,7 +203,11 @@ class Api::V1::PlansController < Api::V1::BaseController
     @user = User.find_by_id(session[:user_id])
     
     # If an institutional user, return the template 
-    if user_role_in?(:institutional_admin, :institutional_reviewer, :resource_editor, :template_editor)
+    if user_role_in?(:dmp_admin)
+      @plan = Plan.find_by_id(params[:id])
+      
+      @plan
+    elsif user_role_in?(:institutional_admin, :institutional_reviewer, :resource_editor, :template_editor)
       @plan = Plan.joins(:users).where("users.institution_id IN (?)", @user.institution.id).find_by_id(params[:id])
 
       # User does not have access to the requested plan
