@@ -130,7 +130,7 @@ class Api::V1::PlansController < Api::V1::BaseController
       end
       format.docx do
         templ_path = File.join(Rails.root.to_s, 'public')
-        str = render_to_string(:template => '/plans/plans_show_docx.html.erb', :layout => false)
+        str = render_to_string(:template => '/plans/show_docx.html.erb', :layout => false)
         converter = PandocRuby.new(str, :from => :html, :to => :docx, 'data-dir' => templ_path )
         headers["Content-Disposition"] = "attachment; filename=\"" + sanitize_for_filename(@plan.name) + ".docx\""
         render :text => converter.convert, :content_type=> 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
