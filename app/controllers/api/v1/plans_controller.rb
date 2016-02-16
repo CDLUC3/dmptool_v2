@@ -108,7 +108,7 @@ class Api::V1::PlansController < Api::V1::BaseController
     else
       if @plan = Plan.find_by_id(params[:id])
         @id = @plan.id
-        if (@plan.visibility != :public)
+        if (@plan.visibility == :public)
           @plan
         else
           render_unauthorized
