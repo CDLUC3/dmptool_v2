@@ -99,10 +99,12 @@ class Api::V1::PlansController < Api::V1::BaseController
               ((@plan.visibility == :private) && (@user == @plan.owner || @plan.coowners.include?(@user)))
             @plan
           else
+            @plan = nil
             render_unauthorized
           end
         end
       else
+        @plan = nil
         render_not_found
       end
     else
@@ -111,29 +113,33 @@ class Api::V1::PlansController < Api::V1::BaseController
         if (@plan.visibility == :public)
           @plan
         else
+          @plan = nil
           render_unauthorized
         end
       else
+        @plan = nil
         render_not_found
       end
     end
     
-    respond_to do |format|
-      format.json do
-        render :layout => false
-      end
-      format.pdf do
-        render :layout => false, :template => '/plans/show.pdf.ruby'
-      end
-      format.rtf do
-        render :layout => false, :template => '/plans/show.rtf.ruby'
-      end
-      format.docx do
-        templ_path = File.join(Rails.root.to_s, 'public')
-        str = render_to_string(:template => '/api/v1/plans/plans_full_show_docx.html.erb', :layout => false)
-        converter = PandocRuby.new(str, :from => :html, :to => :docx, 'data-dir' => templ_path )
-        headers["Content-Disposition"] = "attachment; filename=\"" + sanitize_for_filename(@plan.name) + ".docx\""
-        render :text => converter.convert, :content_type=> 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    if @plan
+      respond_to do |format|
+        format.json do
+          render :layout => false
+        end
+        format.pdf do
+          render :layout => false, :template => '/plans/show.pdf.ruby'
+        end
+        format.rtf do
+          render :layout => false, :template => '/plans/show.rtf.ruby'
+        end
+        format.docx do
+          templ_path = File.join(Rails.root.to_s, 'public')
+          str = render_to_string(:template => '/api/v1/plans/plans_full_show_docx.html.erb', :layout => false)
+          converter = PandocRuby.new(str, :from => :html, :to => :docx, 'data-dir' => templ_path )
+          headers["Content-Disposition"] = "attachment; filename=\"" + sanitize_for_filename(@plan.name) + ".docx\""
+          render :text => converter.convert, :content_type=> 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        end
       end
     end
   end
