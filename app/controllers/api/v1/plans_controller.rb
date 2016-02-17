@@ -130,9 +130,6 @@ class Api::V1::PlansController < Api::V1::BaseController
         format.pdf do
           render :layout => false, :template => '/plans/show.pdf.ruby'
         end
-        format.rtf do
-          render :layout => false, :template => '/plans/show.rtf.ruby'
-        end
         format.docx do
           templ_path = File.join(Rails.root.to_s, 'public')
           str = render_to_string(:template => '/api/v1/plans/plans_full_show_docx.html.erb', :layout => false)
