@@ -36,21 +36,72 @@ FactoryGirl.define do
     end
   end
 
-
-
   factory :role do
     name "DMP Administrator"
   end
-
-
-
-
+  
+  
+  # API Factories
+  # --------------------------------------------------
+  factory :api_institution, class: Institution do |f|
+    f.sequence(:full_name) { |n| "institution_#{n}"}
+  end
+  
+  factory :api_user, class: User do |f|
+    f.sequence(:email) { |n| "test_user_#{n}@cdlib.org"}
+    f.sequence(:login_id) { |n| "test_user_#{n}"}
+    first_name "Test" 
+    f.sequence(:last_name) { |n| "User #{n}"}
+    password 'secret123' 
+    password_confirmation 'secret123'
+  end
+  
+  factory :api_template, class: RequirementsTemplate do |f|
+    f.sequence(:name) { |n| "Template #{n}"}
+    active true
+    start_date '2016-02-01 12:00:00'
+    review_type 'no_review'
+    
+    factory :api_public_template do
+      visibility "public"
+    end
+    
+    factory :api_institutional_template do
+      visibility "institutional"
+    end
+  end
+ 
+  factory :api_plan, class: Plan do |f|
+    f.sequence(:name){|n| "Plan #{n}"}
+    created_at Date.today
+    
+    factory :api_public_plan do
+      visibility 'public'
+    end
+    
+    factory :api_institutional_plan do
+      visibility 'institutional'
+    end
+    
+    factory :api_unit_plan do
+      visibility 'unit'
+    end
+    
+    factory :api_private_plan do
+      visibility 'private'
+    end
+  end
+  
+  factory :api_plan_state_committed, class: PlanState do
+    state :committed
+  end
+  factory :api_plan_owner, class: UserPlan do
+    owner true
+  end
+  factory :api_plan_coowner, class: UserPlan do
+    owner false
+  end
 end
-
-
-
-
-
 
 
 # FactoryGirl.define do

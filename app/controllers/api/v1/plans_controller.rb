@@ -1,9 +1,14 @@
+require 'htmltoword'
+require 'pandoc-ruby'
+
 class Api::V1::PlansController < Api::V1::BaseController
 
   include ApplicationHelper
 
   before_action :soft_authenticate
   #before_action :authenticate
+
+  @@realm = "Plans"
 
   respond_to :json
 
@@ -60,11 +65,11 @@ class Api::V1::PlansController < Api::V1::BaseController
               ((@plan.visibility == :private) && (@user == @plan.owner || @plan.coowners.include?(@user)))
             @plan
           else
-            render json: 'You are not authorized to look at this content.', status: 401
+            render_unauthorized
           end
         end
       else
-        render json: 'The plan you are looking for doesn\'t exist', status: 404
+        render_not_found
       end
     else
       if @plan = Plan.find_by_id(params[:id])
@@ -72,10 +77,10 @@ class Api::V1::PlansController < Api::V1::BaseController
         if (@plan.visibility == :public)
           @plan
         else
-          render json: 'You are not authorized to look at this content.', status: 401
+          render_unauthorized
         end
       else
-        render json: 'The plan you are looking for doesn\'t exist', status: 404
+        render_not_found
       end
     end
   end
@@ -94,11 +99,13 @@ class Api::V1::PlansController < Api::V1::BaseController
               ((@plan.visibility == :private) && (@user == @plan.owner || @plan.coowners.include?(@user)))
             @plan
           else
-            render json: 'You are not authorized to look at this content.', status: 401
+            @plan = nil
+            render_unauthorized
           end
         end
       else
-        render json: 'The plan you are looking for doesn\'t exist', status: 404
+        @plan = nil
+        render_not_found
       end
     else
       if @plan = Plan.find_by_id(params[:id])
@@ -106,10 +113,30 @@ class Api::V1::PlansController < Api::V1::BaseController
         if (@plan.visibility == :public)
           @plan
         else
-          render json: 'You are not authorized to look at this content.', status: 401
+          @plan = nil
+          render_unauthorized
         end
       else
-        render json: 'The plan you are looking for doesn\'t exist', status: 404
+        @plan = nil
+        render_not_found
+      end
+    end
+    
+    if @plan
+      respond_to do |format|
+        format.json do
+          render :layout => false
+        end
+        format.pdf do
+          render :layout => false, :template => '/plans/show.pdf.ruby'
+        end
+        format.docx do
+          templ_path = File.join(Rails.root.to_s, 'public')
+          str = render_to_string(:template => '/api/v1/plans/plans_full_show_docx.html.erb', :layout => false)
+          converter = PandocRuby.new(str, :from => :html, :to => :docx, 'data-dir' => templ_path )
+          headers["Content-Disposition"] = "attachment; filename=\"" + sanitize_for_filename(@plan.name) + ".docx\""
+          render :text => converter.convert, :content_type=> 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        end
       end
     end
   end
@@ -153,6 +180,51 @@ class Api::V1::PlansController < Api::V1::BaseController
     end
   end
 
+  # ------------------------------------------------------------------------------------
+  # Returns all templates 'used' by the user's institution
+  def plans_templates_index
+    @user = User.find_by_id(session[:user_id])
+    
+    # If an institutional user, return the templates that the instition has used to make plans
+    if user_role_in?(:dmp_admin)
+      @plans = Plan.includes(:requirements_template).order(id: :asc)
+      
+      @plans
+      
+    elsif user_role_in?(:institutional_admin, :institutional_reviewer, :resource_editor, :template_editor)
+      @plans = Plan.joins(:users).where("users.institution_id IN (?)", @user.institution.id).
+                            includes(:requirements_template).order(id: :asc)
+      @plans
+    else
+      render_unauthorized
+    end
+  end
+
+  # ------------------------------------------------------------------------------------
+  # Returns the template 'used' by the specified plan
+  def plans_templates_show
+    @user = User.find_by_id(session[:user_id])
+    
+    # If an institutional user, return the template 
+    if user_role_in?(:dmp_admin)
+      @plan = Plan.find_by_id(params[:id])
+      
+      @plan
+    elsif user_role_in?(:institutional_admin, :institutional_reviewer, :resource_editor, :template_editor)
+      @plan = Plan.joins(:users).where("users.institution_id IN (?)", @user.institution.id).find_by_id(params[:id])
+
+      # User does not have access to the requested plan
+      if @plan.nil?
+        render_unauthorized
+      else
+        @plan
+      end
+    else
+      render_unauthorized
+    end
+  end
+
+  # ------------------------------------------------------------------------------------
   private
   def inst_admin_plan_list
     @institutional_plans = Plan.institutional_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id IN (?)", @user.institution.root.subtree_ids)
@@ -168,20 +240,3 @@ class Api::V1::PlansController < Api::V1::BaseController
 
 
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

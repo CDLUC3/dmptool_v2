@@ -6,7 +6,7 @@ class Api::V1::BaseController < ActionController::Base
   protect_from_forgery with: :null_session
 
 
-	
+	@@realm = "Institutions"
  
 
   def safe_has_role?(role)
@@ -46,7 +46,7 @@ class Api::V1::BaseController < ActionController::Base
 
 
   def authenticate
-    authenticate_token || render_unauthorized
+    authenticate_token || render_bad_credentials
   end
 
   def soft_authenticate
@@ -63,12 +63,25 @@ class Api::V1::BaseController < ActionController::Base
   end
 
 
-  def render_unauthorized
-    self.headers['WWW-Authenticate'] = 'Token realm="Users"'
+  def render_bad_credentials
+    self.headers['WWW-Authenticate'] = "Token realm=\"#{@@realm}\""
     render json: 'Bad credentials', status: 401
   end
 
+  def render_unauthorized
+    self.headers['WWW-Authenticate'] = "Token realm=\"#{@@realm}\""
+    render json: 'You are not authorized to look at this content.', status: 401
+  end
 
-	
+  def render_not_found
+    self.headers['WWW-Authenticate'] = "Token realm=\"#{@@realm}\""
+    render json: 'The content you are looking for doesn\'t exist', status: 404
+  end
+
+
+  def sanitize_for_filename(filename)
+    ActiveSupport::Inflector.transliterate filename.downcase.gsub(/[\\\/?:*"><|]+/,"_").gsub(/\s/,"_")
+  end
+
 end
 
