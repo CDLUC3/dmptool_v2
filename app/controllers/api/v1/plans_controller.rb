@@ -235,7 +235,7 @@ class Api::V1::PlansController < Api::V1::BaseController
   end
 
   def owned_plan_list
-    Plan.joins(:users).where(user_plans: {owner: true}).where("users.id = ?", @user.id )
+    Plan.joins(:users).where("users.id = ?", @user.id )
   end
 
 
