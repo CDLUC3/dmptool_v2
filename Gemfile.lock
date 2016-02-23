@@ -266,7 +266,6 @@ DEPENDENCIES
   launchy
   mini_magick
   mysql2
-  nokogiri (~> 1.6.7)
   omniauth
   omniauth-ldap
   omniauth-shibboleth!
