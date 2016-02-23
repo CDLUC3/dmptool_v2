@@ -24,6 +24,8 @@ end
 
 gem "ckeditor", '4.0.11'
 
+gem 'nokogiri', '~> 1.6.7'
+
 gem 'htmltoword'
 
 gem 'omniauth'
@@ -31,7 +33,6 @@ gem 'omniauth-ldap'
 gem "omniauth-shibboleth", :git => "https://bitbucket.org/cdl/omniauth-shibboleth.git", :branch => 'master'
 
 gem 'mysql2'
-gem 'nokogiri', '~> 1.6.6.2'
 gem 'therubyracer'
 gem 'enum_column3'
 gem 'bootstrap-sass', '2.3.2.0'
