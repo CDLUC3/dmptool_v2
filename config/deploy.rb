@@ -22,7 +22,7 @@ set :keep_releases, 5
 
 after "deploy:update", "deploy:cleanup"
 
-default_run_options[:env] = { 'PATH' => '/dmp2/local/bin/:$PATH'}
+default_run_options[:env] = { 'PATH' => '/apps/dmp2/local/bin/:$PATH'}
 default_run_options[:pty] = true
 
 
