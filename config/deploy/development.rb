@@ -5,7 +5,7 @@ role :db,  'uc3-dmp2-dev.cdlib.org', :primary => true # This is where Rails migr
 set :deploy_to, "/dmp2/apps/dmp2/"
 set :unicorn_pid, "/dmp2/apps/dmp2/shared/tmp/unicorn.dmp2.pid"
 
-before 'bundler:install', 'deploy:prepare_bundle_config'
+before 'bundle:install', 'deploy:prepare_bundle_config'
 
 after 'deploy', 'deploy:migrate'
 after 'deploy:finalize_update', 'deploy:symlink_shared'

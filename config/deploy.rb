@@ -37,9 +37,6 @@ namespace :deploy do
   end
 
   task :prepare_bundle_config do
-    on roles(:app) do
-      execute "bundle config build.nokogiri '--use-system-libraries --with-xml2-include=/dmp2/local/libxml2/include/libxml2'"
-    end
+    run "bundle config build.nokogiri '--with-xml2-include=/dmp2/local/libxml2/include/libxml2'"
   end
 end
-
