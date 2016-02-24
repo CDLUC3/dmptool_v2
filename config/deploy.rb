@@ -24,13 +24,8 @@ set :bundle_flags, '--deployment'
 
 after "deploy:update", "deploy:cleanup"
 
-default_run_options[:env] = { 'PATH' => '/apps/dmp2/local/bin/:$PATH'}
+default_run_options[:env] = { 'PATH' => '/dmp2/local/bin/:$PATH'}
 default_run_options[:pty] = true
-
-task :execute_on_server do
-  execute "which bundle"
-end
-
 
 namespace :deploy do
   task :symlink_shared do
@@ -40,6 +35,11 @@ namespace :deploy do
     run "ln -s #{shared_path}/unicorn.rb #{release_path}/config/"
     run "ln -s #{shared_path}/uploads #{release_path}/public/uploads"
   end
-end
 
+  task :prepare_bundle_config do
+    on roles(:app) do
+      execute "bundle config build.nokogiri '--use-system-libraries --with-xml2-include=/dmp2/local/libxml2/include/libxml2'"
+    end
+  end
+end
 

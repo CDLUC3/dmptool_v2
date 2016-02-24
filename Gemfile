@@ -24,8 +24,6 @@ end
 
 gem "ckeditor", '4.0.11'
 
-#gem 'nokogiri', '~> 1.6.7'
-
 gem 'htmltoword'
 
 gem 'omniauth'
