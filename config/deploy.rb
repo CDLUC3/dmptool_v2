@@ -27,6 +27,10 @@ after "deploy:update", "deploy:cleanup"
 default_run_options[:env] = { 'PATH' => '/apps/dmp2/local/bin/:$PATH'}
 default_run_options[:pty] = true
 
+task :execute_on_server do
+  execute "which bundle"
+end
+
 
 namespace :deploy do
   task :symlink_shared do
