@@ -20,6 +20,8 @@ set :ssh_options, { :forward_agent => true }
 set :use_sudo, false
 set :keep_releases, 5
 
+set :bundle_flags, '--deployment'
+
 after "deploy:update", "deploy:cleanup"
 
 default_run_options[:env] = { 'PATH' => '/apps/dmp2/local/bin/:$PATH'}
