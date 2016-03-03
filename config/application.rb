@@ -31,14 +31,13 @@ module Dmptool2
 #   config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
 #    config.assets.precompile += Ckeditor.assets
 #   config.assets.precompile += %w('application.js', 'application.css')
-    config.assets.precompile += ['ckeditor/*']
+    config.assets.precompile += ['ckeditor/*', 'glyphicons-halflings.png', 'glyphicons-halflings-white.png' ]
     config.autoload_paths += %W(#{config.root}/lib)
-    config.assets.compile = true
-    config.assets.debug = false
+#    config.assets.compile = true
+#    config.assets.debug = false
 
     config.exceptions_app = self.routes
 
-    
   end
 end
 

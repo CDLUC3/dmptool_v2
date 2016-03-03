@@ -26,6 +26,8 @@ Dmptool2::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+  config.assets.digest = true
+  config.assets.raise_runtime_errors = true
 
   #special settings if you want to configure Unicorn logs for development use of unicorn server
   if defined? Hulk
