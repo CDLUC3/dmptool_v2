@@ -1,7 +1,7 @@
 object @plan
 
 attributes :id
-attributes :created_at => :created
+attributes :created
 attributes :visibility
 
 child :requirements_template => :template do
