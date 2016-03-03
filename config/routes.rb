@@ -2,15 +2,24 @@ Dmptool2::Application.routes.draw do
 
   namespace :api, :defaults => {:format => :json} do
     namespace :v1 do
-      resources :institutions, only: [:show, :index]
-      resources :users, only: [:show, :index]
-      resources :plans, only: [:show, :index]
-
-      get 'templates/:id', to: 'requirements_templates#show'
-      get 'templates', to: 'requirements_templates#index'
-
+      #resources :resources
+      #resources :roles
+      #resources :requirements
+      #resources :comments
+      #resources :resource_contexts
+      #resources :responses
+      #resources :published_plans
+      #resources :plans_states
+      #resources :sample_plans
+      
+      resources :institutions, only: [:index, :show]
+      resources :users, only: [:index, :show]
+      resources :requirements_templates, only: [:index, :show], path: :templates_for_institution
+      resources :plans, only: [:index, :show]
+      
       get 'institutions_plans_count/:id', to: 'institutions#plans_count_show'
       get 'institutions_plans_count', to: 'institutions#plans_count_index'
+      
       get 'institutions_admins_count/:id', to: 'institutions#admins_count_show'
       get 'institutions_admins_count', to: 'institutions#admins_count_index'
 
@@ -22,6 +31,12 @@ Dmptool2::Application.routes.draw do
       
       get 'plans_full/:id', to: 'plans#plans_full_show'
       get 'plans_full', to: 'plans#plans_full_index'
+
+      get 'plans_owned', to: 'plans#plans_owned'
+      get 'plans_owned_full', to: 'plans#plans_owned_full'
+      
+      get 'plans_templates/:id', to: 'plans#plans_templates_show'
+      get 'plans_templates', to: 'plans#plans_templates_index'
     end
   end
 

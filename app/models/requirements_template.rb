@@ -60,6 +60,9 @@ class RequirementsTemplate < ActiveRecord::Base
     end_date.nil? ? nil : end_date.strftime("%m/%d/%Y") 
   end
 
+  def created
+    created_at.nil? ? nil : created_at.strftime("%m/%d/%Y") 
+  end
 
   def self.letter_range_by_institution(s, e)
     #add as a scope where s=start and e=end letter

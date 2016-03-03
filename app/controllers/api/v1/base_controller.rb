@@ -5,9 +5,7 @@ class Api::V1::BaseController < ActionController::Base
   #API calls should be stateless. Otherwise Rails would check for an authenticity token on POST, PUT/PATCH and DELETE.
   protect_from_forgery with: :null_session
 
-  @@realm = "Institutions"
-	
- 
+	@@realm = "Institutions" 
 
   def safe_has_role?(role)
     #this returns whether a user has a role, but does it safely.  If no user is logged in
@@ -75,6 +73,10 @@ class Api::V1::BaseController < ActionController::Base
     self.headers['WWW-Authenticate'] = "Token realm=\"#{@@realm}\""
     render json: 'The content you are looking for doesn\'t exist', status: 404
   end
-	
+
+
+  def sanitize_for_filename(filename)
+    ActiveSupport::Inflector.transliterate filename.downcase.gsub(/[\\\/?:*"><|]+/,"_").gsub(/\s/,"_")
+  end
 end
 

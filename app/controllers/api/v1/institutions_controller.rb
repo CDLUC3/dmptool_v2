@@ -2,6 +2,7 @@ class Api::V1::InstitutionsController < Api::V1::BaseController
 	 
 	respond_to :json
 
+  @@realm = "Institutions"
 
 	def index         
   	@institutions = Institution.all 
@@ -12,7 +13,7 @@ class Api::V1::InstitutionsController < Api::V1::BaseController
     if @institution = Institution.find_by_id(params[:id]) 
       @institution 
     else
-      render json: 'The institution you are looking for doesn\'t exist', status: 404
+      render_not_found
     end
   end  
 
@@ -21,7 +22,7 @@ class Api::V1::InstitutionsController < Api::V1::BaseController
   	if @institution = Institution.find_by_id(params[:id]) 
       @institution 
     else
-      render json: 'The institution you are looking for doesn\'t exist', status: 404
+      render_not_found
     end
 	end 
 
@@ -35,7 +36,7 @@ class Api::V1::InstitutionsController < Api::V1::BaseController
   	if @institution = Institution.find_by_id(params[:id]) 
       @institution 
     else
-      render json: 'The institution you are looking for doesn\'t exist', status: 404
+      render_not_found
     end
 	end 
 

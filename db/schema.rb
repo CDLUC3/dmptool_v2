@@ -14,8 +14,8 @@
 ActiveRecord::Schema.define(version: 20151214170435) do
 
   create_table "additional_informations", force: true do |t|
-    t.string   "url",                      limit: 191
-    t.string   "label",                    limit: 191
+    t.string   "url",                      limit: 255
+    t.string   "label",                    limit: 255
     t.integer  "requirements_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -133,7 +133,7 @@ ActiveRecord::Schema.define(version: 20151214170435) do
 
   create_table "requirements_templates", force: true do |t|
     t.integer  "institution_id"
-    t.string   "name",           limit: 191
+    t.string   "name",           limit: 255
     t.boolean  "active"
     t.date     "start_date"
     t.date     "end_date"
@@ -151,8 +151,8 @@ ActiveRecord::Schema.define(version: 20151214170435) do
     t.datetime "updated_at"
     t.integer  "resource_id"
     t.text     "name"
-    t.string   "contact_info",             limit: 191
-    t.string   "contact_email",            limit: 191
+    t.string   "contact_info"
+    t.string   "contact_email"
     t.enum     "review_type",              limit: [:formal_review, :informal_review, :no_review]
   end
 
@@ -223,11 +223,11 @@ ActiveRecord::Schema.define(version: 20151214170435) do
     t.binary   "prefs"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "login_id",         limit: 191
-    t.boolean  "active",                       default: true
-    t.datetime "deleted_at"
-    t.string   "orcid_id",         limit: 191
-    t.string   "auth_token",       limit: 191
+    t.string   "login_id"
+    t.date     "deleted_at"
+    t.boolean  "active",           default: true
+    t.string   "orcid_id"
+    t.string   "auth_token"
   end
 
   add_index "users", ["auth_token"], name: "index_users_on_auth_token", unique: true, using: :btree
