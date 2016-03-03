@@ -22,12 +22,6 @@ Dmptool2::Application.routes.draw do
       
       get 'institutions_admins_count/:id', to: 'institutions#admins_count_show'
       get 'institutions_admins_count', to: 'institutions#admins_count_index'
-
-      get 'plans_templates', to: 'plans#templates_index'
-      get 'plans_templates/:id', to: 'plans#templates_show'
-      
-      get 'plans_owned', to: 'plans#owned_index'
-      get 'plans_owned/:id', to: 'plans#owned_show'
       
       get 'plans_full/:id', to: 'plans#plans_full_show'
       get 'plans_full', to: 'plans#plans_full_index'
