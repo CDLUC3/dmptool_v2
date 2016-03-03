@@ -43,6 +43,7 @@ describe 'Templates API', :type => :api do
 
       i = 0
       ids = @templates.collect{|t| t.id}
+
       templates[:templates].each do |template|
         # Make sure we're showing the right templates!
         i = i + 1 if ids.include?(template[:template][:id])
@@ -68,6 +69,7 @@ describe 'Templates API', :type => :api do
       templates = json(response.body)
       
       i = 0
+
       ids = @templates2.collect{|t| t.id}
       templates[:templates].each do |template|
         # Make sure we're showing the right templates!

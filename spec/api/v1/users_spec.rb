@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+require 'spec_helper'
+=======
+>>>>>>> stage
 require_relative '../api_spec_helper.rb'
 
 describe 'Users API', :type => :api do 

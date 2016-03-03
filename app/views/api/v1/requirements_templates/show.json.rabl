@@ -4,3 +4,4 @@ attribute  :id
 attribute  :name
 attribute  :created
 attribute  :visibility
+

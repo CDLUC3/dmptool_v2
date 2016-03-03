@@ -22,10 +22,10 @@ Dmptool2::Application.routes.draw do
       
       get 'institutions_admins_count/:id', to: 'institutions#admins_count_show'
       get 'institutions_admins_count', to: 'institutions#admins_count_index'
-
+      
       get 'plans_full/:id', to: 'plans#plans_full_show'
       get 'plans_full', to: 'plans#plans_full_index'
-      
+
       get 'plans_owned', to: 'plans#plans_owned'
       get 'plans_owned_full', to: 'plans#plans_owned_full'
       

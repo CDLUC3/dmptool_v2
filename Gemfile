@@ -55,4 +55,3 @@ gem 'exception_notification'
 gem 'rabl' # for rendering json views in the api https://github.com/nesquena/rabl
 gem 'pandoc-ruby'
 gem 'roman-numerals' #, :git => 'https://github.com/AndrewVos/roman-numerals'
-

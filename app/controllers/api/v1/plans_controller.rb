@@ -6,7 +6,8 @@ class Api::V1::PlansController < Api::V1::BaseController
   include ApplicationHelper
 
   before_action :soft_authenticate
-  #before_action :authenticate
+
+  @@realm = "Plans"
 
   @@realm = "Plans"
 
@@ -57,8 +58,7 @@ class Api::V1::PlansController < Api::V1::BaseController
       if @plan = Plan.find_by_id(params[:id])
         if user_role_in?(:dmp_admin)
           @plan
-        else
-          @id = @plan.id
+        else         
           if (@plan.visibility == :public) ||
               ((@plan.visibility == :institutional) && (@user.institution.root.subtree_ids.include?(@plan.owner.institution_id) || @plan.coowners.include?(@user))) ||
               ((@plan.visibility == :unit) && (@user.institution.subtree_ids.include?(@plan.owner.institution_id) || @plan.coowners.include?(@user))) ||
@@ -211,6 +211,7 @@ class Api::V1::PlansController < Api::V1::BaseController
       
       @plan
     elsif user_role_in?(:institutional_admin, :institutional_reviewer, :resource_editor, :template_editor)
+
       @plan = Plan.joins(:users).where("users.institution_id IN (?)", @user.institution.id).find_by_id(params[:id])
 
       # User does not have access to the requested plan
@@ -237,6 +238,5 @@ class Api::V1::PlansController < Api::V1::BaseController
   def owned_plan_list
     Plan.joins(:users).where("users.id = ?", @user.id )
   end
-
 
 end

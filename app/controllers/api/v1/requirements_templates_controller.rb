@@ -20,7 +20,6 @@ class Api::V1::RequirementsTemplatesController < Api::V1::BaseController
                                     :resource_editor, :template_editor)
       @requirements_templates = RequirementsTemplate.where("institution_id IN (?)", @user.institution.id).
                                         where(active: true).order(id: :asc).distinct
-
       @requirements_templates
     else
       render_unauthorized
@@ -60,5 +59,4 @@ class Api::V1::RequirementsTemplatesController < Api::V1::BaseController
       render_unauthorized
     end
   end
-  
 end

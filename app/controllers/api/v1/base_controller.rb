@@ -5,9 +5,7 @@ class Api::V1::BaseController < ActionController::Base
   #API calls should be stateless. Otherwise Rails would check for an authenticity token on POST, PUT/PATCH and DELETE.
   protect_from_forgery with: :null_session
 
-
-	@@realm = "Institutions"
- 
+	@@realm = "Institutions" 
 
   def safe_has_role?(role)
     #this returns whether a user has a role, but does it safely.  If no user is logged in
@@ -53,13 +51,11 @@ class Api::V1::BaseController < ActionController::Base
     authenticate_token 
   end
 
-  
   def authenticate_token
     authenticate_with_http_token do |token, options|
       user = User.find_by(auth_token: token)
       session[:user_id] = user.id if user
     end
-
   end
 
 
@@ -82,6 +78,5 @@ class Api::V1::BaseController < ActionController::Base
   def sanitize_for_filename(filename)
     ActiveSupport::Inflector.transliterate filename.downcase.gsub(/[\\\/?:*"><|]+/,"_").gsub(/\s/,"_")
   end
-
 end
 
