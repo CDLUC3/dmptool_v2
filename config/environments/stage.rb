@@ -56,7 +56,7 @@ Dmptool2::Application.configure do
     :email => {
       :email_prefix => "[Dmptool2 Exception] ",
       :sender_address => %{"notifier"},
-      :exception_recipients => %w{shirin.faenza@ucop.edu Marisa.Strong@ucop.edu Scott.Fisher@ucop.edu Bhavi.Vedula@ucop.edu}
+      :exception_recipients => %w{brian.riley@ucop.edu Marisa.Strong@ucop.edu Scott.Fisher@ucop.edu Bhavi.Vedula@ucop.edu}
     }
 
   config.action_mailer.delivery_method = :sendmail
