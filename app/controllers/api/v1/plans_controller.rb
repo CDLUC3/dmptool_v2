@@ -220,7 +220,7 @@ class Api::V1::PlansController < Api::V1::BaseController
 
       # User does not have access to the requested plan
       if @plan.nil?
-        render_unauthorized
+        render_not_found
       else
         @plan
       end
