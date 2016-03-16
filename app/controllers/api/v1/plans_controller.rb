@@ -171,12 +171,16 @@ class Api::V1::PlansController < Api::V1::BaseController
   def plans_owned
     if @user = User.find_by_id(session[:user_id])
       @plans = owned_plan_list
+    else
+      render_unauthorized
     end
   end
 
   def plans_owned_full
     if @user = User.find_by_id(session[:user_id])
       @plans = owned_plan_list
+    else
+      render_unauthorized
     end
   end
 
