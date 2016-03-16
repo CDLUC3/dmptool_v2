@@ -170,11 +170,7 @@ class Api::V1::PlansController < Api::V1::BaseController
 
   def plans_owned
     if @user = User.find_by_id(session[:user_id])
-      if user_role_in?(:dmp_admin, :institutional_admin, :institutional_reviewer, :resource_editor, :template_editor)
-        @plans = owned_plan_list
-      else
-        render_unauthorized
-      end
+      @plans = owned_plan_list
     else
       render_unauthorized
     end
@@ -182,11 +178,7 @@ class Api::V1::PlansController < Api::V1::BaseController
 
   def plans_owned_full
     if @user = User.find_by_id(session[:user_id])
-      if user_role_in?(:dmp_admin, :institutional_admin, :institutional_reviewer, :resource_editor, :template_editor)
-        @plans = owned_plan_list
-      else
-        render_unauthorized
-      end
+      @plans = owned_plan_list
     else
       render_unauthorized
     end
