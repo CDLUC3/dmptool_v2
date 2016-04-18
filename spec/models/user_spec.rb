@@ -1,14 +1,23 @@
-=begin
 require 'spec_helper'
 
 require 'omniauth/auth_hash'
 
 describe 'User', :type => :model do 
   before :all do
-    @user = User.new(institution_id: 1, first_name: "John", last_name: "Doe", email: "JohnDoe@ucop.edu") 
+    @institution = Institution.new(id: 1, full_name: "Test Institution")
+    @user = User.new(
+      institution: @institution, 
+      first_name: "John", 
+      last_name: "Doe", 
+      email: "John.Doe@ucop.edu",
+      prefs: {},
+      login_id: "jdoe",
+      password: "passWord12",
+      password_confirmation: "passWord12"
+    ) 
      
     @omniauth_single_vals = OmniAuth::AuthHash.new(
-      provider: 'default', 
+      provider: 'shibboleth', 
       uid: 'jdoe',
       info: {
         name: 'John Doe',
@@ -19,7 +28,7 @@ describe 'User', :type => :model do
     )
      
     @omniauth_double_vals = OmniAuth::AuthHash.new(
-      provider: 'default', 
+      provider: 'shibboleth', 
       uid: 'john.doe@test.org,jdoe;12577;,',
       info: {
         name: 'John Doe',
@@ -30,25 +39,38 @@ describe 'User', :type => :model do
     )
   end
 
+  # -----------------------------------------------------------------
   it 'should respond to expected attributes' do
-    @user.should respond_to(:first_name) 
-    @user.should respond_to(:last_name) 
-    @user.should respond_to(:email) 
-    @user.should respond_to(:prefs) 
-    @user.should respond_to(:token) 
-    @user.should respond_to(:token_expiration) 
+    expect(@user).to respond_to(:first_name) 
+    expect(@user).to respond_to(:last_name) 
+    expect(@user).to respond_to(:email) 
+    expect(@user).to respond_to(:prefs) 
+    expect(@user).to respond_to(:token) 
+    expect(@user).to respond_to(:token_expiration) 
 
-    @user.should belong_to(:institution) 
+    expect(@user.institution).to eq(@institution) 
 
-    @user.should be_valid 
+    expect(@user.errors.size).to eq(0)
+    expect(@user.valid?).to eq(true)
   end
 
+  # -----------------------------------------------------------------
   it 'should create a user via OmniAuth' do
-    usr = User.from_omniauth(@omniauth_double_vals, 'test')
+    [@omniauth_single_vals, @omniauth_double_vals].each do |vals|
+      usr = User.from_omniauth(@omniauth_double_vals, 'test')
+    
+      usr.institution = @institution
      
-    usr.should be_valid
+      expect(usr.valid?).to eq(true)
+    
+      # Make sure that the email and login only include one value
+      [usr.login_id, usr.email].each do |val|
+        expect(val).not_to include(';')
+        expect(val).not_to include(',')
+      end
+    end
   end
-=end
+
 #   describe "when institution id is nil" do
 #     before do
 #       @user.institution_id = nil
@@ -147,4 +169,4 @@ describe 'User', :type => :model do
 #       @user.plans.first.eql?(plan)
 #     end
 #   end
-#end
+end
