@@ -111,6 +111,8 @@ class User < ActiveRecord::Base
         user.save(:validate => false) #don't want to validate just to set institution_id since this user is garbage if they don't have institution set anyway
       end
 
+puts "In User: #{{:user_id => user.id, :provider => auth[:provider], :uid => smart_userid_from_omniauth(auth)}}"
+
       Authentication.create!({:user_id => user.id, :provider => auth[:provider], :uid => smart_userid_from_omniauth(auth)})
     end
     user
@@ -121,9 +123,17 @@ class User < ActiveRecord::Base
   def self.smart_userid_from_omniauth(auth)
     info = auth[:info]
     uid = (info ? info[:uid] : nil) || auth[:uid]
+    
     if uid.match(/^uid=\S+?,ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)
       return uid.match(/^uid=(\S+?),ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)[1]
     end
+    
+    # If there are multiple uids present, just take the first one
+    matches = uid.match(/(^.*?)[;,]/i)
+    if matches
+      uid = matches[1]
+    end
+    
     uid
   end
 

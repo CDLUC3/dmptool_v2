@@ -63,8 +63,8 @@ describe 'Plans API', :type => :api do
   # -------------------------------------------------------------
   it 'should return a list of public plans for an unauthorized user' do 
     validations = lambda do |role, response|
-      response.status.should eql(200)
-      response.content_type.should eql(Mime::JSON)
+      expect(response.status).to eq(200)
+      expect(response.content_type).to eq(Mime::JSON)
       
       plans = json(response.body)
 
@@ -75,7 +75,7 @@ describe 'Plans API', :type => :api do
         i = i + 1 if ids.include?(plan[:plan][:id])
       end
       
-      i.should eql @public_plans.size
+      expect(i).to eq(@public_plans.size)
     end
   
     test_unauthorized(["/api/v1/plans", "/api/v1/plans_full"], validations)
@@ -84,8 +84,8 @@ describe 'Plans API', :type => :api do
   # -------------------------------------------------------------
   it 'should return a list of plans for the institutional_admin' do 
     validations = lambda do |role, response|
-      response.status.should eql(200)
-      response.content_type.should eql(Mime::JSON)
+      expect(response.status).to eq(200)
+      expect(response.content_type).to eq(Mime::JSON)
   
       plans = json(response.body)
 
@@ -97,7 +97,7 @@ describe 'Plans API', :type => :api do
         i = i + 1 if ids.include?(plan[:plan][:id])
       end
       
-      i.should eql @inst_admin_plans.size
+      expect(i).to eq(@inst_admin_plans.size)
     end
   
     test_specific_role(@inst_admin, ["/api/v1/plans", "/api/v1/plans_full"], validations)
@@ -106,8 +106,8 @@ describe 'Plans API', :type => :api do
   # -------------------------------------------------------------
   it 'should return a list of plans for the institutional non-admin' do 
     validations = lambda do |role, response|
-      response.status.should eql(200)
-      response.content_type.should eql(Mime::JSON)
+      expect(response.status).to eq(200)
+      expect(response.content_type).to eq(Mime::JSON)
   
       plans = json(response.body)
 
@@ -119,7 +119,7 @@ describe 'Plans API', :type => :api do
         i = i + 1 if ids.include?(plan[:plan][:id])
       end
       
-      i.should eql @resource_editor_plans.size
+      expect(i).to eq(@resource_editor_plans.size)
     end
   
     test_specific_role(@resource_editor, ["/api/v1/plans", "/api/v1/plans_full"], validations)
@@ -136,8 +136,8 @@ describe 'Plans API', :type => :api do
     plans = plans.uniq
     
     validations = lambda do |role, response|
-      response.status.should eql(200)
-      response.content_type.should eql(Mime::JSON)
+      expect(response.status).to eq(200)
+      expect(response.content_type).to eq(Mime::JSON)
   
       json = json(response.body)
       
@@ -147,7 +147,7 @@ describe 'Plans API', :type => :api do
         i = i + 1 if plans.include?(plan[:plan][:id])
       end
       
-      i.should eql plans.size
+      expect(i).to eq(plans.size)
     end
   
     test_specific_role(@dmp_admin, ["/api/v1/plans", "/api/v1/plans_full"], validations)
@@ -158,19 +158,19 @@ describe 'Plans API', :type => :api do
     plan_ids = @inst_admin_plans.collect{|p| p.id}
     
     validations = lambda do |role, response|
-      response.status.should eql(200)
-      response.content_type.should eql(Mime::JSON)
+      expect(response.status).to eq(200)
+      expect(response.content_type).to eq(Mime::JSON)
   
       plans = json(response.body)
-      plans.size.should eql 1
+      expect(plans.size).to eq(1)
 
       # The plan returned should match the one we requested!
-      plan_ids.should include plans[:plan][:id]
+      expect(plan_ids).to include(plans[:plan][:id])
     
       # Make sure all of the required values are present
-      plans[:plan][:id].should be
-      plans[:plan][:name].should be
-      plans[:plan][:visibility].should be
+      expect(plans[:plan][:id]).not_to eq(nil)
+      expect(plans[:plan][:name]).not_to eq(nil)
+      expect(plans[:plan][:visibility]).not_to eq(nil)
     end
   
     plan_ids.each do |plan_id|
@@ -182,8 +182,8 @@ describe 'Plans API', :type => :api do
   # -------------------------------------------------------------
   it 'should NOT return a specific plan for the institutional_admin' do 
     validations = lambda do |role, response|
-      response.status.should eql(401)
-      response.content_type.should eql(Mime::JSON)
+      expect(response.status).to eq(401)
+      expect(response.content_type).to eq(Mime::JSON)
     end
   
     @inaccessible_plans.collect{|p| p.id}.each do |plan_id|
@@ -197,14 +197,14 @@ describe 'Plans API', :type => :api do
     plan_ids = @resource_editor_plans.collect{|p| p.id}
        
     validations = lambda do |role, response|      
-      response.status.should eql(200)
-      response.content_type.should eql(Mime::JSON)
+      expect(response.status).to eq(200)
+      expect(response.content_type).to eq(Mime::JSON)
   
       plans = json(response.body)
-      plans.size.should eql 1
+      expect(plans.size).to eq(1)
 
       # The plan returned should match the one we requested!
-      plan_ids.should include plans[:plan][:id]
+      expect(plan_ids).to include(plans[:plan][:id])
     end
   
     plan_ids.each do |plan_id|
@@ -216,8 +216,8 @@ describe 'Plans API', :type => :api do
   # -------------------------------------------------------------
   it 'should NOT return a specific plan for the institutional non-admin' do 
     validations = lambda do |role, response|
-      response.status.should eql(401)
-      response.content_type.should eql(Mime::JSON)
+      expect(response.status).to eq(401)
+      expect(response.content_type).to eq(Mime::JSON)
     end
   
     @inaccessible_plans.collect{|p| p.id}.each do |plan_id|
@@ -235,19 +235,18 @@ describe 'Plans API', :type => :api do
     plans.concat @inaccessible_plans.collect{|p| p.id}
     
     validations = lambda do |role, response|
-      response.status.should eql(200)
-      response.content_type.should eql(Mime::JSON)
+      expect(response.status).to eq(200)
+      expect(response.content_type).to eq(Mime::JSON)
     end
     
-    test_unauthorized(["/api/v1/plans_templates", "/api/v1/plans_templates/#{@resource_editor_plans[1].id}"], validations)
     test_specific_role(@dmp_admin, ["/api/v1/plans_templates", "/api/v1/plans_templates/#{@inst_admin_plans[1].id}"], validations)
   end
 
   # -------------------------------------------------------------
   it 'should return a list of plans owned by the user' do 
     validations = lambda do |role, response|
-      response.status.should eql(200)
-      response.content_type.should eql(Mime::JSON)
+      expect(response.status).to eq(200)
+      expect(response.content_type).to eq(Mime::JSON)
   
       plans = json(response.body)
 
@@ -258,10 +257,25 @@ describe 'Plans API', :type => :api do
         i = i + 1 if ids.include?(plan[:plan][:id])
       end
       
-      i.should eql @inst_admin_plans.size
+      expect(i).to eq(@inst_admin_plans.size)
     end
   
     test_specific_role(@inst_admin, ["/api/v1/plans_owned", "/api/v1/plans_owned_full"], validations)
   end
   
+  # -------------------------------------------------------------
+  it 'should return a list of plans and their templates' do 
+    validations = lambda do |role, response|
+      expect(response.status).to eq(200)
+      expect(response.content_type).to eq(Mime::JSON)
+  
+      plans = json(response.body)
+
+      expect(plans.size).to be > 0
+    end
+  
+    [@dmp_admin, @inst_admin, @resource_editor].each do |role|
+      test_specific_role(role, ["/api/v1/plans_templates"], validations)
+    end
+  end
 end
