@@ -212,7 +212,7 @@ class InstitutionsController < ApplicationController
       respond_to do |format|  
         if @current_institution.update(institution_params)
           
-          logger.debug "1: #{@current_institution.errors.messages}" if @current_institution.errors
+          logger.debug "1: #{@current_institution.errors.messages}" #if @current_institution.errors
           
           #format.html { redirect_to edit_institution_path(@current_institution), 
                         #notice: 'Institution was successfully updated.' }
@@ -220,7 +220,7 @@ class InstitutionsController < ApplicationController
                         notice: 'Institution was successfully updated.' }
         else
 
-          logger.debug "2: #{@current_institution.errors.messages}" if @current_institution.errors
+          logger.debug "2: #{@current_institution.errors.messages}" #if @current_institution.errors
 
           format.html { redirect_to institutions_path(@current_institution), 
                         notice:  'Something went wrong' }     
@@ -230,13 +230,13 @@ class InstitutionsController < ApplicationController
       respond_to do |format|  
         if @current_institution.update(institution_params)
 
-          logger.debug "3: #{@current_institution.errors.messages}" if @current_institution.errors
+          logger.debug "3: #{@current_institution.errors.messages}" #if @current_institution.errors
           
           format.html { redirect_to edit_institution_path(@current_institution), 
                         notice: 'Institution was successfully updated.' }
         else
           
-          logger.debug "4: #{@current_institution.errors.messages}" if @current_institution.errors
+          logger.debug "4: #{@current_institution.errors.messages}" #if @current_institution.errors
           
           format.html { render 'edit'}     
         end 
