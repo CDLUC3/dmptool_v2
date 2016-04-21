@@ -29,6 +29,10 @@ Dmptool2::Application.configure do
   config.assets.digest = true
   config.assets.raise_runtime_errors = true
 
+  # The deployment to the new AWS dev server fails unless bootstrap's glyphicons are precompiled
+  # Not an issue in stage and prod where all assets are precompiled
+  config.assets.precompile += ['glyphicons-halflings.png', 'glyphicons-halflings-white.png']
+
   #special settings if you want to configure Unicorn logs for development use of unicorn server
   if defined? Hulk
     Hulk::Application.configure do

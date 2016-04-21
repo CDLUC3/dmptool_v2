@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-require 'spec_helper'
-=======
->>>>>>> stage
 require_relative '../api_spec_helper.rb'
 
 describe 'Users API', :type => :api do 
@@ -24,7 +20,7 @@ describe 'Users API', :type => :api do
   # -------------------------------------------------------------
   it 'should not return a list of users or a specific user if user is not an authorized admin' do 
     validations = lambda do |role, response|
-      response.status.should eql(401)
+      expect(response.status).to eq(401)
     end
     
     test_unauthorized(['/api/v1/users', "/api/v1/users/#{@users[0].id}"], validations)
@@ -36,8 +32,8 @@ describe 'Users API', :type => :api do
   # -------------------------------------------------------------
   it 'should return list of users if current user is an admin' do 
     validations = lambda do |role, response|
-      response.status.should eql(200)
-      response.content_type.should eql(Mime::JSON)
+      expect(response.status).to eq(200)
+      expect(response.content_type).to eq(Mime::JSON)
     
       users = json(response.body)
       users.size.should be > 1
@@ -55,24 +51,24 @@ describe 'Users API', :type => :api do
         
       else
         # Not a valid admin role so force a failure!
-        '?_admin'.should eql(role)
+        expect('?_admin').to eq(role)
       end
       
       users.each do |user|
         i = i + 1 if ids.include?(user[:user][:id])
         
         # Make sure all of the required values are present
-        user[:user][:id].should be
-        user[:user][:email].should be
-        user[:user][:first_name].should be
-        user[:user][:last_name].should be
+        expect(user[:user][:id]).not_to eq(nil)
+        expect(user[:user][:email]).not_to eq(nil)
+        expect(user[:user][:first_name]).not_to eq(nil)
+        expect(user[:user][:last_name]).not_to eq(nil)
       
         # Make sure that any values that should NOT be there are missing
-        user[:user][:password].should be_nil
-        user[:user][:login_id].should be_nil
+        expect(user[:user][:password]).to eq(nil)
+        expect(user[:user][:login_id]).to eq(nil)
       end
       
-      i.should eql(ids.size)
+      expect(i).to eq(ids.size)
     end
 
     test_authorized(@users_with_admin_access, ['/api/v1/users'], validations)
@@ -81,8 +77,8 @@ describe 'Users API', :type => :api do
   # -------------------------------------------------------------
   it 'should return a ANY specific user if current user is a dmp admin' do 
     validations = lambda do |role, response|
-      response.status.should eql(200)
-      response.content_type.should eql(Mime::JSON)
+      expect(response.status).to eq(200)
+      expect(response.content_type).to eq(Mime::JSON)
     
       users = json(response.body)
       users.size.should eql 1
@@ -90,17 +86,17 @@ describe 'Users API', :type => :api do
       # The user returned should match the one we requested!
       emails = @users.collect{|u| u.email}
       emails << @user2.email
-      emails.should include users[:user][:email]
+      expect(emails).to include(users[:user][:email])
       
       # Make sure all of the required values are present
-      users[:user][:email].should be
-      users[:user][:first_name].should be
-      users[:user][:last_name].should be
+      expect(users[:user][:email]).not_to eq(nil)
+      expect(users[:user][:first_name]).not_to eq(nil)
+      expect(users[:user][:last_name]).not_to eq(nil)
       
       # Make sure that any values that should NOT be there are missing
-      users[:user][:id].should be_nil
-      users[:user][:password].should be_nil
-      users[:user][:login_id].should be_nil
+      expect(users[:user][:id]).to eq(nil)
+      expect(users[:user][:password]).to eq(nil)
+      expect(users[:user][:login_id]).to eq(nil)
     end
     
     @users.each do |user|
@@ -113,25 +109,25 @@ describe 'Users API', :type => :api do
   # -------------------------------------------------------------
   it 'should return a specific user for the institution if current user is a institutional admin' do 
     validations = lambda do |role, response|
-      response.status.should eql(200)
-      response.content_type.should eql(Mime::JSON)
+      expect(response.status).to eq(200)
+      expect(response.content_type).to eq(Mime::JSON)
     
       users = json(response.body)
       users.size.should eql 1
       
       # The user returned should match the one we requested!
       emails = @users.collect{|u| u.email}
-      emails.should include users[:user][:email]
+      expect(emails).to include(users[:user][:email])
       
       # Make sure all of the required values are present
-      users[:user][:email].should be
-      users[:user][:first_name].should be
-      users[:user][:last_name].should be
+      expect(users[:user][:email]).not_to eq(nil)
+      expect(users[:user][:first_name]).not_to eq(nil)
+      expect(users[:user][:last_name]).not_to eq(nil)
       
       # Make sure that any values that should NOT be there are missing
-      users[:user][:id].should be_nil
-      users[:user][:password].should be_nil
-      users[:user][:login_id].should be_nil
+      expect(users[:user][:id]).to eq(nil)
+      expect(users[:user][:password]).to eq(nil)
+      expect(users[:user][:login_id]).to eq(nil)
     end
     
     @users.each do |user|
@@ -142,8 +138,8 @@ describe 'Users API', :type => :api do
   # -------------------------------------------------------------
   it 'should not return a specific user if current user is from another institution' do 
     validations = lambda do |role, response|
-      response.status.should eql(401)
-      response.content_type.should eql(Mime::JSON)
+      expect(response.status).to eq(401)
+      expect(response.content_type).to eq(Mime::JSON)
     end
     
     test_specific_role(@inst_admin, ["/api/v1/users/#{@user2.id}"], validations)
