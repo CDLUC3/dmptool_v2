@@ -62,6 +62,7 @@ describe 'Users API', :type => :api do
         expect(user[:user][:email]).not_to eq(nil)
         expect(user[:user][:first_name]).not_to eq(nil)
         expect(user[:user][:last_name]).not_to eq(nil)
+        expect(user[:user][:created]).not_to eq(nil)
       
         # Make sure that any values that should NOT be there are missing
         expect(user[:user][:password]).to eq(nil)
@@ -92,6 +93,7 @@ describe 'Users API', :type => :api do
       expect(users[:user][:email]).not_to eq(nil)
       expect(users[:user][:first_name]).not_to eq(nil)
       expect(users[:user][:last_name]).not_to eq(nil)
+      expect(users[:user][:created]).not_to eq(nil)
       
       # Make sure that any values that should NOT be there are missing
       expect(users[:user][:id]).to eq(nil)
@@ -123,6 +125,7 @@ describe 'Users API', :type => :api do
       expect(users[:user][:email]).not_to eq(nil)
       expect(users[:user][:first_name]).not_to eq(nil)
       expect(users[:user][:last_name]).not_to eq(nil)
+      expect(users[:user][:created]).not_to eq(nil)
       
       # Make sure that any values that should NOT be there are missing
       expect(users[:user][:id]).to eq(nil)
