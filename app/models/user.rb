@@ -248,6 +248,14 @@ puts "In User: #{{:user_id => user.id, :provider => auth[:provider], :uid => sma
     end
   end
 
+  def created
+    created_at.to_date.strftime("%m/%d/%Y")
+  end
+
+  def modified
+    updated_at.to_date.strftime("%m/%d/%Y")
+  end
+
   
   private
 
