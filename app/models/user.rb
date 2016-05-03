@@ -125,16 +125,12 @@ class User < ActiveRecord::Base
     if uid.match(/^uid=\S+?,ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)
       return uid.match(/^uid=(\S+?),ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)[1]
     end
-    
-# Commenting out fix for duplicate eppn values because it is forcing 
-# the creation of a new account. The DB contains the duplicate eppns so
-# it isn't matching and assumes that the user is new.
 
     # If there are multiple uids present, just take the first one
-    #matches = uid.match(/(^.*?)[;,]/i)
-    #if matches
-    #  uid = matches[1]
-    #end
+    matches = uid.match(/(^.*?)[;,]/i)
+    if matches
+      uid = matches[1]
+    end
     
     uid
   end
