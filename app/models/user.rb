@@ -111,8 +111,6 @@ class User < ActiveRecord::Base
         user.save(:validate => false) #don't want to validate just to set institution_id since this user is garbage if they don't have institution set anyway
       end
 
-puts "In User: #{{:user_id => user.id, :provider => auth[:provider], :uid => smart_userid_from_omniauth(auth)}}"
-
       Authentication.create!({:user_id => user.id, :provider => auth[:provider], :uid => smart_userid_from_omniauth(auth)})
     end
     user
@@ -128,11 +126,15 @@ puts "In User: #{{:user_id => user.id, :provider => auth[:provider], :uid => sma
       return uid.match(/^uid=(\S+?),ou=\S+?,ou=\S+?,dc=\S+?,dc=\S+?$/)[1]
     end
     
+# Commenting out fix for duplicate eppn values because it is forcing 
+# the creation of a new account. The DB contains the duplicate eppns so
+# it isn't matching and assumes that the user is new.
+
     # If there are multiple uids present, just take the first one
-    matches = uid.match(/(^.*?)[;,]/i)
-    if matches
-      uid = matches[1]
-    end
+    #matches = uid.match(/(^.*?)[;,]/i)
+    #if matches
+    #  uid = matches[1]
+    #end
     
     uid
   end
