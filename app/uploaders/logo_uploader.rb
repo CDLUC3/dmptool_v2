@@ -29,6 +29,7 @@ class LogoUploader < CarrierWave::Uploader::Base
 
   # Process files as they are uploaded:
   process :scale => [200, 90]
+  
   #
   def scale(width, height)
     resize_to_fit(width, height)
@@ -43,6 +44,12 @@ class LogoUploader < CarrierWave::Uploader::Base
   # For images you might use something like this:
   def extension_white_list
      %w(jpg jpeg gif png)
+  end
+
+  # Add a white list of allowed content types
+  # Fix for ImageMagick vulnerability - CVE-2016-3714
+  def content_type_whitelist
+    [/image\//]
   end
 
   # Override the filename of the uploaded files:
