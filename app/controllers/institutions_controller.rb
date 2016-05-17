@@ -219,8 +219,13 @@ class InstitutionsController < ApplicationController
 
           logger.error "#{@current_institution.errors.messages}" if @current_institution.errors
 
-          format.html { redirect_to institutions_path(@current_institution), 
-                        notice:  'Something went wrong' }     
+          if @current_institution.errors.get(:logo)
+            format.html { redirect_to institutions_path(@current_institution), 
+                          notice:  'Unable to process your image' }
+          else
+            format.html { redirect_to institutions_path(@current_institution), 
+                          notice:  'Something went wrong' }
+          end
         end 
       end
     else
