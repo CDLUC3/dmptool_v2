@@ -216,16 +216,9 @@ class InstitutionsController < ApplicationController
           format.html { redirect_to institutions_path(@current_institution), 
                         notice: 'Institution was successfully updated.' }
         else
-
           logger.error "#{@current_institution.errors.messages}" if @current_institution.errors
-
-          if @current_institution.errors.get(:logo)
-            format.html { redirect_to institutions_path(@current_institution), 
-                          notice:  'Unable to process your image' }
-          else
-            format.html { redirect_to institutions_path(@current_institution), 
-                          notice:  'Something went wrong' }
-          end
+          format.html { redirect_to institutions_path(@current_institution), 
+                        notice:  'Something went wrong' }
         end 
       end
     else
