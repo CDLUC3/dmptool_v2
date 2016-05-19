@@ -27,7 +27,7 @@ stage:
   recaptcha_private_key:  6Ld2AAYAAAAAAHAzVcdFizHHGPInfgr4aGOm4n4x
   google_analytics_key:   UA-30638119-9
   google_analytics_host:  cdlib.org
-  host_for_email_links:   https://dmp2-staging.cdlib.org
+  host_for_email_links:   https://dmp2-stg.cdlib.org
   ld_path_for_pandoc:     /dmp2/local/lib64
   pdf_font:
     bold: Crimson-Bold.ttf
