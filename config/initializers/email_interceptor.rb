@@ -1,7 +1,3 @@
-if Rails.env.development? or Rails.env.test?
-  ActionMailer::Base.register_interceptor(EmailInterceptor)
-end
-
 class EmailInterceptor
   # Intercepts outgoing emails and changes the recipient to the developers
   def self.delivering_email(message)
@@ -9,3 +5,6 @@ class EmailInterceptor
   end
 end
 
+if Rails.env.development? or Rails.env.test?
+  ActionMailer::Base.register_interceptor(EmailInterceptor)
+end
