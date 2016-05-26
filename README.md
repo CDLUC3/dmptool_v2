@@ -21,7 +21,7 @@ The application is configured and requires OmniAuth to authenticate to LDAP serv
 There are 6 roles associated with the application which give access to different areas of functionality of the application.
 
 * DMP Admin - super user role - this user has access to all functionality of the application and all roles.
-* Institutional Admin - adminstrator for a particular institution.  Has visibility within a particular institution,  assigns roles to users within their institution and maintains institution information.  Assumes template and resource editor roles. 
+* Institutional Admin - administrator for a particular institution.  Has visibility within a particular institution,  assigns roles to users within their institution and maintains institution information.  Assumes template and resource editor roles. 
 * Template editor - user which can create and edit templates
 * Resource Editor - user which can create and edit resources for templates providing information specific to their institution.
 * Reviewer - can review plans within their institution
