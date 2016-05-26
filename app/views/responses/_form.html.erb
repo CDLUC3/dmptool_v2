@@ -3,6 +3,8 @@
 
   <%= f.hidden_field :lock_version %>
 
+  <%= hidden_field_tag(:save_on_preview, false, id: 'true_on_preview') %>
+
   <%= render partial: "shared/errors", locals: {model: @response} %>
   <div class="control-group">
       <%= f.hidden_field :requirement_id, value: requirement_id %>
@@ -52,7 +54,7 @@
   <% end %>
 
   <br/>
-  <% if requirement(requirement_id).obligation == :mandatory %>
+    <% if requirement(requirement_id).obligation == :mandatory %>
       <%= f.submit "Save and Next", name: 'save_and_next', :class => 'btn btn-success pull-right', method: 'post', id: 'save_and_next', remote: true %>
       <%= f.submit "Save Response", name: 'save_only', :class => 'btn btn-success pull-right', method: 'post', id: 'save_only', remote: true %>
       <%= link_to 'Cancel Changes', details_plan_path(@plan), :class => "btn" %>
@@ -67,3 +69,4 @@
 <div id="alert_message" title="Please Enter a Valid Response.">
   Cannot save an empty Response. Please enter a valid Response before continuing.
 </div>
+
