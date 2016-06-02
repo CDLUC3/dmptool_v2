@@ -1,22 +1,23 @@
 namespace :statistics_report do
   desc 'Create monthly institutional statistics reports'
   task institutional: :environment do
-    mstamp = Date.today().strftime('%m-%Y')
+    end_date = Date.today.prev_day
+    start_date = Date.parse(end_date.strftime('%Y-%m-01'))
     
-    # Total user count per Institution
     Institution.find_each do |inst|
+      # If the institution has active users
       if inst.users.where(active: true).count > 0
-        Dir.mkdir("#{Dir.pwd}/tmp/reports/") unless Dir.exist?("#{Dir.pwd}/tmp/reports/")
-        file_name = "#{Dir.pwd}/tmp/reports/#{inst.full_name.rstrip().gsub(/\s/, '_')}-#{mstamp}.txt"
-
-  puts "Generating report: #{file_name}"
-
-        rpt = File.open(file_name, 'w')
-      
-        rpt.write("DMPTool Statistics for #{inst.full_name} - #{mstamp}\n\n")
-        rpt.write("\tTotal number of active users: #{inst.users.where(active: true).count}")
-        rpt.close
+        stats = InstitutionStatistics.new(institution: inst, 
+                                          created_at: Date.today,
+                                          updated_at: Date.today,
+                                          month: start_date.strftime('%m/%Y'), 
+                                          all_users: inst.users.where(active: true).count ||= 0,
+                                          users_created: inst.users.where(created_at: start_date..end_date).count ||= 0)
         
+        #puts "Total: #{inst.users.where(active: true).count}"
+        #puts "Created: #{inst.users.where(created_at: start_date..end_date).count ||= 0}"
+        
+        puts stats.inspect
       end
     end
   end
