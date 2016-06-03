@@ -14,15 +14,11 @@
 ActiveRecord::Schema.define(version: 20151214170435) do
 
   create_table "additional_informations", force: true do |t|
-    t.string   "url"
-    t.string   "label"
+    t.string   "url",                      limit: 255
+    t.string   "label",                    limit: 255
     t.integer  "requirements_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "annita", id: false, force: true do |t|
-    t.integer "xnum"
   end
 
   create_table "authentications", force: true do |t|
@@ -62,21 +58,17 @@ ActiveRecord::Schema.define(version: 20151214170435) do
   end
 
   create_table "institution_statistics", force: true do |t|
-    t.integer  "institution_statistics_id"
-    t.string   "month"
-    t.integer  "users"
-    t.integer  "users_created"
-    t.integer  "plans"
-    t.integer  "test_plans"
-    t.integer  "private_plans"
-    t.integer  "public_plans"
-    t.integer  "plans_created"
-    t.integer  "plans_reviewed"
-    t.integer  "templates"
-    t.integer  "templates_used"
-    t.integer  "unique_templates_used"
-    t.integer  "templates_created"
     t.integer  "institution_id"
+    t.string   "month"
+    t.integer  "total_users"
+    t.integer  "new_users"
+    t.integer  "unique_users"
+    t.integer  "new_completed_plans"
+    t.integer  "new_public_plans"
+    t.integer  "total_public_plans"
+    t.integer  "most_used_public_template"
+    t.integer  "new_plans_using_public_template"
+    t.integer  "total_plans_using_public_template"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -106,6 +98,26 @@ ActiveRecord::Schema.define(version: 20151214170435) do
     t.datetime "updated_at"
     t.integer  "position"
     t.integer  "requirement_id"
+  end
+
+  create_table "overall_statistics", force: true do |t|
+    t.string   "month"
+    t.integer  "total_users"
+    t.integer  "new_users"
+    t.integer  "unique_users"
+    t.integer  "new_institutions"
+    t.integer  "total_institutions"
+    t.integer  "new_completed_plans"
+    t.integer  "new_public_plans"
+    t.integer  "total_public_plans"
+    t.integer  "most_used_public_template"
+    t.integer  "new_plans_using_public_template"
+    t.integer  "total_plans_using_public_template"
+    t.string   "public_template_of_the_month"
+    t.string   "top_ten_institutions_by_users"
+    t.string   "top_ten_institutions_by_plans"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "plan_states", force: true do |t|
@@ -153,7 +165,7 @@ ActiveRecord::Schema.define(version: 20151214170435) do
 
   create_table "requirements_templates", force: true do |t|
     t.integer  "institution_id"
-    t.string   "name"
+    t.string   "name",           limit: 255
     t.boolean  "active"
     t.date     "start_date"
     t.date     "end_date"
@@ -244,8 +256,8 @@ ActiveRecord::Schema.define(version: 20151214170435) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "login_id"
+    t.date     "deleted_at"
     t.boolean  "active",           default: true
-    t.datetime "deleted_at"
     t.string   "orcid_id"
     t.string   "auth_token"
   end
