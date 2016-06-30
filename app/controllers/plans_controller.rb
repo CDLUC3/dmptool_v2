@@ -293,7 +293,6 @@ class PlansController < ApplicationController
       @approved_plans = Plan.plans_approved(Institution.all.ids)
       @rejected_plans = Plan.plans_rejected(Institution.all.ids)
       @reviewed_plans = Plan.plans_reviewed(Institution.all.ids)
-      @previously_reviewed_plans = Plan.plans_previously_reviewed(Insitution.all.ids)
       @plans = Plan.plans_per_institution(Institution.all.ids)
 
     elsif user_role_in?(:institutional_reviewer, :institutional_admin)
@@ -303,7 +302,6 @@ class PlansController < ApplicationController
       @approved_plans = Plan.plans_approved(institutions)
       @rejected_plans = Plan.plans_rejected(institutions)
       @reviewed_plans = Plan.plans_reviewed(institutions)
-      @previously_reviewed_plans = Plan.plans_previously_reviewed(institutions)
       @plans = Plan.plans_per_institution(institutions)
       
     end
@@ -323,8 +321,6 @@ class PlansController < ApplicationController
         @plans = @rejected_plans
       when "reviewed"
         @plans = @reviewed_plans
-      when "previously_reviewed"
-        @plans = @previously_reviewed_plans
       else
         @plans
     end
