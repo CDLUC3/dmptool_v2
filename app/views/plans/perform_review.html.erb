@@ -18,7 +18,7 @@
 
   <% if @reviewer_comments.empty? %>
   <%# if @all_comments.empty? %>
-    <strong>There are currently no comments.</strong>
+    <strong>You have not provided any comments for this plan.</strong>
     <br/>
   <% else %>
     <div class="scrollable-container">
@@ -30,7 +30,24 @@
   </div>
   <% end %>
   <br/>
-  <p><%= link_to "Add Comments", "#", data: {:comment_type => :reviewer}, :class => "btn add_comments_link" %></p>
+  <p><%= link_to "Add Comment", "#", data: {:comment_type => :reviewer}, :class => "btn add_comments_link" %></p>
+</div>
+
+<div class="comments">
+
+  <% if @owner_comments.empty? %>
+  <%# if @all_comments.empty? %>
+    <strong>There are currently no comments from the owners of this plan.</strong>
+    <br/>
+  <% else %>
+    <div class="scrollable-container">
+      <div class="scrollable-content">
+        <br/>
+        <%= render partial: 'comments/index_owner_comments' %>
+      </div>
+    <div class="scrollable-bottom-handle ui-resizable-handle ui-resizable-s"></div>
+  </div>
+  <% end %>
 </div>
 
 <% unless @customization.nil? %>
