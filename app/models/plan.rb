@@ -43,7 +43,7 @@ class Plan < ActiveRecord::Base
   scope :plans_approved, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'approved'}).where(user_plans: {owner: true})}
   scope :plans_rejected, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'rejected'}).where(user_plans: {owner: true})}
   #scope :plans_reviewed, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'reviewed'}).where(user_plans: {owner: true})}
-  scope :plans_reviewed, ->(institution_id) {joins(:users, :plan_states).where("users.institution_id IN(?)", institution_id).where(state: 'reviewed').where(user_plans: {owner: true})}
+  scope :plans_reviewed, ->(institution_id) {joins(:users, :plan_states).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'reviewed'}).where(user_plans: {owner: true})}
   scope :plans_per_institution, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: ['rejected', 'approved', 'submitted', 'reviewed']}).where(user_plans: {owner: true})}
   
   
