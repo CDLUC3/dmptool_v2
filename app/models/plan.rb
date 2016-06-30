@@ -38,10 +38,6 @@ class Plan < ActiveRecord::Base
   #scope :reviewed, -> { joins(:current_state).where('plan_states.state =?', :reviewed) }
   scope :reviewed, -> { joins(:current_state).where('plan_states.state =?', :committed).where(self.joins(:plan_states).where('plan_states.state =?', [:rejected, :approved]).exists) }
   
-  def self.reviewed
-    joins(current_state: :committed).includes(:plan_states).where(plan_states: {state: ['rejected', 'approved']})
-  end
-  
   # scopes for Plan Review
   scope :plans_to_be_reviewed, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'submitted'}).where(user_plans: {owner: true})}
   scope :plans_approved, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'approved'}).where(user_plans: {owner: true})}
