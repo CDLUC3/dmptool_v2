@@ -303,7 +303,7 @@ class PlansController < ApplicationController
       @approved_plans = Plan.plans_approved(institutions)
       @rejected_plans = Plan.plans_rejected(institutions)
       @reviewed_plans = Plan.plans_reviewed(institutions)
-      @previously_reviewed_plans = Plan.plans_previously_reviewed(insitutions)
+      @previously_reviewed_plans = Plan.plans_previously_reviewed(institutions)
       @plans = Plan.plans_per_institution(institutions)
       
     end
