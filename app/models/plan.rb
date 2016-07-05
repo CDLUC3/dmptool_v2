@@ -57,7 +57,7 @@ class Plan < ActiveRecord::Base
 #scope :plans_reviewed, ->(institution_id) {self.reviewed.joins(:users).where("users.institution_id IN(?)", institution_id).where(user_plans: {owner: true})}
 
   def self.plans_reviewed(institution_id) 
-    plans
+    plans = []
     self.reviewed.each do |plan|
       plans << plan if plan.users.institution_id === institution_id and plan.user_plans.owner
     end
