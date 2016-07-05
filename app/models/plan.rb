@@ -50,6 +50,8 @@ class Plan < ActiveRecord::Base
   scope :plans_rejected, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'rejected'}).where(user_plans: {owner: true})}
   scope :plans_reviewed, ->(institution_id) {self.reviewed.joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'committed'}).where(user_plans: {owner: true})}
   scope :plans_per_institution, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: ['rejected', 'approved', 'submitted', 'reviewed']}).where(user_plans: {owner: true})}
+
+scope :plans_committed, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'committed'}).where(user_plans: {owner: true})}
   
   def plan_responses_ids
     @response_ids = [] 
