@@ -37,6 +37,7 @@ class Plan < ActiveRecord::Base
   scope :committed, -> { joins(:current_state).where('plan_states.state =?', :committed) }
   #scope :reviewed, -> { joins(:current_state).where('plan_states.state =?', :reviewed) }
   #scope :reviewed, -> { joins(:current_state).where('plan_states.state =?', :committed).where(self.joins(:plan_states).where('plan_states.state =?', [:rejected, :approved]).exists) }
+  scope :reviewed, -> { self.committed.joins(:plan_states).where('plan_states.state IN (?)', [:rejected, :approved]).exists }
   
   def self.reviewed
     self.committed.joins(:plan_states).joins(:plan_states).where('plan_states.state in(?)', [:approved, :rejected])
