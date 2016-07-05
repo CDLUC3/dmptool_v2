@@ -295,6 +295,8 @@ class PlansController < ApplicationController
       @reviewed_plans = Plan.plans_reviewed(Institution.all.ids)
       @plans = Plan.plans_per_institution(Institution.all.ids)
 
+@committed_plans = Plan.plans_committed(Institution.all.ids)
+
     elsif user_role_in?(:institutional_reviewer, :institutional_admin)
       
       institutions = Institution.find(@user.institution_id).subtree_ids
@@ -303,7 +305,9 @@ class PlansController < ApplicationController
       @rejected_plans = Plan.plans_rejected(institutions)
       @reviewed_plans = Plan.plans_reviewed(institutions)
       @plans = Plan.plans_per_institution(institutions)
-      
+
+@committed_plans = Plan.plans_committed(institutions)
+
     end
 
     review_count
@@ -321,6 +325,8 @@ class PlansController < ApplicationController
         @plans = @rejected_plans
       when "reviewed"
         @plans = @reviewed_plans
+when "committed"
+@plans = @committed_plans
       else
         @plans
     end
