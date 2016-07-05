@@ -37,8 +37,8 @@ class Plan < ActiveRecord::Base
   scope :committed, -> { joins(:current_state).where('plan_states.state =?', :committed) }
   #scope :reviewed, -> { joins(:current_state).where('plan_states.state =?', :reviewed) }
   #scope :reviewed, -> { joins(:current_state).where('plan_states.state =?', :committed).where(self.joins(:plan_states).where('plan_states.state =?', [:rejected, :approved]).exists) }
-  scope :reviewed, -> { self.committed.joins(:plan_states).where('plan_states.state IN (?)', [:rejected, :approved]).distinct }
-  scope :reviewed2, -> { self.committed.where(plan_states: {state: ['approved', 'rejected'] }) }
+  #scope :reviewed, -> { self.committed.joins(:plan_states).where('plan_states.state IN (?)', [:rejected, :approved]).distinct }
+  scope :reviewed, -> { self.committed.where(plan_states: {state: ['approved', 'rejected'] }) }
   
 #  def self.reviewed
 #    self.committed.joins(:plan_states).joins(:plan_states).where('plan_states.state in(?)', [:approved, :rejected])
@@ -48,12 +48,8 @@ class Plan < ActiveRecord::Base
   scope :plans_to_be_reviewed, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'submitted'}).where(user_plans: {owner: true})}
   scope :plans_approved, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'approved'}).where(user_plans: {owner: true})}
   scope :plans_rejected, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'rejected'}).where(user_plans: {owner: true})}
-  #scope :plans_reviewed, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'reviewed'}).where(user_plans: {owner: true})}
+  scope :plans_reviewed, ->(institution_id) {self.reviewed.joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'committed'}).where(user_plans: {owner: true})}
   scope :plans_per_institution, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: ['rejected', 'approved', 'submitted', 'reviewed']}).where(user_plans: {owner: true})}
-  
-  def self.plans_reviewed(institution_id)
-    self.reviewed.joins(:users).where("users.institution_id IN(?)", institution_id).where(user_plans: {owner: true})
-  end
   
   def plan_responses_ids
     @response_ids = [] 
