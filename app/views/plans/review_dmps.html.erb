@@ -10,7 +10,7 @@
 |
 <%= link_to "Rejected (#{@rejected}) ", {scope: "rejected", order_scope: @order_scope, all_scope: @all_scope}, :class => "rejected" %>
 |
-<%= link_to "Reviewed (#{@reviewed}) ", {scope: "reviewed", order_scope: @order_scope, all_scope: @all_scope}, :class => "reviewed" %>
+<%= link_to "Previously Reviewed (#{@reviewed}) ", {scope: "reviewed", order_scope: @order_scope, all_scope: @all_scope}, :class => "reviewed" %>
 </div>
 <table class="table table-striped" id="review_dmps">
   <thead>

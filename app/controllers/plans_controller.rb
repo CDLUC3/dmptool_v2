@@ -296,14 +296,12 @@ class PlansController < ApplicationController
       @plans = Plan.plans_per_institution(Institution.all.ids)
 
     elsif user_role_in?(:institutional_reviewer, :institutional_admin)
-      
       institutions = Institution.find(@user.institution_id).subtree_ids
       @submitted_plans = Plan.plans_to_be_reviewed(institutions)
       @approved_plans = Plan.plans_approved(institutions)
       @rejected_plans = Plan.plans_rejected(institutions)
       @reviewed_plans = Plan.plans_reviewed(institutions)
       @plans = Plan.plans_per_institution(institutions)
-      
     end
 
     review_count
