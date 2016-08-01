@@ -111,7 +111,7 @@
 		<%= f.label :submission_mailer_subject, "Subject", class: "control-label" %>
 		<%= f.text_field :submission_mailer_subject, placeholder: "#{APP_CONFIG['mailer_submission_default']['subject']}", class: "input-xxlarge" %>
 		<%= f.label :submission_mailer_body, "Message", class: "control-label" %>
-		<%= f.cktext_area :submission_mailer_body, :class => "input-xxlarge", :placeholder => "#{APP_CONFIG['mailer_submission_default']['body']}" %>
+		<%= f.cktext_area :submission_mailer_body, :class => "input-xxlarge", :placeholder => "#{APP_CONFIG['mailer_submission_default']['body']}", width: 500 %>
 		<%= content_tag(:span, '', title: 'The automated email message that users will receive after they have submitted their plan for feedback.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => true, class: 'icon questionmark tip') %>
 	</div>
 	
