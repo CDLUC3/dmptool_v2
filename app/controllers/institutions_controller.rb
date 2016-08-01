@@ -210,6 +210,9 @@ class InstitutionsController < ApplicationController
     
     if (current_user.institution == @current_institution)
       respond_to do |format|  
+        
+puts "PARAMS: #{institution_params}"
+        
         if @current_institution.update(institution_params)
           #format.html { redirect_to edit_institution_path(@current_institution), 
                         #notice: 'Institution was successfully updated.' }

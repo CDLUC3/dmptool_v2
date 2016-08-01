@@ -81,13 +81,6 @@
     </div>
   </div>
 
-	<div class="control-group">
-		<%= f.label :submission_mailer_subject, "Email for review process", class: "control-label" %>
-		<%= f.text_field :submission_mailer_subject, placeholder: "[Plan Title] - submitted for feedback"%>
-		<%= f.cktext_area :submission_mailer_body, :class => "input-block-level", :placeholder => "#{APP_CONFIG['mailer_submission_default']['body']}" %>
-		<%= content_tag(:span, '', title: 'The automated email message that users will receive after they have submitted their plan for feedback.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => true, class: 'icon questionmark tip') %>
-	</div>
-
   <div class="control-group">
 
     <%= f.label :logo, 'Institutional Logo', :class => "control-label"  %>
@@ -112,6 +105,17 @@
       <%= f.text_area :desc, rows: 5, :class => "input-xxlarge" %>
     </div>
   </div>
+	
+	<div class="control-group">
+		<h4>Feedback Email Notification</h4>
+		<hr />
+		<%= f.label :submission_mailer_subject, "Subject", class: "control-label" %>
+		<%= f.text_field :submission_mailer_subject, placeholder: "[Plan Title] - submitted for feedback"%>
+		<%= f.label :submission_mailer_body, "Message", class: "control-label" %>
+		<%= f.cktext_area :submission_mailer_body, :class => "input-block-level", :placeholder => "#{APP_CONFIG['mailer_submission_default']['body']}" %>
+		<%= content_tag(:span, '', title: 'The automated email message that users will receive after they have submitted their plan for feedback.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => true, class: 'icon questionmark tip') %>
+	</div>
+	
   <div class="buttons">
     <%= f.submit "Save Changes", :class => "btn btn-green" %>
     <%= button_tag "Cancel", type: :reset, :class => "btn" %>
