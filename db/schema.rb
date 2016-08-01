@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151214170435) do
+ActiveRecord::Schema.define(version: 20160801082200) do
 
   create_table "additional_informations", force: true do |t|
-    t.string   "url",                      limit: 255
-    t.string   "label",                    limit: 255
+    t.string   "url"
+    t.string   "label"
     t.integer  "requirements_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20151214170435) do
   create_table "authentications", force: true do |t|
     t.integer  "user_id"
     t.enum     "provider",   limit: [:shibboleth, :ldap]
-    t.string   "uid",        limit: 191
+    t.string   "uid"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -54,34 +54,55 @@ ActiveRecord::Schema.define(version: 20151214170435) do
 
   create_table "enumerations", force: true do |t|
     t.integer  "requirement_id"
-    t.string   "value",          limit: 191
+    t.string   "value"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "position"
     t.boolean  "default"
   end
 
-  create_table "institutions", force: true do |t|
-    t.string   "full_name",      limit: 191
-    t.string   "nickname",       limit: 191
-    t.text     "desc"
-    t.string   "contact_info",   limit: 191
-    t.string   "contact_email",  limit: 191
-    t.string   "url",            limit: 191
-    t.string   "url_text",       limit: 191
-    t.string   "shib_entity_id", limit: 191
-    t.string   "shib_domain",    limit: 191
+  create_table "institution_statistics", force: true do |t|
+    t.string   "month"
+    t.integer  "all_users"
+    t.integer  "users_created"
+    t.integer  "all_plans"
+    t.integer  "test_plans"
+    t.integer  "private_plans"
+    t.integer  "public_plans"
+    t.integer  "plans_created"
+    t.integer  "plans_reviewed"
+    t.integer  "all_templates"
+    t.integer  "templates_used"
+    t.integer  "unique_templates_used"
+    t.integer  "templates_created"
+    t.integer  "institution_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "logo",           limit: 191
-    t.string   "ancestry",       limit: 191
+  end
+
+  create_table "institutions", force: true do |t|
+    t.string   "full_name"
+    t.string   "nickname"
+    t.text     "desc"
+    t.string   "contact_info"
+    t.string   "contact_email"
+    t.string   "url"
+    t.string   "url_text"
+    t.string   "shib_entity_id"
+    t.string   "shib_domain"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "logo"
+    t.string   "ancestry"
     t.datetime "deleted_at"
+    t.string   "submission_mailer_subject"
+    t.text     "submission_mailer_body"
   end
 
   add_index "institutions", ["ancestry"], name: "index_institutions_on_ancestry", using: :btree
 
   create_table "labels", force: true do |t|
-    t.string   "desc",           limit: 191
+    t.string   "desc"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "position"
@@ -99,7 +120,7 @@ ActiveRecord::Schema.define(version: 20151214170435) do
   create_table "plans", force: true do |t|
     t.text     "name"
     t.integer  "requirements_template_id"
-    t.string   "solicitation_identifier",  limit: 191
+    t.string   "solicitation_identifier"
     t.datetime "submission_deadline"
     t.enum     "visibility",               limit: [:institutional, :public, :private, :unit]
     t.datetime "created_at"
@@ -109,7 +130,7 @@ ActiveRecord::Schema.define(version: 20151214170435) do
 
   create_table "published_plans", force: true do |t|
     t.integer  "plan_id"
-    t.string   "file_name",  limit: 191
+    t.string   "file_name"
     t.enum     "visibility", limit: [:institutional, :public, :private]
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -117,7 +138,7 @@ ActiveRecord::Schema.define(version: 20151214170435) do
 
   create_table "requirements", force: true do |t|
     t.integer  "position"
-    t.string   "text_brief",               limit: 191
+    t.string   "text_brief"
     t.text     "text_full"
     t.enum     "requirement_type",         limit: [:text, :numeric, :date, :enum]
     t.enum     "obligation",               limit: [:mandatory, :mandatory_applicable, :recommended, :optional]
@@ -125,7 +146,7 @@ ActiveRecord::Schema.define(version: 20151214170435) do
     t.integer  "requirements_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "ancestry",                 limit: 191
+    t.string   "ancestry"
     t.boolean  "group"
   end
 
@@ -133,7 +154,7 @@ ActiveRecord::Schema.define(version: 20151214170435) do
 
   create_table "requirements_templates", force: true do |t|
     t.integer  "institution_id"
-    t.string   "name",           limit: 255
+    t.string   "name"
     t.boolean  "active"
     t.date     "start_date"
     t.date     "end_date"
@@ -165,7 +186,7 @@ ActiveRecord::Schema.define(version: 20151214170435) do
   create_table "resources", force: true do |t|
     t.enum     "resource_type", limit: [:actionable_url, :help_text, :example_response, :suggested_response]
     t.text     "value"
-    t.string   "label",         limit: 191
+    t.string   "label"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "text"
@@ -185,14 +206,14 @@ ActiveRecord::Schema.define(version: 20151214170435) do
   end
 
   create_table "roles", force: true do |t|
-    t.string   "name",       limit: 191
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "sample_plans", force: true do |t|
-    t.string   "url",                      limit: 191
-    t.string   "label",                    limit: 191
+    t.string   "url"
+    t.string   "label"
     t.integer  "requirements_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -200,7 +221,7 @@ ActiveRecord::Schema.define(version: 20151214170435) do
 
   create_table "tags", force: true do |t|
     t.integer  "requirements_template_id"
-    t.string   "tag",                      limit: 191
+    t.string   "tag"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -215,17 +236,17 @@ ActiveRecord::Schema.define(version: 20151214170435) do
 
   create_table "users", force: true do |t|
     t.integer  "institution_id"
-    t.string   "email",            limit: 191
-    t.string   "first_name",       limit: 191
-    t.string   "last_name",        limit: 191
-    t.string   "token",            limit: 191
+    t.string   "email"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "token"
     t.datetime "token_expiration"
     t.binary   "prefs"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "login_id"
-    t.date     "deleted_at"
     t.boolean  "active",           default: true
+    t.datetime "deleted_at"
     t.string   "orcid_id"
     t.string   "auth_token"
   end
