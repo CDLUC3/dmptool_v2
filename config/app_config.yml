@@ -15,7 +15,7 @@ development:
     bold_italic: Crimson-BoldItalic.ttf
     normal: Crimson-Roman.ttf
   mailer_submission_default:
-    subject: ''
+    subject: 'DEVELOPMENT: [Plan Title] has been submitted for feedback'
     body: 'Hello [First Name],\r\r[Plan Title] has been submitted for feedback.\r\rIf you have questions pertaining to this action, please visit the DMP Overview page at [Plan Url]\r\rYou may change your notification preferences at [User Url].'
 
 development_nonlocal:
@@ -37,6 +37,9 @@ stage:
     italic: Crimson-Italic.ttf
     bold_italic: Crimson-BoldItalic.ttf
     normal: Crimson-Roman.ttf
+  mailer_submission_default:
+    subject: 'STAGING: [Plan Title] has been submitted for feedback'
+    body: 'Hello [First Name],\r\r[Plan Title] has been submitted for feedback.\r\rIf you have questions pertaining to this action, please visit the DMP Overview page at [Plan Url]\r\rYou may change your notification preferences at [User Url].'
 
 stage_development:
   stage
@@ -57,6 +60,9 @@ production:
     italic: Crimson-Italic.ttf
     bold_italic: Crimson-BoldItalic.ttf
     normal: Crimson-Roman.ttf
+  mailer_submission_default:
+    subject: '[Plan Title] has been submitted for feedback'
+    body: 'Hello [First Name],\r\r[Plan Title] has been submitted for feedback.\r\rIf you have questions pertaining to this action, please visit the DMP Overview page at [Plan Url]\r\rYou may change your notification preferences at [User Url].'
 
 production_development:
   production
