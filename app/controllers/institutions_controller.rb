@@ -336,7 +336,7 @@ puts "PARAMS: #{institution_params}"
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def institution_params
-    params.require(:institution).permit(:full_name, :nickname, :desc, :contact_info, :contact_email, :url, :url_text, :shib_entity_id, :shib_domain, :logo, :logo_cache, :remote_logo_url, :parent_id)
+    params.require(:institution).permit(:full_name, :nickname, :desc, :contact_info, :contact_email, :url, :url_text, :shib_entity_id, :shib_domain, :logo, :logo_cache, :remote_logo_url, :parent_id, :submission_mailer_subject, :submission_mailer_body)
   end
 
   def check_for_cancel
