@@ -1,7 +1,4 @@
-<% if @vars[:body] %>
-	<%= @vars[:body] %>
-	
-<% else %>
+<% if @vars[:body].nil? %>
 	Hello <%= @vars[:user].full_name %>,
 
 	The DMP "<%= @vars[:plan].name %>" has been submitted for institutional review.
@@ -9,4 +6,7 @@
 	If you have questions pertaining to this action, please visit the Review DMPs page at <%= perform_review_plan_url(@vars[:plan].id) %>
 
 	<%= render :partial => 'users_mailer/notification_boilerplate.text.erb' %>
+
+<% else %>
+	<%= @vars[:body] %>
 <% end %>
