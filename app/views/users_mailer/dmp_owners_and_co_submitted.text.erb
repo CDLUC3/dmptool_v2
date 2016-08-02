@@ -1,5 +1,5 @@
-<% if @institution %>
-	<%= @institution.submission_mailer_body %>
+<% if @vars[:body] %>
+	<%= @vars[:body] %>
 	
 <% else %>
 	Hello <%= @vars[:user].full_name %>,
