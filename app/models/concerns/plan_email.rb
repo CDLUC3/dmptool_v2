@@ -88,7 +88,7 @@ module PlanEmail
             user.email,
             (institution.submission_mailer_subject.nil? ? APP_CONFIG['mailer_submission_default']['subject'] : institution.submission_mailer_subject),
             "institutional_reviewers_submitted",
-            {:user => user, :plan => self, body: institution.submission_mailer_subject} ).deliver
+            {user: user, plan: self, body: institution.submission_mailer_body} ).deliver
       end
     end
   end
