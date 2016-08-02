@@ -86,7 +86,7 @@ module PlanEmail
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            (self.submission_mailer_subject.nil? ? APP_CONFIG['mailer_submission_default']['subject'] : self.submission_mailer_subject),
+            (institution.submission_mailer_subject.nil? ? APP_CONFIG['mailer_submission_default']['subject'] : institution.submission_mailer_subject),
             "institutional_reviewers_submitted",
             {:user => user, :plan => self} ).deliver
       end
