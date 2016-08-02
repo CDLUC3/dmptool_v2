@@ -86,8 +86,14 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
     def create_plan_state(state)
 
       if state == :submitted
-        @notice_1 = "This plan has been submitted for review."
-        @notice_2 = "This Plan has been already submitted for review."
+        if @plan.requirements_template.review_type == :informal_review
+          @notice_1 = "This plan has been submitted for feedback from an administrator at your institution."
+          @notice_2 = "This Plan has been already submitted for review."
+          
+        else
+          @notice_1 = "This plan has been submitted for review."
+          @notice_2 = "This Plan has been already submitted for review."
+        end
       else
         @notice_1 = "The Plan has been #{state == :committed ? "Completed" : state}."
         @notice_2 = "The Plan has already been #{state== :committed ? "Completed" : state}."
@@ -104,8 +110,14 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
     def review_plan_state(state)
 
       if state == :submitted
-        @notice_1 = "This plan has been submitted for review."
-        @notice_2 = "This Plan has been already submitted for review."
+        if @plan.requirements_template.review_type == :informal_review
+          @notice_1 = "This plan has been submitted for feedback from an administrator at your institution."
+          @notice_2 = "This Plan has been already submitted for review."
+          
+        else
+          @notice_1 = "This plan has been submitted for review."
+          @notice_2 = "This Plan has been already submitted for review."
+        end
       else
         @notice_1 = "The Plan has been #{state== :committed ? "Completed" : state}."
         @notice_2 = "The Plan has already been #{state== :committed ? "Completed" : state}."
