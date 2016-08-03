@@ -1,6 +1,10 @@
 Hello <%= @vars[:user].full_name %>,
 
-The DMP "<%= @vars[:plan].name %>" has been <%= @vars[:state].state %>.
+<% if @vars[:state].state == "reviewed" %>
+	The DMP "<%= @vars[:plan].name %>" contains new comments.
+<% else %>
+	The DMP "<%= @vars[:plan].name %>" has been <%= @vars[:state].state %>.
+<% end %>
 
 If you have questions pertaining to this action, please contact <%= @vars[:user].institution.contact_info %> at <%= @vars[:user].institution.contact_email %>
 
