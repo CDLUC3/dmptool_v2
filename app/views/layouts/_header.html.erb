@@ -16,7 +16,7 @@
       </li>
       <li class="nav-new"><%= link_to "News", APP_CONFIG['blog'], :title => "News", :target => "_blank" %></li>
       <li class="nav-help<%= (menu_level(0) == 'help' ? ' current' : '') %>"><%= link_to "Help", help_path, :title => "Help" %></li>
-      <li class="nav-contact<%= (menu_level(0) == 'contact' ? ' current' : '') %>"><%= link_to "Contact Us", contact_path, :title => "Contact Us" %></li>
+      <li class="nav-contact<%= (menu_level(0) == 'contact' ? ' current' : '') %>"><a href="http://www.cdlib.org/services/uc3/contact.html" target="_blank" title="Contact Us">Contact Us</a></li>
       <li class="nav-about parent<%= (menu_level(0) == 'about' ? ' current' : '') %>"><%= link_to "About", about_path, :title => "About" %>
       	<ul class="children right">
       		<li><%= link_to "FAQ", "https://github.com/CDLUC3/dmptool/wiki/FAQ", :title => "FAQ", :target => "_blank" %></li>
