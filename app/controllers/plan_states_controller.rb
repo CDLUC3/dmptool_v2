@@ -115,7 +115,7 @@ before_action :set_plan, only: [:approved, :rejected, :submitted, :committed, :r
           @notice_2 = "This Plan has been already submitted for feedback."
           
         else
-          @notice_1 = "This plan has been submitted for feedback from an administrator at your institution."
+          @notice_1 = "This plan has been submitted for feedback from an administrator at your institution.git commit"
           @notice_2 = "This Plan has been already submitted for feedback."
         end
       else
