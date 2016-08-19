@@ -107,4 +107,13 @@ module PlanEmail
       end
     end
   end
+  
+  private
+    def build_email_message(user, plan, template)
+      template.gsub('[User Name]', '<%= @vars[:user].full_name %>')
+      template.gsub('[Plan Name]', '<%= @vars[:plan].name %>')
+      template.gsub('[Plan Url]', '<%= edit_plan_url(@vars[:plan]) %>')
+      
+      template += "<br /><br /><%= render :partial => 'users_mailer/notification_boilerplate.text.erb' %>"
+    end
 end
