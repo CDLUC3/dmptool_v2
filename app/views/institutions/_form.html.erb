@@ -113,7 +113,7 @@
 	</div>
 	<div class="control-group">
 		<%= f.label :submission_mailer_body, "Message", class: "control-label" %>
-		<%= f.text_area :submission_mailer_body, rows: 10, :class => "input-xxlarge" %>
+		<%= f.text_area :submission_mailer_body, rows: 10, :class => "input-xxlarge", placeholder: "#{APP_CONFIG['mailer_submission_default']['body']}" %>
 		<%= content_tag(:span, '', title: 'The automated email message that users receive when they submit a plan for feedback.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => true, class: 'icon questionmark tip') %>
 	</div>
 	
