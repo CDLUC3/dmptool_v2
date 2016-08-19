@@ -129,9 +129,8 @@ module PlanEmail
     # Swap out personalization phrases with their erb counterparts
     def build_email_message(template, params)
       unless template.nil?
-        template.gsub('[User Name]', params['user'].full_name) unless params['user'].nil?
-        template.gsub('[Plan Name]', params['plan'].name) unless params['plan'].nil?
-        template.gsub('[Plan Url]', edit_plan_url(params['plan'].id)) unless params['plan'].nil?
+        template = template.gsub('[User Name]', params[:user].full_name) unless params[:user].nil?
+        template = template.gsub('[Plan Name]', params[:plan].name) unless params[:plan].nil?
       end
         
       template
