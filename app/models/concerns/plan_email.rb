@@ -98,7 +98,7 @@ module PlanEmail
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            (institution.submission_mailer_subject.nil? ? build_email_message(APP_CONFIG['mailer_submission_default']['subject']) : build_email_message(institution.submission_mailer_subject)),
+            (institution.submission_mailer_subject.nil? ? build_email_message(APP_CONFIG['mailer_submission_default']['subject'], false) : build_email_message(institution.submission_mailer_subject, false)),
             "dmp_owners_and_co_submitted",
             {user: user, 
              plan: self, 
@@ -127,13 +127,15 @@ module PlanEmail
   
   private
     # Swap out personalization phrases with their erb counterparts
-    def build_email_message(template)
+    def build_email_message(template, include_boilerplate)
       unless template.nil?
         template.gsub('[User Name]', '<%= @vars[:user].full_name %>')
         template.gsub('[Plan Name]', '<%= @vars[:plan].name %>')
         template.gsub('[Plan Url]', '<%= edit_plan_url(@vars[:plan]) %>')
       
-        template += "<br /><br /><%= render :partial => 'users_mailer/notification_boilerplate.text.erb' %>"
+        if include_boilerplate
+          template += "<br /><br /><%= render :partial => 'users_mailer/notification_boilerplate.text.erb' %>"
+        end
       end
         
       template
