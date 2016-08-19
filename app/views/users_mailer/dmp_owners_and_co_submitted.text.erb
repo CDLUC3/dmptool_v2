@@ -1,7 +1,12 @@
-Hello <%= @vars[:user].full_name %>,
+<% if @vars[:body].nil? %>
+	Hello <%= @vars[:user].full_name %>,
 
-The DMP "<%= @vars[:plan].name %>" has been <%= @vars[:state].state %>.
+	The DMP "<%= @vars[:plan].name %>" has been <%= @vars[:state].state %>.
 
-If you have questions pertaining to this action, please visit the DMP Overview page at <%= edit_plan_url(@vars[:plan]) %>
+	If you have questions pertaining to this action, please visit the DMP Overview page at <%= edit_plan_url(@vars[:plan]) %>
 
-<%= render :partial => 'users_mailer/notification_boilerplate.text.erb' %>
+	<%= render :partial => 'users_mailer/notification_boilerplate.text.erb' %>
+
+<% else %>
+	<%= @vars[:body] %>
+<% end %>

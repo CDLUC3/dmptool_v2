@@ -90,7 +90,7 @@ module PlanEmail
             user.email,
             (institution.submission_mailer_subject.nil? ? APP_CONFIG['mailer_submission_default']['subject'] : institution.submission_mailer_subject),
             "dmp_owners_and_co_submitted",
-            {user: user, plan: self, body: institution.submission_mailer_body} 
+            {user: user, plan: self, body: institution.submission_mailer_body, state: current_state} 
         ).deliver
       end
       
