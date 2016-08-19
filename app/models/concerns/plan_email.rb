@@ -80,6 +80,8 @@ module PlanEmail
 
     # [:institutional_reviewers][:submitted] -- An Institutional DMP is submitted for review
     elsif current_state.state == :submitted
+      institution = self.owner.institution
+      
       # Send the owner and coowners a confirmation message
       users = self.users
       users.delete_if {|u| !u[:prefs][:dmp_owners_and_co][:submitted]}
@@ -93,7 +95,6 @@ module PlanEmail
       end
       
       # Send the reviewers a notification
-      institution = self.owner.institution
       users = institution.users_in_and_above_inst_in_role(Role::INSTITUTIONAL_REVIEWER)
       users.delete_if {|u| !u[:prefs][:institutional_reviewers][:submitted] }
       users.each do |user|
