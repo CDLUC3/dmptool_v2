@@ -102,7 +102,7 @@ module PlanEmail
             "dmp_owners_and_co_submitted",
             {user: user, 
              plan: self, 
-             body: build_email_message(institution.submission_mailer_body, true), 
+             body: (institution.submission_mailer_body.nil? ? build_email_message(APP_CONFIG['mailer_submission_default']['body'], true) : build_email_message(institution.submission_mailer_body, true)), 
              state: current_state,
              contact_us_url: APP_CONFIG['contact_us_url']} 
         ).deliver
