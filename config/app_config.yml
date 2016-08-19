@@ -16,7 +16,7 @@ development:
     normal: Crimson-Roman.ttf
   mailer_submission_default:
     subject: '[DMPTool] (development) Your has been submitted for feedback'
-    body: 'Hello [User Name],<br /><br />"[Plan Name]" has been submitted.<br /><br />If you have questions pertaining to this action, please visit the DMP Overview page at [Plan Url].'
+    body: 'Hello [User Name],<br /><br />The DMP "[Plan Name]" has been submitted for feedback from an administrator at your institution.<br /><br />If you have questions pertaining to this action, please visit the DMP Overview page at [Plan Url].'
   contact_us_url: 'http://cdlib-stage.cdlib.org/services/uc3/contact.html'
 
 development_nonlocal:
@@ -40,7 +40,7 @@ stage:
     normal: Crimson-Roman.ttf
   mailer_submission_default:
     subject: '[DMPTool] (staging) Your plan has been submitted for feedback'
-    body: 'Hello [User Name],<br /><br />"[Plan Name]" has been submitted.<br /><br />If you have questions pertaining to this action, please visit the DMP Overview page at [Plan Url].'
+    body: 'Hello [User Name],<br /><br />The DMP "[Plan Name]" has been submitted for feedback from an administrator at your institution.<br /><br />If you have questions pertaining to this action, please visit the DMP Overview page at [Plan Url].'
   contact_us_url: 'http://cdlib-stage.cdlib.org/services/uc3/contact.html'
 
 stage_development:
@@ -64,7 +64,7 @@ production:
     normal: Crimson-Roman.ttf
   mailer_submission_default:
     subject: '[DMPTool] Your plan has been submitted for feedback'
-    body: 'Hello [User Name],<br /><br />"[Plan Name]" has been submitted.<br /><br />If you have questions pertaining to this action, please visit the DMP Overview page at [Plan Url].'
+    body: 'Hello [User Name],<br /><br />The DMP "[Plan Name]" has been submitted for feedback from an administrator at your institution.<br /><br />If you have questions pertaining to this action, please visit the DMP Overview page at [Plan Url].'
   contact_us_url: 'http://www.cdlib.org/services/uc3/contact.html'
 
 production_development:
