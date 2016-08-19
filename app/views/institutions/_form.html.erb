@@ -114,7 +114,7 @@
 	<div class="control-group">
 		<%= f.label :submission_mailer_body, "Message", class: "control-label" %>
 		<%= f.text_area :submission_mailer_body, rows: 10, :class => "input-xxlarge", placeholder: "#{APP_CONFIG['mailer_submission_default']['body']}" %>
-		<%= content_tag(:span, '', title: 'The automated email message that users receive when they submit a plan for feedback.<br />You may use the following keyword phrases to personalize your message:<br />&nbsp;&nbsp;[User Name] - will insert the owner\'s full name<br />&nbsp;&nbsp;[Plan Name] - will insert the plan\'s title<br />&nbsp;&nbsp;[Plan Url] - will insert a link to the plan\'s page', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => true, class: 'icon questionmark tip') %>
+		<%= content_tag(:span, '', title: 'The automated email message that users receive when they submit a plan for feedback.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => true, class: 'icon questionmark tip') %>
 	</div>
 	
   <div class="buttons">
@@ -124,6 +124,9 @@
 	
 	<script>
 		$.ready(function(){
+console.log('Current: ' + $("#submission_mailer_body").placeholder);
+console.log('Current: ' + $("#submission_mailer_body").placeholder.replace(/\\n/g, '\n'));
+
 			$("#submission_mailer_body").placeholder.replace(/\\n/g, '\n');
 		});
 	</script>
