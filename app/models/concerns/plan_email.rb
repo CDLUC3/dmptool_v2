@@ -25,7 +25,9 @@ module PlanEmail
               user.email,
               "DMP Visibility Changed: #{self.name}",
               "dmp_owners_and_co_vis_change",
-              { :user => user, :plan => self } ).deliver
+              {user: user, 
+               plan: self,
+               contact_us_url: APP_CONFIG['contact_us_url'] } ).deliver
         end
       end
     end
@@ -51,7 +53,9 @@ module PlanEmail
             user.email,
             "PLAN COMPLETED: #{self.name}",
             "dmp_owners_and_co_committed",
-            {:user => user, :plan => self } ).deliver
+            {user: user, 
+             plan: self,
+             contact_us_url: APP_CONFIG['contact_us_url'] } ).deliver
       end
 
     # [:dmp_owners_and_co][:submitted] -- A submitted DMP is approved or rejected
@@ -64,7 +68,10 @@ module PlanEmail
             user.email,
             "DMP #{current_state.state}: #{self.name}",
             "dmp_owners_and_co_submitted",
-            { :user => user, :plan => self, :state => current_state } ).deliver
+            { user: user, 
+              plan: self, 
+              state: current_state,
+              contact_us_url: APP_CONFIG['contact_us_url'] } ).deliver
       end
 
       institution = self.owner.institution
@@ -75,7 +82,10 @@ module PlanEmail
             user.email,
             "DMP #{current_state.state}: #{self.name}",
             "institutional_reviewers_approved_rejected",
-            { :user => user, :plan => self, :state => current_state } ).deliver
+            { user: user, 
+              plan: self, 
+              state: current_state, 
+              contact_us_url: APP_CONFIG['contact_us_url'] } ).deliver
       end
 
     # [:institutional_reviewers][:submitted] -- An Institutional DMP is submitted for review
@@ -93,7 +103,8 @@ module PlanEmail
             {user: user, 
              plan: self, 
              body: build_email_message(institution.submission_mailer_body), 
-             state: current_state} 
+             state: current_state,
+             contact_us_url: APP_CONFIG['contact_us_url']} 
         ).deliver
       end
       
@@ -105,7 +116,10 @@ module PlanEmail
             user.email,
             "DMP #{current_state.state}: #{self.name}",
             "institutional_reviewers_submitted",
-            {user: user, plan: self, state: current_state} 
+            {user: user, 
+             plan: self, 
+             state: current_state,
+             contact_us_url: APP_CONFIG['contact_us_url']} 
         ).deliver
       end
     end
