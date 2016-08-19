@@ -98,11 +98,11 @@ module PlanEmail
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            (institution.submission_mailer_subject.nil? ? build_email_message(APP_CONFIG['mailer_submission_default']['subject'], false) : build_email_message(institution.submission_mailer_subject, false)),
+            (institution.submission_mailer_subject.nil? ? build_email_message(APP_CONFIG['mailer_submission_default']['subject'], {}) : build_email_message(institution.submission_mailer_subject, {})),
             "dmp_owners_and_co_submitted",
             {user: user, 
              plan: self, 
-             body: (institution.submission_mailer_body.nil? ? build_email_message(APP_CONFIG['mailer_submission_default']['body'], true) : build_email_message(institution.submission_mailer_body, true)), 
+             body: (institution.submission_mailer_body.nil? ? build_email_message(APP_CONFIG['mailer_submission_default']['body'], {user: user, plan: self}) : build_email_message(institution.submission_mailer_body, {user: user, plan: self})), 
              state: current_state,
              contact_us_url: APP_CONFIG['contact_us_url']} 
         ).deliver
@@ -127,15 +127,11 @@ module PlanEmail
   
   private
     # Swap out personalization phrases with their erb counterparts
-    def build_email_message(template, include_boilerplate)
+    def build_email_message(template, params)
       unless template.nil?
-        template.gsub('[User Name]', '<%= @vars[:user].full_name %>')
-        template.gsub('[Plan Name]', '<%= @vars[:plan].name %>')
-        template.gsub('[Plan Url]', '<%= edit_plan_url(@vars[:plan]) %>')
-      
-        if include_boilerplate
-          template += "<br /><br /><%= render :partial => 'users_mailer/notification_boilerplate.text.erb' %>"
-        end
+        template.gsub('[User Name]', params['user'].full_name) unless params['user'].nil?
+        template.gsub('[Plan Name]', params['plan'].name) unless params['plan'].nil?
+        template.gsub('[Plan Url]', edit_plan_url(params['plan'].id)) unless params['plan'].nil?
       end
         
       template
