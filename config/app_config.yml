@@ -15,8 +15,8 @@ development:
     bold_italic: Crimson-BoldItalic.ttf
     normal: Crimson-Roman.ttf
   mailer_submission_default:
-    subject: '[DMPTool] (development) Your plan has been submitted for feedback'
-    body: 'Your plan, "[Plan Name]" has been submitted for feedback.<br /><br/>If you have questions pertaining to this action, please visit the DMP Overview page at [Plan Url].<br /><br />You may change your notification preferences by editing your user profile.'
+    subject: '[DMPTool] (development) Your has been submitted for feedback'
+    body: 'Hello [User Name],<br /><br />"[Plan Name]" has been submitted for feedback.<br /><br />If you have questions pertaining to this action, please visit the DMP Overview page at [Plan Url].'
 
 development_nonlocal:
   development
@@ -39,7 +39,7 @@ stage:
     normal: Crimson-Roman.ttf
   mailer_submission_default:
     subject: '[DMPTool] (staging) Your plan has been submitted for feedback'
-    body: 'Your plan has been submitted for feedback.<br /><br />If you have questions pertaining to this action, please visit the DMP Overview page at [Plan Url].<br /><br />You may change your notification preferences by editing your user profile.'
+    body: 'Hello [User Name],<br /><br />"[Plan Name]" has been submitted for feedback.<br /><br />If you have questions pertaining to this action, please visit the DMP Overview page at [Plan Url].'
 
 stage_development:
   stage
@@ -62,7 +62,7 @@ production:
     normal: Crimson-Roman.ttf
   mailer_submission_default:
     subject: '[DMPTool] Your plan has been submitted for feedback'
-    body: 'Your plan has been submitted for feedback.<br /><br />If you have questions pertaining to this action, please visit the DMP Overview page at [Plan Url].<br /><br />You may change your notification preferences by editing your user profile.'
+    body: 'Hello [User Name],<br /><br />"[Plan Name]" has been submitted for feedback.<br /><br />If you have questions pertaining to this action, please visit the DMP Overview page at [Plan Url].'
 
 production_development:
   production
