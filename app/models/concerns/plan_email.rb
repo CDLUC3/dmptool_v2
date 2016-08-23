@@ -98,11 +98,11 @@ module PlanEmail
       users.each do |user|
         UsersMailer.notification(
             user.email,
-            (institution.submission_mailer_subject.nil? ? build_email_message(APP_CONFIG['mailer_submission_default']['subject'], {}) : build_email_message(institution.submission_mailer_subject, {})),
+            (institution.submission_mailer_subject.blank? ? build_email_message(APP_CONFIG['mailer_submission_default']['subject'], {}) : build_email_message(institution.submission_mailer_subject, {})),
             "dmp_owners_and_co_submitted",
             {user: user, 
              plan: self, 
-             body: (institution.submission_mailer_body.nil? ? build_email_message(APP_CONFIG['mailer_submission_default']['body'], {user: user, plan: self}) : build_email_message(institution.submission_mailer_body, {user: user, plan: self})), 
+             body: (institution.submission_mailer_body.blank? ? build_email_message(APP_CONFIG['mailer_submission_default']['body'], {user: user, plan: self}) : build_email_message(institution.submission_mailer_body, {user: user, plan: self})), 
              state: current_state,
              contact_us_url: APP_CONFIG['contact_us_url']} 
         ).deliver
