@@ -4,11 +4,13 @@ The plan "<%= @vars[:plan].name %>" has had its visibility changed to <%= @vars[
 
 Visibility definitions:
 
-Private - Visible to owners and co-owners only
+Test - Select for test plans
+
+Public - visible publicly on the web
 
 Institutional - Visible to others from <%= @vars[:user].institution.name %>
 
-Public - visible publicly on the web
+Private - Visible to owners and co-owners only
 
 If you have questions pertaining to this action, please visit the DMP Overview page at <%= edit_plan_url(@vars[:plan]) %>
 
