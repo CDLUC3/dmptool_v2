@@ -53,7 +53,7 @@
         <% if @plan.new_record? %>
           <div class="control-group" style="position: relative">
             <%= content_tag(:span, '', :title => 'Four possible states:<ul><li>Test (black notepad): Select for test plans.</li><li>Share publicly (green people): anyone can view, copy and or download the plan. 
-            Your DMP will appear on the <a href="/public_dmps">Public DMPs</a> page of this site.</li><li>Shared with institution (yellow key): anyone logged in from your institution can view, copy and or download the plan.</li><li>Private (red lock): only owners and co-owners can view the plan. Administrators at your institution can view all plans for program development purposes. See <a href="/terms">Terms of Use</a></li></ul>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip', :style => 'position: absolute; top: 7px; left: 135px') %>
+            Your DMP will appear on the <a href="/public_dmps">Public DMPs</a> page of this site.</li><li>Shared with institution (yellow key): anyone logged in from your institution can view, copy and or download the plan.</li><li>Private (red lock): only owners and co-owners can view the plan. Administrators at your institution can view all plans for program development purposes. See <a href="/terms_of_use">Terms of Use</a></li></ul>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip', :style => 'position: absolute; top: 7px; left: 135px') %>
             <p class="control-label required">Visibility</p>
             <div class="controls checkbox-controls">
               <%= f.radio_button :visibility, :test, :class => 'radio inline', :id => 'test'  %>

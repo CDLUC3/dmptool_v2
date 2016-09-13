@@ -120,7 +120,7 @@ $(function() {
 		event.preventDefault();
 		$('#visibility_dialog_form').dialog( {
 			width: 600,
-			height: 400,
+			height: 300,
 			modal: true,
 			closeOnEscape: true,
 			draggable: true,
