@@ -237,8 +237,8 @@ class Api::V1::PlansController < Api::V1::BaseController
     
     # with the new privacy policy we need to show all private plans to the 
     # institutional admin if they were created after 09/13/16
-    @institutional_plans + Plan.private_visibility.where("created_at >= '2016-09-13 00:00:01'").joins(:users).where("users.institution_id IN (?)", @user.institution.root.subtree_ids)
-    @unit_plans + Plan.private_visibility.where("created_at >= '2016-09-13 00:00:01'").joins(:users).where("users.institution_id IN (?)", @user.institution.subtree_ids)
+    @institutional_plans + Plan.private_visibility.where("plans.created_at >= '2016-09-13 00:00:01'").joins(:users).where("users.institution_id IN (?)", @user.institution.root.subtree_ids)
+    @unit_plans + Plan.private_visibility.where("plans.created_at >= '2016-09-13 00:00:01'").joins(:users).where("users.institution_id IN (?)", @user.institution.subtree_ids)
     
     @public_inst_plans = Plan.public_visibility.joins(:users).where("users.institution_id IN (?)", @user.institution.subtree_ids)
     @personal_plans = Plan.private_visibility.joins(:users).where("users.id = ?", @user.id )
