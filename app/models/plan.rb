@@ -28,7 +28,8 @@ class Plan < ActiveRecord::Base
   scope :private_visibility, -> { where(visibility: :private) }
   scope :public_and_institutional, -> { where(visibility: [:public, :institutional])}
   scope :unit_visibility, -> { where(visibility: :unit) }
-
+  scope :test_visibility, -> { where(visibility: :test) }
+  
   # scopes for plan's states
   scope :submitted, -> { joins(:current_state).where('plan_states.state =?', :submitted) }
   scope :approved, -> { joins(:current_state).where('plan_states.state =?', :approved) }
