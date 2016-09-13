@@ -15,7 +15,7 @@
       <%= label_tag :visibility_institutional, "With others from #{current_user.institution.full_name}", :class => 'radio-label' %><br/>
 
       <%= radio_button_tag :visibility, :private %>
-      <%= label_tag :visibility_private, 'Private (owners, co-owners, and admins only) See <a href="/terms">Terms of Use</a>.', :class => 'radio-label'%><br/>
+      <%= label_tag :visibility_private, 'Private (owners, co-owners, and admins only) See <a href="/terms">Terms of Use</a>.'.html_safe, :class => 'radio-label'%><br/>
 
       <%if current_user.institution.has_children? || current_user.institution.parent %>
         <%= radio_button_tag :visibility, :unit %>
