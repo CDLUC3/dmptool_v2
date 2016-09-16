@@ -18,6 +18,7 @@ class Plan < ActiveRecord::Base
   validates :visibility, presence: true
   validates :requirements_template_id, presence: true
   validate :unique_plan_name_per_owner, on: :create
+  validates :solicitation_identifier, length: {maximum: 190}
 
   after_create :duplicate_responses
   after_update :change_status_to_revised
