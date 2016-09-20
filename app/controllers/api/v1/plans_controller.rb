@@ -16,16 +16,15 @@ class Api::V1::PlansController < Api::V1::BaseController
       if user_role_in?(:dmp_admin)
         @plans = Plan.all
         
-#        @public_plans = Plan.all.public_visibility
-#        @institutional_plans = Plan.all.institutional_visibility
-#        @unit_plans = Plan.all.unit_visibility
-#        @private_plans = Plan.all.private_visibility
-#        @plans = @private_plans + @institutional_plans + @unit_plans + @public_plans
+        @public_plans = Plan.all.public_visibility
+        @institutional_plans = Plan.all.institutional_visibility
+        @unit_plans = Plan.all.unit_visibility
+        @private_plans = Plan.all.private_visibility
+        @test_plans = Plan.all.test_visibility
+        @plans = @private_plans + @institutional_plans + @unit_plans + @public_plans + @test_plans
 
       elsif user_role_in?(:institutional_admin)
-        @plans = Plan.finished(@user.institution.id).where("plans.visibility != ? OR (plans.visibility = ? and plans.created_at >= ?)", 'private', 'private', '2016-09-13 00:00:01')
-        
-#        @plans = inst_admin_plan_list
+        @plans = inst_admin_plan_list
         
       else
         @public_plans = Plan.public_finished
@@ -37,14 +36,13 @@ class Api::V1::PlansController < Api::V1::BaseController
         # @institutional_plans = Plan.institutional_visibility.joins( {:users => :institution} ).where("user_plans.owner = 1").where("users.institution_id IN (?)", @user.institution.root.subtree_ids)
         # @unit_plans = Plan.unit_visibility.joins( {:users => :institution} ).where("user_plans.owner = 1").where("users.institution_id IN (?)", @user.institution.subtree_ids)
 
+        @institutional_plans = Plan.institutional_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id IN (?)", @user.institution.root.subtree_ids)
+        @unit_plans = Plan.unit_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id IN (?)", @user.institution.subtree_ids)
 
-#        @institutional_plans = Plan.institutional_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id IN (?)", @user.institution.root.subtree_ids)
-#        @unit_plans = Plan.unit_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id IN (?)", @user.institution.subtree_ids)
+        @institutional_coowned_plans = @user.coowned_plans.institutional_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id NOT IN (?)", @user.institution.root.subtree_ids)
+        @unit_coowned_plans = @user.coowned_plans.unit_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id NOT IN (?)", @user.institution.root.subtree_ids)
 
-#        @institutional_coowned_plans = @user.coowned_plans.institutional_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id NOT IN (?)", @user.institution.root.subtree_ids)
-#        @unit_coowned_plans = @user.coowned_plans.unit_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id NOT IN (?)", @user.institution.root.subtree_ids)
-
-#        @plans = @public_plans + @owned_private_plans + @coowned_private_plans + @institutional_plans + @unit_plans + @institutional_coowned_plans + @unit_coowned_plans
+        @plans = @public_plans + @owned_private_plans + @coowned_private_plans + @institutional_plans + @unit_plans + @institutional_coowned_plans + @unit_coowned_plans
       end
       if from_date = params[:from_date]
         @plans = @plans.where(["created_at > ?", from_date])
@@ -239,6 +237,7 @@ class Api::V1::PlansController < Api::V1::BaseController
   private
   def inst_admin_plan_list
     @institutional_plans = Plan.institutional_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id IN (?)", @user.institution.root.subtree_ids)
+    @test_plans = Plan.test_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id IN (?)", @user.institution.root.subtree_ids)
     @unit_plans = Plan.unit_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id IN (?)", @user.institution.subtree_ids)
     
     # with the new privacy policy we need to show all private plans to the 
@@ -247,7 +246,7 @@ class Api::V1::PlansController < Api::V1::BaseController
     
     @public_inst_plans = Plan.public_visibility.joins(:users).where("users.institution_id IN (?)", @user.institution.subtree_ids)
     @personal_plans = Plan.private_visibility.joins(:users).where("users.id = ?", @user.id )
-    return @institutional_plans + @unit_plans + @public_inst_plans + @personal_plans + @private_plans
+    return @institutional_plans + @unit_plans + @test_plans + @public_inst_plans + @personal_plans + @private_plans
   end
 
   def owned_plan_list
