@@ -46,6 +46,10 @@ class Plan < ActiveRecord::Base
   scope :plans_per_institution, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: ['rejected', 'approved', 'submitted', 'reviewed']}).where(user_plans: {owner: true})}
   scope :plans_reviewed, ->(institution_id) {joins(:users, :plan_states).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: ['approved', 'rejected', 'reviewed']}).where(user_plans: {owner: true}).distinct}
   
+  # scopes for API
+  scope :finished, -> (institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: ['rejected', 'approved', 'submitted', 'reviewed']}).where(user_plans: {owner: true})}
+  scope :public_finished, -> {joins(:current_state).where(plan_states: {state: ['rejected', 'approved', 'submitted', 'reviewed']}).where(visibility: 'public')}
+  
   def plan_responses_ids
     @response_ids = [] 
     responses.each do |response|

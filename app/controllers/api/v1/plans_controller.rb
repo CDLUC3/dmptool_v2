@@ -9,39 +9,42 @@ class Api::V1::PlansController < Api::V1::BaseController
 
   @@realm = "Plans"
 
-  @@realm = "Plans"
-
   respond_to :json
 
   def index
     if @user = User.find_by_id(session[:user_id])
       if user_role_in?(:dmp_admin)
-        #@plans = Plan.all
-        @public_plans = Plan.all.public_visibility
-        @institutional_plans = Plan.all.institutional_visibility
-        @unit_plans = Plan.all.unit_visibility
-        @private_plans = Plan.all.private_visibility
-        @plans = @private_plans + @institutional_plans + @unit_plans + @public_plans
+        @plans = Plan.all
+        
+#        @public_plans = Plan.all.public_visibility
+#        @institutional_plans = Plan.all.institutional_visibility
+#        @unit_plans = Plan.all.unit_visibility
+#        @private_plans = Plan.all.private_visibility
+#        @plans = @private_plans + @institutional_plans + @unit_plans + @public_plans
 
       elsif user_role_in?(:institutional_admin)
-        @plans = inst_admin_plan_list
+        @plans = Plan.finished(@user.institution.id).where("plans.visibility = ? OR (plans.visibility != ? and plans.created_at >= ?)", 'private', 'private', '2016-09-13 00:00:01')
+        
+#        @plans = inst_admin_plan_list
+        
       else
-        @public_plans = Plan.all.public_visibility
+        @public_plans = Plan.public_finished
 
-        @owned_private_plans = @user.owned_plans.private_visibility
-        @coowned_private_plans = @user.coowned_plans.private_visibility
+        @owned_private_plans = @user.owned_plans
+        @coowned_private_plans = @user.coowned_plans
 
+        @plans = (@public_plans + @owned_private_plans + @coowned_private_plans).uniq
         # @institutional_plans = Plan.institutional_visibility.joins( {:users => :institution} ).where("user_plans.owner = 1").where("users.institution_id IN (?)", @user.institution.root.subtree_ids)
         # @unit_plans = Plan.unit_visibility.joins( {:users => :institution} ).where("user_plans.owner = 1").where("users.institution_id IN (?)", @user.institution.subtree_ids)
 
 
-        @institutional_plans = Plan.institutional_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id IN (?)", @user.institution.root.subtree_ids)
-        @unit_plans = Plan.unit_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id IN (?)", @user.institution.subtree_ids)
+#        @institutional_plans = Plan.institutional_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id IN (?)", @user.institution.root.subtree_ids)
+#        @unit_plans = Plan.unit_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id IN (?)", @user.institution.subtree_ids)
 
-        @institutional_coowned_plans = @user.coowned_plans.institutional_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id NOT IN (?)", @user.institution.root.subtree_ids)
-        @unit_coowned_plans = @user.coowned_plans.unit_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id NOT IN (?)", @user.institution.root.subtree_ids)
+#        @institutional_coowned_plans = @user.coowned_plans.institutional_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id NOT IN (?)", @user.institution.root.subtree_ids)
+#        @unit_coowned_plans = @user.coowned_plans.unit_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id NOT IN (?)", @user.institution.root.subtree_ids)
 
-        @plans = @public_plans + @owned_private_plans + @coowned_private_plans + @institutional_plans + @unit_plans + @institutional_coowned_plans + @unit_coowned_plans
+#        @plans = @public_plans + @owned_private_plans + @coowned_private_plans + @institutional_plans + @unit_plans + @institutional_coowned_plans + @unit_coowned_plans
       end
       if from_date = params[:from_date]
         @plans = @plans.where(["created_at > ?", from_date])
@@ -49,7 +52,8 @@ class Api::V1::PlansController < Api::V1::BaseController
     else
       @plans = Plan.all.public_visibility
     end
-    @plans.uniq!
+    
+    (@plans.nil? ? @plans : @plans.uniq!)
   end
 
 
@@ -145,9 +149,11 @@ class Api::V1::PlansController < Api::V1::BaseController
   def plans_full_index
     if @user = User.find_by_id(session[:user_id])
       if user_role_in?(:dmp_admin)
-        @plans = Plan.all
+        @plans = Plan.finished(@user.institution.id)
+#        @plans = Plan.all
       elsif user_role_in?(:institutional_admin)
-        @plans = inst_admin_plan_list
+        @plans = Plan.finished(@user.institution.id).where("plans.visibility = ? OR (plans.visibility != ? and plans.created_at >= ?)", 'private', 'private', '2016-09-13 00:00:01')
+#        @plans = inst_admin_plan_list
       else
         @public_plans = Plan.all.public_visibility
 
@@ -229,7 +235,7 @@ class Api::V1::PlansController < Api::V1::BaseController
     end
   end
 
-  # ------------------------------------------------------------------------------------
+  # ----------------------------------------------------------------------------------
   private
   def inst_admin_plan_list
     @institutional_plans = Plan.institutional_visibility.joins(:users).where(user_plans: {owner: true}).where("users.institution_id IN (?)", @user.institution.root.subtree_ids)

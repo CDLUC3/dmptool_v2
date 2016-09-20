@@ -11,18 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160801082200) do
+ActiveRecord::Schema.define(version: 20160913112300) do
 
   create_table "additional_informations", force: true do |t|
-    t.string   "url"
-    t.string   "label"
+    t.string   "url",                      limit: 255
+    t.string   "label",                    limit: 255
     t.integer  "requirements_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "annita", id: false, force: true do |t|
-    t.integer "xnum"
   end
 
   create_table "authentications", force: true do |t|
@@ -122,7 +118,7 @@ ActiveRecord::Schema.define(version: 20160801082200) do
     t.integer  "requirements_template_id"
     t.string   "solicitation_identifier"
     t.datetime "submission_deadline"
-    t.enum     "visibility",               limit: [:institutional, :public, :private, :unit]
+    t.enum     "visibility",               limit: [:institutional, :public, :private, :unit, :test]
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "current_plan_state_id"
@@ -154,7 +150,7 @@ ActiveRecord::Schema.define(version: 20160801082200) do
 
   create_table "requirements_templates", force: true do |t|
     t.integer  "institution_id"
-    t.string   "name"
+    t.string   "name",           limit: 255
     t.boolean  "active"
     t.date     "start_date"
     t.date     "end_date"
