@@ -23,7 +23,7 @@ class Api::V1::PlansController < Api::V1::BaseController
 #        @plans = @private_plans + @institutional_plans + @unit_plans + @public_plans
 
       elsif user_role_in?(:institutional_admin)
-        @plans = Plan.finished(@user.institution.id).where("plans.visibility = ? OR (plans.visibility != ? and plans.created_at >= ?)", 'private', 'private', '2016-09-13 00:00:01')
+        @plans = Plan.finished(@user.institution.id).where("plans.visibility != ? OR (plans.visibility = ? and plans.created_at >= ?)", 'private', 'private', '2016-09-13 00:00:01')
         
 #        @plans = inst_admin_plan_list
         
