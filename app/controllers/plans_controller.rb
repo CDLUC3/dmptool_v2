@@ -444,6 +444,16 @@ class PlansController < ApplicationController
     end
   end
 
+  def confirm_visibility
+    id = params[:plan_id].to_i unless params[:plan_id].blank?
+    plan = Plan.find(id)
+    plan.visibility = params[:visibility]
+    if plan.save
+      # Change the plan's status to committed
+      redirect_to plan_plan_states_committed_url(plan)
+    end
+  end
+
   def preview
     @plan = Plan.find(params[:id])
     @coowners = @plan.coowners

@@ -1,10 +1,6 @@
-<%#= form_tag(change_visibility_path, id: "visibility_form", method: :post, html: { :class => "form-horizontal"}) do %>
-<%= form_tag(change_visibility_path, id: "confirm_visibility_form", method: :post) do %>
+<%= form_tag(confirm_visibility_path, id: "visibility_form", method: :post) do %>
 
   <%= hidden_field_tag(:plan_id, plan_id, id: 'shared_plan_id') %>
-  <%#= hidden_field_tag(:visibility, visibility, id: 'shared_visibility') %>
-
-	<div id="change_visibility_message"></div>
 
   <div class="control-group">
     <div class="controls checkbox-controls">

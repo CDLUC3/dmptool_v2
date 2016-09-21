@@ -1,9 +1,3 @@
-<%= link_to "Submit", 
-						plan_plan_states_committed_path(@plan), 
-						method: :post, id: "done-target", 
-						class: "btn btn-green pull-right",
-						style: "display: none;" %>
-							
 <% if @customization_review == "formal" %>
   <% if state(@plan) == :submitted || state(@plan) == :rejected %>
   	<%= link_to "Submit for Review", plan_plan_states_submitted_path(@plan), disabled: true, :class => "btn btn-green pull-right" %>
@@ -14,7 +8,7 @@
 								class: "btn btn-green pull-right confirm_visibility_link", 
 								'data-planid' => @plan.id, 'data-visibility' => @plan.visibility %>
   <% elsif state(@plan) == :approved %>
-		<%= link_to "Done", "#", method: :post,
+		<%= link_to "Done", "#", 
 								class: "btn btn-green pull-right confirm_visibility_link", 
 								'data-planid' => @plan.id, 'data-visibility' => @plan.visibility %>
   <% end %>
@@ -25,7 +19,7 @@
   <% elsif state(@plan) == :new || state(@plan) == :revised %>
     <%= link_to "Request Feedback", plan_plan_states_submitted_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
 		<%= content_tag(:span, '', :title => '<p>Request feedback on your Plan from an administrator at your institution.</p>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip pull-right') %>
-		<%= link_to "Done", "#", method: :post,
+		<%= link_to "Done", "#", 
 								class: "btn btn-green pull-right confirm_visibility_link", 
 								'data-planid' => @plan.id, 'data-visibility' => @plan.visibility %>
 		<%= content_tag(:span, '', :title => '<p>Complete your Plan.</p>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip pull-right') %>
@@ -34,7 +28,7 @@
 								class: "btn btn-green pull-right confirm_visibility_link", 
 								'data-planid' => @plan.id, 'data-visibility' => @plan.visibility %>
   <% elsif state(@plan) == :reviewed %>
-		<%= link_to "Done", "#", method: :post,
+		<%= link_to "Done", "#", 
 								class: "btn btn-green pull-right confirm_visibility_link", 
 								'data-planid' => @plan.id, 'data-visibility' => @plan.visibility %>
   <% end %>
@@ -45,7 +39,7 @@
 								class: "btn btn-green pull-right confirm_visibility_link", 
 								'data-planid' => @plan.id, 'data-visibility' => @plan.visibility %>
   <% else %>
-		<%= link_to "Done", "#", method: :post,
+		<%= link_to "Done", "#", 
 								class: "btn btn-green pull-right confirm_visibility_link", 
 								'data-planid' => @plan.id, 'data-visibility' => @plan.visibility %>
   <% end %>
@@ -60,7 +54,7 @@
 								class: "btn btn-green pull-right confirm_visibility_link", 
 								'data-planid' => @plan.id, 'data-visibility' => @plan.visibility %>
   <% elsif state(@plan) == :approved %>
-		<%= link_to "Done", "#", method: :post,
+		<%= link_to "Done", "#", 
 								class: "btn btn-green pull-right confirm_visibility_link", 
 								'data-planid' => @plan.id, 'data-visibility' => @plan.visibility %>
   <% end %>
@@ -71,7 +65,7 @@
   <% elsif state(@plan) == :new || state(@plan) == :revised %>
     <%= link_to "Request Feedback", plan_plan_states_submitted_path(@plan), method: :post, :class => "btn btn-green pull-right" %>
 		<%= content_tag(:span, '', :title => '<p>Request feedback on your Plan from an administrator at your institution.</p>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip pull-right') %>
-		<%= link_to "Done", "#", method: :post,
+		<%= link_to "Done", "#", 
 								class: "btn btn-green pull-right confirm_visibility_link", 
 								'data-planid' => @plan.id, 'data-visibility' => @plan.visibility %>
 		<%= content_tag(:span, '', :title => '<p>Complete your Plan.</p>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip pull-right') %>
@@ -80,7 +74,7 @@
 								class: "btn btn-green pull-right confirm_visibility_link", 
 								'data-planid' => @plan.id, 'data-visibility' => @plan.visibility %>
   <% elsif state(@plan) == :reviewed %>
-		<%= link_to "Done", "#", method: :post,
+		<%= link_to "Done", "#", 
 								class: "btn btn-green pull-right confirm_visibility_link", 
 								'data-planid' => @plan.id, 'data-visibility' => @plan.visibility %>
   <% end %>
@@ -91,7 +85,7 @@
 								class: "btn btn-green pull-right confirm_visibility_link", 
 								'data-planid' => @plan.id, 'data-visibility' => @plan.visibility %>
   <% else %>
-		<%= link_to "Done", "#", method: :post,
+		<%= link_to "Done", "#", 
 								class: "btn btn-green pull-right confirm_visibility_link", 
 								'data-planid' => @plan.id, 'data-visibility' => @plan.visibility %>
   <% end %>

@@ -125,7 +125,7 @@ $(function() {
   $('.confirm_visibility_link').click(function(event) {
     event.preventDefault();
     
-    showVisibilityDialog(false);
+    showVisibilityDialog(true);
     return false
   });
 });
@@ -209,7 +209,10 @@ $(function() {
 });
 
 function showVisibilityDialog(planConfirmation){
-  $('#visibility_dialog_form').dialog( {
+  var dlg = (planConfirmation ? ''#visibility_confirmation_dialog_form'' : 
+                                '#visibility_dialog_form')
+  
+  $(dlg).dialog( {
     width: 600,
     height: 300,
     modal: true,
@@ -224,27 +227,19 @@ function showVisibilityDialog(planConfirmation){
         $(this).dialog( "close" );
       },
       Submit: function() {
-
-        $("#visibility_form").submit();
-        $(this).dialog( "close" );
-        
         // If this is the final visibility confirmation, click the confirmation button
         if(planConfirmation){
-          if($("#done-target")){
-            $("#done-target").click();
-          }
+          $("#confirm_visibility_form").submit();
+
+        }else{
+          $("#visibility_form").submit();
         }
+        
+        $(this).dialog( "close" );
       }
     },
     open: function()
-    {   
-      // if this is the final visibility confirmation, display a message
-      if(planConfirmation){
-        $("#change_visibility_message").html("Please review your visibility selection before completing your DMP.");
-      }else{
-        $("#change_visibility_message").html("");
-      }
-
+    {  
       $('.ui-widget-overlay').addClass('custom-overlay');
       
       $('#visibility_dialog_form').prev().css('color', '#4C4C4E');
