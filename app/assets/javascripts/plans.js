@@ -116,6 +116,7 @@ $(function() {
 $(function() {
   $.ui.dialog.prototype._focusTabbable = function(){};
   $('#visibility_dialog_form').hide();
+	$('#visibility_confirmation_dialog_form').hide();
   $('.change_visibility_link').click(function(event) {
     event.preventDefault();
     
