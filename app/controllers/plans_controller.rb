@@ -457,11 +457,8 @@ class PlansController < ApplicationController
       count = requirements.where(obligation: :mandatory).count
       @responses = Requirement.requirements_with_mandatory_obligation(@plan.id, requirements_template.id)
       
-puts "Processing plan: #{@plan.id} (#{@plan.current_plan_state}) with #{@responses.count} required sections"
-      
       if @responses.count == count
         unless @plan.current_plan_state == :committed
-puts "Saving state change"
           plan_state = PlanState.create(plan_id: @plan.id, state: :committed, user_id: current_user.id)
           @plan.current_plan_state_id = plan_state.id
           redirect_to preview_plan_path(@plan), notice: "The Plan has been Completed"

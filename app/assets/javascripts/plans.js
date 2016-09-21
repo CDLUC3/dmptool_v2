@@ -222,15 +222,9 @@ console.log("Received request to display " + dlg);
       Submit: function() {
         // If this is the final visibility confirmation, click the confirmation button
         if(planConfirmation){
-
-console.log("submitting to confirm");
-
           $("#confirm_visibility_form").submit();
 
         }else{
-					
-console.log("submitting to change");
-					
           $("#visibility_form").submit();
         }
         
