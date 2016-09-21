@@ -1,7 +1,8 @@
 <%= link_to "Submit", 
 						plan_plan_states_committed_path(@plan), 
 						method: :post, id: "done-target", 
-						class: "hidden btn btn-green pull-right" %>
+						class: "btn btn-green pull-right",
+						style: "display: none;" %>
 							
 <% if @customization_review == "formal" %>
   <% if state(@plan) == :submitted || state(@plan) == :rejected %>
