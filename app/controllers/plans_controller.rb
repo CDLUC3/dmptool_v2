@@ -451,24 +451,28 @@ class PlansController < ApplicationController
     if @plan.save
       # Change the plan's status to committed
       @responses = Array.new
-      unless @plan.nil?
-        requirements_template = RequirementsTemplate.find(@plan.requirements_template_id)
-        requirements = requirements_template.requirements
-        count = requirements.where(obligation: :mandatory).count
-        @responses = Requirement.requirements_with_mandatory_obligation(@plan.id, requirements_template.id)
-        if @responses.count == count
-          unless @plan.current_plan_state == :committed
-            plan_state = PlanState.create( plan_id: @plan.id, state: :committed, user_id: current_user.id)
-            @plan.current_plan_state_id = plan_state.id
-            redirect_to preview_plan_path(@plan), notice: "The Plan has been Completed"
-          else
-            redirect_to preview_plan_path(@plan), alert: "The Plan has already been Completed"
-          end
+
+      requirements_template = RequirementsTemplate.find(@plan.requirements_template_id)
+      requirements = requirements_template.requirements
+      count = requirements.where(obligation: :mandatory).count
+      @responses = Requirement.requirements_with_mandatory_obligation(@plan.id, requirements_template.id)
+      
+puts "Processing plan: #{@plan.id} (#{@plan.current_plan_state}) with #{@responses.count} required sections"
+      
+      if @responses.count == count
+        unless @plan.current_plan_state == :committed
+puts "Saving state change"
+          plan_state = PlanState.create(plan_id: @plan.id, state: :committed, user_id: current_user.id)
+          @plan.current_plan_state_id = plan_state.id
+          redirect_to preview_plan_path(@plan), notice: "The Plan has been Completed"
         else
-          flash[:error] =  "Please complete all the mandatory Responses for the Plan to be Finished."
-          redirect_to preview_plan_path(@plan)
+          redirect_to preview_plan_path(@plan), alert: "The Plan has already been Completed"
         end
+      else
+        flash[:error] =  "Please complete all the mandatory Responses for the Plan to be Finished."
+        redirect_to preview_plan_path(@plan)
       end
+      
     end
   end
 
