@@ -144,29 +144,15 @@ $(function() {
     var id= $(this).data('planid');
     var visibility = $(this).data('visibility');
 
-    $("#shared_plan_id").val(id);
-
-    if (visibility  == "institutional")
-    {
-      $("#visibility_institutional").click();
-    }
-    else if (visibility  == "public")
-    {
-      $("#visibility_public").click();
-    }
-    else if (visibility  == "test")
-    {
-      $("#visibility_test").click();
-    }
-    else if (visibility  == "private")
-    {
-      $("#visibility_private").click();
-    }
-    else if (visibility  == "unit")
-    {
-      $("#visibility_unit").click();
-    }
+    setInitialVisibilityOnDialog(this, id, visibility);
   });
+	
+	$(".confirm_visibility_link").click(function(e){
+    var id= $(this).data('planid');
+    var visibility = $(this).data('visibility');
+
+		setInitialVisibilityOnDialog(this, id, visibility);
+	});
 });
 
 $(function() {
@@ -302,4 +288,31 @@ function showVisibilityDialog(planConfirmation){
       //window.location.reload(true);
     }
   }).prev ().find(".ui-dialog-titlebar-close").show();
+}
+
+function setInitialVisibilityOnDialog(form, id, visibility){
+	var form = $(this).closest('form');
+	
+  $(form).find("#shared_plan_id").val(id);
+
+  if (visibility  == "institutional")
+  {
+    $(form).find("#visibility_institutional").click();
+  }
+  else if (visibility  == "public")
+  {
+    $(form).find("#visibility_public").click();
+  }
+  else if (visibility  == "test")
+  {
+    $(form).find("#visibility_test").click();
+  }
+  else if (visibility  == "private")
+  {
+    $(form).find("#visibility_private").click();
+  }
+  else if (visibility  == "unit")
+  {
+    $(form).find("#visibility_unit").click();
+  }
 }
