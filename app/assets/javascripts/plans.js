@@ -136,6 +136,10 @@ $(function() {
   $('#visibility_dialog_form').parent().find('button:contains("Cancel")').bind("click",function() {
     $("#visibility_dialog_form").reset();
   });
+	
+	$("#visibility_confirmation_dialog_form").parent().find('button:contains("Cancel")').bind("click", function(){
+		$("#visibility_confirmation_dialog_form").reset();
+	});
 });
 
 
@@ -231,22 +235,22 @@ console.log("Recevied request to display " + dlg);
     {  
       $('.ui-widget-overlay').addClass('custom-overlay');
       
-      $('#visibility_dialog_form').prev().css('color', '#4C4C4E');
-      $('#visibility_dialog_form').prev().css('font-family', 'Helvetica, sans-serif');
-      $('#visibility_dialog_form').prev().css('font-size', '12px');
-      $('#visibility_dialog_form').prev().css('line-height', '1.3');
+      $(dlg).prev().css('color', '#4C4C4E');
+      $(dlg).prev().css('font-family', 'Helvetica, sans-serif');
+      $(dlg).prev().css('font-size', '12px');
+      $(dlg).prev().css('line-height', '1.3');
 
-       $('#visibility_dialog_form').prev().addClass('modal-header');
+       $(dlg).prev().addClass('modal-header');
 
-      $('#visibility_dialog_form').parent().addClass(' in');
+      $(dlg).parent().addClass(' in');
 
-      $('#visibility_dialog_form').prev().find('button').addClass('custom-close');
-      $('#visibility_dialog_form').prev().find('button').css('background','none');
-      $('#visibility_dialog_form').prev().find('button').css('border','none');
-      $('#visibility_dialog_form').prev().find('button').css('font-color','black');
-      $('#visibility_dialog_form').prev().find('button').css('font-size','20');
-      $('#visibility_dialog_form').prev().find('button').css('font-color','black');
-      $('#visibility_dialog_form').prev().find('button').css('opacity','0.2');
+      $(dlg).prev().find('button').addClass('custom-close');
+      $(dlg).prev().find('button').css('background','none');
+      $(dlg).prev().find('button').css('border','none');
+      $(dlg).prev().find('button').css('font-color','black');
+      $(dlg).prev().find('button').css('font-size','20');
+      $(dlg).prev().find('button').css('font-color','black');
+      $(dlg).prev().find('button').css('opacity','0.2');
              
       $(this).parent().find('button:contains("Cancel")').removeClass('ui-corner-all');
       $(this).parent().find('button:contains("Cancel")').removeClass('ui-widget');
@@ -276,16 +280,16 @@ console.log("Recevied request to display " + dlg);
       
       $('#ui-id-1').wrap("<h3 id=\"new_h3\"><strong id=\"new_strong\"></strong></h3>");
 
-      $('#visibility_dialog_form').next().removeClass('ui-dialog-buttonpane ui-widget-content ui-helper-clearfix');
-      $('#visibility_dialog_form').next().addClass('modal-footer');  
+      $(dlg).next().removeClass('ui-dialog-buttonpane ui-widget-content ui-helper-clearfix');
+      $(dlg).next().addClass('modal-footer');  
 
-      $("#visibility_dialog_form").dialog("open");
+      $(dlg).dialog("open");
       $(".copyright span7").hide();
     },
     close: function() {
       $('#ui-id-1').first().unwrap();
       $('#ui-id-1').first().unwrap();
-      $('#visibility_dialog_form').dialog("close");
+      $(dlg).dialog("close");
       
       //window.location.reload(true);
     }
