@@ -209,7 +209,7 @@ $(function() {
 });
 
 function showVisibilityDialog(planConfirmation){
-  var dlg = (planConfirmation ? ''#visibility_confirmation_dialog_form'' : 
+  var dlg = (planConfirmation ? '#visibility_confirmation_dialog_form' : 
                                 '#visibility_dialog_form')
   
   $(dlg).dialog( {
