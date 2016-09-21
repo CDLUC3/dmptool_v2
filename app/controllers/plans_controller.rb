@@ -446,11 +446,29 @@ class PlansController < ApplicationController
 
   def confirm_visibility
     id = params[:plan_id].to_i unless params[:plan_id].blank?
-    plan = Plan.find(id)
-    plan.visibility = params[:visibility]
-    if plan.save
+    @plan = Plan.find(id)
+    @plan.visibility = params[:visibility]
+    if @plan.save
       # Change the plan's status to committed
-      redirect_to plan_plan_states_committed_url(plan)
+      @responses = Array.new
+      unless @plan.nil?
+        requirements_template = RequirementsTemplate.find(@plan.requirements_template_id)
+        requirements = requirements_template.requirements
+        count = requirements.where(obligation: :mandatory).count
+        @responses = Requirement.requirements_with_mandatory_obligation(@plan.id, requirements_template.id)
+        if @responses.count == count
+          unless @plan.current_plan_state == :committed
+            plan_state = PlanState.create( plan_id: @plan.id, state: :committed, user_id: current_user.id)
+            @plan.current_plan_state_id = plan_state.id
+            redirect_to preview_plan_path(@plan), notice: "The Plan has been Completed"
+          else
+            redirect_to preview_plan_path(@plan), alert: "The Plan has already been Completed"
+          end
+        else
+          flash[:error] =  "Please complete all the mandatory Responses for the Plan to be Finished."
+          redirect_to preview_plan_path(@plan)
+        end
+      end
     end
   end
 
