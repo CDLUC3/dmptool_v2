@@ -118,90 +118,14 @@ $(function() {
 	$('#visibility_dialog_form').hide();
 	$('.change_visibility_link').click(function(event) {
 		event.preventDefault();
-		$('#visibility_dialog_form').dialog( {
-			width: 600,
-			height: 300,
-			modal: true,
-			closeOnEscape: true,
-			draggable: true,
-			resizable: false,
-			title: "Share my DMP",
-			
-		 	buttons: {
-				Cancel: function(){
-					//$('#ui-id-1').unwrap();
-					$(this).dialog( "close" );
-				},
-				Submit: function() {
-
-          $("#visibility_form").submit();
-          $(this).dialog( "close" );
-				}
-			},
-			open: function()
-			{   
-
-        $('.ui-widget-overlay').addClass('custom-overlay');
-        
-        $('#visibility_dialog_form').prev().css('color', '#4C4C4E');
-        $('#visibility_dialog_form').prev().css('font-family', 'Helvetica, sans-serif');
-        $('#visibility_dialog_form').prev().css('font-size', '12px');
-        $('#visibility_dialog_form').prev().css('line-height', '1.3');
-
-         $('#visibility_dialog_form').prev().addClass('modal-header');
-
-        $('#visibility_dialog_form').parent().addClass(' in');
-
-        $('#visibility_dialog_form').prev().find('button').addClass('custom-close');
-        $('#visibility_dialog_form').prev().find('button').css('background','none');
-        $('#visibility_dialog_form').prev().find('button').css('border','none');
-        $('#visibility_dialog_form').prev().find('button').css('font-color','black');
-        $('#visibility_dialog_form').prev().find('button').css('font-size','20');
-        $('#visibility_dialog_form').prev().find('button').css('font-color','black');
-        $('#visibility_dialog_form').prev().find('button').css('opacity','0.2');
-               
-    		$(this).parent().find('button:contains("Cancel")').removeClass('ui-corner-all');
-    		$(this).parent().find('button:contains("Cancel")').removeClass('ui-widget');
-    		$(this).parent().find('button:contains("Cancel")').removeClass('ui-button');
-    		$(this).parent().find('button:contains("Cancel")').removeClass('ui-state-default');
-    		$(this).parent().find('button:contains("Cancel")').removeClass('ui-button-text-only');
-				$(this).parent().find('button:contains("Cancel")').addClass('btn');
-				
-
-    		$(this).parent().find('button:contains("Submit")').removeClass('ui-corner-all');
-    		$(this).parent().find('button:contains("Submit")').removeClass('ui-widget');
-    		$(this).parent().find('button:contains("Submit")').removeClass('ui-button');
-    		$(this).parent().find('button:contains("Submit")').removeClass('ui-state-default');
-    		$(this).parent().find('button:contains("Submit")').removeClass('ui-button-text-only');
-				$(this).parent().find('button:contains("Submit")').removeClass('ui-button-text');
-				$(this).parent().find('button:contains("Submit")').addClass('btn btn-green confirm');			
-
-				$('#ui-id-1').parent().removeClass('ui-widget-overlay');
-				$('#ui-id-1').parent().removeClass('ui-widget-header');
-				$('#ui-id-1').parent().removeClass('ui-dialog-title');
-				$('#ui-id-1').parent().addClass('modal-header');
-				
-				// $('#ui-id-1').css('font-weight','bold');
-				// $('#ui-id-1').css('font-family', 'Helvetica, sans-serif');
-				// $('#ui-id-1').css('font-size', '12px');
-
-				
-				$('#ui-id-1').wrap("<h3 id=\"new_h3\"><strong id=\"new_strong\"></strong></h3>");
-
-				$('#visibility_dialog_form').next().removeClass('ui-dialog-buttonpane ui-widget-content ui-helper-clearfix');
-				$('#visibility_dialog_form').next().addClass('modal-footer');	
-
-				$("#visibility_dialog_form").dialog("open");
-				$(".copyright span7").hide();
-			},
-      close: function() {
-      	$('#ui-id-1').first().unwrap();
-      	$('#ui-id-1').first().unwrap();
-        $('#visibility_dialog_form').dialog("close");
-        
-        //window.location.reload(true);
-      }
-		}).prev ().find(".ui-dialog-titlebar-close").show();
+		
+		showVisibilityDialog(false);
+		return false
+	});
+	$('.confirm_visibility_link').click(function(event) {
+		event.preventDefault();
+		
+		showVisibilityDialog(false);
 		return false
 	});
 });
@@ -228,6 +152,10 @@ $(function() {
 		else if (visibility  == "public")
 	  {
 	  	$("#visibility_public").click();
+	  }
+		else if (visibility  == "test")
+	  {
+	  	$("#visibility_test").click();
 	  }
 		else if (visibility  == "private")
 	  {
@@ -279,3 +207,101 @@ $(function() {
 		$("#reject_dialog_form").reset();
 	});
 });
+
+function showVisibilityDialog(planConfirmation = false){
+	$('#visibility_dialog_form').dialog( {
+		width: 600,
+		height: 300,
+		modal: true,
+		closeOnEscape: true,
+		draggable: true,
+		resizable: false,
+		title: (planConfirmation ? "Confirm your DMP's visibility setting" : "Share my DMP"),
+		
+	 	buttons: {
+			Cancel: function(){
+				//$('#ui-id-1').unwrap();
+				$(this).dialog( "close" );
+			},
+			Submit: function() {
+
+        $("#visibility_form").submit();
+        $(this).dialog( "close" );
+				
+				// If this is the final visibility confirmation, click the confirmation button
+				if(planConfirmation){
+					if($("#done-target")){
+						$("#done-target").click();
+					}
+				}
+			}
+		},
+		open: function()
+		{   
+			// if this is the final visibility confirmation, display a message
+			if(planConfirmation){
+				$("#change_visibility_message").html("Please review your visibility selection before completing your DMP.");
+			}
+
+      $('.ui-widget-overlay').addClass('custom-overlay');
+      
+      $('#visibility_dialog_form').prev().css('color', '#4C4C4E');
+      $('#visibility_dialog_form').prev().css('font-family', 'Helvetica, sans-serif');
+      $('#visibility_dialog_form').prev().css('font-size', '12px');
+      $('#visibility_dialog_form').prev().css('line-height', '1.3');
+
+       $('#visibility_dialog_form').prev().addClass('modal-header');
+
+      $('#visibility_dialog_form').parent().addClass(' in');
+
+      $('#visibility_dialog_form').prev().find('button').addClass('custom-close');
+      $('#visibility_dialog_form').prev().find('button').css('background','none');
+      $('#visibility_dialog_form').prev().find('button').css('border','none');
+      $('#visibility_dialog_form').prev().find('button').css('font-color','black');
+      $('#visibility_dialog_form').prev().find('button').css('font-size','20');
+      $('#visibility_dialog_form').prev().find('button').css('font-color','black');
+      $('#visibility_dialog_form').prev().find('button').css('opacity','0.2');
+             
+  		$(this).parent().find('button:contains("Cancel")').removeClass('ui-corner-all');
+  		$(this).parent().find('button:contains("Cancel")').removeClass('ui-widget');
+  		$(this).parent().find('button:contains("Cancel")').removeClass('ui-button');
+  		$(this).parent().find('button:contains("Cancel")').removeClass('ui-state-default');
+  		$(this).parent().find('button:contains("Cancel")').removeClass('ui-button-text-only');
+			$(this).parent().find('button:contains("Cancel")').addClass('btn');
+			
+
+  		$(this).parent().find('button:contains("Submit")').removeClass('ui-corner-all');
+  		$(this).parent().find('button:contains("Submit")').removeClass('ui-widget');
+  		$(this).parent().find('button:contains("Submit")').removeClass('ui-button');
+  		$(this).parent().find('button:contains("Submit")').removeClass('ui-state-default');
+  		$(this).parent().find('button:contains("Submit")').removeClass('ui-button-text-only');
+			$(this).parent().find('button:contains("Submit")').removeClass('ui-button-text');
+			$(this).parent().find('button:contains("Submit")').addClass('btn btn-green confirm');			
+
+			$('#ui-id-1').parent().removeClass('ui-widget-overlay');
+			$('#ui-id-1').parent().removeClass('ui-widget-header');
+			$('#ui-id-1').parent().removeClass('ui-dialog-title');
+			$('#ui-id-1').parent().addClass('modal-header');
+			
+			// $('#ui-id-1').css('font-weight','bold');
+			// $('#ui-id-1').css('font-family', 'Helvetica, sans-serif');
+			// $('#ui-id-1').css('font-size', '12px');
+
+			
+			$('#ui-id-1').wrap("<h3 id=\"new_h3\"><strong id=\"new_strong\"></strong></h3>");
+
+			$('#visibility_dialog_form').next().removeClass('ui-dialog-buttonpane ui-widget-content ui-helper-clearfix');
+			$('#visibility_dialog_form').next().addClass('modal-footer');	
+
+			$("#visibility_dialog_form").dialog("open");
+			$(".copyright span7").hide();
+		},
+    close: function() {
+    	$('#ui-id-1').first().unwrap();
+    	$('#ui-id-1').first().unwrap();
+      $('#visibility_dialog_form').dialog("close");
+      
+      //window.location.reload(true);
+    }
+	}).prev ().find(".ui-dialog-titlebar-close").show();
+}
