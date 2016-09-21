@@ -208,7 +208,7 @@ $(function() {
   });
 });
 
-function showVisibilityDialog(planConfirmation = false){
+function showVisibilityDialog(planConfirmation){
   $('#visibility_dialog_form').dialog( {
     width: 600,
     height: 300,
