@@ -203,7 +203,7 @@ function showVisibilityDialog(planConfirmation){
   var dlg = (planConfirmation ? '#visibility_confirmation_dialog_form' : 
                                 '#visibility_dialog_form')
   
-console.log("Recevied request to display " + dlg);
+console.log("Received request to display " + dlg);
 	
   $(dlg).dialog( {
     width: 600,
@@ -222,9 +222,15 @@ console.log("Recevied request to display " + dlg);
       Submit: function() {
         // If this is the final visibility confirmation, click the confirmation button
         if(planConfirmation){
+
+console.log("submitting to confirm");
+
           $("#confirm_visibility_form").submit();
 
         }else{
+					
+console.log("submitting to change");
+					
           $("#visibility_form").submit();
         }
         
