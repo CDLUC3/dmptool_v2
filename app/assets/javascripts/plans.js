@@ -199,6 +199,8 @@ function showVisibilityDialog(planConfirmation){
   var dlg = (planConfirmation ? '#visibility_confirmation_dialog_form' : 
                                 '#visibility_dialog_form')
   
+console.log("Recevied request to display " + dlg);
+	
   $(dlg).dialog( {
     width: 600,
     height: 300,
