@@ -295,9 +295,7 @@ function showVisibilityDialog(planConfirmation){
 }
 
 function setInitialVisibilityOnDialog(form, id, visibility){
-	var form = $(this).closest('form');
-	
-  $(form).find("#shared_plan_id").val(id);
+	$(form).find("#shared_plan_id").val(id);
 
   if (visibility  == "institutional")
   {
