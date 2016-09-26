@@ -4,33 +4,33 @@
 
   <div class="control-group">
     <div class="controls checkbox-controls">
-      <%= radio_button_tag :visibility, :public, checked: (visibility.to_s == 'public' ? true : false) %>
+      <%= radio_button_tag :visibility, :public, (visibility.to_s == 'public' ? true : false) %>
       <%= label_tag :visibility_public, 
 										'Publicly on the web. Your DMP will appear on the Public DMPs page of this site.', 
 										class: 'radio-label',
 										title: 'Share publicly: anyone can view, copy and or download the plan.' %><br/>
 
-      <%= radio_button_tag :visibility, :institutional, checked: (visibility.to_s == 'institutional' ? true : false) %>
+      <%= radio_button_tag :visibility, :institutional, (visibility.to_s == 'institutional' ? true : false) %>
       <%= label_tag :visibility_institutional, 
 										"With others from #{current_user.institution.full_name}", 
 										class: 'radio-label',
 										title: 'Shared with institution: anyone logged in from your institution can view, copy and or download the plan.' %><br/>
 
-      <%= radio_button_tag :visibility, :private, checked: (visibility.to_s == 'private' ? true : false) %>
+      <%= radio_button_tag :visibility, :private, (visibility.to_s == 'private' ? true : false) %>
       <%= label_tag :visibility_private, 
 										'Private (owners, co-owners, and admins only) See <a href="/terms_of_use" style="text-decoration: underline;">Terms of Use</a>.'.html_safe, 
 										class: 'radio-label', 
 										title: 'Private: only owners and co-owners can view the plan. Administrators at your institution can view all plans for program development purposes.' %><br/>
 
       <%if current_user.institution.has_children? || current_user.institution.parent %>
-        <%= radio_button_tag :visibility, :unit, checked: (visibility.to_s == 'unit' ? true : false) %>
+        <%= radio_button_tag :visibility, :unit, (visibility.to_s == 'unit' ? true : false) %>
         <%= label_tag :visibility_unit, 
 											"Within your institution/sub-institution unit only.", 
                       class: 'radio-label',
 											title: '' %><br />
       <%end%>
 
-      <%= radio_button_tag :visibility, :test, checked: (visibility.to_s == 'test' ? true : false) %>
+      <%= radio_button_tag :visibility, :test, (visibility.to_s == 'test' ? true : false) %>
       <%= label_tag :visibility_test, 
 										"Test or practice plan", 
 										class: 'radio-label',
