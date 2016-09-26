@@ -131,6 +131,7 @@ class PlansController < ApplicationController
           @invalid_users.count > 1 ? @notice_1 = "Could not find the following users #{@invalid_users.join(', ')}." : @notice_1 = "Could not find the following user #{@invalid_users.join(', ')}."
           @existing_coowners.count > 1 ? @notice_2 = "The users chosen #{@existing_coowners.join(', ')} are already #{@item_description}s of this Plan." : @notice_2 = "The user chosen #{@existing_coowners.join(', ')} is already a #{@item_description} of this Plan."
           @notice_3 = "The user chosen #{@owner[0].to_s} is the owner of the Plan. An owner cannot be #{@item_description} for the same plan."
+          
           if !@invalid_users.empty? && !@existing_coowners.empty? && !@owner.empty?
             format.html { flash[:error] << @notice_1 << @notice_2 << @notice_3
                   redirect_to details_plan_path(@plan)}
@@ -265,6 +266,10 @@ class PlansController < ApplicationController
           .where(users: {institution_id: @user.institution.subtree_ids})
           .unit_visibility.pluck(:id)
     
+    test_visible_plans_ids = Plan.joins(:users)
+          .where(users: {institution_id: @user.institution.subtree_ids})
+          .test_visibility.pluck(:id)
+                
     plans = (current_user_plan_ids + public_plans_ids + institutionally_visible_plans_ids + unit_visible_plans_ids).uniq
     @plans = Plan.where(id: plans)
     @plans = Kaminari.paginate_array(@plans).page(params[:page]).per(5)
@@ -439,6 +444,35 @@ class PlansController < ApplicationController
     end
   end
 
+  def confirm_visibility
+    id = params[:plan_id].to_i unless params[:plan_id].blank?
+    @plan = Plan.find(id)
+    @plan.visibility = params[:visibility]
+    if @plan.save
+      # Change the plan's status to committed
+      @responses = Array.new
+
+      requirements_template = RequirementsTemplate.find(@plan.requirements_template_id)
+      requirements = requirements_template.requirements
+      count = requirements.where(obligation: :mandatory).count
+      @responses = Requirement.requirements_with_mandatory_obligation(@plan.id, requirements_template.id)
+      
+      if @responses.count == count
+        unless @plan.current_plan_state == :committed
+          plan_state = PlanState.create(plan_id: @plan.id, state: :committed, user_id: current_user.id)
+          @plan.current_plan_state_id = plan_state.id
+          redirect_to preview_plan_path(@plan), notice: "The Plan has been Completed"
+        else
+          redirect_to preview_plan_path(@plan), alert: "The Plan has already been Completed"
+        end
+      else
+        flash[:error] =  "Please complete all the mandatory Responses for the Plan to be Finished."
+        redirect_to preview_plan_path(@plan)
+      end
+      
+    end
+  end
+
   def preview
     @plan = Plan.find(params[:id])
     @coowners = @plan.coowners
@@ -466,6 +500,9 @@ class PlansController < ApplicationController
     @unit_plans = Plan.joins( {:users => :institution} ).joins(:requirements_template)
           .where("user_plans.owner = 1").where(visibility: :unit)
 
+    @test_plans = Plan.joins( {:users => :institution} ).joins(:requirements_template)
+        .where("user_plans.owner = 1").test_visibility
+
     @show_institution = false
     
     if current_user
@@ -489,6 +526,7 @@ class PlansController < ApplicationController
          
     else
       @inst_plans = nil
+      @test_plans = nil
     end
     
     @plans = multitable(@plans, public_params)

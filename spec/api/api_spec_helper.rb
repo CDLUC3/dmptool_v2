@@ -125,21 +125,21 @@ def create_test_plan_per_visibility(template, owner)
   plans = []
   
   ['public', 'institutional', 'private', 'unit'].each do |visibility|
-    create_test_plan(template, visibility, owner, nil)
+    create_test_plan(template, visibility, owner, nil, 'new')
   end
   
   plans
 end
 # ---------------------------------------------
-def create_test_plan(template, visibility, owner, coowner)
+def create_test_plan(template, visibility, owner, coowner, state)
   original_plan = Plan.first
-  
+
   plan = create("api_#{visibility}_plan", requirements_template_id: template.id,
                                           original_plan_id: original_plan.id)
                                    
   create(:api_plan_owner, plan: plan, user: owner)
   create(:api_plan_coowner, plan: plan, user: coowner) unless coowner.nil?
-  
+  create(:api_plan_state_committed, plan: plan, state: state)
   plan
 end
 

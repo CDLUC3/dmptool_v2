@@ -134,6 +134,7 @@ Dmptool2::Application.routes.draw do
   get 'select_dmp_template', to: 'plans#select_dmp_template'
   get 'review_dmps', to: 'plans#review_dmps'
   post 'change_visibility', to: 'plans#change_visibility'
+  post 'confirm_visibility', to: 'plans#confirm_visibility'
   get 'public_dmps', to: 'plans#public'
   #post 'add_coowner_autocomplete', to: 'plans#add_coowner_autocomplete' #this isn't used and is a helping function for the users controller
   delete 'delete_coowner', to: 'plans#delete_coowner'

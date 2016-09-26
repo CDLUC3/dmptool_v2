@@ -18,7 +18,11 @@
 <div class="buttons">
   <p class="pull-left"> This DMP is <strong class="blue"><%=@plan.visibility.capitalize %></strong><br/></p>
 	<%= link_to "Change Settings", "#", :class => "btn change_visibility_link", :'data-planid' => @plan.id, :'data-visibility' => @plan.visibility %>
-  <span>Note: when visibility is set to "Public", your DMP will appear on the <a href="/public_dmps">Public DMPs</a> page of this site and it will be downloadable and copy-able.</span> 
+  <div style="width: 500px; float: right; line-height: 20px; margin-right: 150px;">
+  
+    Note: when visibility is set to "Public", your DMP will appear on the <a href="/public_dmps">Public DMPs</a> page of this site
+    and it will be downloadable and copy-able. 
+  </div>
 </div>
 
 <div class="row-fluid">
@@ -27,7 +31,11 @@
 </div>
 
 <div id = 'visibility_dialog_form'>
-	<%= render partial: 'change_visibility', locals: {:plan_id => @plan.id, :visibility => @plan.visibility} %>
+	<%= render partial: 'change_visibility', locals: {plan_id: @plan.id, visibility: @plan.visibility} %>
+</div>
+
+<div id = 'visibility_confirmation_dialog_form'>
+	<%= render partial: 'confirm_visibility', locals: {plan_id: @plan.id, visibility: @plan.visibility} %>
 </div>
 
 <script type="text/javascript">

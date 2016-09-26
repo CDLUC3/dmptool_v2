@@ -40,11 +40,11 @@
       <th>
         <%= sortable "visibility" %>
         <%if current_user && (current_user.institution.has_children? || current_user.institution.parent) %>
-          <%= content_tag(:span, '', :title => 'Four possible states:<ul><li>Private (red lock): only owners and co-owners can view the plan.</li><li>Shared with institution (yellow key): anyone logged in from your entire institution hierarchy can view, copy and or download the plan.</li><li>Shared within unit (hierarchy icon): anyone logged in from your institution or from a parent institution can view, copy and or download the plan. </li><li>Share publicly (green people): anyone can view, copy and or download the plan. 
-            Your DMP will appear on the <a href="/public_dmps">Public DMPs</a> page of this site.</li></ul>', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'data-html' => 'true', :class => 'icon questionmark tip') %>
+          <%= content_tag(:span, '', :title => 'Five possible states:<ul><li>Share publicly (green people): anyone can view, copy and or download the plan. 
+            Your DMP will appear on the <a href="/public_dmps">Public DMPs</a> page of this site.</li><li>Shared with institution (yellow key): anyone logged in from your entire institution hierarchy can view, copy and or download the plan.</li><li>Shared within unit (hierarchy icon): anyone logged in from your institution or from a parent institution can view, copy and or download the plan. </li><li>Private (red lock): only owners and co-owners can view the plan. Administrators at your institution can view all plans for program development purposes. See <a href="/terms">Terms of Use</a></li><li>Test (black notepad): select if you are exploring the tool and/or creating a practice plan that you will not submit with a proposal.</li></ul>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
         <%else%>
-          <%= content_tag(:span, '', :title => 'Four possible states:<ul><li>Private (red lock): only owners and co-owners can view the plan.</li><li>Shared with institution (yellow key): anyone logged in from your institution can view, copy and or download the plan.</li><li>Share publicly (green people): anyone can view, copy and or download the plan. 
-            Your DMP will appear on the <a href="/public_dmps">Public DMPs</a> page of this site.</li></ul>', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'data-html' => 'true', :class => 'icon questionmark tip') %>
+          <%= content_tag(:span, '', :title => 'Four possible states:<ul><li>Share publicly (green people): anyone can view, copy and or download the plan. 
+            Your DMP will appear on the <a href="/public_dmps">Public DMPs</a> page of this site.</li><li>Shared with institution (yellow key): anyone logged in from your institution can view, copy and or download the plan.</li><li>Private (red lock): only owners and co-owners can view the plan. Administrators at your institution can view all plans for program development purposes. See <a href="/terms">Terms of Use</a></li><li>Test (black notepad): select if you are exploring the tool and/or creating a practice plan that you will not submit with a proposal.</li></ul>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
         <%end%>
       </th>
       
@@ -84,7 +84,9 @@
         <td><strong><%= plan.display_state %></strong></td>
 
         <%case plan.visibility%>
-        <%when :private%>
+        <%when :test%>
+          <td class="span1"><span class="edit-user icon" title="Test or Practice Plan"></span></td>
+				<%when :private%>
           <td class="span1"><span class="private-visibility icon" title="Private"></span></td>
         <%when :public%>
           <td class="span1"><span class="public-visibility icon" title="Public"></span></td>
@@ -121,5 +123,5 @@
 <!-- </table> -->
 <%= button_to 'Create New DMP', plan_template_information_path, :method => :get, :class => 'btn' %>
 <div id = 'visibility_dialog_form'>
-  <%= render partial: 'change_visibility', locals: {:plan_id => @plan_id} %>
+  <%= render partial: 'change_visibility', locals: {plan_id: @plan_id, visibility: @plan_visibility} %>
 </div>

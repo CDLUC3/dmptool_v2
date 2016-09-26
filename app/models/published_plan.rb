@@ -20,4 +20,7 @@ class PublishedPlan < ActiveRecord::Base
     visibility == :institutional
   end
 
+  def test?
+    visibility == :test
+  end
 end

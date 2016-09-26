@@ -18,6 +18,7 @@ class Plan < ActiveRecord::Base
   validates :visibility, presence: true
   validates :requirements_template_id, presence: true
   validate :unique_plan_name_per_owner, on: :create
+  validates :solicitation_identifier, length: {maximum: 190}
 
   after_create :duplicate_responses
   after_update :change_status_to_revised
@@ -28,7 +29,8 @@ class Plan < ActiveRecord::Base
   scope :private_visibility, -> { where(visibility: :private) }
   scope :public_and_institutional, -> { where(visibility: [:public, :institutional])}
   scope :unit_visibility, -> { where(visibility: :unit) }
-
+  scope :test_visibility, -> { where(visibility: :test) }
+  
   # scopes for plan's states
   scope :submitted, -> { joins(:current_state).where('plan_states.state =?', :submitted) }
   scope :approved, -> { joins(:current_state).where('plan_states.state =?', :approved) }
@@ -43,6 +45,10 @@ class Plan < ActiveRecord::Base
   scope :plans_rejected, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: 'rejected'}).where(user_plans: {owner: true})}
   scope :plans_per_institution, ->(institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: ['rejected', 'approved', 'submitted', 'reviewed']}).where(user_plans: {owner: true})}
   scope :plans_reviewed, ->(institution_id) {joins(:users, :plan_states).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: ['approved', 'rejected', 'reviewed']}).where(user_plans: {owner: true}).distinct}
+  
+  # scopes for API
+  scope :finished, -> (institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: ['rejected', 'approved', 'submitted', 'reviewed']}).where(user_plans: {owner: true})}
+  scope :public_finished, -> {joins(:current_state).where(plan_states: {state: ['rejected', 'approved', 'submitted', 'reviewed']}).where(visibility: 'public')}
   
   def plan_responses_ids
     @response_ids = [] 

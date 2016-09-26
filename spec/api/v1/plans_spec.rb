@@ -26,32 +26,32 @@ describe 'Plans API', :type => :api do
     
     # Plans
     @inst_admin_plans = [
-        create_test_plan(@templates[0], 'institutional', @inst_admin, nil),
-        create_test_plan(@templates[0], 'unit', @inst_admin, nil),
-        create_test_plan(@templates[0], 'public', @inst_admin, nil),
-        create_test_plan(@templates[1], 'private', @inst_admin, @resource_editor),
-        create_test_plan(@templates[1], 'public', @inst_admin, nil),
-        create_test_plan(@templates[0], 'private', @inst_admin, @resource_editor),
-        create_test_plan(@templates[1], 'institutional', @inst_admin, @resource_editor),
-        create_test_plan(@templates[0], 'unit', @inst_admin, @resource_editor)
+        create_test_plan(@templates[0], 'institutional', @inst_admin, nil, 'submitted'),
+        create_test_plan(@templates[0], 'unit', @inst_admin, nil, 'submitted'),
+        create_test_plan(@templates[0], 'public', @inst_admin, nil, 'submitted'),
+        create_test_plan(@templates[1], 'private', @inst_admin, @resource_editor, 'submitted'),
+        create_test_plan(@templates[1], 'public', @inst_admin, nil, 'submitted'),
+        create_test_plan(@templates[0], 'private', @inst_admin, @resource_editor, 'submitted'),
+        create_test_plan(@templates[1], 'institutional', @inst_admin, @resource_editor, 'submitted'),
+        create_test_plan(@templates[0], 'unit', @inst_admin, @resource_editor, 'submitted')
     ]
 
     @template_editor_plans = [
-      create_test_plan(@templates[1], 'private', @template_editor, nil),
-      create_test_plan(@templates[1], 'institutional', @template_editor, @resource_editor),
-      create_test_plan(@templates[0], 'unit', @template_editor, nil)
+      create_test_plan(@templates[1], 'private', @template_editor, nil, 'submitted'),
+      create_test_plan(@templates[1], 'institutional', @template_editor, @resource_editor, 'submitted'),
+      create_test_plan(@templates[0], 'unit', @template_editor, nil, 'submitted')
     ]
     
-    @resource_editor_plans = [create_test_plan(@templates[1], 'private', @resource_editor, nil)]
+    @resource_editor_plans = [create_test_plan(@templates[1], 'private', @resource_editor, nil, 'submitted')]
     @resource_editor_plans.concat @inst_admin_plans.select{|p| p.coowners.include?(@resource_editor)}
     @resource_editor_plans.concat @template_editor_plans.select{|p| p.coowners.include?(@resource_editor)}
     
-    @template_editor2_plans = [create_test_plan(@templates2[0], 'public', @template_editor2, nil)]
+    @template_editor2_plans = [create_test_plan(@templates2[0], 'public', @template_editor2, nil, 'submitted')]
     
     @inaccessible_plans = [
-      create_test_plan(@templates2[0], 'private', @template_editor2, nil),
-      create_test_plan(@templates2[0], 'institutional', @template_editor2, nil),
-      create_test_plan(@templates2[0], 'unit', @template_editor2, nil)
+      create_test_plan(@templates2[0], 'private', @template_editor2, nil, 'submitted'),
+      create_test_plan(@templates2[0], 'institutional', @template_editor2, nil, 'submitted'),
+      create_test_plan(@templates2[0], 'unit', @template_editor2, nil, 'submitted')
     ]
         
     @unused_templates = [@templates2[1]]
@@ -93,7 +93,7 @@ describe 'Plans API', :type => :api do
       ids = @inst_admin_plans.collect{|p| p.id}
 
       plans.each do |plan|
-        # Make sure we're showing the right templates!
+        # Make sure we're showing the right plans!
         i = i + 1 if ids.include?(plan[:plan][:id])
       end
       
@@ -115,7 +115,7 @@ describe 'Plans API', :type => :api do
       ids = @resource_editor_plans.collect{|p| p.id}
 
       plans.each do |plan|
-        # Make sure we're showing the right templates!
+        # Make sure we're showing the right plans!
         i = i + 1 if ids.include?(plan[:plan][:id])
       end
       
@@ -140,11 +140,10 @@ describe 'Plans API', :type => :api do
       expect(response.content_type).to eq(Mime::JSON)
   
       json = json(response.body)
-      
+
       i = 0
-      json.each do |plan|
-        # Make sure we're showing the right templates!
-        i = i + 1 if plans.include?(plan[:plan][:id])
+      plans.each do |id|
+        i = i + 1 unless json.select{ |plan| plan[:plan][:id] == id }.nil?
       end
       
       expect(i).to eq(plans.size)
