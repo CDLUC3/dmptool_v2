@@ -123,5 +123,5 @@
 <!-- </table> -->
 <%= button_to 'Create New DMP', plan_template_information_path, :method => :get, :class => 'btn' %>
 <div id = 'visibility_dialog_form'>
-  <%= render partial: 'change_visibility', locals: {:plan_id => @plan_id} %>
+  <%= render partial: 'change_visibility', locals: {plan_id: @plan_id, visibility: @plan_visibility} %>
 </div>
