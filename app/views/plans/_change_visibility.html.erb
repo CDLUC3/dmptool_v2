@@ -4,6 +4,8 @@
 
 	<div id="change_visibility_message"></div>
 
+<p><%= visibility %></p>
+
   <div class="control-group">
     <div class="controls checkbox-controls">
       <%= radio_button_tag :visibility, :public, checked: (visibility == 'public' ? true : false) %>
