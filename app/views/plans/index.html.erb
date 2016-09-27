@@ -128,8 +128,8 @@
 
 <script type="text/javascript">
 	$(".change_visibility_link").click(function(e){
-		var id = $(this).attr("data-planid").val();
-		var vis = $(this).attr("data-visibility").val();
+		var id = $(this).attr("data-planid");
+		var vis = $(this).attr("data-visibility");
 		
 		$("#visibility_form").find("#shared_plan_id").val(id);
 		
