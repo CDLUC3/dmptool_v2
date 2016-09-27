@@ -64,7 +64,7 @@
               <% @plan_id = plan.id %>
                 <%= link_to('Overview', edit_plan_path(plan)) %>
               | <%= link_to('Details', details_plan_path(plan)) %>
-              | <%= link_to('Share', '#', {:class => 'change_visibility_link', :'data-planid' => plan.id, :'data-visibility' => plan.visibility }) %>
+              | <%= link_to('Share', '#', {:class => 'change_visibility_link', :'data-planid' => plan.id, :'data-visibility' => plan.visibility, locals: {plan_id: plan.id, visibility: plan.visibility} }) %>
 
               <%# if (review_type(plan) == true) || (review_type(plan) == nil && plan.requirements_template.try(:review_type) && plan.requirements_template.review_type != :no_review) %>
                 | <%= link_to('Preview', preview_plan_path(plan)) %>
@@ -125,3 +125,29 @@
 <div id = 'visibility_dialog_form'>
   <%= render partial: 'change_visibility', locals: {plan_id: @plan_id, visibility: @plan_visibility} %>
 </div>
+
+<script type="text/javascript">
+	$(".change_visibility_link").click(function(e){
+		var id = $(this).attr("data-planid");
+		var vis = $(this).attr("data-visibility");
+		
+		$("#visibility_form").find("#shared_plan_id").val(id);
+		
+		if(vis == "public"){
+			$("#visibility_form").find("#visibility_public").click();
+			
+		}else if(vis == "institutional"){
+			$("#visibility_form").find("#visibility_institutional").click();
+			
+		}else if(vis == "unit"){
+			$("#visibility_form").find("#visibility_unit").click();
+			
+		}else if(vis == "private"){
+			$("#visibility_form").find("#visibility_private").click();
+			
+		}else{
+			$("#visibility_form").find("#visibility_test").click();
+		}
+		
+	});
+</script>
