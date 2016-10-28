@@ -12,6 +12,8 @@ class RequirementsController < ApplicationController
     @requirements = @requirements_template.requirements
     @requirement.enumerations.build
     @requirement.labels.build
+    
+    @has_plans = !@requirements_template.plans.empty?
   end
 
   # GET /requirements/1
