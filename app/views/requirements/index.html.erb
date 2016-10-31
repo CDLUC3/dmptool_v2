@@ -65,7 +65,7 @@
 				<% if !@has_plans %>
 	  			<%= render 'form' %>
 				<% else %>	
-					<%= render 'show', locals: {notice: notice, requirement: @requirement} %>
+					<%= render 'show', locals: {notice: notice} %>
 				<% end %>
 	  	</div>
 		</div>

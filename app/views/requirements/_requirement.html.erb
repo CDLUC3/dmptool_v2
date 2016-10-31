@@ -16,8 +16,10 @@
                 :id => "req_text_#{requirement.id}"
         %>
 			<% end %>
-			<div class="actions">
-				<% if requirement.requirements_template.plans.count <= 0 %>
+			
+			<% if requirement.requirements_template.plans.count <= 0 %>
+				<div class="actions">
+				
 					<% if requirement.group == false %>
 						<%= link_to raw(''),
 									[requirement.requirements_template, requirement], :method => :delete, id: "delete_requirement_#{requirement.text_brief}", :class => 'icon remove',
@@ -59,8 +61,9 @@
 									[requirement.requirements_template, requirement], :method => :delete, id: "delete_requirement_#{requirement.text_brief}", :class => 'icon remove',
 									data: { confirm: 'Are you sure?' } %>
 					<% end %>
-				<% end %>
-			</div>
+				
+				</div>
+			<% end %>
 		</li>
 	</ul>
 </div>
