@@ -19,6 +19,10 @@ class RequirementsController < ApplicationController
   # GET /requirements/1
   # GET /requirements/1.json
   def show
+    @requirements = @requirements_template.requirements
+    @enumerations = @requirement.enumerations
+    @labels = @requirement.labels
+    render 'index'
   end
 
   # GET /requirements/new
