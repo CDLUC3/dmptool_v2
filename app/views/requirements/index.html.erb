@@ -10,18 +10,25 @@
           <%= image_tag("throbber.gif") %> Please wait a moment . . .
         </div>
       </div>
-	  	<p><strong>Template Outline</strong></p>
-	  	<div class="actions">
-		    <%= link_to(content_tag(:span, '', :class => 'icon add-group') + 'Add Group' + content_tag(:span, '', :title => 'Similar requirements may be grouped together under a single requirement &#8220;group&#8221;.', 'data-toggle' => "tooltip", 'data-placement' => 'top', 'data-html' => 'true', :class => 'icon questionmark tip'), new_requirements_template_requirement_path(@requirements_template, node_type: 'group') + '#jump') %>
-		    <%=  raw('&nbsp;') %>
-		    <%= link_to(content_tag(:span, '', :class => 'icon add-requirement') + 'Add Requirement' + content_tag(:span, '', :title => 'A requirement is the specific question that a researcher is to answer.', 'data-toggle' => "tooltip", 'data-placement' => 'top', 'data-html' => 'true', :class => 'icon questionmark tip'), new_requirements_template_requirement_path(@requirements_template) + '#jump') %>
-		  </div>
-			<div id="drop_before_first">
-	    	<hr/>
-	    </div>
-	    <div class="requirements-tree-view" id="main_requirements_tree">
+			
+			<p><strong>Template Outline</strong></p>
+			
+			<% if !@has_plans %>
+		  	<div class="actions">
+			    <%= link_to(content_tag(:span, '', :class => 'icon add-group') + 'Add Group' + content_tag(:span, '', :title => 'Similar requirements may be grouped together under a single requirement &#8220;group&#8221;.', 'data-toggle' => "tooltip", 'data-placement' => 'top', 'data-html' => 'true', :class => 'icon questionmark tip'), new_requirements_template_requirement_path(@requirements_template, node_type: 'group') + '#jump') %>
+			    <%=  raw('&nbsp;') %>
+			    <%= link_to(content_tag(:span, '', :class => 'icon add-requirement') + 'Add Requirement' + content_tag(:span, '', :title => 'A requirement is the specific question that a researcher is to answer.', 'data-toggle' => "tooltip", 'data-placement' => 'top', 'data-html' => 'true', :class => 'icon questionmark tip'), new_requirements_template_requirement_path(@requirements_template) + '#jump') %>
+			  </div>
+				
+				<div id="drop_before_first">
+		    	<hr/>
+		    </div>
+	    <% end %>
+			
+			<div class="requirements-tree-view" id="main_requirements_tree">
 	      <%= nested_requirements @requirements.arrange(order: :position) %>
 	    </div>
+			
 	  </div>
 	  <div class="template-status border-box">
 	    <p><strong>DMP Template Status:</strong>
@@ -36,7 +43,7 @@
 	    </div>
       <div>
         <br/>
-        <% if @requirements_template.plans.count < 1 %>
+        <% if !@has_plans %>
           <%= link_to 'Delete', requirements_template_path(@requirements_template, after_url: requirements_templates_path), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn' %>
         <% else %>
           <%= link_to 'Delete', '', :class => 'btn', disabled: true, style: "pointer-events: none;" %><br/><br/>
@@ -55,7 +62,11 @@
 		</ul>
 	 	<div class="tab-content">
 	  	<div class="tab-pane active" id="tab1">
-	  		<%= render 'form' %>
+				<% if !@has_plans %>
+	  			<%= render 'form' %>
+				<% else %>	
+					<%= render 'show', locals: {notice: notice} %>
+				<% end %>
 	  	</div>
 		</div>
 	</div>

@@ -12,11 +12,19 @@ class RequirementsController < ApplicationController
     @requirements = @requirements_template.requirements
     @requirement.enumerations.build
     @requirement.labels.build
+    
+    @has_plans = !@requirements_template.plans.empty?
   end
 
   # GET /requirements/1
   # GET /requirements/1.json
   def show
+    @requirements = @requirements_template.requirements
+    @enumerations = @requirement.enumerations
+    @labels = @requirement.labels
+    
+    @has_plans = !@requirements_template.plans.empty?
+    render 'index'
   end
 
   # GET /requirements/new
