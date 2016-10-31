@@ -47,7 +47,7 @@
           <%= link_to 'Delete', requirements_template_path(@requirements_template, after_url: requirements_templates_path), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn' %>
         <% else %>
           <%= link_to 'Delete', '', :class => 'btn', disabled: true, style: "pointer-events: none;" %><br/><br/>
-          <p>This template cannot be deleted until all DMPs that use it have been removed.</p>
+          <p>This template cannot be deleted nor can the requirements be modified until all DMPs that use it have been removed.</p>
         <% end %>
       </div>
 	  </div>
