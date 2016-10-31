@@ -229,6 +229,7 @@ class RequirementsTemplatesController < ApplicationController
     end
 
     @requirements_template.institution_id = current_user.institution_id
+    @requirements_template.active = false
 
     respond_to do |format|
       if @requirements_template.save
