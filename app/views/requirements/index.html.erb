@@ -26,11 +26,7 @@
 	    <% end %>
 			
 			<div class="requirements-tree-view" id="main_requirements_tree">
-				<% if !@has_plans %>
-	      	<%= nested_requirements @requirements.arrange(order: :position) %>
-				<% else %>
-					<%= nested_requirements_view @requirements.arrange(order: :position) %>
-				<% end %>
+	      <%= nested_requirements @requirements.arrange(order: :position) %>
 	    </div>
 			
 	  </div>
