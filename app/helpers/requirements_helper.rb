@@ -7,7 +7,7 @@ module RequirementsHelper
   
   def nested_requirements_view(requirements)
     requirements.map do |requirement, sub_requirements|
-      render(requirement)
+      render(requirement_readonly)
     end.join.html_safe
   end
 end
