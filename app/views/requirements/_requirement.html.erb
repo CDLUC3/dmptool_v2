@@ -9,12 +9,21 @@
                 id: "req_text_#{requirement.id}")
         %>
 			<% else %>
-        <span class="icon requirement"></span>
-				<%= link_to requirement.text_brief,
-                edit_requirements_template_requirement_path(requirement.requirements_template, requirement) + '#jump',
-                class: (requirement.id.to_s == params[:id] ? 'current requirements_text' : ' requirements_text'),
-                :id => "req_text_#{requirement.id}"
-        %>
+				<% if requirement.requirements_template.plans.count <= 0 %>
+	        <span class="icon requirement"></span>
+					<%= link_to requirement.text_brief,
+	                edit_requirements_template_requirement_path(requirement.requirements_template, requirement) + '#jump',
+	                class: (requirement.id.to_s == params[:id] ? 'current requirements_text' : ' requirements_text'),
+	                :id => "req_text_#{requirement.id}"
+	        %>
+				<% else %>
+	        <span class="icon requirement"></span>
+					<%= link_to requirement.text_brief,
+	                requirements_template_requirement_path(requirement.requirements_template, requirement) + '#jump',
+	                class: (requirement.id.to_s == params[:id] ? 'current requirements_text' : ' requirements_text'),
+	                :id => "req_text_#{requirement.id}"
+	        %>
+				<% end %>
 			<% end %>
 			
 			<% if requirement.requirements_template.plans.count <= 0 %>
