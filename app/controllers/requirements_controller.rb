@@ -22,6 +22,8 @@ class RequirementsController < ApplicationController
     @requirements = @requirements_template.requirements
     @enumerations = @requirement.enumerations
     @labels = @requirement.labels
+    
+    @has_plans = !@requirements_template.plans.empty?
     render 'index'
   end
 
