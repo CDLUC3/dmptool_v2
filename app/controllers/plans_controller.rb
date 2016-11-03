@@ -281,11 +281,7 @@ class PlansController < ApplicationController
     id = params[:plan].to_i unless params[:plan].blank?
     @original_plan_id = params[:plan].to_i
     plan = Plan.where(id: id).first
-    @plan = plan.deep_clone include: [:responses]
-    
-    # Default the newly cloned plan to private visibility
-    @plan.visibility = 'private'
-    @plan.save!
+    @plan = plan.deep_clone except: :visibility, include: [:responses]
     
     render action: "copy_existing_template"
   end
