@@ -3,24 +3,29 @@
 <h1 class="row-fluid"><span class="icon institution-profile"></span>Institution Profile</h1>
 <div class="tabbable">
   <ul class="nav nav-tabs">
-    <li class="active"><a href="#tab1" data-toggle="tab">Institution Information</a></li>
-    <li><a href="#tab2" data-toggle="tab">Institutional Resources</a></li>
+		<li class="active"><a href="#tab1" data-toggle="tab">Dashboard</a></li>
+    <li><a href="#tab2" data-toggle="tab">Institution Information</a></li>
+    <li><a href="#tab3" data-toggle="tab">Institutional Resources</a></li>
     <% if user_role_in?(:dmp_admin) %>
-      <li><a href="#tab3" data-toggle="tab">Institution Hierarchy</a></li>
+      <li><a href="#tab4" data-toggle="tab">Institution Hierarchy</a></li>
     <%end%>
-    <li><a href="#tab4" data-toggle="tab">Assign Roles</a></li>
+    <li><a href="#tab5" data-toggle="tab">Assign Roles</a></li>
   </ul>
   <div class="tab-content">
 
-    <div class="tab-pane active" id="tab1">
+		<div class="tab-pane active" id="tab1">
+			<%= render 'dashboard' %>
+		</div>
+		
+    <div class="tab-pane active" id="tab2">
       <%= render 'form' %>
     </div>
 
-     <div class="tab-pane" id="tab2">
+     <div class="tab-pane" id="tab3">
         <%= render 'institutional_resources' %>
     </div>
 
-    <div class="tab-pane " id="tab3">
+    <div class="tab-pane " id="tab4">
     	<div class="institutions">
         <%= nested_institutions @institutions.arrange(order: :full_name) %>
 	    </div>
@@ -29,7 +34,7 @@
 	    </div>
     </div>
 
-    <div class="tab-pane" id="tab4">
+    <div class="tab-pane" id="tab5">
         <%= render 'manage_users' %>
     </div>
 

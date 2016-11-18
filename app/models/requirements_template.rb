@@ -9,6 +9,9 @@ class RequirementsTemplate < ActiveRecord::Base
   has_many :sample_plans, inverse_of: :requirements_template, dependent: :destroy
   has_many :resource_contexts, dependent: :destroy
   has_many :plans, dependent: :destroy
+  
+  has_many :statistics, foreign_key: "requirements_template_id", 
+                        class_name: "PublicTemplateStatistic"
 
   accepts_nested_attributes_for :requirements, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }
   accepts_nested_attributes_for :tags, allow_destroy: true, reject_if: proc { |attributes| attributes.all? { |key, value| key == '_destroy' || value.blank? } }

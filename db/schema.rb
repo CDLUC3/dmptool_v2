@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160913112300) do
+ActiveRecord::Schema.define(version: 20161118171513) do
 
   create_table "additional_informations", force: true do |t|
-    t.string   "url",                      limit: 255
-    t.string   "label",                    limit: 255
+    t.string   "url"
+    t.string   "label"
     t.integer  "requirements_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -57,21 +57,38 @@ ActiveRecord::Schema.define(version: 20160913112300) do
     t.boolean  "default"
   end
 
-  create_table "institution_statistics", force: true do |t|
-    t.integer  "institution_id"
-    t.string   "month"
-    t.integer  "total_users"
+  create_table "global_statistics", force: true do |t|
+    t.string   "run_date"
     t.integer  "new_users"
-    t.integer  "unique_users"
+    t.integer  "total_users"
     t.integer  "new_completed_plans"
+    t.integer  "total_completed_plans"
     t.integer  "new_public_plans"
     t.integer  "total_public_plans"
-    t.integer  "most_used_public_template"
-    t.integer  "new_plans_using_public_template"
-    t.integer  "total_plans_using_public_template"
+    t.integer  "new_institutions"
+    t.integer  "total_institutions"
+    t.integer  "template_of_the_month"
+    t.string   "top_ten_institutions_by_users"
+    t.string   "top_ten_institutions_by_plans"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "global_statistics", ["run_date"], name: "index_global_statistics_on_run_date", using: :btree
+  add_index "global_statistics", ["template_of_the_month"], name: "index_global_statistics_on_template_of_the_month", using: :btree
+
+  create_table "institution_statistics", force: true do |t|
+    t.string   "run_date"
+    t.integer  "new_users"
+    t.integer  "total_users"
+    t.integer  "new_completed_plans"
+    t.integer  "total_completed_plans"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "institution_id"
+  end
+
+  add_index "institution_statistics", ["run_date"], name: "index_institution_statistics_on_run_date", using: :btree
 
   create_table "institutions", force: true do |t|
     t.string   "full_name"
@@ -102,26 +119,6 @@ ActiveRecord::Schema.define(version: 20160913112300) do
     t.integer  "requirement_id"
   end
 
-  create_table "overall_statistics", force: true do |t|
-    t.string   "month"
-    t.integer  "total_users"
-    t.integer  "new_users"
-    t.integer  "unique_users"
-    t.integer  "new_institutions"
-    t.integer  "total_institutions"
-    t.integer  "new_completed_plans"
-    t.integer  "new_public_plans"
-    t.integer  "total_public_plans"
-    t.integer  "most_used_public_template"
-    t.integer  "new_plans_using_public_template"
-    t.integer  "total_plans_using_public_template"
-    t.string   "public_template_of_the_month"
-    t.string   "top_ten_institutions_by_users"
-    t.string   "top_ten_institutions_by_plans"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "plan_states", force: true do |t|
     t.integer  "plan_id"
     t.enum     "state",      limit: [:new, :committed, :submitted, :approved, :reviewed, :rejected, :revised, :inactive, :deleted]
@@ -140,6 +137,17 @@ ActiveRecord::Schema.define(version: 20160913112300) do
     t.datetime "updated_at"
     t.integer  "current_plan_state_id"
   end
+
+  create_table "public_template_statistics", force: true do |t|
+    t.string   "run_date"
+    t.integer  "new_plans"
+    t.integer  "total_plans"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "requirements_template_id"
+  end
+
+  add_index "public_template_statistics", ["run_date"], name: "index_public_template_statistics_on_run_date", using: :btree
 
   create_table "published_plans", force: true do |t|
     t.integer  "plan_id"
@@ -167,7 +175,7 @@ ActiveRecord::Schema.define(version: 20160913112300) do
 
   create_table "requirements_templates", force: true do |t|
     t.integer  "institution_id"
-    t.string   "name",           limit: 255
+    t.string   "name"
     t.boolean  "active"
     t.date     "start_date"
     t.date     "end_date"
@@ -258,8 +266,8 @@ ActiveRecord::Schema.define(version: 20160913112300) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "login_id"
-    t.date     "deleted_at"
     t.boolean  "active",           default: true
+    t.datetime "deleted_at"
     t.string   "orcid_id"
     t.string   "auth_token"
   end

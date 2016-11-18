@@ -50,6 +50,10 @@ class Plan < ActiveRecord::Base
   scope :finished, -> (institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: ['rejected', 'approved', 'submitted', 'reviewed']}).where(user_plans: {owner: true})}
   scope :public_finished, -> {joins(:current_state).where(plan_states: {state: ['rejected', 'approved', 'submitted', 'reviewed']}).where(visibility: 'public')}
   
+  #scopes for Statistics
+  scope :completed, -> (institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: ['rejected', 'approved', 'submitted', 'reviewed', 'committed']})}
+  scope :public_completed, -> {joins(:current_state).where(plan_states: {state: ['rejected', 'approved', 'submitted', 'reviewed', 'committed']}).where(visibility: 'public')}
+  
   def plan_responses_ids
     @response_ids = [] 
     responses.each do |response|

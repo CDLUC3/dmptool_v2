@@ -8,6 +8,9 @@ class Institution < ActiveRecord::Base
 	has_many :resource_templates
 	has_many :requirements_templates
   has_many :resource_contexts
+  
+  has_many :statistics, foreign_key: "institution_id", 
+                        class_name: "InstitutionStatistic"
 
 	validates :full_name, presence: true
 
