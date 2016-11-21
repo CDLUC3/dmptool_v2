@@ -61,7 +61,7 @@ class InstitutionsController < ApplicationController
 
   def institutional_statistics
     institution = Institution.find(current_user.institution)
-    @run_dates = GlobalStatistic.all.order(run_date: :desc).collect(|gs| gs.run_date)
+    @run_dates = GlobalStatistic.all.order(run_date: :desc).collect{|gs| gs.run_date}
     
     run_date = (params[:run_date].nil? ? @run_dates.first : params[:run_date])
     
@@ -296,7 +296,9 @@ puts "INSTITUTION: #{institution}, RUN DATE: #{run_date}"
 
 
   def institutional_admins
-    @user_ids = Authorization.where(role_id: 5).pluck(:user_id) #All the institutional_admins
+    #All the institutional_admins
+    @user_ids = Authorization.where(role_id: Role::INSTITUTIONAL_ADMIN).pluck(:user_id) 
+    
     if user_role_in?(:dmp_admin)
       @users = User.where(id: @user_ids).order('created_at DESC').page(params[:page]).per(10)
     else
