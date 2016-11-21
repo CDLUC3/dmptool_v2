@@ -31,7 +31,7 @@ namespace :statistics do
             new_users: inst.users.where(created_at: first..last, active: true).count,
             total_users: inst.users.where(active: true, created_at: <= first).count,
             new_completed_plans: Plan.completed(inst).where(created_at: first..last).count,
-            total_completed_plans: Plan.completed(inst).where(created_at: <= first.count
+            total_completed_plans: Plan.completed(inst).where(created_at: <= first).count
           })
         end
       
