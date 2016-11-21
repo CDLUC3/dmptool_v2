@@ -29,9 +29,9 @@ namespace :statistics do
           stat = InstitutionStatistic.new({
             run_date: run_date,
             new_users: inst.users.where(created_at: first..last, active: true).count,
-            total_users: inst.users.where(active: true, created_at: <= first).count,
+            total_users: inst.users.where("created_at <= ? AND active = ", first, true).count,
             new_completed_plans: Plan.completed(inst).where(created_at: first..last).count,
-            total_completed_plans: Plan.completed(inst).where(created_at: <= first).count
+            total_completed_plans: Plan.completed(inst).where("created_at <= ?", first).count
           })
         end
       
@@ -55,7 +55,7 @@ namespace :statistics do
           stat = PublicTemplateStatistic.new({
             run_date: run_date,
             new_plans: tmplt.plans.where(created_at: first..last).count,
-            total_plans: tmplt.plans.where(created_at: <= first).count
+            total_plans: tmplt.plans.where("created_at <= ?", first).count
           })
         end
         
