@@ -52,11 +52,25 @@ class InstitutionsController < ApplicationController
 
     institutional_resources
 
-    @tab_number = 'tab_tab2' #the tab number for the maze of editing resources from everywhere
+    institutional_statistics
+
+    @tab_number = 'tab_tab1' #the tab number for the maze of editing resources from everywhere
     #@anchor = params[:anchor]
    
   end
 
+  def institutional_statistics
+    institution = Institution.find(current_user.institution)
+    @run_dates = GlobalStatistic.all.order(run_date: :desc).collect(|gs| gs.run_date)
+    
+    run_date = (params[:run_date].nil? ? @run_dates.first : params[:run_date])
+    
+puts "INSTITUTION: #{institution}, RUN DATE: #{run_date}"
+    
+    @institution_statistics = InstitutionStatistic.where(institution: institution, run_date: run_date)
+                                                         
+    render partial: 'dashboard'
+  end
 
   def institutional_resources
     @resource_contexts = ResourceContext.includes(:resource).
@@ -210,9 +224,7 @@ class InstitutionsController < ApplicationController
     
     if (current_user.institution == @current_institution)
       respond_to do |format|  
-        
-puts "PARAMS: #{institution_params}"
-        
+
         if @current_institution.update(institution_params)
           #format.html { redirect_to edit_institution_path(@current_institution), 
                         #notice: 'Institution was successfully updated.' }

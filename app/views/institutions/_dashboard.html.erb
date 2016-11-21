@@ -1,0 +1,27 @@
+<div class="statistic-date">
+	<%= select_tag 'run_date', options_for_select(@run_dates, @institution_statistics.run_date) %>
+</div>
+
+<% date = Date.new("#{@institution_statistics.run_date}-01 00:00:00") %>
+
+<div class="statistics">
+	<div class="statistic-card">
+		<%= @institution_statistics.total_users %>
+		<%= "Active User#{@institution_statistics.total_users == 1 ? '' : 's'}" %>
+	</div>
+	
+	<div class="statistic-card">
+		<%= @institution_statistics.new_users %> 
+		<%= "New User#{@institution_statistics.new_users == 1 ? '' : 's'} In #{Date::ABBR_MONTHNAMES[date.month]} #{date.year}" %>
+	</div>
+	
+	<div class="statistic-card">
+		<%= @institution_statistics.total_completed_plans %> 
+		<%= "Completed Plan#{@institution_statistics.total_completed_plans == 1 ? '' : 's'}" %>
+	</div>
+	
+	<div class="statistic-card">
+		<%= @institution_statistics.new_completed_plans %> 
+		<%= "New Completed Plan#{@institution_statistics.new_completed_plans == 1 ? '' : 's'} In #{Date::ABBR_MONTHNAMES[date.month]} #{date.year}" %>
+	</div>
+</div>

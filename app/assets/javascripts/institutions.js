@@ -96,11 +96,18 @@ function validateFiles(inputFile) {
   };
 }
 
-
-
-
-
-
-
-
-
+$(".statistic-date select").click(function(e){
+	var run_date = this.prop('selectedIndex');
+	
+console.log('run_date selected: ' + run_date);
+	
+	$.ajax({
+		method: "GET",
+		url: "institutions/institutional_statistics?run_date=" + run_date
+	}).done(function(data){
+		
+console.log(data);
+		
+		$("#tab1").html(data);
+	});
+});
