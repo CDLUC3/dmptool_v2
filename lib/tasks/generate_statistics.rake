@@ -29,9 +29,9 @@ namespace :statistics do
           stat = InstitutionStatistic.new({
             run_date: run_date,
             new_users: inst.users.where(created_at: first..last, active: true).count,
-            total_users: inst.users.where(active: true).count,
+            total_users: inst.users.where(active: true, created_at: <= first).count,
             new_completed_plans: Plan.completed(inst).where(created_at: first..last).count,
-            total_completed_plans: Plan.completed(inst).count
+            total_completed_plans: Plan.completed(inst).where(created_at: <= first.count
           })
         end
       
@@ -48,14 +48,14 @@ namespace :statistics do
       end
       
       # Collect the public template statistics
-      RequirementsTemplate.where(visibility: 'public').each do |tmplt|
+      RequirementsTemplate.where(visibility: 'public', active: true).each do |tmplt|
         stat = tmplt.statistics.find_by(run_date: run_date)
         
         if stat.nil?
           stat = PublicTemplateStatistic.new({
             run_date: run_date,
             new_plans: tmplt.plans.where(created_at: first..last).count,
-            total_plans: tmplt.plans.count
+            total_plans: tmplt.plans.where(created_at: <= first).count
           })
         end
         
