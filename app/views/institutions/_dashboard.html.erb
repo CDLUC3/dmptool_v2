@@ -68,7 +68,7 @@
       <div class="statistic-card">
 				Top 10 templates
 				<% @top_ten_templates.each do |entry| %>
-        	<%= "#{entry.title} - (#{entry.plans.count} user#{entry.plans.count == 1 ? '' : 's'})" %> 
+        	<%= "#{entry[:title]} - (#{entry[:count]} user#{entry[:count] == 1 ? '' : 's'})" %> 
         <% end %>
       </div>
   
