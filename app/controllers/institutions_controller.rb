@@ -74,12 +74,12 @@ class InstitutionsController < ApplicationController
       
       @template_of_the_month = RequirementsTemplate.find(@global_statistics.template_of_the_month)
     
-      JSON.parse(@global_statistics.top_ten_institutions_by_users).each do |inst,count|
+      Hash.new(@global_statistics.top_ten_institutions_by_users).each do |inst,count|
         @top_ten_by_users << {name: Institution.find(inst).full_name, 
                               count: count}
       end
       
-      JSON.parse(@global_statistics.top_ten_institutions_by_plans).each do |inst,count|
+      Hash.new(@global_statistics.top_ten_institutions_by_plans).each do |inst,count|
         @top_ten_by_plans << {name: Institution.find(inst).full_name, 
                               count: count}
       end
