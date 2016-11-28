@@ -7,27 +7,29 @@
 
   <% date = Date.parse("#{@institution_statistics.run_date}-01 00:00:00") %>
 
-  <div class="statistics-row">
-    <div class="statistic-card">
-      <%= @institution_statistics.total_users %>
-      <%= "Active User#{@institution_statistics.total_users == 1 ? '' : 's'}" %>
-    </div>
+  <div class="statistics">
+    <div class="statistics-row">
+      <div class="statistic-card">
+        <%= @institution_statistics.total_users %>
+        <%= "Active User#{@institution_statistics.total_users == 1 ? '' : 's'}" %>
+      </div>
   
-    <div class="statistic-card">
-      <%= @institution_statistics.new_users %> 
-      <%= "New User#{@institution_statistics.new_users == 1 ? '' : 's'}" %>
+      <div class="statistic-card">
+        <%= @institution_statistics.new_users %> 
+        <%= "New User#{@institution_statistics.new_users == 1 ? '' : 's'}" %>
+      </div>
     </div>
-  </div>
 
-  <div class="statistics-row">  
-    <div class="statistic-card">
-      <%= @institution_statistics.total_completed_plans %> 
-      <%= "Completed Plan#{@institution_statistics.total_completed_plans == 1 ? '' : 's'}" %>
-    </div>
+    <div class="statistics-row">  
+      <div class="statistic-card">
+        <%= @institution_statistics.total_completed_plans %> 
+        <%= "Completed Plan#{@institution_statistics.total_completed_plans == 1 ? '' : 's'}" %>
+      </div>
   
-    <div class="statistic-card">
-      <%= @institution_statistics.new_completed_plans %> 
-      <%= "New Completed Plan#{@institution_statistics.new_completed_plans == 1 ? '' : 's'}" %>
+      <div class="statistic-card">
+        <%= @institution_statistics.new_completed_plans %> 
+        <%= "New Completed Plan#{@institution_statistics.new_completed_plans == 1 ? '' : 's'}" %>
+      </div>
     </div>
   </div>
 </div>

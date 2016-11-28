@@ -9,6 +9,7 @@ div.usage-statistics {
 	}
 	
 	.statistics {
+		display: block;
 		margin: 0 auto;
 		
 		.statistics-row {
@@ -20,11 +21,11 @@ div.usage-statistics {
 				position: relative;
 				float: left;
 			
-				width: 300px;
+				width: 250px;
 			
 				border: .5px rgb(76,76,78) solid;
 				margin: 10px 25px;
-				padding: 100px 25px 100px 25px;
+				padding: 50px 25px 50px 25px;
 			
 				text-align: center;
 				vertical-align: middle;
