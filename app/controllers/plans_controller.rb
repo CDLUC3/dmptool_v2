@@ -707,7 +707,7 @@ class PlansController < ApplicationController
         
       # If the plan's template is not active then we cannot copy it
       elsif !Plan.find(params[:plan]).requirements_template.active
-        flash[:error] = "That plan was created from a template that is no longer active. Please select a more recent Plan to copy."
+        flash[:error] = "That Plan was created from a template that is no longer active. Please select a more recent Plan to copy."
         redirect_to plans_path
         
       else

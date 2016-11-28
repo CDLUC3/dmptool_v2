@@ -2,9 +2,14 @@ namespace :statistics do
   desc 'Generate monthly usage statistics'
   
   task generate: :environment do |t, args|
-    date = Date.today
     
-    last = Date.yesterday
+    date = Date.new(Date.today.year, Date.today.month, 1)
+    if (date.month - 1) <= 0
+      last = Date.civil((date.year - 1), 12, -1)
+    else
+      last = Date.civil(date.year, (date.month - 1), -1)
+    end
+    
     first = Date.new(last.year, last.month, 1)
     
     run_date = "#{date.year}-#{date.month}"
@@ -14,7 +19,7 @@ namespace :statistics do
       puts "The system has already generated statistics for #{run_date}"
       
     else
-      puts "Generating statistics for #{run_date}"
+      puts "Generating statistics for #{run_date}: #{first.to_s} - #{last.to_s}"
       
       top_users, top_plans, top_templates = {}, {}, {}
       n_users, t_users = 0, 0
@@ -29,9 +34,9 @@ namespace :statistics do
           stat = InstitutionStatistic.new({
             run_date: run_date,
             new_users: inst.users.where(created_at: first..last, active: true).count,
-            total_users: inst.users.where("created_at <= ? AND active = ", first, true).count,
+            total_users: inst.users.where("users.created_at <= ? AND users.active = true", first).count,
             new_completed_plans: Plan.completed(inst).where(created_at: first..last).count,
-            total_completed_plans: Plan.completed(inst).where("created_at <= ?", first).count
+            total_completed_plans: Plan.completed(inst).where("plans.created_at <= ?", first).count
           })
         end
       
@@ -55,7 +60,7 @@ namespace :statistics do
           stat = PublicTemplateStatistic.new({
             run_date: run_date,
             new_plans: tmplt.plans.where(created_at: first..last).count,
-            total_plans: tmplt.plans.where("created_at <= ?", first).count
+            total_plans: tmplt.plans.where("plans.created_at <= ?", first).count
           })
         end
         
