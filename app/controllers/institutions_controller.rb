@@ -70,20 +70,25 @@ class InstitutionsController < ApplicationController
     unless @global_statistics.nil?
       @institution_statistics = InstitutionStatistic.where(institution: institution, run_date: run_date).first
 
-      @top_ten_templates, @top_ten_by_users, @top_ten_by_plans = [], [], []
+      @top_ten_by_users, @top_ten_by_plans = [], []
       
-      PublicTemplateStatistic.where(run_date: run_date).order(new_plans: :desc).limit(10).each do |stat|
-        @top_ten_templates << {title: RequirementsTemplate.find(stat.requirements_template_id).name,
-                               count: stat.new_plans}
+      @template_of_the_month = RequirementsTemplate.find(@global_statistics.template_of_the_month)
+    
+      JSON.parse(@global_statistics.top_ten_institutions_by_users).each do |inst,count|
+        @top_ten_by_users << {name: Institution.find(inst).full_name, 
+                              count: count}
       end
       
-      InstitutionStatistic.where(run_date: run_date).order(new_users: :desc).limit(10). each do |stat|
-        @top_ten_by_users << {name: stat.institution.full_name, count: stat.new_users}
+      JSON.parse(@global_statistics.top_ten_institutions_by_plans).each do |inst,count|
+        @top_ten_by_plans << {name: Institution.find(inst).full_name, 
+                              count: count}
       end
       
-      InstitutionStatistic.where(run_date: run_date).order(new_completed_plans: :desc).limit(10). each do |stat|
-        @top_ten_by_users << {name: stat.institution.full_name, count: stat.new_completed_plans}
-      end
+#      PublicTemplateStatistic.where(run_date: run_date).order(new_plans: :desc).limit(10).each do |stat|
+#        @top_ten_templates << {title: RequirementsTemplate.find(stat.requirements_template_id).name,
+#                               count: stat.new_plans}
+#      end
+      
     end
     
   end

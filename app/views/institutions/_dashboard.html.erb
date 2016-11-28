@@ -64,12 +64,10 @@
 		
     <div class="statistics-row">  
       <div class="statistic-card">
-				Top 10 templates by number of new plans
-				<% @top_ten_templates.each do |entry| %>
-        	<%= "#{entry[:title]} - (#{entry[:count]} plan#{entry[:count] == 1 ? '' : 's'})" %> 
-        <% end %>
+				<%= "Template of the month: '#{@template_of_the_month.name}'" %> 
       </div>
-  
+  	</div>
+		<div class="statistics-row">  
       <div class="statistic-card">
 				Top 10 institutions by number of users
 				<% @top_ten_by_users.each do |entry| %>
