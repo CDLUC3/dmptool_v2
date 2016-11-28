@@ -76,7 +76,7 @@ class InstitutionsController < ApplicationController
     
 puts "HASH: #{Hash.new(@global_statistics.top_ten_institutions_by_users).inspect}"
     
-      Hash.new(@global_statistics.top_ten_institutions_by_users).each do |inst,count|
+      JSON.parse(@global_statistics.top_ten_institutions_by_users.gsub('=>', ':')).each do |inst,count|
         
 puts "INST: #{inst.inspect}"
 puts "COUNT: #{count.inspect}"
@@ -85,7 +85,7 @@ puts "COUNT: #{count.inspect}"
                               count: count}
       end
       
-      Hash.new(@global_statistics.top_ten_institutions_by_plans).each do |inst,count|
+      JSON.parse(@global_statistics.top_ten_institutions_by_plans.gsub('=>', ':')).each do |inst,count|
         @top_ten_by_plans << {name: Institution.find(inst).full_name, 
                               count: count}
       end
