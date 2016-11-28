@@ -8,8 +8,7 @@
   <% date = Date.parse("#{@institution_statistics.run_date}-01 00:00:00") %>
 
   <div class="statistics">
-		<hr />
-		<h4 class="center">@current_institution.full_name</h4>
+		<h4><%= @current_institution.full_name %></h4>
 			
     <div class="statistics-row">
       <div class="statistic-card">
@@ -37,8 +36,7 @@
   </div>
 	
   <div class="statistics">
-		<hr />
-		<h4 class="center">Systemwide</h4>
+		<h4>Systemwide</h4>
 			
     <div class="statistics-row">
       <div class="statistic-card">
@@ -66,9 +64,9 @@
 		
     <div class="statistics-row">  
       <div class="statistic-card">
-				Top 10 templates
+				Top 10 templates by number of new plans
 				<% @top_ten_templates.each do |entry| %>
-        	<%= "#{entry[:title]} - (#{entry[:count]} user#{entry[:count] == 1 ? '' : 's'})" %> 
+        	<%= "#{entry[:title]} - (#{entry[:count]} plan#{entry[:count] == 1 ? '' : 's'})" %> 
         <% end %>
       </div>
   

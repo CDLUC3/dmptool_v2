@@ -73,10 +73,17 @@ class InstitutionsController < ApplicationController
       @top_ten_templates, @top_ten_by_users, @top_ten_by_plans = [], [], []
       
       PublicTemplateStatistic.where(run_date: run_date).order(new_plans: :desc).limit(10).each do |stat|
-        @top_ten_templates << {title: RequirementsTemplate.find(stat.requirements_template_id),
+        @top_ten_templates << {title: RequirementsTemplate.find(stat.requirements_template_id).title,
                                count: stat.new_plans}
       end
       
+      InstitutionStatistic.where(run_date: rund_date).order(new_users: :desc).limit(10). each do |stat|
+        @top_ten_by_users << {name: stat.institution.full_name, count: stat.new_users}
+      end
+      
+      InstitutionStatistic.where(run_date: rund_date).order(new_completed_plans: :desc).limit(10). each do |stat|
+        @top_ten_by_users << {name: stat.institution.full_name, count: stat.new_completed_plans}
+      end
     end
     
   end
