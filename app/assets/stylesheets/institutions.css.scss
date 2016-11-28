@@ -1,38 +1,42 @@
 div.usage-statistics {
-	overflow: auto;
-	
-	h3 {
-		.statistic-date {
-			display: inline;
-			margin-left: 25px;
-		}
-	}
-	
-	.statistics {
-		display: block;
-		margin: 0 auto;
-		
-		.statistics-row {
-			float: left;
-			clear: left;
-			margin: 0 auto;
-		
-			.statistic-card {
-				position: relative;
-				float: left;
-			
-				width: 250px;
-			
-				border: .5px rgb(76,76,78) solid;
-				margin: 10px 25px;
-				padding: 50px 25px 50px 25px;
-			
-				text-align: center;
-				vertical-align: middle;
-			
-				font-size: .9rem;
-				font-weight: bold;
-			}
-		}
-	}
+  overflow: auto;
+  
+  h3 {
+    .statistic-date {
+      display: inline;
+      margin-left: 25px;
+    }
+    
+    select {
+      font-size: 15px;
+    }
+  }
+  
+  .statistics {
+    
+    .statistics-row {
+      float: left;
+      clear: left;
+
+      display: block;
+      margin: 0 auto;
+    
+      .statistic-card {
+        position: relative;
+        float: left;
+      
+        width: 250px;
+      
+        border: .5px rgb(76,76,78) solid;
+        margin: 10px 25px;
+        padding: 50px 25px 50px 25px;
+      
+        text-align: center;
+        vertical-align: middle;
+      
+        font-size: .9rem;
+        font-weight: bold;
+      }
+    }
+  }
 }
