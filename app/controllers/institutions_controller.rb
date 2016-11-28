@@ -77,11 +77,11 @@ class InstitutionsController < ApplicationController
                                count: stat.new_plans}
       end
       
-      InstitutionStatistic.where(run_date: rund_date).order(new_users: :desc).limit(10). each do |stat|
+      InstitutionStatistic.where(run_date: run_date).order(new_users: :desc).limit(10). each do |stat|
         @top_ten_by_users << {name: stat.institution.full_name, count: stat.new_users}
       end
       
-      InstitutionStatistic.where(run_date: rund_date).order(new_completed_plans: :desc).limit(10). each do |stat|
+      InstitutionStatistic.where(run_date: run_date).order(new_completed_plans: :desc).limit(10). each do |stat|
         @top_ten_by_users << {name: stat.institution.full_name, count: stat.new_completed_plans}
       end
     end
