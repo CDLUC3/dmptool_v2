@@ -75,6 +75,10 @@ class InstitutionsController < ApplicationController
       @template_of_the_month = RequirementsTemplate.find(@global_statistics.template_of_the_month)
     
       Hash.new(@global_statistics.top_ten_institutions_by_users).each do |inst,count|
+        
+puts "INST: #{inst.inspect}"
+puts "COUNT: #{count.inspect}"
+        
         @top_ten_by_users << {name: Institution.find(inst).full_name, 
                               count: count}
       end
