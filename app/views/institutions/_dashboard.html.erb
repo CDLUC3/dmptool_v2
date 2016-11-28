@@ -15,7 +15,7 @@
   
     <div class="statistic-card">
       <%= @institution_statistics.new_users %> 
-      <%= "New User#{@institution_statistics.new_users == 1 ? '' : 's'} In #{Date::ABBR_MONTHNAMES[date.month]} #{date.year}" %>
+      <%= "New User#{@institution_statistics.new_users == 1 ? '' : 's'}" %>
     </div>
   </div>
 
@@ -27,7 +27,7 @@
   
     <div class="statistic-card">
       <%= @institution_statistics.new_completed_plans %> 
-      <%= "New Completed Plan#{@institution_statistics.new_completed_plans == 1 ? '' : 's'} In #{Date::ABBR_MONTHNAMES[date.month]} #{date.year}" %>
+      <%= "New Completed Plan#{@institution_statistics.new_completed_plans == 1 ? '' : 's'}" %>
     </div>
   </div>
 </div>
