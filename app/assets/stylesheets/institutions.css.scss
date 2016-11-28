@@ -19,13 +19,12 @@ div.usage-statistics {
   
   .statistics {
     
+    margin: 0 auto;
+    width: 600px;
+
     .statistics-row {
       float: left;
       clear: left;
-
-      display: block;
-      margin: 0 auto;
-      width: 600px;
       
       .statistic-card {
         position: relative;
