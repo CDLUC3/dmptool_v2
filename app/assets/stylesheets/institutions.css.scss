@@ -8,28 +8,30 @@ div.usage-statistics {
 		}
 	}
 	
-	.statistics-row {
-		float: left;
-		clear: left;
+	.statistics {
 		margin: 0 auto;
 		
-		.statistic-card {
-			position: relative;
+		.statistics-row {
 			float: left;
+			clear: left;
+			margin: 0 auto;
+		
+			.statistic-card {
+				position: relative;
+				float: left;
 			
-			width: 300px;
-			height: 300px;
+				width: 300px;
 			
-			border: 1px #000 solid;
-			margin: 10px auto 10px;
-			padding: 100px 25px 100px 25px;
+				border: .5px rgb(76,76,78) solid;
+				margin: 10px 25px;
+				padding: 100px 25px 100px 25px;
 			
-			text-align: center;
-			vertical-align: middle;
+				text-align: center;
+				vertical-align: middle;
 			
-			font-size: .9rem;
-			font-weight: bold;
+				font-size: .9rem;
+				font-weight: bold;
+			}
 		}
 	}
-	
 }
