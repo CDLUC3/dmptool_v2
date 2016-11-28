@@ -65,7 +65,18 @@ class InstitutionsController < ApplicationController
     
     run_date = (params[:run_date].nil? ? @run_dates.first : params[:run_date])
     
-    @institution_statistics = InstitutionStatistic.where(institution: institution, run_date: run_date).first
+    @global_statistics = GlobalStatistic.where(run_date: run_date).first
+    
+    unless @global_statistics.nil?
+      @institution_statistics = InstitutionStatistic.where(institution: institution, run_date: run_date).first
+
+      @top_ten_templates = PublicTemplateStatistic.where(run_date: run_date).order(new_plans: :desc).limit(10)
+
+      @top_ten_by_users, @top_ten_by_plans = [], []
+      
+      
+    end
+    
   end
 
   def institutional_resources

@@ -8,6 +8,9 @@
   <% date = Date.parse("#{@institution_statistics.run_date}-01 00:00:00") %>
 
   <div class="statistics">
+		<hr />
+		<h4 class="center">@current_institution.full_name</h4>
+			
     <div class="statistics-row">
       <div class="statistic-card">
         <%= @institution_statistics.total_users %>
@@ -31,5 +34,58 @@
         <%= "New Completed Plan#{@institution_statistics.new_completed_plans == 1 ? '' : 's'}" %>
       </div>
     </div>
+  </div>
+	
+  <div class="statistics">
+		<hr />
+		<h4 class="center">Systemwide</h4>
+			
+    <div class="statistics-row">
+      <div class="statistic-card">
+        <%= @global_statistics.total_users %>
+        <%= "Active User#{@global_statistics.total_users == 1 ? '' : 's'}" %>
+      </div>
+  
+      <div class="statistic-card">
+        <%= @global_statistics.new_users %> 
+        <%= "New User#{@global_statistics.new_users == 1 ? '' : 's'}" %>
+      </div>
+    </div>
+
+    <div class="statistics-row">  
+      <div class="statistic-card">
+        <%= @global_statistics.total_completed_plans %> 
+        <%= "Completed Plan#{@global_statistics.total_completed_plans == 1 ? '' : 's'}" %>
+      </div>
+  
+      <div class="statistic-card">
+        <%= @global_statistics.new_completed_plans %> 
+        <%= "New Completed Plan#{@global_statistics.new_completed_plans == 1 ? '' : 's'}" %>
+      </div>
+    </div>
+		
+    <div class="statistics-row">  
+      <div class="statistic-card">
+				Top 10 templates
+				<% @top_ten_templates.each do |entry| %>
+        	<%= "#{entry.title} - (#{entry.plans.count} user#{entry.plans.count == 1 ? '' : 's'})" %> 
+        <% end %>
+      </div>
+  
+      <div class="statistic-card">
+				Top 10 institutions by number of users
+				<% @top_ten_by_users.each do |entry| %>
+        	<%= "#{entry[:name]} - (#{entry.count} user#{entry.count == 1 ? '' : 's'})" %> 
+        <% end %>
+      </div>
+			
+      <div class="statistic-card">
+				Top 10 institutions by number of plans
+				<% @top_ten_by_plans.each do |entry| %>
+        	<%= "#{entry[:name]} - (#{entry.count} plan#{entry.count == 1 ? '' : 's'})" %> 
+        <% end %>
+      </div>
+    </div>
+		
   </div>
 </div>
