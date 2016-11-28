@@ -74,6 +74,7 @@ class InstitutionsController < ApplicationController
       
       @template_of_the_month = RequirementsTemplate.find(@global_statistics.template_of_the_month)
     
+=begin
 puts "HASH: #{Hash.new(@global_statistics.top_ten_institutions_by_users).inspect}"
     
       JSON.parse(@global_statistics.top_ten_institutions_by_users.gsub('=>', ':')).each do |inst,count|
@@ -89,7 +90,7 @@ puts "COUNT: #{count.inspect}"
         @top_ten_by_plans << {name: Institution.find(inst).full_name, 
                               count: count}
       end
-      
+=end
 #      PublicTemplateStatistic.where(run_date: run_date).order(new_plans: :desc).limit(10).each do |stat|
 #        @top_ten_templates << {title: RequirementsTemplate.find(stat.requirements_template_id).name,
 #                               count: stat.new_plans}
