@@ -2,14 +2,19 @@ div.usage-statistics {
   overflow: auto;
   
   h3 {
+    font-weight: bold;
+    margin-left: 25px;
+    
     .statistic-date {
       display: inline;
       margin-left: 25px;
+      
+      select {
+        font-size: 15px;
+      }
     }
     
-    select {
-      font-size: 15px;
-    }
+    
   }
   
   .statistics {
@@ -29,8 +34,8 @@ div.usage-statistics {
         width: 250px;
       
         border: 1px rgb(182,182,183) solid;
-        margin: 10px 25px;
-        padding: 50px 25px 50px 25px;
+        margin: 10px 15px;
+        padding: 40px 15px 40px 15px;
       
         text-align: center;
         vertical-align: middle;
