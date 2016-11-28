@@ -66,8 +66,6 @@ class InstitutionsController < ApplicationController
     run_date = (params[:run_date].nil? ? @run_dates.first : params[:run_date])
     
     @institution_statistics = InstitutionStatistic.where(institution: institution, run_date: run_date).first
-                                                         
-    render partial: 'dashboard'
   end
 
   def institutional_resources

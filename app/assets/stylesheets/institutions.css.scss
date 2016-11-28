@@ -1,0 +1,27 @@
+div.usage-statistics {
+	
+	h3 {
+		.statistic-date {
+			display: inline;
+			margin-left: 25px;
+		}
+	}
+	
+	.statistics-row {
+		float: left;
+		clear: left;
+		margin: 0 auto;
+		
+		.statistic-card {
+			width: 200px;
+			height: 200px;
+			
+			text-align: center;
+			vertical-align: middle;
+			
+			font-size: 1.5rem;
+			font-weight: bold;
+		}
+	}
+	
+}
