@@ -13,8 +13,14 @@ div.usage-statistics {
 		margin: 0 auto;
 		
 		.statistic-card {
+			position: relative;
+			float: left;
+			
 			width: 200px;
 			height: 200px;
+			
+			border: 1px #000 solid;
+			margin: 10px auto 10px;
 			
 			text-align: center;
 			vertical-align: middle;
