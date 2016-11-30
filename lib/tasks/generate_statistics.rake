@@ -30,7 +30,7 @@ namespace :statistics do
     
       first = Date.new(last.year, last.month, 1)
     
-      run_date = "#{date.year}-#{date.month}"
+      run_date = "#{date.year}-#{"0#{date.month}".slice(-2)}"
     
       # Only run if we haven't already recorded the stats for this round
       if !GlobalStatistic.find_by(run_date: run_date).nil?
@@ -71,10 +71,10 @@ namespace :statistics do
           stat = tmplt.statistics.find_by(run_date: run_date)
         
           if stat.nil?
-            stat = TemplateStatistic.new({
+            stat = RequirementsTemplateStatistic.new({
               run_date: run_date,
-              new_plans: tmplt.plans.where(created_at: first..last, visibility: []).count,
-              total_plans: tmplt.plans.where("plans.created_at <= ?", last).count
+              new_plans: tmplt.plans.where("visibility != 'test' AND plans.created_at BETWEEN ? AND ?", [first, last]).count,
+              total_plans: tmplt.plans.where("plans.created_at <= ? AND visibility != 'test'", last).count
             })
           end
         
