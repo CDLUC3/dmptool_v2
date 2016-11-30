@@ -3,8 +3,10 @@
 <h1 class="row-fluid"><span class="icon institution-profile"></span>Institution Profile</h1>
 <div class="tabbable">
   <ul class="nav nav-tabs">
-		<li class="active"><a href="#tab1" data-toggle="tab">Usage</a></li>
-    <li><a href="#tab2" data-toggle="tab">Institution Information</a></li>
+		<% unless @institution_statistics.nil? %>
+			<li class="active"><a href="#tab1" data-toggle="tab">Usage</a></li>
+		<% end %>
+    <li><a <%= "class='active'" unless @institution_statistics.nil? %>href="#tab2" data-toggle="tab">Institution Information</a></li>
     <li><a href="#tab3" data-toggle="tab">Institutional Resources</a></li>
     <% if user_role_in?(:dmp_admin) %>
       <li><a href="#tab4" data-toggle="tab">Institution Hierarchy</a></li>
