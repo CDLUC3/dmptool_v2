@@ -8,7 +8,7 @@
   <% date = Date.parse("#{@institution_statistics.run_date}-01 00:00:00") %>
 
   <div class="statistics">
-		<h3><%= @current_institution.full_name %> Usage</h3>
+		<h4><%= @current_institution.full_name %> Usage</h4>
 			
 		<div class="statistics-row">  
 	    <%= usage_card_content('User', @institution_statistics.total_users, 
@@ -18,57 +18,50 @@
 																@global_statistics.effective_month).html_safe %>
 		</div>
 		
-    <div class="statistics-row">  
-      <div class="statistic-card">
-        <%= @institution_statistics.total_completed_plans %> 
-        <%= " Total Completed Plan#{@institution_statistics.total_completed_plans == 1 ? '' : 's'}" %>
-      </div>
+		<div class="statistics-row">  
+	    <%= usage_card_content('Completed Plan', @institution_statistics.total_completed_plans, 
+																@global_statistics.effective_month, true).html_safe %>
   
-      <div class="statistic-card">
-        <%= @institution_statistics.new_completed_plans %> 
-        <%= " New Completed Plan#{@institution_statistics.new_completed_plans == 1 ? '' : 's'} For #{@global_statistics.effective_month}"%>
+	    <%= usage_card_content('Completed Plan', @institution_statistics.new_completed_plans, 
+																@global_statistics.effective_month).html_safe %>
+		</div>
+		
+    <div class="statistics-row">  
+      <div class="statistic-card" style="width: 475px;">
+				<%= "Top 5 Plans For Your Institution" %>
+				<% @top_five_institution_templates.each do |stat| %>
+					<%= "'#{stat.name.slice(0..40)}' (#{stat.new_plans} new plan#{stat.new_plans == 1 ? '' : 's'}, #{stat.total_plans} total plan#{stat.total_plans == 1 ? '' : 's'})" %> 
+				<% end %>
       </div>
-    </div>
+  	</div>
   </div>
 	
   <div class="statistics">
-		<h3>Global Usage</h3>
+		<h4>Global Usage</h4>
 			
-    <div class="statistics-row">
-      <div class="statistic-card">
-        <%= @global_statistics.total_users %>
-        <%= " Total User#{@global_statistics.total_users == 1 ? '' : 's'}" %>
-      </div>
+		<div class="statistics-row">  
+	    <%= usage_card_content('User', @global_statistics.total_users, 
+																@global_statistics.effective_month, true).html_safe %>
   
-      <div class="statistic-card">
-        <%= @global_statistics.new_users %> 
-        <%= " New User#{@global_statistics.new_users == 1 ? '' : 's'} For #{@global_statistics.effective_month}" %>
-      </div>
-    </div>
-
-    <div class="statistics-row">  
-      <div class="statistic-card">
-        <%= @global_statistics.total_completed_plans %> 
-        <%= " Total Completed Plan#{@global_statistics.total_completed_plans == 1 ? '' : 's'}" %>
-      </div>
+	    <%= usage_card_content('User', @global_statistics.total_users, 
+																@global_statistics.effective_month).html_safe %>
+		</div>
+		
+		<div class="statistics-row">  
+	    <%= usage_card_content('Completed Plan', @global_statistics.total_completed_plans, 
+																@global_statistics.effective_month, true).html_safe %>
   
-      <div class="statistic-card">
-        <%= @global_statistics.new_completed_plans %> 
-        <%= " New Completed Plan#{@global_statistics.new_completed_plans == 1 ? '' : 's'} For #{@global_statistics.effective_month}" %>
-      </div>
-    </div>
-
-    <div class="statistics-row">  
-      <div class="statistic-card">
-        <%= @global_statistics.total_public_plans %> 
-        <%= " Total Public Plan#{@global_statistics.total_public_plans == 1 ? '' : 's'}" %>
-      </div>
+	    <%= usage_card_content('Completed Plan', @global_statistics.new_completed_plans, 
+																@global_statistics.effective_month).html_safe %>
+		</div>
+		
+		<div class="statistics-row">  
+	    <%= usage_card_content('Public Plan', @global_statistics.total_public_plans, 
+																@global_statistics.effective_month, true).html_safe %>
   
-      <div class="statistic-card">
-        <%= @global_statistics.new_public_plans %> 
-        <%= " New Public Plan#{@global_statistics.new_public_plans == 1 ? '' : 's'} For #{@global_statistics.effective_month}" %>
-      </div>
-    </div>
+	    <%= usage_card_content('Public Plan', @global_statistics.new_public_plans, 
+																@global_statistics.effective_month).html_safe %>
+		</div>
 		
     <div class="statistics-row">  
       <div class="statistic-card" style="width: 475px;">
