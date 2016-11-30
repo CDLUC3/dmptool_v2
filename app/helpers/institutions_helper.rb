@@ -28,5 +28,12 @@ module InstitutionsHelper
     Authorization.joins(:user).where("users.institution_id = ? AND authorizations.role_id = ?", institution.id, 5).count
   end
  
+  
+  def usage_card_content(text, number, month, overall = false)
+    '<div class="statistic-card">' +
+      "#{number_with_delimiter(number)} #{overall ? 'Total' : 'New'} " +
+      "#{text}#{number == 1 ? '' : 's'}" + "#{overall ? '' : " For #{month}"}" +
+    '</div>'
+  end
 
 end

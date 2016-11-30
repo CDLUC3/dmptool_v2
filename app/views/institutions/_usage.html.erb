@@ -10,18 +10,14 @@
   <div class="statistics">
 		<h3><%= @current_institution.full_name %> Usage</h3>
 			
-    <div class="statistics-row">
-      <div class="statistic-card">
-        <%= @institution_statistics.total_users %>
-        <%= " Total User#{@institution_statistics.total_users == 1 ? '' : 's'}" %>
-      </div>
+		<div class="statistics-row">  
+	    <%= usage_card_content('User', @institution_statistics.total_users, 
+																@global_statistics.effective_month, true).html_safe %>
   
-      <div class="statistic-card">
-        <%= @institution_statistics.new_users %> 
-        <%= " New User#{@institution_statistics.new_users == 1 ? '' : 's'} For #{@global_statistics.effective_month}" %>
-      </div>
-    </div>
-
+	    <%= usage_card_content('User', @institution_statistics.new_users, 
+																@global_statistics.effective_month).html_safe %>
+		</div>
+		
     <div class="statistics-row">  
       <div class="statistic-card">
         <%= @institution_statistics.total_completed_plans %> 
