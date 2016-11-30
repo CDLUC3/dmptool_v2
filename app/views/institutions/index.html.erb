@@ -6,7 +6,7 @@
 		<% unless @institution_statistics.nil? %>
 			<li class="active"><a href="#tab1" data-toggle="tab">Usage</a></li>
 		<% end %>
-    <li><a <%= "class='active'" unless @institution_statistics.nil? %>href="#tab2" data-toggle="tab">Institution Information</a></li>
+    <li><a <%= @institution_statistics.nil? ? 'class="active" ' : '' %>href="#tab2" data-toggle="tab">Institution Information</a></li>
     <li><a href="#tab3" data-toggle="tab">Institutional Resources</a></li>
     <% if user_role_in?(:dmp_admin) %>
       <li><a href="#tab4" data-toggle="tab">Institution Hierarchy</a></li>
@@ -21,7 +21,7 @@
 			</div>
 		<% end %>
 		
-    <div class="tab-pane<%= ' active' unless @institution_statistics.nil? %>" id="tab2">
+    <div class="tab-pane<%= @institution_statistics.nil? ? ' active' : '' %>" id="tab2">
       <%= render 'form' %>
     </div>
 
