@@ -79,7 +79,7 @@ logger.info "RUN_DATE: #{run_date}"
         
 logger.info "TEMPLATE: #{tmplt.id} is #{tmplt.visibility} (#{@top_five_public_templates.count})"
         
-        if tmplt.visibility == 'public' && @top_five_public_templates.count < 5
+        if tmplt.visibility == :public && @top_five_public_templates.count < 5
           @top_five_public_templates << {name: tmplt.name,
                                          new_plans: stat.new_plans,
                                          total_plans: stat.total_plans}
