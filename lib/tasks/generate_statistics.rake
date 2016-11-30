@@ -30,7 +30,7 @@ namespace :statistics do
     
       first = Date.new(last.year, last.month, 1)
     
-      run_date = "#{date.year}-#{"0#{date.month}".slice(-2)}"
+      run_date = "#{date.year}-#{"0#{date.month}".slice(-2, 2)}"
     
       # Only run if we haven't already recorded the stats for this round
       if !GlobalStatistic.find_by(run_date: run_date).nil?
