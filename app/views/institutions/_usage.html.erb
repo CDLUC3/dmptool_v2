@@ -56,7 +56,7 @@
 		
     <div class="statistics-row">  
       <div class="statistic-card" style="width: 765px;">
-				<%= "Top 5 Public Templates" %>
+				<%= "Top 5 Public Templates" %><br /><br />
 				<% @top_five_public_templates.each do |stat| %>
 					<%= "'#{stat[:name].slice(0..40)}' (#{stat[:new_plans]} new plan#{stat[:new_plans] == 1 ? '' : 's'}, #{stat[:total_plans]} total plan#{stat[:total_plans] == 1 ? '' : 's'})" %><br /> 
 				<% end %>
