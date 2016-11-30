@@ -70,7 +70,7 @@ class InstitutionsController < ApplicationController
     unless @global_statistics.nil?
       @institution_statistics = InstitutionStatistic.where(institution: institution, run_date: run_date).first
 
-      @top_five_public_templates, @top_five_institution_templates = [], []
+      @top_five_public_templates = []
     
       PublicTemplateStatistic.where(run_date: run_date).order(new_plans: :desc).each do |stat|
         tmplt = RequirementsTemplate.find(stat.requirements_template_id)
@@ -79,11 +79,6 @@ class InstitutionsController < ApplicationController
           @top_five_public_templates << {name: tmplt.name,
                                          new_plans: stat.new_plans,
                                          total_plans: stat.total_plans}
-                                         
-        elsif tmplt.institution == institution && @top_five_institution_templates.count < 5
-          @top_five_institution_templates << {name: tmplt.name,
-                                              new_plans: stat.new_plans,
-                                              total_plans: stat.total_plans}
         end
       end
       

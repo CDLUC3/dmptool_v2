@@ -8,7 +8,7 @@
   <% date = Date.parse("#{@institution_statistics.run_date}-01 00:00:00") %>
 
   <div class="statistics">
-		<h4><%= @current_institution.full_name %> Usage</h4>
+		<h3><%= @current_institution.full_name %> Usage</h3>
 			
 		<div class="statistics-row">  
 	    <%= usage_card_content('User', @institution_statistics.total_users, 
@@ -25,19 +25,10 @@
 	    <%= usage_card_content('Completed Plan', @institution_statistics.new_completed_plans, 
 																@global_statistics.effective_month).html_safe %>
 		</div>
-		
-    <div class="statistics-row">  
-      <div class="statistic-card" style="width: 475px;">
-				<%= "Top 5 Plans For Your Institution" %>
-				<% @top_five_institution_templates.each do |stat| %>
-					<%= "'#{stat.name.slice(0..40)}' (#{stat.new_plans} new plan#{stat.new_plans == 1 ? '' : 's'}, #{stat.total_plans} total plan#{stat.total_plans == 1 ? '' : 's'})" %> 
-				<% end %>
-      </div>
-  	</div>
   </div>
 	
   <div class="statistics">
-		<h4>Global Usage</h4>
+		<h3>Global Usage</h3>
 			
 		<div class="statistics-row">  
 	    <%= usage_card_content('User', @global_statistics.total_users, 
@@ -64,8 +55,8 @@
 		</div>
 		
     <div class="statistics-row">  
-      <div class="statistic-card" style="width: 475px;">
-				<%= "Top 5 Public Plans" %>
+      <div class="statistic-card" style="width: 775px;">
+				<%= "Top 5 Public Templates" %>
 				<% @top_five_public_templates.each do |stat| %>
 					<%= "'#{stat.name.slice(0..40)}' (#{stat.new_plans} new plan#{stat.new_plans == 1 ? '' : 's'}, #{stat.total_plans} total plan#{stat.total_plans == 1 ? '' : 's'})" %> 
 				<% end %>
