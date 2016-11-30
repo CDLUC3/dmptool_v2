@@ -3,7 +3,7 @@
 <h1 class="row-fluid"><span class="icon institution-profile"></span>Institution Profile</h1>
 <div class="tabbable">
   <ul class="nav nav-tabs">
-		<li class="active"><a href="#tab1" data-toggle="tab">Dashboard</a></li>
+		<li class="active"><a href="#tab1" data-toggle="tab">Usage</a></li>
     <li><a href="#tab2" data-toggle="tab">Institution Information</a></li>
     <li><a href="#tab3" data-toggle="tab">Institutional Resources</a></li>
     <% if user_role_in?(:dmp_admin) %>
@@ -14,7 +14,7 @@
   <div class="tab-content">
 
 		<div class="tab-pane active" id="tab1">
-			<%= render 'dashboard' %>
+			<%= render 'usage' %>
 		</div>
 		
     <div class="tab-pane" id="tab2">

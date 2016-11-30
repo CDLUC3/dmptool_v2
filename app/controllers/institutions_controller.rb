@@ -70,9 +70,15 @@ class InstitutionsController < ApplicationController
     unless @global_statistics.nil?
       @institution_statistics = InstitutionStatistic.where(institution: institution, run_date: run_date).first
 
-      @top_ten_by_users, @top_ten_by_plans = [], []
+      @top_five_public_templates, @top_five_institution_templates = [], []
       
       @template_of_the_month = RequirementsTemplate.find(@global_statistics.template_of_the_month)
+    
+      PublicTemplateStatistic.where(run_date: run_date).order(new_plans: :desc).each do |stat|
+        @top_five_public_templates << {name: RequirementsTemplate.find(stat.requirements_template_id).name,
+                                       new_plans: stat.new_plans,
+                                       total_plans: stat.total_plans}
+      end
     
 =begin
 puts "HASH: #{Hash.new(@global_statistics.top_ten_institutions_by_users).inspect}"

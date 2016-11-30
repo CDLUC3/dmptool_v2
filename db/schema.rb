@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20161118171513) do
 
   create_table "global_statistics", force: true do |t|
     t.string   "run_date"
+    t.string   "effective_month"
     t.integer  "new_users"
     t.integer  "total_users"
     t.integer  "new_completed_plans"
@@ -67,15 +68,11 @@ ActiveRecord::Schema.define(version: 20161118171513) do
     t.integer  "total_public_plans"
     t.integer  "new_institutions"
     t.integer  "total_institutions"
-    t.integer  "template_of_the_month"
-    t.string   "top_ten_institutions_by_users"
-    t.string   "top_ten_institutions_by_plans"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "global_statistics", ["run_date"], name: "index_global_statistics_on_run_date", using: :btree
-  add_index "global_statistics", ["template_of_the_month"], name: "index_global_statistics_on_template_of_the_month", using: :btree
 
   create_table "institution_statistics", force: true do |t|
     t.string   "run_date"
