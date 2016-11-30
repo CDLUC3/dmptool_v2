@@ -103,6 +103,7 @@ class InstitutionsController < ApplicationController
 
 
   def manage_users
+    @q = params[:q]
 
     if user_role_in?(:dmp_admin)
       case params[:scope]
@@ -138,6 +139,10 @@ class InstitutionsController < ApplicationController
       end
       @roles = Role.where(['id NOT IN (?)', 1])
       count
+    end
+    
+    if (!@q.blank? && !@q.nil?)
+      @users = @users.search_terms(@q)
     end
   end
 
