@@ -72,7 +72,7 @@ class InstitutionsController < ApplicationController
 
       @top_five_public_templates = []
     
-      RequirementsTemplateStatistic.where(run_date: run_date).order(new_plans: :desc).each do |stat|
+      RequirementsTemplateStatistic.where(run_date: run_date).order(new_plans: :desc, total_plans: desc).each do |stat|
         tmplt = RequirementsTemplate.find(stat.requirements_template_id)
         
 puts "TEMPLATE: #{tmplt.id} is #{tmplt.visibility} (#{@top_five_public_templates.count})"
