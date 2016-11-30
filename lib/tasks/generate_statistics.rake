@@ -73,7 +73,7 @@ namespace :statistics do
           if stat.nil?
             stat = RequirementsTemplateStatistic.new({
               run_date: run_date,
-              new_plans: tmplt.plans.where("visibility != 'test' AND plans.created_at BETWEEN ? AND ?", [first, last]).count,
+              new_plans: tmplt.plans.where("visibility != 'test' AND plans.created_at BETWEEN ? AND ?", first, last).count,
               total_plans: tmplt.plans.where("plans.created_at <= ? AND visibility != 'test'", last).count
             })
           end
