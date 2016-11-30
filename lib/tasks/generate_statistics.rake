@@ -39,7 +39,6 @@ namespace :statistics do
       else
         log.info "Generating statistics #{start} - For cycle: #{first.to_s} - #{last.to_s}"
       
-        top_users, top_plans, top_templates = {}, {}, {}
         n_users, t_users = 0, 0
         n_plans, t_plans = 0, 0
     
@@ -58,9 +57,6 @@ namespace :statistics do
             })
           end
       
-          top_users[inst.id] = stat.total_users
-          top_plans[inst.id] = stat.total_completed_plans
-      
           n_users += stat.new_users
           t_users += stat.total_users
           n_plans += stat.new_completed_plans
@@ -71,29 +67,20 @@ namespace :statistics do
         end
       
         # Collect the public template statistics
-        RequirementsTemplate.where(visibility: 'public', active: true).each do |tmplt|
+        RequirementsTemplate.where(active: true).each do |tmplt|
           stat = tmplt.statistics.find_by(run_date: run_date)
         
           if stat.nil?
-            stat = PublicTemplateStatistic.new({
+            stat = TemplateStatistic.new({
               run_date: run_date,
               new_plans: tmplt.plans.where(created_at: first..last, visibility: []).count,
               total_plans: tmplt.plans.where("plans.created_at <= ?", last).count
             })
           end
         
-          top_templates[tmplt.id] = stat.new_plans 
-        
           tmplt.statistics << stat
           tmplt.save!
         end
-    
-        # Select the most used template for the period
-        top_templates = Hash[top_templates.sort_by{|k,v| v}.reverse].first
-    
-        # Select the top ten institutions by user and plan
-        top_users = Hash[top_users.sort_by{|k,v| v}.reverse[0..9]]
-        top_plans = Hash[top_plans.sort_by{|k,v| v}.reverse[0..9]]
     
         # create the global stats record
         GlobalStatistic.create({

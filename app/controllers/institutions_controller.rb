@@ -71,40 +71,26 @@ class InstitutionsController < ApplicationController
       @institution_statistics = InstitutionStatistic.where(institution: institution, run_date: run_date).first
 
       @top_five_public_templates, @top_five_institution_templates = [], []
-      
-      @template_of_the_month = RequirementsTemplate.find(@global_statistics.template_of_the_month)
     
       PublicTemplateStatistic.where(run_date: run_date).order(new_plans: :desc).each do |stat|
-        @top_five_public_templates << {name: RequirementsTemplate.find(stat.requirements_template_id).name,
-                                       new_plans: stat.new_plans,
-                                       total_plans: stat.total_plans}
-      end
-    
-=begin
-puts "HASH: #{Hash.new(@global_statistics.top_ten_institutions_by_users).inspect}"
-    
-      JSON.parse(@global_statistics.top_ten_institutions_by_users.gsub('=>', ':')).each do |inst,count|
+        tmplt = RequirementsTemplate.find(stat.requirements_template_id)
         
-puts "INST: #{inst.inspect}"
-puts "COUNT: #{count.inspect}"
-        
-        @top_ten_by_users << {name: Institution.find(inst).full_name, 
-                              count: count}
+        if tmplt.visibility == 'public' && @top_five_public_templates.count < 5
+          @top_five_public_templates << {name: tmplt.name,
+                                         new_plans: stat.new_plans,
+                                         total_plans: stat.total_plans}
+                                         
+        elsif tmplt.institution == institution && @top_five_institution_templates.count < 5
+          @top_five_institution_templates << {name: tmplt.name,
+                                              new_plans: stat.new_plans,
+                                              total_plans: stat.total_plans}
+        end
       end
       
-      JSON.parse(@global_statistics.top_ten_institutions_by_plans.gsub('=>', ':')).each do |inst,count|
-        @top_ten_by_plans << {name: Institution.find(inst).full_name, 
-                              count: count}
-      end
-=end
-#      PublicTemplateStatistic.where(run_date: run_date).order(new_plans: :desc).limit(10).each do |stat|
-#        @top_ten_templates << {title: RequirementsTemplate.find(stat.requirements_template_id).name,
-#                               count: stat.new_plans}
-#      end
       
     end
-    
   end
+  
 
   def institutional_resources
     @resource_contexts = ResourceContext.includes(:resource).
