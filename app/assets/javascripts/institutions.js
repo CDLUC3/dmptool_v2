@@ -108,6 +108,12 @@ $(function(){
 				
 				$(".effective-month").text(data['global_statistics']['effective_month']);
 				
+				Object.keys(data['institution_statistics']).forEach(function(key){
+					if($(".institutional_stats #" + key.replace('_', '-')) != null){
+						$(".institutional_stats #" + key.replace('_', '-')).text(data['institution_statistics'][key]);
+					}
+				});
+				
 			}).fail(function(xhr, stat, e){ console.log(stat + ', ' + e); });
 	});
 });
