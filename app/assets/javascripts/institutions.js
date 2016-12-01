@@ -112,7 +112,7 @@ $(function(){
 				
 				Object.keys(data['global_statistics']).forEach(function(key){
 					if($(".global_stats #" + key.replace(/_/g, '-')).length){
-console.log($(".global_stats #" + key.replace(/_/g, '-'))));
+console.log($(".global_stats #" + key.replace(/_/g, '-')));
 						$(".global_stats #" + key.replace(/_/g, '-'))).text(data['global_statistics'][key]);
 					}
 				});
