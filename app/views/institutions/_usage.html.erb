@@ -7,7 +7,7 @@
 
   <% date = Date.parse("#{@institution_statistics.run_date}-01 00:00:00") %>
 
-  <div class="statistics">
+  <div class="statistics institutional_stats">
 		<h3><%= @current_institution.full_name %> Usage</h3>
 			
 		<div class="statistics-row">  
@@ -27,7 +27,7 @@
 		</div>
   </div>
 	
-  <div class="statistics">
+  <div class="statistics global_stats">
 		<h3>Global Usage</h3>
 			
 		<div class="statistics-row">  

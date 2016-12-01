@@ -31,8 +31,11 @@ module InstitutionsHelper
   
   def usage_card_content(text, number, month, overall = false)
     '<div class="statistic-card">' +
-      "#{number_with_delimiter(number)} #{overall ? 'Total' : 'New'} " +
-      "#{text}#{number == 1 ? '' : 's'}" + "#{overall ? '' : " For #{month}"}" +
+      "<span id=\"#{overall ? 'total' : 'new'}_#{text.downcase.gsub(' ', '_')}s\">"
+        "#{number_with_delimiter(number)}" +
+      "</span>" +
+      " #{overall ? 'Total' : 'New'} #{text}#{number == 1 ? '' : 's'}" + 
+      "#{overall ? '' : " For <span class=\"effective_month\">#{month}</span>"}" +
     '</div>'
   end
 

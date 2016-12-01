@@ -105,18 +105,9 @@ $(function(){
 		$.getJSON("usage_statistics", {run_date: run_date.value})
 			.done(function(data){
 				console.log(data);
+				
+				$(".effective-month").text(data['global_statistics']['effective_month']);
+				
 			}).fail(function(xhr, stat, e){ console.log(stat + ', ' + e); });
-	/*
-		$.ajax({
-			method: "GET",
-			accepts: 'json'
-			url: "institutions/usage_statistics?run_date=" + run_date.value
-		}).done(function(data){
-		
-	console.log(data);
-		
-			//$("#tab1").html(data);
-		});
-	*/
 	});
 });
