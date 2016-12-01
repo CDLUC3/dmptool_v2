@@ -53,6 +53,7 @@ class InstitutionsController < ApplicationController
     institutional_resources
 
     institutional_statistics
+    @run_date = @run_dates.first
 
     @tab_number = 'tab_tab1' #the tab number for the maze of editing resources from everywhere
     #@anchor = params[:anchor]

@@ -100,11 +100,11 @@ $(function(){
 	$("#run_date").on('change', function(e){
 		var run_date = $("#run_date option:selected")[0];
 	
-	console.log('run_date selected: ' + run_date);
+	console.log('run_date selected: ' + run_date.val());
 	
 		$.ajax({
 			method: "GET",
-			url: "institutions/usage_statistics?run_date=" + run_date
+			url: "institutions/usage_statistics?run_date=" + run_date.val()
 		}).done(function(data){
 		
 	console.log(data);
