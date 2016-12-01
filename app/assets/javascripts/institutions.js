@@ -100,7 +100,7 @@ $(function(){
 	$("#run_date").on('change', function(e){
 		var run_date = $("#run_date option:selected")[0];
 	
-	console.log('run_date selected: ' + run_date.text());
+	console.log('run_date selected: ' + run_date);
 	
 		$.ajax({
 			method: "GET",
