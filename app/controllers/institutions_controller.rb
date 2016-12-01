@@ -62,9 +62,6 @@ class InstitutionsController < ApplicationController
 
   # AJAX call to retrieve usage statistics for a specific date
   def usage_statistics
-    
-puts "RUN_DATE: #{params[:run_date]} - USER: #{current_user.inspect}"
-    
     if params[:run_date] && !current_user.nil?
       if params[:run_date].match(/[0-9]{4}\-[0-9]{2}/)
         institutional_statistics
