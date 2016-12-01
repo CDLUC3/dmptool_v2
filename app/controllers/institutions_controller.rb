@@ -86,7 +86,7 @@ class InstitutionsController < ApplicationController
     # If called via AJAX send the response back as JSON
     render json: {global_statistics: @global_statistics,
                   institution_statistics: @institution_statistics,
-                  top_five_public_templates: @top_five_public_templates}}
+                  top_five_public_templates: @top_five_public_templates}
   end
   
 
