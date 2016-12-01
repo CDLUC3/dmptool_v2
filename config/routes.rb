@@ -119,6 +119,8 @@ Dmptool2::Application.routes.draw do
   resources :institutions
   resources :authorizations
 
+  get "institutions/institutional_statistics", defaults: {format: 'json'}
+
   match 'user_sessions/login', to: 'user_sessions#login', as: 'login', :via => [:get, :post]
   get 'user_sessions/institution', to: 'user_sessions#institution', as: 'choose_institution'
   match '/auth/:provider/callback', to: 'user_sessions#create', :via => [:get, :post]
