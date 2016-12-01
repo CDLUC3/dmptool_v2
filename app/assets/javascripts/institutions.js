@@ -99,12 +99,10 @@ function validateFiles(inputFile) {
 $(function(){
 	$("#run_date").on('change', function(e){
 		var run_date = $("#run_date option:selected")[0];
-	
-		console.log('run_date selected: ' + run_date.value);
-	
+		
 		$.getJSON("usage_statistics", {run_date: run_date.value})
 			.done(function(data){
-				console.log(data);
+console.log(data);
 				
 				$(".effective-month").text(data['global_statistics']['effective_month']);
 				
@@ -115,6 +113,8 @@ $(function(){
 				});
 				
 				Object.keys(data['global_statistics']).forEach(function(key){
+console.log($(".global_stats #" + key.replace('_', '-')));
+					
 					if($(".global_stats #" + key.replace('_', '-')) != null){
 						$(".global_stats #" + key.replace('_', '-')).text(data['global_statistics'][key]);
 					}
