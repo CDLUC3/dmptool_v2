@@ -104,7 +104,7 @@ $(function(){
 	
 		$.ajax({
 			method: "GET",
-			url: "institutions/usage_statistics?run_date=" + run_date.text()
+			url: "institutions/usage_statistics?run_date=" + run_date.value()
 		}).done(function(data){
 		
 	console.log(data);
