@@ -113,6 +113,9 @@ console.log(data);
 				});
 				
 				Object.keys(data['global_statistics']).forEach(function(key){
+					
+console.log("Looking for: .global_stats #" + key.replace('_', '-'));
+					
 					if($(".global_stats #" + key.replace('_', '-')).length){
 console.log($(".global_stats #" + key.replace('_', '-')));
 						$(".global_stats #" + key.replace('_', '-')).text(data['global_statistics'][key]);
