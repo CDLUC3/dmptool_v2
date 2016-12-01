@@ -96,7 +96,7 @@ function validateFiles(inputFile) {
   };
 }
 
-$(".statistic-date select").click(function(e){
+$(".statistic-date #run_date").change(function(e){
 	var run_date = this.prop('selectedIndex');
 	
 console.log('run_date selected: ' + run_date);
@@ -108,6 +108,6 @@ console.log('run_date selected: ' + run_date);
 		
 console.log(data);
 		
-		$("#tab1").html(data);
+		//$("#tab1").html(data);
 	});
 });

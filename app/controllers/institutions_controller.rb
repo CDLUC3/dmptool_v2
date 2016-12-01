@@ -81,8 +81,13 @@ class InstitutionsController < ApplicationController
                                          total_plans: stat.total_plans}
         end
       end
-      
-      
+    end
+    
+    # If called via AJAX send the response back as JSON
+    respond_to do |format|
+      format.json {render json: {global_statistics: @global_statistics,
+                                 institution_statistics: @institution_statistics,
+                                 top_five_public_templates: @top_five_public_templates}}
     end
   end
   
