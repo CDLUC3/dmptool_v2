@@ -114,6 +114,23 @@ $(function(){
 					}
 				});
 				
+				Object.keys(data['global_statistics']).forEach(function(key){
+					if($(".global_stats #" + key.replace('_', '-')) != null){
+						$(".global_stats #" + key.replace('_', '-')).text(data['global_statistics'][key]);
+					}
+				});
+				
+				var top5 = '';
+				for(var i = 0; i < data['top_five_public_templates'].length; i++){
+					var tmplt = data['top_five_public_templates'][i];
+					
+					top5 += tmplt['name'].substr(0,40) + ' ' + 
+								'(' + tmplt['new_plans'] + ' new ' + (tmplt['new_plans'] == 1 ? 'plan ' : 'plans, ') +
+								'(' + tmplt['total_plans'] + ' total ' + (tmplt['total_plans'] == 1 ? 'plan ' : 'plans ') + ')<br/ >';
+				} 
+				
+				$("#top-five-public-templates").html(top5);
+				
 			}).fail(function(xhr, stat, e){ console.log(stat + ', ' + e); });
 	});
 });
