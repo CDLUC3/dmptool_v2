@@ -59,6 +59,25 @@ class InstitutionsController < ApplicationController
    
   end
 
+  # AJAX call to retrieve usage statistics for a specific date
+  def usage_statistics
+    if params[:run_date] && !current_user.nil?
+      if params[:run_date].match(/[0-9]{4}\-[0-9]{2}/)
+        institutional_statistics
+        
+        render json: {global_statistics: @global_statistics,
+                      institution_statistics: @institution_statistics,
+                      top_five_public_templates: @top_five_public_templates}
+      
+      else
+        render json: {}
+      end
+      
+    else
+      render json: {}
+    end
+  end
+
   def institutional_statistics
     institution = Institution.find(current_user.institution)
     @run_dates = GlobalStatistic.all.order(run_date: :desc).collect{|gs| gs.run_date}
@@ -82,11 +101,6 @@ class InstitutionsController < ApplicationController
         end
       end
     end
-    
-    # If called via AJAX send the response back as JSON
-    render json: {global_statistics: @global_statistics,
-                  institution_statistics: @institution_statistics,
-                  top_five_public_templates: @top_five_public_templates}
   end
   
 

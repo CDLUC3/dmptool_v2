@@ -103,7 +103,7 @@ console.log('run_date selected: ' + run_date);
 	
 	$.ajax({
 		method: "GET",
-		url: "institutions/institutional_statistics?run_date=" + run_date
+		url: "institutions/usage_statistics?run_date=" + run_date
 	}).done(function(data){
 		
 console.log(data);
