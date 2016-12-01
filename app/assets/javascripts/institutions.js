@@ -100,10 +100,15 @@ $(function(){
 	$("#run_date").on('change', function(e){
 		var run_date = $("#run_date option:selected")[0];
 	
-	console.log('run_date selected: ' + run_date);
+		console.log('run_date selected: ' + run_date.value);
 	
+		$.getJSON("institutions/usage_statistics?run_date=" + run_date.value, function(data){
+			console.log(data);
+		});
+	/*
 		$.ajax({
 			method: "GET",
+			accepts: 'json'
 			url: "institutions/usage_statistics?run_date=" + run_date.value
 		}).done(function(data){
 		
@@ -111,5 +116,6 @@ $(function(){
 		
 			//$("#tab1").html(data);
 		});
+	*/
 	});
 });
