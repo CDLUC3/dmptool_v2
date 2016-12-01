@@ -98,7 +98,7 @@ function validateFiles(inputFile) {
 
 $(function(){
 	$("#run_date").on('change', function(e){
-		var run_date = $("#run_date option:selected")[0].text();
+		var run_date = $("#run_date option:selected");
 	
 	console.log('run_date selected: ' + run_date);
 	
