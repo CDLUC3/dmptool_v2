@@ -102,23 +102,18 @@ $(function(){
 		
 		$.getJSON("usage_statistics", {run_date: run_date.value})
 			.done(function(data){
-console.log(data);
-				
 				$(".effective-month").text(data['global_statistics']['effective_month']);
 				
 				Object.keys(data['institution_statistics']).forEach(function(key){
 					if($(".institutional_stats #" + key.replace(/_/g, '-')).length){
-						$(".institutional_stats #" + key.replace('_', '-')).text(data['institution_statistics'][key]);
+						$(".institutional_stats #" + key.replace(/_/g, '-')).text(data['institution_statistics'][key]);
 					}
 				});
 				
 				Object.keys(data['global_statistics']).forEach(function(key){
-					
-console.log("Looking for: .global_stats #" + key.replace(/_/g, '-'));
-					
-					if($(".global_stats #" + key.replace('_', '-')).length){
-console.log($(".global_stats #" + key.replace('_', '-')));
-						$(".global_stats #" + key.replace('_', '-')).text(data['global_statistics'][key]);
+					if($(".global_stats #" + key.replace(/_/g, '-')).length){
+console.log($(".global_stats #" + key.replace(/_/g, '-'))));
+						$(".global_stats #" + key.replace(/_/g, '-'))).text(data['global_statistics'][key]);
 					}
 				});
 				
