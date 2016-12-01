@@ -96,18 +96,20 @@ function validateFiles(inputFile) {
   };
 }
 
-$(".statistic-date #run_date").change(function(e){
-	var run_date = this.prop('selectedIndex');
+$(function(){
+	$("#run_date").on('change', function(e){
+		var run_date = this.prop('selectedIndex');
 	
-console.log('run_date selected: ' + run_date);
+	console.log('run_date selected: ' + run_date);
 	
-	$.ajax({
-		method: "GET",
-		url: "institutions/usage_statistics?run_date=" + run_date
-	}).done(function(data){
+		$.ajax({
+			method: "GET",
+			url: "institutions/usage_statistics?run_date=" + run_date
+		}).done(function(data){
 		
-console.log(data);
+	console.log(data);
 		
-		//$("#tab1").html(data);
+			//$("#tab1").html(data);
+		});
 	});
 });
