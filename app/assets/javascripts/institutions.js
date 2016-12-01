@@ -102,9 +102,10 @@ $(function(){
 	
 		console.log('run_date selected: ' + run_date.value);
 	
-		$.getJSON("institutions/usage_statistics?run_date=" + run_date.value, function(data){
-			console.log(data);
-		});
+		$.getJSON("institutions/usage_statistics", {run_date: run_date.value})
+			.done(function(data){
+				console.log(data);
+			});
 	/*
 		$.ajax({
 			method: "GET",
