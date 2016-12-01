@@ -107,15 +107,14 @@ console.log(data);
 				$(".effective-month").text(data['global_statistics']['effective_month']);
 				
 				Object.keys(data['institution_statistics']).forEach(function(key){
-					if($(".institutional_stats #" + key.replace('_', '-')) != null){
+					if($(".institutional_stats #" + key.replace('_', '-')).length){
 						$(".institutional_stats #" + key.replace('_', '-')).text(data['institution_statistics'][key]);
 					}
 				});
 				
 				Object.keys(data['global_statistics']).forEach(function(key){
+					if($(".global_stats #" + key.replace('_', '-')).length){
 console.log($(".global_stats #" + key.replace('_', '-')));
-					
-					if($(".global_stats #" + key.replace('_', '-')) != null){
 						$(".global_stats #" + key.replace('_', '-')).text(data['global_statistics'][key]);
 					}
 				});
