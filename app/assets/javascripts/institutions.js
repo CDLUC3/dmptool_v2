@@ -105,7 +105,7 @@ $(function(){
 		$.getJSON("institutions/usage_statistics", {run_date: run_date.value})
 			.done(function(data){
 				console.log(data);
-			});
+			}).fail(function(xhr, stat, e){ console.log(stat + ', ' + e); });
 	/*
 		$.ajax({
 			method: "GET",
