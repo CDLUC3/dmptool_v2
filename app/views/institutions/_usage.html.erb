@@ -1,7 +1,8 @@
 <div class="usage-statistics">
   <h3>Statistics for:
     <div class="statistic-date">
-      <%= select_tag 'run_date', options_for_select(@run_dates, @run_date), {autocomplete: 'off'} %>
+      <%= select_tag 'run_date', 
+										 options_for_select(@run_dates.map{ |i| [i[:name], i[:id]] }, @run_date), 										 {autocomplete: 'off'} %>
     </div>
   </h3>
 
@@ -10,48 +11,43 @@
   <div class="statistics institutional_stats">
 		<h3><%= @current_institution.full_name %> Usage</h3>
 			
-		<div class="statistics-row">  
-	    <%= usage_card_content('User', @institution_statistics.total_users, 
-																@global_statistics.effective_month, true).html_safe %>
-  
+		<div class="statistics-row">
 	    <%= usage_card_content('User', @institution_statistics.new_users, 
 																@global_statistics.effective_month).html_safe %>
+	    <%= usage_card_content('User', @institution_statistics.total_users, 
+																@global_statistics.effective_month, true).html_safe %>
 		</div>
 		
-		<div class="statistics-row">  
-	    <%= usage_card_content('Completed Plan', @institution_statistics.total_completed_plans, 
-																@global_statistics.effective_month, true).html_safe %>
-  
+		<div class="statistics-row">
 	    <%= usage_card_content('Completed Plan', @institution_statistics.new_completed_plans, 
 																@global_statistics.effective_month).html_safe %>
+	    <%= usage_card_content('Completed Plan', @institution_statistics.total_completed_plans, 
+																@global_statistics.effective_month, true).html_safe %>
 		</div>
   </div>
 	
   <div class="statistics global_stats">
-		<h3>Global Usage</h3>
+		<h3>All Institutions</h3>
 			
-		<div class="statistics-row">  
-	    <%= usage_card_content('User', @global_statistics.total_users, 
-																@global_statistics.effective_month, true).html_safe %>
-  
+		<div class="statistics-row">
 	    <%= usage_card_content('User', @global_statistics.new_users, 
 																@global_statistics.effective_month).html_safe %>
+	    <%= usage_card_content('User', @global_statistics.total_users, 
+																@global_statistics.effective_month, true).html_safe %>
 		</div>
 		
-		<div class="statistics-row">  
-	    <%= usage_card_content('Completed Plan', @global_statistics.total_completed_plans, 
-																@global_statistics.effective_month, true).html_safe %>
-  
+		<div class="statistics-row">
 	    <%= usage_card_content('Completed Plan', @global_statistics.new_completed_plans, 
 																@global_statistics.effective_month).html_safe %>
+	    <%= usage_card_content('Completed Plan', @global_statistics.total_completed_plans, 
+																@global_statistics.effective_month, true).html_safe %>
 		</div>
 		
-		<div class="statistics-row">  
-	    <%= usage_card_content('Public Plan', @global_statistics.total_public_plans, 
-																@global_statistics.effective_month, true).html_safe %>
-  
+		<div class="statistics-row">
 	    <%= usage_card_content('Public Plan', @global_statistics.new_public_plans, 
 																@global_statistics.effective_month).html_safe %>
+	    <%= usage_card_content('Public Plan', @global_statistics.total_public_plans, 
+																@global_statistics.effective_month, true).html_safe %>
 		</div>
 		
     <div class="statistics-row">  
