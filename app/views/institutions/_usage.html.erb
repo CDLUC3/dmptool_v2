@@ -1,8 +1,7 @@
 <div class="usage-statistics">
   <h3>Statistics for:
     <div class="statistic-date">
-      <%= select_tag 'run_date', 
-										 options_for_select(@run_dates.map{ |i| [i[:name], i[:id]] }, @run_date), 										 {autocomplete: 'off'} %>
+      <%= select_tag 'run_date', options_for_select(@run_dates, @run_date), {autocomplete: 'off'} %>
     </div>
   </h3>
 

@@ -81,7 +81,7 @@ class InstitutionsController < ApplicationController
 
   def institutional_statistics
     institution = Institution.find(current_user.institution)
-    @run_dates = GlobalStatistic.all.order(run_date: :desc).collect{|gs| {id: gs.run_date, name: year_numeric_month_to_year_text_month(gs.run_date)} }
+    @run_dates = GlobalStatistic.all.order(run_date: :desc).collect{|gs| {name: year_numeric_month_to_year_text_month(gs.run_date), id: gs.run_date} }
     
     run_date = (params[:run_date].nil? ? @run_dates.first[:id] : params[:run_date])
     
