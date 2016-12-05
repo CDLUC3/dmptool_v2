@@ -62,3 +62,38 @@
 		
   </div>
 </div>
+
+<script type="text/javascript">
+	$("#run_date").on('change', function(e){
+		var run_date = $("#run_date option:selected")[0];
+	
+		$.getJSON("usage_statistics", {run_date: run_date.value})
+			.done(function(data){
+				$(".effective-month").text(data['global_statistics']['effective_month']);
+			
+				Object.keys(data['institution_statistics']).forEach(function(key){
+					if($(".institutional_stats #" + key.replace(/_/g, '-')).length){
+						$(".institutional_stats #" + key.replace(/_/g, '-')).text(data['institution_statistics'][key]);
+					}
+				});
+			
+				Object.keys(data['global_statistics']).forEach(function(key){
+					if($(".global_stats #" + key.replace(/_/g, '-')).length){
+						$(".global_stats #" + key.replace(/_/g, '-')).text(data['global_statistics'][key]);
+					}
+				});
+			
+				var top5 = '';
+				for(var i = 0; i < data['top_five_public_templates'].length; i++){
+					var tmplt = data['top_five_public_templates'][i];
+				
+					top5 += tmplt['name'].substr(0,40) + ' ' + 
+								'(' + tmplt['new_plans'] + ' new ' + (tmplt['new_plans'] == 1 ? 'plan ' : 'plans, ') +
+								'(' + tmplt['total_plans'] + ' total ' + (tmplt['total_plans'] == 1 ? 'plan ' : 'plans ') + ')<br/ >';
+				} 
+			
+				$("#top-five-public-templates").html(top5);
+			
+			}).fail(function(xhr, stat, e){ console.log(stat + ', ' + e); });
+	});
+</script
