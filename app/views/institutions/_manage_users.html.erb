@@ -55,35 +55,3 @@
 		  <% end %>
 		</tbody>
 </table>
-<%= form_tag(add_authorization_manage_users_path(anchor: 'tab_tab4'), method: 'post') do %>
-<table class ="table">
-	<tr class="user_row">  
-		<td class="span7">
-			<div class="control-group">
-				<%= render partial: '/users/user_autocomplete_widget',
-				:locals =>
-					       {  user_role: 'template_editor',
-					          #submit_text: 'Add As Template Editor',
-					          submit_text: 'Grant Role',
-					          submit_url: add_authorization_manage_users_path( anchor: 'tab_tab4'),
-					          role_number: Role::TEMPLATE_EDITOR,
-					          
-					          item_description: 'template editor'
-					       }
-				%>
-			</div>
-		</td>
-		<td class="span5">
-			<div class="control-group row-fluid">
-						<% @roles.each do |role| %>
-						  <div class="controls span6">
-						  	<%= check_box_tag "role_ids[]", role.id , checked = false, id: role.id%>
-						    <%= label_tag role.id, role.name, :class => 'checkbox-label' %>
-						  </div>
-						<% end %>
-				</div>
-		</td>
-	 </tr>
-</table>
-<%end%>
-	

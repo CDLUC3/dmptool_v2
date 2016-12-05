@@ -62,9 +62,6 @@ class InstitutionsController < ApplicationController
 
   # AJAX call to retrieve usage statistics for a specific date
   def usage_statistics
-    
-puts "RUN_DATE: #{params[:run_date]} - USER: #{current_user.inspect}"
-    
     if params[:run_date] && !current_user.nil?
       if params[:run_date].match(/[0-9]{4}\-[0-9]{2}/)
         institutional_statistics
@@ -84,7 +81,7 @@ puts "RUN_DATE: #{params[:run_date]} - USER: #{current_user.inspect}"
 
   def institutional_statistics
     institution = Institution.find(current_user.institution)
-    @run_dates = GlobalStatistic.all.order(run_date: :desc).collect{|gs| gs.run_date}
+    @run_dates = GlobalStatistic.all.order(run_date: :desc).collect{|gs| {id: gs.run_date, name: year_numeric_month_to_year_text_month(gs.run_date) }
     
     run_date = (params[:run_date].nil? ? @run_dates.first : params[:run_date])
     
