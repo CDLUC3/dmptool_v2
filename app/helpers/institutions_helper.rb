@@ -40,7 +40,7 @@ module InstitutionsHelper
   end
   
   def year_numeric_month_to_year_text_month(val)
-    if val.matches(/[0-9]{4}\-[0-9]{1,2}/)
+    if val.match(/[0-9]{4}\-[0-9]{1,2}/)
       parts = val.split('-')
       "#{parts[0]}-#{Date::ABBR_MONTHNAMES[parts[1].to_i]}"
     else
