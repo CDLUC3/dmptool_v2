@@ -2,7 +2,7 @@
   <h3>Statistics for:
     <div class="statistic-date">
       <%= select_tag 'run_date', 
-										 options_from_collection_for_select(@run_dates, :id, :name, @run_date), 										 {autocomplete: 'off'} %>
+										 options_for_select(@run_dates.map{ |i| [i[:name], i[:id]] }, @run_date), 										 {autocomplete: 'off'} %>
     </div>
   </h3>
 
