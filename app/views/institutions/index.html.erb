@@ -10,7 +10,7 @@
     <%end%>
     <li><a href="#tab4" data-toggle="tab">Assign Roles</a></li>
 		<% unless @institution_statistics.nil? %>
-			<li class="active"><a href="#tab5" data-toggle="tab">Usage</a></li>
+			<li><a href="#tab5" data-toggle="tab">Usage</a></li>
 		<% end %>
   </ul>
   <div class="tab-content">
@@ -36,7 +36,7 @@
     </div>
 
 		<% unless @institution_statistics.nil? %>
-			<div class="tab-pane active" id="tab5">
+			<div class="tab-pane" id="tab5">
 				<%= render 'usage' %>
 			</div>
 		<% end %>
