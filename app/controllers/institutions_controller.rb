@@ -127,13 +127,13 @@ class InstitutionsController < ApplicationController
     
     scope = nil
     
-    roles = {'resources_editor': Authorization.find_by(name: "Resources Editor"),
-             'template_editor': Authorization.find_by(name: "Template Editor"),
-             'institutional_reviewer': Authorization.find_by(name: "Institutional Reviewer"),
-             'institutional_administrator': Authorization.find_by(name: "Institutional Administrator"),
-             'dmp_administrator': Authorization.find_by(name: "DMP Administrator")}
+    roles = {resources_editor: Authorization.find_by(name: "Resources Editor"),
+             template_editor: Authorization.find_by(name: "Template Editor"),
+             institutional_reviewer: Authorization.find_by(name: "Institutional Reviewer"),
+             institutional_administrator: Authorization.find_by(name: "Institutional Administrator"),
+             dmp_administrator: Authorization.find_by(name: "DMP Administrator")}
     
-    scope = (params[:scope].nil? ? nil : roles[params[:scope]])
+    scope = (params[:scope].nil? ? nil : roles[params[:scope].to_sym])
     
     if user_role_in?(:dmp_admin)
       @users = User.all.order(last_name: :asc)
@@ -143,11 +143,11 @@ class InstitutionsController < ApplicationController
     
     # User-Role counts for filters
     @all = @users.count
-    @resources_editor = @users.roles.include?(roles['resources_editor']).count
-    @template_editor = @users.roles.include?(roles['template_editor']).count
-    @institutional_reviewer = @users.roles.include?(roles['institutional_reviewer']).count
-    @institutional_administrator = @users.roles.include?(roles['institutional_administrator']).count
-    @dmp_administrator = @users.roles.include?(roles['dmp_administrator']).count
+    @resources_editor = @users.roles.include?(roles[:resources_editor]).count
+    @template_editor = @users.roles.include?(roles[:template_editor]).count
+    @institutional_reviewer = @users.roles.include?(roles[:institutional_reviewer]).count
+    @institutional_administrator = @users.roles.include?(roles[:institutional_administrator]).count
+    @dmp_administrator = @users.roles.include?(roles[:dmp_administrator]).count
     
     unless scope.nil?
       @users = @users.map{ |u| u.roles.include?(scope) }
