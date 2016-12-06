@@ -123,47 +123,75 @@ class InstitutionsController < ApplicationController
   def manage_users
     @q = params[:q]
 
+    @users = @current_institution.users
+    
+    scope = nil
+    
+    roles = {'resources_editor': Authorization.find_by(name: "Resources Editor"),
+             'template_editor': Authorization.find_by(name: "Template Editor"),
+             'institutional_reviewer': Authorization.find_by(name: "Institutional Reviewer"),
+             'institutional_administrator': Authorization.find_by(name: "Institutional Administrator"),
+             'dmp_administrator': Authorization.find_by(name: "DMP Administrator")}
+    
+    scope = (params[:scope].nil? ? nil : roles[params[:scope]])
+    
+    if user_role_in?(:dmp_admin)
+      @users = User.all.order(last_name: :asc)
+    else
+      @users = @current_institution.users.order(last_name: :asc)
+    end
+    
+    # User-Role counts for filters
+    @all = @users.count
+    @resources_editor = @users.roles.include?(roles['resources_editor']).count
+    @template_editor = @users.roles.include?(roles['template_editor']).count
+    @institutional_reviewer = @users.roles.include?(roles['institutional_reviewer']).count
+    @institutional_administrator = @users.roles.include?(roles['institutional_administrator']).count
+    @dmp_administrator = @users.roles.include?(roles['dmp_administrator']).count
+    
+    unless scope.nil?
+      @users = @users.map{ |u| u.roles.include?(scope) }
+    end
+
+    @roles = Role.where(['id NOT IN (?)', 1])
+
     if user_role_in?(:dmp_admin)
       case params[:scope]
         when "resources_editor"
-          @users = @current_institution.users_in_role_any_institution("Resources Editor").order(last_name: :asc)
+          @old_users = @current_institution.users_in_role_any_institution("Resources Editor").order(last_name: :asc)
         when "template_editor"
-           @users = @current_institution.users_in_role_any_institution("Template Editor").order(last_name: :asc)
+           @old_users = @current_institution.users_in_role_any_institution("Template Editor").order(last_name: :asc)
         when "institutional_administrator"
-           @users = @current_institution.users_in_role_any_institution("Institutional Administrator").order(last_name: :asc)
+           @old_users = @current_institution.users_in_role_any_institution("Institutional Administrator").order(last_name: :asc)
         when "institutional_reviewer"
-          @users = @current_institution.users_in_role_any_institution("Institutional Reviewer").order(last_name: :asc)
+          @old_users = @current_institution.users_in_role_any_institution("Institutional Reviewer").order(last_name: :asc)
         when "dmp_administrator"
-          @users =  @current_institution.users_in_role_any_institution("DMP Administrator").order(last_name: :asc)
+          @old_users =  @current_institution.users_in_role_any_institution("DMP Administrator").order(last_name: :asc)
         else
-          @users = @current_institution.users_deep_in_any_role_any_institution.order(last_name: :asc)
+          @old_users = @current_institution.users_deep_in_any_role_any_institution.order(last_name: :asc)
       end
-      @roles = Role.where(['id NOT IN (?)', 1])
-      count_any_institution
+#      @roles = Role.where(['id NOT IN (?)', 1])
+#      count_any_institution
     else
       case params[:scope]
         when "resources_editor"
-          @users = @current_institution.users_in_role("Resources Editor").order(last_name: :asc)
+          @old_users = @current_institution.users_in_role("Resources Editor").order(last_name: :asc)
         when "template_editor"
-           @users = @current_institution.users_in_role("Template Editor").order(last_name: :asc)
+           @old_users = @current_institution.users_in_role("Template Editor").order(last_name: :asc)
         when "institutional_administrator"
-           @users = @current_institution.users_in_role("Institutional Administrator").order(last_name: :asc)
+           @old_users = @current_institution.users_in_role("Institutional Administrator").order(last_name: :asc)
         when "institutional_reviewer"
-          @users = @current_institution.users_in_role("Institutional Reviewer").order(last_name: :asc)
+          @old_users = @current_institution.users_in_role("Institutional Reviewer").order(last_name: :asc)
         when "dmp_administrator"
-          @users =  @current_institution.users_in_role("DMP Administrator").order(last_name: :asc)
+          @old_users =  @current_institution.users_in_role("DMP Administrator").order(last_name: :asc)
         else
-          @users = @current_institution.users_deep_in_any_role.order(last_name: :asc)
+          @old_users = @current_institution.users_deep_in_any_role.order(last_name: :asc)
       end
-      @roles = Role.where(['id NOT IN (?)', 1])
-      count
+#      @roles = Role.where(['id NOT IN (?)', 1])
+#      count
     end
     
-logger.error "BEFORE: #{@users.count} - #{@users.inspect}"
-    
-    @users << @current_institution.non_admin_users
-    
-logger.error "AFTER: #{@users.count} - #{@users.inspect}"
+logger.error "OLD: #{@old_users.count} - #{@old_users.inspect}"
     
     if (!@q.blank? && !@q.nil?)
       @users = @users.search_terms(@q)
