@@ -127,11 +127,11 @@ class InstitutionsController < ApplicationController
     
     scope = nil
     
-    roles = {resources_editor: Authorization.find_by(name: "Resources Editor"),
-             template_editor: Authorization.find_by(name: "Template Editor"),
-             institutional_reviewer: Authorization.find_by(name: "Institutional Reviewer"),
-             institutional_administrator: Authorization.find_by(name: "Institutional Administrator"),
-             dmp_administrator: Authorization.find_by(name: "DMP Administrator")}
+    roles = {resources_editor: Role.find_by(name: "Resources Editor"),
+             template_editor: Role.find_by(name: "Template Editor"),
+             institutional_reviewer: Role.find_by(name: "Institutional Reviewer"),
+             institutional_administrator: Role.find_by(name: "Institutional Administrator"),
+             dmp_administrator: Role.find_by(name: "DMP Administrator")}
     
     scope = (params[:scope].nil? ? nil : roles[params[:scope].to_sym])
     
