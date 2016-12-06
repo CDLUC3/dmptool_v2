@@ -143,11 +143,11 @@ class InstitutionsController < ApplicationController
     
     # User-Role counts for filters
     @all = @users.count
-    @resources_editor = @users.map{ |u| u.roles.include?(roles[:resources_editor]) }.count
-    @template_editor = @users.map{ |u| u.roles.include?(roles[:template_editor]) }.count
-    @institutional_reviewer = @users.map{ |u| u.roles.include?(roles[:institutional_reviewer]) }.count
-    @institutional_administrator = @users.map{ |u| u.roles.include?(roles[:institutional_administrator]) }.count
-    @dmp_administrator = @users.map{ |u| u.roles.include?(roles[:dmp_administrator]) }.count
+    @resources_editor = @users.select{ |u| u.roles.include?(roles[:resources_editor]) }.count
+    @template_editor = @users.select{ |u| u.roles.include?(roles[:template_editor]) }.count
+    @institutional_reviewer = @users.select{ |u| u.roles.include?(roles[:institutional_reviewer]) }.count
+    @institutional_administrator = @users.select{ |u| u.roles.include?(roles[:institutional_administrator]) }.count
+    @dmp_administrator = @users.select{ |u| u.roles.include?(roles[:dmp_administrator]) }.count
     
     unless scope.nil?
       @users = @users.map{ |u| u.roles.include?(scope) }
