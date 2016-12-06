@@ -43,6 +43,9 @@ class Institution < ActiveRecord::Base
     User.where(institution_id: self.subtree_ids)
   end
 
+  def non_admin_users
+    User.includes(:authorizations).where(authorizations: {role_id: nil})
+  end
 
   def users_in_role(role_name)
     User.joins({:authorizations => :role}).where("roles.name = ?", role_name).where(institution_id: [self.subtree_ids])

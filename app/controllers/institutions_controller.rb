@@ -159,6 +159,8 @@ class InstitutionsController < ApplicationController
       count
     end
     
+    @users << @current_institution.non_admin_users
+    
     if (!@q.blank? && !@q.nil?)
       @users = @users.search_terms(@q)
     end
