@@ -150,7 +150,7 @@ class InstitutionsController < ApplicationController
     @dmp_administrator = @users.select{ |u| u.roles.include?(roles[:dmp_administrator]) }.count
     
     unless scope.nil?
-      @users = @users.map{ |u| u.roles.include?(scope) }
+      @users = @users.select{ |u| u.roles.include?(scope) }
     end
 
     @roles = Role.where(['id NOT IN (?)', 1])
