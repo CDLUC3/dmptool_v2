@@ -44,7 +44,7 @@ class Institution < ActiveRecord::Base
   end
 
   def non_admin_users
-    User.includes(:authorizations).where(authorizations: {role_id: nil})
+    self.users.includes(:authorizations).where(authorizations: {role_id: nil})
   end
 
   def users_in_role(role_name)
