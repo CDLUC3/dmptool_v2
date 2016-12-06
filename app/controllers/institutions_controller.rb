@@ -44,7 +44,7 @@ class InstitutionsController < ApplicationController
 
     @institution = Institution.new(:parent_id => params[:parent_id])
 
-    @institution_users = Institution.users #institutional_admins
+    @institution_users = current_user.institution.users #institutional_admins
 
     @categories.delete_if {|i| i[1] == current_user.institution.id}
 
