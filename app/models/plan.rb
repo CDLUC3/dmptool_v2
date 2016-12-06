@@ -51,8 +51,8 @@ class Plan < ActiveRecord::Base
   scope :public_finished, -> {joins(:current_state).where(plan_states: {state: ['rejected', 'approved', 'submitted', 'reviewed']}).where(visibility: 'public')}
   
   #scopes for Statistics
-  scope :completed, -> (institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: ['rejected', 'approved', 'submitted', 'reviewed', 'committed', 'revised']})}
-  scope :public_completed, -> {joins(:current_state).where(plan_states: {state: ['rejected', 'approved', 'submitted', 'reviewed', 'committed', 'revised']}).where(visibility: 'public')}
+  scope :completed, -> (institution_id) {joins(:users, :current_state).where("users.institution_id IN(?)", institution_id).where(plan_states: {state: ['rejected', 'approved', 'submitted', 'reviewed', 'committed', 'revised', 'new']})}
+  scope :public_completed, -> {joins(:current_state).where(plan_states: {state: ['rejected', 'approved', 'submitted', 'reviewed', 'committed', 'revised', 'new']}).where(visibility: 'public')}
   
   def plan_responses_ids
     @response_ids = [] 
