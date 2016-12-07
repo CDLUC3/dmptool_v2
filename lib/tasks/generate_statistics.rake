@@ -58,8 +58,8 @@ namespace :statistics do
             
             stat = InstitutionStatistic.new({
               run_date: run_date,
-              new_users: inst.users.where(created_at: first..last, active: true).count,
-              total_users: inst.users.where("users.created_at <= ? AND users.active = true", last).count,
+              new_users: inst.users.select{ |u| u.created_at.between?(first, last) }.count,
+              total_users: inst.users.select{ |u| u.created_at <= last }.count,
               new_completed_plans: plans.select{ |p| p.created_at.between?(first, last) }.count,
               total_completed_plans: plans.select{ |p| p.created_at <= last }.count
             })
@@ -81,8 +81,8 @@ namespace :statistics do
           if stat.nil?
             stat = RequirementsTemplateStatistic.new({
               run_date: run_date,
-              new_plans: tmplt.plans.where("visibility != 'test' AND plans.created_at BETWEEN ? AND ?", first, last).count,
-              total_plans: tmplt.plans.where("plans.created_at <= ? AND visibility != 'test'", last).count
+              new_plans: tmplt.plans.select{ |t| (t.visibility != 'test' &&  t.created_at.between?(first..last)) }.count,
+              total_plans: tmplt.plans.select{ |t| (t.visibility != 'test' && t.created_at <= last) }..count
             })
           end
         
@@ -91,13 +91,14 @@ namespace :statistics do
         end
     
         plans = Plan.where("visibility != ?", 'test')
-    
+        users = User.all
+        
         # create the global stats record
         GlobalStatistic.create({
           run_date: run_date,
           effective_month: "#{Date::MONTHNAMES[first.month]}",
-          new_users: n_users,
-          total_users: t_users,
+          new_users: users.select{ |u| u.created_at.between?(first, last) }.count,
+          total_users: users.select{ |u| u.created_at <= last }.count,
           new_completed_plans: plans.select{ |p| p.created_at.between?(first, last) }.count,
           total_completed_plans: plans.select{ |p| p.created_at <= last }.count,
           new_public_plans: Plan.public_finished.select{ |p| p.created_at.between?(first, last) }.count,
