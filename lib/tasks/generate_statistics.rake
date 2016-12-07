@@ -82,7 +82,7 @@ namespace :statistics do
             stat = RequirementsTemplateStatistic.new({
               run_date: run_date,
               new_plans: tmplt.plans.select{ |t| (t.visibility != 'test' &&  t.created_at.between?(first, last)) }.count,
-              total_plans: tmplt.plans.select{ |t| (t.visibility != 'test' && t.created_at <= last) }..count
+              total_plans: tmplt.plans.select{ |t| (t.visibility != 'test' && t.created_at <= last) }.count
             })
           end
         
