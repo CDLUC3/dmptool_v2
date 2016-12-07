@@ -101,8 +101,8 @@ namespace :statistics do
           total_users: users.select{ |u| u.created_at <= last }.count,
           new_completed_plans: plans.select{ |p| p.created_at.between?(first, last) }.count,
           total_completed_plans: plans.select{ |p| p.created_at <= last }.count,
-          new_public_plans: Plan.public_finished.select{ |p| p.created_at.between?(first, last) }.count,
-          total_public_plans: Plan.public_finished.count,
+          new_public_plans: plans.select{ |p| (p.visibility = 'public' && p.created_at.between?(first, last)) }.count,
+          total_public_plans: plans.select{ |p| (p.visibility = 'public' && p.created_at <= last) }.count,
           new_institutions: Institution.where(created_at: first..last).count,
           total_institutions: Institution.all.where("institutions.created_at <= ?", last).count
         })
