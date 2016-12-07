@@ -83,7 +83,7 @@ class InstitutionsController < ApplicationController
     institution = Institution.find(current_user.institution)
     @run_dates = GlobalStatistic.all.order(run_date: :desc).collect{|gs| {name: year_numeric_month_to_year_text_month(gs.run_date), id: gs.run_date} }
     
-    run_date = (params[:run_date].nil? ? @run_dates.first[:id] : params[:run_date])
+    run_date = (params[:run_date].nil? ? (@run_dates.empty? ? nil : @run_dates.first[:id]) : params[:run_date])
     
     @global_statistics = GlobalStatistic.where(run_date: run_date).first
     
@@ -131,11 +131,7 @@ class InstitutionsController < ApplicationController
     
     scope = (params[:scope].nil? ? nil : roles[params[:scope].to_sym])
     
-    if user_role_in?(:dmp_admin)
-      @users = User.all.order(last_name: :asc)
-    else
-      @users = @current_institution.users.order(last_name: :asc)
-    end
+    @users = @current_institution.users.order(last_name: :asc)
     
     # User-Role counts for filters
     @all = @users.count
@@ -143,7 +139,10 @@ class InstitutionsController < ApplicationController
     @template_editor = @users.select{ |u| u.roles.include?(roles[:template_editor]) }.count
     @institutional_reviewer = @users.select{ |u| u.roles.include?(roles[:institutional_reviewer]) }.count
     @institutional_administrator = @users.select{ |u| u.roles.include?(roles[:institutional_administrator]) }.count
-    @dmp_administrator = @users.select{ |u| u.roles.include?(roles[:dmp_administrator]) }.count
+    
+    if user_role_in?(:dmp_admin)
+      @dmp_administrator = @users.select{ |u| u.roles.include?(roles[:dmp_administrator]) }.count
+    end
     
     unless scope.nil?
       @users = @users.select{ |u| u.roles.include?(scope) }

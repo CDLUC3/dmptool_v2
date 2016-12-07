@@ -48,12 +48,20 @@ namespace :statistics do
         
           # If we haven't already generated the stat for this instition
           if stat.nil?
+            
+            inst_plans = Plan.institutional_visibility.joins(:users).where(user_plans: {owner: true}).joins(:users).where("users.institution_id = ?", inst.id) 
+            unit_plans = Plan.unit_visibility.joins(:users).where(user_plans: {owner: true}).joins(:users).where("users.institution_id = ?", inst.id)
+            priv_plans = Plan.private_visibility.where("plans.created_at >= '2016-09-26 00:00:01'").joins(:users).where("users.institution_id = ?", inst.id)
+            pub_plans = Plan.public_visibility.joins(:users).where("users.institution_id = ?", inst.id)
+            
+            plans = inst_plans + unit_plans + pub_plans + priv_plans
+            
             stat = InstitutionStatistic.new({
               run_date: run_date,
               new_users: inst.users.where(created_at: first..last, active: true).count,
               total_users: inst.users.where("users.created_at <= ? AND users.active = true", last).count,
-              new_completed_plans: Plan.completed(inst).where(created_at: first..last).count,
-              total_completed_plans: Plan.completed(inst).where("plans.created_at <= ?", last).count
+              new_completed_plans: plans.select{ |p| p.created_at.between?(first, last) }.count,
+              total_completed_plans: plans.count
             })
           end
       
@@ -82,16 +90,18 @@ namespace :statistics do
           tmplt.save!
         end
     
+        plans = Plan.where("visibility != ?", 'test')
+    
         # create the global stats record
         GlobalStatistic.create({
           run_date: run_date,
           effective_month: "#{Date::MONTHNAMES[first.month]}",
           new_users: n_users,
           total_users: t_users,
-          new_completed_plans: n_plans,
-          total_completed_plans: t_plans,
-          new_public_plans: Plan.public_visibility.where(created_at: first..last).count,
-          total_public_plans: Plan.public_visibility.where("plans.created_at <= ?", last).count,
+          new_completed_plans: plans.select{ |p| p.created_at.between?(first, last) }.count,
+          total_completed_plans: plans.select{ |p| p.created_at <= last }.count,
+          new_public_plans: Plan.public_finished.select{ |p| p.created_at.between?(first, last) }.count,
+          total_public_plans: Plan.public_finished.count,
           new_institutions: Institution.where(created_at: first..last).count,
           total_institutions: Institution.all.where("institutions.created_at <= ?", last).count
         })
