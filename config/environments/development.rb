@@ -32,6 +32,8 @@ Dmptool2::Application.configure do
   # The deployment to the new AWS dev server fails unless bootstrap's glyphicons are precompiled
   # Not an issue in stage and prod where all assets are precompiled
   config.assets.precompile += ['glyphicons-halflings.png', 'glyphicons-halflings-white.png']
+  config.assets.precompile += %w( scaffolds.css )
+  config.assets.precompile += %w( orcid_widget.js )
 
   #special settings if you want to configure Unicorn logs for development use of unicorn server
   if defined? Hulk
