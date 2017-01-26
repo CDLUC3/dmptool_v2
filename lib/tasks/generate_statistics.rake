@@ -53,8 +53,11 @@ namespace :statistics do
             unit_plans = Plan.unit_visibility.joins(:users).where(user_plans: {owner: true}).joins(:users).where("users.institution_id = ?", inst.id)
             priv_plans = Plan.private_visibility.joins(:users).where("users.institution_id = ?", inst.id)
             pub_plans = Plan.public_visibility.joins(:users).where("users.institution_id = ?", inst.id)
+            test_plans = Plan.test_visibility.joins(:users).where("users.institution_id = ?", inst.id)
             
-            plans = inst_plans + unit_plans + pub_plans + priv_plans
+            plans = inst_plans + unit_plans + pub_plans + priv_plans + test_plans
+            
+puts "run_date: #{run_date} ==> first: #{first} - last: #{last}"
             
             stat = InstitutionStatistic.new({
               run_date: run_date,
