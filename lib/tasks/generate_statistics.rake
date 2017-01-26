@@ -56,9 +56,7 @@ namespace :statistics do
             test_plans = Plan.test_visibility.joins(:users).where("users.institution_id = ?", inst.id)
             
             plans = inst_plans + unit_plans + pub_plans + priv_plans + test_plans
-            
-puts "run_date: #{run_date} ==> first: #{first} - last: #{last}"
-            
+           
             stat = InstitutionStatistic.new({
               run_date: run_date,
               new_users: inst.users.select{ |u| u.created_at.between?(first, last) }.count,
