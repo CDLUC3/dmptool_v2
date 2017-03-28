@@ -8,6 +8,7 @@ config/database.yml
 config/ldap.yml
 config/shibboleth.yml
 *.old
+dump.rdb
 .DS_Store?
 ._*
 .Spotlight-V100
