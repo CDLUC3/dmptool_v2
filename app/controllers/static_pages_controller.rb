@@ -5,10 +5,12 @@ class StaticPagesController < ApplicationController
   layout 'application', only: [:guidance, :contact]
 
   def orcid
+    respond_to :html
     render(layout: nil)
   end
 
   def home
+    respond_to :html
     @rss = Rails.cache.read('rss')
     @public_dmps = Plan.public_visibility.order(name: :asc).limit(3)
     if @rss.nil?
@@ -23,18 +25,23 @@ class StaticPagesController < ApplicationController
   end
 
   def about
+    respond_to :html
   end
 
   def video
+    respond_to :html
   end
 
   def partners
+    respond_to :html
   end
 
   def help
+    respond_to :html
   end
 
   def contact
+    respond_to :html
     if request.post?
       if verify_recaptcha
         msg = []
@@ -66,9 +73,11 @@ class StaticPagesController < ApplicationController
   end
 
   def privacy
+    respond_to :html
   end
 
   def guidance
+    respond_to :html
     @public_templates = RequirementsTemplate.public_visibility.includes(:institution, :sample_plans, :additional_informations).active.current.public_visibility
 
     @scope1 = params[:scope1]

@@ -42,24 +42,24 @@ Dmptool2::Application.routes.draw do
   match '/404', :to => 'errors#not_found', :via => :all
   match '/403', :to => 'errors#forbidden', :via => :all
 
-  get "dashboard/show", defaults: {format: 'html'}
-  root 'static_pages#home', defaults: {format: 'html'}
-  get 'about', to: 'static_pages#about', defaults: {format: 'html'}
-  get 'community_resources', to: 'static_pages#community_resources', defaults: {format: 'html'}
-  match 'contact', to: 'static_pages#contact', :via => [:get, :post], as: 'contact', defaults: {format: 'html'}
+  get "dashboard/show"
+  root 'static_pages#home'
+  get 'about', to: 'static_pages#about'
+  get 'community_resources', to: 'static_pages#community_resources'
+  match 'contact', to: 'static_pages#contact', :via => [:get, :post], as: 'contact'
   get 'dashboard', to: 'dashboard#show', as: 'dashboard'
   get 'dashboard/test', to: 'dashboard#test'
-  get 'dm_guidance', to: 'static_pages#data_management_guidance', defaults: {format: 'html'}
-  get 'guidance', to: 'static_pages#guidance', defaults: {format: 'html'}
-  get 'help', to: 'static_pages#help', defaults: {format: 'html'}
+  get 'dm_guidance', to: 'static_pages#data_management_guidance'
+  get 'guidance', to: 'static_pages#guidance'
+  get 'help', to: 'static_pages#help'
   get 'logout', to: 'user_sessions#destroy'
-  get 'partners', to: 'static_pages#partners', defaults: {format: 'html'}
+  get 'partners', to: 'static_pages#partners'
   get 'partners_list', to: 'institutions#partners_list'
-  get 'privacy', to: 'static_pages#privacy', defaults: {format: 'html'}
-  get 'promote', to: 'static_pages#promote', defaults: {format: 'html'}
-  get 'quickstartguide', to: 'static_pages#quickstartguide', defaults: {format: 'html'}
-  get 'terms_of_use', to: 'static_pages#terms_of_use', defaults: {format: 'html'}
-  get 'video', to: 'static_pages#video', defaults: {format: 'html'}
+  get 'privacy', to: 'static_pages#privacy'
+  get 'promote', to: 'static_pages#promote'
+  get 'quickstartguide', to: 'static_pages#quickstartguide'
+  get 'terms_of_use', to: 'static_pages#terms_of_use'
+  get 'video', to: 'static_pages#video'
   get 'resource_contexts/dmp_for_customization', to: 'resource_contexts#dmp_for_customization', as: "dmp_for_customization"
   get 'resource_contexts/choose_institution', to: 'resource_contexts#choose_institution'
   post 'requirements/reorder', to: 'requirements#reorder', as: "reorder_requirements"
