@@ -93,12 +93,14 @@ class InstitutionsController < ApplicationController
       @top_five_public_templates = []
     
       RequirementsTemplateStatistic.where(run_date: run_date).order(new_plans: :desc, total_plans: :desc).each do |stat|
-        tmplt = RequirementsTemplate.find(stat.requirements_template_id)
+        tmplt = RequirementsTemplate.find_by(id: stat.requirements_template_id)
         
-        if tmplt.visibility == :public && @top_five_public_templates.count < 5
-          @top_five_public_templates << {name: tmplt.name,
-                                         new_plans: stat.new_plans,
-                                         total_plans: stat.total_plans}
+        unless tmplt.nil?
+          if tmplt.visibility == :public && @top_five_public_templates.count < 5
+            @top_five_public_templates << {name: tmplt.name,
+                                           new_plans: stat.new_plans,
+                                           total_plans: stat.total_plans}
+          end
         end
       end
     end
