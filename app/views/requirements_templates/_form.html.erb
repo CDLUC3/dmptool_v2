@@ -12,7 +12,7 @@
 				<div class="control-group">
 					<%= f.label :name, 'Template name', :class => 'control-label required' %>
 					<div class="controls">
-						<%= f.text_field :name, :class => 'longfield', 'aria-required' => 'true' %>
+						<%= f.text_field :name, :class => 'longfield', 'aria-required' => 'true', disabled: true %>
 					</div>
 				</div>
 
@@ -20,9 +20,9 @@
 					<%= content_tag(:span, '', :title => 'Once active, template visibility can be either: <ul><li>Public: anyone can view the template.</li><li>Institutional: only those logged in from your institution can view the template.</li></ul>', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip', :style => 'position: absolute; top: 7px; left: 125px') %>
 					<label class="control-label required">Visibility</label>
 					<div class="controls checkbox-controls">
-						<%= f.radio_button :visibility, :public, :class => 'radio inline', :id => 'public', 'aria-required' => 'true'  %>
+						<%= f.radio_button :visibility, :public, :class => 'radio inline', :id => 'public', 'aria-required' => 'true', disabled: true %>
 						<%= label_tag :public, 'public', :class => 'radio-label'%><br/>
-						<%= f.radio_button :visibility, :institutional, :class => 'radio inline', :id => 'institutional', 'aria-required' => 'true'  %>
+						<%= f.radio_button :visibility, :institutional, :class => 'radio inline', :id => 'institutional', 'aria-required' => 'true', disabled: true %>
 						<%= label_tag :institutional, 'institutional', :class => 'radio-label'%>
 					</div>
 				</div>
@@ -34,7 +34,7 @@
 					<div class="control-group" >
 						<%= f.label :institution_id, :class => "control-label" %>
 						<div class="controls" >
-							<%= collection_select(:requirements_template, :institution_id, Institution.all, :id, :full_name, { selected:  current_user.institution.root_id}, :class => 'longfield') %>
+							<%= collection_select(:requirements_template, :institution_id, Institution.all, :id, :full_name, { selected:  current_user.institution.root_id}, :class => 'longfield', disabled: true) %>
 						</div>
 					</div>
 
@@ -45,7 +45,7 @@
 						<div class="controls" >
 							<%= f.select(:institution_id,
 											current_user.institution.subtree.map {|r| [r.full_name,r.id] },
-											{ selected:  current_user.institution.root_id}, :class => 'longfield') %>
+											{ selected:  current_user.institution.root_id}, :class => 'longfield', disabled: true) %>
 						</div>
 					</div>
 				<% else %>
@@ -53,7 +53,7 @@
 						<%= f.label :institution_id, :class => 'control-label' %>
 						<div class="controls" >
 							<%= f.hidden_field :institution_id, value: current_user.institution.id %>
-							<%= text_field_tag :institution_name, current_user.institution.full_name, disabled: true, :class => 'longfield' %>
+							<%= text_field_tag :institution_name, current_user.institution.full_name, disabled: true, :class => 'longfield', disabled: true %>
 						</div>
 					</div>
 				<% end %>
@@ -63,7 +63,7 @@
 				<div class="control-group">
 					<%= label_tag :start_date, "Start Date", :class => "control-label" %>
 					<div class="controls">
-						<%= f.text_field :start_date, value: @requirements_template.start_date.blank? ? " " : @requirements_template.start_date.strftime('%m/%d/%Y'), id: 'start_date', :class => 'datepicker shortfield' %>
+						<%= f.text_field :start_date, value: @requirements_template.start_date.blank? ? " " : @requirements_template.start_date.strftime('%m/%d/%Y'), id: 'start_date', :class => 'datepicker shortfield', disabled: true %>
 						<%= content_tag(:span, '', :title => 'Start date for the template, often provided by the funder as a proposal submission start date.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
 					</div>
 				</div>
@@ -71,7 +71,7 @@
 				<div class="control-group">
 					<%= label_tag :end_date, "End Date", :class => 'control-label' %>
 					<div class="controls">
-						<%= f.text_field :end_date, value: @requirements_template.end_date.blank? ? " " : @requirements_template.end_date.strftime('%m/%d/%Y'), id: 'end_date', :class => 'datepicker shortfield' %>
+						<%= f.text_field :end_date, value: @requirements_template.end_date.blank? ? " " : @requirements_template.end_date.strftime('%m/%d/%Y'), id: 'end_date', :class => 'datepicker shortfield', disabled: true %>
 						<%= content_tag(:span, '', :title => 'End date for the template, often provided by the funder as a proposal submission end date.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
 					</div>
 				</div>
@@ -80,14 +80,14 @@
 					<%= content_tag(:span, '', :title => 'You can require institutional administrator review of plans submitted using this template.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip', :style => 'position: absolute; top: 7px; left: 65px') %>
 					<p class="control-label">Review requirement</p>
 					<div class="controls checkbox-controls">
-						<%= f.radio_button :review_type, :formal_review, :class => 'radio inline', :id => 'formal_review' %>
+						<%= f.radio_button :review_type, :formal_review, :class => 'radio inline', :id => 'formal_review', disabled: true %>
 						<%= label_tag :formal_review, 'Review Required', :class => 'radio-label' %><br/>
-						<%= f.radio_button :review_type, :informal_review, :class => 'radio inline', :id => 'informal_review' %>
+						<%= f.radio_button :review_type, :informal_review, :class => 'radio inline', :id => 'informal_review', disabled: true %>
 						<%= label_tag :informal_review, 'Informal Review Allowed', :class => 'radio-label' %><br/>
 						<% unless @requirements_template.new_record? %>
-							<%= f.radio_button :review_type, :no_review, :class => 'radio inline', :id => 'no_review' %>
+							<%= f.radio_button :review_type, :no_review, :class => 'radio inline', :id => 'no_review', disabled: true %>
 						<% else %>
-							<%= f.radio_button :review_type, :no_review, :class => 'radio inline', :id => 'no_review', checked: true %>
+							<%= f.radio_button :review_type, :no_review, :class => 'radio inline', :id => 'no_review', checked: true, disabled: true %>
 						<% end %>
 						<%= label_tag :no_review, 'No Review Needed', :class => 'radio-label' %>
 					</div>
@@ -97,24 +97,26 @@
 					<%= f.fields_for :additional_informations do |builder| %>
 						<%= render 'additional_information_fields', f: builder %>
 					<% end %>
-					<%= link_to_add_fields 'Add Funder Link', f, :additional_informations %>
+					<%# link_to_add_fields 'Add Funder Link', f, :additional_informations %>
 				</div>
 
 				<div class="control-group">
 					<%= f.fields_for :sample_plans do |builder| %>
 						<%= render 'sample_plan_fields', f: builder %>
 					<% end %>
-					<%= link_to_add_fields 'Add Sample Plan', f , :sample_plans %>
+					<%# link_to_add_fields 'Add Sample Plan', f , :sample_plans %>
 				</div>
 				<br/>
 
 				<div class="buttons">
 					<% unless @requirements_template.new_record? %>
-						<%= f.submit 'Save', name: 'save_changes', :class => 'btn btn-green' %>
+						<%# f.submit 'Save', name: 'save_changes', :class => 'btn btn-green' %>
 						<%= button_tag 'Cancel', type: :reset, :class => 'btn'%>
-						<%= f.submit "Save and Next >>", name: 'save_and_template_details', :class => 'btn btn-green pull-right' %>
+						<%# f.submit "Next >>", name: 'save_and_template_details', :class => 'btn btn-green pull-right' %>
+						<%= link_to(content_tag(:span, 'Next >>'), requirements_template_requirements_path(@requirements_template), :class => 'btn btn-green pull-right') %>
 					<% else %>
-					  <%= f.submit "Save and Next >>", name: 'save_and_template_details', :class => 'btn btn-success pull-right' %>
+						<%= link_to(content_tag(:span, 'Next >>'), requirements_template_requirements_path(@requirements_template), :class => 'btn btn-success pull-right') %>
+					  <%# f.submit "Next >>", name: 'save_and_template_details', :class => 'btn btn-success pull-right' %>
             <%= link_to '<< Back', :back, method: :get, :class => 'btn btn-green pull-left' %>
             <%= button_tag 'Cancel', type: :reset, :class => 'btn btn-success'%>
 	         <% end %>

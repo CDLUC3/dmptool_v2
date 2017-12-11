@@ -51,25 +51,30 @@ class RequirementsController < ApplicationController
     @requirements = @requirements_template.requirements
     group = requirement_params[:group].to_i
     respond_to do |format|
-      if !group.nil? && group == 1
-        if @requirement.save
-          @requirement.requirements_template.touch
-          format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement, node_type: 'group'), notice: 'Group was successfully created.' }
-          format.json { render action: 'show', status: :created, location: @requirement }
-        else
-          format.html { render action: 'index' }
-          format.json { render json: @requirement.errors, status: :unprocessable_entity }
-        end
-      else
-        if @requirement.save
-          @requirement.requirements_template.touch
-          format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement), notice: 'Requirement was successfully created.' }
-          format.json { render action: 'show', status: :created, location: @requirement }
-        else
-          format.html { render action: 'index' }
-          format.json { render json: @requirement.errors, status: :unprocessable_entity }
-        end
-      end
+      # Temporary code to prevent requirements from being created before migration to the Roadmap codebase
+      flash[:notice] = 'Unable to create new requirements at this time.'
+      format.html { render action: 'index' }
+      format.json { render json: [flash[:notice]], status: :unprocessable_entity }
+      
+      #if !group.nil? && group == 1
+      #  if @requirement.save
+      #    @requirement.requirements_template.touch
+      #    format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement, node_type: 'group'), notice: 'Group was successfully created.' }
+      #    format.json { render action: 'show', status: :created, location: @requirement }
+      #  else
+      #    format.html { render action: 'index' }
+      #    format.json { render json: @requirement.errors, status: :unprocessable_entity }
+      #  end
+      #else
+      #  if @requirement.save
+      #    @requirement.requirements_template.touch
+      #    format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement), notice: 'Requirement was successfully created.' }
+      #    format.json { render action: 'show', status: :created, location: @requirement }
+      #  else
+      #    format.html { render action: 'index' }
+      #    format.json { render json: @requirement.errors, status: :unprocessable_entity }
+      #  end
+      #end
     end
   end
 
@@ -80,19 +85,24 @@ class RequirementsController < ApplicationController
     @enumerations = @requirement.enumerations
     @labels = @requirement.labels
     respond_to do |format|
-      if @requirement.update(requirement_params)
-        if @requirement.previous_changes.blank?
-          format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement) }
-          format.json { head :no_content }
-        else
-          @requirement.requirements_template.touch 
-          format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement), notice: "Requirement was successfully updated. "}
-          format.json { head :no_content }
-        end
-      else
-        format.html { render action: 'index' }
-        format.json { render json: @requirement.errors, status: :unprocessable_entity }
-      end
+      # Temporary code to prevent requirements from being updated before migration to the Roadmap codebase
+      flash[:notice] = 'Unable to update requirements at this time.'
+      format.html { render action: 'index' }
+      format.json { render json: [flash[:notice]], status: :unprocessable_entity }
+      
+      #if @requirement.update(requirement_params)
+      #  if @requirement.previous_changes.blank?
+      #    format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement) }
+      #    format.json { head :no_content }
+      #  else
+      #    @requirement.requirements_template.touch 
+      #    format.html { redirect_to edit_requirements_template_requirement_path(@requirements_template, @requirement), notice: "Requirement was successfully updated. "}
+      #    format.json { head :no_content }
+      #  end
+      #else
+      #  format.html { render action: 'index' }
+      #  format.json { render json: @requirement.errors, status: :unprocessable_entity }
+      #end
     end
   end
 
@@ -100,87 +110,96 @@ class RequirementsController < ApplicationController
   # DELETE /requirements/1.json
   def destroy
     @requirements = @requirements_template.requirements
-    @requirement.destroy
-    @requirement.requirements_template.touch
+    #@requirement.destroy
+    #@requirement.requirements_template.touch
     respond_to do |format|
-      format.html { redirect_to requirements_template_requirements_path }
-      format.json { head :no_content }
+      # Temporary code to prevent requirements from being deleted before migration to the Roadmap codebase
+      flash[:notice] = 'Unable to delete requirements at this time.'
+      format.html { render action: 'index' }
+      format.json { render json: [flash[:notice]], status: :unprocessable_entity }
+      
+      #format.html { redirect_to requirements_template_requirements_path }
+      #format.json { head :no_content }
     end
   end
 
   # reorders the requirements in a template from drag and drop
   def reorder
     respond_to do |format|
-      format.js do
-        render 'reorder_fail' and return if params[:drag_id].blank? || params[:drop_id].blank?
-        @drag_req = Requirement.find(params[:drag_id].first)
-        if params[:drop_id] == 'drop_before_first' #a special case of dropping before -- the rest are dropping after
-          ActiveRecord::Base.transaction do
-            desc_ids = @drag_req.descendant_ids
-            old_path = (@drag_req.ancestry.nil? ? [] : @drag_req.ancestry.split("/")) + [@drag_req.id]
-            @drop_req = @drag_req.requirements_template.requirements.roots.order(:position).first
-            @drag_req.position_before(@drop_req.id)
-            @drag_req.update_column(:ancestry, nil)
-            if @drag_req.group
-              fix_descendant_ancestry(desc_ids, old_path, [@drag_req.id])
-            end
-          end
-        else
-          render 'reorder_fail' and return if params[:drag_id] == params[:drop_id] #ignore drop on self
-          @drop_req = Requirement.find(params[:drop_id].first)
-          render 'reorder_fail' and return if @drag_req.requirements_template_id != @drag_req.requirements_template_id #ignore drops between templates, not allowed
-          # add other validation that you can reorder here
+      # Temporary code to prevent requirements from being reordered before migration to the Roadmap codebase
+      flash[:notice] = 'Unable to update templates at this time.'
+      format.js { render 'reorder_fail' and return }
+      
+      #format.js do
+      #  render 'reorder_fail' and return if params[:drag_id].blank? || params[:drop_id].blank?
+      #  @drag_req = Requirement.find(params[:drag_id].first)
+      #  if params[:drop_id] == 'drop_before_first' #a special case of dropping before -- the rest are dropping after
+      #    ActiveRecord::Base.transaction do
+      #      desc_ids = @drag_req.descendant_ids
+      #      old_path = (@drag_req.ancestry.nil? ? [] : @drag_req.ancestry.split("/")) + [@drag_req.id]
+      #      @drop_req = @drag_req.requirements_template.requirements.roots.order(:position).first
+      #      @drag_req.position_before(@drop_req.id)
+      #      @drag_req.update_column(:ancestry, nil)
+      #      if @drag_req.group
+      #        fix_descendant_ancestry(desc_ids, old_path, [@drag_req.id])
+      #      end
+      #    end
+      #  else
+      #    render 'reorder_fail' and return if params[:drag_id] == params[:drop_id] #ignore drop on self
+      #    @drop_req = Requirement.find(params[:drop_id].first)
+      #    render 'reorder_fail' and return if @drag_req.requirements_template_id != @drag_req.requirements_template_id #ignore drops between templates, not allowed
+      #    # add other validation that you can reorder here
 
-          if @drag_req.group.blank? && @drop_req.group.blank? # one requirement dropped on another requirement
-            ActiveRecord::Base.transaction do
-              #unless @drop_req.ancestor_ids.include?(@drag_req.id) #do not change anything for dragging yourself into your own area
-              @drag_req.position_after(@drop_req.id)
-              @drag_req.update_column(:ancestry, @drop_req.ancestry)
-              @drag_req.requirements_template.touch
-            end
-            #end
-          elsif @drag_req.group.blank? && @drop_req.group #one requirement dropped on a folder
-            ActiveRecord::Base.transaction do
-              @drag_req.position_after(@drop_req.id)
-              a = (@drop_req.ancestry.nil? ? [] : @drop_req.ancestry.split("/"))
-              a = (a + [@drop_req.id]).join("/")
-              @drag_req.update_column(:ancestry, a)
-              @drag_req.requirements_template.touch
-            end
+      #    if @drag_req.group.blank? && @drop_req.group.blank? # one requirement dropped on another requirement
+      #      ActiveRecord::Base.transaction do
+      #        #unless @drop_req.ancestor_ids.include?(@drag_req.id) #do not change anything for dragging yourself into your own area
+      #        @drag_req.position_after(@drop_req.id)
+      #        @drag_req.update_column(:ancestry, @drop_req.ancestry)
+      #        @drag_req.requirements_template.touch
+      #      end
+      #      #end
+      #    elsif @drag_req.group.blank? && @drop_req.group #one requirement dropped on a folder
+      #      ActiveRecord::Base.transaction do
+      #        @drag_req.position_after(@drop_req.id)
+      #        a = (@drop_req.ancestry.nil? ? [] : @drop_req.ancestry.split("/"))
+      #        a = (a + [@drop_req.id]).join("/")
+      #        @drag_req.update_column(:ancestry, a)
+      #        @drag_req.requirements_template.touch
+      #      end
 
-          elsif @drag_req.group && @drop_req.group #dropping on a folder on a folder
-            unless @drop_req.ancestor_ids.include?(@drag_req.id) #do not change anything for dragging yourself into your own area
-              ActiveRecord::Base.transaction do
-                desc_ids = @drag_req.descendant_ids
-                old_path = (@drag_req.ancestry.nil? ? [] : @drag_req.ancestry.split("/")) + [@drag_req.id]
-                new_path = (@drop_req.ancestry.nil? ? [] : @drop_req.ancestry.split("/")) + [@drop_req.id]
-                @drag_req.position_after(@drop_req.id)
-                @drag_req.update_column(:ancestry, new_path.join("/")) #put it under the dropped folder
-                new_path = new_path + [@drag_req.id]
-                fix_descendant_ancestry(desc_ids, old_path, new_path)
-                @drag_req.requirements_template.touch
-              end
-            end
-          elsif @drag_req.group && @drop_req.group.blank? #dropping on a folder on a file
-            unless @drop_req.ancestor_ids.include?(@drag_req.id) #do not change anything for dragging yourself into your own area
-              ActiveRecord::Base.transaction do
-                desc_ids = @drag_req.descendant_ids
-                old_path = (@drag_req.ancestry.nil? ? [] : @drag_req.ancestry.split("/")) + [@drag_req.id]
-                new_path = (@drop_req.ancestry.nil? ? [] : @drop_req.ancestry.split("/"))
-                @drag_req.position_after(@drop_req.id)
-                @drag_req.update_column(:ancestry, @drop_req.ancestry) #put it under same parent
-                new_path = new_path + [@drag_req.id]
-                fix_descendant_ancestry(desc_ids, old_path, new_path)
-                @drag_req.requirements_template.touch
-              end
-            end
-          end
-        end
+      #    elsif @drag_req.group && @drop_req.group #dropping on a folder on a folder
+      #      unless @drop_req.ancestor_ids.include?(@drag_req.id) #do not change anything for dragging yourself into your own area
+      #        ActiveRecord::Base.transaction do
+      #          desc_ids = @drag_req.descendant_ids
+      #          old_path = (@drag_req.ancestry.nil? ? [] : @drag_req.ancestry.split("/")) + [@drag_req.id]
+      #          new_path = (@drop_req.ancestry.nil? ? [] : @drop_req.ancestry.split("/")) + [@drop_req.id]
+      #          @drag_req.position_after(@drop_req.id)
+      #          @drag_req.update_column(:ancestry, new_path.join("/")) #put it under the dropped folder
+      #          new_path = new_path + [@drag_req.id]
+      #          fix_descendant_ancestry(desc_ids, old_path, new_path)
+      #          @drag_req.requirements_template.touch
+      #        end
+      #      end
+      #    elsif @drag_req.group && @drop_req.group.blank? #dropping on a folder on a file
+      #      unless @drop_req.ancestor_ids.include?(@drag_req.id) #do not change anything for dragging yourself into your own area
+      #        ActiveRecord::Base.transaction do
+      #          desc_ids = @drag_req.descendant_ids
+      #          old_path = (@drag_req.ancestry.nil? ? [] : @drag_req.ancestry.split("/")) + [@drag_req.id]
+      #          new_path = (@drop_req.ancestry.nil? ? [] : @drop_req.ancestry.split("/"))
+      #          @drag_req.position_after(@drop_req.id)
+      #          @drag_req.update_column(:ancestry, @drop_req.ancestry) #put it under same parent
+      #          new_path = new_path + [@drag_req.id]
+      #          fix_descendant_ancestry(desc_ids, old_path, new_path)
+      #          @drag_req.requirements_template.touch
+      #        end
+      #      end
+      #    end
+      #  end
 
-        #these need setting for re-rendering the view area
-        @requirements_template = @drag_req.requirements_template
-        @requirements = @requirements_template.requirements
-      end
+      #  #these need setting for re-rendering the view area
+      #  @requirements_template = @drag_req.requirements_template
+      #  @requirements = @requirements_template.requirements
+      #end
     end
     
   end

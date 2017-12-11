@@ -62,11 +62,11 @@
 			  	<%= content_tag(:span, '', :title => 'You can require institutional administrator review of plans submitted using this template.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip', :style => 'position: absolute; top: 7px; left: 115px') %>
 			    <p class ="control-label">Review type</p>
 			    <div class="controls checkbox-controls">
-			      <%= f.radio_button :review_type, :formal_review, :class => 'radio inline', :id => 'formal_review'  %>
+			      <%= f.radio_button :review_type, :formal_review, :class => 'radio inline', :id => 'formal_review', disabled: true %>
 			      <%= label_tag :formal_review, 'Review Required', :class => 'checkbox-label'%><br/>
-			      <%= f.radio_button :review_type, :informal_review, :class => 'radio inline', :id => 'informal_review'  %>
+			      <%= f.radio_button :review_type, :informal_review, :class => 'radio inline', :id => 'informal_review', disabled: true %>
 			      <%= label_tag :informal_review, 'Informal Review Allowed', :class => 'checkbox-label'%><br/>
-			      <%= f.radio_button :review_type, :no_review, :class => 'radio inline', :id => 'no_review'  %>
+			      <%= f.radio_button :review_type, :no_review, :class => 'radio inline', :id => 'no_review', disabled: true %>
 			      <%= label_tag :no_review, 'No Review Needed', :class => 'checkbox-label'%>
 			    </div>
 			  </div>
@@ -74,7 +74,7 @@
 			  <div class="control-group">
 			    <%= f.label :contact_info, 'Contact Information',:class => "control-label" %>
 			    <div class="controls">
-			      <%= f.text_field :contact_info, :class => "input-xlarge" %>
+			      <%= f.text_field :contact_info, :class => "input-xlarge", disabled: true %>
 			      <%= content_tag(:span, '', :title => 'Name & E-mail for contact about this specific DMP Template customizations. Default is the institutional admin contact information.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
 			    </div>
 			  </div>
@@ -82,7 +82,7 @@
 			  <div class="control-group">
 			    <%= f.label :contact_email, 'Contact Email', :class => "control-label required" %>
 			    <div class="controls">
-			      <%= f.text_field :contact_email, :class => "input-xlarge", 'aria-required' => 'true' %>
+			      <%= f.text_field :contact_email, :class => "input-xlarge", 'aria-required' => 'true', disabled: true %>
 			    </div>
 			  </div>
 
@@ -100,7 +100,7 @@
 			    </div>
 			  </div>
 			<div class="buttons">
-			  <%= f.submit('Save') %>
+			  <%# f.submit('Save') %>
 			</div>
 			<%= hidden_field_tag :after_save, 'this_page' %>
 			<% end %>

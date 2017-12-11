@@ -15,9 +15,9 @@
 			
 			<% if !@has_plans %>
 		  	<div class="actions">
-			    <%= link_to(content_tag(:span, '', :class => 'icon add-group') + 'Add Group' + content_tag(:span, '', :title => 'Similar requirements may be grouped together under a single requirement &#8220;group&#8221;.', 'data-toggle' => "tooltip", 'data-placement' => 'top', 'data-html' => 'true', :class => 'icon questionmark tip'), new_requirements_template_requirement_path(@requirements_template, node_type: 'group') + '#jump') %>
-			    <%=  raw('&nbsp;') %>
-			    <%= link_to(content_tag(:span, '', :class => 'icon add-requirement') + 'Add Requirement' + content_tag(:span, '', :title => 'A requirement is the specific question that a researcher is to answer.', 'data-toggle' => "tooltip", 'data-placement' => 'top', 'data-html' => 'true', :class => 'icon questionmark tip'), new_requirements_template_requirement_path(@requirements_template) + '#jump') %>
+			    <%# link_to(content_tag(:span, '', :class => 'icon add-group') + 'Add Group' + content_tag(:span, '', :title => 'Similar requirements may be grouped together under a single requirement &#8220;group&#8221;.', 'data-toggle' => "tooltip", 'data-placement' => 'top', 'data-html' => 'true', :class => 'icon questionmark tip'), new_requirements_template_requirement_path(@requirements_template, node_type: 'group') + '#jump') %>
+			    <%#  raw('&nbsp;') %>
+			    <%# link_to(content_tag(:span, '', :class => 'icon add-requirement') + 'Add Requirement' + content_tag(:span, '', :title => 'A requirement is the specific question that a researcher is to answer.', 'data-toggle' => "tooltip", 'data-placement' => 'top', 'data-html' => 'true', :class => 'icon questionmark tip'), new_requirements_template_requirement_path(@requirements_template) + '#jump') %>
 			  </div>
 				
 				<div id="drop_before_first">
@@ -38,15 +38,15 @@
 		  <%= content_tag(:span, '', :title => 'The template status is inactive by default, which means it will not be visible to DMPTool users. When your template is complete, select &#8220;activate&#8221; to make the template available to use.', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'data-html' => 'true', :class => 'icon questionmark tip') %>
 		  </p>
 	  	<div>
-		    <%= link_to activate_link_text(@requirements_template),
+		    <%# link_to activate_link_text(@requirements_template),
 		      toggle_active_requirements_template_path(@requirements_template), remote: true, id: "activate_link_#{@requirements_template.id}", :class => 'btn' %>
 	    </div>
       <div>
         <br/>
         <% if !@has_plans %>
-          <%= link_to 'Delete', requirements_template_path(@requirements_template, after_url: requirements_templates_path), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn' %>
+          <%# link_to 'Delete', requirements_template_path(@requirements_template, after_url: requirements_templates_path), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn' %>
         <% else %>
-          <%= link_to 'Delete', '', :class => 'btn', disabled: true, style: "pointer-events: none;" %><br/><br/>
+          <%# link_to 'Delete', '', :class => 'btn', disabled: true, style: "pointer-events: none;" %><br/><br/>
           <p>This template cannot be deleted nor can the requirements be modified until all DMPs that use it have been removed.</p>
         <% end %>
       </div>
@@ -63,7 +63,7 @@
 	 	<div class="tab-content">
 	  	<div class="tab-pane active" id="tab1">
 				<% if !@has_plans %>
-	  			<%= render 'form' %>
+	  			<%= render 'show' %>
 				<% else %>	
 					<%= render 'show', locals: {notice: notice} %>
 				<% end %>

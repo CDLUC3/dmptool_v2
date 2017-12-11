@@ -23,7 +23,7 @@
         <div class="edit_icon_right">
           <% #pass these along: :resource, :resource_level, :customization_id, :template_id, :requirement_id, :tab, :tab_number, :custom_origin %>
           <% if cust_level == '4' %>
-            <%= link_to raw(''),
+            <%# link_to raw(''),
              edit_resource_path(  id:                 resource.id,
                                   resource_level:     'requirement',
                                   customization_id:   @customization.id,
@@ -36,7 +36,7 @@
                 :class => 'icon edit-user', :title => 'Edit Customization' %>
           <% else %>
 
-            <%= link_to raw(''),
+            <%# link_to raw(''),
                         edit_customization_resource_path( id:                 resource.id,
                                                           resource_level:     'requirement',
                                                           customization_id:   @customization.id,

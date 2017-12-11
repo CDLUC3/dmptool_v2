@@ -145,23 +145,29 @@ class RequirementsTemplatesController < ApplicationController
   def create
     @requirements_template = RequirementsTemplate.new(requirements_template_params)
     respond_to do |format|
-      if params[:save_and_template_details]
-        if @requirements_template.save
-          format.html { redirect_to requirements_template_requirements_path(@requirements_template), notice: 'DMP Template was successfully created.' }
-          format.json { head :no_content }
-        else
-          format.html { render action: 'new' }
-          format.json { render json: @requirements_template.errors, status: :unprocessable_entity }
-        end
-      else
-        if @requirements_template.save
-          format.html { redirect_to edit_requirements_template_path(@requirements_template), notice: 'DMP Template was successfully created.' }
-          format.json { head :no_content }
-        else
-          format.html { render action: 'new' }
-          format.json { render json: @requirements_template.errors, status: :unprocessable_entity }
-        end
-      end
+      
+      # Temporary code to prevent templates from being created before migration to the Roadmap codebase
+      flash[:notice] = 'Unable to create new templates at this time.'
+      format.html { render action: 'index' }
+      format.json { render json: [flash[:notice]], status: :unprocessable_entity }
+      
+      #if params[:save_and_template_details]
+        #if @requirements_template.save
+        #  format.html { redirect_to requirements_template_requirements_path(@requirements_template), notice: 'DMP Template was successfully created.' }
+        #  format.json { head :no_content }
+        #else
+        #  format.html { render action: 'new' }
+        #  format.json { render json: @requirements_template.errors, status: :unprocessable_entity }
+        #end
+      #else
+        #if @requirements_template.save
+        #  format.html { redirect_to edit_requirements_template_path(@requirements_template), notice: 'DMP Template was successfully created.' }
+        #  format.json { head :no_content }
+        #else
+        #  format.html { render action: 'new' }
+        #  format.json { render json: @requirements_template.errors, status: :unprocessable_entity }
+        #end
+      #end
     end
   end
 
@@ -169,106 +175,132 @@ class RequirementsTemplatesController < ApplicationController
   # PATCH/PUT /requirements_templates/1.json
   def update
     respond_to do |format|
-      if params[:save_changes] || !params[:save_and_template_details]
-        if @requirements_template.update(requirements_template_params)
-          format.html { redirect_to edit_requirements_template_path(@requirements_template), notice: 'DMP Template was successfully updated.' }
-          format.json { head :no_content }
-        else
-          format.html { render action: 'edit' }
-          format.json { render json: @requirements_template.errors, status: :unprocessable_entity }
-        end
-      else
-        if @requirements_template.update(requirements_template_params)
-          format.html { redirect_to requirements_template_requirements_path(@requirements_template) }
-          format.json { head :no_content }
-        else
-          format.html { render action: 'edit' }
-          format.json { render json: @requirements_template.errors, status: :unprocessable_entity }
-        end
-      end
+      
+      # Temporary code to prevent templates from being edited before migration to the Roadmap codebase
+      flash[:notice] = 'Unable to edit templates at this time.'
+      format.html { render action: 'index' }
+      format.json { render json: [flash[:notice]], status: :unprocessable_entity }
+      
+      #if params[:save_changes] || !params[:save_and_template_details]
+      #  if @requirements_template.update(requirements_template_params)
+      #    format.html { redirect_to edit_requirements_template_path(@requirements_template), notice: 'DMP Template was successfully updated.' }
+      #    format.json { head :no_content }
+      #  else
+      #    format.html { render action: 'edit' }
+      #    format.json { render json: @requirements_template.errors, status: :unprocessable_entity }
+      #  end
+      #else
+      #  if @requirements_template.update(requirements_template_params)
+      #    format.html { redirect_to requirements_template_requirements_path(@requirements_template) }
+      #    format.json { head :no_content }
+      #  else
+      #    format.html { render action: 'edit' }
+      #    format.json { render json: @requirements_template.errors, status: :unprocessable_entity }
+      #  end
+      #end
     end
   end
 
   # DELETE /requirements_templates/1
   # DELETE /requirements_templates/1.json
   def destroy
-    if @requirements_template.user_can_delete_me?(current_user)
-      @requirements_template.destroy
-    end
     respond_to do |format|
-      format.html {
-        if params[:after_url].blank?
-          redirect_to requirements_templates_url, notice: 'DMP template was deleted.'
-        else
-          redirect_to params[:after_url], notice: 'DMP template was deleted.'
-        end
-      }
-      format.json { head :no_content }
+      # Temporary code to prevent templates from being deleted before migration to the Roadmap codebase
+      flash[:notice] = 'Unable to delete templates at this time.'
+      format.html { render action: 'index' }
+      format.json { render json: [flash[:notice]], status: :unprocessable_entity }
     end
+    
+    #if @requirements_template.user_can_delete_me?(current_user)
+    #  @requirements_template.destroy
+    #end
+    #respond_to do |format|
+    #  format.html {
+    #    if params[:after_url].blank?
+    #      redirect_to requirements_templates_url, notice: 'DMP template was deleted.'
+    #    else
+    #      redirect_to params[:after_url], notice: 'DMP template was deleted.'
+    #    end
+    #  }
+    #  format.json { head :no_content }
+    #end
   end
 
   def copy_existing_template
-    id = params[:requirements_template].to_i unless params[:requirements_template].blank?
-
-    if user_role_in?(:dmp_admin)
-      requirements_template = RequirementsTemplate.where(id: id).first
-    else
-      requirements_template = RequirementsTemplate.
-          where("visibility = 'public' OR institution_id IN ( ? )", current_user.institution.root.subtree_ids).
-          where(id: id).first
-    end
-
-    @requirements_template = requirements_template.deep_clone include: [:sample_plans, :additional_informations, :requirements], validate: false
-
-    @requirements_template.name = "Copy of #{@requirements_template.name}"
-
-    count = 1
-    while RequirementsTemplate.where(name: @requirements_template.name).count > 0
-      count += 1
-      @requirements_template.name[/^Copy [0-9]* ?of/] = "Copy #{count} of"
-    end
-
-    @requirements_template.institution_id = current_user.institution_id
-    @requirements_template.active = false
-
     respond_to do |format|
-      if @requirements_template.save
-
-        #now fix the ancestry to apply old order and structure to new
-        o = requirements_template.requirements.order(:position).pluck(:id)
-        n = @requirements_template.requirements.order(:position).pluck(:id)
-        corr = Hash[o.zip(n)] #this creates a hash with old (keys) and new (values) for the copied requirements for updating ancestry column in new
-
-        #now should be able to map any numbers in the ancestry column (example "274/279") into the new structure that was copied
-        @requirements_template.requirements.each do |r|
-          unless r.ancestry.nil?
-            val = r.ancestry
-            val = val.split("/").map{|i| corr[i.to_i]}.join("/")
-            r.update_column(:ancestry, val ) #update new ancestry
-          end
-        end
-
-
-        format.html { redirect_to edit_requirements_template_path(@requirements_template), notice: 'Requirements template was successfully created.' }
-        format.json { render action: 'edit', status: :created, location: @requirements_template }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @requirements_template.errors, status: :unprocessable_entity }
-      end
+      # Temporary code to prevent templates from being deleted before migration to the Roadmap codebase
+      flash[:notice] = 'Unable to create templates at this time.'
+      format.html { render action: 'index' }
+      format.json { render json: [flash[:notice]], status: :unprocessable_entity }
     end
+    
+    #id = params[:requirements_template].to_i unless params[:requirements_template].blank?
+
+    #if user_role_in?(:dmp_admin)
+    #  requirements_template = RequirementsTemplate.where(id: id).first
+    #else
+    #  requirements_template = RequirementsTemplate.
+    #      where("visibility = 'public' OR institution_id IN ( ? )", current_user.institution.root.subtree_ids).
+    #      where(id: id).first
+    #end
+
+    #@requirements_template = requirements_template.deep_clone include: [:sample_plans, :additional_informations, :requirements], validate: false
+
+    #@requirements_template.name = "Copy of #{@requirements_template.name}"
+
+    #count = 1
+    #while RequirementsTemplate.where(name: @requirements_template.name).count > 0
+    #  count += 1
+    #  @requirements_template.name[/^Copy [0-9]* ?of/] = "Copy #{count} of"
+    #end
+
+    #@requirements_template.institution_id = current_user.institution_id
+    #@requirements_template.active = false
+
+    #respond_to do |format|
+    #  if @requirements_template.save
+
+    #    #now fix the ancestry to apply old order and structure to new
+    #    o = requirements_template.requirements.order(:position).pluck(:id)
+    #    n = @requirements_template.requirements.order(:position).pluck(:id)
+    #    corr = Hash[o.zip(n)] #this creates a hash with old (keys) and new (values) for the copied requirements for updating ancestry column in new
+
+    #    #now should be able to map any numbers in the ancestry column (example "274/279") into the new structure that was copied
+    #    @requirements_template.requirements.each do |r|
+    #      unless r.ancestry.nil?
+    #        val = r.ancestry
+    #        val = val.split("/").map{|i| corr[i.to_i]}.join("/")
+    #        r.update_column(:ancestry, val ) #update new ancestry
+    #      end
+    #    end
+
+
+    #    format.html { redirect_to edit_requirements_template_path(@requirements_template), notice: 'Requirements template was successfully created.' }
+    #    format.json { render action: 'edit', status: :created, location: @requirements_template }
+    #  else
+    #    format.html { render action: 'new' }
+    #    format.json { render json: @requirements_template.errors, status: :unprocessable_entity }
+    #  end
+    #end
   end
 
   def toggle_active
     respond_to do |format|
-      @requirements = @requirements_template.requirements
-      if @requirements.empty?
-        @msg =  "The DMP template \"#{@requirements_template.name}\" you are attempting to activate has no Requirements. A template must contain at least one Requirement before you may activate it."
-        format.js { render 'activate_errors.js.erb' }
-      else
-        @requirements_template.toggle!(:active)
-        format.js { render 'toggle_active.js.erb'}
-      end
-    end
+      # Temporary code to prevent templates from being deleted before migration to the Roadmap codebase
+      @msg = 'Unable to activate templates at this time.'
+      format.js { render 'activate_errors.js.erb' }
+    end 
+    
+    #respond_to do |format|
+    #  @requirements = @requirements_template.requirements
+    #  if @requirements.empty?
+    #    @msg =  "The DMP template \"#{@requirements_template.name}\" you are attempting to activate has no Requirements. A template must contain at least one Requirement before you may activate it."
+    #    format.js { render 'activate_errors.js.erb' }
+    #  else
+    #    @requirements_template.toggle!(:active)
+    #    format.js { render 'toggle_active.js.erb'}
+    #  end
+    #end
   end
 
   private
