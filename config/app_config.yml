@@ -2,7 +2,7 @@ development:
   rss:                    https://blog.dmptool.org/feed
   blog:                   http://blog.dmptool.org
   feedback_email_to:      [pwillet.ucop.edu, mstrong@ucop.edu, sfisher@ucop.edu, briley@ucop.edu]
-  feedback_email_from:    no-reply-dmptool@ucop.edu
+  feedback_email_from:    no-reply-dmptool@cdlib.org
   recaptcha_public_key:   6Ld2AAYAAAAAAKrPZimDhCZY56x_VK2RuAgao1_6
   recaptcha_private_key:  6Ld2AAYAAAAAAHAzVcdFizHHGPInfgr4aGOm4n4x
   google_analytics_key:   UA-30638119-8
@@ -26,7 +26,7 @@ stage:
   rss:                    https://blog.dmptool.org/feed
   blog:                   http://blog.dmptool.org
   feedback_email_to:      [uc3@ucop.edu]
-  feedback_email_from:    no-reply-dmptool@ucop.edu
+  feedback_email_from:    no-reply-dmptool@cdlib.org
   recaptcha_public_key:   6Ld2AAYAAAAAAKrPZimDhCZY56x_VK2RuAgao1_6
   recaptcha_private_key:  6Ld2AAYAAAAAAHAzVcdFizHHGPInfgr4aGOm4n4x
   google_analytics_key:   UA-30638119-9
@@ -50,7 +50,7 @@ production:
   rss:                    https://blog.dmptool.org/feed
   blog:                   http://blog.dmptool.org
   feedback_email_to:      [uc3@ucop.edu]
-  feedback_email_from:    no-reply-dmptool@ucop.edu
+  feedback_email_from:    no-reply-dmptool@cdlib.org
   recaptcha_public_key:   6Ld2AAYAAAAAAKrPZimDhCZY56x_VK2RuAgao1_6
   recaptcha_private_key:  6Ld2AAYAAAAAAHAzVcdFizHHGPInfgr4aGOm4n4x
   google_analytics_key:   UA-30638119-10
@@ -74,8 +74,8 @@ production_development:
 test:
   rss:                    https://blog.dmptool.org/feed
   blog:                   http://blog.dmptool.org
-  feedback_email_to:      [pwillet.ucop.edu, mstrong@ucop.edu]
-  feedback_email_from:    no-reply-dmptool@ucop.edu
+  feedback_email_to:      [brian.riley.ucop.edu, mstrong@ucop.edu]
+  feedback_email_from:    no-reply-dmptool@cdlib.org
   recaptcha_public_key:   6Ld2AAYAAAAAAKrPZimDhCZY56x_VK2RuAgao1_6
   recaptcha_private_key:  6Ld2AAYAAAAAAHAzVcdFizHHGPInfgr4aGOm4n4x
   google_analytics_key:   ""
