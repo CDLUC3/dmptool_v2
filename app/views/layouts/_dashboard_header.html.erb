@@ -1,3 +1,9 @@
+<% if ['customizations', 'dmp_templates'].include?(menu_level(0)) %>
+  <div class="alert">
+   Changes to <%= menu_level(0) == 'customizations' ? 'Customizations' : 'Templates' %> have been disabled. Please contact the DMPTool helpdesk <a href="mailto:uc3@ucop.edu">uc3@ucop.edu</a> if you need to make any changes to your institutional templates and guidance or customizations.
+  </div>
+<% end %>
+
 <div class="dashboard row">
   <%= render partial: 'layouts/dashboard_logo_row' %>
   <div class="dashboard-nav row-fluid" id="quick_dashboard">
