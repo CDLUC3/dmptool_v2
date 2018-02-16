@@ -28,10 +28,22 @@
     <%= render :partial => 'layouts/analytics' %>
   </head>
   <body>
+
+  <% if !current_user %>
+    <div><p class="text-center alert alert-info">
+      The DMPTool will be unavailable on 27 Feb 8am-5pm Pacific Time while we migrate to the new version.<br>Please plan accordingly.
+    </p></div>
+  <% end %>
+
   <%= render 'layouts/header' %>
 
   <div class="container">
   	<% if current_user %>
+
+      <div><p class="text-center alert alert-info">
+        The DMPTool will be unavailable on 27 Feb 8am-5pm Pacific Time while we migrate to the new version.<br>Please plan accordingly.
+      </p></div>
+
   		<%= render 'layouts/dashboard_header' unless ['static_pages', 'user_sessions'].include?(controller_name) && !['guidance', 'public_dmps', 'contact'].include?(action_name) %>
   	<% end %>
 
