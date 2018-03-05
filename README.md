@@ -1,6 +1,4 @@
-
-=======
-dmptool
+DMPTool
 =======
 
 **Project moved to Github in June 2014.**
