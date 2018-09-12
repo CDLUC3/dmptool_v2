@@ -2,7 +2,8 @@
 =======
 dmptool
 =======
-
+**This repository is now archived.  Please refer to the subsequent repository https://github.com/CDLUC3/dmptool**
+---
 **Project moved to Github in June 2014.**
 
 **Helpful information for installing and running DMPTool for your environment:**
