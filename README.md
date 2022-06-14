@@ -1,6 +1,4 @@
-
-=======
-dmptool
+DMPTool
 =======
 **This repository is now archived.  Please refer to the subsequent repository https://github.com/CDLUC3/dmptool**
 ---
